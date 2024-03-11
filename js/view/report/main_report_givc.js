@@ -240,7 +240,6 @@
 
 
         LockScreenOff();
-        /*        $('#example').DataTable();*/
     });
 
 
