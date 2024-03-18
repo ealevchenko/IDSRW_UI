@@ -50,18 +50,18 @@
         };
         if (list) {
             $.each(list, function (i, table) {
-                if (table === 'countrys') {
-                    if (lock) LockScreen(langView('mess_load_reference', App.Langs));
-                    if (update || !this.list_countrys) {
-                        process++;
-                        this.getCountrys(function (data) {
-                            this.list_countrys = data;
-                            process--;
-                            result.push('countrys');
-                            out_load(process);
-                        }.bind(this));
-                    };
-                };
+                //if (table === 'countrys') {
+                //    if (lock) LockScreen(langView('mess_load_reference', App.Langs));
+                //    if (update || !this.list_countrys) {
+                //        process++;
+                //        this.getCountrys(function (data) {
+                //            this.list_countrys = data;
+                //            process--;
+                //            result.push('countrys');
+                //            out_load(process);
+                //        }.bind(this));
+                //    };
+                //};
             }.bind(this));
         };
         out_load(process);
