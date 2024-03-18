@@ -44,6 +44,11 @@
             't_mtr_field_rod_vag': 'Код рода вагона',
             't_mtr_field_esr_nazn': 'Третья составляющая индекса поезда (код ЕСР станции назначения текущего индекса поезда)',
             't_mtr_field_pr_nrp': 'Признак вагонов нерабочего парка',
+            't_mtr_field_cargo_group_name': 'Наименование груза',
+            't_mtr_field_date_pogr_min_max': 'Дата погрузки',
+            't_mtr_field_train_index': 'Индекс поезда',
+            't_mtr_field_stan_railway_detali': 'Станция и дорога дислокации',
+            't_mtr_field_loading_stations': 'Станции погрузки',
 
             't_mtr_mess_init_module': 'Инициализация модуля (table_report) ...',
             't_mtr_mess_view_report': 'Показать отчет ...',
@@ -88,7 +93,7 @@
         {
             field: 'gruz_detali_etsng',
             data: function (row, type, val, meta) {
-                return row.gruz!==null ? row.gruz.etsng : null;
+                return row.gruz !== null ? row.gruz.etsng : null;
             },
             className: 'dt-body-center',
             title: langView('t_mtr_field_gruz_detali_etsng', App.Langs), width: "50px", orderable: true, searchable: true
@@ -144,10 +149,22 @@
         {
             field: 'st_otpr_detali_n_rpus',
             data: function (row, type, val, meta) {
-                return row.st_otpr !== null ? row.st_otpr.n_rpus : null;
+                if (row.st_otpr_n_rpus) {
+                    return row.st_otpr_n_rpus
+                } else {
+                    return row.st_otpr && row.st_otpr.n_rpus ? row.st_otpr.n_rpus : null;
+                }
             },
             className: 'dt-body-left shorten mw-100',
             title: langView('t_mtr_field_st_otpr_detali_n_rpus', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        {
+            field: 'loading_stations',
+            data: function (row, type, val, meta) {
+                return row.loading_stations !== null ? row.loading_stations : null;
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_loading_stations', App.Langs), width: "100px", orderable: true, searchable: true
         },
         {
             field: 'kod_grotp',
@@ -178,7 +195,7 @@
             data: function (row, type, val, meta) {
                 return row.st_nazn !== null ? row.st_nazn.n_rpus : null;
             },
-            className: 'dt-body-left shorten mw-100',
+            className: 'dt-body-center shorten mw-100',
             title: langView('t_mtr_field_st_nazn_detali_n_rpus', App.Langs), width: "100px", orderable: true, searchable: true
         },
         {
@@ -285,6 +302,45 @@
             className: 'dt-body-center',
             title: langView('t_mtr_field_pr_nrp', App.Langs), width: "50px", orderable: true, searchable: true
         },
+        {
+            field: 'cargo_group_name',
+            data: function (row, type, val, meta) {
+                return row.cargo_group_name;
+            },
+            className: 'dt-body-left shorten mw-150',
+            title: langView('t_mtr_field_cargo_group_name', App.Langs), width: "150px", orderable: true, searchable: true
+        },
+        {
+            field: 'date_pogr_min_max',
+            data: function (row, type, val, meta) {
+                var dt_start = row.date_pogr_min ? moment(row.date_pogr_min).format(format_date) + ' - ' : '';
+                var dt_stop = row.date_pogr_max ? moment(row.date_pogr_max).format(format_date) : '';
+                if (row.date_pogr_min !== row.date_pogr_max) {
+                    return dt_start + dt_stop;
+                } else {
+                    return dt_stop;
+                }
+            },
+            className: 'dt-body-center shorten mw-150',
+            title: langView('t_mtr_field_date_pogr_min_max', App.Langs), width: "150px", orderable: true, searchable: true
+        },
+        {
+            field: 'train_index',
+            data: function (row, type, val, meta) {
+                return row.esr_form && row.nom_sost && row.esr_nazn ? row.esr_form.slice(0, 4) + '-' + row.nom_sost + '-' + row.esr_nazn.slice(0, 4) : null;
+            },
+            className: 'dt-body-left shorten mw-150',
+            title: langView('t_mtr_field_train_index', App.Langs), width: "150px", orderable: true, searchable: true
+        },
+        {
+            field: 'stan_railway_detali',
+            data: function (row, type, val, meta) {
+                return row.stan_railway_detali;
+            },
+            className: 'dt-body-left shorten mw-150',
+            title: langView('t_mtr_field_stan_railway_detali', App.Langs), width: "150px", orderable: true, searchable: true
+        },
+
     ];
     // Перечень кнопок
     var list_buttons = [
@@ -362,13 +418,13 @@
     //==========================================================================================
     //------------------------------- ПОЛЯ ----------------------------------------------------
     // инициализация полей по умолчанию
-    table_report.prototype.init_columns_default= function () {
+    table_report.prototype.init_columns_default = function () {
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         // gruz
         return init_columns(collums, list_collums);
     };
-    // инициализация полей adoption_sostav
+    // инициализация полей req1892
     table_report.prototype.init_columns_req1892 = function () {
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
@@ -399,6 +455,21 @@
         collums.push({ field: 'pr_nrp', title: null, class: null });
         return init_columns_detali(collums, list_collums);
     };
+    // инициализация полей req1892_formed_routes
+    table_report.prototype.init_columns_req1892_formed_routes = function () {
+        var collums = [];
+        collums.push({ field: 'cargo_group_name', title: null, class: null });
+        collums.push({ field: 'st_otpr_detali_n_rpus', title: null, class: null });
+        collums.push({ field: 'kol_vag', title: null, class: null });
+        collums.push({ field: 'date_pogr_min_max', title: null, class: null });
+        collums.push({ field: 'train_index', title: null, class: null });
+        collums.push({ field: 'mnkua_opv', title: null, class: null });
+        collums.push({ field: 'stan_railway_detali', title: null, class: null });
+        collums.push({ field: 'date_op', title: null, class: null });
+        collums.push({ field: 'loading_stations', title: null, class: null });
+
+        return init_columns_detali(collums, list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок по умолчанию
     table_report.prototype.init_button_default = function () {
@@ -408,7 +479,7 @@
         /*        buttons.push({ name: 'page_length', action: null });*/
         return init_buttons(buttons, list_buttons);
     };
-    // инициализация кнопок adoption_sostav
+    // инициализация кнопок req1892
     table_report.prototype.init_button_req1892 = function () {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
@@ -421,6 +492,21 @@
             }.bind(this)
         });
         buttons.push({ name: 'page_length', action: null });
+        return init_buttons(buttons, list_buttons);
+    };
+    // инициализация кнопок req1892_formed_routes
+    table_report.prototype.init_button_req1892_formed_routes = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                //this.action_refresh();
+            }.bind(this)
+        });
+        /*        buttons.push({ name: 'page_length', action: null });*/
         return init_buttons(buttons, list_buttons);
     };
     //-------------------------------------------------------------------------------------------
@@ -444,6 +530,23 @@
                 this.autoWidth = true;
                 this.table_columns = this.init_columns_req1892();
                 this.table_buttons = this.init_button_req1892();
+                this.dom = 'Bfrtip';
+                break;
+            };
+            case 'req1892_formed_routes': {
+                this.deferRender = true;
+                this.paging = false;
+                this.searching = true;
+                this.ordering = true;
+                this.info = true;
+                this.fixedHeader = false;            // вкл. фикс. заголовка
+                this.leftColumns = 0;
+                this.columnDefs = null;
+                this.order_column = [0, 'asc'];
+                this.table_select = false;
+                this.autoWidth = true;
+                this.table_columns = this.init_columns_req1892_formed_routes();
+                this.table_buttons = this.init_button_req1892_formed_routes();
                 this.dom = 'Bfrtip';
                 break;
             };
@@ -471,7 +574,7 @@
             detali_table: false,
             type_report: null,     // 
             link_num: false,
-        //    ids_wsd: null,
+            //    ids_wsd: null,
             fn_init: null,
             fn_select_rows: null,
             fn_action_view_wagons: null,
@@ -507,7 +610,8 @@
         // Создать макет таблицы
         var table_report = new this.fe_ui.table({
             id: 'tab-tr-' + this.selector,
-            class: 'display compact cell-border row-border hover',
+            //class: 'display compact cell-border row-border hover',
+            class: 'table table-success table-striped',
             title: null,
         });
         if (this.settings.type_report === 'req1892') {
