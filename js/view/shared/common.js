@@ -1,66 +1,71 @@
-﻿    /* ----------------------------------------------------------
-            Вывод текста согласно региональных настроек
-    -------------------------------------------------------------*/
-    // Метод определения списка по указаному языку
-    getLanguages = function (languages, lang) {
-        if (lang === 'ru') {
-            var language = navigator.language ? navigator.language : navigator.browserLanguage;
-            if (!language) return languages['default'];
-            language = language.toLowerCase();
-            for (var key in languages) {
-                if (language.indexOf(key) != -1) {
-                    return languages[key];
-                }
+﻿/* ----------------------------------------------------------
+        Вывод текста согласно региональных настроек
+-------------------------------------------------------------*/
+// Метод определения списка по указаному языку
+getLanguages = function (languages, lang) {
+    if (lang === 'ru') {
+        var language = navigator.language ? navigator.language : navigator.browserLanguage;
+        if (!language) return languages['default'];
+        language = language.toLowerCase();
+        for (var key in languages) {
+            if (language.indexOf(key) != -1) {
+                return languages[key];
             }
-            return languages['default'];
         }
-        else if (lang && lang in languages) {
-            return languages[lang];
-        }
-        else {
-            return languages['default'];
-        }
-    };
-    // Показать текст
-    langView = function (t, langs) {
-        var _t = t.toLowerCase();
-        var re = (t in langs) ? langs[t] : (_t in langs) ? langs[_t] : null;
-        if (re === null) {
-            throw new Error('Неопределённ параметр : ' + t);
-        }
-        return re;
-    };
-    //==============================================================================================
-    /* ----------------------------------------------------------
-                    Блокировка экрана
-    -------------------------------------------------------------*/
-    // Блокировать с текстом
-    var LockScreen = function (message) {
-        var lock = document.getElementById('lockPanel');
-        if (lock)
-            lock.className = 'LockOn';
-        lock.innerHTML = message;
-    };
-    // Разблокировать 
-    var LockScreenOff = function () {
-        var lock = document.getElementById('lockPanel');
-        if (lock)
-            lock.className = 'LockOff';
-    };
-    //------------------------------------------------------------------------
-    // Определение параметров переданных по url
-    var getUrlVars = function () {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    };
-    var getUrlVar = function (name) {
-        return getUrlVars()[name];
+        return languages['default'];
+    }
+    else if (lang && lang in languages) {
+        return languages[lang];
+    }
+    else {
+        return languages['default'];
+    }
+};
+// Показать текст
+langView = function (t, langs) {
+    var _t = t.toLowerCase();
+    var re = (t in langs) ? langs[t] : (_t in langs) ? langs[_t] : null;
+    if (re === null) {
+        throw new Error('Неопределённ параметр : ' + t);
+    }
+    return re;
+};
+// Вернуть строку с первой заглавной
+ucFirst = function (str) {
+    if (!str) return str;
+    return str[0].toUpperCase() + str.slice(1);
+};
+//==============================================================================================
+/* ----------------------------------------------------------
+                Блокировка экрана
+-------------------------------------------------------------*/
+// Блокировать с текстом
+var LockScreen = function (message) {
+    var lock = document.getElementById('lockPanel');
+    if (lock)
+        lock.className = 'LockOn';
+    lock.innerHTML = message;
+};
+// Разблокировать 
+var LockScreenOff = function () {
+    var lock = document.getElementById('lockPanel');
+    if (lock)
+        lock.className = 'LockOff';
+};
+//------------------------------------------------------------------------
+// Определение параметров переданных по url
+var getUrlVars = function () {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+};
+var getUrlVar = function (name) {
+    return getUrlVars()[name];
 };
 //==============================================================================================
 /* ----------------------------------------------------------
