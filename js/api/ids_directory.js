@@ -38,9 +38,14 @@
         }, options);
         this.api_com = new API_COMMON({
             list_load: [
-                { name: 'cargo', list: null, fn_get: this.getCargo },
-                { name: 'cargo_group', list: null, fn_get: this.getCargoGroup },
-                { name: 'cargo_etsng', list: null, fn_get: this.getCargoETSNG },
+                { name: 'cargo', list: null, fn_get: this.getCargo.bind(this) },
+                { name: 'cargo_group', list: null, fn_get: this.getCargoGroup.bind(this) },
+                { name: 'cargo_etsng', list: null, fn_get: this.getCargoETSNG.bind(this) },
+                { name: 'genus_wagon', list: null, fn_get: this.getGenusWagons.bind(this) },
+                { name: 'operators_wagons', list: null, fn_get: this.getOperatorsWagons.bind(this) },
+                { name: 'wagons', list: null, fn_get: this.getWagons.bind(this) },
+                { name: 'wagons_rent', list: null, fn_get: this.getWagonsRent.bind(this) },
+                { name: 'owners_wagons', list: null, fn_get: this.getOwnersWagons.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -52,76 +57,385 @@
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
     //======= Directory_Cargo (Справочник грузов) ======================================
-    //
+    //ids_directory.prototype.getCargo = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryCargo/list',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getCargo", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
     ids_directory.prototype.getCargo = function (callback) {
-        $.ajax({
-            type: 'GET',
-            url: this.settings.url_api + '/DirectoryCargo/list',
-            async: true,
-            dataType: 'json',
-            beforeSend: function () {
-                AJAXBeforeSend();
-            },
-            success: function (data) {
-                if (typeof callback === 'function') {
-                    callback(data);
-                }
-            },
-            error: function (x, y, z) {
-                OnAJAXError("ids_directory.getCargo", x, y, z);
-            },
-            complete: function () {
-                AJAXComplete();
-            },
-        });
+        this.api_com.get('/DirectoryCargo', callback);
     };
+
     //======= Directory_CargoGroup (Справочник группа грузов) ======================================
-    //
+    //ids_directory.prototype.getCargoGroup = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryCargoGroup',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getCargoGroup", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
     ids_directory.prototype.getCargoGroup = function (callback) {
-        $.ajax({
-            type: 'GET',
-            url: this.settings.url_api + '/DirectoryCargoGroup',
-            async: true,
-            dataType: 'json',
-            beforeSend: function () {
-                AJAXBeforeSend();
-            },
-            success: function (data) {
-                if (typeof callback === 'function') {
-                    callback(data);
-                }
-            },
-            error: function (x, y, z) {
-                OnAJAXError("ids_directory.getCargoGroup", x, y, z);
-            },
-            complete: function () {
-                AJAXComplete();
-            },
-        });
+        this.api_com.get('/DirectoryCargoGroup', callback);
     };
     //======= Directory_CargoETSNG (Справочник грузов ЕТСНГ) ======================================
-    //
+    //ids_directory.prototype.getCargoETSNG = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryCargoEtsng',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getCargoETSNG", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
     ids_directory.prototype.getCargoETSNG = function (callback) {
-        $.ajax({
-            type: 'GET',
-            url: this.settings.url_api + '/DirectoryCargoEtsng',
-            async: true,
-            dataType: 'json',
-            beforeSend: function () {
-                AJAXBeforeSend();
-            },
-            success: function (data) {
-                if (typeof callback === 'function') {
-                    callback(data);
-                }
-            },
-            error: function (x, y, z) {
-                OnAJAXError("ids_directory.getCargoETSNG", x, y, z);
-            },
-            complete: function () {
-                AJAXComplete();
-            },
-        });
+        this.api_com.get('/DirectoryCargoEtsng', callback);
+    };
+    //======= Directory_Countrys (Справочник стран) ======================================
+    //ids_directory.prototype.getCountrys = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryCountry',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getCountrys", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getCountrys = function (callback) {
+        this.api_com.get('/DirectoryCountry', callback);
+    };
+    //======= Directory_GenusWagons (Справочник РОД ВАГОНА) ======================================
+    //ids_directory.prototype.getGenusWagons = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryGenusWagon',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getGenusWagons", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getGenusWagons = function (callback) {
+        this.api_com.get('/DirectoryGenusWagon', callback);
+    };
+    //
+    //ids_directory.prototype.getGenusWagonsID = function (id, callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryGenusWagon/' + id,
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getGenusWagonsID", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getGenusWagonsID = function (id, callback) {
+        this.api_com.get('/DirectoryGenusWagon/' + id, callback);
+    };
+    //======= Directory_OperatorsWagons (Справочник операторов вагонов) ======================================
+    //ids_directory.prototype.getOperatorsWagons = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryOperatorsWagon',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getOperatorsWagons", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getOperatorsWagons = function (callback) {
+        this.api_com.get('/DirectoryOperatorsWagon', callback);
+    };
+    // Получить парки по указаной станции c позицией
+    //ids_directory.prototype.getOperatorsWagonsID = function (id, callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryOperatorsWagon/' + id,
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getOperatorsWagonsID", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getOperatorsWagonsID = function (id, callback) {
+        this.api_com.get('/DirectoryOperatorsWagon/' + id, callback);
+    };
+    //======= Directory_OwnersWagons (Справочник собствинеков вагонов) ======================================
+    //ids_directory.prototype.getOwnersWagons = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryOwnersWagon',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getOwnersWagons", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getOwnersWagons = function (callback) {
+        this.api_com.get('/DirectoryOwnersWagon', callback);
+    };
+    //
+    //ids_directory.prototype.getOwnersWagonsID = function (id, callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryOwnersWagon/' + id,
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getOwnersWagonsID", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getOwnersWagonsID = function (id, callback) {
+        this.api_com.get('/DirectoryOwnersWagon/' + id, callback);
+    };
+    //======= Directory_Wagons (Справочник вагонов) ======================================
+    //ids_directory.prototype.getWagons = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryWagon',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getWagons", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getWagons = function (callback) {
+        this.api_com.get('/DirectoryWagon', callback);
+    };
+    // Получить по номеру вагона
+    //ids_directory.prototype.getWagonsOfNum = function (num, callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryWagon/num/' + num,
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getWagonsOfNum", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getWagonsOfNum = function (num, callback) {
+        this.api_com.get('/DirectoryWagon/num/' + num, callback);
+    };
+    //======= Directory_WagonsRent (Справочник аренд вагонов) ======================================
+    //ids_directory.prototype.getWagonsRent = function (callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryWagonsRent',
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getWagonsRent", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getWagonsRent = function (callback) {
+        this.api_com.get('/DirectoryWagonsRent', callback);
+    };
+    // Получить аренды по номеру вагона
+    //ids_directory.prototype.getWagonsRentOfNum = function (num, callback) {
+    //    $.ajax({
+    //        type: 'GET',
+    //        url: this.settings.url_api + '/DirectoryWagonsRent/num/' + num,
+    //        async: true,
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            AJAXBeforeSend();
+    //        },
+    //        success: function (data) {
+    //            if (typeof callback === 'function') {
+    //                callback(data);
+    //            }
+    //        },
+    //        error: function (x, y, z) {
+    //            OnAJAXError("ids_directory.getWagonsRentOfNum", x, y, z);
+    //        },
+    //        complete: function () {
+    //            AJAXComplete();
+    //        },
+    //    });
+    //};
+    ids_directory.prototype.getWagonsRentOfNum = function (num, callback) {
+        this.api_com.get('/DirectoryWagonsRent/num/' + num, callback);
+    };
+    //****************************************************************************************
+    //-------------------------------- функции для работы с таблицами ------------------------
+    //*======= (Справочник wagons) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllWagons = function () {
+        var obj = this.api_com.getAllObj('wagons');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getWagons_Of_num = function (num) {
+        return this.api_com.getObj_Of_field('wagons', 'num', id);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getWagons_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('wagons', name, text);
     };
 
     //****************************************************************************************
@@ -152,6 +466,7 @@
     ids_directory.prototype.getListValueTextCargo = function () {
         return this.getListCargo('id', 'cargoName', ucFirst(App.Lang));
     };
+
     //*======= ids_directory.list_cargo_group  (Справочник группы грузов) ======================================
     // Получить все записи
     ids_directory.prototype.getAllCargoGroup = function () {
@@ -174,6 +489,7 @@
     ids_directory.prototype.getListValueTextCargoGroup = function () {
         return this.getListCargoGroup('id', 'cargoGroupName', ucFirst(App.Lang));
     };
+
     //*======= ids_directory.list_cargo_etsng  (Справочник грузов ЕТСНГ) ======================================
     // Получить все записи
     ids_directory.prototype.getAllCargoETSNG = function () {

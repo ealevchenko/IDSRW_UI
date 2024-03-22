@@ -88,18 +88,41 @@ var AJAXComplete = function () {
                         if (lock) LockScreen(langView('mess_load_reference', App.Langs));
                         if (update || !set_load.list) {
                             process++;
-                            set_load.fn_get.call(this, function (data) {
+                            set_load.fn_get(function (data) {
                                 set_load.list = data;
                                 process--;
                                 result.push(set_load.name);
                                 out_load(process);
-                            }.bind(this))
+                            }.bind(this));
                         };
                     };
                 }.bind(this));
             }.bind(this));
         };
         out_load(process);
+    };
+
+    api_common.prototype.get = function (api_url, callback) {
+        $.ajax({
+            type: 'GET',
+            url: this.settings.url_api + api_url,
+            async: true,
+            dataType: 'json',
+            beforeSend: function () {
+                AJAXBeforeSend();
+            },
+            success: function (data) {
+                if (typeof callback === 'function') {
+                    callback(data);
+                }
+            },
+            error: function (x, y, z) {
+                OnAJAXError("ids_directory" + api_url, x, y, z);
+            },
+            complete: function () {
+                AJAXComplete();
+            },
+        });
     };
 
     //****************************************************************************************
