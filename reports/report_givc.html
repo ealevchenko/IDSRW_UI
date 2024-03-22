@@ -157,22 +157,22 @@
                                                 Введите код одержувача
                                             </div>
                                         </div>
-                                        @*                                    <div class="col-md-2">
+                                        <div class="col-md-2">
                                             <label for="date_beg" class="form-label">Нижня межа дат відправлення</label>
-                                            <input type="date" class="form-control" id="date_beg" value="01.01.2024" required>
+                                            <input type="date" class="form-control" id="date_beg" value="2024-01-01" required>
                                             <div class="valid-feedback">
                                                 Введите дату відправлення
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="date_end" class="form-label">Верхня межа дат відправлення</label>
-                                            <input type="date" class="form-control" id="date_end" value="01.03.2024" required>
+                                            <input type="date" class="form-control" id="date_end" value="2024-03-01" required>
                                             <div class="valid-feedback">
                                                 Введите дату відправлення
                                             </div>
-                                        </div>*@
+                                        </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary" type="submit">ВЫПОЛНИТЬ</button>
+                                            <button class="btn btn-primary" type="submit" disabled>ВЫПОЛНИТЬ</button>
                                         </div>
                                     </form>
                                 </div>
@@ -184,34 +184,70 @@
 
             <div class="row mb-2">
                 <div class="col-12">
-                    <div class="card border-secondary mb-3" ">
+                    <div class="card border-secondary mb-3" id="card-1892" style="display: none;">
                         <div class="card-header">Подходы</div>
                         <div class="card-body text-secondary">
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <nav>
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <button class="nav-link active" id="nav-generated-routes-tab" data-bs-toggle="tab" data-bs-target="#nav-generated-routes" type="button" role="tab" aria-controls="nav-generated-routes" aria-selected="false">Сформированные маршруты</button>
-                                            <button class="nav-link" id="nav-total-cargo-tab" data-bs-toggle="tab" data-bs-target="#nav-total-cargo" type="button" role="tab" aria-controls="nav-total-cargo" aria-selected="false">Общий грузопоток</button>
-                                            <button class="nav-link" id="nav-givc-tab" data-bs-toggle="tab" data-bs-target="#nav-givc" type="button" role="tab" aria-controls="nav-givc" aria-selected="false">ГИВЦ</button>
+                                            <button class="nav-link active" id="nav-req1892-generated-routes-tab" data-bs-toggle="tab" data-bs-target="#nav-req1892-generated-routes" type="button" role="tab" aria-controls="nav-req1892-generated-routes" aria-selected="false">Сформированные маршруты</button>
+                                            <button class="nav-link" id="nav-total-req1892-cargo-tab" data-bs-toggle="tab" data-bs-target="#nav-req1892-total-cargo" type="button" role="tab" aria-controls="nav-req1892-total-cargo" aria-selected="false">Общий грузопоток</button>
+                                            <button class="nav-link" id="nav-req1892-givc-tab" data-bs-toggle="tab" data-bs-target="#nav-req1892-givc" type="button" role="tab" aria-controls="nav-req1892-givc" aria-selected="false">ГИВЦ</button>
                                         </div>
                                     </nav>
                                     <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="nav-generated-routes" role="tabpanel" aria-labelledby="nav-generated-routes-tab" tabindex="0">
+                                        <div class="tab-pane fade show active" id="nav-req1892-generated-routes" role="tabpanel" aria-labelledby="req1892-nav-generated-routes-tab" tabindex="0">
                                             <div class="row mb-2">
                                                 <div class="col-12 pt-3" id="req1892-formed-routes">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="nav-total-cargo" role="tabpanel" aria-labelledby="nav-total-cargo-tab" tabindex="0">
+                                        <div class="tab-pane" id="nav-req1892-total-cargo" role="tabpanel" aria-labelledby="nav-req1892-total-cargo-tab" tabindex="0">
                                             <div class="row mb-2">
-                                                <div class="col-12" id="">
+                                                <div class="col-12" id="req1892-total-cargo">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade " id="nav-givc" role="tabpanel" aria-labelledby="nav-givc-tab" tabindex="0">
+                                        <div class="tab-pane fade " id="nav-req1892-givc" role="tabpanel" aria-labelledby="nav-req1892-givc-tab" tabindex="0">
                                             <div class="row mb-2">
                                                 <div class="col-12" id="req1892">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-secondary mb-3" id="card-0002" style="display: none;">
+                        <div class="card-header">Натурный лист поезда</div>
+                        <div class="card-body text-secondary">
+                            <div class="row mb-2">
+                                <div class="col-12">
+                                    <nav>
+                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                            <button class="nav-link active" id="nav-req0002-train-tab" data-bs-toggle="tab" data-bs-target="#nav-req0002-train" type="button" role="tab" aria-controls="nav-req0002-train" aria-selected="false">Поезд</button>
+                                            <button class="nav-link" id="nav-req0002-givc-tab" data-bs-toggle="tab" data-bs-target="#nav-req0002-givc" type="button" role="tab" aria-controls="nav-req0002-givc" aria-selected="false">ГИВЦ</button>
+                                            <button class="nav-link" id="nav-req0002-result-tab" data-bs-toggle="tab" data-bs-target="#nav-req0002-result" type="button" role="tab" aria-controls="nav-req0002-result" aria-selected="false">ИТОГ</button>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-req0002-train" role="tabpanel" aria-labelledby="nav-req0002-train-tab" tabindex="0">
+                                            <div class="row mb-2">
+                                                <div class="col-12" id="req0002-train">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-req0002-givc" role="tabpanel" aria-labelledby="nav-req0002-givc-tab" tabindex="0">
+                                            <div class="row mb-2">
+                                                <div class="col-12" id="req0002">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-req0002-result" role="tabpanel" aria-labelledby="nav-req0002-result-tab" tabindex="0">
+                                            <div class="row mb-2">
+                                                <div class="col-12" id="req0002-result">
                                                 </div>
                                             </div>
                                         </div>

@@ -25,6 +25,7 @@
             't_mtr_field_ves_gruz': 'Вес груза (в кг)',
             't_mtr_field_mnkua_opv': 'Мнемокод операции с вагоном вне поезда',
             't_mtr_field_kol_vag': 'Количество вагонов в поезде ст. отправления',
+            't_mtr_field_kol_vag_dor': 'Кл-во вагонов на дороге',
             't_mtr_field_st_otpr_detali_esr_otpr': 'Код ст. отправления',
             't_mtr_field_st_otpr_detali_n_rpus': 'Наименование ст. отправления',
             't_mtr_field_kod_grotp': 'Код грузоотправителя',
@@ -49,6 +50,28 @@
             't_mtr_field_train_index': 'Индекс поезда',
             't_mtr_field_stan_railway_detali': 'Станция и дорога дислокации',
             't_mtr_field_loading_stations': 'Станции погрузки',
+            't_mtr_field_st_disl_n_rpus': 'Станции дислокации грузов',
+            't_mtr_field_pr_rol': 'Отметка о роликах',
+            't_mtr_field_pr_marsh': 'Признак маршрута',
+            't_mtr_field_prymitka': 'Примечание',
+            't_mtr_field_ves_gruz': 'Вес груза',
+            't_mtr_field_ves_tary_pogruzka': 'Вес тары',
+            't_mtr_field_kol_plomb': 'Кол-во пломб',
+            't_mtr_field_kod_prikr': 'Код прикрытия',
+            't_mtr_field_esr_nazn_vag': 'код ст.назначения',
+            't_mtr_field_nom_vag': '№ вагона',
+            't_mtr_field_kol_zav_kont': 'Количество груженых контейнеров',
+            't_mtr_field_esr_sd_ukr': 'Код пограничного пункта',
+            't_mtr_field_kod_grp': 'Код грузополуч',
+            't_mtr_field_por_nom': '№п/п',
+            't_mtr_field_pr_negab': 'Призн. Негабарит.',
+            't_mtr_field_etsng': 'Код ЕТСНГ',
+            't_mtr_field_kod_adm_arc': 'Код Адм.',
+            't_mtr_field_kol_por_kont': 'Количество пустых контейнеров',
+            't_mtr_field_genus_wagon_abbr': 'Род.',
+            't_mtr_field_operators_wagons_amkr_abbr': 'Оператор по АМКР.',
+            't_mtr_field_owners_wagon_abbr': 'Собственник вагона.',
+            't_mtr_field_operators_wagons_uz_abbr': 'Оператор УЗ',
 
             't_mtr_mess_init_module': 'Инициализация модуля (table_report) ...',
             't_mtr_mess_view_report': 'Показать отчет ...',
@@ -90,6 +113,7 @@
             className: 'dt-body-center',
             title: langView('t_mtr_field_numeration', App.Langs), width: "30px", orderable: true, searchable: false
         },
+        // *** req1892.disl_vag_detali
         {
             field: 'gruz_detali_etsng',
             data: function (row, type, val, meta) {
@@ -101,7 +125,12 @@
         {
             field: 'gruz_detali_nvs',
             data: function (row, type, val, meta) {
-                return row.gruz !== null ? row.gruz.nvs : null;
+                if (row.gruz_nvs) {
+                    return row.gruz_nvs;
+                } else {
+                    return row.gruz !== null ? row.gruz.nvs : null;
+                }
+
             },
             className: 'dt-body-left shorten mw-100',
             title: langView('t_mtr_field_gruz_detali_nvs', App.Langs), width: "100px", orderable: true, searchable: true
@@ -139,6 +168,14 @@
             title: langView('t_mtr_field_kol_vag', App.Langs), width: "50px", orderable: true, searchable: true
         },
         {
+            field: 'kol_vag_dor',
+            data: function (row, type, val, meta) {
+                return row.kol_vag_dor;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kol_vag_dor', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
             field: 'st_otpr_detali_esr_otpr',
             data: function (row, type, val, meta) {
                 return row.st_otpr !== null ? row.st_otpr.esr_otpr : null;
@@ -155,8 +192,8 @@
                     return row.st_otpr && row.st_otpr.n_rpus ? row.st_otpr.n_rpus : null;
                 }
             },
-            className: 'dt-body-left shorten mw-100',
-            title: langView('t_mtr_field_st_otpr_detali_n_rpus', App.Langs), width: "100px", orderable: true, searchable: true
+            className: 'dt-body-left shorten mw-150',
+            title: langView('t_mtr_field_st_otpr_detali_n_rpus', App.Langs), width: "150px", orderable: true, searchable: true
         },
         {
             field: 'loading_stations',
@@ -302,6 +339,8 @@
             className: 'dt-body-center',
             title: langView('t_mtr_field_pr_nrp', App.Langs), width: "50px", orderable: true, searchable: true
         },
+        // --- END req1892.disl_vag_detali
+        // *** req0002 - Справки
         {
             field: 'cargo_group_name',
             data: function (row, type, val, meta) {
@@ -340,7 +379,185 @@
             className: 'dt-body-left shorten mw-150',
             title: langView('t_mtr_field_stan_railway_detali', App.Langs), width: "150px", orderable: true, searchable: true
         },
-
+        {
+            field: 'st_disl_n_rpus',
+            data: function (row, type, val, meta) {
+                return row.st_disl_n_rpus !== null ? row.st_disl_n_rpus : null;
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_st_disl_n_rpus', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        // --- END req0002 - Справки
+        // ** req0002.info_fraza_detali
+        {
+            field: 'pr_rol',
+            data: function (row, type, val, meta) {
+                return row.pr_rol;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_pr_rol', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'pr_marsh',
+            data: function (row, type, val, meta) {
+                return row.pr_marsh;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_pr_marsh', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'prymitka',
+            data: function (row, type, val, meta) {
+                return row.prymitka;
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_prymitka', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        {
+            field: 'ves_gruz',
+            data: function (row, type, val, meta) {
+                return row.ves_gruz;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_ves_gruz', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'ves_tary_pogruzka',
+            data: function (row, type, val, meta) {
+                return row.ves_tary_pogruzka;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_ves_tary_pogruzka', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kol_plomb',
+            data: function (row, type, val, meta) {
+                return row.kol_plomb;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kol_plomb', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kod_prikr',
+            data: function (row, type, val, meta) {
+                return row.kod_prikr;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kod_prikr', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'esr_nazn_vag',
+            data: function (row, type, val, meta) {
+                return row.esr_nazn_vag;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_esr_nazn_vag', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'nom_vag',
+            data: function (row, type, val, meta) {
+                return row.nom_vag;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_nom_vag', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kol_zav_kont',
+            data: function (row, type, val, meta) {
+                return row.kol_zav_kont;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kol_zav_kont', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'esr_sd_ukr',
+            data: function (row, type, val, meta) {
+                return row.esr_sd_ukr;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_esr_sd_ukr', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kod_grp',
+            data: function (row, type, val, meta) {
+                return row.kod_grp;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kod_grp', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'por_nom',
+            data: function (row, type, val, meta) {
+                return row.por_nom;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_por_nom', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'pr_negab',
+            data: function (row, type, val, meta) {
+                return row.pr_negab;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_pr_negab', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'etsng',
+            data: function (row, type, val, meta) {
+                return row.etsng;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_etsng', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kod_adm_arc',
+            data: function (row, type, val, meta) {
+                return row.kod_adm_arc;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kod_adm_arc', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'kol_por_kont',
+            data: function (row, type, val, meta) {
+                return row.kol_por_kont;
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_kol_por_kont', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        // --- END req0002.info_fraza_detali
+        {
+            field: 'genus_wagon_abbr',
+            data: function (row, type, val, meta) {
+                return row.GenusWagon && row.GenusWagon['abbr'+ucFirst(App.Lang)];
+            },
+            className: 'dt-body-center',
+            title: langView('t_mtr_field_genus_wagon_abbr', App.Langs), width: "50px", orderable: true, searchable: true
+        },
+        {
+            field: 'operators_wagons_amkr_abbr',
+            data: function (row, type, val, meta) {
+                return row.OperatorsWagonsAMKR && row.OperatorsWagonsAMKR['abbr' + ucFirst(App.Lang)];
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_operators_wagons_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        {
+            field: 'owners_wagon_abbr',
+            data: function (row, type, val, meta) {
+                return row.OwnersWagon && row.OwnersWagon['abbr' + ucFirst(App.Lang)];
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_owners_wagon_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        {
+            field: 'operators_wagons_uz_abbr',
+            data: function (row, type, val, meta) {
+                return row.OperatorsWagonsUZ && row.OperatorsWagonsUZ['abbr' + ucFirst(App.Lang)];
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_operators_wagons_uz_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+        },
     ];
     // Перечень кнопок
     var list_buttons = [
@@ -467,6 +684,55 @@
         collums.push({ field: 'stan_railway_detali', title: null, class: null });
         collums.push({ field: 'date_op', title: null, class: null });
         collums.push({ field: 'loading_stations', title: null, class: null });
+        return init_columns_detali(collums, list_collums);
+    };
+    // инициализация полей req1892_total_cargo
+    table_report.prototype.init_columns_req1892_total_cargo = function () {
+        var collums = [];
+        collums.push({ field: 'gruz_detali_nvs', title: null, class: null });
+        collums.push({ field: 'st_otpr_detali_n_rpus', title: null, class: null });
+        collums.push({ field: 'kol_vag', title: null, class: null });
+        collums.push({ field: 'kol_vag_dor', title: null, class: null });
+        collums.push({ field: 'n_dorus', title: null, class: null });
+        collums.push({ field: 'st_disl_n_rpus', title: null, class: null });
+        return init_columns_detali(collums, list_collums);
+    };
+    // инициализация полей req0002
+    table_report.prototype.init_columns_req0002 = function () {
+        var collums = [];
+        collums.push({ field: 'pr_rol', title: null, class: null });
+        collums.push({ field: 'pr_marsh', title: null, class: null });
+        collums.push({ field: 'prymitka', title: null, class: null });
+        collums.push({ field: 'ves_gruz', title: null, class: null });
+        collums.push({ field: 'ves_tary_pogruzka', title: null, class: null });
+        collums.push({ field: 'kol_plomb', title: null, class: null });
+        collums.push({ field: 'kod_prikr', title: null, class: null });
+        collums.push({ field: 'esr_nazn_vag', title: null, class: null });
+        collums.push({ field: 'nom_vag', title: null, class: null });
+        collums.push({ field: 'kol_zav_kont', title: null, class: null });
+        collums.push({ field: 'esr_sd_ukr', title: null, class: null });
+        collums.push({ field: 'kod_grp', title: null, class: null });
+        collums.push({ field: 'por_nom', title: null, class: null });
+        collums.push({ field: 'pr_negab', title: null, class: null });
+        collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'kod_adm_arc', title: null, class: null });
+        collums.push({ field: 'kol_por_kont', title: null, class: null });
+        return init_columns_detali(collums, list_collums);
+    };
+    // инициализация полей req0002_train
+    table_report.prototype.init_columns_req0002_train = function () {
+        var collums = [];
+        collums.push({ field: 'por_nom', title: null, class: null });
+        collums.push({ field: 'nom_vag', title: null, class: null });
+        collums.push({ field: 'kod_adm_arc', title: null, class: null });
+        collums.push({ field: 'genus_wagon_abbr', title: null, class: null });
+        collums.push({ field: 'operators_wagons_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'ves_gruz', title: null, class: null });
+        collums.push({ field: 'esr_nazn_vag', title: null, class: null });
+        collums.push({ field: 'kod_grp', title: null, class: null });
+        collums.push({ field: 'owners_wagon_abbr', title: null, class: null });
+        collums.push({ field: 'operators_wagons_uz_abbr', title: null, class: null });
 
         return init_columns_detali(collums, list_collums);
     };
@@ -509,6 +775,52 @@
         /*        buttons.push({ name: 'page_length', action: null });*/
         return init_buttons(buttons, list_buttons);
     };
+    // инициализация кнопок req1892_total_cargo
+    table_report.prototype.init_button_req1892_total_cargo = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                //this.action_refresh();
+            }.bind(this)
+        });
+        /*        buttons.push({ name: 'page_length', action: null });*/
+        return init_buttons(buttons, list_buttons);
+    };
+    // инициализация кнопок req0002
+    table_report.prototype.init_button_req0002 = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                //this.action_refresh();
+            }.bind(this)
+        });
+        buttons.push({ name: 'page_length', action: null });
+        return init_buttons(buttons, list_buttons);
+    };
+    // инициализация кнопок req0002_train
+    table_report.prototype.init_button_req0002_train = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                //this.action_refresh();
+            }.bind(this)
+        });
+        /*        buttons.push({ name: 'page_length', action: null });*/
+        return init_buttons(buttons, list_buttons);
+    };
+
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
     table_report.prototype.init_type_report = function () {
@@ -547,6 +859,60 @@
                 this.autoWidth = true;
                 this.table_columns = this.init_columns_req1892_formed_routes();
                 this.table_buttons = this.init_button_req1892_formed_routes();
+                this.dom = 'Bfrtip';
+                break;
+            };
+            case 'req1892_total_cargo': {
+                this.deferRender = true;
+                this.paging = false;
+                this.searching = true;
+                this.ordering = true;
+                this.info = true;
+                this.fixedHeader = false;            // вкл. фикс. заголовка
+                this.leftColumns = 0;
+                this.columnDefs = null;
+                this.order_column = [0, 'asc'];
+                this.table_select = false;
+                this.autoWidth = true;
+                this.table_columns = this.init_columns_req1892_total_cargo();
+                this.table_buttons = this.init_button_req1892_total_cargo();
+                this.dom = 'Bfrtip';
+                break;
+            };
+            case 'req0002': {
+                this.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_mtr_title_all', App.Langs)]];
+                this.pageLength = 10;
+                this.deferRender = true;
+                this.paging = true;
+                this.searching = true;
+                this.ordering = true;
+                this.info = true;
+                this.fixedHeader = false;            // вкл. фикс. заголовка
+                this.leftColumns = 0;
+                this.columnDefs = null;
+                this.order_column = [0, 'asc'];
+                this.type_select_rows = 1; // Выбирать одну
+                this.table_select = false;
+                this.autoWidth = true;
+                this.table_columns = this.init_columns_req0002();
+                this.table_buttons = this.init_button_req0002();
+                this.dom = 'Bfrtip';
+                break;
+            };
+            case 'req0002_train': {
+                this.deferRender = true;
+                this.paging = false;
+                this.searching = true;
+                this.ordering = true;
+                this.info = true;
+                this.fixedHeader = false;            // вкл. фикс. заголовка
+                this.leftColumns = 0;
+                this.columnDefs = null;
+                this.order_column = [0, 'asc'];
+                this.table_select = false;
+                this.autoWidth = true;
+                this.table_columns = this.init_columns_req0002_train();
+                this.table_buttons = this.init_button_req0002_train();
                 this.dom = 'Bfrtip';
                 break;
             };
