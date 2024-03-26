@@ -72,6 +72,7 @@
             't_mtr_field_operators_wagons_amkr_abbr': 'Оператор по АМКР.',
             't_mtr_field_owners_wagon_abbr': 'Собственник вагона.',
             't_mtr_field_operators_wagons_uz_abbr': 'Оператор УЗ',
+            't_mtr_field_cargo_cargo_name': 'Груз ПРИБ',
 
             't_mtr_mess_init_module': 'Инициализация модуля (table_report) ...',
             't_mtr_mess_view_report': 'Показать отчет ...',
@@ -113,7 +114,7 @@
             className: 'dt-body-center',
             title: langView('t_mtr_field_numeration', App.Langs), width: "30px", orderable: true, searchable: false
         },
-        // *** req1892.disl_vag_detali
+        // +++ req1892.disl_vag_detali
         {
             field: 'gruz_detali_etsng',
             data: function (row, type, val, meta) {
@@ -146,9 +147,9 @@
         {
             field: 'ves_gruz',
             data: function (row, type, val, meta) {
-                return row.ves_gruz;
+                return row.ves_gruz ? Number(row.ves_gruz).toFixed(2) : 0.00;
             },
-            className: 'dt-body-center',
+            className: 'dt-body-right',
             title: langView('t_mtr_field_ves_gruz', App.Langs), width: "50px", orderable: true, searchable: true
         },
         {
@@ -340,7 +341,7 @@
             title: langView('t_mtr_field_pr_nrp', App.Langs), width: "50px", orderable: true, searchable: true
         },
         // --- END req1892.disl_vag_detali
-        // *** req0002 - Справки
+        // +++ req0002 - Справки
         {
             field: 'cargo_group_name',
             data: function (row, type, val, meta) {
@@ -388,7 +389,7 @@
             title: langView('t_mtr_field_st_disl_n_rpus', App.Langs), width: "100px", orderable: true, searchable: true
         },
         // --- END req0002 - Справки
-        // ** req0002.info_fraza_detali
+        // +++ req0002.info_fraza_detali
         {
             field: 'pr_rol',
             data: function (row, type, val, meta) {
@@ -526,10 +527,11 @@
             title: langView('t_mtr_field_kol_por_kont', App.Langs), width: "50px", orderable: true, searchable: true
         },
         // --- END req0002.info_fraza_detali
+        // +++ req0002_train
         {
             field: 'genus_wagon_abbr',
             data: function (row, type, val, meta) {
-                return row.GenusWagon && row.GenusWagon['abbr'+ucFirst(App.Lang)];
+                return row.GenusWagon && row.GenusWagon['abbr' + ucFirst(App.Lang)];
             },
             className: 'dt-body-center',
             title: langView('t_mtr_field_genus_wagon_abbr', App.Langs), width: "50px", orderable: true, searchable: true
@@ -558,6 +560,15 @@
             className: 'dt-body-left shorten mw-100',
             title: langView('t_mtr_field_operators_wagons_uz_abbr', App.Langs), width: "100px", orderable: true, searchable: true
         },
+        {
+            field: 'cargo_cargo_name',
+            data: function (row, type, val, meta) {
+                return row.Cargo && row.Cargo['cargoName' + ucFirst(App.Lang)];
+            },
+            className: 'dt-body-left shorten mw-100',
+            title: langView('t_mtr_field_cargo_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+        },
+        // --- END req0002_train
     ];
     // Перечень кнопок
     var list_buttons = [
@@ -728,12 +739,21 @@
         collums.push({ field: 'genus_wagon_abbr', title: null, class: null });
         collums.push({ field: 'operators_wagons_amkr_abbr', title: null, class: null });
         collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'cargo_cargo_name', title: null, class: null });
         collums.push({ field: 'ves_gruz', title: null, class: null });
         collums.push({ field: 'esr_nazn_vag', title: null, class: null });
         collums.push({ field: 'kod_grp', title: null, class: null });
         collums.push({ field: 'owners_wagon_abbr', title: null, class: null });
         collums.push({ field: 'operators_wagons_uz_abbr', title: null, class: null });
 
+        return init_columns_detali(collums, list_collums);
+    };
+    // инициализация полей req0002_result
+    table_report.prototype.init_columns_req0002_result = function () {
+        var collums = [];
+        collums.push({ field: 'cargo_cargo_name', title: null, class: null });
+        collums.push({ field: 'operators_wagons_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'kol_vag', title: null, class: null });
         return init_columns_detali(collums, list_collums);
     };
     //------------------------------- КНОПКИ ----------------------------------------------------
@@ -820,7 +840,21 @@
         /*        buttons.push({ name: 'page_length', action: null });*/
         return init_buttons(buttons, list_buttons);
     };
-
+    // инициализация кнопок req0002_result
+    table_report.prototype.init_button_req0002_result = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                //this.action_refresh();
+            }.bind(this)
+        });
+        /*        buttons.push({ name: 'page_length', action: null });*/
+        return init_buttons(buttons, list_buttons);
+    };
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
     table_report.prototype.init_type_report = function () {
@@ -916,6 +950,55 @@
                 this.dom = 'Bfrtip';
                 break;
             };
+            case 'req0002_result': {
+                this.deferRender = true;
+                this.paging = false;
+                this.searching = true;
+                this.ordering = true;
+                this.info = true;
+                this.fixedHeader = false;            // вкл. фикс. заголовка
+                this.leftColumns = 0;
+                this.columnDefs = null;
+                this.order_column = [0, 'asc'];
+                this.table_select = false;
+                this.autoWidth = true;
+                this.footerCallback = function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string'
+                            ? i.replace(/[\$,]/g, '') * 1
+                            : typeof i === 'number'
+                                ? i
+                                : 0;
+                    };
+
+                    // Total over all pages
+                    var total = api
+                        .column(2)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    var pageTotal = api
+                        .column(2, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(2).footer()).html(
+                        '$' + pageTotal + ' ( $' + total + ' total)'
+                    );
+                };
+                this.table_columns = this.init_columns_req0002_result();
+                this.table_buttons = this.init_button_req0002_result();
+                this.dom = 'Brtlip';
+                break;
+            };
             // Таблица составы по умолчанию (если не выставят тип отчета)
             default: {
                 this.fixedHeader = false;            // вкл. фикс. заголовка
@@ -979,9 +1062,15 @@
             //class: 'display compact cell-border row-border hover',
             class: 'table table-success table-striped',
             title: null,
+            style: 'width: 100%',
         });
-        if (this.settings.type_report === 'req1892') {
-            //this.$table_report = table_report.$table.append($('<tfoot><tr><th class="dt-right">ИТОГО:</th><td class="dt-centr"></td><td class="dt-centr"></td><td class="dt-centr"></td><td class="dt-centr"></td></tr></tfoot>'));
+        if (this.settings.type_report === 'req0002_train') {
+            this.$table_report = table_report.$table.append($('<tfoot><tr><th class="dt-right">ИТОГО:</th><td class="dt-centr sum-nom-vag"></td><td colspan="5"></td><td class="dt-right sum-ves-gruz"></td><td colspan="4"></td></tr></tfoot>'));
+        }
+        if (this.settings.type_report === 'req0002_result') {
+            this.$table_report = table_report.$table.append($('<tfoot><tr><th colspan="2" class="dt-right">ИТОГО:</th><td class="dt-centr sum-kol-vag"></td></tr></tfoot>'));
+            //this.$table_report = table_report.$table.append($('<tfoot><tr><th>0</th><th>ИТОГО:</th><th>0</th></tr></tfoot>'));
+
         }
         this.$table_report = table_report.$table;
         this.$td_report.addClass('table-report').append(this.$table_report);
@@ -1127,7 +1216,7 @@
         this.obj_t_report.draw();
         if (id_select !== null) {
             this.id_select = id_select
-            this.obj_t_report.row('#' + this.id_select).select();
+            //this.obj_t_report.row('#' + this.id_select).select();
         } else {
             this.id_select = null;
         }
@@ -1138,842 +1227,37 @@
     //
     table_report.prototype.view_footer = function (data) {
         switch (this.settings.type_report) {
-            case 'adoption_sostav': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_count_wagon_all = 0;
-                    var sum_count_return_wagon = 0;
-                    var sum_count_return_wagon_all = 0;
-                    var sum_count_account_balance = 0;
-                    var sum_count_account_balance_all = 0;
-                    var sum_count_not_operator = 0;
-                    var sum_count_not_operator_all = 0;
-                    $.each(data, function (i, el) {
-                        if (el.type === 0) {
-                            sum_count_wagon += el.count_wagon;
-                            sum_count_account_balance += el.count_account_balance;
-                            sum_count_not_operator += el.count_not_operator;
-                            sum_count_return_wagon += el.count_return_wagon;
-                        }
-                        sum_count_wagon_all += el.count_wagon;
-                        sum_count_account_balance_all += el.count_account_balance;
-                        sum_count_not_operator_all += el.count_not_operator;
-                        sum_count_return_wagon_all += el.count_return_wagon;
-                    });
-                }
-                this.obj_t_report.columns('.sum_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon_all + '(' + sum_count_wagon + ')');
-                });
-                this.obj_t_report.columns('.sum_count_account_balance').every(function () {
-                    $(this.footer()).html(sum_count_account_balance_all + '(' + sum_count_account_balance + ')');
-                });
-                this.obj_t_report.columns('.sum_count_not_operator').every(function () {
-                    $(this.footer()).html(sum_count_not_operator_all + '(' + sum_count_not_operator + ')');
-                });
-                this.obj_t_report.columns('.sum_count_return_wagon').every(function () {
-                    $(this.footer()).html(sum_count_return_wagon_all + '(' + sum_count_return_wagon + ')');
-                });
-                break;
-            };
-            case 'outgoing_sostav': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_count_wagon_all = 0;
-                    var sum_count_account_balance = 0;
-                    var sum_count_account_balance_all = 0;
-                    var sum_count_return_wagon = 0;
-                    var sum_count_return_wagon_all = 0;
-                    $.each(data, function (i, el) {
-                        if (el.type === 0) {
-                            sum_count_wagon += el.count_wagon;
-                            sum_count_return_wagon += el.count_return_wagon;
-                            sum_count_account_balance += el.count_account_balance;
-                        }
-                        sum_count_wagon_all += el.count_wagon;
-                        sum_count_return_wagon_all += el.count_return_wagon;
-                        sum_count_account_balance_all += el.count_account_balance;
-                    });
-                }
-                this.obj_t_report.columns('.sum_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon_all + '(' + sum_count_wagon + ')');
-                });
-                this.obj_t_report.columns('.sum_count_account_balance').every(function () {
-                    $(this.footer()).html(sum_count_account_balance_all + '(' + sum_count_account_balance + ')');
-                });
-                this.obj_t_report.columns('.sum_count_return_wagon').every(function () {
-                    $(this.footer()).html(sum_count_return_wagon_all + '(' + sum_count_return_wagon + ')');
-                });
-                break;
-            };
-            case 'adoption_sostav_detali': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_count_account_balance = 0;
-                    var sum_count_not_operator = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_count_account_balance += el.count_account_balance;
-                        sum_count_not_operator += el.count_not_operator;
-                    });
-                }
-                this.obj_t_report.columns('.sum_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.sum_count_account_balance').every(function () {
-                    $(this.footer()).html(sum_count_account_balance);
-                });
-                this.obj_t_report.columns('.sum_count_not_operator').every(function () {
-                    $(this.footer()).html(sum_count_not_operator);
-                });
-                break;
-            };
-            case 'outgoing_sostav_detali': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_count_account_balance += el.count_account_balance;
-                    });
-                }
-                this.obj_t_report.columns('.sum_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.sum_count_account_balance').every(function () {
-                    $(this.footer()).html(sum_count_account_balance);
-                });
-                break;
-            };
-            case 'adoption_common_detali': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_gruzp = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon++;
-                        sum_vesg += el.arrival_uz_vagon_vesg;
-                        sum_vesg_reweighing += el.arrival_uz_vagon_vesg_reweighing;
-                        sum_vesg_deff += el.arrival_uz_vagon_vesg && el.arrival_uz_vagon_vesg_reweighing ? Number(Number(Number(el.arrival_uz_vagon_vesg) - Number(el.arrival_uz_vagon_vesg_reweighing)) / 1000) : 0;
-                        //sum_gruzp += el.arrival_uz_vagon_gruzp;
-                    });
-                    //var avg_vesg = sum_vesg / sum_count_wagon;
-                    //var avg_gruzp = sum_gruzp / sum_count_wagon;
-                }
-                this.obj_t_report.columns('.fl-num').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-incoming_cars_arrival_uz_vagon_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-incoming_cars_arrival_uz_vagon_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-incoming_cars_arrival_uz_vagon_deff_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_common_detali': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    //var sum_vesg = 0;
-                    var sum_vesg1 = 0;
-                    var sum_idle_time = 0;
-                    //var sum_idle_time_act = 0;
-                    var downtime = 0;
-                    var fee_amount = 0;
-                    $.each(data, function (i, el) {
-                        sum_vesg1 += el.outgoing_uz_vagon_vesg;
-                        sum_count_wagon++;
-                        //if (el && el.otpr && el.otpr.vagon && el.otpr.vagon.length > 0 && el.otpr.vagon[0].collect_v && el.otpr.vagon[0].collect_v.length > 0 && el.otpr.vagon[0].collect_v[0].vesg) {
-                        //    sum_vesg += el.otpr.vagon[0].collect_v[0].vesg;
-                        //}
-                        sum_idle_time += el.idle_time !== null ? el.idle_time : 0;
-                        //sum_idle_time_act += el.idle_time_act !== null ? el.idle_time_act : 0;
-                        downtime += el.wagon_usage_fee_downtime !== null ? el.wagon_usage_fee_downtime : 0;
-                        fee_amount += el.wagon_usage_fee_manual_fee_amount !== null ? el.wagon_usage_fee_manual_fee_amount : (el.wagon_usage_fee_calc_fee_amount !== null ? el.wagon_usage_fee_calc_fee_amount : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-num').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                //this.obj_t_report.columns('.fl-outgoing_cars_epd_vagon_collect_v_vesg').every(function () {
-                //    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                //});
-                this.obj_t_report.columns('.fl-outgoing_cars_outgoing_uz_vagon_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg1 ? Number(sum_vesg1 / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-outgoing_cars_idle_time').every(function () {
-                    $(this.footer()).html(sum_idle_time ? getTimeFromMins(sum_idle_time) : '00:00');
-                });
-                //this.obj_t_report.columns('.fl-outgoing_cars_idle_time_act').every(function () {
-                //    $(this.footer()).html(sum_idle_time_act ? getTimeFromMins(sum_idle_time_act) : '00:00');
-                //});
-                this.obj_t_report.columns('.fl-outgoing_cars_wagon_usage_fee_downtime').every(function () {
-                    $(this.footer()).html(downtime ? getTimeFromMins(downtime) : '0:00');
-                });
-                this.obj_t_report.columns('.fl-outgoing_cars_wagon_usage_fee_calc_fee_amount_final').every(function () {
-                    $(this.footer()).html(fee_amount ? Number(fee_amount).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_cargo_operation_amkr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_operator_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_perent_wagon = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_perent_wagon += (el.perent_wagon ? Number(el.perent_wagon) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                    $(this.footer()).html(sum_perent_wagon ? Number(sum_perent_wagon).toFixed(1) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_cargo_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_group_cargo_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_genus_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_perent_wagon = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_perent_wagon += (el.perent_wagon ? Number(el.perent_wagon) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                    $(this.footer()).html(sum_perent_wagon ? Number(sum_perent_wagon).toFixed(1) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_cargo_sap_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_station_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_division_to_arr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'adoption_to_gs': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_vesg_reweighing = 0;
-                    var sum_vesg_deff = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_vesg_reweighing += el.sum_vesg_reweighing;
-                        sum_vesg_deff += el.sum_vesg_deff;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_reweighing').every(function () {
-                    $(this.footer()).html(sum_vesg_reweighing ? Number(sum_vesg_reweighing / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg_deff').every(function () {
-                    $(this.footer()).html(sum_vesg_deff ? Number(sum_vesg_deff / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_cargo_operator': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_cargo_ext_station': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_total_division_metall': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_total_division_cargo': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_total_cargo_metall': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'outgoing_total_operators': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    var sum_perent_wagon = 0;
-                    var sum_idle_time = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        sum_perent_wagon += (el.perent_wagon ? Number(el.perent_wagon) : 0);
-                        sum_idle_time += (el.sum_idle_time ? Number(el.sum_idle_time) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                    $(this.footer()).html(sum_perent_wagon ? Number(sum_perent_wagon).toFixed(1) : Number(0).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-total_sum_idle_time').every(function () {
-                    $(this.footer()).html(getTimeFromMins(sum_idle_time));
-                });
-                this.obj_t_report.columns('.fl-total_wagon_idle_time').every(function () {
-                    $(this.footer()).html(getTimeFromMins(Number(Number(sum_idle_time / sum_count_wagon).toFixed(0))));
-                });
-                break;
-            };
-            case 'outgoing_total_operators_cargo': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_perent_wagon = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                        //sum_perent_wagon += (el.perent_wagon ? Number(el.perent_wagon) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                //this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                //    $(this.footer()).html(sum_perent_wagon ? Number(sum_perent_wagon).toFixed(1) : Number(0).toFixed(2));
-                //});
-                break;
-            };
-            case 'outgoing_total_ext_station': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_vesg = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_vesg += el.sum_vesg;
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_sum_vesg').every(function () {
-                    $(this.footer()).html(sum_vesg ? Number(sum_vesg / 1000).toFixed(2) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'usage_fee_cargo': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_usage_fee_sum_calc_time = 0;
-                    var sum_usage_fee_sum_calc_fee_amount = 0;
-                    var sum_usage_fee_wagon_persent_fee_amount = 0;
-                    var usage_fee_wagon_calc_time = 0;
-                    var usage_fee_wagon_calc_fee_amount = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_usage_fee_sum_calc_time += el.sum_calc_time;
-                        sum_usage_fee_sum_calc_fee_amount += el.sum_calc_fee_amount;
-                        sum_usage_fee_wagon_persent_fee_amount += el.persent;
-                    });
-                }
-                usage_fee_wagon_calc_time = sum_count_wagon > 0 ? getHourFromMins(Number(sum_usage_fee_sum_calc_time / sum_count_wagon)).toFixed(0) : 0;
-                usage_fee_wagon_calc_fee_amount = sum_count_wagon > 0 ? Number(sum_usage_fee_sum_calc_fee_amount / sum_count_wagon).toFixed(2) : 0.00;
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_time').every(function () {
-                    $(this.footer()).html(getHourFromMins(sum_usage_fee_sum_calc_time));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_time').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_time);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_sum_calc_fee_amount).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_fee_amount').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_fee_amount);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_persent_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_wagon_persent_fee_amount).toFixed(0));
-                });
-                break;
-            };
-            case 'usage_fee_cargo_not_derailment': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_usage_fee_sum_calc_time = 0;
-                    var sum_usage_fee_sum_calc_fee_amount = 0;
-                    var sum_usage_fee_wagon_persent_fee_amount = 0;
-                    var usage_fee_wagon_calc_time = 0;
-                    var usage_fee_wagon_calc_fee_amount = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_usage_fee_sum_calc_time += el.sum_calc_time;
-                        sum_usage_fee_sum_calc_fee_amount += el.sum_calc_fee_amount;
-                        sum_usage_fee_wagon_persent_fee_amount += el.persent_not_derailment;
-                    });
-                }
-                usage_fee_wagon_calc_time = sum_count_wagon > 0 ? getHourFromMins(Number(sum_usage_fee_sum_calc_time / sum_count_wagon)).toFixed(0) : 0;
-                usage_fee_wagon_calc_fee_amount = sum_count_wagon > 0 ? Number(sum_usage_fee_sum_calc_fee_amount / sum_count_wagon).toFixed(2) : 0.00;
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_time').every(function () {
-                    $(this.footer()).html(getHourFromMins(sum_usage_fee_sum_calc_time));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_time').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_time);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_sum_calc_fee_amount).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_fee_amount').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_fee_amount);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_persent_not_derailment_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_wagon_persent_fee_amount).toFixed(0));
-                });
-                break;
-            };
-            case 'usage_fee_operator_amkr': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_usage_fee_sum_calc_time = 0;
-                    var sum_usage_fee_sum_calc_fee_amount = 0;
-                    var sum_usage_fee_wagon_persent_fee_amount = 0;
-                    var usage_fee_wagon_calc_time = 0;
-                    var usage_fee_wagon_calc_fee_amount = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_usage_fee_sum_calc_time += el.sum_calc_time;
-                        sum_usage_fee_sum_calc_fee_amount += el.sum_calc_fee_amount;
-                        sum_usage_fee_wagon_persent_fee_amount += el.persent;
-                    });
-                }
-                usage_fee_wagon_calc_time = sum_count_wagon > 0 ? getHourFromMins(Number(sum_usage_fee_sum_calc_time / sum_count_wagon)).toFixed(0) : 0;
-                usage_fee_wagon_calc_fee_amount = sum_count_wagon > 0 ? Number(sum_usage_fee_sum_calc_fee_amount / sum_count_wagon).toFixed(2) : 0.00;
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_time').every(function () {
-                    $(this.footer()).html(getHourFromMins(sum_usage_fee_sum_calc_time));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_time').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_time);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_sum_calc_fee_amount).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_fee_amount').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_fee_amount);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_persent_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_wagon_persent_fee_amount).toFixed(0));
-                });
-                break;
-            };
-            case 'usage_fee_operator_amkr_derailment': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_usage_fee_sum_calc_time = 0;
-                    var sum_usage_fee_sum_calc_fee_amount = 0;
-                    var sum_usage_fee_wagon_persent_fee_amount = 0;
-                    var usage_fee_wagon_calc_time = 0;
-                    var usage_fee_wagon_calc_fee_amount = 0;
-
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_usage_fee_sum_calc_time += el.sum_calc_time;
-                        sum_usage_fee_sum_calc_fee_amount += el.sum_calc_fee_amount;
-                        sum_usage_fee_wagon_persent_fee_amount += el.persent_derailment;
-                    });
-                }
-                usage_fee_wagon_calc_time = sum_count_wagon > 0 ? getHourFromMins(Number(sum_usage_fee_sum_calc_time / sum_count_wagon)).toFixed(0) : 0;
-                usage_fee_wagon_calc_fee_amount = sum_count_wagon > 0 ? Number(sum_usage_fee_sum_calc_fee_amount / sum_count_wagon).toFixed(2) : 0.00;
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_time').every(function () {
-                    $(this.footer()).html(getHourFromMins(sum_usage_fee_sum_calc_time));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_time').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_time);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_sum_calc_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_sum_calc_fee_amount).toFixed(2));
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_calc_fee_amount').every(function () {
-                    $(this.footer()).html(usage_fee_wagon_calc_fee_amount);
-                });
-                this.obj_t_report.columns('.fl-usage_fee_wagon_persent_derailment_fee_amount').every(function () {
-                    $(this.footer()).html(Number(sum_usage_fee_wagon_persent_fee_amount).toFixed(0));
-                });
-                break;
-            };
-            case 'residue_total_operators': {
-                if (data) {
-                    var sum_start = 0;
-                    var sum_arrival = 0;
-                    var sum_outgoing = 0;
-                    var sum_stop = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_start += el.start;
-                        sum_arrival += el.arrival;
-                        sum_outgoing += el.outgoing;
-                        sum_stop += el.stop;
-                    });
-                }
-                this.obj_t_report.columns('.fl-residue_total_operators_start').every(function () {
-                    $(this.footer()).html(sum_start);
-                });
-                this.obj_t_report.columns('.fl-residue_total_operators_arrival').every(function () {
-                    $(this.footer()).html(sum_arrival);
-                });
-                this.obj_t_report.columns('.fl-residue_total_operators_outgoing').every(function () {
-                    $(this.footer()).html(sum_outgoing);
-                });
-                this.obj_t_report.columns('.fl-residue_total_operators_stop').every(function () {
-                    $(this.footer()).html(sum_stop);
-                });
-                break;
-            };
-            case 'residue_total_common': {
-                if (data) {
-                    var sum_total = 0;
-                    var sum_external = 0;
-                    var sum_paid = 0;
-                    var sum_accounting = 0;
-                    var sum_amkr = 0;
-                    var count = 0
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_total += el.total;
-                        sum_external += el.external;
-                        sum_paid += el.paid;
-                        sum_accounting += el.accounting;
-                        sum_amkr += el.amkr;
-                        count++;
-                    });
-                }
-                this.obj_t_report.columns('.fl-residue_total_common_total').every(function () {
-                    $(this.footer()).html(count > 0 ? Number(sum_total / count).toFixed(0) : 0);
-                });
-                this.obj_t_report.columns('.fl-residue_total_common_external').every(function () {
-                    $(this.footer()).html(count > 0 ? Number(sum_external / count).toFixed(0) : 0);
-                });
-                this.obj_t_report.columns('.fl-residue_total_common_paid').every(function () {
-                    $(this.footer()).html(count > 0 ? Number(sum_paid / count).toFixed(0) : 0);
-                });
-                this.obj_t_report.columns('.fl-residue_total_common_accounting').every(function () {
-                    $(this.footer()).html(count > 0 ? Number(sum_accounting / count).toFixed(0) : 0);
-                });
-                this.obj_t_report.columns('.fl-residue_total_common_amkr').every(function () {
-                    $(this.footer()).html(count > 0 ? Number(sum_amkr / count).toFixed(0) : 0);
-                });
-                break;
-            };
-
-            case 'residue_total_markup_arr':
-            case 'residue_total_markup_curr':
-            case 'residue_total_genus': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_perent_wagon = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_perent_wagon += (el.perent_wagon ? Number(el.perent_wagon) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                    $(this.footer()).html(sum_perent_wagon ? Number(sum_perent_wagon).toFixed(1) : Number(0).toFixed(2));
-                });
-                break;
-            };
-            case 'residue_total_markup_operator':
-            case 'residue_total_genus_station_amkr':
-            case 'residue_total_station_out': {
-                if (data) {
-                    var sum_count_wagon = 0;
-                    var sum_perent_wagon = 0;
-                    //var sum_count_account_balance = 0;
-                    $.each(data, function (i, el) {
-                        sum_count_wagon += el.count_wagon;
-                        sum_perent_wagon += (el.perent_wagon !== null ? Number(el.perent_wagon) : 0);
-                    });
-                }
-                this.obj_t_report.columns('.fl-total_count_wagon').every(function () {
-                    $(this.footer()).html(sum_count_wagon);
-                });
-                this.obj_t_report.columns('.fl-total_perent_wagon').every(function () {
-                    $(this.footer()).html(Number(sum_perent_wagon).toFixed(0));
-                });
-                break;
-            };
+            //case 'req0002_train': {
+            //    if (data) {
+            //        var sum_count_wagon = 0;
+            //        var sum_vesg = 0;
+            //        $.each(data, function (i, el) {
+            //            sum_count_wagon++;
+            //            sum_vesg += el.ves_gruz ? Number(el.ves_gruz) : 0.00;
+            //        });
+            //    }
+            //    this.obj_t_report.columns('.sum-nom-vag').every(function () {
+            //        $(this.footer()).html(sum_count_wagon);
+            //    });
+            //    this.obj_t_report.columns('.sum-ves-gruz').every(function () {
+            //        $(this.footer()).html(sum_vesg ? Number(sum_vesg).toFixed(2) : Number(0).toFixed(2));
+            //    });
+            //    break;
+            //};
+            //case 'req0002_result': {
+            //    if (data) {
+            //        var sum_count_wagon = 0;
+            //        $.each(data, function (i, el) {
+            //            sum_count_wagon += el.kol_vag ? el.kol_vag : 0;
+            //        });
+            //    }
+            //    //this.obj_t_report.columns('.fl-kol_vag').every(function () {
+            //    //    $(this.footer()).html(sum_count_wagon);
+            //    //});
+            //    //this.$table_report.find('.sum-kol-vag').val(sum_count_wagon);
+            //    $('td.sum-kol-vag').val(sum_count_wagon);
+            //    break;
+            //};
         };
     };
     //-------------------------------------------------------------------------------------------

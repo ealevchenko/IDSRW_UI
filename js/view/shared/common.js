@@ -580,6 +580,7 @@ var init_buttons = function (buttons_name, list_buttons) {
             id: null,
             class: null,
             title: null,
+            style: null,
         }, options);
         this.$table = $('<table></table>');
 
@@ -589,6 +590,7 @@ var init_buttons = function (buttons_name, list_buttons) {
             add_class(this.$table, this.settings.class);
             add_id(this.$table, this.settings.id);
             add_tag(this.$table, 'title', this.settings.title);
+            add_tag(this.$table, 'style', this.settings.style);
         }
     };
 

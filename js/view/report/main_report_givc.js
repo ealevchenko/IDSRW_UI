@@ -81,7 +81,10 @@
     var list_cargo = [];
     var list_cargo_group = [];
     var list_cargo_etsng = [];
-    var list_wagons = [];
+    var list_genus_wagon = [];
+    var list_operators_wagons = [];
+    var list_owners_wagons = [];
+    //var list_wagons = [];
 
     var sel_rows = 30;
     var cur_type = '-1';
@@ -129,12 +132,16 @@
     $(document).ready(function ($) {
 
         // Загрузим справочники
-        load_db(['cargo', 'cargo_group', 'cargo_etsng'], true, function (result) {
+        load_db(['cargo', 'cargo_group', 'cargo_etsng', 'genus_wagon', 'operators_wagons', 'owners_wagons'], true, function (result) {
             //
             list_cargo = api_dir.getAllCargo();
             list_cargo_group = api_dir.getAllCargoGroup();
             list_cargo_etsng = api_dir.getAllCargoETSNG();
-            /*            list_wagons = api_dir.getAllWagons();*/
+            list_genus_wagon = api_dir.getAllGenusWagons();
+            list_operators_wagons = api_dir.getAllOperatorsWagons();
+            list_owners_wagons = api_dir.getAllOwnersWagons();
+            //list_wagons = api_dir.getAllWagons();
+
             // Вернуть сформированый отчет "Сформированные маршруты"
             var get_req1892_formed_route = function (data, callback) {
                 var result_list = [];
@@ -218,12 +225,30 @@
             // Вернуть сформированый отчет "Общий грузопоток"
             var get_req0002_train = function (data, callback) {
                 var result_list = [];
+                var result_total = [];
                 var count_row = 0;
                 // Выход из циклов
                 var out_row = function (count_row) {
                     if (count_row === 0) {
+                        //- total
+                        $.each(result_list, function (key, el) {
+                            var tw = result_total.find(function (o) {
+                                return o.etsng === el.etsng && o.id_operator_amkr === el.OperatorsWagonsAMKR.id;
+                            }.bind(this));
+                            if (!tw) {
+                                result_total.push({
+                                    etsng: el.etsng,
+                                    Cargo: el.Cargo,
+                                    id_operator_amkr: el.OperatorsWagonsAMKR.id,
+                                    OperatorsWagonsAMKR: el.OperatorsWagonsAMKR,
+                                    kol_vag: 1,
+                                });
+                            } else {
+                                tw.kol_vag++;
+                            }
+                        }.bind(this));
                         if (typeof callback === 'function') {
-                            callback(result_list);
+                            callback(result_list, result_total);
                         }
                     }
                 }.bind(this);
@@ -232,7 +257,7 @@
                     //var res = {};
                     api_dir.getWagonsOfNum(el.nom_vag, function (wag) {
                         el.Wagon = wag;
-                        var count_req = 4;
+                        var count_req = 1;
                         var out_req = function (count_req) {
                             if (count_req === 0) {
                                 if (typeof callback === 'function') {
@@ -241,39 +266,25 @@
                             }
                         }.bind(this);
                         // Получим род вагона
-                        api_dir.getGenusWagonsID(wag.idGenus, function (genus) {
-                            el.GenusWagon = genus;
-                            count_req--;
-                            out_req(count_req);
-                        }.bind(this));
+                        el.GenusWagon = api_dir.getGenusWagons_Of_ID(wag.idGenus);
                         // Получим владельца вагона
-                        api_dir.getOwnersWagonsID(wag.idOwner, function (owner) {
-                            el.OwnersWagon = owner;
-                            count_req--;
-                            out_req(count_req);
-                        }.bind(this));
+                        el.OwnersWagon = api_dir.getOwnersWagons_Of_ID(wag.idOwner);
+                        // Получим оператора вагона по уз
+                        el.OperatorsWagonsUZ = api_dir.getOperatorsWagons_Of_ID(wag.idOperator);
                         // Получим аренды вагонов
                         api_dir.getWagonsRentOfNum(el.nom_vag, function (rent) {
                             var last_rent = rent.find(function (o) { return o.rentEnd === null }.bind(this));
                             if (last_rent) {
                                 // Получим оператора вагона по амкр
-                                api_dir.getOperatorsWagonsID(last_rent.idOperator, function (operator_amkr) {
-                                    el.OperatorsWagonsAMKR = operator_amkr;
-                                    count_req--;
-                                    out_req(count_req);
-                                }.bind(this));
+                                el.OperatorsWagonsAMKR = api_dir.getOperatorsWagons_Of_ID(last_rent.idOperator);
+                                count_req--;
+                                out_req(count_req);
                             } else {
+                                el.OperatorsWagonsAMKR = null;
                                 count_req--;
                                 out_req(count_req);
                             }
                         }.bind(this));
-                        // Получим оператора вагона по уз
-                        api_dir.getOperatorsWagonsID(wag.idOperator, function (operator_uz) {
-                            el.OperatorsWagonsUZ = operator_uz;
-                            count_req--;
-                            out_req(count_req);
-                        }.bind(this));
-
                     }.bind(this));
                 }.bind(this);
                 // Перебрать вагоны
@@ -283,6 +294,12 @@
                         count_row--;
                         out_row(count_row);
                     }.bind(this));
+                    el.CargoETSNG = api_dir.getCargoETSNG_Of_Name('code', el.etsng);
+                    if (el.CargoETSNG) {
+                        el.Cargo = api_dir.getCargo_Of_IDETSNG(el.CargoETSNG.id);
+                    } else {
+                        el.Cargo = null;
+                    }
                     result_list.push(el);
                 }.bind(this));
             };
@@ -292,6 +309,7 @@
                 var list_approaches = [];
                 var list_total_cargo = [];
                 var list_wagon = [];
+                var list_wagon_total = [];
                 switch (type) {
                     case 'req1892': {
                         $el_card_1892.show();
@@ -332,23 +350,19 @@
                                 curr_data = getRequests(data, type);
                                 table_table_req0002.view(curr_data);
                                 //
-                                get_req0002_train(curr_data, function (result_list) {
+                                get_req0002_train(curr_data, function (result_list, result_total) {
                                     list_wagon = result_list;
+                                    list_wagon_total = result_total;
                                     table_table_req0002_train.view(list_wagon);
+                                    table_table_req0002_result.view(list_wagon_total);
                                     LockScreenOff();
                                 }.bind(this));
-                                ////
-                                //get_req1892_total_cargo(curr_data, function (result_list) {
-                                //    list_total_cargo = result_list;
-                                //    table_table_req1892_total_cargo.view(list_total_cargo);
-                                //    LockScreenOff();
-                                //}.bind(this));
-                                //LockScreenOff();
+                                //
                             }.bind(this));
                         } else {
                             table_table_req0002.view(curr_data);
                             table_table_req0002_train.view(list_wagon);
-                            //table_table_req1892_total_cargo.view(list_total_cargo);
+                            table_table_req0002_result.view(list_wagon_total);
                             LockScreenOff();
                         }
                         break;
@@ -415,14 +429,14 @@
             var $el_card_1892 = $('#card-1892');
             var $el_card_0002 = $('#card-0002');
 
-            var process = 5;
+            var process = 6;
 
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
                     this.report_panel = 0;
                     $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
-                        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+                        $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
                         switch (event.target.id) {
                             case 'nav-req1892-generated-routes-tab': {
                                 this.report_panel = 0;
@@ -542,7 +556,26 @@
 
                 }.bind(this),
             });
+            // Инициализация модуля "Таблица req0002-ИТОГ"
+            var table_table_req0002_result = new TTDR('div#req0002-result');               // Создадим экземпляр
+            table_table_req0002_result.init({
+                alert: null,
+                detali_table: false,
+                type_report: 'req0002_result',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
             // Инициализация формы 
             var $form = $('#fm-reguest-givc');
             var $el_kod_stan_beg = $('#kod_stan_beg');
