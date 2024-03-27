@@ -101,7 +101,7 @@
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
 
-    var VICR = App.view_incoming_report; // Модуль отчетов по прибытию
+/*    var VICR = App.view_incoming_report; // Модуль отчетов по прибытию*/
 
     // Перечень полей
     var list_collums = [
@@ -962,7 +962,7 @@
                 this.order_column = [0, 'asc'];
                 this.table_select = false;
                 this.autoWidth = true;
-                this.footerCallback = function (row, data, start, end, display) {
+                this.footerCallback = function (tr, data, start, end, display) {
                     var api = this.api();
                     // Remove the formatting to get integer data for summation
                     var intVal = function (i) {
@@ -973,26 +973,18 @@
                                 : 0;
                     };
 
-                    // Total over all pages
-                    var total = api
+                    var count = api
                         .column(2)
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+                
 
-                    // Total over this page
-                    var pageTotal = api
-                        .column(2, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
-
-                    // Update footer
-                    $(api.column(2).footer()).html(
-                        '$' + pageTotal + ' ( $' + total + ' total)'
-                    );
                 };
                 this.table_columns = this.init_columns_req0002_result();
                 this.table_buttons = this.init_button_req0002_result();
@@ -1062,14 +1054,13 @@
             //class: 'display compact cell-border row-border hover',
             class: 'table table-success table-striped',
             title: null,
-            style: 'width: 100%',
+            //style: 'width: 100%',
         });
         if (this.settings.type_report === 'req0002_train') {
-            this.$table_report = table_report.$table.append($('<tfoot><tr><th class="dt-right">ИТОГО:</th><td class="dt-centr sum-nom-vag"></td><td colspan="5"></td><td class="dt-right sum-ves-gruz"></td><td colspan="4"></td></tr></tfoot>'));
+            this.$table_report = table_report.$table.append($('<tfoot><tr><th class="dt-right">ИТОГО:</th><td class="dt-centr sum-nom-vag"></td><td colspan="5"></td><td class="dt-right"></td><td colspan="4"></td></tr></tfoot>'));
         }
         if (this.settings.type_report === 'req0002_result') {
-            this.$table_report = table_report.$table.append($('<tfoot><tr><th colspan="2" class="dt-right">ИТОГО:</th><td class="dt-centr sum-kol-vag"></td></tr></tfoot>'));
-            //this.$table_report = table_report.$table.append($('<tfoot><tr><th>0</th><th>ИТОГО:</th><th>0</th></tr></tfoot>'));
+            this.$table_report = table_report.$table.append($('<tfoot><tr><th colspan="2" class="dt-right">ИТОГО:</th><th class="dt-head-center"></th></tr></tfoot>'));
 
         }
         this.$table_report = table_report.$table;
