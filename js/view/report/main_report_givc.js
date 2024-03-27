@@ -178,6 +178,8 @@
                                 kol_vag: el.kol_vag,
                                 mnkua_opv: el.mnkua_opv,
                                 stan_railway_detali: el.stan.n_rpus + ' ' + el.n_dorus,
+                                stan_esr_op: el.stan.esr_op,
+                                kod_dor: el.kod_dor,
                                 date_op: el.date_op ? moment(el.date_op, format_datetime_ru).format(format_datetime) : null,
                                 st_otpr_n_rpus: el.st_otpr.n_rpus,
                                 date_pogr_min: el.date_pogr ? moment(el.date_pogr, format_datetime_ru).format(format_datetime) : null,
@@ -212,7 +214,9 @@
                             kol_vag: el.kol_vag,
                             kol_vag_dor: el.kol_vag,
                             n_dorus: el.n_dorus,
-                            st_disl_n_rpus: el.stan.n_rpus // - станция дислокации берем из станции соверш операции
+                            st_disl_n_rpus: el.stan.n_rpus, // - станция дислокации берем из станции соверш операции
+                            stan_esr_op: el.stan.esr_op,
+                            kod_dor: el.kod_dor,
                         });
                     } else {
                         ap.kol_vag += el.kol_vag ? Number(el.kol_vag) : 0;

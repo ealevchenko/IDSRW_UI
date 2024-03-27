@@ -686,10 +686,6 @@
                     } else if (data.kod_dor === 45) {
                         $(row).addClass('yellow');
                     }
-                    //if (data.wir_highlight_color !== null) {
-                    //    $(row).addClass('red');
-                    //    //$(row).attr('style', 'background-color:' + data.wir_highlight_color + ' !important;');
-                    //}
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_req1892();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(); //   this.init_button_req1892();
@@ -708,6 +704,13 @@
                 this.tab_com.order_column = [0, 'asc'];
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    if (data.stan_esr_op === 467004 || data.stan_esr_op === 467201 || data.stan_esr_op === 467108) {
+                        $(row).addClass('green');
+                    } else if (data.kod_dor === 45) {
+                        $(row).addClass('yellow');
+                    }
+                }.bind(this);
                 this.tab_com.table_columns = this.init_columns_req1892_formed_routes();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req1892_formed_routes();
                 this.tab_com.dom = 'Bfrtip';
@@ -725,6 +728,13 @@
                 this.tab_com.order_column = [0, 'asc'];
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    if (data.stan_esr_op === 467004 || data.stan_esr_op === 467201 || data.stan_esr_op === 467108) {
+                        $(row).addClass('green');
+                    } else if (data.kod_dor === 45) {
+                        $(row).addClass('yellow');
+                    }
+                }.bind(this);
                 this.tab_com.table_columns = this.init_columns_req1892_total_cargo();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req1892_total_cargo();
                 this.tab_com.dom = 'Bfrtip';
