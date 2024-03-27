@@ -30,7 +30,7 @@
 
     var API_GIVC = App.api_givc;
     var API_DIRECTORY = App.ids_directory;
-    var TTDR = App.table_report;
+    var TRGIVC = App.table_report_givc;
     var api_givc = new API_GIVC({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
     var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
@@ -429,7 +429,7 @@
             var $el_card_1892 = $('#card-1892');
             var $el_card_0002 = $('#card-0002');
 
-            var process = 6;
+            var process = 6; // 6
 
             // Выход из инициализации
             var out_init = function (process) {
@@ -457,7 +457,7 @@
             }.bind(this);
 
             // Инициализация модуля "Таблица req1892-ГИВЦ"
-            var table_table_req1892 = new TTDR('div#req1892');               // Создадим экземпляр
+            var table_table_req1892 = new TRGIVC('div#req1892');               // Создадим экземпляр
             table_table_req1892.init({
                 alert: null,
                 detali_table: false,
@@ -477,7 +477,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req1892-Сформированные маршруты"
-            var table_table_req1892_formed_routes = new TTDR('div#req1892-formed-routes');               // Создадим экземпляр
+            var table_table_req1892_formed_routes = new TRGIVC('div#req1892-formed-routes');               // Создадим экземпляр
             table_table_req1892_formed_routes.init({
                 alert: null,
                 detali_table: false,
@@ -497,7 +497,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req1892-Общий грузопоток"
-            var table_table_req1892_total_cargo = new TTDR('div#req1892-total-cargo');               // Создадим экземпляр
+            var table_table_req1892_total_cargo = new TRGIVC('div#req1892-total-cargo');               // Создадим экземпляр
             table_table_req1892_total_cargo.init({
                 alert: null,
                 detali_table: false,
@@ -517,7 +517,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-ГИВЦ"
-            var table_table_req0002 = new TTDR('div#req0002');               // Создадим экземпляр
+            var table_table_req0002 = new TRGIVC('div#req0002');               // Создадим экземпляр
             table_table_req0002.init({
                 alert: null,
                 detali_table: false,
@@ -537,7 +537,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-Поезд"
-            var table_table_req0002_train = new TTDR('div#req0002-train');               // Создадим экземпляр
+            var table_table_req0002_train = new TRGIVC('div#req0002-train');               // Создадим экземпляр
             table_table_req0002_train.init({
                 alert: null,
                 detali_table: false,
@@ -557,7 +557,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-ИТОГ"
-            var table_table_req0002_result = new TTDR('div#req0002-result');               // Создадим экземпляр
+            var table_table_req0002_result = new TRGIVC('div#req0002-result');               // Создадим экземпляр
             table_table_req0002_result.init({
                 alert: null,
                 detali_table: false,
