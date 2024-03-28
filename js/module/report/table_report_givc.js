@@ -73,6 +73,16 @@
             't_mtr_field_owners_wagon_abbr': 'Собственник вагона.',
             't_mtr_field_operators_wagons_uz_abbr': 'Оператор УЗ',
             't_mtr_field_cargo_cargo_name': 'Груз ПРИБ',
+            't_mtr_field_mn_park': 'Тип парка по нагрузке.',
+            't_mtr_field_idf_op': 'Идентификатор операции.',
+            't_mtr_field_date_inf': 'Время начала обработки информации.',
+            't_mtr_field_code_op': 'Код операции с объектом.',
+            't_mtr_field_disl': 'Текущая дислокация.',
+            't_mtr_field_tip_parka_teh_sost': 'Тип парка техническое состояние.',
+            't_mtr_field_sost_pogr_pp': 'Состояние вагона на подъездном пути.',
+            't_mtr_field_nom_p': 'Четвертая составляющая индекса поезда (Номер поезда создание текущего индекса поезда)',
+            't_mtr_field_esr_op': 'Код ЕСР станции совершения операции',
+            't_mtr_field_wagon_operations_uz_name_op': 'Наименование  операции с вагоном вне поезда',
         },
         'en':  //default language: English
         {
@@ -548,6 +558,91 @@
                 title: langView('t_mtr_field_cargo_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // --- END req0002_train
+            // +++ req8858_train
+            {
+                field: 'mn_park',
+                data: function (row, type, val, meta) {
+                    return row.mn_park;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_mn_park', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'idf_op',
+                data: function (row, type, val, meta) {
+                    return row.idf_op;
+                },
+                className: 'dt-body-center',
+                title: langView('t_mtr_field_idf_op', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'date_inf',
+                data: function (row, type, val, meta) {
+                    return row.date_inf ? moment(row.date_inf, format_datetime_ru).format(format_datetime) : '';
+                },
+                className: 'dt-body-center shorten mw-100',
+                title: langView('t_mtr_field_date_inf', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'code_op',
+                data: function (row, type, val, meta) {
+                    return row.code_op;
+                },
+                className: 'dt-body-center',
+                title: langView('t_mtr_field_code_op', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'disl',
+                data: function (row, type, val, meta) {
+                    return row.disl;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_disl', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'tip_parka_teh_sost',
+                data: function (row, type, val, meta) {
+                    return row.tip_parka_teh_sost;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_tip_parka_teh_sost', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'sost_pogr_pp',
+                data: function (row, type, val, meta) {
+                    return row.sost_pogr_pp;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_sost_pogr_pp', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'nom_p',
+                data: function (row, type, val, meta) {
+                    return row.nom_p;
+                },
+                className: 'dt-body-center',
+                title: langView('t_mtr_field_nom_p', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'esr_op',
+                data: function (row, type, val, meta) {
+                    return row.esr_op;
+                },
+                className: 'dt-body-center',
+                title: langView('t_mtr_field_esr_op', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+
+            // --- END req8858_train
+
+            {
+                field: 'wagon_operations_uz_name_op',
+                data: function (row, type, val, meta) {
+                    return row.WagonOperationsUz ? row.WagonOperationsUz.nameOp : null;
+                },
+                className: 'dt-body-left shorten mw-200',
+                title: langView('t_mtr_field_wagon_operations_uz_name_op', App.Langs), width: "200px", orderable: true, searchable: true
+            },
+
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -658,6 +753,46 @@
         collums.push({ field: 'cargo_cargo_name', title: null, class: null });
         collums.push({ field: 'operators_wagons_amkr_abbr', title: null, class: null });
         collums.push({ field: 'kol_vag', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+    // инициализация полей req8858
+    table_report_givc.prototype.init_columns_req8858 = function () {
+        var collums = [];
+        collums.push({ field: 'prymitka', title: null, class: null });
+        collums.push({ field: 'mn_park', title: null, class: null });
+        collums.push({ field: 'ves_gruz', title: null, class: null });
+        collums.push({ field: 'mnkua_opv', title: null, class: null });
+        collums.push({ field: 'idf_op', title: null, class: null });
+        collums.push({ field: 'esr_form', title: null, class: null });
+        collums.push({ field: 'esr_nazn_vag', title: null, class: null });
+        collums.push({ field: 'nom_vag', title: null, class: null });
+        collums.push({ field: 'date_inf', title: null, class: null });
+        collums.push({ field: 'code_op', title: null, class: null });
+        collums.push({ field: 'disl', title: null, class: null });
+        collums.push({ field: 'tip_parka_teh_sost', title: null, class: null });
+        collums.push({ field: 'kod_grp', title: null, class: null });
+        collums.push({ field: 'nom_sost', title: null, class: null });
+        collums.push({ field: 'date_op', title: null, class: null });
+        collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'esr_nazn', title: null, class: null });
+        collums.push({ field: 'nom_p', title: null, class: null });
+        collums.push({ field: 'esr_op', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+    // инициализация полей req8858_train
+    table_report_givc.prototype.init_columns_req8858_train = function () {
+        var collums = [];
+        collums.push({ field: 'date_op', title: null, class: null });
+        collums.push({ field: 'mnkua_opv', title: null, class: null });
+        collums.push({ field: 'wagon_operations_uz_name_op', title: null, class: null });
+        collums.push({ field: 'esr_op', title: null, class: null });
+        //
+        collums.push({ field: 'train_index', title: null, class: null });
+        collums.push({ field: 'esr_nazn_vag', title: null, class: null });
+        collums.push({ field: 'kod_grp', title: null, class: null });
+        collums.push({ field: 'sost_pogr_pp', title: null, class: null });
+        collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'cargo_cargo_name', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     //------------------------------- КНОПКИ ----------------------------------------------------
@@ -832,6 +967,43 @@
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req0002_result();
                 this.tab_com.dom = 'Brtlip';
                 this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="dt-right">ИТОГО:</th><th class="dt-head-center"></th></tr></tfoot>';
+                break;
+            };
+            case 'req8858': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.table_columns = this.init_columns_req8858();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(); // this.init_button_req0002();
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            case 'req8858_train': {
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = false;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.table_columns = this.init_columns_req8858_train();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req0002_train();
+                this.tab_com.dom = 'Bfrtip';
                 break;
             };
             // Таблица составы по умолчанию (если не выставят тип отчета)

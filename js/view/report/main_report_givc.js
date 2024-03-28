@@ -3,10 +3,10 @@
     var App = window.App || {};
     var $ = window.jQuery;
 
-    var format_date = "YYYY-MM-DD";
-    var format_time = "HH:mm:ss";
-    var format_datetime = "YYYY-MM-DD HH:mm:ss";
-    var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
+    //var format_date = "YYYY-MM-DD";
+    //var format_time = "HH:mm:ss";
+    //var format_datetime = "YYYY-MM-DD HH:mm:ss";
+    //var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
 
     // Массив текстовых сообщений 
     $.Text_View =
@@ -84,6 +84,7 @@
     var list_genus_wagon = [];
     var list_operators_wagons = [];
     var list_owners_wagons = [];
+    var list_owners_operations_uz = [];
     //var list_wagons = [];
 
     var sel_rows = 30;
@@ -124,6 +125,20 @@
                 }
                 break;
             };
+            case 'req8858': {
+                if (data !== null && data.resultRequests !== null) {
+                    if (data.resultRequests !== 'error_toking') {
+                        var res = JSON.parse(data.resultRequests);
+                        if (res.disl_vag != null) {
+                            result = res.disl_vag;
+                        }
+                    } else {
+                        validation.out_warning_message('При выполнении запроса, произошла ошибка - ' + data.resultRequests)
+                    }
+
+                }
+                break;
+            };
         }
         return result;
     };
@@ -132,7 +147,7 @@
     $(document).ready(function ($) {
 
         // Загрузим справочники
-        load_db(['cargo', 'cargo_group', 'cargo_etsng', 'genus_wagon', 'operators_wagons', 'owners_wagons'], true, function (result) {
+        load_db(['cargo', 'cargo_group', 'cargo_etsng', 'genus_wagon', 'operators_wagons', 'owners_wagons', 'owners_operations_uz'], true, function (result) {
             //
             list_cargo = api_dir.getAllCargo();
             list_cargo_group = api_dir.getAllCargoGroup();
@@ -140,6 +155,7 @@
             list_genus_wagon = api_dir.getAllGenusWagons();
             list_operators_wagons = api_dir.getAllOperatorsWagons();
             list_owners_wagons = api_dir.getAllOwnersWagons();
+            list_owners_operations_uz = api_dir.getAllWagonOperationsUz();
             //list_wagons = api_dir.getAllWagons();
 
             // Вернуть сформированый отчет "Сформированные маршруты"
@@ -226,7 +242,7 @@
                     callback(result_list);
                 }
             };
-            // Вернуть сформированый отчет "Общий грузопоток"
+            // Вернуть сформированый отчет "0002 Натурный лист поезда"
             var get_req0002_train = function (data, callback) {
                 var result_list = [];
                 var result_total = [];
@@ -307,6 +323,25 @@
                     result_list.push(el);
                 }.bind(this));
             };
+            // Вернуть сформированый отчет "8858 Дислокация вагона"
+            var get_req8858_train = function (data, callback) {
+                var result_list = [];
+                // Перебрать вагоны
+                $.each(data, function (key, el) {
+                    el.WagonOperationsUz = api_dir.getWagonOperationsUz_Of_mnkOp(el.mnkua_opv);
+                    el.CargoETSNG = api_dir.getCargoETSNG_Of_Name('code', el.etsng);
+                    if (el.CargoETSNG) {
+                        el.Cargo = api_dir.getCargo_Of_IDETSNG(el.CargoETSNG.id);
+                    } else {
+                        el.Cargo = null;
+                    }
+                    result_list.push(el);
+                }.bind(this));
+                if (typeof callback === 'function') {
+                    callback(result_list);
+                }
+            };
+
             // Отобразить экран с информацией
             var view_report = function (type, id) {
                 curr_data = [];
@@ -314,10 +349,12 @@
                 var list_total_cargo = [];
                 var list_wagon = [];
                 var list_wagon_total = [];
+                var list_disl_wagon = [];
                 switch (type) {
                     case 'req1892': {
                         $el_card_1892.show();
                         $el_card_0002.hide();
+                        $el_card_8858.hide();
                         if (id > 0) {
                             LockScreen(langView('mess_load_data', App.Langs));
                             api_givc.getRequestOfId(id, function (data) {
@@ -348,6 +385,7 @@
                     case 'req0002': {
                         $el_card_1892.hide();
                         $el_card_0002.show();
+                        $el_card_8858.hide();
                         if (id > 0) {
                             LockScreen(langView('mess_load_data', App.Langs));
                             api_givc.getRequestOfId(id, function (data) {
@@ -371,9 +409,32 @@
                         }
                         break;
                     }
+                    case 'req8858': {
+                        $el_card_1892.hide();
+                        $el_card_0002.hide();
+                        $el_card_8858.show();
+                        if (id > 0) {
+                            LockScreen(langView('mess_load_data', App.Langs));
+                            api_givc.getRequestOfId(id, function (data) {
+                                curr_data = getRequests(data, type);
+                                table_table_req8858.view(curr_data);
+                                get_req8858_train(curr_data, function (result_list) {
+                                    list_disl_wagon = result_list;
+                                    table_table_req8858_train.view(list_disl_wagon);
+                                    LockScreenOff();
+                                }.bind(this));
+                            }.bind(this));
+                        } else {
+                            table_table_req8858.view(curr_data);
+                            table_table_req8858_train.view(list_disl_wagon);
+                            LockScreenOff();
+                        }
+                        break;
+                    }
                     default: {
                         $el_card_1892.hide();
                         $el_card_0002.hide();
+                        $el_card_8858.hide();
                         break;
                     }
                 }
@@ -432,8 +493,9 @@
             })
             var $el_card_1892 = $('#card-1892');
             var $el_card_0002 = $('#card-0002');
+            var $el_card_8858 = $('#card-8858');
 
-            var process = 6; // 6
+            var process = 7; // 6
 
             // Выход из инициализации
             var out_init = function (process) {
@@ -580,6 +642,47 @@
 
                 }.bind(this),
             });
+            // Инициализация модуля "Таблица req8858-ГИВЦ"
+            var table_table_req8858 = new TRGIVC('div#req8858');               // Создадим экземпляр
+            table_table_req8858.init({
+                alert: null,
+                detali_table: false,
+                type_report: 'req8858',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+            // Инициализация модуля "Таблица req8858-Поезд"
+            var table_table_req8858_train = new TRGIVC('div#req8858-train');               // Создадим экземпляр
+            table_table_req8858_train.init({
+                alert: null,
+                detali_table: false,
+                type_report: 'req8858_train',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+
             // Инициализация формы 
             var $form = $('#fm-reguest-givc');
             var $el_kod_stan_beg = $('#kod_stan_beg');
