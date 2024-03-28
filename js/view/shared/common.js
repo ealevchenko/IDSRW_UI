@@ -1,6 +1,7 @@
 ﻿var format_date = "YYYY-MM-DD";
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
+var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
 
 /* ----------------------------------------------------------
         Вывод текста согласно региональных настроек
