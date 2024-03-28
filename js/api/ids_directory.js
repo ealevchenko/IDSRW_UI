@@ -46,6 +46,7 @@
                 { name: 'wagons', list: null, fn_get: this.getWagons.bind(this) },
                 { name: 'wagons_rent', list: null, fn_get: this.getWagonsRent.bind(this) },
                 { name: 'owners_wagons', list: null, fn_get: this.getOwnersWagons.bind(this) },
+                { name: 'owners_operations_uz', list: null, fn_get: this.getWagonOperationsUz.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -201,8 +202,43 @@
     ids_directory.prototype.getWagonsRentOfNum = function (num, callback) {
         this.api_com.get('/DirectoryWagonsRent/num/' + num, callback);
     };
+    //======= Directory_WagonOperationsUz (Довідник Операції) ======================================
+    ids_directory.prototype.getWagonOperationsUz = function (callback) {
+        this.api_com.get('/DirectoryWagonOperationsUz', callback);
+    };
+    // Получить операцию по коду и pr_op
+    ids_directory.prototype.getWagonsRentOfKodOp_PrOp = function (kod_op, pr_op, callback) {
+        this.api_com.get('/DirectoryWagonOperationsUz/' + kod_op + '/PrOp/' + pr_op, callback);
+    };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
+    //*======= (Справочник owners_operations_uz) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllWagonOperationsUz = function () {
+        var obj = this.api_com.getAllObj('owners_operations_uz');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по kodOp
+    ids_directory.prototype.getWagonOperationsUz_Of_kodOp = function (kodOp) {
+        return this.api_com.getObj_Of_field('owners_operations_uz', 'kodOp', id);
+    };
+    // Получить запись по mnkOp
+    ids_directory.prototype.getWagonOperationsUz_Of_mnkOp = function (mnkOp) {
+        return this.api_com.getObj_Of_field('owners_operations_uz', 'mnkOp', mnkOp);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getWagonOperationsUz_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('owners_operations_uz', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListWagonOperationsUz = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('owners_operations_uz', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextWagonOperationsUz = function () {
+        return this.getListWagonOperationsUz('mnkOp', 'nameOp', null);
+    };
+
     //*======= (Справочник owners_wagons) ======================================
     // Получить все записи
     ids_directory.prototype.getAllOwnersWagons = function () {
@@ -223,10 +259,9 @@
     };
     // Получить списки (Value, Text, Desabled) по умолчанию
     ids_directory.prototype.getListValueTextOwnersWagons = function () {
-        return this.getListGenusWagons('id', 'owner', ucFirst(App.Lang));
+        return this.getListOwnersWagons('id', 'owner', ucFirst(App.Lang));
     };
-    //****************************************************************************************
-    //-------------------------------- функции для работы с таблицами ------------------------
+
     //*======= (Справочник operators_wagons) ======================================
     // Получить все записи
     ids_directory.prototype.getAllOperatorsWagons = function () {
@@ -247,10 +282,9 @@
     };
     // Получить списки (Value, Text, Desabled) по умолчанию
     ids_directory.prototype.getListValueTextOperatorsWagons = function () {
-        return this.getListGenusWagons('id', 'operators', ucFirst(App.Lang));
+        return this.getListOperatorsWagons('id', 'operators', ucFirst(App.Lang));
     };
-    //****************************************************************************************
-    //-------------------------------- функции для работы с таблицами ------------------------
+
     //*======= (Справочник genus_wagon) ======================================
     // Получить все записи
     ids_directory.prototype.getAllGenusWagons = function () {
@@ -273,8 +307,7 @@
     ids_directory.prototype.getListValueTextGenusWagons = function () {
         return this.getListGenusWagons('id', 'genus', ucFirst(App.Lang));
     };
-    //****************************************************************************************
-    //-------------------------------- функции для работы с таблицами ------------------------
+
     //*======= (Справочник wagons) ======================================
     // Получить все записи
     ids_directory.prototype.getAllWagons = function () {
@@ -289,8 +322,7 @@
     ids_directory.prototype.getWagons_Of_Name = function (name, text) {
         return this.api_com.getObj_Of_field('wagons', name, text);
     };
-    //****************************************************************************************
-    //-------------------------------- функции для работы с таблицами ------------------------
+
     //*======= ids_directory.list_cargo  (Справочник грузов) ======================================
     // Получить все записи
     ids_directory.prototype.getAllCargo = function () {
