@@ -31,19 +31,23 @@
             't_mtr_field_kod_grotp': 'Код грузоотправителя',
             't_mtr_field_mname_rv': 'Род вагона (мнемокод)',
             't_mtr_field_esr_form': 'Первая составляющая индекса поезда (код ЕСР станции формирования текущего индекса поезда)',
+            't_mtr_field_esr_form1': 'Код станции формирования ',
             't_mtr_field_st_nazn_detali_n_rpus': 'Станция назначения',
             't_mtr_field_st_nazn_detali_esr_nazn_vag': 'Код станции назначения',
             't_mtr_field_n_dorus': 'Наименование железной дороги (сокращенное)',
             't_mtr_field_date_pogr': 'Дата погрузки',
             't_mtr_field_kod_grp': 'Код грузополучателя',
             't_mtr_field_nom_sost': 'Вторая составляющая индекса поезда (Номер склада текущего индекса поезда)',
+            't_mtr_field_nom_sost1': '№ состава',
             't_mtr_field_date_op': 'Время совершения операции с объектом',
+            't_mtr_field_date_op1': 'Дата операции',
             't_mtr_field_stan_detali_n_rpus': 'Станция совершения операции',
             't_mtr_field_stan_detali_esr_op': 'Код ЕСР станции совершения операции',
             't_mtr_field_prog_cha_prib': 'Прогнозное время прибытия',
             't_mtr_field_kod_dor': 'Код железной дороги',
             't_mtr_field_rod_vag': 'Код рода вагона',
             't_mtr_field_esr_nazn': 'Третья составляющая индекса поезда (код ЕСР станции назначения текущего индекса поезда)',
+            't_mtr_field_esr_nazn1': 'Код станции назначения',
             't_mtr_field_pr_nrp': 'Признак вагонов нерабочего парка',
             't_mtr_field_cargo_group_name': 'Наименование груза',
             't_mtr_field_date_pogr_min_max': 'Дата погрузки',
@@ -77,12 +81,23 @@
             't_mtr_field_idf_op': 'Идентификатор операции.',
             't_mtr_field_date_inf': 'Время начала обработки информации.',
             't_mtr_field_code_op': 'Код операции с объектом.',
+            't_mtr_field_code_op1': 'Код операции.',
             't_mtr_field_disl': 'Текущая дислокация.',
             't_mtr_field_tip_parka_teh_sost': 'Тип парка техническое состояние.',
             't_mtr_field_sost_pogr_pp': 'Состояние вагона на подъездном пути.',
             't_mtr_field_nom_p': 'Четвертая составляющая индекса поезда (Номер поезда создание текущего индекса поезда)',
+            't_mtr_field_nom_p1': '№ поезда',
             't_mtr_field_esr_op': 'Код ЕСР станции совершения операции',
+            't_mtr_field_esr_op1': 'Код станции дислокации',
             't_mtr_field_wagon_operations_uz_name_op': 'Наименование  операции с вагоном вне поезда',
+            't_mtr_field_mnk_esr_op': 'Станция дислокации',
+            't_mtr_field_mnk_op': 'Операция с вагоном',
+            't_mtr_field_mnk_esr_nazn': 'Станция назначения',
+            't_mtr_field_esr_otpr': 'Код станции отправления',
+            't_mtr_field_mnk_esr_otpr': 'Станция отправления',
+            't_mtr_field_date_otpr': 'Дата отправления',
+            't_mtr_field_docnom': '№ жд накладной',
+
         },
         'en':  //default language: English
         {
@@ -633,7 +648,6 @@
             },
 
             // --- END req8858_train
-
             {
                 field: 'wagon_operations_uz_name_op',
                 data: function (row, type, val, meta) {
@@ -642,7 +656,66 @@
                 className: 'dt-body-left shorten mw-200',
                 title: langView('t_mtr_field_wagon_operations_uz_name_op', App.Langs), width: "200px", orderable: true, searchable: true
             },
+            // +++ regDisvag
+            {
+                field: 'mnk_esr_op',
+                data: function (row, type, val, meta) {
+                    return row.mnk_esr_op;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_mnk_esr_op', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'mnk_op',
+                data: function (row, type, val, meta) {
+                    return row.mnk_op;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_mnk_op', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'mnk_esr_nazn',
+                data: function (row, type, val, meta) {
+                    return row.mnk_esr_nazn;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_mnk_esr_nazn', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'esr_otpr',
+                data: function (row, type, val, meta) {
+                    return row.esr_otpr;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_esr_otpr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'mnk_esr_otpr',
+                data: function (row, type, val, meta) {
+                    return row.mnk_esr_otpr;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('t_mtr_field_mnk_esr_otpr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'date_otpr',
+                data: function (row, type, val, meta) {
+                    return row.date_otpr ? moment(row.date_otpr, format_datetime_ru).format(format_datetime) : '';
+                },
+                className: 'dt-body-center shorten mw-100',
+                title: langView('t_mtr_field_date_otpr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'docnom',
+                data: function (row, type, val, meta) {
+                    return row.docnom;
+                },
+                className: 'dt-body-center',
+                title: langView('t_mtr_field_docnom', App.Langs), width: "50px", orderable: true, searchable: true
+            },
 
+            //
+            // --- END regDisvag
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -793,6 +866,43 @@
         collums.push({ field: 'sost_pogr_pp', title: null, class: null });
         collums.push({ field: 'etsng', title: null, class: null });
         collums.push({ field: 'cargo_cargo_name', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+    // инициализация полей reqDisvag
+    table_report_givc.prototype.init_columns_reqDisvag = function () {
+        var collums = [];
+        collums.push({ field: 'esr_op', title: langView('t_mtr_field_esr_op1', App.Langs), class: null });
+        collums.push({ field: 'mnk_esr_op', title: null, class: null });
+        collums.push({ field: 'date_op', title: langView('t_mtr_field_date_op1', App.Langs), class: null });
+        collums.push({ field: 'code_op', title: langView('t_mtr_field_code_op1', App.Langs), class: null });
+        collums.push({ field: 'mnk_op', title: null, class: null });
+        collums.push({ field: 'nom_p', title: langView('t_mtr_field_nom_p1', App.Langs), class: null });
+        collums.push({ field: 'esr_form', title: langView('t_mtr_field_esr_form1', App.Langs), class: null });
+        collums.push({ field: 'nom_sost', title: langView('t_mtr_field_nom_sost1', App.Langs), class: null });
+        collums.push({ field: 'esr_nazn', title: langView('t_mtr_field_esr_nazn1', App.Langs), class: null });
+        collums.push({ field: 'nom_vag', title: null, class: null });
+        collums.push({ field: 'ves_gruz', title: null, class: null });
+        collums.push({ field: 'esr_nazn_vag', title: null, class: null });
+        collums.push({ field: 'mnk_esr_nazn', title: null, class: null });
+        collums.push({ field: 'etsng', title: null, class: null });
+        collums.push({ field: 'kod_grp', title: null, class: null });
+        collums.push({ field: 'kod_grotp', title: null, class: null });
+        collums.push({ field: 'esr_otpr', title: null, class: null });
+        collums.push({ field: 'mnk_esr_otpr', title: null, class: null });
+        collums.push({ field: 'date_otpr', title: null, class: null });
+        collums.push({ field: 'docnom', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+    // инициализация полей reqDisvag_sheet
+    table_report_givc.prototype.init_columns_reqDisvag_sheet = function () {
+        var collums = [];
+        collums.push({ field: 'nom_sost', title: langView('t_mtr_field_nom_sost1', App.Langs), class: null });
+        collums.push({ field: 'kol_vag', title: null, class: null });
+        collums.push({ field: 'cargo_cargo_name', title: null, class: null });
+        collums.push({ field: 'mnk_esr_op', title: null, class: null });
+        collums.push({ field: 'date_op', title: langView('t_mtr_field_date_op1', App.Langs), class: null });
+        collums.push({ field: 'wagon_operations_uz_name_op', title: null, class: null });
+        //
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     //------------------------------- КНОПКИ ----------------------------------------------------
@@ -1002,6 +1112,43 @@
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
                 this.tab_com.table_columns = this.init_columns_req8858_train();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req0002_train();
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            case 'reqDisvag': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.table_columns = this.init_columns_reqDisvag();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(); // this.init_button_req0002();
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            case 'reqDisvag_sheet': {
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = false;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.table_columns = this.init_columns_reqDisvag_sheet();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref(); //this.init_button_req0002_train();
                 this.tab_com.dom = 'Bfrtip';
                 break;

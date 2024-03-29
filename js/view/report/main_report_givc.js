@@ -73,7 +73,7 @@
             'text': 'Оперативное сальдо (справка 8692)',
         },
         {
-            'value': 'regDisvag',
+            'value': 'reqDisvag',
             'text': 'Дислокация вагонов c грузом (справка Disvag)',
         }
     ];
@@ -131,6 +131,20 @@
                         var res = JSON.parse(data.resultRequests);
                         if (res.disl_vag != null) {
                             result = res.disl_vag;
+                        }
+                    } else {
+                        validation.out_warning_message('При выполнении запроса, произошла ошибка - ' + data.resultRequests)
+                    }
+
+                }
+                break;
+            };
+            case 'reqDisvag': {
+                if (data !== null && data.resultRequests !== null) {
+                    if (data.resultRequests !== 'error_toking') {
+                        var res = JSON.parse(data.resultRequests);
+                        if (res.data != null) {
+                            result = res.data;
                         }
                     } else {
                         validation.out_warning_message('При выполнении запроса, произошла ошибка - ' + data.resultRequests)
@@ -341,7 +355,39 @@
                     callback(result_list);
                 }
             };
-
+            // Вернуть сформированый отчет "8858 Дислокация вагона"
+            var get_reqDisvag_sheet = function (data, callback) {
+                var result_list = [];
+                // Перебрать вагоны
+                $.each(data, function (key, el) {
+                    var ap = result_list.find(function (o) {
+                        return o.nom_sost === el.nom_sost
+                            && o.etsng === el.etsng
+                            && o.esr_op === el.esr_op
+                            && o.code_op === el.code_op
+                    }.bind(this));
+                    if (!ap) {
+                        var CargoETSNG = api_dir.getCargoETSNG_Of_Name('code', el.etsng);
+                        result_list.push({
+                            nom_sost: el.nom_sost,
+                            kol_vag: 1,
+                            etsng: el.etsng,
+                            CargoETSNG : CargoETSNG,
+                            Cargo : CargoETSNG ? api_dir.getCargo_Of_IDETSNG(CargoETSNG.id) : null,
+                            mnk_esr_op: el.mnk_esr_op,
+                            date_op: el.date_op,
+                            esr_op: el.esr_op,
+                            code_op: el.code_op,
+                            WagonOperationsUz : api_dir.getWagonOperationsUz_Of_mnkOp(el.mnk_op),
+                        });
+                    } else {
+                        ap.kol_vag += 1;
+                    }
+                }.bind(this));
+                if (typeof callback === 'function') {
+                    callback(result_list);
+                }
+            };
             // Отобразить экран с информацией
             var view_report = function (type, id) {
                 curr_data = [];
@@ -350,34 +396,36 @@
                 var list_wagon = [];
                 var list_wagon_total = [];
                 var list_disl_wagon = [];
+                var list_disl_cargo = [];
                 switch (type) {
                     case 'req1892': {
                         $el_card_1892.show();
                         $el_card_0002.hide();
                         $el_card_8858.hide();
+                        $el_card_Disvag.hide();
                         if (id > 0) {
                             LockScreen(langView('mess_load_data', App.Langs));
                             api_givc.getRequestOfId(id, function (data) {
                                 curr_data = getRequests(data, type);
-                                table_table_req1892.view(curr_data);
+                                table_req1892.view(curr_data);
                                 //
                                 get_req1892_formed_route(curr_data, function (result_list) {
                                     list_approaches = result_list;
-                                    table_table_req1892_formed_routes.view(list_approaches);
+                                    table_req1892_formed_routes.view(list_approaches);
                                     LockScreenOff();
                                 }.bind(this));
                                 //
                                 get_req1892_total_cargo(curr_data, function (result_list) {
                                     list_total_cargo = result_list;
-                                    table_table_req1892_total_cargo.view(list_total_cargo);
+                                    table_req1892_total_cargo.view(list_total_cargo);
                                     LockScreenOff();
                                 }.bind(this));
 
                             }.bind(this));
                         } else {
-                            table_table_req1892.view(curr_data);
-                            table_table_req1892_formed_routes.view(list_approaches);
-                            table_table_req1892_total_cargo.view(list_total_cargo);
+                            table_req1892.view(curr_data);
+                            table_req1892_formed_routes.view(list_approaches);
+                            table_req1892_total_cargo.view(list_total_cargo);
                             LockScreenOff();
                         }
                         break;
@@ -386,25 +434,26 @@
                         $el_card_1892.hide();
                         $el_card_0002.show();
                         $el_card_8858.hide();
+                        $el_card_Disvag.hide();
                         if (id > 0) {
                             LockScreen(langView('mess_load_data', App.Langs));
                             api_givc.getRequestOfId(id, function (data) {
                                 curr_data = getRequests(data, type);
-                                table_table_req0002.view(curr_data);
+                                table_req0002.view(curr_data);
                                 //
                                 get_req0002_train(curr_data, function (result_list, result_total) {
                                     list_wagon = result_list;
                                     list_wagon_total = result_total;
-                                    table_table_req0002_train.view(list_wagon);
-                                    table_table_req0002_result.view(list_wagon_total);
+                                    table_req0002_train.view(list_wagon);
+                                    table_req0002_result.view(list_wagon_total);
                                     LockScreenOff();
                                 }.bind(this));
                                 //
                             }.bind(this));
                         } else {
-                            table_table_req0002.view(curr_data);
-                            table_table_req0002_train.view(list_wagon);
-                            table_table_req0002_result.view(list_wagon_total);
+                            table_req0002.view(curr_data);
+                            table_req0002_train.view(list_wagon);
+                            table_req0002_result.view(list_wagon_total);
                             LockScreenOff();
                         }
                         break;
@@ -413,20 +462,44 @@
                         $el_card_1892.hide();
                         $el_card_0002.hide();
                         $el_card_8858.show();
+                        $el_card_Disvag.hide();
                         if (id > 0) {
                             LockScreen(langView('mess_load_data', App.Langs));
                             api_givc.getRequestOfId(id, function (data) {
                                 curr_data = getRequests(data, type);
-                                table_table_req8858.view(curr_data);
+                                table_req8858.view(curr_data);
                                 get_req8858_train(curr_data, function (result_list) {
                                     list_disl_wagon = result_list;
-                                    table_table_req8858_train.view(list_disl_wagon);
+                                    table_req8858_train.view(list_disl_wagon);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this));
                         } else {
-                            table_table_req8858.view(curr_data);
-                            table_table_req8858_train.view(list_disl_wagon);
+                            table_req8858.view(curr_data);
+                            table_req8858_train.view(list_disl_wagon);
+                            LockScreenOff();
+                        }
+                        break;
+                    }
+                    case 'reqDisvag': {
+                        $el_card_1892.hide();
+                        $el_card_0002.hide();
+                        $el_card_8858.hide();
+                        $el_card_Disvag.show();
+                        if (id > 0) {
+                            LockScreen(langView('mess_load_data', App.Langs));
+                            api_givc.getRequestOfId(id, function (data) {
+                                curr_data = getRequests(data, type);
+                                table_reqDisvag.view(curr_data);
+                                get_reqDisvag_sheet(curr_data, function (result_list) {
+                                    list_disl_cargo = result_list;
+                                    table_reqDisvag_sheet.view(list_disl_cargo);
+                                LockScreenOff();
+                                }.bind(this));
+                            }.bind(this));
+                        } else {
+                            table_reqDisvag.view(curr_data);
+                            table_reqDisvag_sheet.view(list_disl_cargo);
                             LockScreenOff();
                         }
                         break;
@@ -435,6 +508,7 @@
                         $el_card_1892.hide();
                         $el_card_0002.hide();
                         $el_card_8858.hide();
+                        $el_card_Disvag.hide();
                         break;
                     }
                 }
@@ -494,7 +568,7 @@
             var $el_card_1892 = $('#card-1892');
             var $el_card_0002 = $('#card-0002');
             var $el_card_8858 = $('#card-8858');
-
+            var $el_card_Disvag = $('#card-Disvag');
             var process = 7; // 6
 
             // Выход из инициализации
@@ -523,8 +597,8 @@
             }.bind(this);
 
             // Инициализация модуля "Таблица req1892-ГИВЦ"
-            var table_table_req1892 = new TRGIVC('div#req1892');               // Создадим экземпляр
-            table_table_req1892.init({
+            var table_req1892 = new TRGIVC('div#req1892');               // Создадим экземпляр
+            table_req1892.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req1892',     //
@@ -543,8 +617,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req1892-Сформированные маршруты"
-            var table_table_req1892_formed_routes = new TRGIVC('div#req1892-formed-routes');               // Создадим экземпляр
-            table_table_req1892_formed_routes.init({
+            var table_req1892_formed_routes = new TRGIVC('div#req1892-formed-routes');               // Создадим экземпляр
+            table_req1892_formed_routes.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req1892_formed_routes',     //
@@ -563,8 +637,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req1892-Общий грузопоток"
-            var table_table_req1892_total_cargo = new TRGIVC('div#req1892-total-cargo');               // Создадим экземпляр
-            table_table_req1892_total_cargo.init({
+            var table_req1892_total_cargo = new TRGIVC('div#req1892-total-cargo');               // Создадим экземпляр
+            table_req1892_total_cargo.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req1892_total_cargo',     //
@@ -583,8 +657,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-ГИВЦ"
-            var table_table_req0002 = new TRGIVC('div#req0002');               // Создадим экземпляр
-            table_table_req0002.init({
+            var table_req0002 = new TRGIVC('div#req0002');               // Создадим экземпляр
+            table_req0002.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req0002',     //
@@ -603,8 +677,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-Поезд"
-            var table_table_req0002_train = new TRGIVC('div#req0002-train');               // Создадим экземпляр
-            table_table_req0002_train.init({
+            var table_req0002_train = new TRGIVC('div#req0002-train');               // Создадим экземпляр
+            table_req0002_train.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req0002_train',     //
@@ -623,8 +697,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req0002-ИТОГ"
-            var table_table_req0002_result = new TRGIVC('div#req0002-result');               // Создадим экземпляр
-            table_table_req0002_result.init({
+            var table_req0002_result = new TRGIVC('div#req0002-result');               // Создадим экземпляр
+            table_req0002_result.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req0002_result',     //
@@ -643,8 +717,8 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req8858-ГИВЦ"
-            var table_table_req8858 = new TRGIVC('div#req8858');               // Создадим экземпляр
-            table_table_req8858.init({
+            var table_req8858 = new TRGIVC('div#req8858');               // Создадим экземпляр
+            table_req8858.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req8858',     //
@@ -663,11 +737,51 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица req8858-Поезд"
-            var table_table_req8858_train = new TRGIVC('div#req8858-train');               // Создадим экземпляр
-            table_table_req8858_train.init({
+            var table_req8858_train = new TRGIVC('div#req8858-train');               // Создадим экземпляр
+            table_req8858_train.init({
                 alert: null,
                 detali_table: false,
                 type_report: 'req8858_train',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+            // Инициализация модуля "Таблица reqDisvag-ГИВЦ"
+            var table_reqDisvag = new TRGIVC('div#reqDisvag');               // Создадим экземпляр
+            table_reqDisvag.init({
+                alert: null,
+                detali_table: false,
+                type_report: 'reqDisvag',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+            // Инициализация модуля "Таблица reqDisvag-Лист"
+            var table_reqDisvag_sheet = new TRGIVC('div#reqDisvag-sheet');               // Создадим экземпляр
+            table_reqDisvag_sheet.init({
+                alert: null,
+                detali_table: false,
+                type_report: 'reqDisvag_sheet',     //
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
@@ -741,14 +855,14 @@
                         if (res.disl_vag != null) {
                             curr_data = res.disl_vag;
                         }
-                        table_table_req1892.view(curr_data);
+                        table_req1892.view(curr_data);
                         LockScreenOff();
                     } else {
                         var message = 'Ошибка!'
                         if (data.message) {
                             message = data.message;
                         }
-                        table_table_req1892.view(curr_data);
+                        table_req1892.view(curr_data);
                         validation.out_error_message(message);
                     }
                     LockScreenOff();
