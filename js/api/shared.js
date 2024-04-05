@@ -47,10 +47,12 @@ var AJAXComplete = function () {
     {
         'default':  //default language: ru
         {
+            'mess_load_reference': 'Загружаю справочники...',
             'mess_delay': 'Мы обрабатываем ваш запрос...',
         },
         'en':  //default language: English
         {
+            'mess_load_reference': 'Loading references ...',
             'mess_delay': 'We are processing your request ...',
         }
 

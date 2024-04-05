@@ -426,7 +426,7 @@ var intVal = function (i) {
             this.$select.prop('readonly', this.settings.readonly);
         }
     };
-
+    // <table></table>
     form_element.prototype.table = function (options) {
         this.settings = $.extend({
             id: null,
@@ -443,6 +443,259 @@ var intVal = function (i) {
             add_id(this.$table, this.settings.id);
             add_tag(this.$table, 'title', this.settings.title);
             add_tag(this.$table, 'style', this.settings.style);
+        }
+    };
+    // <thead></thead>
+    form_element.prototype.thead = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$thead = $('<thead></thead>');
+
+        if (!this.$thead || this.$thead.length === 0) {
+            throw new Error('Не удалось создать элемент <thead></thead>');
+        } else {
+            add_class(this.$thead, this.settings.class);
+            add_id(this.$thead, this.settings.id);
+            add_tag(this.$thead, 'style', this.settings.style);
+        }
+    };
+    // Элемент <tr</tr>
+    form_element.prototype.tr = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$tr = $('<tr></tr>');
+
+        if (!this.$tr || this.$tr.length === 0) {
+            throw new Error('Не удалось создать элемент <thead></thead>');
+        } else {
+            add_class(this.$tr, this.settings.class);
+            add_id(this.$tr, this.settings.id);
+            add_tag(this.$tr, 'style', this.settings.style);
+        }
+    };
+    // Элемент <th</th>
+    form_element.prototype.th = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+            width: null,
+            scope: null,
+            text: null,
+            colspan: null,
+            colrow: null,
+        }, options);
+        this.$th = $('<th></th>');
+
+        if (!this.$th || this.$th.length === 0) {
+            throw new Error('Не удалось создать элемент <thead></thead>');
+        } else {
+            add_class(this.$th, this.settings.class);
+            add_id(this.$th, this.settings.id);
+            add_tag(this.$th, 'style', this.settings.style);
+            add_tag(this.$th, 'width', this.settings.width);
+            add_tag(this.$th, 'scope', this.settings.scope);
+            add_tag(this.$th, 'text', this.settings.text);
+            add_tag(this.$th, 'colspan', this.settings.colspan);
+            add_tag(this.$th, 'colrow', this.settings.colrow);
+        }
+    };
+    // Элемент <div></div>
+    form_element.prototype.div = function (options) {
+        this.settings = $.extend({
+            class: null,
+            id: null,
+        }, options);
+        this.$div = $('<div></div>');
+        if (!this.$div || this.$div.length === 0) {
+            throw new Error('Не удалось создать элемент <div></div>');
+        } else {
+            add_class(this.$div, this.settings.class);
+            add_id(this.$div, this.settings.id);
+        }
+    };
+    //Элемент <a class="..." id="..." href='...' target="_blank">...</a>
+    form_element.prototype.a = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            href: null,
+            text: null,
+            target: null,
+            title: null,
+        }, options);
+        this.$alink = $('<a></a>');
+        if (!this.$alink || this.$alink.length === 0) {
+            throw new Error('Не удалось создать элемент <a></a>');
+        } else {
+            add_id(this.$alink, this.settings.id);
+            add_class(this.$alink, this.settings.class);
+            add_title(this.$alink, this.settings.title);
+            append_label(this.$alink, this.settings.text);
+            add_tag(this.$alink, 'target', this.settings.target);
+            add_tag(this.$alink, 'href', this.settings.href);
+        }
+    };
+    // Элемент <label for="..." class="..">..</label>
+    form_element.prototype.label = function (options) {
+        this.settings = $.extend({
+            class: null,
+            id: null,
+            for: null,
+            label: null
+        }, options);
+        this.$label = $('<label></label>');
+        if (!this.$label || this.$label.length === 0) {
+            throw new Error('Не удалось создать элемент <div></div>');
+        } else {
+            add_class(this.$label, this.settings.class);
+            add_id(this.$label, this.settings.id);
+            append_label(this.$label, this.settings.label);
+            add_for(this.$label, this.settings.for);
+        }
+    };
+    // Элемент <input type=".." class=".." id="num_car" title=".." name="..".>
+    form_element.prototype.input = function (options) {
+        this.settings = $.extend({
+            id: null,
+            value: null,
+            checked: null,
+            type: 'text',
+            class: null,
+            title: null,
+            placeholder: null,
+            required: null,
+            maxlength: null,
+            pattern: null,
+            readonly: false,
+            min: null,
+            max: null,
+            step: null,
+        }, options);
+        this.$input = $('<input></input>', {
+            'type': this.settings.type
+        });
+
+        if (!this.$input || this.$input.length === 0) {
+            throw new Error('Не удалось создать элемент <input></input>');
+        } else {
+            add_class(this.$input, this.settings.class);
+            add_id(this.$input, this.settings.id);
+            add_tag(this.$input, 'value', this.settings.value);
+            add_tag(this.$input, 'checked', this.settings.checked);
+            add_tag(this.$input, 'name', this.settings.id);
+            add_tag(this.$input, 'title', this.settings.title);
+            add_tag(this.$input, 'placeholder', this.settings.placeholder);
+            add_tag(this.$input, 'required', this.settings.required);
+            add_tag(this.$input, 'maxlength', this.settings.maxlength);
+            add_tag(this.$input, 'pattern', this.settings.pattern);
+            add_tag(this.$input, 'min', this.settings.min);
+            add_tag(this.$input, 'max', this.settings.max);
+            add_tag(this.$input, 'step', this.settings.step);
+            this.$input.prop('readonly', this.settings.readonly);
+        }
+    };
+
+    // bootstrap-components ----------------------------------
+    form_element.prototype.bs_dropdown = function (options) {
+        this.settings = $.extend({
+            color: 'secondary',
+            size: null,
+            class: null,
+            id: 'dropdownMenuButton',
+            label: null,
+            title: null,
+            list_menu: null,
+        }, options);
+        this.fe = new form_element();
+        var div_dropdown = new this.fe.div({ class: 'dropdown' });
+        this.$element = div_dropdown.$div;
+        add_class(this.$element, this.settings.class);
+        var button = new this.fe.bs_button({
+            color: this.settings.color,
+            size: this.settings.size,
+            class: 'dropdown-toggle',
+            id: this.settings.id,
+            label: this.settings.label,
+            title: this.settings.title,
+        });
+        add_tag(button.$button, 'data-toggle', 'dropdown');
+        add_tag(button.$button, 'aria-expanded', 'false');
+        var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
+        this.$dropdown_menu = div_dropdown_menu.$div
+        add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
+        this.$element.append(button.$button).append(this.$dropdown_menu);
+        if (this.settings.list_menu && this.settings.list_menu.length > 0) {
+            $.each(this.settings.list_menu, function (index, element) {
+                var a_link = new this.fe.a({
+                    id: element.id,
+                    class: 'dropdown-item',
+                    href: element.href,
+                    text: element.label,
+                    target: null,
+                    title: null,
+                });
+                add_class(a_link.$alink, element.disable ? 'disabled' : '');
+
+                if (typeof element.click === 'function') {
+                    a_link.$alink.on("click", element.click);
+                }
+                this.$dropdown_menu.append(a_link.$alink);
+            }.bind(this));
+        }
+    };
+
+    form_element.prototype.bs_droplistgroup = function (options) {
+        this.settings = $.extend({
+            color: 'secondary',
+            size: null,
+            class: null,
+            id: 'dropdownMenuButton',
+            label: null,
+            title: null,
+            list_menu: null,
+        }, options);
+        this.fe = new form_element();
+        var div_dropdown = new this.fe.div({ class: 'dropdown' });
+        this.$element = div_dropdown.$div;
+        add_class(this.$element, this.settings.class);
+        var button = new this.fe.bs_button({
+            color: this.settings.color,
+            size: this.settings.size,
+            class: 'dropdown-toggle',
+            id: this.settings.id,
+            label: this.settings.label,
+            title: this.settings.title,
+        });
+        add_tag(button.$button, 'data-toggle', 'dropdown');
+        add_tag(button.$button, 'aria-expanded', 'false');
+        var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
+        this.$dropdown_menu = div_dropdown_menu.$div
+        add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
+        this.$element.append(button.$button).append(this.$dropdown_menu);
+        if (this.settings.list_menu && this.settings.list_menu.length > 0) {
+            $.each(this.settings.list_menu, function (index, element) {
+                var a_link = new this.fe.a({
+                    id: element.id,
+                    class: 'dropdown-item',
+                    href: element.href,
+                    text: element.label,
+                    target: null,
+                    title: null,
+                });
+                add_class(a_link.$alink, element.disable ? 'disabled' : '');
+
+                if (typeof element.click === 'function') {
+                    a_link.$alink.on("click", element.click);
+                }
+                this.$dropdown_menu.append(a_link.$alink);
+            }.bind(this));
         }
     };
 
@@ -551,6 +804,7 @@ var intVal = function (i) {
         this.out_info_message(mes_ok);
         return true;
     };
+
     // --------------------------------------------------------------------------
     // Установить признак ошибка
     validation_form.prototype.set_form_element_error = function (o, mes_error, out_message) {

@@ -15,11 +15,11 @@
     {
         'default':  //default language: ru
         {
-            'mess_load_reference': 'Загружаю справочники...',
+            //'mess_load_reference': 'Загружаю справочники...',
         },
         'en':  //default language: English
         {
-            'mess_load_reference': 'Loading references ...',
+            //'mess_load_reference': 'Loading references ...',
         }
     };
     // Определлим список текста для этого модуля

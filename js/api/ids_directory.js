@@ -47,6 +47,7 @@
                 { name: 'wagons_rent', list: null, fn_get: this.getWagonsRent.bind(this) },
                 { name: 'owners_wagons', list: null, fn_get: this.getOwnersWagons.bind(this) },
                 { name: 'owners_operations_uz', list: null, fn_get: this.getWagonOperationsUz.bind(this) },
+                { name: 'station', list: null, fn_get: this.getStation.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -210,8 +211,39 @@
     ids_directory.prototype.getWagonsRentOfKodOp_PrOp = function (kod_op, pr_op, callback) {
         this.api_com.get('/DirectoryWagonOperationsUz/' + kod_op + '/PrOp/' + pr_op, callback);
     };
+    //======= Directory_Station (Справочник станций) ======================================
+    ids_directory.prototype.getStation = function (callback) {
+        this.api_com.get('/DirectoryStation', callback);
+    };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
+    //*======= (Справочник owners_operations_uz) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllStation = function () {
+        var obj = this.api_com.getAllObj('station');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getStation_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('station', 'id', id);
+    };
+    // Получить запись по id
+    ids_directory.prototype.getStation_Of_Code = function (code) {
+        return this.api_com.getObj_Of_field('station', 'code', code);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getStation_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('station', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListStation = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('station', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextStation = function () {
+        return this.getListStation('id', 'stationName', ucFirst(App.Lang));
+    };
+
     //*======= (Справочник owners_operations_uz) ======================================
     // Получить все записи
     ids_directory.prototype.getAllWagonOperationsUz = function () {
