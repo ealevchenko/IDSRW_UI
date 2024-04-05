@@ -37,6 +37,11 @@
     {
       "library": "jquery@3.7.1",
       "destination": "lib/jquery/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "popper.js@2.11.8",
+      "destination": "lib/popper/"
     }
   ]
 }
