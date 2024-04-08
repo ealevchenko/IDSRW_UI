@@ -215,6 +215,9 @@
     ids_directory.prototype.getStation = function (callback) {
         this.api_com.get('/DirectoryStation', callback);
     };
+    ids_directory.prototype.getViewStatusAllStation = function (callback) {
+        this.api_com.get('/DirectoryStation/status', callback);
+    };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
     //*======= (Справочник owners_operations_uz) ======================================

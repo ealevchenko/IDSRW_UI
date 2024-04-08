@@ -5,6 +5,7 @@
     var App = window.App || {};
     var $ = window.jQuery;
 
+    var API_DIRECTORY = App.ids_directory;
 
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
@@ -78,72 +79,106 @@
         // Определим основные свойства
         this.settings = $.extend({
             alert: null,
+            api_dir: null,
             fn_init: null,
         }, options);
+        // определим библиотеку  dir
+        this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+
         this.$tw.attr("style", "overflow-x:auto");
         this.$tw.empty();
         this.$table = new this.fe_ui.table({
             id: this.selector + '-table',
             class: 'table table-sm table-hover',
             title: null,
-        });       
-        this.$tw.append(this.$table);
-        ////----------------------------------
-        //// Создать макет таблицы
+        });
+        this.$tw.append(this.$table.$html);
+        // Создаем макет таблицы дерева
+        // ЗАГОЛОВОК
+        this.$thead = new this.fe_ui.thead({
+            class: 'thead-light fw-normal text-uppercase',
+        });
+        this.$tr = new this.fe_ui.tr({
 
-        //if (this.html_footer !== '' && this.html_footer !== null) {
-        //    this.$table_report = table_tree_way.$table.append($(this.html_footer));
-        //}
-        ////this.settings.fn_init_footer_report;
-        //this.$table_report = table_tree_way.$table;
-        //this.$tw.addClass('table-report').append(this.$table_report);
-        //// Инициализируем таблицу
-        //this.obj_t_report = this.$table_report.DataTable({
-        //    "lengthMenu": this.lengthMenu,
-        //    "pageLength": this.pageLength,
-        //    "deferRender": this.deferRender,
-        //    "paging": this.paging,
-        //    "searching": this.searching,
-        //    "ordering": this.ordering,
-        //    "info": this.info,
-        //    "keys": true,
-        //    columnDefs: this.columnDefs,
-        //    colReorder: true,                       // вкл. перетаскивание полей
-        //    fixedHeader: this.fixedHeader,          // вкл. фикс. заголовка
-        //    fixedColumns: {
-        //        leftColumns: this.leftColumns,
-        //    },
-        //    select: this.table_select,
-        //    "autoWidth": this.autoWidth,
-        //    //"filter": true,
-        //    //"scrollY": "600px",
-        //    //sScrollX: "100%",
-        //    scrollX: true,
-        //    /*            sScrollXInner: "100%",*/
-        //    //"responsive": true,
-        //    //"bAutoWidth": false,
-        //    //order: this.order_column,
-        //    language: this.language_table(App.Langs),
-        //    jQueryUI: false,
-        //    drawCallback: this.drawCallback,
-        //    "createdRow": this.createdRow,
-        //    footerCallback: this.footerCallback,
-        //    columns: this.table_columns,
-        //    dom: this.dom,
-        //    stateSave: true,
-        //    buttons: this.table_buttons,
-        //});
-        //// Обработка события выбора
-        //if (this.table_select !== false) {
-        //    this.obj_t_report.on('select deselect', function (e, dt, type, indexes) {
-        //        this.select_rows(); // определим строку
-        //        this.enable_button();
-        //        // Обработать событие выбрана строка
-        //        if (typeof this.settings.fn_select_rows === 'function') {
-        //            this.settings.fn_select_rows(this.selected_rows);
-        //        }
-        //    }.bind(this));
-        //}
+        });
+        this.$th_name = new this.fe_ui.th({
+            width: '60%',
+            scope: 'col',
+            colspan: '5',
+            class: 'fw-normal text-uppercase',
+        });
+        this.$th_pb = new this.fe_ui.th({
+            width: '20%',
+            scope: 'col',
+            colspan: '1',
+            text: langView('title_inp_out', App.Langs),
+            class: 'fw-normal text-uppercase',
+        });
+        this.$th_count = new this.fe_ui.th({
+            width: '5%',
+            scope: 'col',
+            colspan: '1',
+            text: langView('title_count', App.Langs),
+            class: 'fw-normal text-uppercase',
+        });
+        this.$th_amkr = new this.fe_ui.th({
+            width: '5%',
+            scope: 'col',
+            colspan: '1',
+            text: langView('title_count_amkr', App.Langs),
+            class: 'fw-normal text-uppercase',
+        });
+        this.$th_capacity = new this.fe_ui.th({
+            width: '10%',
+            scope: 'col',
+            colspan: '1',
+            text: langView('title_max', App.Langs),
+            class: 'fw-normal text-uppercase',
+        });
+        this.$table.$html.append(this.$thead.$html.append(this.$tr.$html.append(this.$th_name.$html).append(this.$th_pb.$html).append(this.$th_count.$html).append(this.$th_amkr.$html).append(this.$th_capacity.$html)));
+        // ДАННЫЕ
+        this.$tbody = new this.fe_ui.tbody({
+        });
+        this.$table.$html.append(this.$tbody.$html);
+        // ПОДВАЛ
+        this.$tfoot = new this.fe_ui.tfoot({
+            class: 'bg-secondary text-white',
+        });
+        this.$trf = new this.fe_ui.tr({
+        });
+        this.$thf_name = new this.fe_ui.th({
+            width: '60%',
+            scope: 'col',
+            colspan: '5',
+            text: langView('title_totals', App.Langs),
+            class: 'fw-normal text-uppercase',
+        });
+        this.$thf_pb = new this.fe_ui.th({
+            width: '20%',
+            scope: 'col',
+            colspan: '1',
+            class: 'fw-normal text-uppercase',
+        });
+        this.$thf_count = new this.fe_ui.th({
+            width: '5%',
+            scope: 'col',
+            colspan: '1',
+            class: 'fw-normal text-uppercase',
+        });
+        this.$thf_amkr = new this.fe_ui.th({
+            width: '5%',
+            scope: 'col',
+            colspan: '1',
+            class: 'fw-normal text-uppercase',
+        });
+        this.$thf_capacity = new this.fe_ui.th({
+            width: '10%',
+            scope: 'col',
+            colspan: '1',
+            class: 'fw-normal text-uppercase',
+        });
+        this.$table.$html.append(this.$tfoot.$html.append(this.$trf.$html.append(this.$thf_name.$html).append(this.$thf_pb.$html).append(this.$thf_count.$html).append(this.$thf_amkr.$html).append(this.$thf_capacity.$html)));
+
         // На проверку окончания инициализации
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
@@ -151,63 +186,114 @@
         }
         //----------------------------------
     };
-    // Выбрано
-    table_tree_way.prototype.select_rows = function () {
-        var index = this.obj_t_report.rows({ selected: true });
-        var rows = this.obj_t_report.rows(index && index.length > 0 ? index[0] : null).data().toArray();
-        this.selected_rows = rows;
-        this.id_sostav = this.select_rows_sostav && this.select_rows_sostav.length > 0 ? this.select_rows_sostav[0].id : null;
-    };
-    // Отображение кнопки добавить
-    table_tree_way.prototype.enable_button = function () {
-        switch (this.settings.type_report) {
-            //case 'adoption_sostav': {
-            //    if (this.select_rows_sostav && this.select_rows_sostav.length > 0) {
-            //        this.obj_t_sostav.button(5).enable(true);
-            //        if (this.select_rows_sostav[0].status < 1) {
-            //            this.obj_t_sostav.button(3).enable(true);
-            //            this.obj_t_sostav.button(4).enable(true); // отмена сдачи состава
-            //            this.obj_t_sostav.button(5).text(langView('tis_title_button_wagon_accept', App.Langs));
-            //        } else {
-            //            // Если статус в работе принят или удален 
-            //            this.obj_t_sostav.button(3).enable(true);
-            //            this.obj_t_sostav.button(4).enable(false);
-            //            //if (this.select_rows_sostav[0].status === 2) { this.obj_t_sostav.button(4).enable(true); } else { this.obj_t_sostav.button(4).enable(false); }
-            //            this.obj_t_sostav.button(5).text(langView('tis_title_button_wagon_view', App.Langs));
-            //        }
-            //    } else {
-            //        this.obj_t_sostav.button(3).enable(false);
-            //        this.obj_t_sostav.button(4).enable(false);
-            //        this.obj_t_sostav.button(5).enable(false);
-            //    }
-            //    break;
-            //};
-        };
-    };
-    // Показать данные
-    table_tree_way.prototype.view = function (data, id_select) {
-        this.data = data;
-        this.id_select = id_select;
-        this.out_clear();
-        LockScreen(langView('t_com_mess_view_report', App.Langs));
-        this.obj_t_report.clear();
-        this.obj_t_report.rows.add(data);
-        this.obj_t_report.order(this.order_column);
-        this.obj_t_report.draw();
-        if (id_select !== null) {
-            this.id_select = id_select
-            //this.obj_t_report.row('#' + this.id_select).select();
-        } else {
-            this.id_select = null;
-        }
-        this.view_footer(data);
-        this.select_rows();
-        this.enable_button();
-    };
     //
-    table_tree_way.prototype.view_footer = function (data) {
-
+    table_tree_way.prototype.view = function (list_station, id_station, id_park, id_way) {
+        this.view_station(list_station, id_station, id_park, id_way, function () {
+            LockScreenOff();
+        })
     };
+
+    table_tree_way.prototype.view_tr_station = function (base, el) {
+        this.$tr = new base.fe_ui.tr({});
+        this.$tr.$html.attr('data-tree-area', 'station');
+        this.$tr.$html.attr('data-station', el.id);
+        var $td_control = new base.fe_ui.td({
+            width: '18px',
+            class: 'station-control',
+        });
+        var $td_img_station = new base.fe_ui.td({
+            width: '18px',
+            class: 'icon-station',
+        });
+        var $td_name = new base.fe_ui.td({
+            class: 'text-left',
+            text: el["stationName" + ucFirst(App.Lang)],
+            colspan: '3'
+        });
+        //
+        var $td_pb = new base.fe_ui.td({
+            class: 'text-centr',
+        });
+        var $td_count = new base.fe_ui.td({
+            class: 'text-right',
+            text: el.countAllWagons,
+        });
+        var $td_amkr = new base.fe_ui.td({
+            class: 'text-right',
+            text: el.countAmkrWagons,
+        });
+        var $td_capacity = new base.fe_ui.td({
+            class: 'text-right',
+            text: el.capacityWagons,
+        });
+        //$td_pb.$html.append(as_Element.$element);
+        this.$tr.$html.append($td_control.$html).append($td_img_station.$html).append($td_name.$html).append($td_pb.$html).append($td_count.$html).append($td_amkr.$html).append($td_capacity.$html);
+    };
+
+    // Показать станции
+    table_tree_way.prototype.view_station = function (list_station, id_station, id_park, id_way, callback) {
+        this.$tbody.$html.empty();
+        //var base = this;
+        this.list_station = list_station;
+        this.load_station(this.list_station, function (stations) {
+            $.each(stations, function (i, el) {
+
+                var $trbody = new this.view_tr_station(this, el);
+                $trbody.$tr.$html.on('click', 'td.station-control', function (e) {
+                    var tr = $(e.currentTarget).closest('tr');
+                    var id_station = tr.attr('data-station');
+                    //this.view_park(id_station, null, null, function () {
+                    //    LockScreenOff();
+                    //}); // Показать парки
+                }.bind(this));
+                this.$tbody.$html.append($trbody.$tr.$html);
+                //        var trbodyElement = new table_tr_station(base.selector, el); // Получим парк
+                //        // Настроим событие нажатия на "открыть"\"закрыть" парк
+                //        trbodyElement.$element.on('click', 'td.station-control', function (e) {
+                //            var tr = $(e.currentTarget).closest('tr');
+                //            var id_station = tr.attr('data-station');
+                //            this.view_park(id_station, null, null, function () {
+                //                LockScreenOff();
+                //            }); // Показать парки
+                //        }.bind(base));
+                //        // Добавим элемент
+                //        base.body.append(trbodyElement.$element);
+                //        if (id_station && el.id === id_station) {
+                //            base.view_park(id_station, id_park, id_way, function () {
+                //                LockScreenOff();
+                //            }); // Показать парки
+                //        }
+            }.bind(this));
+            //    base.select_way(id_way);
+            //    base.update_foot();
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }.bind(this));
+    };
+
+    //--------------------------------Станции-----------------------------------
+    // Загрузить станции из базы
+    table_tree_way.prototype.load_station = function (list_station, callback) {
+        LockScreen(langView('mess_load_station', App.Langs));
+        this.api_dir.getViewStatusAllStation(function (stations) {
+            if (typeof callback === 'function') {
+                var current_stations = stations.filter(function (i) {
+                    return !i.station_uz;
+                });
+                if (list_station && list_station.length > 0) {
+                    current_stations = current_stations.filter(function (i) {
+                        return list_station.find(function (o) {
+                            return o.id == i.id && o.checked;
+                        });
+                    });
+                }
+                callback(current_stations);
+            }
+        }.bind(this));
+    };
+
+
     //------------------------------- СООБЩЕНИЯ ----------------------------------------------------
     //-------------------------------------------------------------------------------------------
     // Очистить сообщения

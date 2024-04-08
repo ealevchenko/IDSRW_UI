@@ -142,7 +142,10 @@
                 };
             });
 
-            tw.init();
+            tw.init({
+                api_dir: api_dir,
+            });
+            tw.view(list_station_visible, null, null, null);
 
             LockScreenOff();
         }.bind(this));

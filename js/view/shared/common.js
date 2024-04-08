@@ -239,6 +239,11 @@ var intVal = function (i) {
             element.append(label);
         }
     };
+    var append_text = function (element, text) {
+        if (element && text && text !== '') {
+            element.append(text);
+        }
+    };
 
     var add_click = function (element, fn) {
         if (element && typeof fn === 'function') {
@@ -434,15 +439,15 @@ var intVal = function (i) {
             title: null,
             style: null,
         }, options);
-        this.$table = $('<table></table>');
+        this.$html = $('<table></table>');
 
-        if (!this.$table || this.$table.length === 0) {
+        if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <table></table>');
         } else {
             add_class(this.$table, this.settings.class);
-            add_id(this.$table, this.settings.id);
-            add_tag(this.$table, 'title', this.settings.title);
-            add_tag(this.$table, 'style', this.settings.style);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'title', this.settings.title);
+            add_tag(this.$html, 'style', this.settings.style);
         }
     };
     // <thead></thead>
@@ -452,14 +457,48 @@ var intVal = function (i) {
             class: null,
             style: null,
         }, options);
-        this.$thead = $('<thead></thead>');
+        this.$html = $('<thead></thead>');
 
-        if (!this.$thead || this.$thead.length === 0) {
+        if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <thead></thead>');
         } else {
-            add_class(this.$thead, this.settings.class);
-            add_id(this.$thead, this.settings.id);
-            add_tag(this.$thead, 'style', this.settings.style);
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    // <tbody></tbody>
+    form_element.prototype.tbody = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<tbody></tbody>');
+
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <tbody></tbody>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    // <tfoot></tfoot>
+    form_element.prototype.tfoot = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<tfoot></tfoot>');
+
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <tfoot></tfoot>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
         }
     };
     // Элемент <tr</tr>
@@ -469,14 +508,14 @@ var intVal = function (i) {
             class: null,
             style: null,
         }, options);
-        this.$tr = $('<tr></tr>');
+        this.$html = $('<tr></tr>');
 
-        if (!this.$tr || this.$tr.length === 0) {
-            throw new Error('Не удалось создать элемент <thead></thead>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <tr></tr>');
         } else {
-            add_class(this.$tr, this.settings.class);
-            add_id(this.$tr, this.settings.id);
-            add_tag(this.$tr, 'style', this.settings.style);
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
         }
     };
     // Элемент <th</th>
@@ -491,19 +530,46 @@ var intVal = function (i) {
             colspan: null,
             colrow: null,
         }, options);
-        this.$th = $('<th></th>');
+        this.$html = $('<th></th>');
 
-        if (!this.$th || this.$th.length === 0) {
-            throw new Error('Не удалось создать элемент <thead></thead>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <th></th>');
         } else {
-            add_class(this.$th, this.settings.class);
-            add_id(this.$th, this.settings.id);
-            add_tag(this.$th, 'style', this.settings.style);
-            add_tag(this.$th, 'width', this.settings.width);
-            add_tag(this.$th, 'scope', this.settings.scope);
-            add_tag(this.$th, 'text', this.settings.text);
-            add_tag(this.$th, 'colspan', this.settings.colspan);
-            add_tag(this.$th, 'colrow', this.settings.colrow);
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
+            add_tag(this.$html, 'width', this.settings.width);
+            add_tag(this.$html, 'scope', this.settings.scope);
+            append_text(this.$html, this.settings.text);
+            add_tag(this.$html, 'colspan', this.settings.colspan);
+            add_tag(this.$html, 'colrow', this.settings.colrow);
+        }
+    };
+    // Элемент <td</td>
+    form_element.prototype.td = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+            width: null,
+            scope: null,
+            text: null,
+            colspan: null,
+            colrow: null,
+        }, options);
+        this.$html = $('<td></td>');
+
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <td></td>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'style', this.settings.style);
+            add_tag(this.$html, 'width', this.settings.width);
+            add_tag(this.$html, 'scope', this.settings.scope);
+            append_text(this.$html, this.settings.text);
+            add_tag(this.$html, 'colspan', this.settings.colspan);
+            add_tag(this.$html, 'colrow', this.settings.colrow);
         }
     };
     // Элемент <div></div>
