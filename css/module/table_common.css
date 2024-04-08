@@ -1,110 +1,139 @@
-﻿body {
+﻿@charset "UTF-8";
+
+:root {
+    --dt-row-green: 166, 255, 166;
+    --dt-row-green-text: 0, 0, 0;
+    --dt-row-green-link: 9, 10, 11;
+    --dt-row-yellow: 253, 242, 186;
+    --dt-row-yellow-text: 0, 0, 0;
+    --dt-row-yellow-link: 9, 10, 11;
 }
 
-.table td {
-    padding: .15rem;
+body {
 }
 
-.table th {
-    padding: .15rem;
+table.dataTable {
+    /*    width: 100%;*/
+    margin: 0;
+    /*    clear: both;
+    border-collapse: separate;
+    border-spacing: 0*/
 }
 
-
-tr.select {
-    background-color: #ffedda
+/*Уменьшить размер таблицы*/
+.table-report {
+    font-size: 0.8rem;
 }
 
-    tr.select td.row-select {
-        background: url("../../Images/idsrwt/wsd/eye-solid.svg") no-repeat center center;
-        width: 16px;
-    }
-
-    tr.select:hover {
-        background-color: #ffdab3
-    }
-
-td.station-control {
-    background: url('../../Content/DataTables/media/images/details_open.png') no-repeat center center;
-    width: 20px;
-    cursor: pointer;
-}
-
-tr.shown td.station-control {
-    background: url('../../Content/DataTables/media/images/details_close.png') no-repeat center center;
-    width: 20px;
-}
-
-td.park-control {
-    background: url('../../Content/DataTables/media/images/details_open.png') no-repeat center center;
-    width: 20px;
-    cursor: pointer;
-}
-
-tr[data-tree-area='station'].shown {
-    background-color: #dadaff;
-}
-
-    tr[data-tree-area='station'].shown:hover {
-        background-color: #b3b3ff;
-    }
-
-tr[data-tree-area='park'].shown {
-    background-color: #daffda;
-}
-
-    tr[data-tree-area='park'].shown:hover {
-        background-color: #b3ffb3;
-    }
-
-tr.shown td.park-control {
-    background: url('../../Content/DataTables/media/images/details_close.png') no-repeat center center;
-    width: 20px;
+.table-report-detali {
+    font-size: 0.7rem;
 }
 
 
-td.icon-station {
-    background: url("../../Images/idsrwt/wsd/station.svg") no-repeat center center;
-    width: 16px;
-    /*    height: 16px;
-    margin-right: 5px;*/
+table.dataTable tbody td.mw-50 {
+    max-width: 50px;
 }
 
-.icon-park {
-    background: url("../../Images/idsrwt/wsd/park.svg") no-repeat center center;
-    width: 16px;
-    /*    height: 16px;
-    margin-right: 5px;*/
+table.dataTable tbody td.mw-100 {
+    max-width: 100px;
 }
 
-.icon-way {
-    background: url("../../Images/idsrwt/wsd/way.png") no-repeat center center;
-    height: 16px !important;
-    /*    margin-right: 5px;*/
+table.dataTable tbody td.mw-150 {
+    max-width: 150px;
 }
 
-.icon-tree-open {
-    background: url("../../Images/idsrwt/wsd/tree_detali.png") no-repeat center center;
-    width: 16px;
-    /*    height: 16px;*/
-    /*    margin-right: 5px;*/
+table.dataTable tbody td.mw-200 {
+    max-width: 200px;
 }
 
-.icon-tree-open-end {
-    background: url("../../Images/idsrwt/wsd/tree_end.png") no-repeat center center;
-    width: 16px;
-    /*height: 16px;*/
-    /*    margin-right: 5px;*/
+table.dataTable tbody td.mw-250 {
+    max-width: 250px;
 }
 
-.icon-tree-open-skeep {
-    background: url("../../Images/idsrwt/wsd/tree_skeep.png") no-repeat center center;
-    width: 16px;
-    /*    height: 16px;*/
-    /*    margin-right: 5px;*/
+table.dataTable tbody td.mw-300 {
+    max-width: 300px;
 }
 
-.icon-tree-open-not {
-    width: 16px;
-    height: 16px;
-    /*    margin-right: 5px;*/
+table.dataTable tbody td.shorten {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
+/*Отобразить типы полей*/
+/*Зафиксированные поля - не просвечиваемые*/
+table.dataTable.display thead tr th.fixed-column {
+    background-color: #ffffff;
+}
+
+table.dataTable.display tfoot tr th.fixed-column {
+    background-color: #ffffff;
+}
+
+/*Зеленый*/
+table.table.dataTable > tbody > tr.green > * {
+    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-green));
+    color: rgb(255, 255, 255);
+    color: rgb(var(--dt-row-green-text));
+}
+
+table.table.dataTable > tbody > tr.green a {
+    color: rgb(9, 10, 11);
+    color: rgb(var(--dt-row-green-link));
+}
+
+table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).green > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.95);
+}
+
+/*table.table.dataTable.table-hover > tbody > tr:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+}*/
+
+table.table.dataTable.table-hover > tbody > tr.green:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.975);
+}
+/*Желтый*/
+table.table.dataTable > tbody > tr.yellow > * {
+    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-yellow));
+    color: rgb(255, 255, 255);
+    color: rgb(var(--dt-row-yellow-text));
+}
+
+table.table.dataTable > tbody > tr.yellow a {
+    color: rgb(9, 10, 11);
+    color: rgb(var(--dt-row-yellow-link));
+}
+
+table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).yellow > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.95);
+}
+
+/*table.table.dataTable.table-hover > tbody > tr:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+}*/
+
+table.table.dataTable.table-hover > tbody > tr.yellow:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.975);
+}
+
+
+/*Отобразить подсветку строки*/
+/*Зеленый*/
+/*table.table.dataTable tbody tr:not(.selected).green.odd, table.table.dataTable tbody tr:not(.selected).green.even {
+    background-color: #cdffcd;
+}
+
+table.table.dataTable.display tbody tr:not(.selected).odd.green > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.odd.green > .sorting_1 {
+    background-color: #a6ffa6;
+}
+
+table.table.dataTable.display tbody tr:not(.selected).even.green > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.even.green > .sorting_1 {
+    background-color: #a6ffa6;
+}*/
