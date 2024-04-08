@@ -444,7 +444,7 @@ var intVal = function (i) {
         if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <table></table>');
         } else {
-            add_class(this.$table, this.settings.class);
+            add_class(this.$html, this.settings.class);
             add_id(this.$html, this.settings.id);
             add_tag(this.$html, 'title', this.settings.title);
             add_tag(this.$html, 'style', this.settings.style);
