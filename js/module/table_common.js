@@ -394,10 +394,10 @@
             //style: 'width: 100%',
         });
         if (this.html_footer !== '' && this.html_footer !== null) {
-            this.$table_report = table_common.$table.append($(this.html_footer));
+            this.$table_report = table_common.$html.append($(this.html_footer));
         }
         //this.settings.fn_init_footer_report;
-        this.$table_report = table_common.$table;
+        this.$table_report = table_common.$html;
         this.$td_report.addClass('table-report').append(this.$table_report);
         // Инициализируем таблицу
         this.obj_t_report = this.$table_report.DataTable({
