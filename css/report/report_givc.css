@@ -6,7 +6,7 @@
 /*Блокировка экрана*/
 .LockOff {
     display: none;
-    /*visibility: hidden;*/
+    visibility: hidden;
 }
 
 .LockOn {
