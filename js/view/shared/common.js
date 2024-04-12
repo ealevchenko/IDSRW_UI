@@ -182,7 +182,7 @@ var intVal = function (i) {
         }
     };
     // Определлим список текста для этого модуля
-    App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang), getLanguages($.Text_Common, App.Lang)); 
+    App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang), getLanguages($.Text_Common, App.Lang));
 
     //================================================================================
     // Класс для создания объектов 
@@ -240,7 +240,7 @@ var intVal = function (i) {
         }
     };
     var append_text = function (element, text) {
-        if (element && text && text !== '') {
+        if (element && text !== '') {
             element.append(text);
         }
     };
@@ -575,15 +575,39 @@ var intVal = function (i) {
     // Элемент <div></div>
     form_element.prototype.div = function (options) {
         this.settings = $.extend({
-            class: null,
             id: null,
+            class: null,
+            style: null,
         }, options);
-        this.$div = $('<div></div>');
-        if (!this.$div || this.$div.length === 0) {
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <div></div>');
         } else {
-            add_class(this.$div, this.settings.class);
-            add_id(this.$div, this.settings.id);
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    // Элемент <span></span>
+    form_element.prototype.span = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            text: null,
+            class: null,
+            color: null,
+            style: null,
+        }, options);
+        this.$html = $('<span></span>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <span></span>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.name);
+            add_class(this.$html, this.settings.class);
+            add_class(this.$html, this.settings.color);
+            add_tag(this.$html, 'style', this.settings.style);
+            append_text(this.$html, this.settings.text);
         }
     };
     //Элемент <a class="..." id="..." href='...' target="_blank">...</a>
@@ -596,16 +620,16 @@ var intVal = function (i) {
             target: null,
             title: null,
         }, options);
-        this.$alink = $('<a></a>');
-        if (!this.$alink || this.$alink.length === 0) {
+        this.$html = $('<a></a>');
+        if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <a></a>');
         } else {
-            add_id(this.$alink, this.settings.id);
-            add_class(this.$alink, this.settings.class);
-            add_title(this.$alink, this.settings.title);
-            append_label(this.$alink, this.settings.text);
-            add_tag(this.$alink, 'target', this.settings.target);
-            add_tag(this.$alink, 'href', this.settings.href);
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            add_title(this.$html, this.settings.title);
+            append_label(this.$html, this.settings.text);
+            add_tag(this.$html, 'target', this.settings.target);
+            add_tag(this.$html, 'href', this.settings.href);
         }
     };
     // Элемент <label for="..." class="..">..</label>
@@ -669,6 +693,74 @@ var intVal = function (i) {
     };
 
     // bootstrap-components ----------------------------------
+    //<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    //    <div class="progress-bar bg-success" style="width: 25%">25%</div>
+    //</div>
+    form_element.prototype.bs_progressbar = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            value: 0,
+            min: 0,
+            max: 100,
+            class: null,
+        }, options);
+        this.fe = new form_element();
+        var div_progress = new this.fe.div({ class: 'progress' });
+        add_class(div_progress.$html, this.settings.class);
+        div_progress.$html.attr('role', 'progressbar');
+        div_progress.$html.attr('aria-valuenow', this.settings.value);
+        div_progress.$html.attr('aria-valuemin', this.settings.min);
+        div_progress.$html.attr('aria-valuemax', this.settings.max);
+        var current = Number(this.settings.value > this.settings.max ? 100.0 : this.settings.max === 0 ? 0.0 : (this.settings.value * 100.0) / this.settings.max);
+        var pb_color = '';
+        var txt_color = '';
+        if (current <= 25) {
+            pb_color = ' bg-success';
+
+        } else {
+            if (current <= 50) {
+                pb_color = ' bg-info';
+                txt_color = ' text-dark';
+            } else {
+                if (current <= 75) {
+                    pb_color = ' bg-warning';
+                    txt_color = ' text-dark';
+                } else {
+                    pb_color = ' bg-danger';
+                }
+            }
+        };
+        var div_progress_bar = new this.fe.div({
+            class: 'progress-bar' + pb_color + txt_color,
+            style: 'width: ' + current + '%',
+        });
+        append_text(div_progress_bar.$html, current.toFixed(0) + '%');
+        this.$html = div_progress.$html.append(div_progress_bar.$html);
+    };
+    //<span class="badge bg-secondary">New</span>
+    form_element.prototype.bs_badge = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            text: null,
+            class: null,
+            color: null,
+            style: null,
+        }, options);
+        this.fe = new form_element();
+        var span = new this.fe.span({
+            id: this.settings.id,
+            name: this.settings.name,
+            text: this.settings.text,
+            class: 'badge',
+            color: this.settings.color,
+            style: this.settings.style,
+        });
+        add_class(this.$html, this.settings.class);
+        this.$html = span.$html;
+    };
+
     form_element.prototype.bs_dropdown = function (options) {
         this.settings = $.extend({
             color: 'secondary',

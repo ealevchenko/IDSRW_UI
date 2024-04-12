@@ -7,6 +7,9 @@
     --dt-row-yellow: 253, 242, 186;
     --dt-row-yellow-text: 0, 0, 0;
     --dt-row-yellow-link: 9, 10, 11;
+    --dt-row-red: 255, 196, 19;
+    --dt-row-red-text: 0, 0, 0;
+    --dt-row-red-link: 9, 10, 11;
 }
 
 body {
@@ -62,13 +65,13 @@ table.dataTable tbody td.shorten {
 
 /*Отобразить типы полей*/
 /*Зафиксированные поля - не просвечиваемые*/
-table.dataTable.display thead tr th.fixed-column {
+/*table.dataTable.display thead tr th.fixed-column {
     background-color: #ffffff;
 }
 
 table.dataTable.display tfoot tr th.fixed-column {
     background-color: #ffffff;
-}
+}*/
 
 /*Зеленый*/
 table.table.dataTable > tbody > tr.green > * {
@@ -122,7 +125,32 @@ table.table.dataTable.table-hover > tbody > tr.yellow:hover > * {
     box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.975);
 }
+/*Красный*/
+table.table.dataTable > tbody > tr.red > * {
+    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
+    box-shadow: inset 0 0 0 9999px rgb(var(red));
+    color: rgb(255, 255, 255);
+    color: rgb(var(--dt-row-red-text));
+}
 
+table.table.dataTable > tbody > tr.red a {
+    color: rgb(9, 10, 11);
+    color: rgb(var(--dt-row-red-link));
+}
+
+table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.95);
+}
+
+/*table.table.dataTable.table-hover > tbody > tr:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+}*/
+
+table.table.dataTable.table-hover > tbody > tr.red:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.975);
+}
 
 /*Отобразить подсветку строки*/
 /*Зеленый*/

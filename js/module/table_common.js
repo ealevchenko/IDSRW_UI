@@ -233,28 +233,44 @@
 
     table_common.prototype.init_columns_detali = function (collums_detali, list_collums) {
         var collums = [];
+        var field = null;
         if (collums_detali && collums_detali.length > 0) {
             $.each(collums_detali, function (i, el) {
-                var field = list_collums.find(function (o) {
-                    return o.field === el.field;
-                });
-                // Если поле не найдено, создадим по умолчанию (чтобы небыло ошибки)
-                if (!field) {
+                if (el.create) {
                     field = {
-                        field: el,
+                        field: el.field,
                         data: function (row, type, val, meta) {
-                            return "Field_error";
+                            switch (el.ft) {
+                                case 'int': { return row[el.field]; }
+                                case 'string': { return row[el.field + ucFirst(App.Lang)]; }
+                                default: return null;
+                            }
                         },
-                        title: el, width: "100px", orderable: false, searchable: false
-                    };
-                }
-                field.className += ' fl-' + el.field;
-                // Добавим детали
-                if (el.title !== null) {
-                    field.title = el.title;
-                }
-                if (el.class !== null) {
-                    field.className += ' ' + el.class;
+                        className: el.class,
+                        title: el.title, width: el.width + "px", orderable: el.orderable, searchable: el.searchable
+                    }
+                } else {
+                    field = list_collums.find(function (o) {
+                        return o.field === el.field;
+                    });
+                    // Если поле не найдено, создадим по умолчанию (чтобы небыло ошибки)
+                    if (!field) {
+                        field = {
+                            field: el,
+                            data: function (row, type, val, meta) {
+                                return "Field_error";
+                            },
+                            title: el, width: "100px", orderable: false, searchable: false
+                        };
+                    }
+                    field.className += ' fl-' + el.field;
+                    // Добавим детали
+                    if (el.title !== null) {
+                        field.title = el.title;
+                    }
+                    if (el.class !== null) {
+                        field.className += ' ' + el.class;
+                    }
                 }
                 collums.push(field);
             });
@@ -351,6 +367,7 @@
         // Определим основные свойства
         this.settings = $.extend({
             alert: null,
+            class_table: 'table',
             detali_table: false,
             type_report: null,     // 
             link_num: false,
@@ -389,7 +406,8 @@
         // Создать макет таблицы
         var table_common = new this.fe_ui.table({
             id: 'tab-tr-' + this.selector,
-            class: 'table table-success table-striped',
+            class: this.settings.class_table,
+            //class: 'table table-success table-striped',
             title: null,
             //style: 'width: 100%',
         });
@@ -398,7 +416,8 @@
         }
         //this.settings.fn_init_footer_report;
         this.$table_report = table_common.$html;
-        this.$td_report.addClass('table-report').append(this.$table_report);
+        //this.$td_report.addClass('table-report').append(this.$table_report);
+        this.$td_report.append(this.$table_report);
         // Инициализируем таблицу
         this.obj_t_report = this.$table_report.DataTable({
             "lengthMenu": this.lengthMenu,

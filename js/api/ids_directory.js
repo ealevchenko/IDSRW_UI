@@ -48,6 +48,8 @@
                 { name: 'owners_wagons', list: null, fn_get: this.getOwnersWagons.bind(this) },
                 { name: 'owners_operations_uz', list: null, fn_get: this.getWagonOperationsUz.bind(this) },
                 { name: 'station', list: null, fn_get: this.getStation.bind(this) },
+                { name: 'park_ways', list: null, fn_get: this.getParkWays.bind(this) },
+                { name: 'ways', list: null, fn_get: this.getWays.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -215,8 +217,33 @@
     ids_directory.prototype.getStation = function (callback) {
         this.api_com.get('/DirectoryStation', callback);
     };
+    // Получить состояние всех станций 
     ids_directory.prototype.getViewStatusAllStation = function (callback) {
         this.api_com.get('/DirectoryStation/status', callback);
+    };
+    // Получить состояние станции по id 
+    ids_directory.prototype.getViewStatusStationOfId = function (id, callback) {
+        this.api_com.get('/DirectoryStation/status/' + id, callback);
+    };
+    //======= Directory_ParkWays (Справочник парков станций) ======================================
+    ids_directory.prototype.getParkWays = function (callback) {
+        this.api_com.get('/DirectoryParkWay', callback);
+    };
+    ids_directory.prototype.getViewStatusAllParkOfStationId = function (id_station, callback) {
+        this.api_com.get('/DirectoryParkWay/status/station/' + id_station, callback);
+    };
+    ids_directory.prototype.getViewStatusParkOfId = function (id_station, id_park, callback) {
+        this.api_com.get('/DirectoryParkWay/status/station/' + id_station + '/park/' + id_park, callback);
+    };
+    //======= Directory_Ways (Справочник путей станций) ======================================
+    ids_directory.prototype.getWays = function (callback) {
+        this.api_com.get('/DirectoryWay', callback);
+    };
+    ids_directory.prototype.GetViewStatusAllWayOfStationParkId = function (id_station, id_park, callback) {
+        this.api_com.get('/DirectoryWay/status/station/' + id_station + '/park/' + id_park, callback);
+    };
+    ids_directory.prototype.GetViewStatusWayOfId = function (id_way, callback) {
+        this.api_com.get('/DirectoryWay/status/way/' + id_way, callback);
     };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------

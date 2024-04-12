@@ -8,9 +8,7 @@
     {
         'default':  //default language: ru
         {
-
-            //'title_select': 'Выберите...',
-
+            'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
         },
         'en':  //default language: English
         {
@@ -24,10 +22,14 @@
     App.User_Name = $('input#username').val();
 
     var API_DIRECTORY = App.ids_directory;
+    var IDS_WSD = App.ids_wsd;
     var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+    var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
     var TW = App.table_tree_way;
     var tw = new TW('DIV#tree-way');
+
+    var TCW = App.table_cars_way;
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -52,11 +54,42 @@
     };
 
     var list_station = [];
-
+    var current_id_station = null;
+    var current_id_park = null;
+    var current_id_way = null;
+    var current_option_way = null;
+    var current_num_wagon = null;
+    var wagons = [];
     $(document).ready(function ($) {
+
+        // загрузить данные 
+        var load_wagons_of_way = function (id_way, num, callback) {
+            if (id_way !== null && id_way >= 0) {
+                wagons = [];
+                LockScreen(langView('mwsd_mess_load_wagons', App.Langs));
+                api_wsd.getViewWagonsOfIdWay(id_way, function (wagons) {
+                    wagons = wagons;
+                    if (typeof callback === 'function') {
+                        callback(wagons);
+                    }
+                }.bind(this));
+            } else {
+                if (typeof callback === 'function') {
+                    callback([]);
+                }
+            };
+        };
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
+            var process = 2;
+            // Выход из инициализации
+            var out_init = function (process) {
+                if (process === 0) {
+                    tw.view(list_station_visible, null, null, null);
+                    //LockScreenOff();
+                }
+            }.bind(this);
             //
             list_station = api_dir.getAllStation();
             // Настроим выбор станций
@@ -66,6 +99,8 @@
             var list_station_visible = null;
             var select_station_tree = $.cookie("select_station_tree");
             if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
+            //-------------------------------------------------
+            // Инициализация компонент выбора станций для отображения
             // Загрузим список станций
             $list_select_station.empty();
             //<label class="list-group-item">
@@ -133,6 +168,9 @@
                         });
                         $.cookie("select_station_tree", JSON.stringify(list), { expires: 365 });
                         $('#dropdownListgroup').collapse('hide');
+                        var select_station_tree = $.cookie("select_station_tree");
+                        if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
+                        tw.view(list_station_visible, current_id_station, current_id_park, current_id_way);
                         break;
                     };
                     case 'close': {
@@ -141,13 +179,71 @@
                     };
                 };
             });
-
+            // ---------------------------------------------------
+            // Инициализация дерева путей
             tw.init({
                 api_dir: api_dir,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_select_way: function (id_station, id_park, id_way, option) {
+                    // Обработка выбраного пути
+                    current_id_station = id_station;
+                    current_id_park = id_park;
+                    current_id_way = id_way;
+                    current_option_way = option;
+                    load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
+                        tcw.view(wagons)
+                        LockScreenOff();
+                    });
+                }.bind(this),
             });
-            tw.view(list_station_visible, null, null, null);
+            // Обработка кнопок дерева путей
+            $('#btn-tree-way').on('click', 'button', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'open-park': {
+                        tw.open_tree(false);
+                        break;
+                    };
+                    case 'open-way': {
+                        tw.open_tree(true);
+                        break;
+                    };
+                    case 'close-tree': {
+                        tw.close_tree();
+                        break;
+                    };
+                    case 'refresh-tree': {
+                        tw.update();
+                        break;
+                    };
+                };
+            });
+            //-----------------------------------------------------
+            // Инициализация модуля "Таблица вагоны на пути
+            var tcw = new TCW('div#cars-way');               // Создадим экземпляр
+            tcw.init({
+                alert: null,
+                class_table:'table table-sm table-cars-way table-striped table-success',
+                detali_table: false,
+                type_report: 'cars_way',     //
+                link_num: true,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
-            LockScreenOff();
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+
         }.bind(this));
     });
 
