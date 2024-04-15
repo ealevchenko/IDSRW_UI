@@ -193,13 +193,16 @@
         //----------------------------------
     };
     //
-    table_tree_way.prototype.view = function (list_station, id_station, id_park, id_way) {
+    table_tree_way.prototype.view = function (list_station, id_station, id_park, id_way, callback) {
         this.view_station(list_station, id_station, id_park, id_way, function () {
-            LockScreenOff();
+            if (typeof callback === 'function') {
+                callback();
+            }
+            //LockScreenOff();
         })
     };
     // обновление дерева путей
-    table_tree_way.prototype.update = function () {
+    table_tree_way.prototype.update = function (callback) {
         var tr = this.$tbody.$html.find('tr');
         this.count_update = tr.length;
         if (tr && tr.length > 0) LockScreen(langView('mess_update_status', App.Langs)); // выведем сообщение
@@ -214,7 +217,9 @@
                         this.count_update--;
                         if (this.count_update <= 0) {
                             this.update_foot();
-                            LockScreenOff();
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
                         }
                     }.bind(this));
                     break
@@ -224,7 +229,9 @@
                         this.count_update--;
                         if (this.count_update <= 0) {
                             this.update_foot();
-                            LockScreenOff();
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
                         }
                     }.bind(this));
                     break
@@ -234,7 +241,9 @@
                         this.count_update--;
                         if (this.count_update <= 0) {
                             this.update_foot();
-                            LockScreenOff();
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
                         }
                     }.bind(this));
                     break

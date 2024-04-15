@@ -9,6 +9,7 @@
         'default':  //default language: ru
         {
             'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
+            'mwsd_mess_load_balance': 'Загружаю остаток...',
         },
         'en':  //default language: English
         {
@@ -60,6 +61,7 @@
     var current_option_way = null;
     var current_num_wagon = null;
     var wagons = [];
+    var balance = [];
     $(document).ready(function ($) {
 
         // загрузить данные 
@@ -79,15 +81,42 @@
                 }
             };
         };
+        var load_total_balance = function (callback) {
+            balance = [];
+            LockScreen(langView('mwsd_mess_load_balance', App.Langs));
+            api_wsd.getViewTotalBalance(function (balance) {
+                balance = balance;
+                if (typeof callback === 'function') {
+                    callback(balance);
+                }
+            }.bind(this));
+        };
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 2;
+            var process = 3;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
-                    tw.view(list_station_visible, null, null, null);
-                    //LockScreenOff();
+
+                    var out_pr1 = function (pr_1) {
+                        if (pr_1 === 0) {
+                            LockScreenOff();
+                        }
+                    }.bind(this);
+
+                    var pr_1 = 2;
+
+                    tw.view(list_station_visible, null, null, null, function () {
+                        pr_1--;
+                        out_pr1(pr_1);
+                    });
+
+                    load_total_balance(function (balance) {
+                        ttb.view(balance)
+                        pr_1--;
+                        out_pr1(pr_1);
+                    });
                 }
             }.bind(this);
             //
@@ -107,7 +136,9 @@
             //    <input class="form-check-input me-1" type="checkbox" value="" checked="checked">
             //        First checkbox
             //</label>
-            $.each(list_station, function (key, el) {
+            $.each(list_station.filter(function (i) {
+                return !i.stationUz;
+            }.bind(this)), function (key, el) {
                 if (!el.delete) {
                     var checked = 'checked';
                     if (list_station_visible) {
@@ -216,17 +247,35 @@
                         break;
                     };
                     case 'refresh-tree': {
-                        tw.update();
+
+                        var out_refresh = function (pr_refresh) {
+                            if (pr_refresh === 0) {
+                                LockScreenOff();
+                            }
+                        }.bind(this);
+
+                        var pr_refresh = 2;
+
+                        tw.update(function () {
+                            pr_refresh--;
+                            out_refresh(pr_refresh);
+                        });
+
+                        load_total_balance(function (balance) {
+                            ttb.view(balance)
+                            pr_refresh--;
+                            out_refresh(pr_refresh);
+                        });
                         break;
                     };
                 };
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица вагоны на пути
-            var tcw = new TCW('div#cars-way');               // Создадим экземпляр
+            var tcw = new TCW('div#cars-way');
             tcw.init({
                 alert: null,
-                class_table:'table table-sm table-cars-way table-striped table-success',
+                class_table: 'table table-sm table-cars-way table-striped table-success',
                 detali_table: false,
                 type_report: 'cars_way',     //
                 link_num: true,
@@ -243,8 +292,30 @@
 
                 }.bind(this),
             });
+            //-----------------------------------------------------
+            // Инициализация модуля "Таблица вагоны на пути
+            var ttb = new TCW('div#total-balance');
+            ttb.init({
+                alert: null,
+                class_table: 'table table-sm table-hover table-total-balance',
+                detali_table: false,
+                type_report: 'total_balance',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
-        }.bind(this));
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+        }.bind(this))
+            ;
     });
 
 }); // End of use strict

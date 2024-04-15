@@ -11,6 +11,20 @@ table.table-cars-way {
         padding: 0 0.5rem;
     }
 
+table.table-total-balance {
+    font-size: .9rem;
+}
+
+    table.table-total-balance th {
+        text-align: center;
+/*        padding: 0 0.5rem;*/
+    }
+
+    table.table-total-balance td {
+        padding: 0 0.5rem;
+    }
+
+
 table.table.dataTable > tbody > tr:not(.selected) > td.idle-time-error {
     color: rgb(255, 51, 51);
 
@@ -34,7 +48,7 @@ table.dataTable.display tbody tr:not(.selected).odd.arrival-wagon > .sorting_1, 
 table.dataTable.display tbody tr:not(.selected).even.arrival-wagon > .sorting_1, table.dataTable.order-column.stripe tbody tr.even.arrival-wagon > .sorting_1 {
     background-color: #f2bf99;
 }*/
-table.dataTable tbody td.epd {
+/*table.dataTable tbody td.epd {
     background-color: #FFF2CC;
 }
 
@@ -53,7 +67,7 @@ table.dataTable tbody  td.common {
 table.dataTable tbody  td.letter {
     background-color: #eed6fc;
 }
-
+*/
 /*Состав сдан*/
 /*table.dataTable tbody tr:not(.selected).green.odd, table.dataTable tbody tr:not(.selected).green.even {
     background-color: #cdffcd;

@@ -111,11 +111,19 @@
             'tcw_field_old_date_outgoing': 'Дата последней сдачи',
             'tcw_field_old_outgoing_uz_document_station_to_name': 'Станция ОТПР предыдущая',
 
+            'tcw_field_id': 'Остаток',
+            'tcw_field_all': 'Все вагоны',
+            'tcw_field_amkr': 'Вагоны АМКР',
+            'tcw_field_id_1': 'ВСЕГО',
+            'tcw_field_id_2': 'ОСТАТОК ВНЕШНИХ',
+            'tcw_field_id_3': 'УЧЕТНЫЙ ОСТАТОК',
+
             'tcw_title_status_0': 'Предъявлен',
             'tcw_title_status_1': 'В работе',
             'tcw_title_status_2': 'Сдан',
             'tcw_title_status_3': 'Отправлен',
             'tcw_title_status_4': 'Возврат',
+
 
             'tcw_title_link_num': 'Показать историю по вагону...',
         },
@@ -908,8 +916,8 @@
                     }
                     //return row.outgoing_sostav_status;
                 },
-                className: 'dt-body-center',
-                title: langView('tcw_field_outgoing_sostav_status_name', App.Langs), width: "30px", orderable: true, searchable: true
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tcw_field_outgoing_sostav_status_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Запреты по УЗ 
             {
@@ -966,6 +974,19 @@
                 title: langView('tcw_field_old_outgoing_uz_document_station_to_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // --- END ViewCarWay
+            // +++ ViewTotalBalance
+            {
+                field: 'remainder_type',
+                data: function (row, type, val, meta) {
+
+                    return langView('tcw_field_id_' + row.id, App.Langs);
+                },
+                className: 'dt-body-left',
+                title: langView('tcw_field_id', App.Langs), width: "50px", orderable: false, searchable: false
+            },
+            // --- ViewTotalBalance
+
+
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -1076,12 +1097,31 @@
         collums.push({ field: 'wagon_ban_uz', title: null, class: null });
         collums.push({ field: 'wagon_closed_route', title: null, class: null });
         collums.push({ field: 'wir_note', title: null, class: null });
-        collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: null });
-        collums.push({ field: 'old_date_outgoing', title: null, class: null });
-        collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: null });
+        collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
+        collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_cars_way.prototype.init_columns_total_balance = function () {
+        var collums = [];
+        collums.push({ field: 'remainder_type', title: null, class: null });
+        collums.push({
+            create: true,
+            field: 'all',
+            title: langView('tcw_field_all', App.Langs),
+            class: 'dt-body-center dt-head-center', ft: 'int', width: 50, orderable: false, searchable: false
+        });
+        collums.push({
+            create: true,
+            field: 'amkr',
+            title: langView('tcw_field_amkr', App.Langs),
+            class: 'dt-body-center dt-head-center', ft: 'int', width: 50, orderable: false, searchable: false
+        });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     //------------------------------- КНОПКИ ----------------------------------------------------
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
@@ -1143,6 +1183,23 @@
                 this.tab_com.table_columns = this.init_columns_cars_way();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(); //   this.init_button_req1892();
                 this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            case 'total_balance': {
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = false;
+                this.tab_com.info = false;
+                //this.tab_com.columnDefs = null;
+                //this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                this.tab_com.createdRow = function (row, data, index) {
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_total_balance();
+                this.tab_com.table_buttons = []; //
+                this.tab_com.dom = 'frtip';
                 break;
             };
             // Таблица составы по умолчанию (если не выставят тип отчета)
