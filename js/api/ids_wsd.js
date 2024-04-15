@@ -49,9 +49,13 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
-    //======= Directory_Cargo (Справочник грузов) ======================================
+    // Вагоны на пути
     ids_wsd.prototype.getViewWagonsOfIdWay = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/way/' + id, callback);
+    };
+    // Баланс
+    ids_wsd.prototype.getViewTotalBalance = function (callback) {
+        this.api_com.get('/WSD/view/total_balance', callback);
     };
 
     App.ids_wsd = ids_wsd;
