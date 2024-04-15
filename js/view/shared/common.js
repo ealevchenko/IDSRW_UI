@@ -712,7 +712,12 @@ var intVal = function (i) {
         div_progress.$html.attr('aria-valuenow', this.settings.value);
         div_progress.$html.attr('aria-valuemin', this.settings.min);
         div_progress.$html.attr('aria-valuemax', this.settings.max);
-        var current = Number(this.settings.value > this.settings.max ? 100.0 : this.settings.max === 0 ? 0.0 : (this.settings.value * 100.0) / this.settings.max);
+        this.settings.max = this.settings.max === null ? 100.0 : this.settings.max;
+        this.settings.max = this.settings.value > this.settings.max ? this.settings.value : (this.settings.max === 0 && this.settings.value === 0 ? 100.0 : this.settings.max);
+        var current = Number((this.settings.value * 100.0) / this.settings.max);
+
+        //var current = Number(this.settings.max === 0 && this.settings.value === 0 ? 0.0 : (this.settings.value > this.settings.max ? 100.0 : (this.settings.value * 100.0) / this.settings.max));
+        //var current = Number(this.settings.value > this.settings.max ? 100.0 : this.settings.max === 0 && this.settings.value===0 ? 0.0 : (this.settings.value * 100.0) / this.settings.max);
         var pb_color = '';
         var txt_color = '';
         if (current <= 25) {

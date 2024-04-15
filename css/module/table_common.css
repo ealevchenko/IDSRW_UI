@@ -3,13 +3,37 @@
 :root {
     --dt-row-green: 166, 255, 166;
     --dt-row-green-text: 0, 0, 0;
-    --dt-row-green-link: 9, 10, 11;
-    --dt-row-yellow: 253, 242, 186;
+    --dt-row-green-link: 10, 88, 202;
+    --dt-row-yellow: 255, 255, 157;
     --dt-row-yellow-text: 0, 0, 0;
-    --dt-row-yellow-link: 9, 10, 11;
-    --dt-row-red: 255, 196, 19;
+    --dt-row-yellow-link: 10, 88, 202;
+    --dt-row-l-yellow: 255, 255, 235;
+    --dt-row-l-yellow-text: 0, 0, 0;
+    --dt-row-l-yellow-link: 10, 88, 202;
+    --dt-row-red: 255, 165, 165;
     --dt-row-red-text: 0, 0, 0;
-    --dt-row-red-link: 9, 10, 11;
+    --dt-row-red-link: 10, 88, 202;
+    --dt-row-pink: 255, 217, 217;
+    --dt-row-pink-text: 0, 0, 0;
+    --dt-row-pink-link: 10, 88, 202;
+    --dt-row-blue: 157, 157, 255;
+    --dt-row-blue-text: 0, 0, 0;
+    --dt-row-blue-link: 9, 10, 11;
+    --dt-row-l-blue: 216, 236, 255;
+    --dt-row-l-blue-text: 0, 0, 0;
+    --dt-row-l-blue-link: 9, 10, 11;
+    --dt-row-violet: 255, 225, 255;
+    --dt-row-violet-text: 0, 0, 0;
+    --dt-row-violet-link: 9, 10, 11;
+    --dt-row-grey: 128, 128, 128;
+    --dt-row-grey-text: 250, 250, 250;
+    --dt-row-grey-link: 10, 88, 202;
+    --dt-row-l-grey: 216, 216, 216;
+    --dt-row-l-grey-text: 0, 0, 0;
+    --dt-row-l-grey-link: 10, 88, 202;
+    /*    --dt-row-selected: 166, 255, 166;
+    --dt-row-selected-text: 0, 0, 0;
+    --dt-row-selected-link: 9, 10, 11;*/
 }
 
 body {
@@ -62,106 +86,344 @@ table.dataTable tbody td.shorten {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
-/*Отобразить типы полей*/
-/*Зафиксированные поля - не просвечиваемые*/
-/*table.dataTable.display thead tr th.fixed-column {
-    background-color: #ffffff;
-}
-
-table.dataTable.display tfoot tr th.fixed-column {
-    background-color: #ffffff;
-}*/
-
-/*Зеленый*/
+/*РЯДЫ*/
+/*Зеленый ряд*/
 table.table.dataTable > tbody > tr.green > * {
-    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-green));
-    color: rgb(255, 255, 255);
-    color: rgb(var(--dt-row-green-text));
+    color: rgb(var(--dt-row-green-text))
 }
 
 table.table.dataTable > tbody > tr.green a {
-    color: rgb(9, 10, 11);
-    color: rgb(var(--dt-row-green-link));
+    color: rgb(var(--dt-row-green-link))
 }
 
+/*table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
+}*/
+
 table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).green > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.95)
 }
 
 /*table.table.dataTable.table-hover > tbody > tr:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
 table.table.dataTable.table-hover > tbody > tr.green:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.975)
 }
-/*Желтый*/
+/*Желтый ряд*/
 table.table.dataTable > tbody > tr.yellow > * {
-    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-yellow));
-    color: rgb(255, 255, 255);
-    color: rgb(var(--dt-row-yellow-text));
+    color: rgb(var(--dt-row-yellow-text))
 }
 
 table.table.dataTable > tbody > tr.yellow a {
-    color: rgb(9, 10, 11);
-    color: rgb(var(--dt-row-yellow-link));
+    color: rgb(var(--dt-row-yellow-link))
 }
 
+/*table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
+}*/
+
 table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).yellow > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.95)
 }
 
 /*table.table.dataTable.table-hover > tbody > tr:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
 table.table.dataTable.table-hover > tbody > tr.yellow:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.975)
 }
-/*Красный*/
+
+table.table.dataTable > tbody > tr.yellow > * {
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-yellow));
+    color: rgb(var(--dt-row-yellow-text))
+}
+/*Красный ряд*/
 table.table.dataTable > tbody > tr.red > * {
-    box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
-    box-shadow: inset 0 0 0 9999px rgb(var(red));
-    color: rgb(255, 255, 255);
-    color: rgb(var(--dt-row-red-text));
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-red));
+    color: rgb(var(--dt-row-red-text))
 }
 
 table.table.dataTable > tbody > tr.red a {
-    color: rgb(9, 10, 11);
-    color: rgb(var(--dt-row-red-link));
+    color: rgb(var(--dt-row-red-link))
 }
 
+/*table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
+}*/
+
 table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.95);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.95);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.95)
 }
 
 /*table.table.dataTable.table-hover > tbody > tr:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
 table.table.dataTable.table-hover > tbody > tr.red:hover > * {
-    box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
-    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.975);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.975)
 }
 
-/*Отобразить подсветку строки*/
-/*Зеленый*/
-/*table.table.dataTable tbody tr:not(.selected).green.odd, table.table.dataTable tbody tr:not(.selected).green.even {
-    background-color: #cdffcd;
+/*Синий ряд*/
+table.table.dataTable > tbody > tr.red > * {
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-blue-red));
+    color: rgb(var(--dt-blue-red-text))
 }
 
-table.table.dataTable.display tbody tr:not(.selected).odd.green > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.odd.green > .sorting_1 {
-    background-color: #a6ffa6;
+table.table.dataTable > tbody > tr.red a {
+    color: rgb(var(--dt-blue-red-link))
 }
 
-table.table.dataTable.display tbody tr:not(.selected).even.green > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.even.green > .sorting_1 {
-    background-color: #a6ffa6;
+/*table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-stripe), 0.05)
 }*/
+
+table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-red), 0.95)
+}
+
+/*table.table.dataTable.table-hover > tbody > tr:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-hover), 0.075)
+}*/
+
+table.table.dataTable.table-hover > tbody > tr.red:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-red), 0.975)
+}
+
+
+/*ЯЧЕЙКИ*/
+/*Зеленая ячейка*/
+table.table.dataTable > thead > tr > th.green {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.green {
+    color: rgb(var(--dt-row-green-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.green {
+    color: rgb(var(--dt-row-green-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.green a {
+        color: rgb(var(--dt-row-green-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.green {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.green {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.85);
+}
+/*Феолетовая ячейка*/
+table.table.dataTable > thead > tr > th.violet {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.violet {
+    color: rgb(var(--dt-row-violet-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.violet {
+    color: rgb(var(--dt-row-violet-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.violet a {
+        color: rgb(var(--dt-row-violet-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.violet {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.violet {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet), 0.85);
+}
+/*Красная ячейка*/
+table.table.dataTable > thead > tr > th.red {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.red {
+    color: rgb(var(--dt-row-red-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.red {
+    color: rgb(var(--dt-row-red-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.red a {
+        color: rgb(var(--dt-row-red-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.red {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.red {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.85);
+}
+/*Розовая ячейка*/
+table.table.dataTable > thead > tr > th.pink {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.pink {
+    color: rgb(var(--dt-row-pink-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.pink {
+    color: rgb(var(--dt-row-pink-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.pink a {
+        color: rgb(var(--dt-row-pink-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.pink {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.pink {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink), 0.85);
+}
+/*Желтая ячейка*/
+table.table.dataTable > thead > tr > th.yellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.yellow {
+    color: rgb(var(--dt-row-yellow-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.yellow {
+    color: rgb(var(--dt-row-yellow-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.yellow a {
+        color: rgb(var(--dt-row-yellow-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.yellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.yellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.85);
+}
+/*Светло желтая ячейка*/
+table.table.dataTable > thead > tr > th.lyellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.lyellow {
+    color: rgb(var(--dt-row-l-yellow-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.lyellow {
+    color: rgb(var(--dt-row-l-yellow-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.lyellow a {
+        color: rgb(var(--dt-row-l-yellow-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lyellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lyellow {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow), 0.85);
+}
+/*Синяя ячейка*/
+table.table.dataTable > thead > tr > th.blue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.blue {
+    color: rgb(var(--dt-row-blue-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.blue {
+    color: rgb(var(--dt-row-blue-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.blue a {
+        color: rgb(var(--dt-row-blue-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.blue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.blue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue), 0.85);
+}
+/*Голубая ячейка*/
+table.table.dataTable > thead > tr > th.lblue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.lblue {
+    color: rgb(var(--dt-row-l-blue-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.lblue {
+    color: rgb(var(--dt-row-l-blue-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.lblue a {
+        color: rgb(var(--dt-row-l-blue-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lblue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lblue {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue), 0.85);
+}
+/*Серая ячейка*/
+table.table.dataTable > thead > tr > th.grey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.grey {
+    color: rgb(var(--dt-row-grey-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.grey {
+    color: rgb(var(--dt-row-grey-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.grey a {
+        color: rgb(var(--dt-row-grey-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.grey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.grey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey), 0.85);
+}
+/*Светло-серая ячейка*/
+table.table.dataTable > thead > tr > th.lgrey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey));
+}
+table.table.dataTable > tbody > tr:not(.selected) > td.lgrey {
+    color: rgb(var(--dt-row-l-grey-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.lgrey {
+    color: rgb(var(--dt-row-l-grey-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.lgrey a {
+        color: rgb(var(--dt-row-l-grey-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lgrey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lgrey {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey), 0.85);
+}

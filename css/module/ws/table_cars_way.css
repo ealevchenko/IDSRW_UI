@@ -11,18 +11,17 @@ table.table-cars-way {
         padding: 0 0.5rem;
     }
 
+table.table.dataTable > tbody > tr:not(.selected) > td.idle-time-error {
+    color: rgb(255, 51, 51);
+
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.idle-time-error a {
+    color: rgb(255, 51, 51);
+
+}
+/*idle-time-error*/
 /*table.dataTable tbody th.dt-body-center,*/
-
-table.dataTable tbody td.green {
-    background-color: #cdffcd;
-}
-table.dataTable tbody td.yellow {
-    background-color: #fef9e0;
-}
-table.dataTable tbody td.red {
-    background-color: #ffc4c4;
-}
-
 /*table.dataTable tbody tr:not(.selected).arrival-wagon.odd, table.dataTable tbody tr:not(.selected).arrival-wagon.even {
     background-color: #f5cdb0;
 }
@@ -35,14 +34,7 @@ table.dataTable.display tbody tr:not(.selected).odd.arrival-wagon > .sorting_1, 
 table.dataTable.display tbody tr:not(.selected).even.arrival-wagon > .sorting_1, table.dataTable.order-column.stripe tbody tr.even.arrival-wagon > .sorting_1 {
     background-color: #f2bf99;
 }*/
-
-
-
-
-
-
-
-table.dataTable tbody  td.epd {
+table.dataTable tbody td.epd {
     background-color: #FFF2CC;
 }
 
