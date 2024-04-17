@@ -650,6 +650,30 @@ var intVal = function (i) {
             add_for(this.$label, this.settings.for);
         }
     };
+    // Элемент <button class="btn btn-primary" type="button">Toggle right offcanvas</button>
+    form_element.prototype.button = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            color: null,
+            text: null
+        }, options);
+        this.$html = $('<button></button>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <button></button>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.name);
+            add_tag(this.$html, 'type', 'button');
+            add_class(this.$html, 'btn');
+            add_class(this.$html, this.settings.class);
+            add_class(this.$html, this.settings.color);
+            append_text(this.$html, this.settings.text);
+        }
+    };
+
+
     // Элемент <input type=".." class=".." id="num_car" title=".." name="..".>
     form_element.prototype.input = function (options) {
         this.settings = $.extend({

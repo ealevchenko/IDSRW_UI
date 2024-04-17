@@ -110,6 +110,8 @@
             'tcw_field_old_outgoing_uz_vagon_cargo_name': 'Груз по ОТПР предыдущий',
             'tcw_field_old_date_outgoing': 'Дата последней сдачи',
             'tcw_field_old_outgoing_uz_document_station_to_name': 'Станция ОТПР предыдущая',
+            'tcw_field_count': 'Кол.',
+            'tcw_field_park_abbr': 'Парк (аббр.)',
 
             'tcw_field_id': 'Остаток',
             'tcw_field_all': 'Все вагоны',
@@ -985,7 +987,14 @@
                 title: langView('tcw_field_id', App.Langs), width: "50px", orderable: false, searchable: false
             },
             // --- ViewTotalBalance
-
+            {
+                field: 'park_abbr',
+                data: function (row, type, val, meta) {
+                    return row['parkAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tcw_field_park_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
 
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
@@ -1122,6 +1131,18 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
+    table_cars_way.prototype.init_columns_operators_station = function () {
+        var collums = [];
+        collums.push({ field: 'park_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: null });
+        collums.push({
+            create: true,
+            field: 'countOperators',
+            title: langView('tcw_field_count', App.Langs),
+            class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
+        });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
@@ -1202,6 +1223,38 @@
                 this.tab_com.dom = 'frtip';
                 break;
             };
+            case 'operators_station': {
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                //this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(2)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+                };
+                this.tab_com.createdRow = function (row, data, index) {
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_operators_station();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
+                this.tab_com.dom = 'Bfrtip';
+                this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
+
+                break;
+            };
             // Таблица составы по умолчанию (если не выставят тип отчета)
             default: {
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
@@ -1210,7 +1263,7 @@
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.table_columns = this.tab_com.init_columns_default();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); //this.tab_com.init_button_default();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
                 break;
             };
         }

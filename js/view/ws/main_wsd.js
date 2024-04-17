@@ -9,6 +9,7 @@
         'default':  //default language: ru
         {
             'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
+            'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
             'mwsd_mess_load_balance': 'Загружаю остаток...',
         },
         'en':  //default language: English
@@ -91,10 +92,24 @@
                 }
             }.bind(this));
         };
+        var load_operators_of_station = function (id_station, callback) {
+            if (id_station !== null && id_station >= 0) {
+                LockScreen(langView('mwsd_mess_load_operators', App.Langs));
+                api_wsd.getViewOperatorsOfStation(id_station, function (operators) {
+                    if (typeof callback === 'function') {
+                        callback(operators);
+                    }
+                }.bind(this));
+            } else {
+                if (typeof callback === 'function') {
+                    callback([]);
+                }
+            };
+        };
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 3;
+            var process = 4;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -230,6 +245,14 @@
                         LockScreenOff();
                     });
                 }.bind(this),
+                fn_select_station: function (id_station) {
+                    
+                    $('#operator-detali-label').empty().append("Операторы по " + list_station.find(function (o) { return o.id == id_station}.bind(this))['stationName' + ucFirst(App.Lang)]   );
+                    load_operators_of_station(id_station, function (operators) {
+                        tos.view(operators);
+                        LockScreenOff();
+                    });
+                }.bind(this),
             });
             // Обработка кнопок дерева путей
             $('#btn-tree-way').on('click', 'button', function (event) {
@@ -270,8 +293,13 @@
                     };
                 };
             });
+            //$('.btn-all').on('click', function (event) {
+            //    switch (event.currentTarget.id) {
+
+            //    };
+            //});
             //-----------------------------------------------------
-            // Инициализация модуля "Таблица вагоны на пути
+            // Инициализация модуля "Таблица вагоны на пути"
             var tcw = new TCW('div#cars-way');
             tcw.init({
                 alert: null,
@@ -293,7 +321,7 @@
                 }.bind(this),
             });
             //-----------------------------------------------------
-            // Инициализация модуля "Таблица вагоны на пути
+            // Инициализация модуля "Таблица остаток"
             var ttb = new TCW('div#total-balance');
             ttb.init({
                 alert: null,
@@ -314,8 +342,30 @@
 
                 }.bind(this),
             });
-        }.bind(this))
-            ;
+            //-----------------------------------------------------
+            // Инициализация модуля "Таблица операторы на станции"
+            var tos = new TCW('div#operators-station');
+            tos.init({
+                alert: null,
+                class_table: 'table table-sm table-hover table-total-balance',
+                detali_table: false,
+                type_report: 'operators_station',     
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
+
+        }.bind(this));
     });
 
 }); // End of use strict

@@ -1,10 +1,10 @@
 ﻿/*:root {*/
-    /*--dt-row-green: 166, 255, 166;
+/*--dt-row-green: 166, 255, 166;
     --dt-row-green-text: 0, 0, 0;
     --dt-row-green-link: 9, 10, 11;
     --dt-row-yellow: 253, 242, 186;*/
-    /*    --dt-row-yellow-text: 0, 0, 0;*/
-    /*--dt-row-yellow-link: 9, 10, 11;*/
+/*    --dt-row-yellow-text: 0, 0, 0;*/
+/*--dt-row-yellow-link: 9, 10, 11;*/
 /*    --bs-table-bg: transparent;*/
 /*}*/
 
@@ -33,9 +33,18 @@ table.table-striped > tbody > tr:nth-of-type(2n+1).yellow > * {
 table#tree-way-table td {
     padding: 0;
 }
+
+    table#tree-way-table td .btn-sm {
+        padding: 0 .5rem;
+    }
+
+/* {
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+}*/
+
 table#tree-way-table th {
     font-size: .9em;
-    font-weight:600;
+    font-weight: 600;
 }
 /*.table td {
     padding: 0;
@@ -50,15 +59,15 @@ tr.select > td {
     background-color: #ffedda
 }
 
-    /*tr.select td.row-select {*/
-        /*background-color: #ffedda;*/
-        /*background: url("../../img/module/tree_way/eye-solid.svg") no-repeat center center;
+/*tr.select td.row-select {*/
+/*background-color: #ffedda;*/
+/*background: url("../../img/module/tree_way/eye-solid.svg") no-repeat center center;
         width: 16px;
     }*/
 
-    tr.select:hover > td {
-        background-color: #ffdab3
-    }
+tr.select:hover > td {
+    background-color: #ffdab3
+}
 
 td.station-control {
     background: url('../../img/module/tree_way/details_open.png') no-repeat center center;
@@ -81,17 +90,17 @@ tr[data-tree-area='station'].shown > td {
     background-color: #dadaff;
 }
 
-    tr[data-tree-area='station'].shown:hover  > td {
-        background-color: #b3b3ff;
-    }
+tr[data-tree-area='station'].shown:hover > td {
+    background-color: #b3b3ff;
+}
 
 tr[data-tree-area='park'].shown > td {
     background-color: #daffda;
 }
 
-    tr[data-tree-area='park'].shown:hover > td {
-        background-color: #b3ffb3;
-    }
+tr[data-tree-area='park'].shown:hover > td {
+    background-color: #b3ffb3;
+}
 
 tr.shown td.park-control {
     background: url('../../img/module/tree_way/details_close.png') no-repeat center center;
@@ -101,27 +110,27 @@ tr.shown td.park-control {
 /*td.icon-station {
     background: url("../../img/module/tree_way/station.svg") no-repeat center center;
     width: 16px;*/
-    /*    height: 16px;
+/*    height: 16px;
     margin-right: 5px;*/
 /*}
 td.icon-station-uz {
     background: url("../../img/module/tree_way/station_uz.svg") no-repeat center center;
     width: 16px;*/
-    /*    height: 16px;
+/*    height: 16px;
     margin-right: 5px;*/
 /*}*/
 
 /*.icon-park {
     background: url("../../img/module/tree_way/park.svg") no-repeat center center;
     width: 16px;*/
-    /*    height: 16px;
+/*    height: 16px;
     margin-right: 5px;*/
 /*}*/
 
 /*.icon-way {
     background: url("../../img/module/tree_way/way.png") no-repeat center center;
     height: 16px !important;*/
-    /*    margin-right: 5px;*/
+/*    margin-right: 5px;*/
 /*}*/
 
 .icon-tree-open {

@@ -57,7 +57,10 @@
     ids_wsd.prototype.getViewTotalBalance = function (callback) {
         this.api_com.get('/WSD/view/total_balance', callback);
     };
-
+    // Операторы по станции
+    ids_wsd.prototype.getViewOperatorsOfStation = function (id, callback) {
+        this.api_com.get('/WSD/view/operators/station/' + id, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;

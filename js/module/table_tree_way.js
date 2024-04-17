@@ -85,6 +85,7 @@
             api_dir: null,
             fn_init: null,
             fn_select_way: null,
+            fn_select_station: null,
         }, options);
         // определим библиотеку  dir
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
@@ -276,6 +277,25 @@
         div.$html.append(arr > 0 ? linl_arr.$html.append(arr_bange.$html) : '0').append('-').append(out > 0 ? linl_out.$html.append(out_bange.$html) : '0');
         this.$html = div.$html;
     }
+
+    table_tree_way.prototype.create_html_btn_all = function (base, id, count) {
+
+        var $bt_count = new base.fe_ui.button({
+            id: id,
+            color: 'btn-primary',
+            class: 'btn-all btn-sm',
+            text: count,
+        })
+        $bt_count.$html.attr('data-bs-toggle', 'offcanvas');
+        $bt_count.$html.attr('data-bs-target', '#offcanvas-operator-detali');
+        $bt_count.$html.attr('aria-controls', '#offcanvas-operator-detali');
+        $bt_count.$html.on('click', function (event) {
+            if (typeof this.settings.fn_select_station === 'function') {
+                this.settings.fn_select_station(event.currentTarget.id);
+            };
+        }.bind(base));
+        this.$html = $bt_count.$html;
+    }
     //
     table_tree_way.prototype.create_html_tr_station = function (base, el) {
         this.$tr = new base.fe_ui.tr({});
@@ -304,8 +324,10 @@
         });
         var $td_count = new base.fe_ui.td({
             class: 'text-end',
-            text: el.countAllWagons,
+            //text: el.countAllWagons,
         });
+        $td_count.$html.append(new base.create_html_btn_all(base, el.id, el.countAllWagons).$html);
+
         var $td_amkr = new base.fe_ui.td({
             class: 'text-end',
             text: el.countAmkrWagons,
@@ -388,7 +410,7 @@
                 if (station) {
                     var $arr_out = new this.create_html_arr_out(this, station.id, station.countArrivesWagons, station.countSentWagons);
                     $div_pb.empty().append($arr_out.$html);
-                    $td_count.empty().text(station.countAllWagons);
+                    $td_count.empty().append(new this.create_html_btn_all(this, station.id, station.countAllWagons).$html);
                     $td_amkr.empty().text(station.countAmkrWagons);
                     $td_capacity.empty().text(station.capacityWagons);
                     if (typeof callback === 'function') {
@@ -579,7 +601,8 @@
         var $td_img_way = new base.fe_ui.td({
             width: '18px',
             //class: 'icon-way',
-            class: (el.deadlock ? 'text-danger' : (el.dissolution ? 'text-success' : (el.crossingAmkr ? 'text-primary' : null))),
+            class: (el.deadlock ? 'text-danger' : (el.crossingUz ? 'text-primary' : (el.dissolution ? 'text-success' : null))),
+/*            class: (el.deadlock ? 'text-danger' : (el.dissolution ? 'text-success' : (el.crossingAmkr ? 'text-primary' : null))),*/
             text: '<i class="fa-solid fa-pallet"></i>',
         });
         var $td_name = new base.fe_ui.td({
