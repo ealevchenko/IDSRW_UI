@@ -358,6 +358,14 @@
         buttons.push({ name: 'field', action: null });
         return this.init_buttons(buttons, this.list_buttons);
     };
+    // инициализация кнопок стандартная
+    table_common.prototype.init_button_Ex_Prn = function () {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+/*        buttons.push({ name: 'field', action: null });*/
+        return this.init_buttons(buttons, this.list_buttons);
+    };
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
     table_common.prototype.init = function (options) {
@@ -373,6 +381,7 @@
             link_num: false,
             fn_init: null,
             fn_select_rows: null,
+            fn_select_link: null,
         }, options);
         //
         // Настройки отчета по умолчанию
@@ -465,6 +474,14 @@
                 }
             }.bind(this));
         }
+        this.$table_report.on('click', 'a.link-cell', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var id = $(e.currentTarget).attr('id')
+            if (typeof this.settings.fn_select_link === 'function') {
+                this.settings.fn_select_link(id);
+            }
+        }.bind(this));
         // На проверку окончания инициализации
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
