@@ -61,6 +61,14 @@
     ids_wsd.prototype.getViewOperatorsOfStation = function (id, callback) {
         this.api_com.get('/WSD/view/operators/station/' + id, callback);
     };
+    // Операторы отправленые вагоны со станции 
+    ids_wsd.prototype.getViewOperatorsSendOfIdStation = function (id, callback) {
+        this.api_com.get('/WSD/view/operators/send/station/' + id, callback);
+    };
+    // Операторы прибывающие вагоны на станцию 
+    ids_wsd.prototype.getViewOperatorsArrivalOfIdStation = function (id, callback) {
+        this.api_com.get('/WSD/view/operators/arrival/station/' + id, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
