@@ -239,6 +239,9 @@
     ids_directory.prototype.getWays = function (callback) {
         this.api_com.get('/DirectoryWay', callback);
     };
+    ids_directory.prototype.getWaysOfId = function (id_way, callback) {
+        this.api_com.get('/DirectoryWay/' + id_way, callback);
+    };
     ids_directory.prototype.GetViewStatusAllWayOfStationParkId = function (id_station, id_park, callback) {
         this.api_com.get('/DirectoryWay/status/station/' + id_station + '/park/' + id_park, callback);
     };
