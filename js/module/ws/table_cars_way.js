@@ -112,6 +112,8 @@
             'tcw_field_old_outgoing_uz_document_station_to_name': 'Станция ОТПР предыдущая',
             'tcw_field_count': 'Кол.',
             'tcw_field_park_abbr': 'Парк (аббр.)',
+            'tcw_field_way_name': 'Путь (аббр.)',
+            'tcw_field_name_outer_way': 'Перегон',
 
             'tcw_field_id': 'Остаток',
             'tcw_field_all': 'Все вагоны',
@@ -995,6 +997,40 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tcw_field_park_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'current_way_amkr_name',
+                data: function (row, type, val, meta) {
+                    return row["currentWayAmkrNum" + ucFirst(App.Lang)] + '-' + row["currentWayAmkrAbbr" + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tcw_field_way_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'current_way_amkr_name_link',
+                data: function (row, type, val, meta) {
+                    var $link = new fe_ui.a({
+                        id: row.idWay,
+                        class: 'link-cell',
+                        href: '#',
+                        text: row["currentWayAmkrNum" + ucFirst(App.Lang)] + '-' + row["currentWayAmkrAbbr" + ucFirst(App.Lang)],
+                        target: null,
+/*                        title: langView('tcw_title_link_num', App.Langs),*/
+                    });
+                    if ($link) {
+                        return $link.$html[0].outerHTML;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tcw_field_way_name', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'name_outer_way',
+                data: function (row, type, val, meta) {
+                    return row['nameOuterWay' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-150',
+                title: langView('tcw_field_name_outer_way', App.Langs), width: "150px", orderable: true, searchable: true
+            },
 
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
@@ -1133,7 +1169,46 @@
 
     table_cars_way.prototype.init_columns_operators_station = function () {
         var collums = [];
-        collums.push({ field: 'park_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: null });
+        collums.push({
+            create: true,
+            field: 'countOperators',
+            title: langView('tcw_field_count', App.Langs),
+            class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
+        });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_cars_way.prototype.init_columns_operators_way_station = function () {
+        var collums = [];
+        //collums.push({ field: 'current_way_amkr_name', title: null, class: null });
+        collums.push({ field: 'current_way_amkr_name_link', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: null });
+        collums.push({
+            create: true,
+            field: 'countOperators',
+            title: langView('tcw_field_count', App.Langs),
+            class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
+        });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_cars_way.prototype.init_columns_operators_send_station = function () {
+        var collums = [];
+        collums.push({ field: 'name_outer_way', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: null });
+        collums.push({
+            create: true,
+            field: 'countOperators',
+            title: langView('tcw_field_count', App.Langs),
+            class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
+        });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_cars_way.prototype.init_columns_operators_arrival_station = function () {
+        var collums = [];
+        collums.push({ field: 'name_outer_way', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: null });
         collums.push({
             create: true,
@@ -1217,6 +1292,7 @@
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.createdRow = function (row, data, index) {
+
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_total_balance();
                 this.tab_com.table_buttons = []; //
@@ -1224,6 +1300,41 @@
                 break;
             };
             case 'operators_station': {
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                //this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(1)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+                };
+                this.tab_com.createdRow = function (row, data, index) {
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_operators_station();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
+                this.tab_com.dom = 'Bfrtip';
+                this.tab_com.html_footer = '<tfoot><tr><th class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
+                break;
+            };
+            case 'operators_way_station': {
                 this.tab_com.paging = false;
                 this.tab_com.searching = false;
                 this.tab_com.ordering = true;
@@ -1247,9 +1358,85 @@
                         .html(count);
                 };
                 this.tab_com.createdRow = function (row, data, index) {
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
+                    }
                 }.bind(this);
-                this.tab_com.table_columns = this.init_columns_operators_station();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
+                this.tab_com.table_columns = this.init_columns_operators_way_station();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
+                this.tab_com.dom = 'Bfrtip';
+                this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
+
+                break;
+            };
+            case 'operators_send_station': {
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                //this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(2)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+                };
+                this.tab_com.createdRow = function (row, data, index) {
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_operators_send_station();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
+                this.tab_com.dom = 'Bfrtip';
+                this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
+
+                break;
+            };
+            case 'operators_arrival_station': {
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                //this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(2)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+                };
+                this.tab_com.createdRow = function (row, data, index) {
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_operators_arrival_station();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
 

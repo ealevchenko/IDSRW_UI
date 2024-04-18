@@ -63,6 +63,10 @@
     var current_num_wagon = null;
     var wagons = [];
     var balance = [];
+    var operators = [];
+    var operators_way = [];
+    var operators_send = [];
+    var operators_arrival = [];
     $(document).ready(function ($) {
 
         // загрузить данные 
@@ -93,34 +97,82 @@
             }.bind(this));
         };
         var load_operators_of_station = function (id_station, callback) {
+            operators = []; operators_way = []; operators_send = []; operators_arrival = [];
             if (id_station !== null && id_station >= 0) {
-                LockScreen(langView('mwsd_mess_load_operators', App.Langs));
-                api_wsd.getViewOperatorsOfStation(id_station, function (operators) {
-                    if (typeof callback === 'function') {
-                        callback(operators);
+                var pr_lo = 3;
+                var out_pr_lo = function (pr_lo) {
+                    if (pr_lo === 0) {
+                        if (typeof callback === 'function') {
+                            $.each(operators_way, function (i, el) {
+                                var op = operators.find(function (o) { return o.idOperator === el.idOperator; }.bind(this));
+                                if (!op) {
+                                    operators.push({
+                                        idOperator: el.idOperator,
+                                        operatorAbbrRu: el.operatorAbbrRu,
+                                        operatorAbbrEn: el.operatorAbbrEn,
+                                        operatorColor: el.operatorColor,
+                                        countOperators: el.countOperators
+                                    });
+                                } else {
+                                    op.countOperators += el.countOperators;
+                                }
+                            }.bind(this));
+                            callback(operators, operators_way, operators_send, operators_arrival);
+                        }
                     }
+                }.bind(this);
+                LockScreen(langView('mwsd_mess_load_operators', App.Langs));
+                api_wsd.getViewOperatorsOfStation(id_station, function (result) {
+                    operators_way = result;
+                    pr_lo--;
+                    out_pr_lo(pr_lo);
+                }.bind(this));
+                api_wsd.getViewOperatorsSendOfIdStation(id_station, function (result) {
+                    operators_send = result;
+                    pr_lo--;
+                    out_pr_lo(pr_lo);
+                }.bind(this));
+                api_wsd.getViewOperatorsArrivalOfIdStation(id_station, function (result) {
+                    operators_arrival = result;
+                    pr_lo--;
+                    out_pr_lo(pr_lo);
                 }.bind(this));
             } else {
                 if (typeof callback === 'function') {
-                    callback([]);
+                    callback([], [], [], []);
                 }
             };
         };
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 4;
+            var process = 7;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
+                    // События окна операторы
+                    $('#offcanvas-operator-detali').on('shown.bs.offcanvas', function (event) {
+                        //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
 
+                    }.bind(this));
+                    // События акардиона окна операторы
+                    $('#accordion-operators-of-station').on('shown.bs.collapse', function (event) {
+                        $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+                        //switch (event.target.id) {
+                        //    case 'view-operators-of-station': {
+                        //        break;
+                        //    };
+                        //};
+                    }.bind(this));
+
+
+
+                    var pr_1 = 2;
                     var out_pr1 = function (pr_1) {
                         if (pr_1 === 0) {
                             LockScreenOff();
                         }
                     }.bind(this);
-
-                    var pr_1 = 2;
 
                     tw.view(list_station_visible, null, null, null, function () {
                         pr_1--;
@@ -246,10 +298,14 @@
                     });
                 }.bind(this),
                 fn_select_station: function (id_station) {
-                    
-                    $('#operator-detali-label').empty().append("Операторы по " + list_station.find(function (o) { return o.id == id_station}.bind(this))['stationName' + ucFirst(App.Lang)]   );
-                    load_operators_of_station(id_station, function (operators) {
+
+                    $('#operator-detali-label').empty().append("Операторы по " + list_station.find(function (o) { return o.id == id_station }.bind(this))['stationName' + ucFirst(App.Lang)]);
+                    load_operators_of_station(id_station, function (operators, operators_way, operators_send, operators_arrival) {
                         tos.view(operators);
+                        tows.view(operators_way);
+                        toss.view(operators_send);
+                        toas.view(operators_arrival);
+                        //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
                         LockScreenOff();
                     });
                 }.bind(this),
@@ -319,6 +375,9 @@
                 fn_select_rows: function (rows) {
 
                 }.bind(this),
+                fn_select_link: function (link) {
+
+                }.bind(this),
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица остаток"
@@ -341,6 +400,9 @@
                 fn_select_rows: function (rows) {
 
                 }.bind(this),
+                fn_select_link: function (link) {
+
+                }.bind(this),
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица операторы на станции"
@@ -349,7 +411,59 @@
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
                 detali_table: false,
-                type_report: 'operators_station',     
+                type_report: 'operators_station',
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+                fn_select_link: function (link) {
+
+                }.bind(this),
+            });
+            // Инициализация модуля "Таблица операторы по путям на станции"
+            var tows = new TCW('div#operators-way-station');
+            tows.init({
+                alert: null,
+                class_table: 'table table-sm table-hover table-total-balance',
+                detali_table: false,
+                type_report: 'operators_way_station',
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+                fn_select_link: function (id) {
+                    api_dir.getWaysOfId(id, function (way) {
+                        if (way) {
+                            tw.open_way(way.idStation, way.idPark, way.id);
+                        }
+                    }.bind(this))
+                }.bind(this),
+            });
+            // Инициализация модуля "Таблица операторы отправленные со станции"
+            var toss = new TCW('div#operators-send-station');
+            toss.init({
+                alert: null,
+                class_table: 'table table-sm table-hover table-total-balance',
+                detali_table: false,
+                type_report: 'operators_send_station',
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
@@ -364,7 +478,27 @@
 
                 }.bind(this),
             });
+            // Инициализация модуля "Таблица операторы прибывающие на станцию"
+            var toas = new TCW('div#operators-arrival-station');
+            toas.init({
+                alert: null,
+                class_table: 'table table-sm table-hover table-total-balance',
+                detali_table: false,
+                type_report: 'operators_arrival_station',
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
+                },
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+            });
         }.bind(this));
     });
 

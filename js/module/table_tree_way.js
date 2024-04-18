@@ -282,7 +282,7 @@
 
         var $bt_count = new base.fe_ui.button({
             id: id,
-            color: 'btn-primary',
+            color: 'btn-outline-dark',
             class: 'btn-all btn-sm',
             text: count,
         })
@@ -600,9 +600,7 @@
         });
         var $td_img_way = new base.fe_ui.td({
             width: '18px',
-            //class: 'icon-way',
             class: (el.deadlock ? 'text-danger' : (el.crossingUz ? 'text-primary' : (el.dissolution ? 'text-success' : null))),
-/*            class: (el.deadlock ? 'text-danger' : (el.dissolution ? 'text-success' : (el.crossingAmkr ? 'text-primary' : null))),*/
             text: '<i class="fa-solid fa-pallet"></i>',
         });
         var $td_name = new base.fe_ui.td({
@@ -655,7 +653,7 @@
             }
         }.bind(this));
     };
-    // показать парки станции
+    // показать пути станции
     table_tree_way.prototype.view_way = function (id_station, id_park, id_way, callback) {
         var park = this.$tbody.$html.find('tr[data-tree-area="park"][data-station="' + id_station + '"][data-park="' + id_park + '"]');
         var end_park = park.attr('data-tree-end');
@@ -684,7 +682,7 @@
                         park.after($trbody.$tr.$html);
                     }.bind(this));
                     if (id_way) {
-                        base.select_way(id_way);
+                        this.select_way(id_way);
                     }
                     if (typeof callback === 'function') {
                         callback(ways);

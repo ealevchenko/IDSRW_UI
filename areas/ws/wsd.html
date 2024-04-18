@@ -220,8 +220,55 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <div id="operators-station">
-
+                <div class="accordion" id="accordion-operators-of-station">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#view-operators-of-station" aria-expanded="true" aria-controls="view-operators-of-station">
+                                ОПЕРАТОРЫ
+                            </button>
+                        </h2>
+                        <div id="view-operators-of-station" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <div id="operators-station"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#view-operators-way-of-station" aria-expanded="false" aria-controls="view-operators-way-of-station">
+                                ОПЕРАТОРЫ ПО ПУТЯМ
+                            </button>
+                        </h2>
+                        <div id="view-operators-way-of-station" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div id="operators-way-station"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#view-operators-send-of-station" aria-expanded="false" aria-controls="view-operators-send-of-station">
+                                ОПЕРАТОРЫ ОТПРАВЛЕННЫЕ
+                            </button>
+                        </h2>
+                        <div id="view-operators-send-of-station" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div id="operators-send-station"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#view-operators-arrival-of-station" aria-expanded="false" aria-controls="view-operators-arrival-of-station">
+                                ОПЕРАТОРЫ ПРИБЫВАЮЩИЕ
+                            </button>
+                        </h2>
+                        <div id="view-operators-arrival-of-station" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <div id="operators-arrival-station"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
