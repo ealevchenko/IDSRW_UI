@@ -1,5 +1,5 @@
 ﻿/* ===============================================
--= Модуль библиотеки таблиц отчетов ГИЦ УЗ =-
+-= Модуль библиотеки таблицы АРМа диспетчера =-
   + js/view/shared/common.js
   + js/module/table_common.js
   + css/module/table_common.css
@@ -157,7 +157,7 @@
 
     //-----------------------------------------------------------------------------------------
     // Конструктор
-    function table_cars_way(selector) {
+    function table_ws(selector) {
         this.tab_com = new TAB_COMMON({
             selector: selector,
             fn_init_type_report: this.init_type_report.bind(this),
@@ -1041,7 +1041,7 @@
     //==========================================================================================
     //------------------------------- ПОЛЯ ----------------------------------------------------
     // инициализация полей req1892
-    table_cars_way.prototype.init_columns_cars_way = function () {
+    table_ws.prototype.init_columns_cars_way = function () {
         var collums = [];
         collums.push({ field: 'position', title: null, class: null });
         if (this.tab_com.settings.link_num) {
@@ -1149,7 +1149,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_cars_way.prototype.init_columns_total_balance = function () {
+    table_ws.prototype.init_columns_total_balance = function () {
         var collums = [];
         collums.push({ field: 'remainder_type', title: null, class: null });
         collums.push({
@@ -1167,7 +1167,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_cars_way.prototype.init_columns_operators_station = function () {
+    table_ws.prototype.init_columns_operators_station = function () {
         var collums = [];
         collums.push({ field: 'operator_abbr', title: null, class: null });
         collums.push({
@@ -1179,7 +1179,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_cars_way.prototype.init_columns_operators_way_station = function () {
+    table_ws.prototype.init_columns_operators_way_station = function () {
         var collums = [];
         //collums.push({ field: 'current_way_amkr_name', title: null, class: null });
         collums.push({ field: 'current_way_amkr_name_link', title: null, class: null });
@@ -1193,7 +1193,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_cars_way.prototype.init_columns_operators_send_station = function () {
+    table_ws.prototype.init_columns_operators_send_station = function () {
         var collums = [];
         collums.push({ field: 'name_outer_way', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: null });
@@ -1206,7 +1206,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_cars_way.prototype.init_columns_operators_arrival_station = function () {
+    table_ws.prototype.init_columns_operators_arrival_station = function () {
         var collums = [];
         collums.push({ field: 'name_outer_way', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: null });
@@ -1221,7 +1221,7 @@
     //------------------------------- КНОПКИ ----------------------------------------------------
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
-    table_cars_way.prototype.init_type_report = function () {
+    table_ws.prototype.init_type_report = function () {
         switch (this.tab_com.settings.type_report) {
             case 'cars_way': {
                 this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
@@ -1456,15 +1456,15 @@
         }
     };
     // Инициализация
-    table_cars_way.prototype.init = function (options) {
+    table_ws.prototype.init = function (options) {
         this.tab_com.init(options);
     };
     // Показать данные
-    table_cars_way.prototype.view = function (data, id_select) {
+    table_ws.prototype.view = function (data, id_select) {
         this.tab_com.view(data, id_select);
     };
     //
-    //table_cars_way.prototype.view_footer = function (data) {
+    //table_ws.prototype.view_footer = function (data) {
     //    switch (this.settings.type_report) {
     //        //case 'req0002_train': {
     //        //    if (data) {
@@ -1501,40 +1501,40 @@
     //};
     ////-------------------------------------------------------------------------------------------
     //// Очистить сообщения
-    //table_cars_way.prototype.out_clear = function () {
+    //table_ws.prototype.out_clear = function () {
     //    if (this.settings.alert) {
     //        this.settings.alert.clear_message()
     //    }
     //}
     //// Показать ошибки
-    //table_cars_way.prototype.out_error = function (message) {
+    //table_ws.prototype.out_error = function (message) {
     //    if (this.settings.alert) {
     //        this.settings.alert.out_error_message(message)
     //    }
     //};
     //// Показать предупреждения
-    //table_cars_way.prototype.out_warning = function (message) {
+    //table_ws.prototype.out_warning = function (message) {
     //    if (this.settings.alert) {
     //        this.settings.alert.out_warning_message(message)
     //    }
     //};
     //// Показать сообщения о выполнении действий
-    //table_cars_way.prototype.out_info = function (message) {
+    //table_ws.prototype.out_info = function (message) {
     //    if (this.settings.alert) {
     //        this.settings.alert.out_info_message(message)
     //    }
     //};
     // Очистить объект
-    table_cars_way.prototype.destroy = function () {
+    table_ws.prototype.destroy = function () {
         //
         this.tab_com.destroy();
     };
     // Очистить детали по указаному пути
-    table_cars_way.prototype.destroy_detali = function (data) {
+    table_ws.prototype.destroy_detali = function (data) {
         this.tab_com.destroy_detali(data);
     };
     //
-    App.table_cars_way = table_cars_way;
+    App.table_ws = table_ws;
 
     window.App = App;
 })(window);

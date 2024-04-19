@@ -31,7 +31,7 @@
     var TW = App.table_tree_way;
     var tw = new TW('DIV#tree-way');
 
-    var TCW = App.table_cars_way;
+    var TWS = App.table_ws;
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -311,7 +311,7 @@
                     current_id_way = id_way;
                     current_option_way = option;
                     load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
-                        tcw.view(wagons)
+                        tws.view(wagons)
                         LockScreenOff();
                     });
                 }.bind(this),
@@ -374,8 +374,8 @@
             //});
             //-----------------------------------------------------
             // Инициализация модуля "Таблица вагоны на пути"
-            var tcw = new TCW('div#cars-way');
-            tcw.init({
+            var tws = new TWS('div#cars-way');
+            tws.init({
                 alert: null,
                 class_table: 'table table-sm table-cars-way table-striped table-success',
                 detali_table: false,
@@ -399,7 +399,7 @@
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица остаток"
-            var ttb = new TCW('div#total-balance');
+            var ttb = new TWS('div#total-balance');
             ttb.init({
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
@@ -424,7 +424,7 @@
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица операторы на станции"
-            var tos = new TCW('div#operators-station');
+            var tos = new TWS('div#operators-station');
             tos.init({
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
@@ -448,7 +448,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица операторы по путям на станции"
-            var tows = new TCW('div#operators-way-station');
+            var tows = new TWS('div#operators-way-station');
             tows.init({
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
@@ -476,7 +476,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица операторы отправленные со станции"
-            var toss = new TCW('div#operators-send-station');
+            var toss = new TWS('div#operators-send-station');
             toss.init({
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
@@ -497,7 +497,7 @@
                 }.bind(this),
             });
             // Инициализация модуля "Таблица операторы прибывающие на станцию"
-            var toas = new TCW('div#operators-arrival-station');
+            var toas = new TWS('div#operators-arrival-station');
             toas.init({
                 alert: null,
                 class_table: 'table table-sm table-hover table-total-balance',
