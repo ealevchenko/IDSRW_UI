@@ -19,117 +19,117 @@
     {
         'default':  //default language: ru
         {
-            'tcw_field_position': '№ поз.',
-            'tcw_field_num': '№ вагона',
-            'tcw_field_operator_abbr': 'Оператор (аббр.)',
-            'tcw_field_limiting_abbr': 'Огран. (аббр.)',
-            'tcw_field_owner_wagon_abbr': 'Собст. УЗ (аббр.)',
-            'tcw_field_operator_paid': 'Приз. платн.',
-            'tcw_field_wagon_rod_abbr': 'Род ваг.(аббр.)',
-            'tcw_field_wagon_type': 'Тип вагона',
-            'tcw_field_arrival_condition_abbr': 'Разм.',
-            'tcw_field_current_condition_abbr': 'Разм. тек.',
-            'tcw_field_wagon_date_rem_uz': 'Дата деповского ремонта по УЗ',
-            'tcw_field_wagon_gruzp_doc': 'Груз-ть, тн (док.)',
-            'tcw_field_wagon_gruzp_uz': 'Груз-ть, тн (УЗ.)',
-            'tcw_field_wagon_adm': 'Код адм.',
-            'tcw_field_arrival_cargo_group_name': 'Группа груза по прибытию',
-            'tcw_field_arrival_cargo_name': 'Груз по прибытию ',
-            'tcw_field_arrival_sertification_data': 'Сертиф. данные',
-            'tcw_field_arrival_id_commercial_condition': 'id ком. сост.',
-            'tcw_field_arrival_commercial_condition': 'Комм. сост.',
-            'tcw_field_arrival_station_from_code': 'Код. ст. отпр.',
-            'tcw_field_arrival_station_from_name': 'Стан. отправ.',
-            'tcw_field_arrival_shipper_code': 'Код отпр.',
-            'tcw_field_arrival_shipper_name': 'Отправитель',
-            'tcw_field_arrival_station_amkr_name': 'Стан. назн. АМКР',
-            'tcw_field_arrival_division_amkr_abbr': 'Цех получ.',
-            'tcw_field_current_loading_status': 'Груж/порож.',
-            'tcw_field_current_wagon_busy': 'Занят (операция)',
-            'tcw_field_current_operation_name': 'Последняя операция над вагоном',
-            'tcw_field_current_operation_start': 'Дата начала выполнения операции',
-            'tcw_field_current_operation_end': 'Дата окончания выполнения операции',
-            'tcw_field_arrival_duration': 'Простой  УЗ, час',
-            'tcw_field_arrival_idle_time': 'Норма, час',
-            'tcw_field_arrival_usage_fee': 'Плата на текущий момент, грн',
-            'tcw_field_current_station_indicator': 'Инд.',
-            'tcw_field_current_station_idle_time': 'Норма ст., ч',
-            'tcw_field_current_station_duration': 'Факт ст., ч',
-            'tcw_field_current_way_duration': 'Факт путь, ч',
-            'tcw_field_instructional_letters_num': '№ письма',
-            'tcw_field_instructional_letters_datetime': 'Дата письма',
-            'tcw_field_instructional_letters_station_code': 'Код ст. наз.',
-            'tcw_field_instructional_letters_station_name': 'Станция назначения',
-            'tcw_field_instructional_letters_note': 'Текст',
-            'tcw_field_sap_incoming_supply_cargo_ban': 'Вх. пост. Запрет',
-            'tcw_field_sap_incoming_supply_num': 'Вх. пост. №',
-            'tcw_field_sap_incoming_supply_date': 'Вх. пост. дата созд.',
-            'tcw_field_sap_incoming_supply_time': 'Вх. пост. время созд.',
-            'tcw_field_sap_incoming_supply_cargo_code': 'Вх. пост. Код мат.',
-            'tcw_field_sap_incoming_supply_cargo_name': 'Вх. пост. материал (груз)',
-            'tcw_field_sap_incoming_supply_warehouse_code': 'Вх. пост. склад',
-            'tcw_field_sap_incoming_supply_warehouse_name': 'Вх. пост. Наименование склада',
-            'tcw_field_sap_outgoing_supply_num': 'Исх. пост. №',
-            'tcw_field_sap_outgoing_supply_date': 'Исх. пост. дата созд.',
-            'tcw_field_sap_outgoing_supply_cargo_code': 'Исх. пост. Код ЕТСНГ',
-            'tcw_field_sap_outgoing_supply_cargo_name': 'Исх. пост. Наименование груза',
-            'tcw_field_sap_outgoing_supply_shipper_code': 'Исх. пост. Код получателя',
-            'tcw_field_sap_outgoing_supply_shipper_name': 'Исх. пост. Получатель',
-            'tcw_field_sap_outgoing_supply_destination_station_code': 'Исх. пост. Код станции назначения',
-            'tcw_field_sap_outgoing_supply_destination_station_name': 'Исх. пост. Станция назначения',
-            'tcw_field_sap_outgoing_supply_border_checkpoint_code': 'Исх. пост. Код погранперехода',
-            'tcw_field_sap_outgoing_supply_border_checkpoint_name': 'Исх. пост. Погранпереход',
-            'tcw_field_sap_outgoing_supply_netto': 'Исх. пост. Вес нетто',
-            'tcw_field_sap_outgoing_supply_warehouse_code': 'Исх. пост. склад',
-            'tcw_field_sap_outgoing_supply_warehouse_name': 'Исх. пост. Наименование склада',
-            'tcw_field_sap_outgoing_supply_responsible_post': 'Исх. пост. Долж. отв. за погрузку',
-            'tcw_field_sap_outgoing_supply_responsible_fio': 'Исх. пост. ФИО отв. за погрузку',
-            'tcw_field_sap_outgoing_supply_payer_code': 'Исх. пост. Код плательщик',
-            'tcw_field_sap_outgoing_supply_payer_name': 'Исх. пост. Плательщик',
-            'tcw_field_wagon_brutto_doc': 'Брутто по ЭПД, тн',
-            'tcw_field_wagon_brutto_amkr': 'Брутто АМКР, тн',
-            'tcw_field_wagon_tara_doc': 'Тара по ЭПД, тн.',
-            'tcw_field_wagon_tara_arc_doc': 'Тара по ЭПД уточ., тн.',
-            'tcw_field_wagon_tara_uz': 'Тара по УЗ, тн.',
-            'tcw_field_wagon_vesg_doc': 'Нетто по ЭПД, тн',
-            'tcw_field_wagon_vesg_amkr': 'Нетто АМКР, тн',
-            'tcw_field_diff_vesg': 'Разница нетто, тн.',
-            'tcw_field_doc_outgoing_car': 'Наличие документа для сдачи на  УЗ',
-            'tcw_field_arrival_nom_main_doc': '№ накладной по приб',
-            'tcw_field_arrival_nom_doc': '№ досылки по приб',
-            'tcw_field_arrival_composition_index': 'Индекс поезда',
-            'tcw_field_arrival_date_adoption': 'Дата приема на АМКР',
-            'tcw_field_outgoing_date': 'Дата сдачи на УЗ',
-            'tcw_field_outgoing_id_return': 'id возврат',
-            'tcw_field_outgoing_return_cause': 'Причина возврата по отправлению',
-            'tcw_field_outgoing_sostav_status': 'Код стат. отпр. сост.',
-            'tcw_field_outgoing_sostav_status_name': 'Статус отпр. сост.',
-            'tcw_field_wagon_ban_uz': 'Запреты по УЗ',
-            'tcw_field_wagon_closed_route': 'Замкнутый маршрут (кольцо)',
-            'tcw_field_wir_note': 'Примечание',
-            'tcw_field_old_outgoing_uz_vagon_cargo_name': 'Груз по ОТПР предыдущий',
-            'tcw_field_old_date_outgoing': 'Дата последней сдачи',
-            'tcw_field_old_outgoing_uz_document_station_to_name': 'Станция ОТПР предыдущая',
-            'tcw_field_count': 'Кол.',
-            'tcw_field_park_abbr': 'Парк (аббр.)',
-            'tcw_field_way_name': 'Путь (аббр.)',
-            'tcw_field_name_outer_way': 'Перегон',
+            'tws_field_position': '№ поз.',
+            'tws_field_num': '№ вагона',
+            'tws_field_operator_abbr': 'Оператор (аббр.)',
+            'tws_field_limiting_abbr': 'Огран. (аббр.)',
+            'tws_field_owner_wagon_abbr': 'Собст. УЗ (аббр.)',
+            'tws_field_operator_paid': 'Приз. платн.',
+            'tws_field_wagon_rod_abbr': 'Род ваг.(аббр.)',
+            'tws_field_wagon_type': 'Тип вагона',
+            'tws_field_arrival_condition_abbr': 'Разм.',
+            'tws_field_current_condition_abbr': 'Разм. тек.',
+            'tws_field_wagon_date_rem_uz': 'Дата деповского ремонта по УЗ',
+            'tws_field_wagon_gruzp_doc': 'Груз-ть, тн (док.)',
+            'tws_field_wagon_gruzp_uz': 'Груз-ть, тн (УЗ.)',
+            'tws_field_wagon_adm': 'Код адм.',
+            'tws_field_arrival_cargo_group_name': 'Группа груза по прибытию',
+            'tws_field_arrival_cargo_name': 'Груз по прибытию ',
+            'tws_field_arrival_sertification_data': 'Сертиф. данные',
+            'tws_field_arrival_id_commercial_condition': 'id ком. сост.',
+            'tws_field_arrival_commercial_condition': 'Комм. сост.',
+            'tws_field_arrival_station_from_code': 'Код. ст. отпр.',
+            'tws_field_arrival_station_from_name': 'Стан. отправ.',
+            'tws_field_arrival_shipper_code': 'Код отпр.',
+            'tws_field_arrival_shipper_name': 'Отправитель',
+            'tws_field_arrival_station_amkr_name': 'Стан. назн. АМКР',
+            'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
+            'tws_field_current_loading_status': 'Груж/порож.',
+            'tws_field_current_wagon_busy': 'Занят (операция)',
+            'tws_field_current_operation_name': 'Последняя операция над вагоном',
+            'tws_field_current_operation_start': 'Дата начала выполнения операции',
+            'tws_field_current_operation_end': 'Дата окончания выполнения операции',
+            'tws_field_arrival_duration': 'Простой  УЗ, час',
+            'tws_field_arrival_idle_time': 'Норма, час',
+            'tws_field_arrival_usage_fee': 'Плата на текущий момент, грн',
+            'tws_field_current_station_indicator': 'Инд.',
+            'tws_field_current_station_idle_time': 'Норма ст., ч',
+            'tws_field_current_station_duration': 'Факт ст., ч',
+            'tws_field_current_way_duration': 'Факт путь, ч',
+            'tws_field_instructional_letters_num': '№ письма',
+            'tws_field_instructional_letters_datetime': 'Дата письма',
+            'tws_field_instructional_letters_station_code': 'Код ст. наз.',
+            'tws_field_instructional_letters_station_name': 'Станция назначения',
+            'tws_field_instructional_letters_note': 'Текст',
+            'tws_field_sap_incoming_supply_cargo_ban': 'Вх. пост. Запрет',
+            'tws_field_sap_incoming_supply_num': 'Вх. пост. №',
+            'tws_field_sap_incoming_supply_date': 'Вх. пост. дата созд.',
+            'tws_field_sap_incoming_supply_time': 'Вх. пост. время созд.',
+            'tws_field_sap_incoming_supply_cargo_code': 'Вх. пост. Код мат.',
+            'tws_field_sap_incoming_supply_cargo_name': 'Вх. пост. материал (груз)',
+            'tws_field_sap_incoming_supply_warehouse_code': 'Вх. пост. склад',
+            'tws_field_sap_incoming_supply_warehouse_name': 'Вх. пост. Наименование склада',
+            'tws_field_sap_outgoing_supply_num': 'Исх. пост. №',
+            'tws_field_sap_outgoing_supply_date': 'Исх. пост. дата созд.',
+            'tws_field_sap_outgoing_supply_cargo_code': 'Исх. пост. Код ЕТСНГ',
+            'tws_field_sap_outgoing_supply_cargo_name': 'Исх. пост. Наименование груза',
+            'tws_field_sap_outgoing_supply_shipper_code': 'Исх. пост. Код получателя',
+            'tws_field_sap_outgoing_supply_shipper_name': 'Исх. пост. Получатель',
+            'tws_field_sap_outgoing_supply_destination_station_code': 'Исх. пост. Код станции назначения',
+            'tws_field_sap_outgoing_supply_destination_station_name': 'Исх. пост. Станция назначения',
+            'tws_field_sap_outgoing_supply_border_checkpoint_code': 'Исх. пост. Код погранперехода',
+            'tws_field_sap_outgoing_supply_border_checkpoint_name': 'Исх. пост. Погранпереход',
+            'tws_field_sap_outgoing_supply_netto': 'Исх. пост. Вес нетто',
+            'tws_field_sap_outgoing_supply_warehouse_code': 'Исх. пост. склад',
+            'tws_field_sap_outgoing_supply_warehouse_name': 'Исх. пост. Наименование склада',
+            'tws_field_sap_outgoing_supply_responsible_post': 'Исх. пост. Долж. отв. за погрузку',
+            'tws_field_sap_outgoing_supply_responsible_fio': 'Исх. пост. ФИО отв. за погрузку',
+            'tws_field_sap_outgoing_supply_payer_code': 'Исх. пост. Код плательщик',
+            'tws_field_sap_outgoing_supply_payer_name': 'Исх. пост. Плательщик',
+            'tws_field_wagon_brutto_doc': 'Брутто по ЭПД, тн',
+            'tws_field_wagon_brutto_amkr': 'Брутто АМКР, тн',
+            'tws_field_wagon_tara_doc': 'Тара по ЭПД, тн.',
+            'tws_field_wagon_tara_arc_doc': 'Тара по ЭПД уточ., тн.',
+            'tws_field_wagon_tara_uz': 'Тара по УЗ, тн.',
+            'tws_field_wagon_vesg_doc': 'Нетто по ЭПД, тн',
+            'tws_field_wagon_vesg_amkr': 'Нетто АМКР, тн',
+            'tws_field_diff_vesg': 'Разница нетто, тн.',
+            'tws_field_doc_outgoing_car': 'Наличие документа для сдачи на  УЗ',
+            'tws_field_arrival_nom_main_doc': '№ накладной по приб',
+            'tws_field_arrival_nom_doc': '№ досылки по приб',
+            'tws_field_arrival_composition_index': 'Индекс поезда',
+            'tws_field_arrival_date_adoption': 'Дата приема на АМКР',
+            'tws_field_outgoing_date': 'Дата сдачи на УЗ',
+            'tws_field_outgoing_id_return': 'id возврат',
+            'tws_field_outgoing_return_cause': 'Причина возврата по отправлению',
+            'tws_field_outgoing_sostav_status': 'Код стат. отпр. сост.',
+            'tws_field_outgoing_sostav_status_name': 'Статус отпр. сост.',
+            'tws_field_wagon_ban_uz': 'Запреты по УЗ',
+            'tws_field_wagon_closed_route': 'Замкнутый маршрут (кольцо)',
+            'tws_field_wir_note': 'Примечание',
+            'tws_field_old_outgoing_uz_vagon_cargo_name': 'Груз по ОТПР предыдущий',
+            'tws_field_old_date_outgoing': 'Дата последней сдачи',
+            'tws_field_old_outgoing_uz_document_station_to_name': 'Станция ОТПР предыдущая',
+            'tws_field_count': 'Кол.',
+            'tws_field_park_abbr': 'Парк (аббр.)',
+            'tws_field_way_name': 'Путь (аббр.)',
+            'tws_field_name_outer_way': 'Перегон',
 
-            'tcw_field_id': 'Остаток',
-            'tcw_field_all': 'Все вагоны',
-            'tcw_field_amkr': 'Вагоны АМКР',
-            'tcw_field_id_1': 'ВСЕГО',
-            'tcw_field_id_2': 'ОСТАТОК ВНЕШНИХ',
-            'tcw_field_id_3': 'УЧЕТНЫЙ ОСТАТОК',
+            'tws_field_id': 'Остаток',
+            'tws_field_all': 'Все вагоны',
+            'tws_field_amkr': 'Вагоны АМКР',
+            'tws_field_id_1': 'ВСЕГО',
+            'tws_field_id_2': 'ОСТАТОК ВНЕШНИХ',
+            'tws_field_id_3': 'УЧЕТНЫЙ ОСТАТОК',
 
-            'tcw_title_status_0': 'Предъявлен',
-            'tcw_title_status_1': 'В работе',
-            'tcw_title_status_2': 'Сдан',
-            'tcw_title_status_3': 'Отправлен',
-            'tcw_title_status_4': 'Возврат',
+            'tws_title_status_0': 'Предъявлен',
+            'tws_title_status_1': 'В работе',
+            'tws_title_status_2': 'Сдан',
+            'tws_title_status_3': 'Отправлен',
+            'tws_title_status_4': 'Возврат',
 
 
-            'tcw_title_link_num': 'Показать историю по вагону...',
+            'tws_title_link_num': 'Показать историю по вагону...',
         },
         'en':  //default language: English
         {
@@ -139,9 +139,9 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
-    var TAB_COMMON = App.table_common; // Общий модуль таблиц*/
-
     var fe_ui = new FE();
+
+    var TAB_COMMON = App.table_common; // Общий модуль таблиц*/
 
     var getHoursFromMinuts = function (minutes) {
         if (minutes && minutes > 0) {
@@ -171,7 +171,7 @@
                     return row.position;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_position', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_position', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'num',
@@ -179,7 +179,7 @@
                     return row.num;
                 },
                 className: 'dt-body-center num-wagon',
-                title: langView('tcw_field_num', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_num', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'num_link',
@@ -190,14 +190,14 @@
                         href: '#',
                         text: row.num,
                         target: '_blank',
-                        title: langView('tcw_title_link_num', App.Langs),
+                        title: langView('tws_title_link_num', App.Langs),
                     });
                     if ($link) {
                         return $link.$html[0].outerHTML;
                     }
                 },
                 className: 'dt-body-center num-wagon',
-                title: langView('tcw_field_num', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_num', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'operator_abbr',
@@ -205,7 +205,7 @@
                     return row['operatorAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'limiting_abbr',
@@ -213,7 +213,7 @@
                     return row['limitingAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_limiting_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_limiting_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'owner_wagon_abbr',
@@ -221,7 +221,7 @@
                     return row['ownerWagonAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_owner_wagon_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_owner_wagon_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'operator_paid',
@@ -229,7 +229,7 @@
                     return row.operatoPaid ? langView('t_com_title_yes', App.Langs) : '';
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_operator_paid', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_operator_paid', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_rod_abbr',
@@ -237,7 +237,7 @@
                     return row['wagonRodAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-50',
-                title: langView('tcw_field_wagon_rod_abbr', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_rod_abbr', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_type',
@@ -245,7 +245,7 @@
                     return row['wagonType' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_wagon_type', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_type', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_condition_abbr',
@@ -253,7 +253,7 @@
                     return row['arrivalConditionAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_arrival_condition_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_condition_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_condition_abbr',
@@ -261,7 +261,7 @@
                     return row['currentConditionAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_current_condition_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_condition_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_date_rem_uz',
@@ -269,7 +269,7 @@
                     return row.wagonDateRemUz ? moment(row.wagonDateRemUz).format(format_date) : null;
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_wagon_date_rem_uz', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_date_rem_uz', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_gruzp_doc',
@@ -277,7 +277,7 @@
                     return row.wagonGruzpDoc ? Number(row.wagonGruzpDoc).toFixed(1) : null;
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_wagon_gruzp_doc', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_gruzp_doc', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_gruzp_uz',
@@ -285,7 +285,7 @@
                     return row.wagonGruzpUz ? Number(row.wagonGruzpUz).toFixed(1) : null;
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_wagon_gruzp_uz', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_gruzp_uz', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_adm',
@@ -293,7 +293,7 @@
                     return row.wagonAdm;
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_wagon_adm', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_adm', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_cargo_group_name',
@@ -301,7 +301,7 @@
                     return row['arrivalCargoGroupName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_arrival_cargo_group_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_cargo_group_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_cargo_name',
@@ -309,7 +309,7 @@
                     return row['arrivalCargoName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_arrival_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_sertification_data',
@@ -317,7 +317,7 @@
                     return row['arrivalSertificationData' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_arrival_sertification_data', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_sertification_data', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_commercial_condition',
@@ -325,7 +325,7 @@
                     return row['arrivalCommercialCondition' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_arrival_commercial_condition', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_commercial_condition', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_station_from_code',
@@ -333,7 +333,7 @@
                     return row.arrivalStationFromCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_arrival_station_from_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_station_from_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_station_from_name',
@@ -341,7 +341,7 @@
                     return row['arrivalStationFromName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_arrival_station_from_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_station_from_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_shipper_code',
@@ -349,7 +349,7 @@
                     return row.arrivalShipperCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_arrival_shipper_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_shipper_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_shipper_name',
@@ -357,7 +357,7 @@
                     return row['arrivalShipperName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-nowrap text-left',
-                title: langView('tcw_field_arrival_shipper_name', App.Langs), width: "300px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_shipper_name', App.Langs), width: "300px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_station_amkr_name',
@@ -365,7 +365,7 @@
                     return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_arrival_station_amkr_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_station_amkr_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_division_amkr_abbr',
@@ -373,7 +373,7 @@
                     return row['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_arrival_division_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_division_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_loading_status',
@@ -381,7 +381,7 @@
                     return row['currentLoadingStatus' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_current_loading_status', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_loading_status', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_wagon_busy',
@@ -389,7 +389,7 @@
                     return row.currentWagonBusy ? langView('t_com_title_yes', App.Langs) : '';
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_current_wagon_busy', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_current_wagon_busy', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'current_operation_name',
@@ -397,7 +397,7 @@
                     return row['currentOperationName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_current_operation_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_operation_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_operation_start',
@@ -405,7 +405,7 @@
                     return row.currentOperationStart ? moment(row.currentOperationStart).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_current_operation_start', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_operation_start', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_operation_end',
@@ -413,7 +413,7 @@
                     return row.currentOperationEnd ? moment(row.currentOperationEnd).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_current_operation_end', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_operation_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Простой  УЗ, час
             {
@@ -422,7 +422,7 @@
                     return row.arrivalDuration !== null ? getHoursFromMinuts(Number(row.arrivalDuration)) : null;
                 },
                 className: 'dt-body-nowrap arrival-duration',
-                title: langView('tcw_field_arrival_duration', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_duration', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Норма, час
             {
@@ -431,7 +431,7 @@
                     return row.arrivalIdleTime !== null ? Number(row.arrivalIdleTime / 60) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_arrival_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Плата на текущий момент, грн
             {
@@ -440,7 +440,7 @@
                     return row.arrivalUsageFee !== null ? Number(row.arrivalUsageFee).toFixed(2) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_arrival_usage_fee', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_usage_fee', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'current_station_indicator',
@@ -463,7 +463,7 @@
                     }
                 },
                 className: 'dt-body-justify mw-100',
-                title: langView('tcw_field_current_station_indicator', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_current_station_indicator', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_station_idle_time',
@@ -471,7 +471,7 @@
                     return row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime / 60) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_current_station_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_current_station_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Факт станция, ч
             {
@@ -480,7 +480,7 @@
                     return row.currentStationDuration !== null ? getHoursFromMinuts(Number(row.currentStationDuration)) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_current_station_duration', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_current_station_duration', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'current_way_duration',
@@ -488,7 +488,7 @@
                     return row.currentWayDuration !== null ? getHoursFromMinuts(Number(row.currentWayDuration)) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_current_way_duration', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_current_way_duration', App.Langs), width: "50px", orderable: true, searchable: true
             },
             //=============== ИНСТРУКТИВНЫЕ ПИСЬМА ==================
             // № письма
@@ -498,7 +498,7 @@
                     return row.instructionalLettersNum;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_instructional_letters_num', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_instructional_letters_num', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Дата письма
             {
@@ -507,7 +507,7 @@
                     return row.instructionalLettersDatetime ? moment(row.instructionalLettersDatetime).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_instructional_letters_datetime', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_instructional_letters_datetime', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Станция назначения
             {
@@ -516,7 +516,7 @@
                     return row.instructionalLettersStationCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_instructional_letters_station_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_instructional_letters_station_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'instructional_letters_station_name',
@@ -524,7 +524,7 @@
                     return row.instructionalLettersStationName;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_instructional_letters_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_instructional_letters_station_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Текст
             {
@@ -533,7 +533,7 @@
                     return row.instructionalLettersNote;
                 },
                 className: 'dt-body-nowrap text-left',
-                title: langView('tcw_field_instructional_letters_note', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_instructional_letters_note', App.Langs), width: "150px", orderable: true, searchable: true
             },
             //
             {
@@ -546,7 +546,7 @@
                     }
                 },
                 className: 'dt-body-nowrap sap-inc-supp',
-                title: langView('tcw_field_sap_incoming_supply_cargo_ban', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_cargo_ban', App.Langs), width: "30px", orderable: true, searchable: true
             },
             //=============== ВХОДЯЩАЯ ПОСТАВКА ==================
             {
@@ -555,7 +555,7 @@
                     return row.sapIncomingSupplyNum;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_sap_incoming_supply_num', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_num', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // дата создания
             {
@@ -564,7 +564,7 @@
                     return row.sapIncomingSupplyDate ? moment(row.sapIncomingSupplyDate).format(format_date) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_sap_incoming_supply_date', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_date', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // время создания
             {
@@ -573,7 +573,7 @@
                     return row.sapIncomingSupplyTime;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_sap_incoming_supply_time', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_time', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Материал
             {
@@ -582,7 +582,7 @@
                     return row.sapIncomingSupplyCargoCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_incoming_supply_cargo_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_cargo_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_incoming_supply_cargo_name',
@@ -590,7 +590,7 @@
                     return row.sapIncomingSupplyCargoName;
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_sap_incoming_supply_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Склад, Наименование склада
             {
@@ -599,7 +599,7 @@
                     return row.sapIncomingSupplyWarehouseCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_incoming_supply_warehouse_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_warehouse_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_incoming_supply_warehouse_name',
@@ -607,7 +607,7 @@
                     return row.sapIncomingSupplyWarehouseName;
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_sap_incoming_supply_warehouse_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_sap_incoming_supply_warehouse_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             //=============== ИСХОДЯЩАЯ ПОСТАВКА ==================
             {
@@ -616,7 +616,7 @@
                     return row.sapOutgoingSupplyNum;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_sap_outgoing_supply_num', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_num', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // дата создания
             {
@@ -625,7 +625,7 @@
                     return row.sapOutgoingSupplyDate ? moment(row.sapOutgoingSupplyDate).format(format_date) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_sap_outgoing_supply_date', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_date', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Груз
             {
@@ -634,7 +634,7 @@
                     return row.sapOutgoingSupplyCargoCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_cargo_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_cargo_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_cargo_name',
@@ -642,7 +642,7 @@
                     return row.sapOutgoingSupplyCargoName;
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_sap_outgoing_supply_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_cargo_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Грузополучатель
             {
@@ -651,7 +651,7 @@
                     return row.sapOutgoingSupplyShipperCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_shipper_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_shipper_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_shipper_name',
@@ -659,7 +659,7 @@
                     return row.sapOutgoingSupplyShipperName;
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_sap_outgoing_supply_shipper_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_shipper_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Станция назначения
             {
@@ -668,7 +668,7 @@
                     return row.sapOutgoingSupplyDestinationStationCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_destination_station_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_destination_station_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_destination_station_name',
@@ -676,7 +676,7 @@
                     return row.sapOutgoingSupplyDestinationStationName;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_sap_outgoing_supply_destination_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_destination_station_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Погран переход
             {
@@ -685,7 +685,7 @@
                     return row.sapOutgoingSupplyBorderCheckpointCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_border_checkpoint_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_border_checkpoint_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_border_checkpoint_name',
@@ -693,7 +693,7 @@
                     return row.sapOutgoingSupplyBorderCheckpointName;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_sap_outgoing_supply_border_checkpoint_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_border_checkpoint_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Нетто по исх пост, тн
             {
@@ -702,7 +702,7 @@
                     return row.sapOutgoingSupplyNetto !== null ? (row.sapOutgoingSupplyNetto > 0 ? Number(row.sapOutgoingSupplyNetto / 1000).toFixed(2) : Number(row.sapOutgoingSupplyNetto).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_sap_outgoing_supply_netto', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_netto', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Склад, Наименование склада
             {
@@ -711,7 +711,7 @@
                     return row.sapOutgoingSupplyWarehouseCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_warehouse_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_warehouse_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_warehouse_name',
@@ -719,7 +719,7 @@
                     return row.sapOutgoingSupplyWarehouseName;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_sap_outgoing_supply_warehouse_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_warehouse_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Ответственный за погрузку
             {
@@ -728,7 +728,7 @@
                     return row.sapOutgoingSupplyResponsiblePost;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_sap_outgoing_supply_responsible_post', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_responsible_post', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_responsible_fio',
@@ -736,7 +736,7 @@
                     return row.sapOutgoingSupplyResponsibleFio;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_sap_outgoing_supply_responsible_fio', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_responsible_fio', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Плательщик ж.д. тарифа
             {
@@ -745,7 +745,7 @@
                     return row.sapOutgoingSupplyPayerCode;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_sap_outgoing_supply_payer_code', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_payer_code', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'sap_outgoing_supply_payer_name',
@@ -753,7 +753,7 @@
                     return row.sapOutgoingSupplyPayerName;
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_sap_outgoing_supply_payer_name', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_sap_outgoing_supply_payer_name', App.Langs), width: "150px", orderable: true, searchable: true
             },
             //=============== ВХОДНОЕ ВЗВЕШИВАНИЕ С УЗ ==================
             // Брутто по ЭПД, тн
@@ -763,7 +763,7 @@
                     return row.wagonBruttoDoc !== null ? (row.wagonBruttoDoc > 0 ? Number(row.wagonBruttoDoc / 1000).toFixed(2) : Number(row.wagonBruttoDoc).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_brutto_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_brutto_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Брутто по ЭПД, тн
             {
@@ -772,7 +772,7 @@
                     return row.wagonBruttoAmkr !== null ? (row.wagonBruttoAmkr > 0 ? Number(row.wagonBruttoAmkr / 1000).toFixed(2) : Number(row.wagonBruttoAmkr).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_brutto_amkr', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_brutto_amkr', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Тара
             {
@@ -781,7 +781,7 @@
                     return row.wagonTaraDoc !== null ? (row.wagonTaraDoc > 0 ? Number(row.wagonTaraDoc / 1000).toFixed(2) : Number(row.wagonTaraDoc).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_tara_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_tara_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_tara_arc_doc',
@@ -789,7 +789,7 @@
                     return row.wagonTaraArcDoc !== null ? (row.wagonTaraArcDoc > 0 ? Number(row.wagonTaraArcDoc / 1000).toFixed(2) : Number(row.wagonTaraArcDoc).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_tara_arc_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_tara_arc_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'wagon_tara_uz',
@@ -797,7 +797,7 @@
                     return row.wagonTaraUz !== null ? (row.wagonTaraUz > 0 ? Number(row.wagonTaraUz).toFixed(2) : 0.00) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_tara_uz', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_tara_uz', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Нетто по ЭПД, тн
             {
@@ -806,7 +806,7 @@
                     return row.wagonVesgDoc !== null ? (row.wagonVesgDoc > 0 ? Number(row.wagonVesgDoc / 1000).toFixed(2) : Number(row.wagonVesgDoc).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_vesg_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_vesg_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Нетто АМКР, тн
             {
@@ -815,7 +815,7 @@
                     return row.wagonVesgAmkr !== null ? (row.wagonVesgAmkr > 0 ? Number(row.wagonVesgAmkr / 1000).toFixed(2) : Number(row.wagonVesgAmkr).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_wagon_vesg_amkr', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_vesg_amkr', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Разница нетто, тн.
             {
@@ -824,7 +824,7 @@
                     return row.diffVesg !== null ? (row.diffVesg > 0 ? Number(row.diffVesg / 1000).toFixed(2) : Number(row.diffVesg).toFixed(2)) : null;
                 },
                 className: 'dt-body-right',
-                title: langView('tcw_field_diff_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_diff_vesg', App.Langs), width: "50px", orderable: true, searchable: true
             },
             //=============== ДОПОЛНИТЕЛЬНО ==================
             // Наличие документа для сдачи на  УЗ
@@ -834,7 +834,7 @@
                     return row.docOutgoingCar ? langView('t_com_title_yes', App.Langs) : '';
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_doc_outgoing_car', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_doc_outgoing_car', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // № накладной по приб
             {
@@ -843,7 +843,7 @@
                     return row.arrivalNomMainDoc ? row.arrivalNomMainDoc : row.arrivalNomDoc;
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_arrival_nom_main_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_nom_main_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // № досылки по приб
             {
@@ -852,7 +852,7 @@
                     return row.arrivalNomDoc ? row.arrivalNomDoc : '';
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_arrival_nom_doc', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_nom_doc', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Индекс поезда
             {
@@ -861,7 +861,7 @@
                     return row.arrivalCompositionIndex;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_arrival_composition_index', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_composition_index', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Дата приема на АМКР
             {
@@ -870,7 +870,7 @@
                     return row.arrivalDateAdoption ? moment(row.arrivalDateAdoption).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_arrival_date_adoption', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_arrival_date_adoption', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Дата сдачи на УЗ
             {
@@ -879,7 +879,7 @@
                     return row.outgoingDate ? moment(row.outgoingDate).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_outgoing_date', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_outgoing_date', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Причина возврата по отправлению
             {
@@ -888,7 +888,7 @@
                     return row.outgoingIdReturn;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_outgoing_id_return', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_outgoing_id_return', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'outgoing_return_cause',
@@ -896,7 +896,7 @@
                     return row['outgoingReturnCause' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_outgoing_return_cause', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_outgoing_return_cause', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Статус отправляемого состава
             {
@@ -905,23 +905,23 @@
                     return row.outgoingSostavStatus;
                 },
                 className: 'dt-body-center',
-                title: langView('tcw_field_outgoing_sostav_status', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_outgoing_sostav_status', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'outgoing_sostav_status_name',
                 data: function (row, type, val, meta) {
                     switch (row.outgoingSostavStatus) {
                         default: return row.outgoingSostavStatus;
-                        case 0: return langView('tcw_title_status_0', App.Langs);
-                        case 1: return langView('tcw_title_status_1', App.Langs);
-                        case 2: return langView('tcw_title_status_2', App.Langs);
-                        case 3: return langView('tcw_title_status_3', App.Langs);
-                        case 4: return langView('tcw_title_status_4', App.Langs);
+                        case 0: return langView('tws_title_status_0', App.Langs);
+                        case 1: return langView('tws_title_status_1', App.Langs);
+                        case 2: return langView('tws_title_status_2', App.Langs);
+                        case 3: return langView('tws_title_status_3', App.Langs);
+                        case 4: return langView('tws_title_status_4', App.Langs);
                     }
                     //return row.outgoing_sostav_status;
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_outgoing_sostav_status_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_outgoing_sostav_status_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Запреты по УЗ 
             {
@@ -930,7 +930,7 @@
                     return row.wagonBanUz;
                 },
                 className: 'dt-body-nowrap text-left',
-                title: langView('tcw_field_wagon_ban_uz', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_ban_uz', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Замкнутый маршрут (кольцо)
             {
@@ -939,7 +939,7 @@
                     return row.wagonClosedRoute ? langView('t_com_title_yes', App.Langs) : '';
                 },
                 className: 'dt-body-centr',
-                title: langView('tcw_field_wagon_closed_route', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tws_field_wagon_closed_route', App.Langs), width: "30px", orderable: true, searchable: true
             },
             // Примечание
             {
@@ -948,7 +948,7 @@
                     return row.wirNote;
                 },
                 className: 'dt-body-nowrap text-left',
-                title: langView('tcw_field_wir_note', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_wir_note', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Груз по отправке предыдущий
             {
@@ -957,7 +957,7 @@
                     return row['oldOutgoingUzVagonCargoName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_old_outgoing_uz_vagon_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_old_outgoing_uz_vagon_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Дата последней здачи
             {
@@ -966,7 +966,7 @@
                     return row.oldDateOutgoingAct ? moment(row.oldDateOutgoingAct).format(format_datetime) : (row.oldDateOutgoing ? moment(row.oldDateOutgoing).format(format_datetime) : null);
                 },
                 className: 'dt-body-nowrap',
-                title: langView('tcw_field_old_date_outgoing', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_old_date_outgoing', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Станция ОТПР предыдущая
             {
@@ -975,7 +975,7 @@
                     return row['oldOutgoingUzDocumentStationToName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_old_outgoing_uz_document_station_to_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_old_outgoing_uz_document_station_to_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // --- END ViewCarWay
             // +++ ViewTotalBalance
@@ -983,10 +983,10 @@
                 field: 'remainder_type',
                 data: function (row, type, val, meta) {
 
-                    return langView('tcw_field_id_' + row.id, App.Langs);
+                    return langView('tws_field_id_' + row.id, App.Langs);
                 },
                 className: 'dt-body-left',
-                title: langView('tcw_field_id', App.Langs), width: "50px", orderable: false, searchable: false
+                title: langView('tws_field_id', App.Langs), width: "50px", orderable: false, searchable: false
             },
             // --- ViewTotalBalance
             {
@@ -995,7 +995,7 @@
                     return row['parkAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_park_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_park_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_way_amkr_name',
@@ -1003,7 +1003,7 @@
                     return row["currentWayAmkrNum" + ucFirst(App.Lang)] + '-' + row["currentWayAmkrAbbr" + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_way_name', App.Langs), width: "100px", orderable: true, searchable: true
+                title: langView('tws_field_way_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'current_way_amkr_name_link',
@@ -1014,14 +1014,14 @@
                         href: '#',
                         text: row["currentWayAmkrNum" + ucFirst(App.Lang)] + '-' + row["currentWayAmkrAbbr" + ucFirst(App.Lang)],
                         target: null,
-/*                        title: langView('tcw_title_link_num', App.Langs),*/
+/*                        title: langView('tws_title_link_num', App.Langs),*/
                     });
                     if ($link) {
                         return $link.$html[0].outerHTML;
                     }
                 },
                 className: 'dt-body-left shorten mw-100',
-                title: langView('tcw_field_way_name', App.Langs), width: "50px", orderable: true, searchable: true
+                title: langView('tws_field_way_name', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'name_outer_way',
@@ -1029,7 +1029,7 @@
                     return row['nameOuterWay' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-150',
-                title: langView('tcw_field_name_outer_way', App.Langs), width: "150px", orderable: true, searchable: true
+                title: langView('tws_field_name_outer_way', App.Langs), width: "150px", orderable: true, searchable: true
             },
 
         ];
@@ -1067,13 +1067,13 @@
         //collums.push({
         //    create: true,
         //    field: 'arrivalIdCommercialCondition',
-        //    title: langView('tcw_field_arrival_id_commercial_condition', App.Langs),
+        //    title: langView('tws_field_arrival_id_commercial_condition', App.Langs),
         //    class: 'dt-body-center', ft: 'int', width: 30, orderable: true, searchable: true
         //});
         //collums.push({
         //    create: true,
         //    field: 'arrivalCommercialCondition',
-        //    title: langView('tcw_field_arrival_commercial_condition', App.Langs),
+        //    title: langView('tws_field_arrival_commercial_condition', App.Langs),
         //    class: 'dt-body-left shorten mw-150', ft: 'string', width: 150, orderable: true, searchable: true
         //});
         collums.push({ field: 'arrival_commercial_condition', title: null, class: null });
@@ -1155,13 +1155,13 @@
         collums.push({
             create: true,
             field: 'all',
-            title: langView('tcw_field_all', App.Langs),
+            title: langView('tws_field_all', App.Langs),
             class: 'dt-body-center dt-head-center', ft: 'int', width: 50, orderable: false, searchable: false
         });
         collums.push({
             create: true,
             field: 'amkr',
-            title: langView('tcw_field_amkr', App.Langs),
+            title: langView('tws_field_amkr', App.Langs),
             class: 'dt-body-center dt-head-center', ft: 'int', width: 50, orderable: false, searchable: false
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -1173,7 +1173,7 @@
         collums.push({
             create: true,
             field: 'countOperators',
-            title: langView('tcw_field_count', App.Langs),
+            title: langView('tws_field_count', App.Langs),
             class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -1187,7 +1187,7 @@
         collums.push({
             create: true,
             field: 'countOperators',
-            title: langView('tcw_field_count', App.Langs),
+            title: langView('tws_field_count', App.Langs),
             class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -1200,7 +1200,7 @@
         collums.push({
             create: true,
             field: 'countOperators',
-            title: langView('tcw_field_count', App.Langs),
+            title: langView('tws_field_count', App.Langs),
             class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -1213,7 +1213,7 @@
         collums.push({
             create: true,
             field: 'countOperators',
-            title: langView('tcw_field_count', App.Langs),
+            title: langView('tws_field_count', App.Langs),
             class: 'dt-body-right dt-head-center', ft: 'int', width: 50, orderable: true, searchable: false
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
