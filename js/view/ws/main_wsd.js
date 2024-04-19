@@ -143,6 +143,7 @@
                 }
             };
         };
+        var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
@@ -186,7 +187,24 @@
                     });
                 }
             }.bind(this);
-            //
+            // Кнопки основного меню
+            $('#btn-external-operations').on('click', 'button', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'send-cars': {
+                        bs_operation_detali.show();
+                        break;
+                    };
+                    case 'arrival-cars': {
+                        bs_operation_detali.show();
+                        break;
+                    };
+                    case 'return-cars': {
+                        bs_operation_detali.show();
+                        break;
+                    };
+                };
+            });
+
             list_station = api_dir.getAllStation();
             // Настроим выбор станций
             var $el_dlg_select_station = $('#station-select')
