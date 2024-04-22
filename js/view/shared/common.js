@@ -239,6 +239,7 @@ var intVal = function (i) {
             element.append(label);
         }
     };
+
     var append_text = function (element, text) {
         if (element && text !== '') {
             element.append(text);
@@ -640,14 +641,14 @@ var intVal = function (i) {
             for: null,
             label: null
         }, options);
-        this.$label = $('<label></label>');
-        if (!this.$label || this.$label.length === 0) {
+        this.$html = $('<label></label>');
+        if (!this.$html || this.$html.length === 0) {
             throw new Error('Не удалось создать элемент <div></div>');
         } else {
-            add_class(this.$label, this.settings.class);
-            add_id(this.$label, this.settings.id);
-            append_label(this.$label, this.settings.label);
-            add_for(this.$label, this.settings.for);
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            append_label(this.$html, this.settings.label);
+            add_for(this.$html, this.settings.for);
         }
     };
     // Элемент <button class="btn btn-primary" type="button">Toggle right offcanvas</button>
@@ -657,7 +658,8 @@ var intVal = function (i) {
             name: null,
             class: null,
             color: null,
-            text: null
+            text: null,
+            fn_click: null,
         }, options);
         this.$html = $('<button></button>');
         if (!this.$html || this.$html.length === 0) {
@@ -670,9 +672,28 @@ var intVal = function (i) {
             add_class(this.$html, this.settings.class);
             add_class(this.$html, this.settings.color);
             append_text(this.$html, this.settings.text);
+            if (this.settings.fn_close !== null) {
+                this.$html.on("click", this.settings.fn_click);
+            }
         }
     };
-
+    // <h5 class="offcanvas-title" id="offcanvas-title-operation-detali">Offcanvas</h5>
+    form_element.prototype.hx = function (options) {
+        this.settings = $.extend({
+            size: 1,
+            id: null,
+            class: null,
+            text: null
+        }, options);
+        this.$html = $('<h' + this.settings.size + '></h' + this.settings.size + '>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div></div>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            append_text(this.$html, this.settings.text);
+        }
+    };
 
     // Элемент <input type=".." class=".." id="num_car" title=".." name="..".>
     form_element.prototype.input = function (options) {
@@ -790,101 +811,195 @@ var intVal = function (i) {
         this.$html = span.$html;
     };
 
-    form_element.prototype.bs_dropdown = function (options) {
+    //form_element.prototype.bs_dropdown = function (options) {
+    //    this.settings = $.extend({
+    //        color: 'secondary',
+    //        size: null,
+    //        class: null,
+    //        id: 'dropdownMenuButton',
+    //        label: null,
+    //        title: null,
+    //        list_menu: null,
+    //    }, options);
+    //    this.fe = new form_element();
+    //    var div_dropdown = new this.fe.div({ class: 'dropdown' });
+    //    this.$element = div_dropdown.$div;
+    //    add_class(this.$element, this.settings.class);
+    //    var button = new this.fe.bs_button({
+    //        color: this.settings.color,
+    //        size: this.settings.size,
+    //        class: 'dropdown-toggle',
+    //        id: this.settings.id,
+    //        label: this.settings.label,
+    //        title: this.settings.title,
+    //    });
+    //    add_tag(button.$button, 'data-toggle', 'dropdown');
+    //    add_tag(button.$button, 'aria-expanded', 'false');
+    //    var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
+    //    this.$dropdown_menu = div_dropdown_menu.$div
+    //    add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
+    //    this.$element.append(button.$button).append(this.$dropdown_menu);
+    //    if (this.settings.list_menu && this.settings.list_menu.length > 0) {
+    //        $.each(this.settings.list_menu, function (index, element) {
+    //            var a_link = new this.fe.a({
+    //                id: element.id,
+    //                class: 'dropdown-item',
+    //                href: element.href,
+    //                text: element.label,
+    //                target: null,
+    //                title: null,
+    //            });
+    //            add_class(a_link.$alink, element.disable ? 'disabled' : '');
+
+    //            if (typeof element.click === 'function') {
+    //                a_link.$alink.on("click", element.click);
+    //            }
+    //            this.$dropdown_menu.append(a_link.$alink);
+    //        }.bind(this));
+    //    }
+    //};
+    //<div class="card border-success mb-3" style="max-width: 18rem;">
+    //    <div class="card-header bg-transparent border-success">Header</div>
+    //    <div class="card-body text-success">
+    //        <h5 class="card-title">Success card title</h5>
+    //        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    //    </div>
+    //    <div class="card-footer bg-transparent border-success">Footer</div>
+    //</div>
+    form_element.prototype.bs_card = function (options) {
         this.settings = $.extend({
-            color: 'secondary',
-            size: null,
-            class: null,
-            id: 'dropdownMenuButton',
-            label: null,
-            title: null,
-            list_menu: null,
+            border_color: 'border-secondary',
+            header_color: null,
+            header_bg: null,
+            header_text: null,
+            body_color: null,
+            body_bg: null,
+            body_text: null,
+            footer: false,
+            footer_text: null,
+            footer_color: null,
+            footer_bg: null,
+            max_width: null,
+
         }, options);
         this.fe = new form_element();
-        var div_dropdown = new this.fe.div({ class: 'dropdown' });
-        this.$element = div_dropdown.$div;
-        add_class(this.$element, this.settings.class);
-        var button = new this.fe.bs_button({
-            color: this.settings.color,
-            size: this.settings.size,
-            class: 'dropdown-toggle',
-            id: this.settings.id,
-            label: this.settings.label,
-            title: this.settings.title,
-        });
-        add_tag(button.$button, 'data-toggle', 'dropdown');
-        add_tag(button.$button, 'aria-expanded', 'false');
-        var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
-        this.$dropdown_menu = div_dropdown_menu.$div
-        add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
-        this.$element.append(button.$button).append(this.$dropdown_menu);
-        if (this.settings.list_menu && this.settings.list_menu.length > 0) {
-            $.each(this.settings.list_menu, function (index, element) {
-                var a_link = new this.fe.a({
-                    id: element.id,
-                    class: 'dropdown-item',
-                    href: element.href,
-                    text: element.label,
-                    target: null,
-                    title: null,
-                });
-                add_class(a_link.$alink, element.disable ? 'disabled' : '');
-
-                if (typeof element.click === 'function') {
-                    a_link.$alink.on("click", element.click);
-                }
-                this.$dropdown_menu.append(a_link.$alink);
-            }.bind(this));
+        var card = new this.fe.div({ class: 'card mb-3' });
+        add_class(card.$html, this.settings.border_color);
+        if (max_width !== null) card.$html.attr('style', 'max-width: ' + max_width + 'rem;');
+        this.header = new this.fe.div({ class: 'card-header' });
+        add_class(header.$html, this.settings.header_color);
+        add_class(header.$html, this.settings.header_bg);
+        append_label(header.$html, this.settings.header_text);
+        card.$html.append(this.header.$html);
+        this.body = new this.fe.div({ class: 'card-header' });
+        add_class(body.$html, this.settings.body_color);
+        add_class(body.$html, this.settings.body_bg);
+        append_label(body.$html, this.settings.body_text);
+        card.$html.append(this.body.$html);
+        if (footer) {
+            var footer = new this.fe.div({ class: 'card-footer' });
+            add_class(footer.$html, this.settings.footer_color);
+            add_class(footer.$html, this.settings.footer_bg);
+            append_label(footer.$html, this.settings.footer_text);
+            card.$html.append(this.footer.$html);
         }
+        this.$html = card.$html;
     };
 
-    form_element.prototype.bs_droplistgroup = function (options) {
+    //<div class="offcanvas offcanvas-start offcanvas-operation-detal" data-bs-backdrop="static" tabindex="-1" id="operation-detali" aria-labelledby="">
+    //    <div class="offcanvas-header">
+    //        <h5 class="offcanvas-title" id="offcanvas-title-operation-detali">Offcanvas</h5>
+    //        <button type="button" class="btn-close" id="btn-close-operation-detali" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    //    </div>
+    //    <div class="offcanvas-body">
+    //        <div id="offcanvas-body-operation-detali">
+
+    //        </div>
+    //    </div>
+    //</div>
+    form_element.prototype.bs_offcanvas = function (options) {
         this.settings = $.extend({
-            color: 'secondary',
-            size: null,
+            id: null,
             class: null,
-            id: 'dropdownMenuButton',
-            label: null,
-            title: null,
-            list_menu: null,
+            backdrop: 'static',
+            position: 'offcanvas-start',
+            fn_close: null,
         }, options);
         this.fe = new form_element();
-        var div_dropdown = new this.fe.div({ class: 'dropdown' });
-        this.$element = div_dropdown.$div;
-        add_class(this.$element, this.settings.class);
-        var button = new this.fe.bs_button({
-            color: this.settings.color,
-            size: this.settings.size,
-            class: 'dropdown-toggle',
-            id: this.settings.id,
-            label: this.settings.label,
-            title: this.settings.title,
+        var offcanvas = new this.fe.div({ class: 'offcanvas' });
+        add_class(offcanvas.$html, this.settings.position);
+        add_class(offcanvas.$html, this.settings.class);
+        add_tag(offcanvas.$html, 'data-bs-backdrop', this.settings.backdrop);
+        add_tag(offcanvas.$html, 'tabindex', '-1');
+        add_id(offcanvas.$html, this.settings.id);
+        add_tag(offcanvas.$html, 'aria-labelledby', null);
+        var header = new this.fe.div({ class: 'offcanvas-header' });
+        this.header_title = new this.fe.hx({
+            size: 5,
+            id: null,
+            class: 'offcanvas-title',
+            text: null
         });
-        add_tag(button.$button, 'data-toggle', 'dropdown');
-        add_tag(button.$button, 'aria-expanded', 'false');
-        var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
-        this.$dropdown_menu = div_dropdown_menu.$div
-        add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
-        this.$element.append(button.$button).append(this.$dropdown_menu);
-        if (this.settings.list_menu && this.settings.list_menu.length > 0) {
-            $.each(this.settings.list_menu, function (index, element) {
-                var a_link = new this.fe.a({
-                    id: element.id,
-                    class: 'dropdown-item',
-                    href: element.href,
-                    text: element.label,
-                    target: null,
-                    title: null,
-                });
-                add_class(a_link.$alink, element.disable ? 'disabled' : '');
-
-                if (typeof element.click === 'function') {
-                    a_link.$alink.on("click", element.click);
-                }
-                this.$dropdown_menu.append(a_link.$alink);
-            }.bind(this));
-        }
+        var button = new this.fe.button({
+            class: 'btn-close',
+            fn_click: this.settings.fn_close,
+        });
+        add_tag(button.$html, 'data-bs-dismiss', 'offcanvas');
+        add_tag(button.$html, 'aria-label', 'Закрыть');
+        header.$html.append(this.header_title.$html).append(button.$html);
+        this.body = new this.fe.div({ class: 'offcanvas-body' });
+        offcanvas.$html.append(header.$html).append(this.body.$html);
+        this.$html = offcanvas.$html;
     };
+
+
+    //form_element.prototype.bs_droplistgroup = function (options) {
+    //    this.settings = $.extend({
+    //        color: 'secondary',
+    //        size: null,
+    //        class: null,
+    //        id: 'dropdownMenuButton',
+    //        label: null,
+    //        title: null,
+    //        list_menu: null,
+    //    }, options);
+    //    this.fe = new form_element();
+    //    var div_dropdown = new this.fe.div({ class: 'dropdown' });
+    //    this.$element = div_dropdown.$div;
+    //    add_class(this.$element, this.settings.class);
+    //    var button = new this.fe.bs_button({
+    //        color: this.settings.color,
+    //        size: this.settings.size,
+    //        class: 'dropdown-toggle',
+    //        id: this.settings.id,
+    //        label: this.settings.label,
+    //        title: this.settings.title,
+    //    });
+    //    add_tag(button.$button, 'data-toggle', 'dropdown');
+    //    add_tag(button.$button, 'aria-expanded', 'false');
+    //    var div_dropdown_menu = new this.fe.div({ class: 'dropdown-menu' });
+    //    this.$dropdown_menu = div_dropdown_menu.$div
+    //    add_tag(this.$dropdown_menu, 'aria-labelledby', this.settings.id);
+    //    this.$element.append(button.$button).append(this.$dropdown_menu);
+    //    if (this.settings.list_menu && this.settings.list_menu.length > 0) {
+    //        $.each(this.settings.list_menu, function (index, element) {
+    //            var a_link = new this.fe.a({
+    //                id: element.id,
+    //                class: 'dropdown-item',
+    //                href: element.href,
+    //                text: element.label,
+    //                target: null,
+    //                title: null,
+    //            });
+    //            add_class(a_link.$alink, element.disable ? 'disabled' : '');
+
+    //            if (typeof element.click === 'function') {
+    //                a_link.$alink.on("click", element.click);
+    //            }
+    //            this.$dropdown_menu.append(a_link.$alink);
+    //        }.bind(this));
+    //    }
+    //};
 
     App.form_element = form_element;
 
