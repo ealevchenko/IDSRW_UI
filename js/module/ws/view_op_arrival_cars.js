@@ -137,33 +137,11 @@
 
     var VIEW_COMMON = App.view_op_common;
 
-    // Модуль инициализаии компонентов формы
-    var FE = App.form_element;
+    //// Модуль инициализаии компонентов формы
+    //var FE = App.form_element;
 
     function view_op_arrival_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
-//        if (!selector) {
-//            throw new Error('Не указан селектор');
-//        }
-//        this.$panel = $(selector);
-//        if (this.$panel.length === 0) {
-//            throw new Error('Не удалось найти элемент с селектором: ' + selector);
-//        }
-///*        this.selector = this.$panel.attr('id');*/
-//        this.fe_ui = new FE();
-//        this.offcanvas = new this.fe_ui.bs_offcanvas({
-//            id: null,
-//            class: 'offcanvas-operation-detal',
-//            backdrop: 'static',
-//            position: 'offcanvas-start',
-//            fn_close: function (even) {
-
-//            }.bind(this),
-//        });
-//        this.$title = this.offcanvas.header_title.$html;
-//        this.$op = this.offcanvas.body.$html;
-//        this.$panel.append(this.offcanvas.$html);
-//        this.bs_offcanvas = new bootstrap.Offcanvas(this.offcanvas.$html);
     }
     // инициализация модуля
     view_op_arrival_cars.prototype.init = function (options) {
@@ -203,7 +181,7 @@
         this.view_com.$title.append(langView('vac_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
-        
+
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
             this.settings.fn_init(this.result_init);
@@ -211,9 +189,358 @@
         //----------------------------------
 
         // Сообщение
-        //LockScreen(langView('vac_mess_init_panel', App.Langs));
+        LockScreen(langView('vac_mess_init_panel', App.Langs));
         //----------------------------------
         // Создать макет панели
+        this.card_on = new this.view_com.fe_ui.bs_card({
+            border_color: 'border-primary',
+            class: 'text-bg-light',
+            header_class: 'fw-bold text-uppercase',
+            header_color: null,
+            header_bg: null,
+            header_text: langView('vac_card_header_on', App.Langs),
+            body_color: null,
+            body_bg: null,
+            body_text: null,
+            footer: false,
+            footer_text: null,
+            footer_color: null,
+            footer_bg: null,
+            max_width: null,
+        });
+        var row = new this.view_com.fe_ui.bs_row({});
+        this.on_setup = new this.view_com.fe_ui.bs_col({
+            pref: 'xl',
+            size: 3,
+        });
+        this.on_table = new this.view_com.fe_ui.bs_col({
+            pref: 'xl',
+            size: 9,
+            class: 'rounded border border-secondary'
+        });
+        row.$html.append(this.on_setup.$html).append(this.on_table.$html);
+        this.card_on.body.$html.append(row.$html);
+        this.view_com.$op.append(this.card_on.$html);
+        //--
+        this.card_from = new this.view_com.fe_ui.bs_card({
+            border_color: 'border-primary',
+            class: 'text-bg-light',
+            header_class: 'fw-bold text-uppercase',
+            header_color: null,
+            header_bg: null,
+            header_text: langView('vac_card_header_from', App.Langs),
+            body_color: null,
+            body_bg: null,
+            body_text: null,
+            footer: false,
+            footer_text: null,
+            footer_color: null,
+            footer_bg: null,
+            max_width: null,
+        });
+        var row = new this.view_com.fe_ui.bs_row({});
+        this.from_setup = new this.view_com.fe_ui.bs_col({
+            pref: 'xl',
+            size: 2,
+        });
+        this.from_table = new this.view_com.fe_ui.bs_col({
+            pref: 'xl',
+            size: 10,
+            class: 'rounded border border-secondary'
+        });
+        row.$html.append(this.from_setup.$html).append(this.from_table.$html);
+        this.card_from.body.$html.append(row.$html);
+        this.view_com.$op.append(this.card_from.$html);
+
+        var element_input = new this.view_com.fe_ui.bs_form_input({
+            id: 'element_input',
+            name: 'element_input',
+            label: 'element_input',
+            element_type: 'text',
+            element_fsize: 'sm',
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: 'placeholder element_input',
+            element_required: null,
+            element_maxlength: null,
+            element_pattern: null,
+            element_readonly: false,
+            element_min: null,
+            element_max: null,
+            element_step: null,
+            validation: true,
+            feedback_invalid: 'error element_input',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 10,
+            col_class: null,
+            group_prepend: true,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: 'prepend',
+            group_append: true,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: 'append',
+            form_text: 'Это help-element_input',
+            form_text_class: null,
+        });
+        this.on_setup.$html.append(element_input.$html);
+
+        var element_select = new this.view_com.fe_ui.bs_form_select({
+            id: 'element_select',
+            name: 'element_select',
+            label: 'element_select',
+            element_fsize: 'sm',
+            element_class: null,
+            element_value: null,
+            element_multiple: false,
+            element_title: null,
+            element_required: null,
+            element_readonly: false,
+            element_size: null,
+            element_list:
+                [
+                    { value: 'option1', text: 'option1', disabled: false },
+                    { value: 'dddddd', text: 'ddddddd', disabled: true },
+                    { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
+                ],
+            validation: true,
+            feedback_invalid: 'error element_select',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 10,
+            col_class: null,
+            group_prepend: true,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: 'prepend',
+            group_append: true,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: 'append',
+            form_text: 'Это help-element_select',
+            form_text_class: null,
+        });
+        this.on_setup.$html.append(element_select.$html);
+
+        var element_input_number = new this.view_com.fe_ui.bs_form_input({
+            id: 'element_input_number',
+            name: 'element_input_number',
+            label: 'element_input_number',
+            element_type: 'number',
+            element_fsize: 'sm',
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: 'placeholder element_input_number',
+            element_required: null,
+            element_maxlength: null,
+            element_pattern: null,
+            element_readonly: false,
+            element_min: 0,
+            element_max: 100,
+            element_step: 1,
+            validation: true,
+            feedback_invalid: 'error-element_input_number',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 10,
+            col_class: null,
+            group_prepend: true,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: 'prepend',
+            group_append: true,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: 'append',
+            form_text: 'Это help-element_input_number',
+            form_text_class: null,
+        });
+        this.on_setup.$html.append(element_input_number.$html);
+
+        var element_input_datalist = new this.view_com.fe_ui.bs_form_input_datalist({
+            id: 'element_input_datalist',
+            name: 'element_input_datalist',
+            label: 'element_input_datalist',
+            element_fsize: 'sm',
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: 'placeholder element_input_datalist',
+            element_required: null,
+            element_maxlength: null,
+            element_pattern: null,
+            element_readonly: false,
+            element_list: [
+                { value: 'option1', text: 'option1', disabled: false },
+                { value: 'dddddd', text: 'ddddddd', disabled: true },
+                { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
+            ],
+            validation: true,
+            feedback_invalid: 'error element_input_datalist',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 10,
+            col_class: null,
+            group_prepend: true,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: 'prepend',
+            group_append: true,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: 'append',
+            form_text: 'Это help-element_input_datalist',
+            form_text_class: null
+        });
+        this.on_setup.$html.append(element_input_datalist.$html);
+
+        var element_textarea = new this.view_com.fe_ui.bs_form_textarea({
+            id: 'element_textarea',
+            name: 'element_textarea',
+            label: 'element_textarea',
+            element_fsize: 'sm',
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: 'placeholder element_textarea',
+            element_required: null,
+            element_maxlength: null,
+            element_readonly: false,
+            element_cols: null,
+            element_rows: 3,
+            element_wrap: null,
+            validation: true,
+            feedback_invalid: 'error-element_textarea',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 10,
+            col_class: null,
+            group_prepend: true,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: 'prepend',
+            group_append: true,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: 'append',
+            form_text: 'Это help-element_textarea',
+            form_text_class: null
+        });
+        this.on_setup.$html.append(element_textarea.$html);
+
+        var element_check = new this.view_com.fe_ui.bs_form_check({
+            id: 'element_check',
+            name: 'element_check',
+            label: 'element_check',
+            element_type: 'checkbox',
+            element_switch: false,
+            element_inline: false,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_checked: true,
+            element_required: null,
+            element_readonly: false,
+            validation: true,
+            feedback_invalid: 'error-element_check',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 6,
+            col_class: null,
+            form_text: 'Это help-element_check',
+            form_text_class: null
+        });
+        this.on_setup.$html.append(element_check.$html);
+
+        var element_switch = new this.view_com.fe_ui.bs_form_check({
+            id: 'element_switch',
+            name: 'element_switch',
+            label: 'element_switch',
+            element_type: 'checkbox',
+            element_switch: true,
+            element_inline: false,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_checked: true,
+            element_required: null,
+            element_readonly: false,
+            validation: true,
+            feedback_invalid: 'error-element_switch',
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: 'md',
+            col_size: 6,
+            col_class: null,
+            form_text: 'Это help-element_switch',
+            form_text_class: null
+        });
+        this.on_setup.$html.append(element_switch.$html);
+
+        var element_radio = new this.view_com.fe_ui.bs_form_check({
+            id: 'element_radio',
+            name: 'element_radio',
+            label: 'element_radio',
+            element_type: 'radio',
+            //element_switch: false,
+            element_inline: true,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_checked: true,
+            element_required: null,
+            element_readonly: false,
+            validation: true,
+            feedback_invalid: 'error-element_radio',
+            feedback_valid: null,
+            feedback_class: null,
+            col: true,
+            col_prefix: 'md',
+            col_size: 6,
+            col_class: null,
+            //form_text: 'Это help-element_radio',
+            //form_text_class: null
+        });
+        this.on_setup.$html.append(element_radio.$html);
+
+        var element_radio1 = new this.view_com.fe_ui.bs_form_check({
+            id: 'element_radio1',
+            name: 'element_radio1',
+            label: 'element_radio1',
+            element_type: 'radio',
+            //element_switch: false,
+            element_inline: true,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_checked: false,
+            element_required: null,
+            element_readonly: false,
+            validation: true,
+            feedback_invalid: 'error-element_radio1',
+            feedback_valid: null,
+            feedback_class: null,
+            col: false,
+            //col_prefix: 'md',
+            //col_size: 6,
+            //col_class: null,
+            //form_text: 'Это help-element_radio1',
+            //form_text_class: null
+        });
+
+        element_radio.$html.append(element_radio1.$html);
+        //this.on_setup.$html.append(element_radio1.$html);
+
         //var panelElement = new div_panel(this);
         //this.$panel.empty();
         //this.$setup_on = panelElement.$setup_on;
