@@ -280,7 +280,7 @@
 
     table_tree_way.prototype.create_html_btn_all = function (base, id, count) {
 
-        var $bt_count = new base.fe_ui.button({
+        var $bt_count = new base.fe_ui.bs_button({
             id: id,
             color: 'btn-outline-dark',
             class: 'btn-all btn-sm',
