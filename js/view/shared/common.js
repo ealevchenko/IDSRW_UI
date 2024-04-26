@@ -401,7 +401,7 @@ var intVal = function (i) {
         };
         this.init();
     };
-
+    //--------------HTML-----------------------------------
     form_element.prototype.select = function (options) {
         this.settings = $.extend({
             id: null,
@@ -651,8 +651,250 @@ var intVal = function (i) {
             add_for(this.$html, this.settings.for);
         }
     };
+    // <h5 class="offcanvas-title" id="offcanvas-title-operation-detali">Offcanvas</h5>
+    form_element.prototype.hx = function (options) {
+        this.settings = $.extend({
+            size: 1,
+            id: null,
+            class: null,
+            text: null
+        }, options);
+        this.$html = $('<h' + this.settings.size + '></h' + this.settings.size + '>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div></div>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            append_text(this.$html, this.settings.text);
+        }
+    };
+    // Элемент <input type=".." class=".." id="num_car" title=".." name="..".>
+    form_element.prototype.input = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            type: 'text',
+            class: null,
+            value: null,
+            checked: null,
+            title: null,
+            placeholder: null,
+            required: null,
+            maxlength: null,
+            pattern: null,
+            readonly: false,
+            min: null,
+            max: null,
+            step: null,
+        }, options);
+        this.$html = $('<input></input>');
+
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <input></input>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'type', this.settings.type);
+            add_tag(this.$html, 'value', this.settings.value);
+            add_tag(this.$html, 'checked', this.settings.checked);
+            add_tag(this.$html, 'title', this.settings.title);
+            add_tag(this.$html, 'placeholder', this.settings.placeholder);
+            add_tag(this.$html, 'required', this.settings.required);
+            add_tag(this.$html, 'maxlength', this.settings.maxlength);
+            add_tag(this.$html, 'pattern', this.settings.pattern);
+            add_tag(this.$html, 'min', this.settings.min);
+            add_tag(this.$html, 'max', this.settings.max);
+            add_tag(this.$html, 'step', this.settings.step);
+            this.$html.prop('readonly', this.settings.readonly);
+        }
+    };
+    //<select>
+    //    <option>Пункт 1</option>
+    //    <option>Пункт 2</option>
+    //</select>
+    form_element.prototype.select = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            value: null,
+            multiple: false,
+            title: null,
+            required: null,
+            readonly: false,
+            size: null,
+            list: null,
+        }, options);
+        this.$html = $('<select></select>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <select></select>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'value', this.settings.value);
+            add_tag(this.$html, 'multiple', this.settings.multiple);
+            add_tag(this.$html, 'title', this.settings.title);
+            add_tag(this.$html, 'required', this.settings.required);
+            add_tag(this.$html, 'size', this.settings.size);
+            this.$html.prop('readonly', this.settings.readonly);
+            $.each(this.settings.list, function (i, el) {
+                var option = $('<option value="' + el.value + '">');
+                option.append(el.text);
+                option.prop('disabled', el.disabled);
+                option.prop('selected ', el.selected);
+                this.$html.append(option);
+            }.bind(this));
+        }
+    };
+    // Элемент <textarea rows="10" cols="45" name="text"></textarea>
+    form_element.prototype.textarea = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            value: null,
+            title: null,
+            placeholder: null,
+            required: null,
+            maxlength: null,
+            readonly: false,
+            cols: null,
+            rows: null,
+            wrap: null,
+        }, options);
+        this.$html = $('<textarea></textarea>');
+
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <textarea></textarea>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'value', this.settings.value);
+            add_tag(this.$html, 'title', this.settings.title);
+            add_tag(this.$html, 'placeholder', this.settings.placeholder);
+            add_tag(this.$html, 'required', this.settings.required);
+            add_tag(this.$html, 'maxlength', this.settings.maxlength);
+            add_tag(this.$html, 'cols', this.settings.cols);
+            add_tag(this.$html, 'rows', this.settings.rows);
+            add_tag(this.$html, 'wrap', this.settings.wrap);
+            this.$html.prop('readonly', this.settings.readonly);
+        }
+    };
+
+    //<datalist id="datalistOptions">
+    //  <option value="San Francisco">
+    //  <option value="New York">
+    //  <option value="Seattle">
+    //  <option value="Los Angeles">
+    //  <option value="Chicago">
+    //</datalist>
+    form_element.prototype.datalist = function (options) {
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            list: [],
+        }, options);
+        this.$html = $('<datalist></datalist>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <datalist></datalist>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'name', this.settings.id);
+            add_class(this.$html, this.settings.class);
+            $.each(this.settings.list, function (i, el) {
+                var option = $('<option value="' + el.value + '">');
+                option.append(el.text);
+                option.prop('disabled', el.disabled);
+                this.$html.append(option);
+
+            }.bind(this));
+        }
+    };
+    //--------------BOOTSTRAP-----------------------------------
+    //<div class="row">
+    form_element.prototype.bs_row = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div class="row"></div>');
+        } else {
+            add_class(this.$html, 'row');
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    //<div class="col-6">.col-6</div>
+    form_element.prototype.bs_col = function (options) {
+        this.settings = $.extend({
+            id: null,
+            pref: null,
+            size: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div class="col"></div>');
+        } else {
+
+            var cls = 'col';
+            if (this.settings.pref !== null) {
+                cls += '-' + this.settings.pref;
+            }
+            if (this.settings.size !== null) {
+                cls += '-' + this.settings.size;
+            }
+            add_class(this.$html, cls);
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    // Элемент <div class="input-group"></div>
+    form_element.prototype.bs_input_group = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div class="input-group"></div>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, 'input-group');
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+    // Элемент <div class="form-check"></div>
+    form_element.prototype.bs_div_form_check = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div class="form-check"></div>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, 'form-check');
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
     // Элемент <button class="btn btn-primary" type="button">Toggle right offcanvas</button>
-    form_element.prototype.button = function (options) {
+    form_element.prototype.bs_button = function (options) {
         this.settings = $.extend({
             id: null,
             name: null,
@@ -677,32 +919,16 @@ var intVal = function (i) {
             }
         }
     };
-    // <h5 class="offcanvas-title" id="offcanvas-title-operation-detali">Offcanvas</h5>
-    form_element.prototype.hx = function (options) {
-        this.settings = $.extend({
-            size: 1,
-            id: null,
-            class: null,
-            text: null
-        }, options);
-        this.$html = $('<h' + this.settings.size + '></h' + this.settings.size + '>');
-        if (!this.$html || this.$html.length === 0) {
-            throw new Error('Не удалось создать элемент <div></div>');
-        } else {
-            add_class(this.$html, this.settings.class);
-            add_id(this.$html, this.settings.id);
-            append_text(this.$html, this.settings.text);
-        }
-    };
-
-    // Элемент <input type=".." class=".." id="num_car" title=".." name="..".>
-    form_element.prototype.input = function (options) {
+    //<input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+    form_element.prototype.bs_input = function (options) {
+        this.fe = new form_element();
         this.settings = $.extend({
             id: null,
-            value: null,
-            checked: null,
+            name: null,
             type: 'text',
             class: null,
+            fsize: null,
+            value: null,
             title: null,
             placeholder: null,
             required: null,
@@ -712,32 +938,663 @@ var intVal = function (i) {
             min: null,
             max: null,
             step: null,
-        }, options);
-        this.$input = $('<input></input>', {
-            'type': this.settings.type
-        });
 
-        if (!this.$input || this.$input.length === 0) {
-            throw new Error('Не удалось создать элемент <input></input>');
-        } else {
-            add_class(this.$input, this.settings.class);
-            add_id(this.$input, this.settings.id);
-            add_tag(this.$input, 'value', this.settings.value);
-            add_tag(this.$input, 'checked', this.settings.checked);
-            add_tag(this.$input, 'name', this.settings.id);
-            add_tag(this.$input, 'title', this.settings.title);
-            add_tag(this.$input, 'placeholder', this.settings.placeholder);
-            add_tag(this.$input, 'required', this.settings.required);
-            add_tag(this.$input, 'maxlength', this.settings.maxlength);
-            add_tag(this.$input, 'pattern', this.settings.pattern);
-            add_tag(this.$input, 'min', this.settings.min);
-            add_tag(this.$input, 'max', this.settings.max);
-            add_tag(this.$input, 'step', this.settings.step);
-            this.$input.prop('readonly', this.settings.readonly);
-        }
+        }, options);
+        var input = new this.fe.input({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.type,
+            class: 'form-control',
+            value: this.settings.value,
+            title: this.settings.title,
+            placeholder: this.settings.placeholder,
+            required: this.settings.required,
+            maxlength: this.settings.maxlength,
+            pattern: this.settings.pattern,
+            readonly: this.settings.readonly,
+            min: this.settings.min,
+            max: this.settings.max,
+            step: this.settings.step,
+        });
+        add_class(input.$html, this.settings.fsize !== null ? 'form-control-' + this.settings.fsize : null);
+        add_class(input.$html, this.settings.class);
+        this.$html = input.$html;
     };
+    //<select class="form-select" id="validationCustom04" required>
+    //    <option selected disabled value="">Choose...</option>
+    //    <option>...</option>
+    //</select>
+    form_element.prototype.bs_select = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            fsize: null,
+            value: null,
+            multiple: false,
+            title: null,
+            required: null,
+            readonly: false,
+            size: null,
+            list: null,
+        }, options);
+        var select = new this.fe.select({
+            id: this.settings.id,
+            name: this.settings.name,
+            class: 'form-control',
+            value: this.settings.value,
+            multiple: this.settings.multiple,
+            title: this.settings.title,
+            required: this.settings.required,
+            readonly: this.settings.readonly,
+            size: this.settings.size,
+            list: this.settings.list,
+        });
+        add_class(select.$html, this.settings.fsize !== null ? 'form-control-' + this.settings.fsize : null);
+        add_class(select.$html, this.settings.class);
+        this.$html = select.$html;
+    };
+    // <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+    form_element.prototype.bs_check_input = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            type: 'checkbox',
+            class: null,
+            value: null,
+            title: null,
+            checked: null,
+            required: null,
+            readonly: false,
+        }, options);
+        var input = new this.fe.input({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.type,
+            class: 'form-check-input',
+            value: this.settings.value,
+            title: this.settings.title,
+            checked: this.settings.checked,
+            required: this.settings.required,
+            readonly: this.settings.readonly,
+        });
+        //add_class(input.$html, this.settings.size !== null ? 'form-control-' + this.settings.size : null);
+        add_class(input.$html, this.settings.class);
+        this.$html = input.$html;
+    };
+    //  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    form_element.prototype.bs_textarea = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            class: null,
+            fsize: null,
+            value: null,
+            title: null,
+            placeholder: null,
+            required: null,
+            maxlength: null,
+            readonly: false,
+            cols: null,
+            rows: null,
+            wrap: null,
+        }, options);
+        var textarea = new this.fe.textarea({
+            id: this.settings.id,
+            name: this.settings.name,
+            class: 'form-control',
+            value: this.settings.value,
+            title: this.settings.title,
+            placeholder: this.settings.placeholder,
+            required: this.settings.required,
+            maxlength: this.settings.maxlength,
+            readonly: this.settings.readonly,
+            cols: this.settings.cols,
+            rows: this.settings.rows,
+            wrap: this.settings.wrap,
+        });
+        add_class(textarea.$html, this.settings.fsize !== null ? 'form-control-' + this.settings.fsize : null);
+        add_class(textarea.$html, this.settings.class);
+        this.$html = textarea.$html;
+    };
+    // ============================= Элементы форм ==============================
+    //<div class="col-md-4">
+    //    <label for="validationCustomUsername" class="form-label">Username</label>
+    //    <div class="input-group has-validation">
+    //        <span class="input-group-text" id="inputGroupPrepend">@</span>
+    //        ...............................................................  
+    //            <div class="invalid-feedback">
+    //                Please choose a username.
+    //            </div>
+    //    </div>
+    //</div>
+    form_element.prototype.bs_form_input_group = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_html: null,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            group_prepend: false,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_append: false,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var col = new this.fe.bs_col({
+            pref: this.settings.col_prefix,
+            size: this.settings.col_size,
+            class: this.settings.col_class,
+        });
+        var label = new this.fe.label({
+            class: 'form-label',
+            for: this.settings.id,
+            label: this.settings.label
+        });
+        var input_group = new this.fe.bs_input_group({
+            class: this.settings.validation ? 'has-validation' : null,
+        });
+        if (this.settings.group_prepend) {
+            var span_prepend = new this.fe.span({
+                id: this.settings.group_prepend_id,
+                class: 'input-group-text ' + (this.settings.group_prepend_class !== null ? this.settings.group_prepend_class : ''),
+                text: this.settings.group_prepend_html,
+            });
+            input_group.$html.prepend(span_prepend.$html);
+        };
+        input_group.$html.prepend(this.settings.element_html);
+        if (this.settings.group_append) {
+            var span_append = new this.fe.span({
+                id: this.settings.group_append_id,
+                class: 'input-group-text ' + (this.settings.group_append_class !== null ? this.settings.group_append_class : ''),
+                text: this.settings.group_append_html,
+            });
+            input_group.$html.prepend(span_append.$html);
+        };
+        if (this.settings.validation) {
+            var feedback = new this.fe.div({
+                class: 'invalid-feedback' + (this.settings.feedback_class !== null ? this.settings.feedback_class : ''),
+            });
+            add_class(feedback.$html, this.settings.feedback_class);
+            feedback.$html.append(this.settings.feedback_invalid);
+            input_group.$html.append(feedback.$html);
+        }
+        col.$html.append(label.$html).append(input_group.$html);
+        if (this.settings.form_text !== null) {
+            var ftext = new this.fe.div({
+                id: this.settings.id + '-help',
+                class: 'form-text',
+            });
+            add_class(ftext.$html, this.settings.form_text_class);
+            ftext.$html.append(this.settings.form_text);
+            col.$html.append(ftext.$html);
+        }
+        this.$html = col.$html;
+    }
+    //<div class="col-md-4">
+    //    <label for="validationCustomUsername" class="form-label">Username</label>
+    //    <div class="input-group has-validation">
+    //        <span class="input-group-text" id="inputGroupPrepend">@</span>
+    //        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+    //        <div class="invalid-feedback">
+    //          Please choose a username.
+    //        </div>
+    //    </div>
+    //</div>
+    form_element.prototype.bs_form_input = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_type: 'text',
+            element_fsize: null,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: null,
+            element_required: null,
+            element_maxlength: null,
+            element_pattern: null,
+            element_readonly: false,
+            element_min: null,
+            element_max: null,
+            element_step: null,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            group_prepend: false,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_append: false,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var element = new this.fe.bs_input({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.element_type,
+            class: this.settings.element_class,
+            fsize: this.settings.element_fsize,
+            value: this.settings.element_value,
+            title: this.settings.element_title,
+            placeholder: this.settings.element_placeholder,
+            required: this.settings.element_required,
+            maxlength: this.settings.element_maxlength,
+            pattern: this.settings.element_pattern,
+            readonly: this.settings.element_readonly,
+            min: this.settings.element_min,
+            max: this.settings.element_max,
+            step: this.settings.element_step,
+        });
+        var form_input = new this.fe.bs_form_input_group({
+            id: this.settings.id,
+            name: this.settings.name,
+            label: this.settings.label,
+            element_html: element.$html,
+            validation: this.settings.validation,
+            feedback_invalid: this.settings.feedback_invalid,
+            feedback_valid: this.settings.feedback_valid,
+            feedback_class: this.settings.feedback_class,
+            col_prefix: this.settings.col_prefix,
+            col_size: this.settings.col_size,
+            col_class: this.settings.col_class,
+            group_prepend: this.settings.group_prepend,
+            group_prepend_class: this.settings.group_prepend_class,
+            group_prepend_id: this.settings.group_prepend_id,
+            group_prepend_html: this.settings.group_prepend_html,
+            group_append: this.settings.group_append,
+            group_append_class: this.settings.group_append_class,
+            group_append_id: this.settings.group_append_id,
+            group_append_html: this.settings.group_append_html,
+            form_text: this.settings.form_text,
+            form_text_class: this.settings.form_text_class,
+        });
+        this.$html = form_input.$html;
+    }
+      //<div class="col-md-3">
+      //  <label for="validationCustom04" class="form-label">State</label>
+      //  <select class="form-select" id="validationCustom04" required>
+      //    <option selected disabled value="">Choose...</option>
+      //    <option>...</option>
+      //  </select>
+      //  <div class="invalid-feedback">
+      //    Please select a valid state.
+      //  </div>
+      //</div>
+    form_element.prototype.bs_form_select = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_fsize: null,
+            element_class: null,
+            element_value: null,
+            element_multiple: null,
+            element_title: null,
+            element_required: null,
+            element_readonly: false,
+            element_size: null,
+            element_list: null,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            group_prepend: false,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_append: false,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var element = new this.fe.bs_select({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.element_type,
+            class: this.settings.element_class,
+            fsize: this.settings.element_fsize,
+            value: this.settings.element_value,
+            element_multiple: this.settings.element_multiple,
+            title: this.settings.element_title,
+            required: this.settings.element_required,
+            readonly: this.settings.element_readonly,
+            size: this.settings.element_size,
+            list: this.settings.element_list,
+        });
+        var form_input = new this.fe.bs_form_input_group({
+            id: this.settings.id,
+            name: this.settings.name,
+            label: this.settings.label,
+            element_html: element.$html,
+            validation: this.settings.validation,
+            feedback_invalid: this.settings.feedback_invalid,
+            feedback_valid: this.settings.feedback_valid,
+            feedback_class: this.settings.feedback_class,
+            col_prefix: this.settings.col_prefix,
+            col_size: this.settings.col_size,
+            col_class: this.settings.col_class,
+            group_prepend: this.settings.group_prepend,
+            group_prepend_class: this.settings.group_prepend_class,
+            group_prepend_id: this.settings.group_prepend_id,
+            group_prepend_html: this.settings.group_prepend_html,
+            group_append: this.settings.group_append,
+            group_append_class: this.settings.group_append_class,
+            group_append_id: this.settings.group_append_id,
+            group_append_html: this.settings.group_append_html,
+            form_text: this.settings.form_text,
+            form_text_class: this.settings.form_text_class,
+        });
+        this.$html = form_input.$html;
+    }
+
+    //<div class="col-md-4">
+    //    <label for="validationCustomUsername" class="form-label">Username</label>
+    //    <div class="input-group has-validation">
+    //        <span class="input-group-text" id="inputGroupPrepend">@</span>
+    //        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    //        <div class="invalid-feedback">
+    //          Please choose a username.
+    //        </div>
+    //    </div>
+    //</div>
+    form_element.prototype.bs_form_textarea = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_fsize: null,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: null,
+            element_required: null,
+            element_maxlength: null,
+            element_readonly: false,
+            element_cols: null,
+            element_rows: null,
+            element_wrap: null,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            group_prepend: false,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_append: false,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var element = new this.fe.bs_textarea({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.element_type,
+            class: this.settings.element_class,
+            fsize: this.settings.element_fsize,
+            value: this.settings.element_value,
+            title: this.settings.element_title,
+            placeholder: this.settings.element_placeholder,
+            required: this.settings.element_required,
+            maxlength: this.settings.element_maxlength,
+            pattern: this.settings.element_pattern,
+            readonly: this.settings.element_readonly,
+            cols: this.settings.element_cols,
+            rows: this.settings.element_rows,
+            wrap: this.settings.element_wrap,
+        });
+        var form_input = new this.fe.bs_form_input_group({
+            id: this.settings.id,
+            name: this.settings.name,
+            label: this.settings.label,
+            element_html: element.$html,
+            validation: this.settings.validation,
+            feedback_invalid: this.settings.feedback_invalid,
+            feedback_valid: this.settings.feedback_valid,
+            feedback_class: this.settings.feedback_class,
+            col_prefix: this.settings.col_prefix,
+            col_size: this.settings.col_size,
+            col_class: this.settings.col_class,
+            group_prepend: this.settings.group_prepend,
+            group_prepend_class: this.settings.group_prepend_class,
+            group_prepend_id: this.settings.group_prepend_id,
+            group_prepend_html: this.settings.group_prepend_html,
+            group_append: this.settings.group_append,
+            group_append_class: this.settings.group_append_class,
+            group_append_id: this.settings.group_append_id,
+            group_append_html: this.settings.group_append_html,
+            form_text: this.settings.form_text,
+            form_text_class: this.settings.form_text_class,
+        });
+        this.$html = form_input.$html;
+    }
+    //<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+    //<datalist id="datalistOptions">
+    //  <option value="San Francisco">
+    //  <option value="New York">
+    //  <option value="Seattle">
+    //  <option value="Los Angeles">
+    //  <option value="Chicago">
+    //</datalist>
+    form_element.prototype.bs_form_input_datalist = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_fsize: null,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_placeholder: null,
+            element_required: null,
+            element_maxlength: null,
+            element_pattern: null,
+            element_readonly: false,
+            element_list: [],
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            group_prepend: false,
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_append: false,
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var element = new this.fe.bs_input({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: 'text',
+            class: this.settings.element_class,
+            fsize: this.settings.element_fsize,
+            value: this.settings.element_value,
+            title: this.settings.element_title,
+            placeholder: this.settings.element_placeholder,
+            required: this.settings.element_required,
+            maxlength: this.settings.element_maxlength,
+            pattern: this.settings.element_pattern,
+            readonly: this.settings.element_readonly,
+        });
+        add_tag(element.$html, 'list', this.settings.id + '_datalistOptions');
+        var datalist = new this.fe.datalist({
+            id: this.settings.id + '_datalistOptions',
+            name: null,
+            class: null,
+            list: this.settings.element_list,
+        });
+        var div = $('<div></div>');
+        div.append(element.$html).append(datalist.$html);
+        var form_input = new this.fe.bs_form_input_group({
+            id: this.settings.id,
+            name: this.settings.name,
+            label: this.settings.label,
+            element_html: div[0].innerHTML,
+            validation: this.settings.validation,
+            feedback_invalid: this.settings.feedback_invalid,
+            feedback_valid: this.settings.feedback_valid,
+            feedback_class: this.settings.feedback_class,
+            col_prefix: this.settings.col_prefix,
+            col_size: this.settings.col_size,
+            col_class: this.settings.col_class,
+            group_prepend: this.settings.group_prepend,
+            group_prepend_class: this.settings.group_prepend_class,
+            group_prepend_id: this.settings.group_prepend_id,
+            group_prepend_html: this.settings.group_prepend_html,
+            group_append: this.settings.group_append,
+            group_append_class: this.settings.group_append_class,
+            group_append_id: this.settings.group_append_id,
+            group_append_html: this.settings.group_append_html,
+            form_text: this.settings.form_text,
+            form_text_class: this.settings.form_text_class,
+        });
+        this.$html = form_input.$html;
+    }
+    //< div class="col-12" >
+    //    <div class="form-check">
+    //        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+    //            <label class="form-check-label" for="invalidCheck">
+    //                Agree to terms and conditions
+    //            </label>
+    //            <div class="invalid-feedback">
+    //                You must agree before submitting.
+    //            </div>
+    //    </div>
+    //</div >
+    form_element.prototype.bs_form_check = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_type: 'checkbox',
+            element_switch: false,
+            element_inline: false,
+            element_class: null,
+            element_value: null,
+            element_title: null,
+            element_checked: null,
+            element_required: null,
+            element_readonly: false,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            col: true,
+            col_prefix: null,
+            col_size: null,
+            col_class: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var element = new this.fe.bs_check_input({
+            id: this.settings.id,
+            name: this.settings.name,
+            type: this.settings.element_type,
+            class: this.settings.element_class,
+            value: this.settings.element_value,
+            title: this.settings.element_title,
+            checked: this.settings.element_checked,
+            required: this.settings.element_required,
+            readonly: this.settings.element_readonly,
+        });
+        var col = new this.fe.bs_col({
+            pref: this.settings.col_prefix,
+            size: this.settings.col_size,
+            class: this.settings.col_class,
+        });
+        var div_form_check = new this.fe.bs_div_form_check({
+            //class: this.settings.validation ? 'has-validation' : null,
+        });
+        if (this.settings.element_switch) {
+            add_class(div_form_check.$html, 'form-switch');
+            add_tag(element.$html, 'role', 'switch');
+        }
+        if (this.settings.element_inline) {
+            add_class(div_form_check.$html, 'form-check-inline');
+        }
+        var label = new this.fe.label({
+            class: 'form-check-label',
+            for: this.settings.id,
+            label: this.settings.label
+        });
+        div_form_check.$html.prepend(element.$html);
+        div_form_check.$html.prepend(label.$html);
+        if (this.settings.validation) {
+            var feedback = new this.fe.div({
+                class: 'invalid-feedback' + (this.settings.feedback_class !== null ? this.settings.feedback_class : ''),
+            });
+            add_class(feedback.$html, this.settings.feedback_class);
+            feedback.$html.append(this.settings.feedback_invalid);
+            div_form_check.$html.append(feedback.$html);
+        }
+        col.$html.append(div_form_check.$html);
+        if (this.settings.form_text !== null) {
+            var ftext = new this.fe.div({
+                id: this.settings.id + '-help',
+                class: 'form-text',
+            });
+            add_class(ftext.$html, this.settings.form_text_class);
+            ftext.$html.append(this.settings.form_text);
+            col.$html.append(ftext.$html);
+        }
+        if (this.settings.col) {
+            this.$html = col.$html;
+        } else {
+            this.$html = col.$html[0].innerHTML;
+        }
+
+    }
+
 
     // bootstrap-components ----------------------------------
+
+
     //<div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
     //    <div class="progress-bar bg-success" style="width: 25%">25%</div>
     //</div>
@@ -810,7 +1667,6 @@ var intVal = function (i) {
         add_class(this.$html, this.settings.class);
         this.$html = span.$html;
     };
-
     //form_element.prototype.bs_dropdown = function (options) {
     //    this.settings = $.extend({
     //        color: 'secondary',
@@ -869,13 +1725,17 @@ var intVal = function (i) {
     form_element.prototype.bs_card = function (options) {
         this.settings = $.extend({
             border_color: 'border-secondary',
+            class: null,
+            header_class: null,
             header_color: null,
             header_bg: null,
             header_text: null,
+            body_class: null,
             body_color: null,
             body_bg: null,
             body_text: null,
             footer: false,
+            footer_class: null,
             footer_text: null,
             footer_color: null,
             footer_bg: null,
@@ -885,21 +1745,25 @@ var intVal = function (i) {
         this.fe = new form_element();
         var card = new this.fe.div({ class: 'card mb-3' });
         add_class(card.$html, this.settings.border_color);
-        if (max_width !== null) card.$html.attr('style', 'max-width: ' + max_width + 'rem;');
+        add_class(card.$html, this.settings.class);
+        if (this.settings.max_width !== null) card.$html.attr('style', 'max-width: ' + this.settings.max_width + 'rem;');
         this.header = new this.fe.div({ class: 'card-header' });
-        add_class(header.$html, this.settings.header_color);
-        add_class(header.$html, this.settings.header_bg);
-        append_label(header.$html, this.settings.header_text);
+        add_class(this.header.$html, this.settings.header_color);
+        add_class(this.header.$html, this.settings.header_bg);
+        add_class(this.header.$html, this.settings.header_class);
+        append_label(this.header.$html, this.settings.header_text);
         card.$html.append(this.header.$html);
-        this.body = new this.fe.div({ class: 'card-header' });
-        add_class(body.$html, this.settings.body_color);
-        add_class(body.$html, this.settings.body_bg);
-        append_label(body.$html, this.settings.body_text);
+        this.body = new this.fe.div({ class: 'card-body' });
+        add_class(this.body.$html, this.settings.body_color);
+        add_class(this.body.$html, this.settings.body_bg);
+        add_class(this.body.$html, this.settings.body_class);
+        append_label(this.body.$html, this.settings.body_text);
         card.$html.append(this.body.$html);
         if (footer) {
             var footer = new this.fe.div({ class: 'card-footer' });
             add_class(footer.$html, this.settings.footer_color);
             add_class(footer.$html, this.settings.footer_bg);
+            add_class(this.body.$html, this.settings.footer_class);
             append_label(footer.$html, this.settings.footer_text);
             card.$html.append(this.footer.$html);
         }
@@ -940,7 +1804,7 @@ var intVal = function (i) {
             class: 'offcanvas-title',
             text: null
         });
-        var button = new this.fe.button({
+        var button = new this.fe.bs_button({
             class: 'btn-close',
             fn_click: this.settings.fn_close,
         });
