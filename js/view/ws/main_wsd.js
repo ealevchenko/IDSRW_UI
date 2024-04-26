@@ -77,6 +77,15 @@
     var operators_way = [];
     var operators_send = [];
     var operators_arrival = [];
+    var user_info = {};
+    //var userAgent = navigator.userAgent.toLowerCase();
+    //var user = window.userID;
+    ////var userInfo = window.ShowpadLib.getUserInfo();
+    //var request = new XMLHttpRequest();
+    //request.withCredentials = true;
+    //request.open("GET", "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API/Admin/user_info");
+
+
     $(function () {
         // загрузить данные 
         var load_wagons_of_way = function (id_way, num, callback) {
@@ -179,7 +188,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 8;
+            var process = 9;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -219,6 +228,14 @@
                     });
                 }
             }.bind(this);
+
+            api_wsd.getAdminInfo(function (info) {
+                user_info = info;
+                process--;
+                out_init(process);
+            })
+
+
             // Кнопки основного меню
             $('#btn-external-operations').on('click', 'button', function (event) {
                 switch (event.currentTarget.id) {
@@ -287,7 +304,7 @@
                         step: null,
                     });
                 }
-                $list_select_station.append(label.$html.prepend(input.$input));
+                $list_select_station.append(label.$html.prepend(input.$html));
             }.bind(this));
             // Выбрать или отменить выбор
             var CheckedStations = function (checked) {

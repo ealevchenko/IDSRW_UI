@@ -50,6 +50,10 @@
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
     // Вагоны на пути
+    ids_wsd.prototype.getAdminInfo = function (callback) {
+        this.api_com.get('/Admin/user_info', callback);
+    };
+    // Вагоны на пути
     ids_wsd.prototype.getViewWagonsOfIdWay = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/way/' + id, callback);
     };
