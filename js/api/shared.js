@@ -109,6 +109,9 @@ var AJAXComplete = function () {
             type: 'GET',
             url: this.settings.url_api + api_url,
             async: true,
+            xhrFields: {
+                withCredentials: true
+            },
             dataType: 'json',
             beforeSend: function () {
                 AJAXBeforeSend();
