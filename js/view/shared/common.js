@@ -402,6 +402,23 @@ var intVal = function (i) {
         this.init();
     };
     //--------------HTML-----------------------------------
+    //<form novalidate></form>
+    form_element.prototype.form = function (options) {
+        this.settings = $.extend({
+            class: null,
+            id: null,
+            novalidate: null,
+        }, options);
+        this.$html = $('<form></form>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <form></form>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_id(this.$html, this.settings.id);
+            add_tag(this.$html, 'novalidate', this.settings.novalidate);
+        }
+    };
+
     form_element.prototype.select = function (options) {
         this.settings = $.extend({
             id: null,
@@ -815,6 +832,55 @@ var intVal = function (i) {
         }
     };
     //--------------BOOTSTRAP-----------------------------------
+    form_element.prototype.bs_form = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+        }, options);
+        var form = new this.fe.form({
+            class: this.settings.class,
+            id: this.settings.id,
+            novalidate: true,
+        });
+        add_class(form.$html, 'needs-validation');
+        add_tag(form.$html, 'style', this.settings.style);
+        this.$html = form.$html;
+    };
+    //<div class="alert alert-primary" role="alert">
+    //    A simple primary alert—check it out!
+    //</div>
+    form_element.prototype.bs_alert = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+            color: null,
+            bt_close: false,
+            fn_click_close: null,
+        }, options);
+        var div = new this.fe.div({
+            class: 'alert',
+            id: this.settings.id,
+            style: this.settings.style,
+        });
+        add_tag(div.$html, 'role', 'alert');
+        if (this.settings.color !== null) {
+            add_class(div.$html, 'alert-' + this.settings.color);
+        }
+        if (this.settings.bt_close) {
+            var button = new this.fe.bs_button({
+                class: 'btn-close',
+                fn_click: this.settings.fn_click_close,
+            });
+            add_tag(button.$html, 'data-bs-dismiss', 'alert');
+            add_tag(button.$html, 'aria-label', 'Close');
+            div.$html.append(button.$html);
+        }
+        this.$html = div.$html;
+    };
     //<div class="row">
     form_element.prototype.bs_row = function (options) {
         this.settings = $.extend({
@@ -1085,6 +1151,7 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
+            group_fsize : null,
             group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
@@ -1109,6 +1176,7 @@ var intVal = function (i) {
         var input_group = new this.fe.bs_input_group({
             class: this.settings.validation ? 'has-validation' : null,
         });
+        add_class(input_group.$html, this.settings.group_fsize !== null ? 'input-group-' + this.settings.group_fsize : null);
         if (this.settings.group_prepend) {
             var span_prepend = new this.fe.span({
                 id: this.settings.group_prepend_id,
@@ -1222,6 +1290,7 @@ var intVal = function (i) {
             col_prefix: this.settings.col_prefix,
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
+            group_fsize: this.settings.element_fsize,
             group_prepend: this.settings.group_prepend,
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
@@ -1234,17 +1303,18 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
+        this.$element = element.$html;
     }
-      //<div class="col-md-3">
-      //  <label for="validationCustom04" class="form-label">State</label>
-      //  <select class="form-select" id="validationCustom04" required>
-      //    <option selected disabled value="">Choose...</option>
-      //    <option>...</option>
-      //  </select>
-      //  <div class="invalid-feedback">
-      //    Please select a valid state.
-      //  </div>
-      //</div>
+    //<div class="col-md-3">
+    //  <label for="validationCustom04" class="form-label">State</label>
+    //  <select class="form-select" id="validationCustom04" required>
+    //    <option selected disabled value="">Choose...</option>
+    //    <option>...</option>
+    //  </select>
+    //  <div class="invalid-feedback">
+    //    Please select a valid state.
+    //  </div>
+    //</div>
     form_element.prototype.bs_form_select = function (options) {
         this.fe = new form_element();
         this.settings = $.extend({
@@ -1304,6 +1374,7 @@ var intVal = function (i) {
             col_prefix: this.settings.col_prefix,
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
+            group_fsize: this.settings.element_fsize,
             group_prepend: this.settings.group_prepend,
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
@@ -1392,6 +1463,7 @@ var intVal = function (i) {
             col_prefix: this.settings.col_prefix,
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
+            group_fsize: this.settings.element_fsize,
             group_prepend: this.settings.group_prepend,
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
@@ -1482,6 +1554,7 @@ var intVal = function (i) {
             col_prefix: this.settings.col_prefix,
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
+            group_fsize: this.settings.element_fsize,
             group_prepend: this.settings.group_prepend,
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
@@ -1816,7 +1889,6 @@ var intVal = function (i) {
         this.$html = offcanvas.$html;
     };
 
-
     //form_element.prototype.bs_droplistgroup = function (options) {
     //    this.settings = $.extend({
     //        color: 'secondary',
@@ -1865,11 +1937,350 @@ var intVal = function (i) {
     //    }
     //};
 
+    //----------------------------------------------------------------------------
+    // Автоматически формируем документы на форме
+    form_element.prototype.add_obj = function (content, objs, obj_form, callback) {
+        // Добавить элемент
+        var add_element = function (element, content, obj) {
+            if (element && element.length > 0) {
+                if (obj.childs && obj.childs.length > 0) {
+                    this.add_obj(element, obj.childs, obj_form, function (content) {
+                        return content;
+                    }.bind(this));
+                }
+                content.append(element);
+            };
+            return element;
+        }.bind(this);
+        // Пройдемся по элементам
+        $.each(objs, function (i, obj) {
+            if (obj && obj.obj) {
+                if (obj.obj === 'bs_form_input') {
+                    //obj.options.input_group_obj_form = obj_form;
+                    var obj_html = new this.bs_form_input(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'input_text',
+/*                            element: input.element,*/
+                            $element: obj_html.$element,
+                            destroy: false
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
+            }
+        }.bind(this));
+        if (typeof callback === 'function') {
+            callback(content);
+        };
+    };
+
     App.form_element = form_element;
 
+    //function form_infield() {
+    //    this.fe = new form_element();
+    //}
+
+    //form_infield.prototype.init = function (options) {
+    //    this.init = true;
+    //    // Настройки формы правки строк таблицы
+    //    this.settings = $.extend({
+    //        alert: null,
+    //        mode: null,
+    //        fields: [],
+    //        id: null,
+    //        form_class: null,
+    //        validation: true,
+    //        fn_init: null,
+    //        fn_validation: null,
+    //    }, options);
+    //    var form_add = new this.fe.bs_form({
+    //        id: this.settings.id,
+    //        class: this.settings.form_class,
+    //    });
+    //    var form_edit = new this.fe.bs_form({
+    //        id: this.settings.id,
+    //        class: this.settings.form_class,
+    //    });
+    //    /*        var form_edit = new this.fe.el_form(this.settings.id, this.settings.cl_form + ' text-left');*/
+
+    //    // Установим режим form по умолчанию ('add' & 'edit')
+    //    this.mode = this.settings.mode !== null && this.settings.mode !== '' ? this.settings.mode : null;
+    //    //var button_ok_edit = new this.fc.el_button('sm', 'btn-primary', null, 'Выполнить ', 'far fa-check-circle');
+
+    //    // Добавить кнопку выполнить
+    //    //if (this.settings.button_add_ok) {
+    //    //    var button_ok_add = new this.fc.el_button('sm', 'btn-primary', null, this.settings.button_add_ok.title, 'far fa-check-circle');
+    //    //    button_ok_add.$button.on('click', function (e) {
+    //    //        if (typeof this.settings.button_add_ok.click === 'function') {
+    //    //            this.settings.button_add_ok.click(e);
+    //    //        };
+    //    //    }.bind(this));
+    //    //    form_add.$form.append(button_ok_add.$button);
+    //    //}
+
+    //    this.$form_add = form_add.$html;
+    //    this.$form_edit = form_edit.$html;
+    //    this.alert_add = this.settings.alert;
+    //    this.alert_edit = this.settings.alert;
+    //    // Алерт
+    //    if (!this.settings.alert) {
+    //        var alert_add = new this.fe.bs_alert({
+    //            //id: null,
+    //            //class: null,
+    //            //style: null,
+    //            //color: null,
+    //            //bt_close: false,
+    //            //fn_click_close: null,
+    //        });
+    //        this.$form_add.append(alert_add.$html);
+    //        this.alert_add = new alert_form(alert_add.$html);
+
+    //        var alert_edit = new this.fe.bs_alert({
+    //            //id: null,
+    //            //class: null,
+    //            //style: null,
+    //            //color: null,
+    //            //bt_close: false,
+    //            //fn_click_close: null,
+    //        });
+    //        this.$form_edit.append(alert_edit.$html);
+    //        this.alert_edit = new alert_form(alert_edit.$html);
+    //    }
+
+    //    // Алерт
+    //    //if (!this.settings.alert) {
+    //    //    var $alert = new this.fc.el_alert();
+    //    //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
+    //    //        var $alert_add = $alert.$alert;
+    //    //        this.$form_add.append($alert_add);
+    //    //        this.alert_add = new alert_form($alert_add);
+    //    //        //TODO: решить вопрос привязки this.alert_add к общей валидации
+    //    //    }
+    //    //    var $alert = new this.fc.el_alert();
+    //    //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
+    //    //        var $alert_edit = $alert.$alert;
+    //    //        this.$form_edit.append($alert_edit);
+    //    //        this.alert_edit = new alert_form($alert_edit);
+    //    //        //TODO: решить вопрос привязки this.alert_edit к общей валидации
+    //    //    }
+
+
+    //    //};
+    //    // Привяжем событие submit
+    //    this.$form_add.on('submit', function (event) {
+    //        this.submit(event);
+    //    }.bind(this));
+    //    // Привяжем событие submit
+    //    this.$form_edit.on('submit', function (event) {
+    //        this.submit(event);
+    //    }.bind(this));
+    //    //---------------------------------------------------------
+    //    // Создаем элементы и отрисовываем их на форме
+    //    // Получим список элементов которые должны отображатся на форме
+    //    ////this.el_destroy = []; // Элементы которые нужно удалить методом destroy()
+    //    ////this.data = null;
+    //    /////*        this.el_validation = $([]); // Элементы для валидации*/
+    //    ////// Отсортируем элементы по row
+    //    ////var form_elements = this.settings.fields.filter(function (i) {
+    //    ////    return i.row !== null;
+    //    ////}).sort(function (a, b) {
+    //    ////    return a.row - b.row;
+    //    ////});
+    //    ////var row = 0;
+    //    ////var col = 0;
+    //    ////var row_add$ = null;
+    //    ////var row_edit$ = null;
+    //    ////// Пройдемся по элементам и отрисуем их на форме
+    //    ////$.each(form_elements, function (i, el_field) {
+    //    ////    if (el_field.row !== row) {
+    //    ////        // Это новая строка, создадим ее
+    //    ////        row = el_field.row; // запомним для следующей проверки
+    //    ////        col = 0;            // начнем счет col с 0;
+    //    ////        // Форма добавить
+    //    ////        var form_row_add$ = new this.fc.el_div_form_row();
+    //    ////        if (form_row_add$ && form_row_add$.$div && form_row_add$.$div.length > 0) {
+    //    ////            row_add$ = form_row_add$.$div;
+    //    ////            this.$form_add.append(row_add$); // добавим на форму
+    //    ////        } else {
+    //    ////            throw new Error('Не удалось создать элемент <div class="form-row">');
+    //    ////        };
+    //    ////        // форма править
+    //    ////        var form_row_edit$ = new this.fc.el_div_form_row();
+    //    ////        if (form_row_edit$ && form_row_edit$.$div && form_row_edit$.$div.length > 0) {
+    //    ////            row_edit$ = form_row_edit$.$div;
+    //    ////            this.$form_edit.append(row_edit$); // добавим на форму
+    //    ////        } else {
+    //    ////            throw new Error('Не удалось создать элемент <div class="form-row">');
+    //    ////        };
+    //    ////    };
+    //    ////    if (el_field.col !== col) {
+    //    ////        // Это новая ячейка сетки, строки
+    //    ////        col = el_field.col; // запомним для следующей проверки
+    //    ////        // Форма добавить
+    //    ////        var $form_col_add = new this.fc.el_col(el_field.col_prefix, el_field.col_size, (this.settings.mb ? 'mb-' + this.settings.mb : ''))
+    //    ////        if ($form_col_add && $form_col_add.$col && $form_col_add.$col.length > 0) {
+    //    ////            row_add$.append($form_col_add.$col); // добавим на форму
+    //    ////            this.add_element_form(el_field, 'add', $form_col_add.$col);
+    //    ////        } else {
+    //    ////            throw new Error('Не удалось создать элемент <div class="col-..-..">');
+    //    ////        };
+    //    ////        // форма править
+    //    ////        var $form_col_edit = new this.fc.el_col(el_field.col_prefix, el_field.col_size, (this.settings.mb ? 'mb-' + this.settings.mb : ''))
+    //    ////        if ($form_col_edit && $form_col_edit.$col && $form_col_edit.$col.length > 0) {
+    //    ////            row_edit$.append($form_col_edit.$col); // добавим на форму
+    //    ////            this.add_element_form(el_field, 'edit', $form_col_edit.$col);
+    //    ////        } else {
+    //    ////            throw new Error('Не удалось создать элемент <div class="col-..-..">');
+    //    ////        };
+    //    ////    }
+    //    ////}.bind(this));
+    //    ////// Пройдемся по зависимостям
+    //    ////$.each(form_elements.filter(function (i) { return i.control !== null }), function (i, el_control) {
+    //    ////    if (el_control.control) {
+    //    ////        var n_control = el_control.control;
+    //    ////        var element_control = form_elements.find(function (o) {
+    //    ////            return o.name === n_control;
+    //    ////        });
+    //    ////        if (element_control) {
+    //    ////            if (element_control.element_add && el_control.element_add) {
+    //    ////                el_control.element_add['element_control'] = element_control.element_add;
+    //    ////            }
+    //    ////            if (element_control.element_edit && el_control.element_edit) {
+    //    ////                el_control.element_edit['element_control'] = element_control.element_edit;
+    //    ////            }
+    //    ////        } else {
+    //    ////            throw new Error('Неопределен контролируемый элемент : ' + n_control);
+    //    ////        }
+    //    ////    }
+    //    ////}.bind(this));
+    //    ////// Валидация
+    //    ////if (this.settings.validation) {
+    //    ////    this.validation = new validation_form();
+    //    ////    var elements_add = this.$form_add.find('input, select, textarea');
+    //    ////    var elements_edit = this.$form_edit.find('input, select, textarea');
+    //    ////    var elements = [];
+    //    ////    elements = $.merge(elements_add, elements_edit);
+    //    ////    this.validation.init({
+    //    ////        alert: this.settings.alert, //TODO: решить вопрос привязки this.alert_add или this.alert_edit к общей валидации
+    //    ////        elements: elements,
+    //    ////    });
+    //    ////};
+    //    // Завершение инициализации
+    //    if (typeof this.settings.fn_init === 'function') {
+    //        this.settings.fn_init(this.init);
+    //    }
+    //};
+
+
+    //App.form_infield = form_infield;
 
     //================================================================================
     // Класс валидации элементов формы
+
+    function form_dialog() {
+        this.fe = new form_element();
+    }
+
+    form_dialog.prototype.init = function (options) {
+        this.init = true;
+        // Настройки формы правки строк таблицы
+        this.settings = $.extend({
+            alert: null,
+            objs: [],
+            id: null,
+            form_class: null,
+            validation: true,
+            fn_validation: null,
+            fn_html_init: function () { },
+            fn_init: null,
+        }, options);
+
+        //var form = new this.fc.el_form(this.settings.id, this.settings.cl_form + ' text-left');
+        var form = new this.fe.bs_form({
+            id: this.settings.id,
+            class: this.settings.form_class,
+        });
+
+        this.$form = form.$html;
+
+        // Алерт 
+        //if (!this.settings.alert) {
+        //    var $alert = new this.fc.el_alert();
+        //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
+        //        var $alert = $alert.$alert;
+        //        this.$form.append($alert);
+        //        this.alert = new alert_form($alert);
+        //    }
+        //};
+        // Привяжем событие submit
+        this.$form.on('submit', function (event) {
+
+        }.bind(this));
+        //---------------------------------------------------------
+        // Создаем элементы и отрисовываем их на форме
+        // Получим список элементов которые должны отображатся на форме
+        this.obj_form = {
+            alerts: [],
+            views: [],
+            buttons: [],
+            validations: [],
+        };
+        // Пройдемся по элементам
+        this.fe.add_obj(this.$form, this.settings.objs, this.obj_form, function (form) {
+            // Построение HTML закончена
+            // -------------НАСТРОИМ ВАЛИДАЦИЮ -----------------------
+            // Получим список validation
+            this.list_validation = [];
+            $.each(this.obj_form.views, function (i, obj) {
+                if (obj.validation_group) {
+                    var val = this.list_validation.find(function (o) { return o === obj.validation_group; }.bind(this));
+                    if (!val) {
+                        this.list_validation.push(obj.validation_group);
+                    }
+                }
+            }.bind(this));
+            // Создадим validation для элементов
+            $.each(this.list_validation, function (i, validation_name) {
+                this['validation_' + validation_name] = new validation_form();
+                // Настроим валидацию
+                var validation = {};
+                validation.name = validation_name;
+                validation.elements = [];
+                // Настроим Alert
+                if (validation_name === 'common') {
+                    validation.alert = this.settings.alert;
+                } else {
+                    var alert = this.obj_form.alerts.find(function (o) { return o.validation_group === validation_name && o.type === 'alert'; });
+                    validation.alert = alert && alert.element ? alert.element : this.settings.alert;
+                }
+                // Получим перечень элементов
+                $.each(this.obj_form.views.filter(function (i) { return i.validation_group === validation_name; }),
+                    function (i, obj) {
+                        validation.elements.push(obj.$element);
+                    }.bind(this));
+                validation.$elements = $([]).add($(validation.elements));
+                this['validation_' + validation_name].init({
+                    alert: validation.alert,
+                    elements: validation.$elements,
+                });
+                validation.validation = this['validation_' + validation_name];
+                this.obj_form.validations.push(validation);
+            }.bind(this));
+            // -------------------------------------------------------
+            if (typeof this.settings.fn_init === 'function') {
+                this.settings.fn_init(this.init);
+            }
+            // -------------------------------------------------------
+        }.bind(this));
+    };
+
+    App.form_dialog = form_dialog;
+
     function validation_form() {
 
     }
