@@ -965,8 +965,12 @@ var intVal = function (i) {
             id: null,
             name: null,
             class: null,
+            fsize: null,
             color: null,
             text: null,
+            title: null,
+            icon_fa_left: null,
+            icon_fa_right: null,
             fn_click: null,
         }, options);
         this.$html = $('<button></button>');
@@ -976,11 +980,28 @@ var intVal = function (i) {
             add_id(this.$html, this.settings.id);
             add_tag(this.$html, 'name', this.settings.name);
             add_tag(this.$html, 'type', 'button');
+            add_tag(this.$html, 'title', this.settings.title);
             add_class(this.$html, 'btn');
+            add_class(this.$html, this.settings.fsize !== null ? 'btn-' + this.settings.fsize : null);
+            add_class(this.$html, this.settings.color !== null ? 'btn-' + this.settings.color : null);
             add_class(this.$html, this.settings.class);
-            add_class(this.$html, this.settings.color);
             append_text(this.$html, this.settings.text);
-            if (this.settings.fn_close !== null) {
+            if (this.settings.icon_fa_left !== null && this.settings.icon_fa_left !== '') {
+                var icon = $('<i></i>', {
+                    'class': this.settings.icon_fa_left,
+                    'aria-hidden': 'true'
+                });
+                this.$html.append(icon).append(' ');
+            };
+            if (this.settings.icon_fa_right && this.settings.icon_fa_right !== '') {
+                var icon = $('<i></i>', {
+                    'class': this.settings.icon_fa_right,
+                    'aria-hidden': 'true'
+                });
+                this.$html.append(' ').append(icon);
+            };
+
+            if (this.settings.fn_click !== null) {
                 this.$html.on("click", this.settings.fn_click);
             }
         }
@@ -1151,7 +1172,7 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
-            group_fsize : null,
+            group_fsize: null,
             group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
@@ -1387,6 +1408,7 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
+        this.$element = element.$html;
     }
 
     //<div class="col-md-4">
@@ -1476,6 +1498,7 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
+        this.$element = element.$html;
     }
     //<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
     //<datalist id="datalistOptions">
@@ -1567,6 +1590,7 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
+        this.$element = element.$html;
     }
     //< div class="col-12" >
     //    <div class="form-check">
@@ -1955,6 +1979,30 @@ var intVal = function (i) {
         // Пройдемся по элементам
         $.each(objs, function (i, obj) {
             if (obj && obj.obj) {
+                if (obj.obj === 'bs_row') {
+                    var obj_html = new this.bs_row(obj.options);
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_col') {
+                    var obj_html = new this.bs_col(obj.options);
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_button') {
+                    var obj_html = new this.bs_button(obj.options);
+                    if (obj_html && obj_html.$html) {
+                        obj_form.buttons.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'button',
+                            //element: null,
+                            $element: obj_html.$html,
+                            destroy: false
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
                 if (obj.obj === 'bs_form_input') {
                     //obj.options.input_group_obj_form = obj_form;
                     var obj_html = new this.bs_form_input(obj.options);
@@ -1963,7 +2011,75 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_text',
-/*                            element: input.element,*/
+                            /*                            element: input.element,*/
+                            $element: obj_html.$element,
+                            destroy: false
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_form_select') {
+                    //obj.options.input_group_obj_form = obj_form;
+                    var obj_html = new this.bs_form_select(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'select',
+                            //element: input.element,
+                            $element: obj_html.$element,
+                            destroy: true
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_form_input_datalist') {
+                    //obj.options.input_group_obj_form = obj_form;
+                    var obj_html = new this.bs_form_input_datalist(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'datalist',
+                            //element: input.element,
+                            $element: obj_html.$element,
+                            destroy: true
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_form_textarea') {
+                    //obj.options.input_group_obj_form = obj_form;
+                    var obj_html = new this.bs_form_input_datalist(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'textarea',
+                            //element: input.element,
+                            $element: obj_html.$element,
+                            destroy: true
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_form_input_datetime') {
+                    //obj.options.input_group_obj_form = obj_form;
+                    var obj_html = new this.bs_form_input(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'input_datetime',
+                            /*                            element: input.element,*/
                             $element: obj_html.$element,
                             destroy: false
                         });

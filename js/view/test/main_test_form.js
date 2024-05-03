@@ -698,6 +698,86 @@
         this.form_test_dialog = new FD();
         // Создать макет панели
         var objs = [];
+        var row1 = {
+            obj: 'bs_row',
+            options: {
+                id: null,
+                class: 'mb-1',
+                style: null,
+            },
+            childs: []
+        };
+        var col1 = {
+            obj: 'bs_col',
+            options: {
+                id: null,
+                pref: 'md',
+                size: 12,
+                class: 'text-left',
+                style: null,
+            },
+            childs: []
+        };
+        var bt_1 = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'warning',
+                text: 'кнопка',
+                title: 'Описание....',
+                icon_fa_left: null,
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_2 = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'Описание....',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_3 = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: 'Кнопашка',
+                title: 'Описание....',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_app = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'primary',
+                text: null,
+                title: 'Описание....',
+                icon_fa_left: 'fa-solid fa-user-group',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
 
         var form_input_validationCustom01 = {
             obj: 'bs_form_input',
@@ -828,11 +908,271 @@
             },
             childs: []
         };
+        var form_input_validationSelect = {
+            obj: 'bs_form_select',
+            options: {
+                validation_group: null,
+                id: 'element_select',
+                name: 'element_select',
+                label: 'element_select',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: false,
+                element_title: null,
+                element_required: null,
+                element_readonly: false,
+                element_size: null,
+                element_list:
+                    [
+                        { value: 'option1', text: 'option1', disabled: false },
+                        { value: 'dddddd', text: 'ddddddd', disabled: true },
+                        { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
+                    ],
+                validation: true,
+                feedback_invalid: 'error element_select',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_select',
+                form_text_class: null,
+            },
+            childs: []
+        };
+        var form_input_validationDatalist = {
+            obj: 'bs_form_input_datalist',
+            options: {
+                validation_group: null,
+                id: 'element_input_datalist',
+                name: 'element_input_datalist',
+                label: 'element_input_datalist',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_placeholder: 'placeholder element_input_datalist',
+                element_required: null,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_list: [
+                    { value: 'option1', text: 'option1', disabled: false },
+                    { value: 'dddddd', text: 'ddddddd', disabled: true },
+                    { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
+                ],
+                validation: true,
+                feedback_invalid: 'error element_input_datalist',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_input_datalist',
+                form_text_class: null
+            },
+            childs: []
+        };
+        var form_input_validationTextarea = {
+            obj: 'bs_form_textarea',
+            options: {
+                validation_group: null,
+                id: 'element_textarea',
+                name: 'element_textarea',
+                label: 'element_textarea',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_placeholder: 'placeholder element_textarea',
+                element_required: null,
+                element_maxlength: null,
+                element_readonly: false,
+                element_cols: null,
+                element_rows: 3,
+                element_wrap: null,
+                validation: true,
+                feedback_invalid: 'error-element_textarea',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_textarea',
+                form_text_class: null
+            },
+            childs: []
+        };
+        var form_input_validationDateTime = {
+            obj: 'bs_form_input_datetime',
+            options: {
+                validation_group: null,
+                id: 'validationCustom01',
+                name: 'validationCustom01',
+                label: 'DateTime',
+                element_type: 'datetime-local',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_placeholder: 'First name',
+                element_required: null,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_min: null,
+                element_max: null,
+                element_step: null,
+                validation: true,
+                feedback_invalid: 'error First name',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_input',
+                form_text_class: null,
+                element_fn_change: function (e) {
+                    var num = Number($(e.currentTarget).val());
+                }.bind(this),
+            },
+            childs: []
+        };
+        var form_input_validationDate = {
+            obj: 'bs_form_input_datetime',
+            options: {
+                validation_group: null,
+                id: 'validationCustom01',
+                name: 'validationCustom01',
+                label: 'Date',
+                element_type: 'date',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_placeholder: 'First name',
+                element_required: null,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_min: null,
+                element_max: null,
+                element_step: null,
+                validation: true,
+                feedback_invalid: 'error First name',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_input',
+                form_text_class: null,
+                element_fn_change: function (e) {
+                    var num = Number($(e.currentTarget).val());
+                }.bind(this),
+            },
+            childs: []
+        };
+        var form_input_validationTime = {
+            obj: 'bs_form_input_datetime',
+            options: {
+                validation_group: null,
+                id: 'validationCustom01',
+                name: 'validationCustom01',
+                label: 'Date',
+                element_type: 'time',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_placeholder: 'First name',
+                element_required: null,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_min: null,
+                element_max: null,
+                element_step: null,
+                validation: true,
+                feedback_invalid: 'error First name',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 4,
+                col_class: null,
+                group_prepend: true,
+                group_prepend_class: null,
+                group_prepend_id: null,
+                group_prepend_html: 'prepend',
+                group_append: true,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: 'append',
+                form_text: 'Это help-element_input',
+                form_text_class: null,
+                element_fn_change: function (e) {
+                    var num = Number($(e.currentTarget).val());
+                }.bind(this),
+            },
+            childs: []
+        };
 
+
+        col1.childs.push(bt_1);
+        col1.childs.push(bt_2);
+        col1.childs.push(bt_3);
+        row1.childs.push(col1);
+        objs.push(row1);
         objs.push(form_input_validationCustom01);
         objs.push(form_input_validationCustom02);
         objs.push(form_input_validationCustomUsername);
-
+        objs.push(form_input_validationSelect);
+        objs.push(form_input_validationDatalist);
+        objs.push(form_input_validationTextarea);
+        objs.push(form_input_validationDateTime);
+        objs.push(form_input_validationDate);
+        objs.push(form_input_validationTime);
         this.form_test_dialog.init({
             alert: main_alert,
             objs: objs,
