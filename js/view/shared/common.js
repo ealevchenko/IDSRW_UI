@@ -811,7 +811,7 @@ var intVal = function (i) {
     form_element.prototype.datalist = function (options) {
         this.settings = $.extend({
             id: null,
-            name: null,
+            //name: null,
             class: null,
             list: [],
         }, options);
@@ -820,7 +820,7 @@ var intVal = function (i) {
             throw new Error('Не удалось создать элемент <datalist></datalist>');
         } else {
             add_id(this.$html, this.settings.id);
-            add_tag(this.$html, 'name', this.settings.id);
+            //add_tag(this.$html, 'name', this.settings.id);
             add_class(this.$html, this.settings.class);
             $.each(this.settings.list, function (i, el) {
                 var option = $('<option value="' + el.value + '">');
@@ -1000,10 +1000,10 @@ var intVal = function (i) {
                 });
                 this.$html.append(' ').append(icon);
             };
-
             if (this.settings.fn_click !== null) {
                 this.$html.on("click", this.settings.fn_click);
             }
+
         }
     };
     //<input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
@@ -1173,14 +1173,19 @@ var intVal = function (i) {
             col_size: null,
             col_class: null,
             group_fsize: null,
-            group_prepend: false,
+            obj_form: null,
+            /*            group_prepend: false,*/
+            // В начало
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
-            group_append: false,
+            group_prepend_objs: null,
+            /*            group_append: false,*/
+            // В конец
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
+            group_append_objs: null,
             form_text: null,
             form_text_class: null,
         }, options);
@@ -1198,23 +1203,37 @@ var intVal = function (i) {
             class: this.settings.validation ? 'has-validation' : null,
         });
         add_class(input_group.$html, this.settings.group_fsize !== null ? 'input-group-' + this.settings.group_fsize : null);
-        if (this.settings.group_prepend) {
+        // group_prepend
+        if (this.settings.group_prepend_html !== null) {
             var span_prepend = new this.fe.span({
                 id: this.settings.group_prepend_id,
                 class: 'input-group-text ' + (this.settings.group_prepend_class !== null ? this.settings.group_prepend_class : ''),
                 text: this.settings.group_prepend_html,
             });
             input_group.$html.prepend(span_prepend.$html);
+        }
+        if (this.settings.obj_form !== null && this.settings.group_prepend_objs !== null && this.settings.group_prepend_objs.length > 0) {
+            this.fe.add_obj(input_group.$html, this.settings.group_prepend_objs, this.settings.obj_form, function (content) {
+
+            }.bind(this));
         };
-        input_group.$html.prepend(this.settings.element_html);
-        if (this.settings.group_append) {
+        // element_html
+        input_group.$html.append(this.settings.element_html);
+        // group_append
+        if (this.settings.group_append_html !== null) {
             var span_append = new this.fe.span({
                 id: this.settings.group_append_id,
                 class: 'input-group-text ' + (this.settings.group_append_class !== null ? this.settings.group_append_class : ''),
                 text: this.settings.group_append_html,
             });
-            input_group.$html.prepend(span_append.$html);
+            input_group.$html.append(span_append.$html);
         };
+        if (this.settings.obj_form !== null && this.settings.group_append_objs !== null && this.settings.group_append_objs.length > 0) {
+            this.fe.add_obj(input_group.$html, this.settings.group_append_objs, this.settings.obj_form, function (content) {
+
+            }.bind(this));
+        }
+
         if (this.settings.validation) {
             var feedback = new this.fe.div({
                 class: 'invalid-feedback' + (this.settings.feedback_class !== null ? this.settings.feedback_class : ''),
@@ -1264,6 +1283,7 @@ var intVal = function (i) {
             element_min: null,
             element_max: null,
             element_step: null,
+            element_fn_change: null,
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -1271,14 +1291,17 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
-            group_prepend: false,
+            obj_form: null,
+            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
-            group_append: false,
+            group_prepend_objs: null,
+            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
+            group_append_objs: null,
             form_text: null,
             form_text_class: null,
         }, options);
@@ -1312,14 +1335,17 @@ var intVal = function (i) {
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
-            group_prepend: this.settings.group_prepend,
+            obj_form: this.settings.obj_form,
+            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
-            group_append: this.settings.group_append,
+            group_prepend_objs: this.settings.group_prepend_objs,
+            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
+            group_append_objs: this.settings.group_append_objs,
             form_text: this.settings.form_text,
             form_text_class: this.settings.form_text_class,
         });
@@ -1358,14 +1384,17 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
-            group_prepend: false,
+            obj_form: null,
+            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
-            group_append: false,
+            group_prepend_objs: null,
+            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
+            group_append_objs: null,
             form_text: null,
             form_text_class: null,
         }, options);
@@ -1396,21 +1425,24 @@ var intVal = function (i) {
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
-            group_prepend: this.settings.group_prepend,
+            obj_form: this.settings.obj_form,
+            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
-            group_append: this.settings.group_append,
+            group_prepend_objs: this.settings.group_prepend_objs,
+            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
+            group_append_objs: this.settings.group_append_objs,
+
             form_text: this.settings.form_text,
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
         this.$element = element.$html;
     }
-
     //<div class="col-md-4">
     //    <label for="validationCustomUsername" class="form-label">Username</label>
     //    <div class="input-group has-validation">
@@ -1445,14 +1477,17 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
-            group_prepend: false,
+            obj_form: null,
+            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
-            group_append: false,
+            group_prepend_objs: null,
+            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
+            group_append_objs: null,
             form_text: null,
             form_text_class: null,
         }, options);
@@ -1486,14 +1521,17 @@ var intVal = function (i) {
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
-            group_prepend: this.settings.group_prepend,
+            obj_form: this.settings.obj_form,
+            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
-            group_append: this.settings.group_append,
+            group_prepend_objs: this.settings.group_prepend_objs,
+            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
+            group_append_objs: this.settings.group_append_objs,
             form_text: this.settings.form_text,
             form_text_class: this.settings.form_text_class,
         });
@@ -1531,14 +1569,17 @@ var intVal = function (i) {
             col_prefix: null,
             col_size: null,
             col_class: null,
-            group_prepend: false,
+            obj_form: null,
+            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
-            group_append: false,
+            group_prepend_objs: null,
+            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
+            group_append_objs: null,
             form_text: null,
             form_text_class: null,
         }, options);
@@ -1559,7 +1600,7 @@ var intVal = function (i) {
         add_tag(element.$html, 'list', this.settings.id + '_datalistOptions');
         var datalist = new this.fe.datalist({
             id: this.settings.id + '_datalistOptions',
-            name: null,
+            //name: null,
             class: null,
             list: this.settings.element_list,
         });
@@ -1578,19 +1619,23 @@ var intVal = function (i) {
             col_size: this.settings.col_size,
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
-            group_prepend: this.settings.group_prepend,
+            obj_form: this.settings.obj_form,
+            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
-            group_append: this.settings.group_append,
+            group_prepend_objs: this.settings.group_prepend_objs,
+            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
+            group_append_objs: this.settings.group_append_objs,
             form_text: this.settings.form_text,
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
         this.$element = element.$html;
+        this.$datalist = datalist.$html;
     }
     //< div class="col-12" >
     //    <div class="form-check">
@@ -1687,8 +1732,6 @@ var intVal = function (i) {
         }
 
     }
-
-
     // bootstrap-components ----------------------------------
 
 
@@ -1961,9 +2004,281 @@ var intVal = function (i) {
     //    }
     //};
 
+    //---------------- ИНИЦИАЛИЗАЦИЯ ЭЛЕМЕНТОВ ----------------------
+    // Инициализация текстового поля "INPUT"
+    form_element.prototype.init_input = function (element, options) {
+        this.settings = $.extend({
+            default_value: null,
+            fn_change: null,
+        }, options);
+        this.type = element.attr('type');
+        this.$element = element;
+        this.init = function () {
+            this.update(this.settings.default_value);
+            if (typeof this.settings.fn_change === 'function') {
+                this.$element.on("change", this.settings.fn_change.bind(this));
+            }
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                this.$element.val(value);
+                //this.$element.change();
+            } else {
+                if (this.type === 'number') {
+                    return this.$element.val() !== '' ? Number(this.$element.val()) : null;
+                }
+                if (this.type === 'text') {
+                    return this.$element.val() !== '' ? $.trim(String(this.$element.val())) : null;
+                }
+                return this.$element.val();
+            };
+        };
+        this.update = function (default_value) {
+            this.$element.val(default_value);
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.$element.val('');
+            this.$element.prop("disabled", true);
+        };
+        this.init();
+    };
+    // Инициализация поля дата "INPUT" типа SELECT
+    form_element.prototype.init_select = function (element, options) {
+        //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
+        this.$element = element;
+        var $default_option = $('<option></option>', {
+            'value': '-1',
+            'text': langView('title_select', App.Langs),
+        });
+        this.settings = $.extend({
+            data: [],
+            default_value: null,
+            fn_change: null,
+            fn_check: null,
+        }, options);
+        this.init = function () {
+            this.update(this.settings.data, this.settings.default_value);
+            if (typeof this.settings.fn_change === 'function') {
+                this.$element.on("change", function (event) {
+                    if (typeof this.settings.fn_change) {
+                        this.settings.fn_change(event);
+                    }
+                    if (typeof this.settings.fn_check === 'function') {
+                        this.settings.fn_check(element.val());
+                    };
+                }.bind(this));
+            }
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                var disabled = this.$element.prop("disabled");
+                if (disabled) {
+                    this.$element.prop("disabled", false);
+                }
+                this.$element.val(value);
+                if (disabled) {
+                    this.$element.prop("disabled", true);
+                }
+            } else {
+                return this.$element.val();
+            };
+        };
+        this.getNumber = function () {
+            return this.$element.val() === null ? null : Number(this.$element.val());
+        };
+        this.getNumberNull = function () {
+            return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
+        };
+        this.text = function (text) {
+            if (text !== undefined) {
+                var disabled = this.$element.prop("disabled");
+                if (disabled) {
+                    this.$element.prop("disabled", false);
+                }
+                this.$element.val(text === null ? '' : text);
+                if (disabled) {
+                    this.$element.prop("disabled", true);
+                }
+            } else {
+                return this.$element.text();
+            };
+        };
+        this.update = function (data, default_value) {
+            this.$element.empty();
+            element.append($default_option);
+            //if (default_value === -1) {
+            //    element.append($default_option);
+            //}
+            if (data) {
+                $.each(data, function (i, el) {
+                    // Преобразовать формат
+                    if (el) {
+                        var $option = $('<option></option>', {
+                            'value': el.value,
+                            'text': el.text,
+                            'disabled': el.disabled,
+                        });
+                        this.$element.append($option);
+                    }
+                }.bind(this));
+            };
+            this.$element.val(default_value);
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.$element.val(-1);
+            this.$element.prop("disabled", true);
+        };
+        this.init();
+    };
+    // Инициализация поля дата "INPUT" типа DATALIST
+    form_element.prototype.init_datalist = function (element, datalist, options) {
+        this.$element = element;
+        this.$datalist = datalist;
+        this.settings = $.extend({
+            data: [],
+            default_value: null,
+            fn_change: null,
+            fn_check: null,
+        }, options);
+        this.init = function () {
+            this.update(this.settings.data, this.settings.default_value);
+            //if (typeof this.settings.fn_change === 'function') {
+            //    this.$element.on("change", this.settings.fn_change.bind(this));
+            //}
+            this.$element.on('input', function () {
+
+            });
+
+            //if (typeof this.settings.fn_change === 'function') {
+            //    this.$element.on("change", function (event) {
+            //        if (typeof this.settings.fn_change) {
+            //            this.settings.fn_change(event);
+            //        }
+            //        if (typeof this.settings.fn_check === 'function') {
+            //            this.settings.fn_check(element.val());
+            //        };
+            //    }.bind(this));
+            //}
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                var disabled = this.$element.prop("disabled");
+                if (disabled) {
+                    this.$element.prop("disabled", false);
+                }
+                this.$element.val(value);
+                if (disabled) {
+                    this.$element.prop("disabled", true);
+                }
+            } else {
+                return this.$element.val();
+            };
+        };
+        this.getNumber = function () {
+            return this.$element.val() === null ? null : Number(this.$element.val());
+        };
+        this.getNumberNull = function () {
+            return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
+        };
+        this.text = function (text) {
+            if (text !== undefined) {
+                var disabled = this.$element.prop("disabled");
+                if (disabled) {
+                    this.$element.prop("disabled", false);
+                }
+                this.$element.val(text === null ? '' : text);
+                if (disabled) {
+                    this.$element.prop("disabled", true);
+                }
+            } else {
+                return this.$element.text();
+            };
+        };
+        this.update = function (data, default_value) {
+            //this.$element.empty();
+            //this.$datalist.empty();
+            ///*element.append($default_option);*/
+            ////if (default_value === -1) {
+            ////    element.append($default_option);
+            ////}
+            //if (data) {
+            //    $.each(data, function (i, el) {
+            //        // Преобразовать формат
+            //        if (el) {
+            //            var $option = $('<option></option>', {
+            //                'value': el.value,
+            //                'text': el.text,
+            //                'disabled': el.disabled,
+            //            });
+            //            this.$datalist.append($option);
+            //        }
+            //    }.bind(this));
+            //};
+            //this.$element.val(default_value);
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.$element.val(-1);
+            this.$element.prop("disabled", true);
+        };
+        this.init();
+    };
+    // Инициализация поля дата "TEXTAREA"
+    form_element.prototype.init_textarea = function (element, options) {
+        this.settings = $.extend({
+            default_value: null,
+            fn_change: null,
+        }, options);
+        this.$element = element;
+        this.init = function () {
+            this.update(this.settings.default_value);
+            if (typeof this.settings.fn_change === 'function') {
+                this.$element.on("change", this.settings.fn_change.bind(this));
+            }
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                this.$element.val(value);
+            } else {
+                return this.$element.val();
+            };
+        };
+        this.update = function (default_value) {
+            this.$element.val(default_value);
+        };
+        this.init();
+    };
+
     //----------------------------------------------------------------------------
     // Автоматически формируем документы на форме
     form_element.prototype.add_obj = function (content, objs, obj_form, callback) {
+        this.fe = new form_element();
         // Добавить элемент
         var add_element = function (element, content, obj) {
             if (element && element.length > 0) {
@@ -1991,10 +2306,10 @@ var intVal = function (i) {
                     var obj_html = new this.bs_button(obj.options);
                     if (obj_html && obj_html.$html) {
                         obj_form.buttons.push({
-                            name: obj.options.id,
+                            name: obj.options.id, // может быть null
                             validation_group: obj.options.validation_group,
                             type: 'button',
-                            //element: null,
+                            element: null,
                             $element: obj_html.$html,
                             destroy: false
                         });
@@ -2004,14 +2319,17 @@ var intVal = function (i) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_input') {
-                    //obj.options.input_group_obj_form = obj_form;
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input(obj.options);
                     if (obj_html && obj_html.$element) {
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_text',
-                            /*                            element: input.element,*/
+                            element: new this.fe.init_input(obj_html.$element, {
+                                default_value: '',
+                                fn_change: obj.options.element_fn_change,
+                            }),
                             $element: obj_html.$element,
                             destroy: false
                         });
@@ -2021,14 +2339,19 @@ var intVal = function (i) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_select') {
-                    //obj.options.input_group_obj_form = obj_form;
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_select(obj.options);
                     if (obj_html && obj_html.$element) {
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'select',
-                            //element: input.element,
+                            element : new this.fe.init_select(obj_html.$element, {
+                                data: obj.options.element_list,
+                                default_value: obj.options.element_default,
+                                fn_change: obj.options.element_fn_change,
+                                fn_check: obj.options.element_fn_check
+                            }),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2038,14 +2361,19 @@ var intVal = function (i) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_input_datalist') {
-                    //obj.options.input_group_obj_form = obj_form;
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input_datalist(obj.options);
                     if (obj_html && obj_html.$element) {
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'datalist',
-                            //element: input.element,
+                            element: new this.fe.init_datalist(obj_html.$element, obj_html.$datalist, {
+                                data: obj.options.element_list,
+                                default_value: obj.options.element_default,
+                                fn_change: obj.options.element_fn_change,
+                                fn_check: obj.options.element_fn_check
+                            }),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2055,14 +2383,17 @@ var intVal = function (i) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_textarea') {
-                    //obj.options.input_group_obj_form = obj_form;
-                    var obj_html = new this.bs_form_input_datalist(obj.options);
+                    obj.options.obj_form = obj_form;
+                    var obj_html = new this.bs_form_textarea(obj.options);
                     if (obj_html && obj_html.$element) {
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'textarea',
-                            //element: input.element,
+                            element: new this.fe.init_textarea(obj_html.$element, {
+                                default_value: '',
+                                fn_change: obj.options.element_fn_change,
+                            }),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2072,7 +2403,7 @@ var intVal = function (i) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_input_datetime') {
-                    //obj.options.input_group_obj_form = obj_form;
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input(obj.options);
                     if (obj_html && obj_html.$element) {
                         obj_form.views.push({
@@ -2300,6 +2631,7 @@ var intVal = function (i) {
 
     function form_dialog() {
         this.fe = new form_element();
+        this.el = {}; // Все элементы формы
     }
 
     form_dialog.prototype.init = function (options) {
@@ -2311,8 +2643,9 @@ var intVal = function (i) {
             id: null,
             form_class: null,
             validation: true,
+            fn_html_init: null,
+            fn_element_init: null,
             fn_validation: null,
-            fn_html_init: function () { },
             fn_init: null,
         }, options);
 
@@ -2348,7 +2681,16 @@ var intVal = function (i) {
         };
         // Пройдемся по элементам
         this.fe.add_obj(this.$form, this.settings.objs, this.obj_form, function (form) {
-            // Построение HTML закончена
+            // Построение HTML закончена, обработаем событие
+            if (typeof this.settings.fn_html_init === 'function') {
+                this.settings.fn_html_init();
+            }
+            // Построение HTML закончена, обработаем событие создания элементов
+            if (typeof this.settings.fn_element_init === 'function') {
+                this.settings.fn_element_init();
+            } else {
+                this.create_element(this.el, true);
+            }
             // -------------НАСТРОИМ ВАЛИДАЦИЮ -----------------------
             // Получим список validation
             this.list_validation = [];
@@ -2394,6 +2736,24 @@ var intVal = function (i) {
             // -------------------------------------------------------
         }.bind(this));
     };
+    // Создать элементы и привязать элементы к ссылке
+    form_dialog.prototype.create_element = function (link, add_type) {
+        $.each(this.obj_form.views, function (i, obj) {
+            var type = ''
+            if (add_type) {
+                type = obj.type + '_';
+            }
+            link[type + obj.name] = obj.element;
+        }.bind(this));
+        $.each(this.obj_form.buttons, function (i, obj) {
+            var type = ''
+            if (add_type) {
+                type = obj.type + '_';
+            }
+            link[(type !== '' ? type : '$bt_') + obj.name] = obj.$element;
+        }.bind(this));
+    };
+
 
     App.form_dialog = form_dialog;
 

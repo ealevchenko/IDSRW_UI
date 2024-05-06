@@ -20,7 +20,7 @@
 
     // Определим глобальные переменные
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-    App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); 
+    App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
     //App.User_Name = $('input#username').val();
 
     var API_DIRECTORY = App.ids_directory;
@@ -43,6 +43,36 @@
         var row = new fe_ui.bs_row({});
         main.append(row.$html);
 
+        var bt_append = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
         var element_input_sm = new fe_ui.bs_form_input({
             id: 'element_input',
             name: 'element_input',
@@ -67,14 +97,17 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            /*            group_prepend: true,*/
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            group_prepend_objs: null,
+            /*            group_append: true,*/
             group_append_class: null,
             group_append_id: null,
-            group_append_html: 'append',
+            //group_append_html: 'append',
+            group_append_html: null,
+            group_append_objs: [bt_append],
             form_text: 'Это help-element_input',
             form_text_class: null,
         });
@@ -103,11 +136,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -139,11 +172,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -177,11 +210,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -214,11 +247,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -251,11 +284,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -288,11 +321,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -324,11 +357,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -360,11 +393,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -398,11 +431,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -435,11 +468,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -472,11 +505,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -507,11 +540,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -541,11 +574,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -575,11 +608,11 @@
             col_prefix: 'md',
             col_size: 4,
             col_class: null,
-            group_prepend: true,
+            //group_prepend: true,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: 'prepend',
-            group_append: true,
+            //group_append: true,
             group_append_class: null,
             group_append_id: null,
             group_append_html: 'append',
@@ -698,6 +731,159 @@
         this.form_test_dialog = new FD();
         // Создать макет панели
         var objs = [];
+
+        var bt_append_inp = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend_inp = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_append_sel = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend_sel = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_append_dl = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend_dl = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_append_ta = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend_ta = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_append_dt = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'append',
+                icon_fa_left: 'fas fa-search',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+        var bt_prepend_dt = {
+            obj: 'bs_button',
+            options: {
+                id: null,
+                name: null,
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: 'prepend',
+                icon_fa_left: 'fa-solid fa-house',
+                icon_fa_right: null,
+                fn_click: null,
+            }
+        };
+
+
         var row1 = {
             obj: 'bs_row',
             options: {
@@ -782,7 +968,7 @@
         var form_input_validationCustom01 = {
             obj: 'bs_form_input',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustom01',
                 name: 'validationCustom01',
                 label: 'First name',
@@ -799,6 +985,10 @@
                 element_min: null,
                 element_max: null,
                 element_step: null,
+                element_default: '',
+                element_fn_change: function (e) {
+                    var text = $(e.currentTarget).val();
+                }.bind(this),
                 validation: true,
                 feedback_invalid: 'error First name',
                 feedback_valid: null,
@@ -806,26 +996,26 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
-                group_prepend_html: 'prepend',
-                group_append: true,
+                group_prepend_html: null,
+                group_prepend_objs: [bt_prepend_inp],
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
+                //group_append_html: null,
+                group_append_objs: [bt_append_inp],
                 form_text: 'Это help-element_input',
                 form_text_class: null,
-                element_fn_change: function (e) {
-                    var num = Number($(e.currentTarget).val());
-                }.bind(this),
             },
             childs: []
         };
         var form_input_validationCustom02 = {
             obj: 'bs_form_input',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustom02',
                 name: 'validationCustom02',
                 label: 'Last name',
@@ -849,11 +1039,11 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: false,
+                //group_prepend: false,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: null,
-                group_append: false,
+                //group_append: false,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: null,
@@ -868,7 +1058,7 @@
         var form_input_validationCustomUsername = {
             obj: 'bs_form_input',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustomUsername',
                 name: 'validationCustomUsername',
                 label: 'Username',
@@ -892,11 +1082,11 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: false,
+                //group_prepend: false,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: null,
-                group_append: true,
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: '@',
@@ -911,7 +1101,7 @@
         var form_input_validationSelect = {
             obj: 'bs_form_select',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'element_select',
                 name: 'element_select',
                 label: 'element_select',
@@ -929,6 +1119,13 @@
                         { value: 'dddddd', text: 'ddddddd', disabled: true },
                         { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
                     ],
+                element_default: -1,
+                element_fn_change: function (e) {
+                    var text = $(e.currentTarget).val();
+                }.bind(this),
+                element_fn_check: function (text) {
+;
+                }.bind(this),
                 validation: true,
                 feedback_invalid: 'error element_select',
                 feedback_valid: null,
@@ -936,14 +1133,16 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                group_prepend_objs: [bt_prepend_sel],
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
+                group_append_objs: [bt_append_sel],
                 form_text: 'Это help-element_select',
                 form_text_class: null,
             },
@@ -952,7 +1151,7 @@
         var form_input_validationDatalist = {
             obj: 'bs_form_input_datalist',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'element_input_datalist',
                 name: 'element_input_datalist',
                 label: 'element_input_datalist',
@@ -970,6 +1169,13 @@
                     { value: 'dddddd', text: 'ddddddd', disabled: true },
                     { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
                 ],
+                element_default: -1,
+                element_fn_change: function (e) {
+                    var text = $(e.currentTarget).val();
+                }.bind(this),
+                element_fn_check: function (text) {
+                    
+                }.bind(this),
                 validation: true,
                 feedback_invalid: 'error element_input_datalist',
                 feedback_valid: null,
@@ -977,14 +1183,16 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                /*                group_prepend: true,*/
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                group_prepend_objs: [bt_prepend_dl],
+                /*                group_append: true,*/
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
+                group_append_objs: [bt_append_dl],
                 form_text: 'Это help-element_input_datalist',
                 form_text_class: null
             },
@@ -993,7 +1201,7 @@
         var form_input_validationTextarea = {
             obj: 'bs_form_textarea',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'element_textarea',
                 name: 'element_textarea',
                 label: 'element_textarea',
@@ -1008,6 +1216,10 @@
                 element_cols: null,
                 element_rows: 3,
                 element_wrap: null,
+                element_default: '',
+                element_fn_change: function (e) {
+                    var text = $(e.currentTarget).val();
+                }.bind(this),
                 validation: true,
                 feedback_invalid: 'error-element_textarea',
                 feedback_valid: null,
@@ -1015,14 +1227,16 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                group_prepend_objs: [bt_prepend_ta],
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
+                group_append_objs: [bt_append_ta],
                 form_text: 'Это help-element_textarea',
                 form_text_class: null
             },
@@ -1031,7 +1245,7 @@
         var form_input_validationDateTime = {
             obj: 'bs_form_input_datetime',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustom01',
                 name: 'validationCustom01',
                 label: 'DateTime',
@@ -1055,14 +1269,16 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                /*                group_prepend: true,*/
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                group_prepend_objs: [bt_prepend_dt],
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
+                group_append_objs: [bt_append_dt],
                 form_text: 'Это help-element_input',
                 form_text_class: null,
                 element_fn_change: function (e) {
@@ -1074,7 +1290,7 @@
         var form_input_validationDate = {
             obj: 'bs_form_input_datetime',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustom01',
                 name: 'validationCustom01',
                 label: 'Date',
@@ -1098,11 +1314,11 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
@@ -1117,7 +1333,7 @@
         var form_input_validationTime = {
             obj: 'bs_form_input_datetime',
             options: {
-                validation_group: null,
+                validation_group: 'common',
                 id: 'validationCustom01',
                 name: 'validationCustom01',
                 label: 'Date',
@@ -1141,11 +1357,11 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                group_prepend: true,
+                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
-                group_append: true,
+                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
@@ -1180,14 +1396,35 @@
             form_class: 'row g-3',
             validation: true,
             fn_validation: function (res) { }.bind(this),
-            fn_html_init: function (res) { }.bind(this),
+            fn_html_init: function (res) {
+
+            }.bind(this),
+            fn_element_init: null,
             fn_init: function (init) {
                 row_form.$html.append(this.form_test_dialog.$form);
             }.bind(this),
 
         });
 
-        
+
+        $("#exampleDataList").on('input', function () {
+            var txt = $(this).val();
+            var opt = $("#datalistOptions option[value='" + txt + "']");
+            if (opt) {
+                alert(opt.value)
+            } else {
+                alert("Err")
+            }
+
+
+
+            //$("#datalistOptions").find("option").each(function () {
+            //    if ($(this).val() == txt) {
+            //        var sss = $(this).val();
+            //        //alert($(this).val());
+            //    }
+            //})
+        });
     });
 
 })(jQuery); // End of use strict
