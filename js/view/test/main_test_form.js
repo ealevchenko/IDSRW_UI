@@ -1124,7 +1124,7 @@
                     var text = $(e.currentTarget).val();
                 }.bind(this),
                 element_fn_check: function (text) {
-;
+                    ;
                 }.bind(this),
                 validation: true,
                 feedback_invalid: 'error element_select',
@@ -1152,11 +1152,11 @@
             obj: 'bs_form_input_datalist',
             options: {
                 validation_group: 'common',
-                id: 'element_input_datalist',
-                name: 'element_input_datalist',
-                label: 'element_input_datalist',
+                id: 'element_input_datalist_fm',
+                name: 'element_input_datalist_fm',
+                label: 'element_input_datalist_fm',
                 element_fsize: 'sm',
-                element_class: null,
+                element_class: 'flexdatalist',
                 element_value: null,
                 element_title: null,
                 element_placeholder: 'placeholder element_input_datalist',
@@ -1174,7 +1174,7 @@
                     var text = $(e.currentTarget).val();
                 }.bind(this),
                 element_fn_check: function (text) {
-                    
+
                 }.bind(this),
                 validation: true,
                 feedback_invalid: 'error element_input_datalist',
@@ -1397,11 +1397,11 @@
             validation: true,
             fn_validation: function (res) { }.bind(this),
             fn_html_init: function (res) {
-
+                row_form.$html.append(this.form_test_dialog.$form);
             }.bind(this),
             fn_element_init: null,
             fn_init: function (init) {
-                row_form.$html.append(this.form_test_dialog.$form);
+
             }.bind(this),
 
         });

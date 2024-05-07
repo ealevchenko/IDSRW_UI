@@ -1634,6 +1634,7 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
+        //this.$element = div;
         this.$element = element.$html;
         this.$datalist = datalist.$html;
     }
@@ -2163,9 +2164,45 @@ var intVal = function (i) {
             //if (typeof this.settings.fn_change === 'function') {
             //    this.$element.on("change", this.settings.fn_change.bind(this));
             //}
-            this.$element.on('input', function () {
+            //this.$element.on('change', function (e) {
+            //    var txt = $(this).val();
+            //    //var opt = $("#datalistOptions option[value='" + txt + "']");
+            //    //if (opt) {
+            //    //    alert(opt.value)
+            //    //} else {
+            //    //    alert("Err")
+            //    //}
+            //});
 
+            //$('#' + this.$element[0].id).on('input', function () {
+
+            //var inp = this.$element.find('input');
+            //this.$element.find('input').on('change', function () {
+            //    var txt = $(this).val();
+            //    //    //var opt = $("#datalistOptions option[value='" + txt + "']");
+            //    //    //if (opt) {
+            //    //    //    alert(opt.value)
+            //    //    //} else {
+            //    //    //    alert("Err")
+            //    //    //}
+            //});
+            //this.$element.flexdatalist({
+            //    minLength: 1
+            //});
+            var res = $('#' + this.$element[0].id).flexdatalist({
+                minLength: 1,
+                searchContain: true
             });
+            res.on('change:flexdatalist', function (event, set, options) {
+                console.log(set.value);
+                console.log(set.text);
+            });
+            //var dd = $('#' + this.$element[0].id);
+            //dd.flexdatalist();
+            //this.$element.flexdatalist();
+            //this.$element.on('input', function () {
+
+            //});
 
             //if (typeof this.settings.fn_change === 'function') {
             //    this.$element.on("change", function (event) {
@@ -2346,7 +2383,7 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'select',
-                            element : new this.fe.init_select(obj_html.$element, {
+                            element: new this.fe.init_select(obj_html.$element, {
                                 data: obj.options.element_list,
                                 default_value: obj.options.element_default,
                                 fn_change: obj.options.element_fn_change,
@@ -2368,12 +2405,12 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'datalist',
-                            element: new this.fe.init_datalist(obj_html.$element, obj_html.$datalist, {
-                                data: obj.options.element_list,
-                                default_value: obj.options.element_default,
-                                fn_change: obj.options.element_fn_change,
-                                fn_check: obj.options.element_fn_check
-                            }),
+                            //element: new this.fe.init_datalist(obj_html.$element, {
+                            //    data: obj.options.element_list,
+                            //    default_value: obj.options.element_default,
+                            //    fn_change: obj.options.element_fn_change,
+                            //    fn_check: obj.options.element_fn_check
+                            //}),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2685,7 +2722,7 @@ var intVal = function (i) {
             if (typeof this.settings.fn_html_init === 'function') {
                 this.settings.fn_html_init();
             }
-            // Построение HTML закончена, обработаем событие создания элементов
+            // Обработаем событие создания элементов
             if (typeof this.settings.fn_element_init === 'function') {
                 this.settings.fn_element_init();
             } else {
@@ -2738,8 +2775,16 @@ var intVal = function (i) {
     };
     // Создать элементы и привязать элементы к ссылке
     form_dialog.prototype.create_element = function (link, add_type) {
+        this.fe = new form_element();
         $.each(this.obj_form.views, function (i, obj) {
             var type = ''
+            if (obj.type === 'datalist')
+                obj.element = new this.fe.init_datalist(obj.$element, {
+                    //data: obj.options.element_list,
+                    //default_value: obj.options.element_default,
+                    //fn_change: obj.options.element_fn_change,
+                    //fn_check: obj.options.element_fn_check
+                });
             if (add_type) {
                 type = obj.type + '_';
             }
