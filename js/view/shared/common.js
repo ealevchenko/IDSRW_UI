@@ -252,155 +252,155 @@ var intVal = function (i) {
         }
     };
 
-    form_element.prototype.init_select = function ($element, options) {
-        //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
-        if (!$element) {
-            throw new Error('Не указан элемент $element');
-        }
-        this.$element = $element;
-        var $default_option = $('<option></option>', {
-            'value': '-1',
-            'text': langView('title_select', App.Langs),
-            'disabled': false,
-        });
-        this.settings = $.extend({
-            data: [],
-            default_value: null,
-            fn_change: null,
-            check: null,
-        }, options);
-        this.init = function () {
-            this.update(this.settings.data, this.settings.default_value);
-            if (typeof this.settings.fn_change === 'function') {
-                this.$element.on("change", function (event) {
-                    //this.settings.fn_change.bind(this);
-                    if (typeof this.settings.fn_change) {
-                        this.settings.fn_change(event);
-                    }
-                    if (typeof this.settings.check === 'function') {
-                        this.settings.check(this.$element.val());
-                    };
-                }.bind(this));
-            }
-        };
-        this.val = function (value) {
-            if (value !== undefined) {
-                var disabled = this.$element.prop("disabled");
-                if (disabled) {
-                    this.$element.prop("disabled", false);
-                }
-                this.$element.val(value);
-                if (disabled) {
-                    this.$element.prop("disabled", true);
-                }
-            } else {
-                return this.$element.val();
-            };
-        };
-        this.getNumber = function () {
-            return this.$element.val() === null ? null : Number(this.$element.val());
-        };
-        this.getNumberNull = function () {
-            return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
-        };
-        this.text = function (text) {
-            if (text !== undefined) {
-                var disabled = this.$element.prop("disabled");
-                if (disabled) {
-                    this.$element.prop("disabled", false);
-                }
-                this.$element.val(text === null ? '' : text);
-                if (disabled) {
-                    this.$element.prop("disabled", true);
-                }
-            } else {
-                return this.$element.text();
-            };
-        };
-        this.update = function (data, default_value) {
-            this.$element.empty();
-            if (default_value === -1) {
-                this.$element.append($default_option);
-            }
-            if (data) {
-                $.each(data, function (i, el) {
-                    // Преобразовать формат
-                    if (el) {
-                        var $option = $('<option></option>', {
-                            'value': el.value,
-                            'text': el.text,
-                            'disabled': el.disabled,
-                        });
-                        this.$element.append($option);
-                    }
-                }.bind(this));
-            };
-            this.$element.val(default_value);
-        };
-        this.show = function () {
-            this.$element.show();
-        };
-        this.hide = function () {
-            this.$element.hide();
-        };
-        this.enable = function () {
-            this.$element.prop("disabled", false);
-        };
-        this.disable = function (clear) {
-            if (clear) this.$element.val(-1);
-            this.$element.prop("disabled", true);
-        };
-        this.init();
-    };
-    // Инициализация текстового поля "INPUT"
-    form_element.prototype.init_input = function ($element, options) {
-        this.settings = $.extend({
-            default_value: null,
-            fn_change: null,
-        }, options);
-        this.type = element.attr('type');
-        this.$element = $element;
-        this.init = function () {
-            this.update(this.settings.default_value);
-            if (typeof this.settings.fn_change === 'function') {
-                this.$element.on("change", this.settings.fn_change.bind(this));
-            }
-        };
-        this.val = function (value) {
-            if (value !== undefined) {
-                this.$element.val(value);
-                //this.$element.change();
-            } else {
-                if (this.type === 'number') {
-                    return this.$element.val() !== '' ? Number(this.$element.val()) : null;
-                }
-                if (this.type === 'text') {
-                    return this.$element.val() !== '' ? $.trim(String(this.$element.val())) : null;
-                }
-                if (this.type === 'date') {
-                    return this.$element.val() !== '' ? moment(this.$element.val()) : null;
-                }
-                return this.$element.val();
-            };
-        };
-        this.update = function (default_value) {
-            this.$element.val(default_value);
-        };
-        this.show = function () {
-            this.$element.show();
-        };
-        this.hide = function () {
-            this.$element.hide();
-        };
-        this.enable = function () {
-            this.$element.prop("disabled", false);
-        };
-        this.disable = function (clear) {
-            if (clear) this.$element.val('');
-            this.$element.prop("disabled", true);
-        };
-        this.init();
-    };
+    //form_element.prototype.init_select = function ($element, options) {
+    //    //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
+    //    if (!$element) {
+    //        throw new Error('Не указан элемент $element');
+    //    }
+    //    this.$element = $element;
+    //    var $default_option = $('<option></option>', {
+    //        'value': '-1',
+    //        'text': langView('title_select', App.Langs),
+    //        'disabled': false,
+    //    });
+    //    this.settings = $.extend({
+    //        data: [],
+    //        default_value: null,
+    //        fn_change: null,
+    //        check: null,
+    //    }, options);
+    //    this.init = function () {
+    //        this.update(this.settings.data, this.settings.default_value);
+    //        if (typeof this.settings.fn_change === 'function') {
+    //            this.$element.on("change", function (event) {
+    //                //this.settings.fn_change.bind(this);
+    //                if (typeof this.settings.fn_change) {
+    //                    this.settings.fn_change(event);
+    //                }
+    //                if (typeof this.settings.check === 'function') {
+    //                    this.settings.check(this.$element.val());
+    //                };
+    //            }.bind(this));
+    //        }
+    //    };
+    //    this.val = function (value) {
+    //        if (value !== undefined) {
+    //            var disabled = this.$element.prop("disabled");
+    //            if (disabled) {
+    //                this.$element.prop("disabled", false);
+    //            }
+    //            this.$element.val(value);
+    //            if (disabled) {
+    //                this.$element.prop("disabled", true);
+    //            }
+    //        } else {
+    //            return this.$element.val();
+    //        };
+    //    };
+    //    this.getNumber = function () {
+    //        return this.$element.val() === null ? null : Number(this.$element.val());
+    //    };
+    //    this.getNumberNull = function () {
+    //        return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
+    //    };
+    //    this.text = function (text) {
+    //        if (text !== undefined) {
+    //            var disabled = this.$element.prop("disabled");
+    //            if (disabled) {
+    //                this.$element.prop("disabled", false);
+    //            }
+    //            this.$element.val(text === null ? '' : text);
+    //            if (disabled) {
+    //                this.$element.prop("disabled", true);
+    //            }
+    //        } else {
+    //            return this.$element.text();
+    //        };
+    //    };
+    //    this.update = function (data, default_value) {
+    //        this.$element.empty();
+    //        if (default_value === -1) {
+    //            this.$element.append($default_option);
+    //        }
+    //        if (data) {
+    //            $.each(data, function (i, el) {
+    //                // Преобразовать формат
+    //                if (el) {
+    //                    var $option = $('<option></option>', {
+    //                        'value': el.value,
+    //                        'text': el.text,
+    //                        'disabled': el.disabled,
+    //                    });
+    //                    this.$element.append($option);
+    //                }
+    //            }.bind(this));
+    //        };
+    //        this.$element.val(default_value);
+    //    };
+    //    this.show = function () {
+    //        this.$element.show();
+    //    };
+    //    this.hide = function () {
+    //        this.$element.hide();
+    //    };
+    //    this.enable = function () {
+    //        this.$element.prop("disabled", false);
+    //    };
+    //    this.disable = function (clear) {
+    //        if (clear) this.$element.val(-1);
+    //        this.$element.prop("disabled", true);
+    //    };
+    //    this.init();
+    //};
+    //// Инициализация текстового поля "INPUT"
+    //form_element.prototype.init_input = function ($element, options) {
+    //    this.settings = $.extend({
+    //        default_value: null,
+    //        fn_change: null,
+    //    }, options);
+    //    this.type = element.attr('type');
+    //    this.$element = $element;
+    //    this.init = function () {
+    //        this.update(this.settings.default_value);
+    //        if (typeof this.settings.fn_change === 'function') {
+    //            this.$element.on("change", this.settings.fn_change.bind(this));
+    //        }
+    //    };
+    //    this.val = function (value) {
+    //        if (value !== undefined) {
+    //            this.$element.val(value);
+    //            //this.$element.change();
+    //        } else {
+    //            if (this.type === 'number') {
+    //                return this.$element.val() !== '' ? Number(this.$element.val()) : null;
+    //            }
+    //            if (this.type === 'text') {
+    //                return this.$element.val() !== '' ? $.trim(String(this.$element.val())) : null;
+    //            }
+    //            if (this.type === 'date') {
+    //                return this.$element.val() !== '' ? moment(this.$element.val()) : null;
+    //            }
+    //            return this.$element.val();
+    //        };
+    //    };
+    //    this.update = function (default_value) {
+    //        this.$element.val(default_value);
+    //    };
+    //    this.show = function () {
+    //        this.$element.show();
+    //    };
+    //    this.hide = function () {
+    //        this.$element.hide();
+    //    };
+    //    this.enable = function () {
+    //        this.$element.prop("disabled", false);
+    //    };
+    //    this.disable = function (clear) {
+    //        if (clear) this.$element.val('');
+    //        this.$element.prop("disabled", true);
+    //    };
+    //    this.init();
+    //};
     //--------------HTML-----------------------------------
     //<form novalidate></form>
     form_element.prototype.form = function (options) {
@@ -741,7 +741,7 @@ var intVal = function (i) {
             required: null,
             readonly: false,
             size: null,
-            list: null,
+            options: null,
         }, options);
         this.$html = $('<select></select>');
         if (!this.$html || this.$html.length === 0) {
@@ -756,7 +756,7 @@ var intVal = function (i) {
             add_tag(this.$html, 'required', this.settings.required);
             add_tag(this.$html, 'size', this.settings.size);
             this.$html.prop('readonly', this.settings.readonly);
-            $.each(this.settings.list, function (i, el) {
+            $.each(this.settings.options, function (i, el) {
                 var option = $('<option value="' + el.value + '">');
                 option.append(el.text);
                 option.prop('disabled', el.disabled);
@@ -813,7 +813,7 @@ var intVal = function (i) {
             id: null,
             //name: null,
             class: null,
-            list: [],
+            options: [],
         }, options);
         this.$html = $('<datalist></datalist>');
         if (!this.$html || this.$html.length === 0) {
@@ -822,12 +822,11 @@ var intVal = function (i) {
             add_id(this.$html, this.settings.id);
             //add_tag(this.$html, 'name', this.settings.id);
             add_class(this.$html, this.settings.class);
-            $.each(this.settings.list, function (i, el) {
+            $.each(this.settings.options, function (i, el) {
                 var option = $('<option value="' + el.value + '">');
                 option.append(el.text);
                 option.prop('disabled', el.disabled);
                 this.$html.append(option);
-
             }.bind(this));
         }
     };
@@ -1064,7 +1063,7 @@ var intVal = function (i) {
             required: null,
             readonly: false,
             size: null,
-            list: null,
+            options: null,
         }, options);
         var select = new this.fe.select({
             id: this.settings.id,
@@ -1076,7 +1075,7 @@ var intVal = function (i) {
             required: this.settings.required,
             readonly: this.settings.readonly,
             size: this.settings.size,
-            list: this.settings.list,
+            options: this.settings.options,
         });
         add_class(select.$html, this.settings.fsize !== null ? 'form-control-' + this.settings.fsize : null);
         add_class(select.$html, this.settings.class);
@@ -1292,12 +1291,10 @@ var intVal = function (i) {
             col_size: null,
             col_class: null,
             obj_form: null,
-            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
             group_prepend_objs: null,
-            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
@@ -1376,7 +1373,7 @@ var intVal = function (i) {
             element_required: null,
             element_readonly: false,
             element_size: null,
-            element_list: null,
+            /*            element_options: null,*/
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -1385,12 +1382,10 @@ var intVal = function (i) {
             col_size: null,
             col_class: null,
             obj_form: null,
-            //group_prepend: false,
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
             group_prepend_objs: null,
-            //group_append: false,
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
@@ -1410,7 +1405,7 @@ var intVal = function (i) {
             required: this.settings.element_required,
             readonly: this.settings.element_readonly,
             size: this.settings.element_size,
-            list: this.settings.element_list,
+            options: [],
         });
         var form_input = new this.fe.bs_form_input_group({
             id: this.settings.id,
@@ -1426,17 +1421,14 @@ var intVal = function (i) {
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
             obj_form: this.settings.obj_form,
-            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
             group_prepend_objs: this.settings.group_prepend_objs,
-            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
             group_append_objs: this.settings.group_append_objs,
-
             form_text: this.settings.form_text,
             form_text_class: this.settings.form_text_class,
         });
@@ -1478,12 +1470,12 @@ var intVal = function (i) {
             col_size: null,
             col_class: null,
             obj_form: null,
-            //group_prepend: false,
+
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
             group_prepend_objs: null,
-            //group_append: false,
+
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
@@ -1561,7 +1553,7 @@ var intVal = function (i) {
             element_maxlength: null,
             element_pattern: null,
             element_readonly: false,
-            element_list: [],
+/*            element_list: [],*/
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -1570,12 +1562,12 @@ var intVal = function (i) {
             col_size: null,
             col_class: null,
             obj_form: null,
-            //group_prepend: false,
+
             group_prepend_class: null,
             group_prepend_id: null,
             group_prepend_html: null,
             group_prepend_objs: null,
-            //group_append: false,
+
             group_append_class: null,
             group_append_id: null,
             group_append_html: null,
@@ -1602,7 +1594,7 @@ var intVal = function (i) {
             id: this.settings.id + '_datalistOptions',
             //name: null,
             class: null,
-            list: this.settings.element_list,
+            //options: this.settings.element_options,
         });
         var div = $('<div></div>');
         div.append(element.$html).append(datalist.$html);
@@ -1620,12 +1612,10 @@ var intVal = function (i) {
             col_class: this.settings.col_class,
             group_fsize: this.settings.element_fsize,
             obj_form: this.settings.obj_form,
-            /*            group_prepend: this.settings.group_prepend,*/
             group_prepend_class: this.settings.group_prepend_class,
             group_prepend_id: this.settings.group_prepend_id,
             group_prepend_html: this.settings.group_prepend_html,
             group_prepend_objs: this.settings.group_prepend_objs,
-            /*            group_append: this.settings.group_append,*/
             group_append_class: this.settings.group_append_class,
             group_append_id: this.settings.group_append_id,
             group_append_html: this.settings.group_append_html,
@@ -1634,9 +1624,8 @@ var intVal = function (i) {
             form_text_class: this.settings.form_text_class,
         });
         this.$html = form_input.$html;
-        //this.$element = div;
         this.$element = element.$html;
-        this.$datalist = datalist.$html;
+        //this.$datalist = datalist.$html;
     }
     //< div class="col-12" >
     //    <div class="form-check">
@@ -2062,7 +2051,7 @@ var intVal = function (i) {
         });
         this.settings = $.extend({
             data: [],
-            default_value: null,
+            default: null,
             fn_change: null,
             fn_check: null,
         }, options);
@@ -2150,142 +2139,287 @@ var intVal = function (i) {
         this.init();
     };
     // Инициализация поля дата "INPUT" типа DATALIST
-    form_element.prototype.init_datalist = function (element, datalist, options) {
-        this.$element = element;
-        this.$datalist = datalist;
+    //form_element.prototype.init_datalist = function (element, datalist, options) {
+    //    this.$element = element;
+    //    this.$datalist = datalist;
+    //    this.settings = $.extend({
+    //        data: [],
+    //        default: null,
+    //        fn_change: null,
+    //        fn_check: null,
+    //    }, options);
+    //    this.init = function () {
+    //        this.update(this.settings.data, this.settings.default_value);
+    //        //if (typeof this.settings.fn_change === 'function') {
+    //        //    this.$element.on("change", this.settings.fn_change.bind(this));
+    //        //}
+    //        //this.$element.on('change', function (e) {
+    //        //    var txt = $(this).val();
+    //        //    //var opt = $("#datalistOptions option[value='" + txt + "']");
+    //        //    //if (opt) {
+    //        //    //    alert(opt.value)
+    //        //    //} else {
+    //        //    //    alert("Err")
+    //        //    //}
+    //        //});
+
+    //        //$('#' + this.$element[0].id).on('input', function () {
+
+    //        //var inp = this.$element.find('input');
+    //        //this.$element.find('input').on('change', function () {
+    //        //    var txt = $(this).val();
+    //        //    //    //var opt = $("#datalistOptions option[value='" + txt + "']");
+    //        //    //    //if (opt) {
+    //        //    //    //    alert(opt.value)
+    //        //    //    //} else {
+    //        //    //    //    alert("Err")
+    //        //    //    //}
+    //        //});
+    //        //this.$element.flexdatalist({
+    //        //    minLength: 1
+    //        //});
+    //        var res = $('#' + this.$element[0].id).flexdatalist({
+    //            minLength: 1,
+    //            searchContain: true
+    //        });
+    //        res.on('change:flexdatalist', function (event, set, options) {
+    //            console.log(set.value);
+    //            console.log(set.text);
+    //        });
+    //        //var dd = $('#' + this.$element[0].id);
+    //        //dd.flexdatalist();
+    //        //this.$element.flexdatalist();
+    //        //this.$element.on('input', function () {
+
+    //        //});
+
+    //        //if (typeof this.settings.fn_change === 'function') {
+    //        //    this.$element.on("change", function (event) {
+    //        //        if (typeof this.settings.fn_change) {
+    //        //            this.settings.fn_change(event);
+    //        //        }
+    //        //        if (typeof this.settings.fn_check === 'function') {
+    //        //            this.settings.fn_check(element.val());
+    //        //        };
+    //        //    }.bind(this));
+    //        //}
+    //    };
+    //    this.val = function (value) {
+    //        if (value !== undefined) {
+    //            var disabled = this.$element.prop("disabled");
+    //            if (disabled) {
+    //                this.$element.prop("disabled", false);
+    //            }
+    //            this.$element.val(value);
+    //            if (disabled) {
+    //                this.$element.prop("disabled", true);
+    //            }
+    //        } else {
+    //            return this.$element.val();
+    //        };
+    //    };
+    //    this.getNumber = function () {
+    //        return this.$element.val() === null ? null : Number(this.$element.val());
+    //    };
+    //    this.getNumberNull = function () {
+    //        return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
+    //    };
+    //    this.text = function (text) {
+    //        if (text !== undefined) {
+    //            var disabled = this.$element.prop("disabled");
+    //            if (disabled) {
+    //                this.$element.prop("disabled", false);
+    //            }
+    //            this.$element.val(text === null ? '' : text);
+    //            if (disabled) {
+    //                this.$element.prop("disabled", true);
+    //            }
+    //        } else {
+    //            return this.$element.text();
+    //        };
+    //    };
+    //    this.update = function (data, default_value) {
+    //        //this.$element.empty();
+    //        //this.$datalist.empty();
+    //        ///*element.append($default_option);*/
+    //        ////if (default_value === -1) {
+    //        ////    element.append($default_option);
+    //        ////}
+    //        //if (data) {
+    //        //    $.each(data, function (i, el) {
+    //        //        // Преобразовать формат
+    //        //        if (el) {
+    //        //            var $option = $('<option></option>', {
+    //        //                'value': el.value,
+    //        //                'text': el.text,
+    //        //                'disabled': el.disabled,
+    //        //            });
+    //        //            this.$datalist.append($option);
+    //        //        }
+    //        //    }.bind(this));
+    //        //};
+    //        //this.$element.val(default_value);
+    //    };
+    //    this.show = function () {
+    //        this.$element.show();
+    //    };
+    //    this.hide = function () {
+    //        this.$element.hide();
+    //    };
+    //    this.enable = function () {
+    //        this.$element.prop("disabled", false);
+    //    };
+    //    this.disable = function (clear) {
+    //        if (clear) this.$element.val(-1);
+    //        this.$element.prop("disabled", true);
+    //    };
+    //    this.init();
+    //};
+    // Инициализация поля дата "INPUT" типа DATALIST
+    form_element.prototype.init_datalist = function (element, options, content) {
+        var get_alist = function (data) {
+            var alist = [];
+            $.each(data, function (i, el) {
+                if (this.settings.out_value) {
+                    alist.push({ value: (el.text !== null ? $.trim(el.text) : el.text), label: el.value + '-' + (el.text !== null ? $.trim(el.text) : el.text), disabled: el.disabled ? el.disabled : null });
+                } else {
+                    alist.push({ value: el.text !== null ? $.trim(el.text) : el.text, label: el.text !== null ? $.trim(el.text) : el.text, disabled: el.disabled ? el.disabled : null });
+                }
+            }.bind(this));
+            return alist;
+        }.bind(this);
+        //this.$element = element;
+        // Настройки формы правки строк таблицы
         this.settings = $.extend({
             data: [],
-            default_value: null,
-            fn_change: null,
-            fn_check: null,
+            default: null,
+            minLength: 0,
+            out_value: false,
+            val_inp: 'value',
+            check: null,
         }, options);
+
         this.init = function () {
-            this.update(this.settings.data, this.settings.default_value);
-            //if (typeof this.settings.fn_change === 'function') {
-            //    this.$element.on("change", this.settings.fn_change.bind(this));
-            //}
-            //this.$element.on('change', function (e) {
-            //    var txt = $(this).val();
-            //    //var opt = $("#datalistOptions option[value='" + txt + "']");
-            //    //if (opt) {
-            //    //    alert(opt.value)
-            //    //} else {
-            //    //    alert("Err")
-            //    //}
-            //});
-
-            //$('#' + this.$element[0].id).on('input', function () {
-
-            //var inp = this.$element.find('input');
-            //this.$element.find('input').on('change', function () {
-            //    var txt = $(this).val();
-            //    //    //var opt = $("#datalistOptions option[value='" + txt + "']");
-            //    //    //if (opt) {
-            //    //    //    alert(opt.value)
-            //    //    //} else {
-            //    //    //    alert("Err")
-            //    //    //}
-            //});
-            //this.$element.flexdatalist({
-            //    minLength: 1
-            //});
-            var res = $('#' + this.$element[0].id).flexdatalist({
-                minLength: 1,
-                searchContain: true
-            });
-            res.on('change:flexdatalist', function (event, set, options) {
-                console.log(set.value);
-                console.log(set.text);
-            });
-            //var dd = $('#' + this.$element[0].id);
-            //dd.flexdatalist();
-            //this.$element.flexdatalist();
-            //this.$element.on('input', function () {
-
-            //});
-
-            //if (typeof this.settings.fn_change === 'function') {
-            //    this.$element.on("change", function (event) {
-            //        if (typeof this.settings.fn_change) {
-            //            this.settings.fn_change(event);
+            this.alist = get_alist(this.settings.data);
+            /*            this.$element = element.catcomplete({*/
+            //this.$element = element.autocomplete({
+            //    minLength: this.settings.minLength,
+            //    source: this.alist,
+            //    change: function (event, ui) {
+            //        if (typeof this.settings.check === 'function') {
+            //            this.settings.check(element.val());
             //        }
-            //        if (typeof this.settings.fn_check === 'function') {
-            //            this.settings.fn_check(element.val());
-            //        };
-            //    }.bind(this));
-            //}
+            //    }.bind(this),
+            //    select: function (event, ui) {
+            //        //if (ui.item.value)
+            //    }.bind(this),
+            //    search: function (event, ui) {
+            //        if (typeof this.settings.check === 'function') {
+            //            this.settings.check(element.val());
+            //        }
+            //    }.bind(this),
+            //    focus: function (event, ui) {
+            //        if (ui.item.value)
+            //            if (typeof this.settings.check === 'function') {
+            //                this.settings.check(ui.item.value);
+            //            }
+            //    }.bind(this)
+            //});
+            //this.$element = content.find('#' + element[0].id).flexdatalist({
+            //    minLength: 1,
+            //    data:this.alist,
+            //});
+            var dd = $(element)[0];
+            var df = $(content)[0];
+            var sdsds = $(df).find(dd);
+            var sdsds1 = $(df).filter(dd);
+            var sd1sds = $(content).find(dd);
+            var sd1sds1 = $(content).filter(dd);
+
+            var ss = $(content[0]).find($(element)[0]);
+            var s1s = $(content[0]).filter(element[0]);
+            this.$element = $(content).find(element[0]).flexdatalist({
+                minLength: 1,
+                data:this.alist,
+            });
+            //this.$element = element.flexdatalist({
+            //    minLength: 1,
+            //    data:this.alist,
+            //});
+            //var widgetInst = this.$element.autocomplete('instance');
+            //widgetInst._renderItem = function (ul, item) {
+            //    return $("<li>")
+            //        .append($("<div>").text(item.label))
+            //        .addClass(item.disabled ? 'exist' : 'new')
+            //        .appendTo(ul);
+            //};
         };
+        this.update = function (data, value) {
+            this.settings.data = data;
+            this.alist = get_alist(this.settings.data);
+            this.$element.autocomplete("option", "source", this.alist);
+            this.val(value);
+        };
+        // вернуть value
         this.val = function (value) {
             if (value !== undefined) {
-                var disabled = this.$element.prop("disabled");
-                if (disabled) {
-                    this.$element.prop("disabled", false);
+                var text_out = value;
+                if (this.settings.val_inp === 'value') {
+                    var select = this.settings.data.find(function (o) {
+                        if (value === null) {
+                            return o.value === value;
+                        } else {
+                            return o.value == $.trim(value);
+                        };
+                    }.bind(this));
+                    text_out = select ? select.text : null;
                 }
-                this.$element.val(value);
-                if (disabled) {
-                    this.$element.prop("disabled", true);
-                }
+                this.$element.val(text_out !== null ? $.trim(text_out) : text_out);
+            } else {
+                var select = this.settings.data.find(function (o) {
+                    return o.text === $.trim(this.$element.val());
+                }.bind(this));
+                return select ? select.value : undefined;
+            };
+        };
+        // вернуть техт
+        this.text = function (text) {
+            if (text !== undefined) {
+                this.$element.val(text);
             } else {
                 return this.$element.val();
             };
         };
-        this.getNumber = function () {
-            return this.$element.val() === null ? null : Number(this.$element.val());
-        };
-        this.getNumberNull = function () {
-            return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
-        };
-        this.text = function (text) {
-            if (text !== undefined) {
-                var disabled = this.$element.prop("disabled");
-                if (disabled) {
-                    this.$element.prop("disabled", false);
-                }
-                this.$element.val(text === null ? '' : text);
-                if (disabled) {
-                    this.$element.prop("disabled", true);
-                }
-            } else {
-                return this.$element.text();
-            };
-        };
-        this.update = function (data, default_value) {
-            //this.$element.empty();
-            //this.$datalist.empty();
-            ///*element.append($default_option);*/
-            ////if (default_value === -1) {
-            ////    element.append($default_option);
-            ////}
-            //if (data) {
-            //    $.each(data, function (i, el) {
-            //        // Преобразовать формат
-            //        if (el) {
-            //            var $option = $('<option></option>', {
-            //                'value': el.value,
-            //                'text': el.text,
-            //                'disabled': el.disabled,
-            //            });
-            //            this.$datalist.append($option);
-            //        }
-            //    }.bind(this));
-            //};
-            //this.$element.val(default_value);
+        //this.set = function (value) {
+        //    if (value !== undefined && value !== null) {
+        //        this.$element.val(value);
+        //    } else {
+        //        this.$element.val('');
+        //    }
+        //};
+        this.destroy = function (data) {
+            this.$element.autocomplete("destroy");
         };
         this.show = function () {
+            this.$element.autocomplete("enable");
             this.$element.show();
         };
         this.hide = function () {
+            this.$element.autocomplete("disable");
             this.$element.hide();
         };
         this.enable = function () {
+            this.$element.autocomplete("enable");
             this.$element.prop("disabled", false);
         };
         this.disable = function (clear) {
-            if (clear) this.$element.val(-1);
+            this.$element.autocomplete("disable");
+            if (clear) this.$element.val('');
             this.$element.prop("disabled", true);
         };
         this.init();
     };
+
     // Инициализация поля дата "TEXTAREA"
     form_element.prototype.init_textarea = function (element, options) {
         this.settings = $.extend({
@@ -2346,7 +2480,6 @@ var intVal = function (i) {
                             name: obj.options.id, // может быть null
                             validation_group: obj.options.validation_group,
                             type: 'button',
-                            element: null,
                             $element: obj_html.$html,
                             destroy: false
                         });
@@ -2363,10 +2496,11 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_text',
-                            element: new this.fe.init_input(obj_html.$element, {
-                                default_value: '',
-                                fn_change: obj.options.element_fn_change,
-                            }),
+                            options: obj.options.element_options ? obj.options.element_options : null,
+                            //element: new this.fe.init_input(obj_html.$element, {
+                            //    default_value: '',
+                            //    fn_change: obj.options.element_fn_change,
+                            //}),
                             $element: obj_html.$element,
                             destroy: false
                         });
@@ -2383,12 +2517,13 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'select',
-                            element: new this.fe.init_select(obj_html.$element, {
-                                data: obj.options.element_list,
-                                default_value: obj.options.element_default,
-                                fn_change: obj.options.element_fn_change,
-                                fn_check: obj.options.element_fn_check
-                            }),
+                            options: obj.options.element_options ? obj.options.element_options : null,
+                            //element: new this.fe.init_select(obj_html.$element, {
+                            //    data: obj.options.element_list,
+                            //    default_value: obj.options.element_default,
+                            //    fn_change: obj.options.element_fn_change,
+                            //    fn_check: obj.options.element_fn_check
+                            //}),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2405,6 +2540,7 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'datalist',
+                            options: obj.options.element_options ? obj.options.element_options : null,
                             //element: new this.fe.init_datalist(obj_html.$element, {
                             //    data: obj.options.element_list,
                             //    default_value: obj.options.element_default,
@@ -2427,10 +2563,11 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'textarea',
-                            element: new this.fe.init_textarea(obj_html.$element, {
-                                default_value: '',
-                                fn_change: obj.options.element_fn_change,
-                            }),
+                            options: obj.options.element_options ? obj.options.element_options : null,
+                            //element: new this.fe.init_textarea(obj_html.$element, {
+                            //    default_value: '',
+                            //    fn_change: obj.options.element_fn_change,
+                            //}),
                             $element: obj_html.$element,
                             destroy: true
                         });
@@ -2447,7 +2584,7 @@ var intVal = function (i) {
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_datetime',
-                            /*                            element: input.element,*/
+                            options: obj.options.element_options ? obj.options.element_options : null,
                             $element: obj_html.$element,
                             destroy: false
                         });
@@ -2778,13 +2915,28 @@ var intVal = function (i) {
         this.fe = new form_element();
         $.each(this.obj_form.views, function (i, obj) {
             var type = ''
-            if (obj.type === 'datalist')
-                obj.element = new this.fe.init_datalist(obj.$element, {
-                    //data: obj.options.element_list,
-                    //default_value: obj.options.element_default,
-                    //fn_change: obj.options.element_fn_change,
-                    //fn_check: obj.options.element_fn_check
-                });
+            switch (obj.type) {
+                case 'input_text': {
+                    obj.element = new this.fe.init_input(obj.$element, obj.options);
+                    break;
+                };
+                case 'select': {
+                    obj.element = new this.fe.init_select(obj.$element, obj.options);
+                    break;
+                }
+                case 'datalist': {
+                    obj.element = new this.fe.init_datalist(obj.$element, obj.options, this.$form);
+                    break;
+                }
+            };
+
+            //if (obj.type === 'datalist')
+            //    obj.element = new this.fe.init_datalist(obj.$element, {
+            //        //data: obj.options.element_list,
+            //        //default_value: obj.options.element_default,
+            //        //fn_change: obj.options.element_fn_change,
+            //        //fn_check: obj.options.element_fn_check
+            //    });
             if (add_type) {
                 type = obj.type + '_';
             }

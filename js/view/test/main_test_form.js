@@ -985,10 +985,14 @@
                 element_min: null,
                 element_max: null,
                 element_step: null,
-                element_default: '',
-                element_fn_change: function (e) {
-                    var text = $(e.currentTarget).val();
-                }.bind(this),
+                element_options: {
+                    default: '',
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                        main_alert.clear_message(); main_alert.out_info_message('validationCustom01 : ' + value);
+
+                    }.bind(this),
+                },
                 validation: true,
                 feedback_invalid: 'error First name',
                 feedback_valid: null,
@@ -996,16 +1000,13 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: null,
                 group_prepend_objs: [bt_prepend_inp],
-                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
-                //group_append_html: null,
                 group_append_objs: [bt_append_inp],
                 form_text: 'Это help-element_input',
                 form_text_class: null,
@@ -1032,6 +1033,7 @@
                 element_min: null,
                 element_max: null,
                 element_step: null,
+                element_options: {},
                 validation: true,
                 feedback_invalid: 'error Last name',
                 feedback_valid: null,
@@ -1039,11 +1041,9 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                //group_prepend: false,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: null,
-                //group_append: false,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: null,
@@ -1082,11 +1082,9 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                //group_prepend: false,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: null,
-                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: '@',
@@ -1113,19 +1111,24 @@
                 element_required: null,
                 element_readonly: false,
                 element_size: null,
-                element_list:
-                    [
-                        { value: 'option1', text: 'option1', disabled: false },
-                        { value: 'dddddd', text: 'ddddddd', disabled: true },
-                        { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
+                element_options: {
+                    data: [
+                        { value: '1', text: 'PHP', disabled: false },
+                        { value: '2', text: 'Java', disabled: true },
+                        { value: '3', text: 'C#', disabled: false },
+                        { value: '4', text: 'Fortran', disabled: false }
                     ],
-                element_default: -1,
-                element_fn_change: function (e) {
-                    var text = $(e.currentTarget).val();
-                }.bind(this),
-                element_fn_check: function (text) {
-                    ;
-                }.bind(this),
+                    default: -1,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                        var text = $(e.currentTarget).text();
+                        main_alert.clear_message();
+                        main_alert.out_info_message('element_select : ' + value + '-' + text);
+                    }.bind(this),
+                    fn_check: function (text) {
+                        ;
+                    }.bind(this),
+                },
                 validation: true,
                 feedback_invalid: 'error element_select',
                 feedback_valid: null,
@@ -1133,12 +1136,10 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
                 group_prepend_objs: [bt_prepend_sel],
-                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
@@ -1164,18 +1165,21 @@
                 element_maxlength: null,
                 element_pattern: null,
                 element_readonly: false,
-                element_list: [
-                    { value: 'option1', text: 'option1', disabled: false },
-                    { value: 'dddddd', text: 'ddddddd', disabled: true },
-                    { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
-                ],
-                element_default: -1,
-                element_fn_change: function (e) {
-                    var text = $(e.currentTarget).val();
-                }.bind(this),
-                element_fn_check: function (text) {
+                element_options: {
+                    data: [
+                        { value: '1', text: 'PHP', disabled: false },
+                        { value: '2', text: 'Java', disabled: true },
+                        { value: '3', text: 'C#', disabled: false },
+                        { value: '4', text: 'Fortran', disabled: false }
+                    ],
+                    default: 3,
+                    fn_change: function (e) {
 
-                }.bind(this),
+                    }.bind(this),
+                    fn_check: function (text) {
+
+                    }.bind(this),
+                },
                 validation: true,
                 feedback_invalid: 'error element_input_datalist',
                 feedback_valid: null,
@@ -1183,12 +1187,10 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                /*                group_prepend: true,*/
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
                 group_prepend_objs: [bt_prepend_dl],
-                /*                group_append: true,*/
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
@@ -1216,10 +1218,12 @@
                 element_cols: null,
                 element_rows: 3,
                 element_wrap: null,
-                element_default: '',
-                element_fn_change: function (e) {
-                    var text = $(e.currentTarget).val();
-                }.bind(this),
+                element_options: {
+                    default: '',
+                    fn_change: function (e) {
+                        var text = $(e.currentTarget).val();
+                    }.bind(this),
+                },
                 validation: true,
                 feedback_invalid: 'error-element_textarea',
                 feedback_valid: null,
@@ -1227,12 +1231,10 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                //group_prepend: true,
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
                 group_prepend_objs: [bt_prepend_ta],
-                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
@@ -1262,6 +1264,12 @@
                 element_min: null,
                 element_max: null,
                 element_step: null,
+                element_options: {
+                    default: Date.now,
+                    fn_change: function (e) {
+                        var text = $(e.currentTarget).val();
+                    }.bind(this),
+                },
                 validation: true,
                 feedback_invalid: 'error First name',
                 feedback_valid: null,
@@ -1269,21 +1277,16 @@
                 col_prefix: 'md',
                 col_size: 4,
                 col_class: null,
-                /*                group_prepend: true,*/
                 group_prepend_class: null,
                 group_prepend_id: null,
                 group_prepend_html: 'prepend',
                 group_prepend_objs: [bt_prepend_dt],
-                //group_append: true,
                 group_append_class: null,
                 group_append_id: null,
                 group_append_html: 'append',
                 group_append_objs: [bt_append_dt],
                 form_text: 'Это help-element_input',
                 form_text_class: null,
-                element_fn_change: function (e) {
-                    var num = Number($(e.currentTarget).val());
-                }.bind(this),
             },
             childs: []
         };
@@ -1396,14 +1399,11 @@
             form_class: 'row g-3',
             validation: true,
             fn_validation: function (res) { }.bind(this),
-            fn_html_init: function (res) {
-                row_form.$html.append(this.form_test_dialog.$form);
-            }.bind(this),
+            fn_html_init: function (res) { }.bind(this),
             fn_element_init: null,
             fn_init: function (init) {
-
+                row_form.$html.append(this.form_test_dialog.$form);
             }.bind(this),
-
         });
 
 
