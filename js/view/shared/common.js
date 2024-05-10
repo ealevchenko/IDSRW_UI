@@ -252,155 +252,6 @@ var intVal = function (i) {
         }
     };
 
-    //form_element.prototype.init_select = function ($element, options) {
-    //    //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
-    //    if (!$element) {
-    //        throw new Error('Не указан элемент $element');
-    //    }
-    //    this.$element = $element;
-    //    var $default_option = $('<option></option>', {
-    //        'value': '-1',
-    //        'text': langView('title_select', App.Langs),
-    //        'disabled': false,
-    //    });
-    //    this.settings = $.extend({
-    //        data: [],
-    //        default_value: null,
-    //        fn_change: null,
-    //        check: null,
-    //    }, options);
-    //    this.init = function () {
-    //        this.update(this.settings.data, this.settings.default_value);
-    //        if (typeof this.settings.fn_change === 'function') {
-    //            this.$element.on("change", function (event) {
-    //                //this.settings.fn_change.bind(this);
-    //                if (typeof this.settings.fn_change) {
-    //                    this.settings.fn_change(event);
-    //                }
-    //                if (typeof this.settings.check === 'function') {
-    //                    this.settings.check(this.$element.val());
-    //                };
-    //            }.bind(this));
-    //        }
-    //    };
-    //    this.val = function (value) {
-    //        if (value !== undefined) {
-    //            var disabled = this.$element.prop("disabled");
-    //            if (disabled) {
-    //                this.$element.prop("disabled", false);
-    //            }
-    //            this.$element.val(value);
-    //            if (disabled) {
-    //                this.$element.prop("disabled", true);
-    //            }
-    //        } else {
-    //            return this.$element.val();
-    //        };
-    //    };
-    //    this.getNumber = function () {
-    //        return this.$element.val() === null ? null : Number(this.$element.val());
-    //    };
-    //    this.getNumberNull = function () {
-    //        return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
-    //    };
-    //    this.text = function (text) {
-    //        if (text !== undefined) {
-    //            var disabled = this.$element.prop("disabled");
-    //            if (disabled) {
-    //                this.$element.prop("disabled", false);
-    //            }
-    //            this.$element.val(text === null ? '' : text);
-    //            if (disabled) {
-    //                this.$element.prop("disabled", true);
-    //            }
-    //        } else {
-    //            return this.$element.text();
-    //        };
-    //    };
-    //    this.update = function (data, default_value) {
-    //        this.$element.empty();
-    //        if (default_value === -1) {
-    //            this.$element.append($default_option);
-    //        }
-    //        if (data) {
-    //            $.each(data, function (i, el) {
-    //                // Преобразовать формат
-    //                if (el) {
-    //                    var $option = $('<option></option>', {
-    //                        'value': el.value,
-    //                        'text': el.text,
-    //                        'disabled': el.disabled,
-    //                    });
-    //                    this.$element.append($option);
-    //                }
-    //            }.bind(this));
-    //        };
-    //        this.$element.val(default_value);
-    //    };
-    //    this.show = function () {
-    //        this.$element.show();
-    //    };
-    //    this.hide = function () {
-    //        this.$element.hide();
-    //    };
-    //    this.enable = function () {
-    //        this.$element.prop("disabled", false);
-    //    };
-    //    this.disable = function (clear) {
-    //        if (clear) this.$element.val(-1);
-    //        this.$element.prop("disabled", true);
-    //    };
-    //    this.init();
-    //};
-    //// Инициализация текстового поля "INPUT"
-    //form_element.prototype.init_input = function ($element, options) {
-    //    this.settings = $.extend({
-    //        default_value: null,
-    //        fn_change: null,
-    //    }, options);
-    //    this.type = element.attr('type');
-    //    this.$element = $element;
-    //    this.init = function () {
-    //        this.update(this.settings.default_value);
-    //        if (typeof this.settings.fn_change === 'function') {
-    //            this.$element.on("change", this.settings.fn_change.bind(this));
-    //        }
-    //    };
-    //    this.val = function (value) {
-    //        if (value !== undefined) {
-    //            this.$element.val(value);
-    //            //this.$element.change();
-    //        } else {
-    //            if (this.type === 'number') {
-    //                return this.$element.val() !== '' ? Number(this.$element.val()) : null;
-    //            }
-    //            if (this.type === 'text') {
-    //                return this.$element.val() !== '' ? $.trim(String(this.$element.val())) : null;
-    //            }
-    //            if (this.type === 'date') {
-    //                return this.$element.val() !== '' ? moment(this.$element.val()) : null;
-    //            }
-    //            return this.$element.val();
-    //        };
-    //    };
-    //    this.update = function (default_value) {
-    //        this.$element.val(default_value);
-    //    };
-    //    this.show = function () {
-    //        this.$element.show();
-    //    };
-    //    this.hide = function () {
-    //        this.$element.hide();
-    //    };
-    //    this.enable = function () {
-    //        this.$element.prop("disabled", false);
-    //    };
-    //    this.disable = function (clear) {
-    //        if (clear) this.$element.val('');
-    //        this.$element.prop("disabled", true);
-    //    };
-    //    this.init();
-    //};
     //--------------HTML-----------------------------------
     //<form novalidate></form>
     form_element.prototype.form = function (options) {
@@ -800,7 +651,6 @@ var intVal = function (i) {
             this.$html.prop('readonly', this.settings.readonly);
         }
     };
-
     //<datalist id="datalistOptions">
     //  <option value="San Francisco">
     //  <option value="New York">
@@ -1553,7 +1403,7 @@ var intVal = function (i) {
             element_maxlength: null,
             element_pattern: null,
             element_readonly: false,
-/*            element_list: [],*/
+            /*            element_list: [],*/
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -2139,143 +1989,6 @@ var intVal = function (i) {
         this.init();
     };
     // Инициализация поля дата "INPUT" типа DATALIST
-    //form_element.prototype.init_datalist = function (element, datalist, options) {
-    //    this.$element = element;
-    //    this.$datalist = datalist;
-    //    this.settings = $.extend({
-    //        data: [],
-    //        default: null,
-    //        fn_change: null,
-    //        fn_check: null,
-    //    }, options);
-    //    this.init = function () {
-    //        this.update(this.settings.data, this.settings.default_value);
-    //        //if (typeof this.settings.fn_change === 'function') {
-    //        //    this.$element.on("change", this.settings.fn_change.bind(this));
-    //        //}
-    //        //this.$element.on('change', function (e) {
-    //        //    var txt = $(this).val();
-    //        //    //var opt = $("#datalistOptions option[value='" + txt + "']");
-    //        //    //if (opt) {
-    //        //    //    alert(opt.value)
-    //        //    //} else {
-    //        //    //    alert("Err")
-    //        //    //}
-    //        //});
-
-    //        //$('#' + this.$element[0].id).on('input', function () {
-
-    //        //var inp = this.$element.find('input');
-    //        //this.$element.find('input').on('change', function () {
-    //        //    var txt = $(this).val();
-    //        //    //    //var opt = $("#datalistOptions option[value='" + txt + "']");
-    //        //    //    //if (opt) {
-    //        //    //    //    alert(opt.value)
-    //        //    //    //} else {
-    //        //    //    //    alert("Err")
-    //        //    //    //}
-    //        //});
-    //        //this.$element.flexdatalist({
-    //        //    minLength: 1
-    //        //});
-    //        var res = $('#' + this.$element[0].id).flexdatalist({
-    //            minLength: 1,
-    //            searchContain: true
-    //        });
-    //        res.on('change:flexdatalist', function (event, set, options) {
-    //            console.log(set.value);
-    //            console.log(set.text);
-    //        });
-    //        //var dd = $('#' + this.$element[0].id);
-    //        //dd.flexdatalist();
-    //        //this.$element.flexdatalist();
-    //        //this.$element.on('input', function () {
-
-    //        //});
-
-    //        //if (typeof this.settings.fn_change === 'function') {
-    //        //    this.$element.on("change", function (event) {
-    //        //        if (typeof this.settings.fn_change) {
-    //        //            this.settings.fn_change(event);
-    //        //        }
-    //        //        if (typeof this.settings.fn_check === 'function') {
-    //        //            this.settings.fn_check(element.val());
-    //        //        };
-    //        //    }.bind(this));
-    //        //}
-    //    };
-    //    this.val = function (value) {
-    //        if (value !== undefined) {
-    //            var disabled = this.$element.prop("disabled");
-    //            if (disabled) {
-    //                this.$element.prop("disabled", false);
-    //            }
-    //            this.$element.val(value);
-    //            if (disabled) {
-    //                this.$element.prop("disabled", true);
-    //            }
-    //        } else {
-    //            return this.$element.val();
-    //        };
-    //    };
-    //    this.getNumber = function () {
-    //        return this.$element.val() === null ? null : Number(this.$element.val());
-    //    };
-    //    this.getNumberNull = function () {
-    //        return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
-    //    };
-    //    this.text = function (text) {
-    //        if (text !== undefined) {
-    //            var disabled = this.$element.prop("disabled");
-    //            if (disabled) {
-    //                this.$element.prop("disabled", false);
-    //            }
-    //            this.$element.val(text === null ? '' : text);
-    //            if (disabled) {
-    //                this.$element.prop("disabled", true);
-    //            }
-    //        } else {
-    //            return this.$element.text();
-    //        };
-    //    };
-    //    this.update = function (data, default_value) {
-    //        //this.$element.empty();
-    //        //this.$datalist.empty();
-    //        ///*element.append($default_option);*/
-    //        ////if (default_value === -1) {
-    //        ////    element.append($default_option);
-    //        ////}
-    //        //if (data) {
-    //        //    $.each(data, function (i, el) {
-    //        //        // Преобразовать формат
-    //        //        if (el) {
-    //        //            var $option = $('<option></option>', {
-    //        //                'value': el.value,
-    //        //                'text': el.text,
-    //        //                'disabled': el.disabled,
-    //        //            });
-    //        //            this.$datalist.append($option);
-    //        //        }
-    //        //    }.bind(this));
-    //        //};
-    //        //this.$element.val(default_value);
-    //    };
-    //    this.show = function () {
-    //        this.$element.show();
-    //    };
-    //    this.hide = function () {
-    //        this.$element.hide();
-    //    };
-    //    this.enable = function () {
-    //        this.$element.prop("disabled", false);
-    //    };
-    //    this.disable = function (clear) {
-    //        if (clear) this.$element.val(-1);
-    //        this.$element.prop("disabled", true);
-    //    };
-    //    this.init();
-    //};
-    // Инициализация поля дата "INPUT" типа DATALIST
     form_element.prototype.init_datalist = function (element, options, content) {
         var get_alist = function (data) {
             var alist = [];
@@ -2292,72 +2005,35 @@ var intVal = function (i) {
         // Настройки формы правки строк таблицы
         this.settings = $.extend({
             data: [],
-            default: null,
-            minLength: 0,
             out_value: false,
+            default: null,
+            minLength: 1,
+            searchContain: true,
+            fn_change: null,
+            fn_select: null,
             val_inp: 'value',
             check: null,
         }, options);
 
         this.init = function () {
             this.alist = get_alist(this.settings.data);
-            /*            this.$element = element.catcomplete({*/
-            //this.$element = element.autocomplete({
-            //    minLength: this.settings.minLength,
-            //    source: this.alist,
-            //    change: function (event, ui) {
-            //        if (typeof this.settings.check === 'function') {
-            //            this.settings.check(element.val());
-            //        }
-            //    }.bind(this),
-            //    select: function (event, ui) {
-            //        //if (ui.item.value)
-            //    }.bind(this),
-            //    search: function (event, ui) {
-            //        if (typeof this.settings.check === 'function') {
-            //            this.settings.check(element.val());
-            //        }
-            //    }.bind(this),
-            //    focus: function (event, ui) {
-            //        if (ui.item.value)
-            //            if (typeof this.settings.check === 'function') {
-            //                this.settings.check(ui.item.value);
-            //            }
-            //    }.bind(this)
-            //});
-            //this.$element = content.find('#' + element[0].id).flexdatalist({
-            //    minLength: 1,
-            //    data:this.alist,
-            //});
-            var dd = $(element)[0];
-            var df = $(content)[0];
-            var sdsds = $(df).find(dd);
-            var sdsds1 = $(df).filter(dd);
-            var sd1sds = $(content).find(dd);
-            var sd1sds1 = $(content).filter(dd);
-
-            var ss = $(content[0]).find($(element)[0]);
-            var s1s = $(content[0]).filter(element[0]);
-            this.$element = $(content).find(element[0]).flexdatalist({
-                minLength: 1,
-                data:this.alist,
+            this.$element = content.find('#' + element[0].id).flexdatalist({
+                minLength: this.settings.minLength,
+                searchContain: this.settings.searchContain,
+                data: this.alist,
             });
-            //this.$element = element.flexdatalist({
-            //    minLength: 1,
-            //    data:this.alist,
-            //});
-            //var widgetInst = this.$element.autocomplete('instance');
-            //widgetInst._renderItem = function (ul, item) {
-            //    return $("<li>")
-            //        .append($("<div>").text(item.label))
-            //        .addClass(item.disabled ? 'exist' : 'new')
-            //        .appendTo(ul);
-            //};
+            this.$element_flexdatalist = content.find('#' + element[0].id + '-flexdatalist');
+            if (typeof this.settings.fn_change === 'function') {
+                this.$element.on('change:flexdatalist', this.settings.fn_change.bind(this));
+            }
+            if (typeof this.settings.fn_select === 'function') {
+                this.$element.on('select:flexdatalist', this.settings.fn_select.bind(this));
+            }
         };
         this.update = function (data, value) {
             this.settings.data = data;
             this.alist = get_alist(this.settings.data);
-            this.$element.autocomplete("option", "source", this.alist);
+            this.$element.flexdatalist(data, this.alist);
             this.val(value);
         };
         // вернуть value
@@ -2376,10 +2052,15 @@ var intVal = function (i) {
                 }
                 this.$element.val(text_out !== null ? $.trim(text_out) : text_out);
             } else {
-                var select = this.settings.data.find(function (o) {
-                    return o.text === $.trim(this.$element.val());
-                }.bind(this));
-                return select ? select.value : undefined;
+                var text = this.$element.val();
+                if (text !== "" && text !== null) {
+                    var select = this.alist.find(function (o) {
+                        return o.label === $.trim(text);
+                    }.bind(this));
+                    return select ? select.value : undefined;
+                } else {
+                    return null;
+                }
             };
         };
         // вернуть техт
@@ -2387,39 +2068,36 @@ var intVal = function (i) {
             if (text !== undefined) {
                 this.$element.val(text);
             } else {
-                return this.$element.val();
+                //return this.$element.val();
+                var text = this.$element.val();
+                return text !== "" && text !== null ? text : null;
             };
         };
-        //this.set = function (value) {
-        //    if (value !== undefined && value !== null) {
-        //        this.$element.val(value);
-        //    } else {
-        //        this.$element.val('');
-        //    }
-        //};
+
         this.destroy = function (data) {
-            this.$element.autocomplete("destroy");
+            this.$element.flexdatalist("destroy");
+        };
+        this.reset = function (data) {
+            this.$element.flexdatalist("reset");
         };
         this.show = function () {
-            this.$element.autocomplete("enable");
+            /*            this.$element.autocomplete("enable");*/
             this.$element.show();
         };
         this.hide = function () {
-            this.$element.autocomplete("disable");
+            /*            this.$element.autocomplete("disable");*/
             this.$element.hide();
         };
         this.enable = function () {
-            this.$element.autocomplete("enable");
-            this.$element.prop("disabled", false);
+            this.$element.flexdatalist("disabled", false);
         };
         this.disable = function (clear) {
-            this.$element.autocomplete("disable");
-            if (clear) this.$element.val('');
-            this.$element.prop("disabled", true);
+            this.$element.flexdatalist("disabled", true);
+            //if (clear) this.$element.val('');
+            //this.$element.prop("disabled", true);
         };
         this.init();
     };
-
     // Инициализация поля дата "TEXTAREA"
     form_element.prototype.init_textarea = function (element, options) {
         this.settings = $.extend({
@@ -2445,22 +2123,84 @@ var intVal = function (i) {
         };
         this.init();
     };
+    // Инициализация поля дата и время "INPUT" (стандартные компоненты Edge)
+    form_element.prototype.init_input_datetime = function (element, options, content) {
+        this.settings = $.extend({
+            default: null,
+            format: 'datetime',
+            out_format: 'iso', // формат получения результата ('iso','moment', date)
+            fn_change: null,
+        }, options);
+        this.$element = element;
+        this.init = function () {
+            this.val(this.settings.default);
+            this.$element.on('change', function (e) {
+                var date = $(e.currentTarget).val();
+                var dt = moment(date);
+                if (typeof this.settings.fn_change === 'function') {
+                    this.settings.fn_change(e, dt);
+                }
+            }.bind(this));
+        };
+        this.val = function (value) {
+            if (value !== undefined && moment(value).isValid) {
+                switch (this.settings.format) {
+                    case 'datetime': { var dt = moment(value).format('YYYY-MM-DDThh:mm'); break; }
+                    case 'date': { var dt = moment(value).format('YYYY-MM-DD'); break; }
+                    case 'time': { var dt = moment(value).format('hh:mm'); break; }
+                }
+                this.$element.val(dt);
+            } else {
+                var date = this.$element.val();
+                if (date === null || date === "") return null;
+                if (this.settings.out_format === 'iso' || this.settings.format === 'time') return date;
+                var dt = moment(date);
+                if (this.settings.out_format == 'moment') {
+                    return dt;
+                } else {
+                    return dt.isValid ? dt._d : undefined;
+                }
+            };
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.val(null);
+            this.$element.prop("disabled", true);
+        };
+        this.init();
+    };
 
     //----------------------------------------------------------------------------
     // Автоматически формируем документы на форме
     form_element.prototype.add_obj = function (content, objs, obj_form, callback) {
         this.fe = new form_element();
         // Добавить элемент
-        var add_element = function (element, content, obj) {
+        var add_element = function (element, content, obj, callback) {
             if (element && element.length > 0) {
                 if (obj.childs && obj.childs.length > 0) {
                     this.add_obj(element, obj.childs, obj_form, function (content) {
-                        return content;
+                        if (typeof callback === 'function') {
+                            callback(content);
+                        };
                     }.bind(this));
                 }
                 content.append(element);
-            };
-            return element;
+                if (typeof callback === 'function') {
+                    callback(content);
+                };
+            } else {
+                if (typeof callback === 'function') {
+                    callback(content);
+                };
+            }
         }.bind(this);
         // Пройдемся по элементам
         $.each(objs, function (i, obj) {
@@ -2476,6 +2216,7 @@ var intVal = function (i) {
                 if (obj.obj === 'bs_button') {
                     var obj_html = new this.bs_button(obj.options);
                     if (obj_html && obj_html.$html) {
+                        add_element(obj_html.$html, content, obj);
                         obj_form.buttons.push({
                             name: obj.options.id, // может быть null
                             validation_group: obj.options.validation_group,
@@ -2486,112 +2227,93 @@ var intVal = function (i) {
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_input') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input(obj.options);
                     if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_text',
-                            options: obj.options.element_options ? obj.options.element_options : null,
-                            //element: new this.fe.init_input(obj_html.$element, {
-                            //    default_value: '',
-                            //    fn_change: obj.options.element_fn_change,
-                            //}),
+                            element: new this.fe.init_input(obj_html.$element, obj.options.element_options),
                             $element: obj_html.$element,
                             destroy: false
                         });
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_select') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_select(obj.options);
                     if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'select',
-                            options: obj.options.element_options ? obj.options.element_options : null,
-                            //element: new this.fe.init_select(obj_html.$element, {
-                            //    data: obj.options.element_list,
-                            //    default_value: obj.options.element_default,
-                            //    fn_change: obj.options.element_fn_change,
-                            //    fn_check: obj.options.element_fn_check
-                            //}),
+                            element: new this.fe.init_select(obj_html.$element, obj.options.element_options),
                             $element: obj_html.$element,
                             destroy: true
                         });
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
+
                 };
                 if (obj.obj === 'bs_form_input_datalist') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input_datalist(obj.options);
                     if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
+                        var element = new this.fe.init_datalist(obj_html.$element, obj.options.element_options, content);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'datalist',
-                            options: obj.options.element_options ? obj.options.element_options : null,
-                            //element: new this.fe.init_datalist(obj_html.$element, {
-                            //    data: obj.options.element_list,
-                            //    default_value: obj.options.element_default,
-                            //    fn_change: obj.options.element_fn_change,
-                            //    fn_check: obj.options.element_fn_check
-                            //}),
-                            $element: obj_html.$element,
+                            element: element,
+                            $element: element.$element,
                             destroy: true
                         });
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_textarea') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_textarea(obj.options);
                     if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'textarea',
-                            options: obj.options.element_options ? obj.options.element_options : null,
-                            //element: new this.fe.init_textarea(obj_html.$element, {
-                            //    default_value: '',
-                            //    fn_change: obj.options.element_fn_change,
-                            //}),
+                            element: new this.fe.init_textarea(obj_html.$element, obj.options.element_options),
                             $element: obj_html.$element,
                             destroy: true
                         });
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_form_input_datetime') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_form_input(obj.options);
                     if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_datetime',
-                            options: obj.options.element_options ? obj.options.element_options : null,
+                            element: new this.fe.init_input_datetime(obj_html.$element, obj.options.element_options),
                             $element: obj_html.$element,
                             destroy: false
                         });
                     } else {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
-                    add_element(obj_html.$html, content, obj);
                 };
             }
         }.bind(this));
@@ -2805,7 +2527,8 @@ var intVal = function (i) {
 
     function form_dialog() {
         this.fe = new form_element();
-        this.el = {}; // Все элементы формы
+        this.el = {};       // Все элементы формы
+        this.data_val = {}; // Значение элементов после создания формы
     }
 
     form_dialog.prototype.init = function (options) {
@@ -2815,15 +2538,15 @@ var intVal = function (i) {
             alert: null,
             objs: [],
             id: null,
+            add_type_element: true, // Добавлять в название $elementa тип.
             form_class: null,
-            validation: true,
-            fn_html_init: null,
-            fn_element_init: null,
-            fn_validation: null,
-            fn_init: null,
+            validation: true,       // Выполнить встроиную обработку валидации
+            fn_html_init: null,     // 1. Обработаем событие html - отрисовался
+            fn_element_init: null,  // 2. Обработаем событие создания элементов
+            fn_init: null,          // 3. Обработаем событие форма инициализировалась
+            fn_validation: null,    // 3. Обработаем событие после sumbit встроиная обработка валидации если validation: true
         }, options);
 
-        //var form = new this.fc.el_form(this.settings.id, this.settings.cl_form + ' text-left');
         var form = new this.fe.bs_form({
             id: this.settings.id,
             class: this.settings.form_class,
@@ -2842,7 +2565,7 @@ var intVal = function (i) {
         //};
         // Привяжем событие submit
         this.$form.on('submit', function (event) {
-
+            this.submit(event);
         }.bind(this));
         //---------------------------------------------------------
         // Создаем элементы и отрисовываем их на форме
@@ -2863,7 +2586,7 @@ var intVal = function (i) {
             if (typeof this.settings.fn_element_init === 'function') {
                 this.settings.fn_element_init();
             } else {
-                this.create_element(this.el, true);
+                this.create_element(this.el, this.settings.add_type_element);
             }
             // -------------НАСТРОИМ ВАЛИДАЦИЮ -----------------------
             // Получим список validation
@@ -2912,45 +2635,97 @@ var intVal = function (i) {
     };
     // Создать элементы и привязать элементы к ссылке
     form_dialog.prototype.create_element = function (link, add_type) {
-        this.fe = new form_element();
+        this.data_val = {}
         $.each(this.obj_form.views, function (i, obj) {
-            var type = ''
-            switch (obj.type) {
-                case 'input_text': {
-                    obj.element = new this.fe.init_input(obj.$element, obj.options);
-                    break;
-                };
-                case 'select': {
-                    obj.element = new this.fe.init_select(obj.$element, obj.options);
-                    break;
-                }
-                case 'datalist': {
-                    obj.element = new this.fe.init_datalist(obj.$element, obj.options, this.$form);
-                    break;
-                }
-            };
-
-            //if (obj.type === 'datalist')
-            //    obj.element = new this.fe.init_datalist(obj.$element, {
-            //        //data: obj.options.element_list,
-            //        //default_value: obj.options.element_default,
-            //        //fn_change: obj.options.element_fn_change,
-            //        //fn_check: obj.options.element_fn_check
-            //    });
             if (add_type) {
-                type = obj.type + '_';
+                link[obj.type + '_' + obj.name] = obj.element;
+                this.data_val[obj.type + '_' + obj.name] = obj.element.val();
+            } else {
+                link[obj.name] = obj.element;
+                this.data_val[obj.name] = obj.element.val();
             }
-            link[type + obj.name] = obj.element;
+
         }.bind(this));
         $.each(this.obj_form.buttons, function (i, obj) {
-            var type = ''
             if (add_type) {
-                type = obj.type + '_';
+                link[obj.type + '_' + obj.name] = obj.$element;
+            } else {
+                link['$bt_' + obj.name] = obj.$element;
+
             }
-            link[(type !== '' ? type : '$bt_') + obj.name] = obj.$element;
         }.bind(this));
     };
+    // Выполнить обработку события отправка формы
+    form_dialog.prototype.submit = function (event) {
+        $.each(this.obj_form.validations, function (i, el_val) {
+            el_val.validation.clear_all();
+        }.bind(this));
+        this.valid = true;
+        var result = {};
+        if (this.settings.validation) {
+            event.preventDefault();
+            $.each(this.obj_form.validations, function (i, el_val) {
+                $.each(el_val.$elements, function (i, el) {
+                    if (el && el.length > 0 && !el[0].disabled) {
+                        var valid_element = true;
+                        // Да активный выполнить проверку
+                        if (el[0].tagName === "SELECT") {
+                            var value = el.val();
+                            if (value !== null && Number(value) === -1 && el[0].required) {
+                                this.valid = false;
+                                valid_element = false;
+                                el_val.validation.set_object_error($(el), "Элемент [" + (el[0].placeholder && el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не выбран.");
+                            }
+                        }
 
+                        var valid = el[0].validity;
+                        // Установилась ошибка
+                        if (!valid.valid) {
+                            this.valid = false;
+                            valid_element = false;
+                            if (valid.valueMissing) {
+                                el_val.validation.set_object_error($(el), "Элемент [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не заполнен.");
+                            }
+                            if (valid.patternMismatch) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не соответствует шаблону.");
+                            }
+                            if (valid.rangeOverflow) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - больше максимально допустимого (" + el[0].max + ").");
+                            }
+                            if (valid.rangeUnderflow) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - меньше минимально допустимого (" + el[0].min + ").");
+                            }
+                            if (valid.tooLong) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - значение превышает лимит (" + el[0].maxLength + ").");
+                            }
+                            if (valid.tooShort) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не достигает минимума (" + el[0].minLength + ").");
+                            }
+                            if (valid.typeMismatch) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не соответствует требуемому синтаксису (" + el[0].type + ").");
+                            }
+                        } else {
+                            if (valid_element) el_val.validation.set_control_ok($(el), "");
+                        }
+                        if (!this.valid) {
+                            event.stopPropagation();
+                        }
+                    }
+                }.bind(this));
+            }.bind(this));
+        };
+        // Заполним result полями
+        $.each(this.obj_form.views, function (i, obj) {
+            if (this.settings.add_type_element) {
+                result[obj.type + '_' + obj.name] = obj.element.val();
+            } else {
+                result[obj.name] = obj.element.val();
+            }
+        }.bind(this));
+        if (typeof this.settings.fn_validation === 'function') {
+            this.settings.fn_validation({ valid: Boolean(this.valid), old: this.data_val, new: result });
+        }
+    };
 
     App.form_dialog = form_dialog;
 
@@ -2982,6 +2757,8 @@ var intVal = function (i) {
             if (this.settings.elements && this.settings.elements.length > 0) {
                 this.settings.elements.each(function () {
                     $(this).removeClass('is-valid is-invalid').nextAll(".invalid-feedback").text('');
+                    // Поиск замещенных компонентов
+                    $(this).nextAll($(this)[0].nodeName + "[id^='" + $(this)[0].id + "']").removeClass('is-valid is-invalid');
                 });
             };
         };
@@ -3031,6 +2808,8 @@ var intVal = function (i) {
     //
     validation_form.prototype.set_control_error = function (o, message) {
         o.removeClass('is-valid').addClass('is-invalid');
+        // Поиск замещенных компонентов
+        o.nextAll(o[0].nodeName + "[id^='" + o[0].id + "']").removeClass('is-valid').addClass('is-invalid');
         if (message) {
             o.nextAll(".invalid-feedback").text(message);
         } else { o.nextAll(".invalid-feedback").text('') };
@@ -3038,6 +2817,8 @@ var intVal = function (i) {
     // Установить признак Ok
     validation_form.prototype.set_control_ok = function (o, message) {
         o.removeClass('is-invalid').addClass('is-valid');
+        // Поиск замещенных компонентов
+        o.nextAll(o[0].nodeName + "[id^='" + o[0].id + "']").removeClass('is-invalid').addClass('is-valid');
         if (message) {
             o.nextAll(".valid-feedback").text(message);
         } else { o.nextAll(".invalid-feedback").text('') };
