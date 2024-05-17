@@ -1,6 +1,8 @@
 ﻿/* ===============================================
 -= Модуль панель операции "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР" =-
   + js/view/shared/common.js
+  + js/module/view_op_common.js
+  + js/module/ws/table_ws.js
 ==================================================*/
 (function (window) {
     'use strict';
@@ -18,127 +20,82 @@
     {
         'default':  //default language: ru
         {
-            'vac_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
-            'vac_card_header_on': 'ПРИНЯТЬ НА СТАНЦИЮ',
-            'vac_card_header_from': 'СОСТАВЫ НА ПОДХОДАХ',
-            'vac_fieldset_on_table_title': 'Сформированный состав',
+            'vopac_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
+            'vopac_card_header_on': 'ПРИНЯТЬ НА СТАНЦИЮ',
+            'vopac_card_header_from': 'СОСТАВЫ НА ПОДХОДАХ',
+            'vopac_fieldset_on_table_title': 'Сформированный состав',
 
-            'vac_title_label_station_on': 'Станция прибытия:',
-            'vac_title_placeholder_station_on': 'Станция прибытия:',
+            'vopac_title_label_station_on': 'Станция прибытия:',
+            'vopac_text_label_station_on': 'Выберите станцию прибытия состава...',
+            'vopac_title_placeholder_station_on': 'Станция прибытия:',
 
-            'vac_title_label_way_on': 'Путь прибытия:',
-            'vac_title_placeholder_way_on': 'Выберите путь',
+            'vopac_title_label_way_on': 'Путь прибытия:',
+            'vopac_title_text_way_on': 'Выберите путь прибытия состава...',
 
-
-            'vac_title_label_outer_way': 'Внешний путь:',
-            'vac_title_placeholder_outer_way': 'Внешний путь',
-            'vac_title_label_locomotive1': 'Локомотив №1:',
-            'vac_title_label_locomotive2': 'Локомотив №2:',
-            'vac_title_placeholder_locomotive': ' № локомотива',
-            'vac_title_time_aplly': 'Время выполнения',
-            'vac_title_placeholder_time_aplly': 'Время выполнения',
-
-            'vac_title_form_apply': 'Выполнить?',
-
-            'vac_title_button_export': 'Экспорт',
-            'vac_title_button_buffer': 'Буфер',
-            'vac_title_button_excel': 'Excel',
-            'vac_title_button_cancel': 'Отменить',
-            'vac_title_button_return': 'Вернуть',
-            'vac_title_button_head': 'Голова',
-            'vac_title_button_tail': 'Хвост',
-
-            'vac_title_add_ok': 'ВЫПОЛНИТЬ',
+            'vopac_title_placeholder_way_on': 'Выберите путь',
 
 
-            'vac_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            'vac_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив №',
-            'vac_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) =',
-            'vac_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) =',
-            'vac_mess_error_not_wagons': 'Не выбраны вагоны для приема (в окне «СОСТАВЫ НА ПОДХОДАХ», выберите станцию, прибывающий состав и сформируйте прибытие).',
-            'vac_mess_error_operation_run': 'При выполнении операции «ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ» произошла ошибка, код ошибки:',
+            'vopac_title_label_outer_way': 'Внешний путь:',
+            'vopac_title_placeholder_outer_way': 'Внешний путь',
+            'vopac_title_label_locomotive1': 'Локомотив №1:',
+            'vopac_title_label_locomotive2': 'Локомотив №2:',
+            'vopac_title_placeholder_locomotive': ' № локомотива',
+            'vopac_title_time_aplly': 'Время выполнения',
+            'vopac_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vopac_title_placeholder_time_aplly': 'Время выполнения',
 
-            'vac_mess_cancel_operation': 'Операция "ПРИНЯТЬ НА СТАНЦИЮ АМКР" – отменена',
-            'vac_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
-            'vac_mess_not_select_way_on': 'Выберите путь для приема вагонов!',
+            'vopac_title_form_apply': 'Выполнить',
+            'vopac_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
 
-            'vac_mess_load_operation': 'Загружаю операции...',
-            'vac_mess_load_wagons': 'Загружаю вагоны на пути...',
-            'vac_mess_update_operation': 'Обновляю операции...',
-            'vac_mess_init_panel': 'Выполняю инициализацию модуля ...',
-            'vac_mess_destroy_operation': 'Закрываю форму...',
-            'vac_mess_create_sostav': 'Формирую состав, переношу вагоны...',
-            'vac_mess_clear_sostav': 'Формирую состав, убираю выбранные вагоны...',
-            'vac_mess_reverse_head_sostav': 'Формирую состав, реверс голова-хвост',
-            'vac_mess_reverse_sostav': 'Формирую состав, реверс вагонов...',
+            'vopac_title_button_export': 'Экспорт',
+            'vopac_title_button_buffer': 'Буфер',
+            'vopac_title_button_excel': 'Excel',
+            'vopac_title_button_cancel': 'Отменить',
+            'vopac_title_button_return': 'Вернуть',
+            'vopac_title_button_head': 'Голова',
+            'vopac_title_button_tail': 'Хвост',
+
+            'vopac_title_add_ok': 'ВЫПОЛНИТЬ',
+
+            'vopac_mess_warning_not_num_sostav': 'Нет названия состава!',
+            'vopac_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
+
+            'vopac_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vopac_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив №',
+            'vopac_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) =',
+            'vopac_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) =',
+            'vopac_mess_error_not_wagons': 'Не выбраны вагоны для приема (в окне «СОСТАВЫ НА ПОДХОДАХ», выберите станцию, прибывающий состав и сформируйте прибытие).',
+            'vopac_mess_error_operation_run': 'При выполнении операции «ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ» произошла ошибка, код ошибки:',
+
+            'vopac_mess_cancel_operation': 'Операция "ПРИНЯТЬ НА СТАНЦИЮ АМКР" – отменена',
+            'vopac_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
+            'vopac_mess_not_select_way_on': 'Выберите путь для приема вагонов!',
+
+            'vopac_mess_load_operation': 'Загружаю операции...',
+            'vopac_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopac_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
+            'vopac_mess_update_operation': 'Обновляю операции...',
+            'vopac_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            'vopac_mess_destroy_operation': 'Закрываю форму...',
+            'vopac_mess_create_sostav': 'Формирую состав, переношу вагоны...',
+            'vopac_mess_clear_sostav': 'Формирую состав, убираю выбранные вагоны...',
+            'vopac_mess_reverse_head_sostav': 'Формирую состав, реверс голова-хвост',
+            'vopac_mess_reverse_sostav': 'Формирую состав, реверс вагонов...',
         },
         'en':  //default language: English
         {
-            'vac_card_header_panel': 'PERFORM THE OPERATION "RECEIVE CONSTRUCTIONS TO AMKR STATION"',
-            'vac_card_header_on': 'ACCEPT TO STATION',
-            'vac_card_header_from': 'COMPOSITIONS ON APPROACHES',
-            'vac_fieldset_on_table_title': 'Squad formed',
-
-            'vac_title_label_station_on': 'Arrival station:',
-            'vac_title_placeholder_station_on': 'Arrival station:',
-
-            'vac_title_label_way_on': 'Arrival path:',
-            'vac_title_placeholder_way_on': 'Select path',
-
-
-            'vac_title_label_outer_way': 'External path:',
-            'vac_title_placeholder_outer_way': 'External path',
-            'vac_title_label_locomotive1': 'Locomotive # 1:',
-            'vac_title_label_locomotive2': 'Locomotive # 2:',
-            'vac_title_placeholder_locomotive': 'Locomotive #',
-            'vac_title_time_aplly': 'Runtime',
-            'vac_title_placeholder_time_aplly': 'Execution time',
-
-            'vac_title_form_apply': 'Execute?',
-
-            'vac_title_button_export': 'Export',
-            'vac_title_button_buffer': 'Buffer',
-            'vac_title_button_excel': 'Excel',
-            'vac_title_button_cancel': 'Cancel',
-            'vac_title_button_return': 'Return',
-            'vac_title_button_head': 'Head',
-            'vac_title_button_tail': 'Tail',
-
-            'vac_title_add_ok': 'EXECUTE',
-
-
-            'vac_mess_error_equal_locomotive': 'Locomotive # 1 and # 2 are equal',
-            'vac_mess_error_not_locomotive': 'There is no locomotive # in the IDS directory',
-            'vac_mess_error_min_time_aplly': 'The date of the operation cannot be less than the current date, min. deviation (min) = ',
-            'vac_mess_error_max_time_aplly': 'The date of the operation cannot be greater than the current date, mac. deviation (min) = ',
-            'vac_mess_error_not_wagons': 'No wagons have been selected to receive (in the "TRAFFIC ON APPROACHES" window, select a station, an arriving train and form an arrival).',
-            'vac_mess_error_operation_run': 'An error occurred while executing the "RECEIVE CONSTITUTION TO STATION" operation, error code:',
-
-            'vac_mess_cancel_operation': 'The operation "ACCEPT TO AMKR STATION" - canceled',
-            'vac_mess_run_operation_arrival': 'I am performing the operation of receiving wagons of the arriving train at the AMKR station',
-            'vac_mess_not_select_way_on': 'Please select a track to receive wagons!',
-
-            'vac_mess_load_operation': 'Loading operations ...',
-            'vac_mess_load_wagons': 'Loading wagons on the way ...',
-            'vac_mess_update_operation': 'Updating operations ...',
-            'vac_mess_init_panel': 'Initializing module ...',
-            'vac_mess_destroy_operation': 'Closing the form ...',
-            'vac_mess_create_sostav': 'Forming train, moving wagons ...',
-            'vac_mess_clear_sostav': 'Forming the train, removing the selected wagons ...',
-            'vac_mess_reverse_head_sostav': 'Form composition, reverse head-tail',
-            'vac_mess_reverse_sostav': 'Forming the train, reversing the wagons ...',
         }
     };
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
 
-    //var API_DIRECTORY = App.ids_directory;
-    //var IDS_WSD = App.ids_wsd;
-
+    // js/module/view_op_common.js
     var VIEW_COMMON = App.view_op_common;
-
-    //// Модуль инициализаии компонентов формы
-    //var FE = App.form_element;
+    // js/view/shared/common.js
+    var ALERT = App.alert_form;
+    var FD = App.form_dialog;
+    // js/module/ws/table_ws.js
+    var TWS = App.table_ws;
 
     function view_op_arrival_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
@@ -164,10 +121,16 @@
             fn_init: this.settings.fn_init,
             fn_close: this.settings.fn_close,
         });
-        this.id_station = -1;   // По умолчанию не выбрана
-        this.id_way = -1;       // По умолчанию не выбрана
-        this.list_station = []; // По умолчанию пустой список
-        this.list_way = [];     // По умолчанию пустой список
+        this.id_station = -1;       // По умолчанию не выбрана
+        this.id_way = -1;           // По умолчанию не выбрана
+        this.stations = [];         // Список станций (полный)
+        this.list_station = [];     // Список станций (value\text\desabled)
+        this.was = [];              // Список путей (полный)
+        this.list_way = [];         // Список путей (value\text\desabled)
+        this.locomotives = [];      // Список локомотивов (полный)
+        this.list_locomotive = [];  // Список локомотивов (value\text\desabled)
+        this.outer_ways = [];       // Список внешних путей (полный)
+        this.list_outer_ways = [];  // Список внешних путей  (value\text\desabled)
 
         this.id_outer_way = -1;   // id перегона
         this.station_from = null; // Станция отправления
@@ -175,10 +138,12 @@
         this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
         this.wagons = [];       // Список вагонов на пути (рабочий)
         this.num_sostav = null; // Номер выбранного состава
-        this.wagons_sostav = [];// Список вагонов выбранного состава (рабочий)
+        this.wagons_sostav = [];    // Список вагонов выбранного состава (рабочий)
+        this.wagons_all = [];       // Список всех вагонов всех составов (используем для выборки вагонов по составу)
+        this.sostav_all = [];       // Список всех составов (получаем из Списока всех вагонов всех составов this.wagons_all)
 
         this.view_com.$title.empty();
-        this.view_com.$title.append(langView('vac_card_header_panel', App.Langs));
+        this.view_com.$title.append(langView('vopac_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
 
@@ -189,8 +154,19 @@
         //----------------------------------
 
         // Сообщение
-        LockScreen(langView('vac_mess_init_panel', App.Langs));
+        LockScreen(langView('vopac_mess_init_panel', App.Langs));
         //----------------------------------
+        // Alert
+        this.alert = new this.view_com.fe_ui.bs_alert({
+            id: null,
+            class: null,
+            style: null,
+            color: null,
+            bt_close: false,
+            fn_click_close: null,
+        });
+        this.view_com.$op.append(this.alert.$html);
+        this.main_alert = new ALERT(this.alert.$html);
         // Создать макет панели
         this.card_on = new this.view_com.fe_ui.bs_card({
             border_color: 'border-primary',
@@ -198,7 +174,7 @@
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
-            header_text: langView('vac_card_header_on', App.Langs),
+            header_text: langView('vopac_card_header_on', App.Langs),
             body_color: null,
             body_bg: null,
             body_text: null,
@@ -212,12 +188,12 @@
         this.on_setup = new this.view_com.fe_ui.bs_col({
             pref: 'xl',
             size: 3,
-        });
+        }); // Окно настроек
         this.on_table = new this.view_com.fe_ui.bs_col({
             pref: 'xl',
             size: 9,
             class: 'rounded border border-secondary'
-        });
+        }); // Окно таблицы
         row.$html.append(this.on_setup.$html).append(this.on_table.$html);
         this.card_on.body.$html.append(row.$html);
         this.view_com.$op.append(this.card_on.$html);
@@ -228,7 +204,7 @@
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
-            header_text: langView('vac_card_header_from', App.Langs),
+            header_text: langView('vopac_card_header_from', App.Langs),
             body_color: null,
             body_bg: null,
             body_text: null,
@@ -248,705 +224,664 @@
             size: 10,
             class: 'rounded border border-secondary'
         });
+        // Alert_from
+        this.alert_from = new this.view_com.fe_ui.bs_alert({
+            id: null,
+            class: null,
+            style: null,
+            color: null,
+            bt_close: false,
+            fn_click_close: null,
+        });
+        this.from_table.$html.append(this.alert_from.$html);
+        this.from_alert = new ALERT(this.alert_from.$html);
         row.$html.append(this.from_setup.$html).append(this.from_table.$html);
         this.card_from.body.$html.append(row.$html);
         this.view_com.$op.append(this.card_from.$html);
+        this.view_com.load_db(['station', 'ways', 'outer_ways', 'locomotive'], false, function (result) {
+            var process = 5;
+            // Выход из инициализации
+            var out_init = function (process) {
+                if (process === 0) {
+                    //----------------------------------
+                    if (typeof this.settings.fn_init === 'function') {
+                        this.settings.fn_init(this.result_init);
+                    }
+                    //----------------------------------
+                }
+            }.bind(this);
+            // инициализациия 
+            this.stations = this.view_com.api_dir.getAllStation();
+            this.list_station = this.view_com.api_dir.getListValueTextStation(function (i) {
+                return !i.stationUz && i.stationDelete === null;
+            }.bind(this))
+            this.ways = this.view_com.api_dir.getAllWays();
+            this.locomotives = this.view_com.api_dir.getAllLocomotive();
+            this.list_locomotive = this.view_com.api_dir.getListValueTextLocomotiveOfActive();
+            this.outer_ways = this.view_com.api_dir.getAllOuterWays();
+            //-------------------------------------------------------------------
+            // Создадим форму (this.on_setup)
+            this.form_on_setup = new FD();
+            // Создать макет панели
+            var objs_on_setup = [];
+            var col_bt_apply = {
+                obj: 'bs_col',
+                options: {
+                    id: null,
+                    pref: 'md',
+                    size: 12,
+                    class: 'text-left',
+                    style: null,
+                },
+                childs: []
+            };
+            var bt_bt_apply = {
+                obj: 'bs_button',
+                options: {
+                    id: null,
+                    name: null,
+                    class: null,
+                    fsize: 'sm',
+                    color: 'primary',
+                    text: langView('vopac_title_form_apply', App.Langs),
+                    title: langView('vopac_title_form_apply_title', App.Langs),
+                    icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
+                    icon_fa_right: null,
+                    fn_click: function (event) {
+                        event.preventDefault();
+                        //this.form_test_dialog.$form.submit();
+                    }.bind(this),
+                }
+            };
+            var form_select_way_on = {
+                obj: 'bs_form_select',
+                options: {
+                    validation_group: 'common',
+                    id: 'id_way_on',
+                    name: 'id_way_on',
+                    label: langView('vopac_title_label_way_on', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_multiple: false,
+                    element_title: null,
+                    element_required: true,
+                    element_readonly: false,
+                    element_size: null,
+                    element_options: {
+                        data: this.view_com.api_dir.getListValueTextWaysOfStation(this.id_station),
+                        default: this.id_way,
+                        fn_change: function (e) {
+                            e.preventDefault();
+                            // Обработать выбор
+                            var id = Number($(e.currentTarget).val());
+                            this.update_wagons_of_way(id, function () {
+                                LockScreenOff();
+                            }.bind(this));
+                        }.bind(this),
+                        fn_check: function (text) {
 
-        var element_input = new this.view_com.fe_ui.bs_form_input({
-            id: 'element_input',
-            name: 'element_input',
-            label: 'element_input',
-            element_type: 'text',
-            element_fsize: 'sm',
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_placeholder: 'placeholder element_input',
-            element_required: null,
-            element_maxlength: null,
-            element_pattern: null,
-            element_readonly: false,
-            element_min: null,
-            element_max: null,
-            element_step: null,
-            validation: true,
-            feedback_invalid: 'error element_input',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 10,
-            col_class: null,
-            group_prepend: true,
-            group_prepend_class: null,
-            group_prepend_id: null,
-            group_prepend_html: 'prepend',
-            group_append: true,
-            group_append_class: null,
-            group_append_id: null,
-            group_append_html: 'append',
-            form_text: 'Это help-element_input',
-            form_text_class: null,
-        });
-        this.on_setup.$html.append(element_input.$html);
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: 'mt-0',
+                    form_text: langView('vopac_title_text_way_on', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            var form_input_datalist_locomotive1 = {
+                obj: 'bs_form_input_datalist',
+                options: {
+                    validation_group: 'common',
+                    id: 'locomotive1',
+                    name: 'locomotive1',
+                    label: langView('vopac_title_label_locomotive1', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: 'flexdatalist',
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('vopac_title_placeholder_locomotive', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_options: {
+                        data: this.list_locomotive,
+                        out_value: false,
+                        default: null,
+                        minLength: 1,
+                        searchContain: true,
+                        fn_change: function (event, set, options) {
+                            //main_alert.clear_message();
+                            //main_alert.out_info_message('element_datalist_change value=: ' + set.value + ' text=' + set.text);
+                        }.bind(this),
+                        fn_select: function (event, set, options) {
+                            /*                        main_alert.out_info_message('element_datalist_select value=' + set.value + ' label=' + set.label);*/
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 6,
+                    col_class: 'mt-0',
+                    form_text: null,
+                    form_text_class: null
+                },
+                childs: []
+            };
+            var form_input_datalist_locomotive2 = {
+                obj: 'bs_form_input_datalist',
+                options: {
+                    validation_group: 'common',
+                    id: 'locomotive2',
+                    name: 'locomotive2',
+                    label: langView('vopac_title_label_locomotive2', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: 'flexdatalist',
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('vopac_title_placeholder_locomotive', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_options: {
+                        data: this.list_locomotive,
+                        out_value: false,
+                        default: null,
+                        minLength: 1,
+                        searchContain: true,
+                        fn_change: function (event, set, options) {
+                            //main_alert.clear_message();
+                            //main_alert.out_info_message('element_datalist_change value=: ' + set.value + ' text=' + set.text);
+                        }.bind(this),
+                        fn_select: function (event, set, options) {
+                            /*                        main_alert.out_info_message('element_datalist_select value=' + set.value + ' label=' + set.label);*/
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 6,
+                    col_class: 'mt-0',
+                    form_text: null,
+                    form_text_class: null
+                },
+                childs: []
+            };
+            var form_input_datetime_time_aplly = {
+                obj: 'bs_form_input_datetime',
+                options: {
+                    validation_group: 'common',
+                    id: 'time_aplly',
+                    name: 'time_aplly',
+                    label: langView('vopac_title_time_aplly', App.Langs),
+                    element_type: 'datetime-local',
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('vopac_title_placeholder_time_aplly', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_min: moment().subtract(1, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
+                    element_max: moment().add(1, 'days').format("YYYY-MM-DDThh:mm"),
+                    element_step: null,
+                    element_options: {
+                        default: moment(),
+                        format: 'datetime',
+                        out_format: 'moment',
+                        fn_change: function (e, dt) {
+                            //var text = $(e.currentTarget).val();
+                            //main_alert.clear_message();
+                            //main_alert.out_info_message('validationDatetime text=: ' + text + ' dt=' + dt);
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: 'mt-0',
+                    form_text: langView('vopac_text_time_aplly', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
 
-        var element_select = new this.view_com.fe_ui.bs_form_select({
-            id: 'element_select',
-            name: 'element_select',
-            label: 'element_select',
-            element_fsize: 'sm',
-            element_class: null,
-            element_value: null,
-            element_multiple: false,
-            element_title: null,
-            element_required: null,
-            element_readonly: false,
-            element_size: null,
-            element_list:
-                [
-                    { value: 'option1', text: 'option1', disabled: false },
-                    { value: 'dddddd', text: 'ddddddd', disabled: true },
-                    { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
-                ],
-            validation: true,
-            feedback_invalid: 'error element_select',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 10,
-            col_class: null,
-            group_prepend: true,
-            group_prepend_class: null,
-            group_prepend_id: null,
-            group_prepend_html: 'prepend',
-            group_append: true,
-            group_append_class: null,
-            group_append_id: null,
-            group_append_html: 'append',
-            form_text: 'Это help-element_select',
-            form_text_class: null,
-        });
-        this.on_setup.$html.append(element_select.$html);
+            col_bt_apply.childs.push(bt_bt_apply);
+            objs_on_setup.push(col_bt_apply);
+            objs_on_setup.push(form_select_way_on);
+            objs_on_setup.push(form_input_datalist_locomotive1);
+            objs_on_setup.push(form_input_datalist_locomotive2);
+            objs_on_setup.push(form_input_datetime_time_aplly);
+            this.form_on_setup.init({
+                alert: this.main_alert,
+                objs: objs_on_setup,
+                id: null,
+                form_class: 'row g-3',
+                validation: true,
+                fn_validation: function (result) {
+                    // Валидация успешна
+                    if (result && result.valid) {
 
-        var element_input_number = new this.view_com.fe_ui.bs_form_input({
-            id: 'element_input_number',
-            name: 'element_input_number',
-            label: 'element_input_number',
-            element_type: 'number',
-            element_fsize: 'sm',
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_placeholder: 'placeholder element_input_number',
-            element_required: null,
-            element_maxlength: null,
-            element_pattern: null,
-            element_readonly: false,
-            element_min: 0,
-            element_max: 100,
-            element_step: 1,
-            validation: true,
-            feedback_invalid: 'error-element_input_number',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 10,
-            col_class: null,
-            group_prepend: true,
-            group_prepend_class: null,
-            group_prepend_id: null,
-            group_prepend_html: 'prepend',
-            group_append: true,
-            group_append_class: null,
-            group_append_id: null,
-            group_append_html: 'append',
-            form_text: 'Это help-element_input_number',
-            form_text_class: null,
-        });
-        this.on_setup.$html.append(element_input_number.$html);
+                    }
+                }.bind(this),
+                fn_html_init: function (res) { }.bind(this),
+                fn_element_init: null,
+                fn_init: function (init) {
+                    this.on_setup.$html.append(this.form_on_setup.$form);
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                }.bind(this),
+            });
 
-        var element_input_datalist = new this.view_com.fe_ui.bs_form_input_datalist({
-            id: 'element_input_datalist',
-            name: 'element_input_datalist',
-            label: 'element_input_datalist',
-            element_fsize: 'sm',
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_placeholder: 'placeholder element_input_datalist',
-            element_required: null,
-            element_maxlength: null,
-            element_pattern: null,
-            element_readonly: false,
-            element_list: [
-                { value: 'option1', text: 'option1', disabled: false },
-                { value: 'dddddd', text: 'ddddddd', disabled: true },
-                { value: 'rrrrrrr', text: 'rrrrrrr', disabled: false }
-            ],
-            validation: true,
-            feedback_invalid: 'error element_input_datalist',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 10,
-            col_class: null,
-            group_prepend: true,
-            group_prepend_class: null,
-            group_prepend_id: null,
-            group_prepend_html: 'prepend',
-            group_append: true,
-            group_append_class: null,
-            group_append_id: null,
-            group_append_html: 'append',
-            form_text: 'Это help-element_input_datalist',
-            form_text_class: null
-        });
-        this.on_setup.$html.append(element_input_datalist.$html);
+            var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'arrival-cars-way', class: 'pt-2' });
+            this.on_table.$html.append(row_arr_cars_way.$html);
+            this.tacw = new TWS('div#arrival-cars-way');
+            this.tacw.init({
+                alert: this.from_alert,
+                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                detali_table: false,
+                type_report: 'arrival_cars_way',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
-        var element_textarea = new this.view_com.fe_ui.bs_form_textarea({
-            id: 'element_textarea',
-            name: 'element_textarea',
-            label: 'element_textarea',
-            element_fsize: 'sm',
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_placeholder: 'placeholder element_textarea',
-            element_required: null,
-            element_maxlength: null,
-            element_readonly: false,
-            element_cols: null,
-            element_rows: 3,
-            element_wrap: null,
-            validation: true,
-            feedback_invalid: 'error-element_textarea',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 10,
-            col_class: null,
-            group_prepend: true,
-            group_prepend_class: null,
-            group_prepend_id: null,
-            group_prepend_html: 'prepend',
-            group_append: true,
-            group_append_class: null,
-            group_append_id: null,
-            group_append_html: 'append',
-            form_text: 'Это help-element_textarea',
-            form_text_class: null
-        });
-        this.on_setup.$html.append(element_textarea.$html);
+                },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    //this.from_alert.clear_message();
+                    //if (rowData && rowData.length > 0 && rowData[0].outerWayEnd !== null) {
+                    //    e.preventDefault();
+                    //    this.from_alert.out_warning_message(langView('vopac_mess_warning_wagon_ban_operation', App.Langs).format(rowData[0].num, rowData[0]['arrivalStationName' + ucFirst(App.Lang)]));
 
-        var element_check = new this.view_com.fe_ui.bs_form_check({
-            id: 'element_check',
-            name: 'element_check',
-            label: 'element_check',
-            element_type: 'checkbox',
-            element_switch: false,
-            element_inline: false,
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_checked: true,
-            element_required: null,
-            element_readonly: false,
-            validation: true,
-            feedback_invalid: 'error-element_check',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 6,
-            col_class: null,
-            form_text: 'Это help-element_check',
-            form_text_class: null
-        });
-        this.on_setup.$html.append(element_check.$html);
+                    //}
+                }.bind(this),
+                fn_select_rows: function (rows) {
 
-        var element_switch = new this.view_com.fe_ui.bs_form_check({
-            id: 'element_switch',
-            name: 'element_switch',
-            label: 'element_switch',
-            element_type: 'checkbox',
-            element_switch: true,
-            element_inline: false,
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_checked: true,
-            element_required: null,
-            element_readonly: false,
-            validation: true,
-            feedback_invalid: 'error-element_switch',
-            feedback_valid: null,
-            feedback_class: null,
-            col_prefix: 'md',
-            col_size: 6,
-            col_class: null,
-            form_text: 'Это help-element_switch',
-            form_text_class: null
-        });
-        this.on_setup.$html.append(element_switch.$html);
+                }.bind(this),
+                fn_select_link: function (link) {
 
-        var element_radio = new this.view_com.fe_ui.bs_form_check({
-            id: 'element_radio',
-            name: 'element_radio',
-            label: 'element_radio',
-            element_type: 'radio',
-            //element_switch: false,
-            element_inline: true,
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_checked: true,
-            element_required: null,
-            element_readonly: false,
-            validation: true,
-            feedback_invalid: 'error-element_radio',
-            feedback_valid: null,
-            feedback_class: null,
-            col: true,
-            col_prefix: 'md',
-            col_size: 6,
-            col_class: null,
-            //form_text: 'Это help-element_radio',
-            //form_text_class: null
-        });
-        this.on_setup.$html.append(element_radio.$html);
+                }.bind(this),
+                fn_button_action: function (name, e, dt, node, config) {
 
-        var element_radio1 = new this.view_com.fe_ui.bs_form_check({
-            id: 'element_radio1',
-            name: 'element_radio1',
-            label: 'element_radio1',
-            element_type: 'radio',
-            //element_switch: false,
-            element_inline: true,
-            element_class: null,
-            element_value: null,
-            element_title: null,
-            element_checked: false,
-            element_required: null,
-            element_readonly: false,
-            validation: true,
-            feedback_invalid: 'error-element_radio1',
-            feedback_valid: null,
-            feedback_class: null,
-            col: false,
-            //col_prefix: 'md',
-            //col_size: 6,
-            //col_class: null,
-            //form_text: 'Это help-element_radio1',
-            //form_text_class: null
-        });
+                }.bind(this),
+                fn_enable_button: function (tb) {
+                    var bts = tb.obj_t_report.buttons([7]);
+                    if (this.head) {
+                        bts.text(langView('vopac_title_button_head', App.Langs));
+                    } else {
+                        bts.text(langView('vopac_title_button_tail', App.Langs));
+                    }
+                }.bind(this),
+            });
 
-        element_radio.$html.append(element_radio1.$html);
-        //this.on_setup.$html.append(element_radio1.$html);
 
-        //var panelElement = new div_panel(this);
-        //this.$panel.empty();
-        //this.$setup_on = panelElement.$setup_on;
-        //this.$setup_from = panelElement.$setup_from;
-        //this.$table_on = panelElement.$table_on;
-        //this.$table_from = panelElement.$table_from;
+            //-------------------------------------------------------------------
+            // Создадим форму (this.from_setup)
+            this.form_from_setup = new FD();
+            // Создать макет панели
+            var objs_from_setup = [];
+            var form_select_station_on = {
+                obj: 'bs_form_select',
+                options: {
+                    validation_group: 'common_from',
+                    id: 'id_station',
+                    name: 'id_station',
+                    label: langView('vopac_title_label_station_on', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_multiple: false,
+                    element_title: null,
+                    element_required: true,
+                    element_readonly: false,
+                    element_size: null,
+                    element_options: {
+                        data: this.list_station,
+                        default: this.id_station,
+                        fn_change: function (e) {
+                            e.preventDefault();
+                            // Обработать выбор
+                            var id = Number($(e.currentTarget).val());
+                            this.update_sostav_outer_ways_and_way_of_station(id, -1, null, function (sostav) {
+                                LockScreenOff();
+                            }.bind(this));
+                        }.bind(this),
+                        fn_check: function (text) {
 
-        //this.alert_on = new alert(panelElement.$alert_on);
-        //this.alert_from = new alert(panelElement.$alert_from);
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: 'mt-0',
+                    form_text: langView('vopac_text_label_station_on', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            objs_from_setup.push(form_select_station_on);
+            this.form_from_setup.init({
+                alert: this.main_alert,
+                objs: objs_from_setup,
+                id: null,
+                form_class: 'row g-3',
+                validation: true,
+                fn_validation: function (result) {
+                    // Валидация успешна
+                    if (result && result.valid) {
 
-        //this.$panel.append(panelElement.$element);
+                    }
+                }.bind(this),
+                fn_html_init: function (res) { }.bind(this),
+                fn_element_init: null,
+                fn_init: function (init) {
+                    this.from_setup.$html.append(this.form_from_setup.$form);
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                }.bind(this),
+            });
 
-        // Создадим и добавим макет таблицы
+            var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
+            var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'wagons-outer-way', class: 'pt-2' });
+            this.from_table.$html.append(row_sostav_from.$html).append(row_wagons_from.$html);
+            this.tsf = new TWS('div#sostav-outer-ways');
+            this.tsf.init({
+                alert: this.from_alert,
+                class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
+                detali_table: false,
+                type_report: 'sostav_outer_ways',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
-        // Загрузим справочные данные, определим поля формы правки
+                },
+                fn_select_rows: function (rows, type) {
+                    if (type === "select") {
+                        if (rows != null && rows.length > 0) {
+                            this.view_open_wagon_outer_ways_of_sostav(rows[0].outerWayNumSostav, function (wagons) {
+                                this.twf.view(wagons);
+                                LockScreenOff();
+                            }.bind(this));
+                        } else {
+                            this.twf.view([]);
+                            this.from_alert.clear_message();
+                            this.from_alert.out_warning_message(langView('vopac_mess_warning_not_num_sostav', App.Langs));
+                        }
+                    }
 
-        //this.load_db(['station', 'ways', 'outer_ways', 'locomotive'], false, function (result) {
-        //    // Подгрузили списки
-        //    this.list_station = this.ids_dir.getListStation('id', 'station_name', App.Lang, function (i) { return i.station_uz === false && i.station_delete === null; });
-        //    // Список локомотивов
-        //    this.list_locomotive = this.ids_dir.getListLocomotive('locomotive', 'locomotive', function (i) { return i.id_locomotive_status === 1; });
-        //    //--------------------ФОРМА FROM ---------------------------
-        //    // Создадим форму выбора пути отправки (this.$setup_from)
-        //    this.form_setup_from = new FIF();
-        //    var fl_station = {
-        //        field: 'id_station',
-        //        type: 'int',
-        //        add: null,
-        //        edit: 'select',
-        //        name: 'station',
-        //        prefix: 'sm', //'sm','','lg'
-        //        label: langView('vac_title_label_station_on', App.Langs),
-        //        placeholder: langView('vac_title_placeholder_station_on', App.Langs),
-        //        maxlength: null,
-        //        required: true,
-        //        control: null,
-        //        list: this.list_station,
-        //        select: function (e, ui) {
-        //            event.preventDefault();
-        //            // Обработать выбор
-        //            var id = Number($(e.currentTarget).val());
-        //            this.update_sostav_outer_ways_and_way_of_station(id, -1, null); // Обновим составы в прибытии и пути по выбранной станции
 
-        //        }.bind(this),
-        //        update: null,
-        //        close: null,
-        //        change: null,
-        //        add_validation: null,
-        //        edit_validation: null,
-        //        default: -1,
-        //        row: 1,
-        //        col: 1,
-        //        col_prefix: 'md',
-        //        col_size: 12,
-        //    };
-        //    var fields = [];
-        //    fields.push(fl_station);
-        //    //// Инициализация формы
-        //    this.form_setup_from.init({
-        //        alert: this.alert_from,
-        //        mode: 'edit', // Указали что будем использовать форму типа edit
-        //        fields: fields,
-        //        mb: 2,
-        //        id: null,
-        //        cl_form: '',
-        //        validation: true,
-        //        fn_validation: function (result) {
-        //            // Валидация успешна
-        //            if (result && result.valid) {
-        //            }
-        //        }.bind(this),
-        //    });
-        //    // 
-        //    // Отображение формы
-        //    this.$setup_from.append(this.form_setup_from.$form_edit);
-        //    var sel_sostav_from = 'table-sfrom-' + this.selector;
-        //    var sel_wagon_from = 'table-wfrom-' + this.selector;
-        //    // Создадим таблицу вангонов на пути отправки
-        //    var $div_table_sfrom = $('<div></div>', {
-        //        'id': sel_sostav_from,
-        //    });
-        //    // Создадим таблицу вангонов на пути отправки
-        //    var $div_table_wfrom = $('<div></div>', {
-        //        'id': sel_wagon_from,
-        //    });
-        //    //------- FROM SOSTAV -----------------------------------
-        //    if ($div_table_sfrom && $div_table_sfrom.length > 0) {
-        //        this.$table_from.append($div_table_sfrom);
-        //        this.tab_sostav_from = new TSOW('div#' + sel_sostav_from); // Создадим экземпляр составы на подходах
-        //        this.tab_sostav_from.init({
-        //            alert: this.alert_from,
-        //            type_report: 'arrival-sostav-outer-way',  // Прибвыающие составы на внешнем пути
-        //            ids_wsd: this.ids_wsd,
-        //            fn_select_sostav: function (row) {
-        //                this.id_outer_way = null;   // id перегона
-        //                this.station_from = null; // Станция отправления
-        //                // получим строку состава
-        //                if (row && row.length > 0) {
-        //                    this.id_outer_way = row[0].id_outer_way;   // id перегона
-        //                    this.station_from = row[0]['from_station_abbr_' + App.Lang]; // Станция отправления
-        //                    // обновим вагоны по выбранному сотаву
-        //                    this.load_wagons_of_sostav(row[0].outer_way_num_sostav);
-        //                };
-        //            }.bind(this),
-        //        }, function () {
 
-        //        });
-        //    };
-        //    //------- FROM WAGON -----------------------------------
-        //    if ($div_table_wfrom && $div_table_wfrom.length > 0) {
-        //        this.$table_from.append($div_table_wfrom);
-        //        this.tab_wagon_from = new TCOW('div#' + sel_wagon_from); // Создадим экземпляр составы на подходах
-        //        this.tab_wagon_from.init({
-        //            alert: this.alert_from,
-        //            type_report: 'arrival-wagons-outer-way',  // Прибвыающие составы на внешнем пути
-        //            ids_wsd: this.ids_wsd,
-        //            // инициализируем кнопки
-        //            buttons: [
-        //                {
-        //                    name: 'add_wagons_send',
-        //                    action: function (e, dt, node, config) {
-        //                        if (this.id_way >= 0) {
-        //                            LockScreen(langView('vac_mess_create_sostav', App.Langs));
-        //                            // Выполнить операцию добавить вагоны
-        //                            wagons_add_async.call(this, this.tab_wagon_from.select_rows_wagons, 1, function (position) {
-        //                                this.tab_wagon_from.select_rows_wagons = null;
-        //                                this.view_wagons();
-        //                            }.bind(this));
-        //                        } else {
-        //                            this.form_setup_from.out_warning(langView('vac_mess_not_select_way_on', App.Langs));
-        //                        }
+                }.bind(this),
+                fn_select_link: function (link) {
 
-        //                    }.bind(this)
-        //                },
-        //            ],
-        //            fn_change_data: function (wagons) {
-        //                //this.wagons = wagons;
-        //                //this.tab_cars_on.view(this.wagons.filter(function (i) { return i.position_new !== null; }), null);
-        //            }.bind(this),
-        //        }, function () {
+                }.bind(this),
+            });
 
-        //        });
-        //    };
-        //    //--------------------ФОРМА ON ---------------------------
-        //    // Создадим форму выбора пути прибытия (this.$setup_on)
-        //    this.form_setup_on = new FIF();
-        //    var fl_way_on = {
-        //        field: 'id_way',
-        //        type: 'int',
-        //        add: 'select',
-        //        edit: null,
-        //        name: 'way',
-        //        prefix: 'sm',
-        //        label: langView('vac_title_label_way_on', App.Langs),
-        //        placeholder: langView('vac_title_placeholder_way_on', App.Langs),
-        //        maxlength: null,
-        //        required: true,
-        //        control: null,
-        //        list: this.get_list_way(-1),
-        //        select: function (e, ui) {
-        //            event.preventDefault();
-        //            // Обработать выбор
-        //            var id = Number($(e.currentTarget).val());
-        //            this.load_wagons_of_way(id);
-        //        }.bind(this),
-        //        update: null,
-        //        close: null,
-        //        change: null,
-        //        add_validation: null,
-        //        edit_validation: null,
-        //        default: -1,
-        //        row: 2,
-        //        col: 1,
-        //        col_prefix: 'md',
-        //        col_size: 12,
-        //    };
-        //    var fl_locomotive1 = {
-        //        field: 'locomotive1',
-        //        type: 'string',
-        //        add: 'autocomplete',
-        //        edit: null,
-        //        name: 'locomotive1',
-        //        prefix: 'sm',
-        //        label: langView('vac_title_label_locomotive1', App.Langs),
-        //        placeholder: langView('vac_title_placeholder_locomotive', App.Langs),
-        //        maxlength: 20,
-        //        required: true,
-        //        control: null,
-        //        list: this.list_locomotive,
-        //        select: null,
-        //        //select: function (e, ui) {
-        //        //    event.preventDefault();
-        //        //    // Обработать выбор
-        //        //    var id = Number($(e.currentTarget).val());
-        //        //    //view_wagons_from_way(id);
-        //        //}.bind(this),
-        //        update: null,
-        //        close: null,
-        //        change: null,
-        //        add_validation: null,
-        //        edit_validation: null,
-        //        default: -1,
-        //        row: 3,
-        //        col: 1,
-        //        col_prefix: 'md',
-        //        col_size: 6,
-        //    };
-        //    var fl_locomotive2 = {
-        //        field: 'locomotive2',
-        //        type: 'string',
-        //        add: 'autocomplete',
-        //        edit: null,
-        //        name: 'locomotive2',
-        //        prefix: 'sm',
-        //        label: langView('vac_title_label_locomotive2', App.Langs),
-        //        placeholder: langView('vac_title_placeholder_locomotive', App.Langs),
-        //        maxlength: 20,
-        //        required: false,
-        //        control: null,
-        //        list: this.list_locomotive,
-        //        select: null,
-        //        update: null,
-        //        close: null,
-        //        change: null,
-        //        add_validation: null,
-        //        edit_validation: null,
-        //        default: -1,
-        //        row: 3,
-        //        col: 2,
-        //        col_prefix: 'md',
-        //        col_size: 6,
-        //    };
-        //    var fl_time_aplly = {
-        //        field: 'time_aplly',
-        //        type: 'datetime',
-        //        add: 'datetime',
-        //        edit: null,
-        //        name: 'time_aplly',
-        //        prefix: 'sm',
-        //        label: langView('vac_title_time_aplly', App.Langs),
-        //        placeholder: langView('vac_title_placeholder_time_aplly', App.Langs),
-        //        maxlength: null,
-        //        required: true,
-        //        control: null,
-        //        list: null,
-        //        select: null,
-        //        update: null,
-        //        close: function (datetime) {
+            this.twf = new TWS('div#wagons-outer-way');
+            this.twf.init({
+                alert: this.from_alert,
+                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                detali_table: false,
+                type_report: 'wagons_outer_way',     //
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
 
-        //        },
-        //        change: null,
-        //        add_validation: null,
-        //        edit_validation: null,
-        //        default: null,
-        //        row: 4,
-        //        col: 1,
-        //        col_prefix: 'md',
-        //        col_size: 6,
-        //    };
-        //    var fields_on = [];
-        //    fields_on.push(fl_way_on);
-        //    fields_on.push(fl_locomotive1);
-        //    fields_on.push(fl_locomotive2);
-        //    fields_on.push(fl_time_aplly);
-        //    //// Инициализация формы
-        //    this.form_setup_on.init({
-        //        alert: this.alert_on,
-        //        mode: 'add', // Указали что будем использовать форму типа add
-        //        fields: fields_on,
-        //        mb: 2,
-        //        id: null,
-        //        cl_form: '',
-        //        validation: true,
-        //        fn_validation: function (result) {
-        //            // Валидация успешна
-        //            if (result && result.valid) {
-        //                // Дополнительная проверка
-        //                var valid = this.validation(result);
-        //                if (valid) {
-        //                    var wagons = this.wagons.filter(function (i) { return i.position_new !== null && i.id_wim_arrival !== null; });// получить вагоны
-        //                    this.modal_confirm_form.view(langView('vac_title_form_apply', App.Langs), 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР" в количестве: ' + (wagons ? wagons.length : 0) + ' (ваг.), станция отправки: ' + this.station_from + '?', function (res) {
-        //                        if (res) {
-        //                            // Проверим наличие вагонов 
-        //                            var list_wagons = [];
-        //                            if (wagons && wagons.length > 0) {
-        //                                // Получим перечень вагонов и новую позицию
-        //                                $.each(wagons.sort(function (a, b) { return a.position_new - b.position_new; }), function (i, el) {
-        //                                    list_wagons.push({ wir_id: el.wir_id, position: el.position_new })
-        //                                }.bind(this));
-        //                                // Сформируем операцию
-        //                                var operation = {
-        //                                    id_outer_way: this.id_outer_way,
-        //                                    wagons: list_wagons,
-        //                                    id_way_on: result.new.id_way,
-        //                                    head: this.head,
-        //                                    lead_time: result.new.time_aplly,
-        //                                    locomotive1: result.new.locomotive1,
-        //                                    locomotive2: result.new.locomotive2,
-        //                                    user: App.User_Name
-        //                                };
-        //                                this.apply(operation);
-        //                            }
-        //                        } else {
-        //                            // Отмена
-        //                            this.form_setup_on.out_warning(langView('vac_mess_cancel_operation', App.Langs));
-        //                        }
-        //                    }.bind(this));
-        //                }
-        //            }
-        //        }.bind(this),
-        //        button_add_ok: {
-        //            title: langView('vac_title_add_ok', App.Langs),
-        //            click: function (event) {
-        //                event.preventDefault();
-        //                this.form_setup_on.$form_add.submit();
-        //            }.bind(this),
-        //        },
-        //    });
-        //    // Отображение формы
-        //    this.$setup_on.append(this.form_setup_on.$form_add);
+                },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    this.from_alert.clear_message();
+                    if (rowData && rowData.length > 0 && rowData[0].outerWayEnd !== null) {
+                        e.preventDefault();
+                        this.from_alert.out_warning_message(langView('vopac_mess_warning_wagon_ban_operation', App.Langs).format(rowData[0].num, rowData[0]['arrivalStationName' + ucFirst(App.Lang)]));
 
-        //    // Создадим таблицу вангонов собранных для отправки
-        //    var $div_table_on = $('<div></div>', {
-        //        'id': 'table-on-' + this.selector,
-        //    });
-        //    if ($div_table_on && $div_table_on.length > 0) {
-        //        this.$table_on.append($div_table_on);
-        //        this.tab_cars_on = new TCWay('div#table-on-' + this.selector);
-        //        this.tab_cars_on.init({
-        //            type_report: 3,
-        //            alert: this.alert_on,
-        //            // инициализируем кнопки
-        //            buttons: [
-        //                {
-        //                    name: 'del_wagons_send',
-        //                    action: function (e, dt, node, config) {
-        //                        LockScreen(langView('vac_mess_clear_sostav', App.Langs));
-        //                        var base = this;
-        //                        // Убрать вагоны
-        //                        wagons_del_async.call(this, this.tab_cars_on.select_rows_wagons, function () {
-        //                            // Авто нумерация
-        //                            // Выполнить операцию перенумеровать (добавить 0 - вагонов)
-        //                            wagons_add_async.call(base, [], 1, function (position) {
-        //                                this.tab_cars_on.select_rows_wagons = null;
-        //                                this.view_wagons();
-        //                            }.bind(base));
-        //                        });
-        //                    }.bind(this),
-        //                },
-        //                {
-        //                    name: 'head_tail',
-        //                    action: function (e, dt, node, config) {
-        //                        LockScreen(langView('vac_mess_reverse_head_sostav', App.Langs));
-        //                        this.head = !this.head;
-        //                        // Выполнить операцию перенумеровать с учетом голова хвост (добавить 0 - вагонов)
-        //                        wagons_add_async.call(this, [], 1, function (position) {
-        //                            this.view_wagons();
-        //                        }.bind(this));
-        //                    }.bind(this),
-        //                },
-        //                {
-        //                    name: 'reverse_num_wagon',
-        //                    action: function (e, dt, node, config) {
-        //                        LockScreen(langView('vac_mess_reverse_sostav', App.Langs));
-        //                        wagons_reverse_enumerate_async.call(this, function () {
-        //                            // Выполнить операцию перенумеровать с учетом голова хвост (добавить 0 - вагонов)
-        //                            wagons_add_async.call(this, [], 1, function (position) {
-        //                                this.view_wagons();
-        //                            }.bind(this));
-        //                        }.bind(this));
-        //                    }.bind(this),
-        //                },
-        //            ],
-        //            fn_change_data: function (wagons) {
+                    }
+                }.bind(this),
+                fn_select_rows: function (rows) {
 
-        //            }.bind(this),
-        //        }, function () {
+                }.bind(this),
+                fn_select_link: function (link) {
 
-        //        });
-        //    };
+                }.bind(this),
+                fn_button_action: function (name, e, dt, node, config) {
 
-        //    //----------------------------------
-        //    if (typeof fn_init_ok === 'function') {
-        //        fn_init_ok(this.result_init);
-        //    }
-        //    //----------------------------------
-        //}.bind(this));
+                }.bind(this),
+                fn_enable_button: function (tb) {
+                    var index = tb.obj_t_report.rows({ selected: true });
+                    var bts = tb.obj_t_report.buttons([6]);
+                    //bt.disable();
+                    bts.enable(index && index.length > 0 && index[0].length > 0); // отображение кнопки добавить
+                }.bind(this),
+            });
+
+        }.bind(this)); //------- {end this.view_com.load_db}
     };
     // Показать данные 
     view_op_arrival_cars.prototype.view = function (id_way) {
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
-        //LockScreen(langView('vac_mess_load_operation', App.Langs));
-        //this.id_station = -1;
-        //this.id_way = -1;
-        //if (id_way) {
-        //    var way = this.ids_dir.getWays_Of_ID(id_way);
-        //    if (way) {
-        //        this.id_station = way.id_station;
-        //        // Отобразим выбор на панеле
-        //        this.form_setup_from.view_edit({ id_station: this.id_station });
-        //        this.id_way = id_way;
-        //    }
-        //};
-        //this.update_sostav_outer_ways_and_way_of_station(this.id_station, this.id_way, this.num_sostav);
+        LockScreen(langView('vopac_mess_load_operation', App.Langs));
+        this.id_station = -1;
+        this.id_way = -1;
+        if (id_way) {
+            var way = this.view_com.api_dir.getWays_Of_Id(id_way);
+            if (way) {
+                this.id_station = way.idStation;
+                // Отобразим выбор на панеле
+                this.form_from_setup.el.select_id_station.val(this.id_station);
+                this.id_way = id_way;
+            }
+        };
+        this.update_sostav_outer_ways_and_way_of_station(this.id_station, this.id_way, this.num_sostav, function (sostav) {
+            LockScreenOff();
+        }.bind(this));
     };
+    // Обновить составы на перегонах станции прибытия и пути станции прибытия
+    view_op_arrival_cars.prototype.update_sostav_outer_ways_and_way_of_station = function (id_station, id_way, num_sostav, callback) {
+        this.id_station = id_station;
+        //this.id_way = id_way;
+        this.num_sostav = num_sostav;
+        // сбросим выбранные вагоны на пути и состав
+        this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
+        this.wagons = [];       // Список вагонов на пути (рабочий)
+        this.wagons_sostav = [];// Список вагонов выбранного состава (рабочий)
+        this.id_outer_way = -1;   // id перегона
+        this.station_from = null; // Станция отправления
+        // Обновить пути станции прибытия
+        this.form_on_setup.el.select_id_way_on.update(this.view_com.api_dir.getListValueTextWaysOfStation(this.id_station), id_way);
+        // Загрузим вагоны на пути приема
+        this.update_wagons_of_way(id_way, function () {
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }.bind(this));
+    };
+    // Обновить составы на перегонах станции прибытия и пути станции прибытия
+    view_op_arrival_cars.prototype.update_wagons_of_way = function (id_way, callback) {
+        this.id_way = id_way;
+        // Загрузим вагоны на пути приема
+        this.load_wagons_of_way(id_way, function () {
+            // Обновить составы на перегонах станции прибытия
+            this.load_open_wagon_outer_ways_station_on(this.id_station, function (sostav) {
+                this.twf.view([]); // очистим детали
+                this.tsf.view(sostav, this.num_sostav);
+                // Отложеный вызов - обновили данные
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }.bind(this));
+        }.bind(this));
+    };
+
+    // Показать текущую ситуацию по вагонам на пути приема и состава ()
+    view_op_arrival_cars.prototype.view_wagons = function () {
+        this.form_on_setup.clear_all();
+        // Показать вагоны на пути приема
+        this.tacw.view(this.wagons, null)
+        //if (this.head) {
+        //    this.tab_cars_on.obj_t_cars.button(5).text(langView('vac_title_button_head', App.Langs));
+        //} else {
+        //    this.tab_cars_on.obj_t_cars.button(5).text(langView('vac_title_button_tail', App.Langs));
+        //}
+        //// Показать вагоны выбранного состава без учета уже перенесенных в состав  
+        //this.tab_wagon_from.view(this.wagons_sostav.filter(function (i) { return i.id_way_arrival === null; }), null);
+    };
+    // Загрузить вагоны на пути в внутрений массив
+    view_op_arrival_cars.prototype.load_of_way = function (id_way, callback) {
+        if (id_way !== null && id_way >= 0) {
+            LockScreen(langView('vopac_mess_load_wagons', App.Langs));
+            this.view_com.api_wsd.getViewWagonsOfIdWay(id_way, function (wagons) {
+                // модифицировать данные взависимости от отчета
+                if (wagons) {
+                    $.each(wagons, function (i, el) {
+                        el['position_new'] = el.position;
+                        el['id_wim_arrival'] = null;
+                    });
+                }
+                this.wagons = wagons;
+                // Событие обновили данные
+                if (typeof callback === 'function') {
+                    callback(this.wagons);
+                }
+            }.bind(this));
+        } else {
+            this.wagons = [];
+            // Событие обновили данные
+            if (typeof callback === 'function') {
+                callback(this.wagons);
+            }
+        }
+
+    };
+    // Загрузим вагоны на пути приема и отобразим
+    view_op_arrival_cars.prototype.load_wagons_of_way = function (id_way, callback) {
+        this.id_way = id_way;
+        // сбросить выбранный состав!
+        //this.clear_wagons_of_sostav();
+        // Загрузим вагоны на пути приема
+        this.load_of_way(id_way, function (wagons) {
+            this.view_wagons();
+            // Отложеный вызов - загрузка данных
+            if (typeof callback === 'function') {
+                callback(wagons);
+            }
+        }.bind(this))
+
+    };
+    // Загрузить все вагоны, всех доконца непринятых составов, составы прибывающих на станцию id_station
+    view_op_arrival_cars.prototype.load_open_wagon_outer_ways_station_on = function (id_station, callback) {
+        this.sostav_all = [];
+        if (id_station !== null && id_station >= 0) {
+            LockScreen(langView('vopac_mess_load_sostav_outer_ways', App.Langs));
+            this.view_com.api_wsd.getViewOpenWagonsOfOuterWaysStationOn(id_station, function (wagons) {
+                this.wagons_all = wagons;
+                $.each(wagons, function (key, el) {
+                    var st = this.sostav_all.find(function (o) {
+                        return $.trim(o.outerWayNumSostav) === $.trim(el.outerWayNumSostav);
+                    }.bind(this));
+                    if (!st) {
+                        this.sostav_all.push({
+                            outerWayNumSostav: $.trim(el.outerWayNumSostav),
+                            idOuterWay: el.idOuterWay,
+                            nameOuterWayRu: el.nameOuterWayRu,
+                            nameOuterWayEn: el.nameOuterWayEn,
+                            fromStationNameRu: el.fromStationNameRu,
+                            fromStationNameEn: el.fromStationNameEn,
+                            fromStationAbbrRu: el.fromStationAbbrRu,
+                            fromStationAbbrEn: el.fromStationAbbrEn,
+                            fromIdWay: el.fromIdWay,
+                            fromIdPark: el.fromIdPark,
+                            fromWayNumRu: el.fromWayNumRu,
+                            fromWayNumEn: el.fromWayNumEn,
+                            fromWayNameRu: el.fromWayNameRu,
+                            fromWayNameEn: el.fromWayNameEn,
+                            fromWayAbbrRu: el.fromWayAbbrRu,
+                            fromWayAbbrEn: el.fromWayAbbrEn,
+                            fromOperationStart: el.fromOperationStart,
+                            fromOperationEnd: el.fromOperationEnd,
+                            fromOperationCreateUser: el.fromOperationCreateUser,
+                            fromOperationLocomotive1: el.fromOperationLocomotive1,
+                            fromOperationLocomotive2: el.fromOperationLocomotive2,
+                            countWagonsSend: 1,
+                            countWagonsArrival: el.onIdOperation === 6 ? 1 : 0,
+                            countWagonsReturn: el.onIdOperation === 11 || el.onIdOperation === 12 ? 1 : 0,
+                            countWagonsAccepted: el.outerWayEnd !== null ? 1 : 0,
+                        });
+                    } else {
+                        st.countWagonsSend++;
+                        st.countWagonsArrival += (el.onIdOperation === 6 ? 1 : 0);
+                        st.countWagonsReturn += (el.onIdOperation === 11 || el.onIdOperation === 12 ? 1 : 0)
+                        st.countWagonsAccepted += (el.outerWayEnd !== null ? 1 : 0)
+                    }
+                }.bind(this));
+                //this.id_station_on = id_station;
+                //this.view(this.sostav);
+                //LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(this.sostav_all);
+                }
+            }.bind(this));
+        } else {
+            //this.id_station_on = null;
+            //this.view(this.sostav);
+            if (typeof callback === 'function') {
+                callback(this.sostav_all);
+            }
+            //
+        }
+
+    };
+    // Выбрать все вагоны выбранного состава 
+    view_op_arrival_cars.prototype.view_open_wagon_outer_ways_of_sostav = function (num_sostav, callback) {
+        this.wagons_sostav = [];
+        if (num_sostav !== null && this.wagons_all != null && this.wagons_all.length > 0) {
+            LockScreen(langView('vopac_mess_load_wagons', App.Langs));
+            this.wagons_sostav = this.wagons_all.filter(function (i) {
+                return $.trim(i.outerWayNumSostav) === $.trim(num_sostav);
+            }.bind(this))
+            if (typeof callback === 'function') {
+                callback(this.wagons_sostav);
+            }
+        } else {
+            if (typeof callback === 'function') {
+                callback(this.wagons_sostav);
+            }
+        }
+    }
 
     view_op_arrival_cars.prototype.destroy = function () {
         // удалим элементы этого модуля, затем view_com

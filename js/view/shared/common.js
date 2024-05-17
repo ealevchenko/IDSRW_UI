@@ -40,6 +40,18 @@ ucFirst = function (str) {
     if (!str) return str;
     return str[0].toUpperCase() + str.slice(1);
 };
+// Показать форматированный текст
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
+    };
+}
 //==============================================================================================
 /* ----------------------------------------------------------
                 Блокировка экрана
@@ -835,12 +847,13 @@ var intVal = function (i) {
             add_class(this.$html, this.settings.color !== null ? 'btn-' + this.settings.color : null);
             add_class(this.$html, this.settings.class);
             append_text(this.$html, this.settings.text);
+
             if (this.settings.icon_fa_left !== null && this.settings.icon_fa_left !== '') {
                 var icon = $('<i></i>', {
                     'class': this.settings.icon_fa_left,
                     'aria-hidden': 'true'
                 });
-                this.$html.append(icon).append(' ');
+                this.$html.prepend(' ').prepend(icon);
             };
             if (this.settings.icon_fa_right && this.settings.icon_fa_right !== '') {
                 var icon = $('<i></i>', {
@@ -2657,9 +2670,7 @@ var intVal = function (i) {
     };
     // Выполнить обработку события отправка формы
     form_dialog.prototype.submit = function (event) {
-        $.each(this.obj_form.validations, function (i, el_val) {
-            el_val.validation.clear_all();
-        }.bind(this));
+        this.clear_validation();
         this.valid = true;
         var result = {};
         if (this.settings.validation) {
@@ -2725,6 +2736,17 @@ var intVal = function (i) {
         if (typeof this.settings.fn_validation === 'function') {
             this.settings.fn_validation({ valid: Boolean(this.valid), old: this.data_val, new: result });
         }
+    };
+
+    form_dialog.prototype.clear_validation = function () {
+        $.each(this.obj_form.validations, function (i, el_val) {
+            el_val.validation.clear_all();
+        }.bind(this));
+    };
+    // Выполнить очистку сообщений на форме
+    form_dialog.prototype.clear_all = function (not_clear_message) {
+        if (!not_clear_message && this.settings.alert !== null) this.settings.alert.clear_message();
+        this.clear_validation();
     };
 
     App.form_dialog = form_dialog;

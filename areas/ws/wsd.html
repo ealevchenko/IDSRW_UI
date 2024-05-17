@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />
 
+    <!-- Визуальное отражение компонентов -->
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/shared.css" />
 
     <!-- DataTables -->
@@ -108,7 +110,7 @@
                                 <button type="button" class="btn btn-outline-secondary" title="Принять состав на станцию АМКР" id="arrival-cars">Приб.</button>
                                 <button type="button" class="btn btn-outline-secondary" title="Вернуть(отменить отправку) вагонов состава отправленного на станции АМКР" id="return-cars">Возв.</button>
                             </div>
-                            <div class="btn-group me-2" role="group" id="btn-internal-operations"  aria-label="internal operations  group">
+                            <div class="btn-group me-2" role="group" id="btn-internal-operations" aria-label="internal operations  group">
                                 <button type="button" class="btn btn-outline-secondary" title="Дислокация вагонов по станции" id="dislocation">Дисл.</button>
                                 <button type="button" class="btn btn-outline-secondary" title="Роспуск вагонов" id="dissolution">Росп.</button>
                                 <button type="button" class="btn btn-outline-secondary" title="">Выгр.</button>
@@ -188,12 +190,12 @@
 
                                                 </div>
                                                 <!--<div id="total-balance" class="table-report-operation">
-                                                <div id="tab-tb-total-balance_wrapper" class="dataTables_wrapper no-footer">
-                                                    <div class="dt-buttons"></div><div class="dataTables_scroll">
-                                                        <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;"><div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 525.656px; padding-right: 15px;"><table style="width: 525.656px; margin-left: 0px;" class="display compact cell-border row-border hover dataTable no-footer"><thead><tr><th class="sorting_disabled dt-body-left" rowspan="1" colspan="1" style="width: 148.172px;">Остаток</th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 136.234px;">Все вагоны</th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 139.25px;">Вагоны АМКР</th></tr></thead></table></div></div><div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;"><table id="tab-tb-total-balance" style="width: 100%;" class="display compact cell-border row-border hover dataTable no-footer"><thead><tr style="height: 0px;"><th class="sorting_disabled dt-body-left" rowspan="1" colspan="1" style="width: 148.172px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Остаток</div></th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 136.234px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Все вагоны</div></th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 139.25px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Вагоны АМКР</div></th></tr></thead><tbody><tr class="odd"><td class="  dt-body-left">ВСЕГО</td><td class="  dt-body-center">4220</td><td class="  dt-body-center">2411</td></tr><tr class="even"><td class="  dt-body-left">ОСТАТОК ВНЕШНИХ</td><td class="  dt-body-center">2268</td><td class="  dt-body-center">459</td></tr><tr class="odd"><td class="  dt-body-left">УЧЕТНЫЙ ОСТАТОК</td><td class="  dt-body-center">1303</td><td class="  dt-body-center"></td></tr></tbody></table></div>
+                                                    <div id="tab-tb-total-balance_wrapper" class="dataTables_wrapper no-footer">
+                                                        <div class="dt-buttons"></div><div class="dataTables_scroll">
+                                                            <div class="dataTables_scrollHead" style="overflow: hidden; position: relative; border: 0px; width: 100%;"><div class="dataTables_scrollHeadInner" style="box-sizing: content-box; width: 525.656px; padding-right: 15px;"><table style="width: 525.656px; margin-left: 0px;" class="display compact cell-border row-border hover dataTable no-footer"><thead><tr><th class="sorting_disabled dt-body-left" rowspan="1" colspan="1" style="width: 148.172px;">Остаток</th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 136.234px;">Все вагоны</th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 139.25px;">Вагоны АМКР</th></tr></thead></table></div></div><div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;"><table id="tab-tb-total-balance" style="width: 100%;" class="display compact cell-border row-border hover dataTable no-footer"><thead><tr style="height: 0px;"><th class="sorting_disabled dt-body-left" rowspan="1" colspan="1" style="width: 148.172px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Остаток</div></th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 136.234px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Все вагоны</div></th><th class="sorting_disabled dt-body-center" rowspan="1" colspan="1" style="width: 139.25px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Вагоны АМКР</div></th></tr></thead><tbody><tr class="odd"><td class="  dt-body-left">ВСЕГО</td><td class="  dt-body-center">4220</td><td class="  dt-body-center">2411</td></tr><tr class="even"><td class="  dt-body-left">ОСТАТОК ВНЕШНИХ</td><td class="  dt-body-center">2268</td><td class="  dt-body-center">459</td></tr><tr class="odd"><td class="  dt-body-left">УЧЕТНЫЙ ОСТАТОК</td><td class="  dt-body-center">1303</td><td class="  dt-body-center"></td></tr></tbody></table></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>-->
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -278,7 +280,6 @@
         <!--<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#operation-detali" aria-controls="operation-detali">
             Переключить статический offcanvas
         </button>-->
-
         <!--<div class="offcanvas offcanvas-start offcanvas-operation-detal" data-bs-backdrop="static" tabindex="-1" id="operation-detali" aria-labelledby="">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvas-title-operation-detali">Offcanvas</h5>
@@ -301,8 +302,10 @@
     <script src="../../../idsrw_ui/lib/jquery-cookie/jquery.cookie.min.js"></script>
     <script src="../../../idsrw_ui/lib/popper/umd/popper.min.js"></script>
     <script src="../../../idsrw_ui/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
     <!-- Moment -->
     <script src="../../../idsrw_ui/lib/moment.js/moment.min.js"></script>
+    <script src="../../../idsrw_ui/lib/moment.js/moment-with-locales.min.js"></script>
     <!-- DataTables -->
     <script src="../../../idsrw_ui/lib/DataTables/datatables.min.js"></script>
     <script src="../../../idsrw_ui/lib/DataTables/DataTables-2.0.0/js/dataTables.bootstrap5.min.js"></script>

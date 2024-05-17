@@ -244,7 +244,7 @@
                         break;
                     };
                     case 'arrival-cars': {
-                        voac.view();
+                        voac.view(current_id_way);
                         break;
                     };
                     case 'return-cars': {

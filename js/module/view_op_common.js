@@ -58,8 +58,8 @@
         }, options);
         //
         // Создадим ссылку на модуль работы с базой данных
-        var api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-        var api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+        this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+        this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
         this.offcanvas = new this.fe_ui.bs_offcanvas({
             id: null,
@@ -91,6 +91,16 @@
     view_op_common.prototype.close = function () {
         this.bs_offcanvas.hide();
     };
+    // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
+    view_op_common.prototype.load_db = function (list, update, callback) {
+        if (list) {
+            this.api_dir.load(list, false, update, function (result) {
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            });
+        };
+    }
     //------------------------------- СООБЩЕНИЯ ----------------------------------------------------
     //-------------------------------------------------------------------------------------------
     // Очистить сообщения

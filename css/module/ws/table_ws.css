@@ -24,95 +24,48 @@ table.table-total-balance {
         padding: 0 0.5rem;
     }
 
+table.table-sostav-outer-ways {
+    font-size: .8rem;
+    border-collapse: collapse;
+}
+
+    table.table-sostav-outer-ways th {
+        text-align: center;
+        /*        padding: 0 0.5rem;*/
+    }
+
+    table.table-sostav-outer-ways td {
+        padding: 0 0.5rem;
+    }
+
+table.table-wagons-outer-way {
+    font-size: .8rem;
+    /*border-collapse: collapse;*/
+}
+
+    table.table-wagons-outer-way th {
+        text-align: center;
+        /*        padding: 0 0.5rem;*/
+    }
+
+    table.table-wagons-outer-way td {
+        padding: 0 0.5rem;
+    }
+
+div.dt-search, div.dt-paging {
+    float: right;
+    margin-bottom: 2px;
+}
+
+div.dt-info {
+    float: left;
+}
 
 table.table.dataTable > tbody > tr:not(.selected) > td.idle-time-error {
     color: rgb(255, 51, 51);
-
 }
 
 table.table.dataTable > tbody > tr:not(.selected) > td.idle-time-error a {
     color: rgb(255, 51, 51);
 
 }
-/*idle-time-error*/
-/*table.dataTable tbody th.dt-body-center,*/
-/*table.dataTable tbody tr:not(.selected).arrival-wagon.odd, table.dataTable tbody tr:not(.selected).arrival-wagon.even {
-    background-color: #f5cdb0;
-}
-
-
-table.dataTable.display tbody tr:not(.selected).odd.arrival-wagon > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.arrival-wagon > .sorting_1 {
-    background-color: #f2bf99;
-}
-
-table.dataTable.display tbody tr:not(.selected).even.arrival-wagon > .sorting_1, table.dataTable.order-column.stripe tbody tr.even.arrival-wagon > .sorting_1 {
-    background-color: #f2bf99;
-}*/
-/*table.dataTable tbody td.epd {
-    background-color: #FFF2CC;
-}
-
-table.dataTable tbody  td.sap {
-    background-color: #D9E1F2;
-}
-
-table.dataTable tbody  td.arrival {
-    background-color: #FCE4D6;
-}
-
-table.dataTable tbody  td.common {
-    background-color: #d6fce4;
-}
-
-table.dataTable tbody  td.letter {
-    background-color: #eed6fc;
-}
-*/
-/*Состав сдан*/
-/*table.dataTable tbody tr:not(.selected).green.odd, table.dataTable tbody tr:not(.selected).green.even {
-    background-color: #cdffcd;
-}
-
-table.dataTable tbody tr:not(.selected).odd.green > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd.green > .sorting_1 {
-    background-color: #a6ffa6;
-}
-
-table.dataTable tbody tr:not(.selected).even.green > .sorting_1, table.dataTable.order-column.stripe tbody tr.even.green > .sorting_1 {
-    background-color: #a6ffa6;
-}*/
-/*Состав сдают*/
-/*table.table.dataTable tbody tr:not(.selected).yellow.odd, table.table.dataTable tbody tr:not(.selected).yellow.even {
-    background-color: #fef9e0;
-}
-
-table.table.dataTable tbody tr:not(.selected).odd.yellow > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.odd.yellow > .sorting_1 {
-    background-color: #fdf2ba;
-}
-
-table.table.dataTable tbody tr:not(.selected).even.yellow > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.even.yellow > .sorting_1 {
-    background-color: #fdf2ba;
-}*/
-/*Состав отмена сдачи*/
-/*table.table.dataTable tbody tr:not(.selected).red.odd, table.table.dataTable tbody tr:not(.selected).red.even {
-    background-color: #ffebeb;
-}
-
-table.table.dataTable tbody tr:not(.selected).odd.red > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.odd.red > .sorting_1 {
-    background-color: #ffc4c4;
-}
-
-table.table.dataTable tbody tr:not(.selected).even.red > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.even.red > .sorting_1 {
-    background-color: #ffc4c4;
-}*/
-/*Состав отправили*/
-/*table.table.dataTable tbody tr:not(.selected).blue.odd, table.table.dataTable tbody tr:not(.selected).blue.even {
-    background-color: #dfe9fb;
-}
-
-table.table.dataTable tbody tr:not(.selected).odd.blue > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.odd.blue > .sorting_1 {
-    background-color: #cdddf9;
-}
-
-table.table.dataTable tbody tr:not(.selected).even.blue > .sorting_1, table.table.dataTable.order-column.stripe tbody tr.even.blue > .sorting_1 {
-    background-color: #cdddf9;
-}*/

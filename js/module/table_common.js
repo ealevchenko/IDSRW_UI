@@ -153,6 +153,7 @@
         {
             button: 'refresh',
             text: '<i class="fas fa-retweet"></i>',
+            className: 'btn btn-warning'
         },
         {
             button: 'page_length',
@@ -316,13 +317,10 @@
     // инициализация кнопок по умолчанию
     table_common.prototype.init_button_default = function () {
         var buttons = [];
-        //buttons.push({ name: 'export', action: null });
-        //buttons.push({ name: 'field', action: null });
-        /*        buttons.push({ name: 'page_length', action: null });*/
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная 
-    table_common.prototype.init_button_Ex_Prn_Fld_Ref_Pag = function () {
+    table_common.prototype.init_button_Ex_Prn_Fld_Ref_Pag = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
         buttons.push({ name: 'print', action: null });
@@ -330,40 +328,59 @@
         buttons.push({
             name: 'refresh',
             action: function (e, dt, node, config) {
-                //this.action_refresh();
+                this.button_action(config.button, e, dt, node, config);
             }.bind(this)
         });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
         buttons.push({ name: 'page_length', action: null });
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная
-    table_common.prototype.init_button_Ex_Prn_Fld_Ref = function () {
+    table_common.prototype.init_button_Ex_Prn_Fld_Ref = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
         buttons.push({ name: 'print', action: null });
         buttons.push({ name: 'field', action: null });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
         buttons.push({
             name: 'refresh',
             action: function (e, dt, node, config) {
-                //this.action_refresh();
+                this.button_action(config.button, e, dt, node, config);
             }.bind(this)
         });
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная
-    table_common.prototype.init_button_Ex_Prn_Fld = function () {
+    table_common.prototype.init_button_Ex_Prn_Fld = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
         buttons.push({ name: 'print', action: null });
         buttons.push({ name: 'field', action: null });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная
-    table_common.prototype.init_button_Ex_Prn = function () {
+    table_common.prototype.init_button_Ex_Prn = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
         buttons.push({ name: 'print', action: null });
-/*        buttons.push({ name: 'field', action: null });*/
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
         return this.init_buttons(buttons, this.list_buttons);
     };
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
@@ -377,11 +394,14 @@
             alert: null,
             class_table: 'table',
             detali_table: false,
-            type_report: null,     // 
+            type_report: null,
             link_num: false,
             fn_init: null,
+            fn_user_select_rows: null,
             fn_select_rows: null,
             fn_select_link: null,
+            fn_button_action: null,
+            fn_enable_button: null,
         }, options);
         //
         // Настройки отчета по умолчанию
@@ -465,12 +485,26 @@
         });
         // Обработка события выбора
         if (this.table_select !== false) {
-            this.obj_t_report.on('select deselect', function (e, dt, type, indexes) {
-                this.select_rows(); // определим строку
+            this.obj_t_report.on('user-select', function (e, dt, type, cell, originalEvent) {
+                var indexes = cell && cell.length > 0 ? cell[0][0].row : null;
+                var rowData = this.obj_t_report
+                    .rows(indexes)
+                    .data()
+                    .toArray();
+                if (typeof this.settings.fn_user_select_rows === 'function') {
+                    this.settings.fn_user_select_rows(e, dt, type, cell, originalEvent, rowData);
+                }
+            }.bind(this)).on('select deselect', function (e, dt, type, indexes) {
+                var rowData = this.obj_t_report
+                    .rows(indexes)
+                    .data()
+                    .toArray();
+                this.selected_rows = rowData;
+                /*                this.select_rows(); // определим строку*/
                 this.enable_button();
                 // Обработать событие выбрана строка
                 if (typeof this.settings.fn_select_rows === 'function') {
-                    this.settings.fn_select_rows(this.selected_rows);
+                    this.settings.fn_select_rows(this.selected_rows, e.type);
                 }
             }.bind(this));
         }
@@ -489,38 +523,22 @@
         }
         //----------------------------------
     };
-    // Выбрано
-    table_common.prototype.select_rows = function () {
-        var index = this.obj_t_report.rows({ selected: true });
-        var rows = this.obj_t_report.rows(index && index.length > 0 ? index[0] : null).data().toArray();
-        this.selected_rows = rows;
-        this.id_sostav = this.select_rows_sostav && this.select_rows_sostav.length > 0 ? this.select_rows_sostav[0].id : null;
-    };
+    //table_common.prototype.select_rows = function () {
+    //    if (typeof this.settings.fn_enable_button === 'function') {
+    //        this.settings.fn_enable_button(this);
+    //    }
+    //};
     // Отображение кнопки добавить
     table_common.prototype.enable_button = function () {
-        switch (this.settings.type_report) {
-            //case 'adoption_sostav': {
-            //    if (this.select_rows_sostav && this.select_rows_sostav.length > 0) {
-            //        this.obj_t_sostav.button(5).enable(true);
-            //        if (this.select_rows_sostav[0].status < 1) {
-            //            this.obj_t_sostav.button(3).enable(true);
-            //            this.obj_t_sostav.button(4).enable(true); // отмена сдачи состава
-            //            this.obj_t_sostav.button(5).text(langView('tis_title_button_wagon_accept', App.Langs));
-            //        } else {
-            //            // Если статус в работе принят или удален 
-            //            this.obj_t_sostav.button(3).enable(true);
-            //            this.obj_t_sostav.button(4).enable(false);
-            //            //if (this.select_rows_sostav[0].status === 2) { this.obj_t_sostav.button(4).enable(true); } else { this.obj_t_sostav.button(4).enable(false); }
-            //            this.obj_t_sostav.button(5).text(langView('tis_title_button_wagon_view', App.Langs));
-            //        }
-            //    } else {
-            //        this.obj_t_sostav.button(3).enable(false);
-            //        this.obj_t_sostav.button(4).enable(false);
-            //        this.obj_t_sostav.button(5).enable(false);
-            //    }
-            //    break;
-            //};
-        };
+        if (typeof this.settings.fn_enable_button === 'function') {
+            this.settings.fn_enable_button(this);
+        }
+    };
+    // Нажата кнопка
+    table_common.prototype.button_action = function (name, e, dt, node, config) {
+        if (typeof this.settings.fn_button_action === 'function') {
+            this.settings.fn_button_action(name, e, dt, node, config);
+        }
     };
     // Показать данные
     table_common.prototype.view = function (data, id_select) {
@@ -532,15 +550,19 @@
         this.obj_t_report.rows.add(data);
         this.obj_t_report.order(this.order_column);
         this.obj_t_report.draw();
+        this.select_row(id_select);
+        this.view_footer(data);
+        //this.select_rows();
+        this.enable_button();
+    };
+
+    table_common.prototype.select_row = function (id_select) {
         if (id_select !== null) {
             this.id_select = id_select
-            //this.obj_t_report.row('#' + this.id_select).select();
+            this.obj_t_report.row('#' + this.id_select).select();
         } else {
             this.id_select = null;
         }
-        this.view_footer(data);
-        this.select_rows();
-        this.enable_button();
     };
     //
     table_common.prototype.view_footer = function (data) {

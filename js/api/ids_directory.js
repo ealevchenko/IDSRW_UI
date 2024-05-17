@@ -50,6 +50,8 @@
                 { name: 'station', list: null, fn_get: this.getStation.bind(this) },
                 { name: 'park_ways', list: null, fn_get: this.getParkWays.bind(this) },
                 { name: 'ways', list: null, fn_get: this.getWays.bind(this) },
+                { name: 'outer_ways', list: null, fn_get: this.getOuterWays.bind(this) },
+                { name: 'locomotive', list: null, fn_get: this.getLocomotive.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -60,11 +62,20 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
+    //======= [Directory_Locomotive] (Справочник локомотивов) ======================================
+    ids_directory.prototype.getLocomotive = function (callback) {
+        this.api_com.get('/DirectoryLocomotive', callback);
+    };
+
+    //======= Directory_OuterWay (Справочник внешних путей) ======================================
+    ids_directory.prototype.getOuterWays = function (callback) {
+        this.api_com.get('/DirectoryOuterWay', callback);
+    };
+
     //======= Directory_Cargo (Справочник грузов) ======================================
     ids_directory.prototype.getCargo = function (callback) {
         this.api_com.get('/DirectoryCargo', callback);
     };
-
     //======= Directory_CargoGroup (Справочник группа грузов) ======================================
     //ids_directory.prototype.getCargoGroup = function (callback) {
     //    $.ajax({
@@ -250,7 +261,80 @@
     };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
-    //*======= (Справочник owners_operations_uz) ======================================
+    //*======= (Справочник locomotive) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllLocomotive = function () {
+        var obj = this.api_com.getAllObj('locomotive');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getLocomotive_Of_Id = function (locomotive) {
+        return this.api_com.getObj_Of_field('locomotive', 'locomotive', locomotive);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListLocomotive = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('locomotive', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextLocomotive = function () {
+        return this.getListLocomotive('locomotive', 'locomotive', ucFirst(App.Lang));
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию активных локомотивов
+    ids_directory.prototype.getListValueTextLocomotiveOfActive = function () {
+        var list_obj = this.api_com.getAllObj('locomotive');
+        var list = [];
+        var fvalue = 'locomotive';
+        var ftext = 'locomotive';
+            $.each(list_obj.list, function (i, el) {
+                list.push({ value: el[fvalue], text: el[ftext], disabled: el.idLocomotiveStatus !== 1 });
+            }.bind(this));
+        return list;
+    };
+
+    //*======= (Справочник outer_ways) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllOuterWays = function () {
+        var obj = this.api_com.getAllObj('outer_ways');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getOuterWays_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('outer_ways', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListOuterWays = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('outer_ways', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextOuterWays = function () {
+        return this.getListOuterWays('id', 'nameOuterWay', ucFirst(App.Lang));
+    };
+    //*======= (Справочник ways) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllWays = function () {
+        var obj = this.api_com.getAllObj('ways');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getWays_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('ways', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListWays = function (fvalue, ftext1, ftext2, lang, filter) {
+        return this.api_com.getListObj2('ways', fvalue, ftext1, ftext2, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextWays = function () {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang));
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextWaysOfStation = function (id_station) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            return !i.wayDelete && i.idStation === id_station
+        });
+    };
+
+    //*======= (Справочник station) ======================================
     // Получить все записи
     ids_directory.prototype.getAllStation = function () {
         var obj = this.api_com.getAllObj('station');
@@ -273,8 +357,8 @@
         return this.api_com.getListObj('station', fvalue, ftext, lang, filter);
     };
     // Получить списки (Value, Text, Desabled) по умолчанию
-    ids_directory.prototype.getListValueTextStation = function () {
-        return this.getListStation('id', 'stationName', ucFirst(App.Lang));
+    ids_directory.prototype.getListValueTextStation = function (filter) {
+        return this.getListStation('id', 'stationName', ucFirst(App.Lang), filter);
     };
 
     //*======= (Справочник owners_operations_uz) ======================================

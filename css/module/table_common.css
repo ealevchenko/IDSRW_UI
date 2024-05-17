@@ -1,6 +1,9 @@
 ﻿@charset "UTF-8";
 
 :root {
+    --dt-row-ban: 255, 255, 255;
+    --dt-row-ban-text: 166, 166, 166;
+    --dt-row-ban-link: 166, 166, 166;
     --dt-row-green: 166, 255, 166;
     --dt-row-green-text: 0, 0, 0;
     --dt-row-green-link: 10, 88, 202;
@@ -90,13 +93,32 @@ table.dataTable tbody td.shorten {
     white-space: nowrap;
 }
 /*РЯДЫ*/
+/*ban*/
+table.table.dataTable > tbody > tr.ban > * {
+    box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-ban));
+    color: rgb(var(--dt-row-ban-text));
+    font-style: italic;
+}
+
+table.table.dataTable > tbody > tr.ban a {
+    color: rgb(var(--dt-row-ban-link))
+}
+
+table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).ban > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-ban), 0.95)
+}
+
+table.table.dataTable.table-hover > tbody > tr.ban:hover > * {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-ban), 0.975)
+}
+
 /*Зеленый ряд*/
-table.table.dataTable > tbody > tr.green > * {
+table.table.dataTable > tbody > tr:not(.selected).green > * {
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-green));
     color: rgb(var(--dt-row-green-text))
 }
 
-table.table.dataTable > tbody > tr.green a {
+table.table.dataTable > tbody > tr:not(.selected).green a {
     color: rgb(var(--dt-row-green-link))
 }
 
@@ -104,7 +126,7 @@ table.table.dataTable > tbody > tr.green a {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
 }*/
 
-table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).green > * {
+table.table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1).green > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.95)
 }
 
@@ -112,16 +134,16 @@ table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).green > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
-table.table.dataTable.table-hover > tbody > tr.green:hover > * {
+table.table.dataTable.table-hover > tbody > tr:not(.selected).green:hover > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.975)
 }
 /*Желтый ряд*/
-table.table.dataTable > tbody > tr.yellow > * {
+table.table.dataTable > tbody > tr:not(.selected).yellow > * {
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-yellow));
     color: rgb(var(--dt-row-yellow-text))
 }
 
-table.table.dataTable > tbody > tr.yellow a {
+table.table.dataTable > tbody > tr:not(.selected).yellow a {
     color: rgb(var(--dt-row-yellow-link))
 }
 
@@ -129,7 +151,7 @@ table.table.dataTable > tbody > tr.yellow a {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
 }*/
 
-table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).yellow > * {
+table.table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1).yellow > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.95)
 }
 
@@ -137,21 +159,21 @@ table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).yellow > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
-table.table.dataTable.table-hover > tbody > tr.yellow:hover > * {
+table.table.dataTable.table-hover > tbody > tr:not(.selected).yellow:hover > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.975)
 }
 
-table.table.dataTable > tbody > tr.yellow > * {
+table.table.dataTable > tbody > tr:not(.selected).yellow > * {
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-yellow));
     color: rgb(var(--dt-row-yellow-text))
 }
 /*Красный ряд*/
-table.table.dataTable > tbody > tr.red > * {
+table.table.dataTable > tbody > tr:not(.selected).red > * {
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-red));
     color: rgb(var(--dt-row-red-text))
 }
 
-table.table.dataTable > tbody > tr.red a {
+table.table.dataTable > tbody > tr:not(.selected).red a {
     color: rgb(var(--dt-row-red-link))
 }
 
@@ -159,7 +181,7 @@ table.table.dataTable > tbody > tr.red a {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.05)
 }*/
 
-table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
+table.table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1).red > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.95)
 }
 
@@ -167,17 +189,17 @@ table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075)
 }*/
 
-table.table.dataTable.table-hover > tbody > tr.red:hover > * {
+table.table.dataTable.table-hover > tbody > tr:not(.selected).red:hover > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.975)
 }
 
 /*Синий ряд*/
-table.table.dataTable > tbody > tr.red > * {
+table.table.dataTable > tbody > tr:not(.selected).red > * {
     box-shadow: inset 0 0 0 9999px rgb(var(--dt-blue-red));
     color: rgb(var(--dt-blue-red-text))
 }
 
-table.table.dataTable > tbody > tr.red a {
+table.table.dataTable > tbody > tr:not(.selected).red a {
     color: rgb(var(--dt-blue-red-link))
 }
 
@@ -185,7 +207,7 @@ table.table.dataTable > tbody > tr.red a {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-stripe), 0.05)
 }*/
 
-table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
+table.table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1).red > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-red), 0.95)
 }
 
@@ -193,7 +215,7 @@ table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1).red > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-hover), 0.075)
 }*/
 
-table.table.dataTable.table-hover > tbody > tr.red:hover > * {
+table.table.dataTable.table-hover > tbody > tr:not(.selected).red:hover > * {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-blue-red), 0.975)
 }
 
@@ -251,6 +273,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.violet {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.violet {
     color: rgb(var(--dt-row-violet-text));
 }
@@ -274,6 +297,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.red {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.red {
     color: rgb(var(--dt-row-red-text));
 }
@@ -297,6 +321,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.pink {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.pink {
     color: rgb(var(--dt-row-pink-text));
 }
@@ -320,6 +345,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.yellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.yellow {
     color: rgb(var(--dt-row-yellow-text));
 }
@@ -343,6 +369,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.lyellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.lyellow {
     color: rgb(var(--dt-row-l-yellow-text));
 }
@@ -366,6 +393,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.blue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.blue {
     color: rgb(var(--dt-row-blue-text));
 }
@@ -389,6 +417,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.lblue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.lblue {
     color: rgb(var(--dt-row-l-blue-text));
 }
@@ -412,6 +441,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.grey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.grey {
     color: rgb(var(--dt-row-grey-text));
 }
@@ -435,6 +465,7 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
 table.table.dataTable > thead > tr > th.lgrey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey));
 }
+
 table.table.dataTable > tbody > tr:not(.selected) > td.lgrey {
     color: rgb(var(--dt-row-l-grey-text));
 }

@@ -33,6 +33,8 @@
             'tws_field_wagon_gruzp_doc': 'Груз-ть, тн (док.)',
             'tws_field_wagon_gruzp_uz': 'Груз-ть, тн (УЗ.)',
             'tws_field_wagon_adm': 'Код адм.',
+            'tws_field_wagon_adm_name': 'Адм.',
+            'tws_field_wagon_adm_abbr': 'Адм.',
             'tws_field_arrival_cargo_group_name': 'Группа груза по прибытию',
             'tws_field_arrival_cargo_name': 'Груз по прибытию ',
             'tws_field_arrival_sertification_data': 'Сертиф. данные',
@@ -114,6 +116,29 @@
             'tws_field_park_abbr': 'Парк (аббр.)',
             'tws_field_way_name': 'Путь (аббр.)',
             'tws_field_name_outer_way': 'Перегон',
+            'tws_field_from_station_name': 'Станция отправления',
+            'tws_field_from_way': 'Путь отпр. (аббр.)',
+            'tws_field_count_wagons_send': 'Отпр. ваг.',
+            'tws_field_count_wagons_arrival': 'Прин. факт.',
+            'tws_field_count_wagons_return': 'Возв (Отм).',
+            'tws_field_count_wagons_accepted': 'Прин. ИДС',
+            'tws_field_from_operation_locomotive1': 'Лок.№1',
+            'tws_field_from_operation_locomotive2': 'Лок.№2',
+            'tws_field_from_operation_end': 'Отправлен',
+            'tws_field_from_operation_create_user': 'Вып. опер. отпр.',
+            'tws_field_outer_way_position': '№ поз.',
+            'tws_field_from_operation_condition_abbr': 'Разм. отпр (аббр.)',
+            'tws_field_from_operation_loading_status': 'Состояние загрузки при отправке',
+            'tws_field_outer_way_start': 'Перегон ваг. пост.',
+            'tws_field_outer_way_end': 'Перегон ваг. сняли',
+            'tws_field_from_wim_close': 'Дисл. отпр. закрыта',
+            'tws_field_from_wim_close_user': 'Дисл. отпр. закрыл',
+            'tws_field_on_station_name': 'Прибыв на ст.',
+            'tws_field_on_station_abbr': 'Прибыв на ст. (аббр)',
+            'tws_field_arrival_station_name': 'Принят на ст.',
+            'tws_field_arrival_station_abbr': 'Принят на ст. (аббр)',
+            'tws_field_on_way': 'Путь приб. (аббр.)',
+            'tws_field_on_operation_end': 'Кон. опер. приб.',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -128,8 +153,17 @@
             'tws_title_status_3': 'Отправлен',
             'tws_title_status_4': 'Возврат',
 
+            'tws_title_no_epd': 'без ЭПД',
 
             'tws_title_link_num': 'Показать историю по вагону...',
+
+            'tws_title_button_select_all_wagon': 'Все вагоны',
+            'tws_title_button_deselect_all': 'Убрать выбор',
+            'tws_title_button_add_sostav': 'Добавить в состав',
+            'tws_title_button_del_wagons_sostav': 'Убрать из состава',
+            'tws_title_button_head_tail': 'Голова\Хвост',
+            'tws_title_button_reverse': 'Реверс',
+
         },
         'en':  //default language: English
         {
@@ -169,6 +203,14 @@
                 field: 'position',
                 data: function (row, type, val, meta) {
                     return row.position;
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_position', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'position_new',
+                data: function (row, type, val, meta) {
+                    return row.position_new;
                 },
                 className: 'dt-body-center',
                 title: langView('tws_field_position', App.Langs), width: "30px", orderable: true, searchable: true
@@ -294,6 +336,22 @@
                 },
                 className: 'dt-body-centr',
                 title: langView('tws_field_wagon_adm', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'wagon_adm_name',
+                data: function (row, type, val, meta) {
+                    return row['wagonAdmName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_wagon_adm_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'wagon_adm_abbr',
+                data: function (row, type, val, meta) {
+                    return row['wagonAdmAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_wagon_adm_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'arrival_cargo_group_name',
@@ -840,7 +898,7 @@
             {
                 field: 'arrival_nom_main_doc',
                 data: function (row, type, val, meta) {
-                    return row.arrivalNomMainDoc ? row.arrivalNomMainDoc : row.arrivalNomDoc;
+                    return row.arrivalNomMainDoc ? (Number(row.arrivalNomMainDoc) > 0 ? row.arrivalNomMainDoc : langView('tws_title_no_epd', App.Langs)) : (row.arrivalNomDoc ? row.arrivalNomDoc : '');
                 },
                 className: 'dt-body-centr',
                 title: langView('tws_field_arrival_nom_main_doc', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1014,7 +1072,7 @@
                         href: '#',
                         text: row["currentWayAmkrNum" + ucFirst(App.Lang)] + '-' + row["currentWayAmkrAbbr" + ucFirst(App.Lang)],
                         target: null,
-/*                        title: langView('tws_title_link_num', App.Langs),*/
+                        /*                        title: langView('tws_title_link_num', App.Langs),*/
                     });
                     if ($link) {
                         return $link.$html[0].outerHTML;
@@ -1028,14 +1086,256 @@
                 data: function (row, type, val, meta) {
                     return row['nameOuterWay' + ucFirst(App.Lang)];
                 },
-                className: 'dt-body-left shorten mw-150',
-                title: langView('tws_field_name_outer_way', App.Langs), width: "150px", orderable: true, searchable: true
+                className: 'dt-body-left shorten mw-250',
+                title: langView('tws_field_name_outer_way', App.Langs), width: "250px", orderable: true, searchable: true
             },
+            // +++ ViewWagonsOfOuterWay
+            // Станция отправления
+            {
+                field: 'from_station_name',
+                data: function (row, type, val, meta) {
+                    return row['fromStationName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_from_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция прибытия (план)
+            {
+                field: 'on_station_name',
+                data: function (row, type, val, meta) {
+                    return row['onStationName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_on_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'on_station_abbr',
+                data: function (row, type, val, meta) {
+                    return row['onStationAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_on_station_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция прибытия (факт)
+            {
+                field: 'arrival_station_name',
+                data: function (row, type, val, meta) {
+                    if (row.arrivalIdStation) {
+                        return row['arrivalStationName' + ucFirst(App.Lang)];
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_arrival_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrival_station_abbr',
+                data: function (row, type, val, meta) {
+                    if (row.arrivalIdStation) {
+                        return row['arrivalStationAbbr' + ucFirst(App.Lang)]
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_arrival_station_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Путь отправки
+            {
+                field: 'from_way',
+                data: function (row, type, val, meta) {
+                    return row["fromWayNum" + ucFirst(App.Lang)] + '-' + row["fromWayAbbr" + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_from_way', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Путь прибытия
+            {
+                field: 'on_way',
+                data: function (row, type, val, meta) {
+                    if (row.onIdWay) {
+                        return row["onWayNum" + ucFirst(App.Lang)] + '-' + row["onWayAbbr" + ucFirst(App.Lang)];
+                    } else {
+                        return '';
+                    }
+
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_on_way', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+
+            // Количество вагонов (отпр, принятых, возвращ...)
+            {
+                field: 'count_wagons_send',
+                data: function (row, type, val, meta) {
+                    return row.countWagonsSend;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_count_wagons_send', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'count_wagons_arrival',
+                data: function (row, type, val, meta) {
+                    return row.countWagonsArrival;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_count_wagons_arrival', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'count_wagons_return',
+                data: function (row, type, val, meta) {
+                    return row.countWagonsReturn;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_count_wagons_return', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'count_wagons_accepted',
+                data: function (row, type, val, meta) {
+                    return row.countWagonsAccepted;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_count_wagons_accepted', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Локомотивы
+            {
+                field: 'from_operation_locomotive1',
+                data: function (row, type, val, meta) {
+                    return row.fromOperationLocomotive1;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_from_operation_locomotive1', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_operation_locomotive2',
+                data: function (row, type, val, meta) {
+                    return row.fromOperationLocomotive2;
+                },
+                className: 'dt-body-centr',
+                title: langView('tws_field_from_operation_locomotive2', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Дата и пользователь создавший состав
+            {
+                field: 'from_operation_end',
+                data: function (row, type, val, meta) {
+                    return row.fromOperationEnd ? moment(row.fromOperationEnd).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_from_operation_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_operation_create_user',
+                data: function (row, type, val, meta) {
+                    return row.fromOperationCreateUser;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_from_operation_create_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outer_way_position',
+                data: function (row, type, val, meta) {
+                    return row.outerWayPosition;
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_outer_way_position', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_operation_condition_abbr',
+                data: function (row, type, val, meta) {
+                    return row['fromOperationConditionAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_from_operation_condition_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_operation_loading_status',
+                data: function (row, type, val, meta) {
+                    return row['fromOperationLoadingStatus' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_from_operation_loading_status', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Дата поставки и снятия с перегона
+            {
+                field: 'outer_way_start',
+                data: function (row, type, val, meta) {
+                    return row.outerWayStart ? moment(row.outerWayStart).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_outer_way_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outer_way_end',
+                data: function (row, type, val, meta) {
+                    return row.outerWayEnd ? moment(row.outerWayEnd).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_outer_way_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_wim_close',
+                data: function (row, type, val, meta) {
+                    return row.fromWimClose ? moment(row.fromWimClose).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_from_wim_close', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'from_wim_close_user',
+                data: function (row, type, val, meta) {
+                    return row.fromWimCloseUser;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_from_wim_close_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // конец операции прибытия
+            {
+                field: 'on_operation_end',
+                data: function (row, type, val, meta) {
+                    return row.onOperationEnd ? moment(row.onOperationEnd).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_on_operation_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // --- ViewWagonsOfOuterWay
 
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
-        var list_buttons = [];
+        var list_buttons = [
+            {
+                button: 'select_all',
+                text: langView('tws_title_button_select_all_wagon', App.Langs),
+                className: 'btn btn-success'
+            },
+            {
+                button: 'select_none',
+                extend: 'selectNone',
+                text: langView('tws_title_button_deselect_all', App.Langs),
+                className: 'btn btn-success'
+            },
+            {
+                button: 'add_sostav',
+                text: langView('tws_title_button_add_sostav', App.Langs),
+                className: 'btn btn-info'
+            },
+            {
+                button: 'del_wagons_sostav',
+                text: langView('tws_title_button_del_wagons_sostav', App.Langs),
+                className: 'btn btn-danger'
+            },
+            {
+                button: 'head_tail',
+                text: langView('tws_title_button_head_tail', App.Langs),
+                className: 'btn btn-info'
+            },
+            {
+                button: 'reverse',
+                text: langView('tws_title_button_reverse', App.Langs),
+                className: 'btn btn-info'
+            },
+        ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
     }
     //==========================================================================================
@@ -1149,6 +1449,28 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
+    table_ws.prototype.init_columns_arrival_cars_way = function () {
+        var collums = [];
+        collums.push({ field: 'position_new', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     table_ws.prototype.init_columns_total_balance = function () {
         var collums = [];
         collums.push({ field: 'remainder_type', title: null, class: null });
@@ -1218,7 +1540,51 @@
         });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_ws.prototype.init_columns_sostav_outer_ways = function () {
+        var collums = [];
+        collums.push({ field: 'name_outer_way', title: null, class: null });
+        collums.push({ field: 'from_station_name', title: null, class: null });
+        collums.push({ field: 'from_way', title: null, class: null });
+        collums.push({ field: 'count_wagons_send', title: null, class: null });
+        collums.push({ field: 'count_wagons_arrival', title: null, class: null });
+        collums.push({ field: 'count_wagons_return', title: null, class: null });
+        collums.push({ field: 'count_wagons_accepted', title: null, class: null });
+        collums.push({ field: 'from_operation_locomotive1', title: null, class: null });
+        collums.push({ field: 'from_operation_locomotive2', title: null, class: null });
+        collums.push({ field: 'from_operation_end', title: null, class: null });
+        collums.push({ field: 'from_operation_create_user', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_ws.prototype.init_columns_wagons_outer_way = function () {
+        var collums = [];
+        collums.push({ field: 'outer_way_position', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
+        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'from_operation_loading_status', title: null, class: null });
+        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'outer_way_start', title: null, class: null });
+        collums.push({ field: 'outer_way_end', title: null, class: null });
+        collums.push({ field: 'from_wim_close', title: null, class: null });
+        collums.push({ field: 'from_wim_close_user', title: null, class: null });
+        collums.push({ field: 'arrival_station_abbr', title: null, class: null });
+        collums.push({ field: 'on_way', title: null, class: null });
+        collums.push({ field: 'on_operation_end', title: null, class: null });
+
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
+    // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
     // Инициализация тип отчета
     table_ws.prototype.init_type_report = function () {
@@ -1281,6 +1647,100 @@
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
+            case 'arrival_cars_way': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = true;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.wimId); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.wirHighlightColor !== null) {
+                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    }
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(2).attr('style', 'background-color:' + data.operatorColor)
+                        //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    // Проверим если по оператору контролировать норму времени, тогда проверить
+                    if (data.arrivalIdleTime < data.arrivalDuration) {
+                        // Превышена норма нахождения вагона на АМКР
+                        $('td', row).eq(29).addClass('idle-time-error');
+                        //$('td.arrival-duration', row).addClass('idle-time-error');
+                        if (data.operatorMonitoringIdleTime) {
+                            $('td', row).eq(1).addClass('idle-time-error');
+                        };
+                    }
+                    // Прибыл
+                    if (data.currentIdOperation === 1) {
+                        //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
+                        $('td', row).eq(0).addClass('red');
+                        $('td', row).eq(1).addClass('red');
+                    }
+                    // Предъявлен или сдан
+                    if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
+                        if (data.outgoingSostavStatus === 2) {
+                            $('td', row).eq(0).addClass('green');
+                            $('td', row).eq(1).addClass('green');
+                        }
+                        if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
+                            $('td', row).eq(0).addClass('yellow');
+                            $('td', row).eq(1).addClass('yellow');
+                        }
+                    }
+                    if (data.id_wim_arrival === null) {
+                        $(row).addClass('ban');  // Отметим вагон заблокирован
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_arrival_cars_way();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.outerWayEnd === null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'del_wagons_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'head_tail',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+
+                ]); 
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
             case 'total_balance': {
                 this.tab_com.paging = false;
                 this.tab_com.searching = false;
@@ -1288,7 +1748,7 @@
                 this.tab_com.info = false;
                 //this.tab_com.columnDefs = null;
                 //this.tab_com.order_column = [0, 'asc'];
-/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.createdRow = function (row, data, index) {
@@ -1306,7 +1766,7 @@
                 this.tab_com.info = false;
                 //this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
@@ -1329,7 +1789,7 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_operators_station();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld();
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr><th class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
                 break;
@@ -1341,7 +1801,7 @@
                 this.tab_com.info = false;
                 //this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
@@ -1364,7 +1824,7 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_operators_way_station();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn();
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
 
@@ -1377,7 +1837,7 @@
                 this.tab_com.info = false;
                 //this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
@@ -1394,13 +1854,14 @@
                         .html(count);
                 };
                 this.tab_com.createdRow = function (row, data, index) {
+                    $('td', row).eq(0).attr('title', data.nameOuterWayRu);
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
                         $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_operators_send_station();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn();
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
 
@@ -1413,7 +1874,7 @@
                 this.tab_com.info = false;
                 //this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
@@ -1430,16 +1891,90 @@
                         .html(count);
                 };
                 this.tab_com.createdRow = function (row, data, index) {
+                    $('td', row).eq(0).attr('title', data.nameOuterWayRu);
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
                         $('td', row).eq(1).attr('style', 'background-color:' + data.operatorColor)
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_operators_arrival_station();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(); 
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn();
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr><th colspan="2" class="text-end">ИТОГО:</th><th class="text-end"></th></tr></tfoot>';
 
+                break;
+            };
+            case 'sostav_outer_ways': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [9, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = true;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.outerWayNumSostav); // id строки дислокации вагона
+                    if (data.countWagonsAccepted > 1) {
+                        $(row).addClass('yellow');
+                    }
+                    $('td', row).eq(0).attr('title', data.nameOuterWayRu);
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_sostav_outer_ways();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag();
+                this.tab_com.dom = 'Bfrtip'; //p
+                break;
+            };
+            case 'wagons_outer_way': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                    if (data.outerWayEnd !== null) {
+                        $(row).addClass('ban');  // Отметим вагон заблокирован
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_wagons_outer_way();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.outerWayEnd === null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ]);
+                this.tab_com.dom = 'Bfrtip';
                 break;
             };
             // Таблица составы по умолчанию (если не выставят тип отчета)
@@ -1450,7 +1985,7 @@
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.table_columns = this.tab_com.init_columns_default();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(); 
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld();
                 break;
             };
         }
