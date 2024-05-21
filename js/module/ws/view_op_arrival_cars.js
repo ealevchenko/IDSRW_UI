@@ -81,6 +81,9 @@
             'vopac_mess_clear_sostav': 'Формирую состав, убираю выбранные вагоны...',
             'vopac_mess_reverse_head_sostav': 'Формирую состав, реверс голова-хвост',
             'vopac_mess_reverse_sostav': 'Формирую состав, реверс вагонов...',
+
+            'vopac_confirm_title': 'Внимание!',
+            'vopac_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} прибытия? Все выбранные и перенесённые вагоны в количестве {1} будут сброшены! ',
         },
         'en':  //default language: English
         {
@@ -92,10 +95,315 @@
     // js/module/view_op_common.js
     var VIEW_COMMON = App.view_op_common;
     // js/view/shared/common.js
+    var MCF = App.modal_confirm_form;
     var ALERT = App.alert_form;
     var FD = App.form_dialog;
     // js/module/ws/table_ws.js
     var TWS = App.table_ws;
+
+    // ассинхроная функция (нумерации вагонов)
+    var wagons_enumerate_async = function (row, field, position, callback) {
+        var len = row.length;
+        if (len === 0) {
+            if (typeof callback === 'function') {
+                callback(position);
+            }
+            return 0;
+        }
+        function EnumerateWagonsAsync(i) {
+            if (i < len) {
+                // Поместим следующий вызов функции в цикл событий.
+                setTimeout(function () {
+                    row[i][field] = position;
+                    position++;
+                    EnumerateWagonsAsync.call(this, i + 1);
+                }.bind(this), 0);
+            } else {
+                // Так как достигнут конец массива, мы вызываем коллбэк
+                if (typeof callback === 'function') {
+                    callback(position);
+                } else return 0;
+            }
+        }
+        EnumerateWagonsAsync.call(this, 0);
+    }.bind(this);
+    // ассинхроная функция (Реверса нумерации вагонов)
+    var wagons_reverse_enumerate_async = function (callback) {
+        var row = this.wagons.filter(function (i) {
+            return i.id_wim_arrival !== null;
+        })
+        if (row && row.length > 0) {
+            row = row.sort(function (a, b) {
+                return a.position_new - b.position_new;
+            });
+        };
+        var len = row.length;
+        if (len === 0) {
+            if (typeof callback === 'function') {
+                callback();
+            } else return 0;
+        } else {
+            var position = row[row.length - 1].position_new;
+        };
+        //row = row.sort(function (a, b) { return a[field] - b[field]; });
+        function ReverseEnumerateWagonsAsync(i) {
+            if (len > 0) {
+                // Поместим следующий вызов функции в цикл событий.
+                setTimeout(function () {
+                    row[i].position_new = position;
+                    position--;
+                    len--;
+                    ReverseEnumerateWagonsAsync.call(this, i + 1);
+                }.bind(this), 0);
+            } else {
+                // Так как достигнут конец массива, мы вызываем коллбэк
+                if (typeof callback === 'function') {
+                    callback();
+                } else return 0;
+            }
+        }
+        ReverseEnumerateWagonsAsync.call(this, 0);
+    };
+    // ассинхроная функция (Убрать вагоны)
+    var wagons_del_async = function (row, callback) {
+        var len = row.length;
+        if (len === 0) {
+            if (typeof callback === 'function') {
+                callback();
+            };
+            return 0;
+        }
+        function DelWagonsAsync(i) {
+            if (i < len) {
+                // Поместим следующий вызов функции в цикл событий.
+                setTimeout(function () {
+                    // Найти и удалить с пути приема
+                    var wagon = this.wagons.find(
+                        function (o) { return o.wim_id === row[i].wim_id });
+                    if (wagon !== null) {
+                        // Удалить
+                        var index = this.wagons.indexOf(wagon);
+                        this.wagons.splice(index, 1);
+                    };
+                    // Пометим вагон в составе перегона
+                    var wagon_sostav = this.wagons_sostav.find(
+                        function (o) { return o.from_id_wim === row[i].wim_id });
+                    if (wagon_sostav !== null) {
+                        wagon_sostav.id_way_arrival = null;
+                    }
+                    DelWagonsAsync.call(this, i + 1);
+                }.bind(this), 0);
+            } else {
+                // Так как достигнут конец массива, мы вызываем коллбэк
+                if (typeof callback === 'function') {
+                    callback();
+                } else return 0;
+            }
+        }
+        DelWagonsAsync.call(this, 0);
+    };
+    // ассинхроная функция (Добавить вагоны на путь прибытия)
+    var wagons_add_async = function (row, position, callback) {
+        var len = row.length;
+        this.position = position;
+
+        function AddWagonsAsync(i) {
+            if (i < len) {
+                // Поместим следующий вызов функции в цикл событий.
+                setTimeout(function () {
+                    // Создадим строку вагон на пути
+                    var new_car_way = {
+                        position_new: this.position,
+                        id_wim_arrival: row[i].fromIdWim,
+                        arrivalCargoGroupNameEn: row[i].arrivalCargoGroupNameEn,
+                        arrivalCargoGroupNameRu: row[i].arrivalCargoGroupNameRu,
+                        arrivalCargoNameEn: row[i].arrivalCargoNameEn,
+                        arrivalCargoNameRu: row[i].arrivalCargoNameRu,
+                        arrivalCommercialConditionEn: null,
+                        arrivalCommercialConditionRu: null,
+                        arrivalCompositionIndex: null,
+                        arrivalConditionAbbrEn: row[i].arrivalConditionAbbrEn,
+                        arrivalConditionAbbrRu: row[i].arrivalConditionAbbrRu,
+                        arrivalConditionNameEn: row[i].arrivalConditionNameEn,
+                        arrivalConditionNameRu: row[i].arrivalConditionNameRu,
+                        arrivalConditionRed: row[i].arrivalCompositionRed,
+                        arrivalDateAdoption: null,
+                        arrivalDivisionAmkrAbbrEn: row[i].arrivalDivisionAmkrAbbrEn,
+                        arrivalDivisionAmkrAbbrRu: row[i].arrivalDivisionAmkrAbbrRu,
+                        arrivalDivisionAmkrCode: row[i].arrivalDivisionAmkrCode,
+                        arrivalDivisionAmkrNameEn: row[i].arrivalDivisionAmkrNameEn,
+                        arrivalDivisionAmkrNameRu: row[i].arrivalDivisionAmkrNameRu,
+                        arrivalDuration: null,
+                        arrivalIdCommercialCondition: null,
+                        arrivalIdSertificationData: row[i].arrivalIdSertificationData,
+                        arrivalIdleTime: null,
+                        arrivalNomDoc: row[i].arrivalNomDoc,
+                        arrivalNomMainDoc: row[i].arrivalNomMainDoc,
+                        arrivalSertificationDataEn: row[i].arrivalSertificationDataEn,
+                        arrivalSertificationDataRu: row[i].arrivalSertificationDataRu,
+                        arrivalShipperCode: null,
+                        arrivalShipperNameEn: null,
+                        arrivalShipperNameRu: null,
+                        arrivalStationAmkrAbbrEn: null,
+                        arrivalStationAmkrAbbrRu: null,
+                        arrivalStationAmkrNameEn: null,
+                        arrivalStationAmkrNameRu: null,
+                        arrivalStationFromCode: null,
+                        arrivalStationFromNameEn: null,
+                        arrivalStationFromNameRu: null,
+                        arrivalUsageFee: null,
+                        currentConditionAbbrEn: row[i].fromOperationConditionAbbrEn,
+                        currentConditionAbbrRu: row[i].fromOperationConditionAbbrRu,
+                        currentConditionNameEn: row[i].fromOperationConditionNameEn,
+                        currentConditionNameRu: row[i].fromOperationConditionNameRu,
+                        currentConditionRed: null,
+                        currentIdLoadingStatus: row[i].fromOperationIdLoadingStatus,
+                        currentIdOperation: row[i].fromIdOperation,
+                        currentLoadingStatusEn: row[i].fromOperationLoadingStatusEn,
+                        currentLoadingStatusRu: row[i].fromOperationLoadingStatusRu,
+                        currentOperationEnd: row[i].fromOperationEnd,
+                        currentOperationNameEn: row[i].fromOperationNameEn,
+                        currentOperationNameRu: row[i].fromOperationNameRu,
+                        currentOperationStart: row[i].fromOperationStart,
+                        currentStationDuration: null,
+                        currentStationIdleTime: null,
+                        currentWagonBusy: row[i].fromBusy,
+                        currentWayDuration: null,
+                        diffVesg: null,
+                        docOutgoingCar: row[i].docOutgoingCar,
+                        idLimitingLoading: row[i].idLimitingLoading,
+                        idOperator: row[i].idOperator,
+                        idOwnerWagon: null,
+                        instructionalLettersDatetime: null,
+                        instructionalLettersNote: null,
+                        instructionalLettersNum: null,
+                        instructionalLettersStationCode: null,
+                        instructionalLettersStationName: null,
+                        limitingAbbrEn: row[i].limitingAbbrEn,
+                        limitingAbbrRu: row[i].limitingAbbrRu,
+                        limitingNameEn: row[i].limitingNameEn,
+                        limitingNameRu: row[i].limitingNameRu,
+                        num: row[i].num,
+                        operatorAbbrEn: row[i].operatorAbbrEn,
+                        operatorAbbrRu: row[i].operatorAbbrRu,
+                        operatorColor: null,
+                        operatorMonitoringIdleTime: null,
+                        operatorPaid: null,
+                        operatorRentEnd: null,
+                        operatorRentStart: null,
+                        operatorsEn: row[i].operatorsEn,
+                        operatorsRu: row[i].operatorsRu,
+                        outgoingDate: null,
+                        outgoingIdReturn: null,
+                        outgoingReturnCauseEn: null,
+                        outgoingReturnCauseRu: null,
+                        outgoingSostavStatus: null,
+                        ownerWagonAbbrEn: null,
+                        ownerWagonAbbrRu: null,
+                        ownerWagonEn: null,
+                        ownerWagonRu: null,
+                        position: null,
+                        sapIncomingSupplyCargoCode: null,
+                        sapIncomingSupplyCargoName: null,
+                        sapIncomingSupplyDate: null,
+                        sapIncomingSupplyNum: null,
+                        sapIncomingSupplyPos: null,
+                        sapIncomingSupplyTime: null,
+                        sapIncomingSupplyWarehouseCode: null,
+                        sapIncomingSupplyWarehouseName: null,
+                        wagonAdm: row[i].wagonAdm,
+                        wagonAdmAbbrEn: row[i].wagonAdmAbbrEn,
+                        wagonAdmAbbrRu: row[i].wagonAdmAbbrRu,
+                        wagonAdmNameEn: row[i].wagonAdmNameEn,
+                        wagonAdmNameRu: row[i].wagonAdmNameRu,
+                        wagonBanUz: null,
+                        wagonBruttoAmkr: null,
+                        wagonBruttoDoc: null,
+                        wagonClosedRoute: null,
+                        wagonDateRemUz: null,
+                        wagonGruzpDoc: null,
+                        wagonGruzpUz: null,
+                        wagonRod: row[i].wagonRod,
+                        wagonRodAbbrEn: row[i].wagonRodAbbrEn,
+                        wagonRodAbbrRu: row[i].wagonRodAbbrRu,
+                        wagonRodNameEn: row[i].wagonRodNameEn,
+                        wagonRodNameRu: row[i].wagonRodNameRu,
+                        wagonTaraArcDoc: null,
+                        wagonTaraDoc: null,
+                        wagonTaraUz: null,
+                        wagonTypeEn: null,
+                        wagonTypeRu: null,
+                        wagonVesgAmkr: null,
+                        wagonVesgDoc: null,
+                        wimId: row[i].fromIdWim,
+                        wioId: 0,
+                        wirId: row[i].wirId,
+                    };
+                    this.wagons.push(new_car_way);
+                    this.position++;
+                    // Пометим вагон в составе перегона
+                    var wagon_sostav = this.wagons_sostav.find(
+                        function (o) { return o.fromIdWim === row[i].fromIdWim });
+                    if (wagon_sostav !== null) {
+                        wagon_sostav.id_way_arrival = this.idWay;
+                    }
+                    AddWagonsAsync.call(this, i + 1);
+                }.bind(this), 0);
+            } else {
+                // Так как достигнут конец массива, мы вызываем коллбэк
+                if (typeof callback === 'function') {
+                    callback(this.position);
+                } else return 0;
+            }
+        };
+        // получим вагоны на пути существующие
+        var row_old = this.wagons.filter(function (i) {
+            return i.id_wim_arrival === null;
+        }).sort(function (a, b) {
+            return a.position_new - b.position_new;
+        });
+        // получим вагоны на пути ранее добавленные
+        var row_new = this.wagons.filter(function (i) {
+            return i.id_wim_arrival !== null;
+        }).sort(function (a, b) {
+            return a.position_new - b.position_new;
+        });
+        // выполним добавление
+        if (!this.head) {
+            // добавим в хвост
+            wagons_enumerate_async.call(this, row_old, 'position_new', 1, function (position) {
+                this.position = position;
+                wagons_enumerate_async.call(this, row_new, 'position_new', position, function (position) {
+                    // Если указан вагоны для добавления тогда добавить иначе пропустить
+                    if (len === 0) {
+                        if (typeof callback === 'function') {
+                            callback(this.position);
+                        };
+                        return 0;
+                    } else {
+                        this.position = position;
+                        AddWagonsAsync.call(this, 0);
+                    }
+                }.bind(this))
+            }.bind(this))
+        } else {
+            // добавим в голову
+            wagons_enumerate_async.call(this, row_new, 'position_new', 1, function (position) {
+                this.position = position;
+                wagons_enumerate_async.call(this, row_old, 'position_new', position + len, function (position) {
+                    // Если указан вагоны для добавления тогда добавить иначе пропустить
+                    if (len === 0) {
+                        if (typeof callback === 'function') {
+                            callback(this.position);
+                        };
+                        return 0;
+                    } else {
+                        AddWagonsAsync.call(this, 0);
+                    }
+                }.bind(this));
+            }.bind(this));
+        }
+    };
 
     function view_op_arrival_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
@@ -137,6 +445,7 @@
 
         this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
         this.wagons = [];       // Список вагонов на пути (рабочий)
+        this.wagons_add = [];   // Список вагонов которые нужно перенести на путь (рабочий)
         this.num_sostav = null; // Номер выбранного состава
         this.wagons_sostav = [];    // Список вагонов выбранного состава (рабочий)
         this.wagons_all = [];       // Список всех вагонов всех составов (используем для выборки вагонов по составу)
@@ -155,6 +464,25 @@
 
         // Сообщение
         LockScreen(langView('vopac_mess_init_panel', App.Langs));
+        this.mcf = new MCF(); // Создадим экземпляр окно сообщений
+        this.mcf.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'sm',
+            //header_class: null,
+            //header_text: 'header text',
+            //body_class: null,
+            //body_text: 'border text',
+            bt_close_text: 'Close',
+            bt_ok_text: 'Ok',
+            //fn_init: null,          // Обработаем событие форма инициализировалась
+            //fn_Ok: null,          // Обработаем событие форма нажата "Ок"
+        });
+        //this.mcf.open("sssssss", "dddddddddddddd", function () {
+
+        //}.bind(this));
         //----------------------------------
         // Alert
         this.alert = new this.view_com.fe_ui.bs_alert({
@@ -315,7 +643,7 @@
                             e.preventDefault();
                             // Обработать выбор
                             var id = Number($(e.currentTarget).val());
-                            this.update_wagons_of_way(id, function () {
+                            this.update_wagons_of_way(this.id_station, id, function () {
                                 LockScreenOff();
                             }.bind(this));
                         }.bind(this),
@@ -625,9 +953,31 @@
                 fn_action_view_detali: function (rows) {
 
                 },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    if (this.wagons_add !== null && this.wagons_add.length > 0 && rowData !== null && rowData.length > 0) {
+                        var new_sostav = rowData[0].outerWayNumSostav;
+                        e.preventDefault();
+                        this.mcf.open(
+                            langView('vopac_confirm_title', App.Langs),
+                            langView('vopac_confirm_mess_new_sostav', App.Langs).format(new_sostav, this.wagons_add.length),
+                            function () {
+                                // новый сотав
+                                this.tsf.tab_com.select_row(new_sostav);
+                                this.view_open_wagon_outer_ways_of_sostav(new_sostav, function (wagons) {
+                                    this.twf.view(wagons);
+                                    LockScreenOff();
+                                }.bind(this));
+                            }.bind(this),
+                            function () {
+
+                            }.bind(this)
+                        );
+                    }
+                }.bind(this),
                 fn_select_rows: function (rows, type) {
                     if (type === "select") {
                         if (rows != null && rows.length > 0) {
+
                             this.view_open_wagon_outer_ways_of_sostav(rows[0].outerWayNumSostav, function (wagons) {
                                 this.twf.view(wagons);
                                 LockScreenOff();
@@ -668,7 +1018,6 @@
                     if (rowData && rowData.length > 0 && rowData[0].outerWayEnd !== null) {
                         e.preventDefault();
                         this.from_alert.out_warning_message(langView('vopac_mess_warning_wagon_ban_operation', App.Langs).format(rowData[0].num, rowData[0]['arrivalStationName' + ucFirst(App.Lang)]));
-
                     }
                 }.bind(this),
                 fn_select_rows: function (rows) {
@@ -678,7 +1027,20 @@
 
                 }.bind(this),
                 fn_button_action: function (name, e, dt, node, config) {
-
+                    if (name === 'add_sostav') {
+                        if (this.id_way >= 0) {
+                            LockScreen(langView('vopac_mess_create_sostav', App.Langs));
+                            // Выполнить операцию добавить вагоны
+                            this.wagons_add = this.twf.tab_com.get_select_row();
+                            wagons_add_async.call(this, this.wagons_add, 1, function (position) {
+                                //this.tab_wagon_from.select_rows_wagons = null;
+                                this.view_wagons(); // Обновить вагоны на пути приема
+                                LockScreenOff();
+                            }.bind(this));
+                        } else {
+                            this.from_alert.out_warning_message(langView('vopac_mess_not_select_way_on', App.Langs));
+                        }
+                    }
                 }.bind(this),
                 fn_enable_button: function (tb) {
                     var index = tb.obj_t_report.rows({ selected: true });
@@ -695,55 +1057,62 @@
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
         LockScreen(langView('vopac_mess_load_operation', App.Langs));
+        var id_station_on = -1;
         this.id_station = -1;
         this.id_way = -1;
-        if (id_way) {
+        if (id_way > 0) {
             var way = this.view_com.api_dir.getWays_Of_Id(id_way);
             if (way) {
-                this.id_station = way.idStation;
+                id_station_on = way.idStation;
                 // Отобразим выбор на панеле
-                this.form_from_setup.el.select_id_station.val(this.id_station);
-                this.id_way = id_way;
+                this.form_from_setup.el.select_id_station.val(id_station_on);
+                //this.id_way = id_way;
             }
         };
-        this.update_sostav_outer_ways_and_way_of_station(this.id_station, this.id_way, this.num_sostav, function (sostav) {
+        this.update_sostav_outer_ways_and_way_of_station(id_station_on, id_way, this.num_sostav, function (sostav) {
             LockScreenOff();
         }.bind(this));
     };
     // Обновить составы на перегонах станции прибытия и пути станции прибытия
     view_op_arrival_cars.prototype.update_sostav_outer_ways_and_way_of_station = function (id_station, id_way, num_sostav, callback) {
-        this.id_station = id_station;
-        //this.id_way = id_way;
         this.num_sostav = num_sostav;
         // сбросим выбранные вагоны на пути и состав
         this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
         this.wagons = [];       // Список вагонов на пути (рабочий)
         this.wagons_sostav = [];// Список вагонов выбранного состава (рабочий)
         this.id_outer_way = -1;   // id перегона
-        this.station_from = null; // Станция отправления
-        // Обновить пути станции прибытия
-        this.form_on_setup.el.select_id_way_on.update(this.view_com.api_dir.getListValueTextWaysOfStation(this.id_station), id_way);
+
         // Загрузим вагоны на пути приема
-        this.update_wagons_of_way(id_way, function () {
+        this.update_wagons_of_way(id_station, id_way, function () {
             if (typeof callback === 'function') {
                 callback();
             }
         }.bind(this));
     };
     // Обновить составы на перегонах станции прибытия и пути станции прибытия
-    view_op_arrival_cars.prototype.update_wagons_of_way = function (id_way, callback) {
+    view_op_arrival_cars.prototype.update_wagons_of_way = function (id_station, id_way, callback) {
         this.id_way = id_way;
         // Загрузим вагоны на пути приема
         this.load_wagons_of_way(id_way, function () {
-            // Обновить составы на перегонах станции прибытия
-            this.load_open_wagon_outer_ways_station_on(this.id_station, function (sostav) {
-                this.twf.view([]); // очистим детали
-                this.tsf.view(sostav, this.num_sostav);
-                // Отложеный вызов - обновили данные
+            if (this.id_station != id_station) {
+                // Обновить пути станции прибытия
+                this.id_station = id_station;
+                this.station_from = null; // Станция отправления
+                this.form_on_setup.el.select_id_way_on.update(this.view_com.api_dir.getListValueTextWaysOfStation(this.id_station), id_way);
+                // Обновить составы на перегонах станции прибытия
+                this.load_open_wagon_outer_ways_station_on(this.id_station, function (sostav) {
+                    this.twf.view([]); // очистим детали
+                    this.tsf.view(sostav, this.num_sostav);
+                    // Отложеный вызов - обновили данные
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }.bind(this));
+            } else {
                 if (typeof callback === 'function') {
                     callback();
                 }
-            }.bind(this));
+            }
         }.bind(this));
     };
 
@@ -870,6 +1239,7 @@
         this.wagons_sostav = [];
         if (num_sostav !== null && this.wagons_all != null && this.wagons_all.length > 0) {
             LockScreen(langView('vopac_mess_load_wagons', App.Langs));
+            this.num_sostav = num_sostav;
             this.wagons_sostav = this.wagons_all.filter(function (i) {
                 return $.trim(i.outerWayNumSostav) === $.trim(num_sostav);
             }.bind(this))
