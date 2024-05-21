@@ -2337,207 +2337,195 @@ var intVal = function (i) {
 
     App.form_element = form_element;
 
-    //function form_infield() {
-    //    this.fe = new form_element();
-    //}
+    //================================================================================
+    // Класс модальной формы
+    function modal_confirm_form() {
+        this.fe = new form_element();
+    }
+    // Инициализация модальной формы
+    modal_confirm_form.prototype.init = function (options) {
+        // Настройки формы правки строк таблицы
+        this.settings = $.extend({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: null,
+            header_class: null,
+            header_text: null,
+            body_class: null,
+            body_text: null,
+            bt_close_text: 'Close',
+            bt_ok_text: 'Ok',
+            fn_init: null,              // Обработаем событие форма инициализировалась
+            fn_close: null,             // Обработаем событие форма закрывается
+        }, options);
+        this.result = false;
+        //---------------------------------------------------------
+        // Создадим модальную форму для редактирования и добавим ее в секции body
+        //<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        //    <div class="modal-dialog">
+        //        <div class="modal-content">
+        //            <div class="modal-header">
+        //                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        //                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        //            </div>
+        //            <div class="modal-body">
+        //                ...
+        //            </div>
+        //            <div class="modal-footer">
+        //                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        //                <button type="button" class="btn btn-primary">Understood</button>
+        //            </div>
+        //        </div>
+        //    </div>
+        //</div>
+        var modal = new this.fe.div({
+            id: 'modal-form',
+            class: 'modal fade',
+        });
+        add_tag(modal.$html, 'data-bs-backdrop', this.settings.static ? 'static' : null);
+        add_tag(modal.$html, 'data-bs-keyboard', this.settings.keyboard);
+        add_tag(modal.$html, 'tabindex', '-1');
+        add_tag(modal.$html, 'aria-hidden', this.settings.hidden);
+        var modal_dialog = new this.fe.div({
+            class: 'modal-dialog',
+        });
+        add_class(modal_dialog.$html, this.settings.centered ? 'modal-dialog-centered' : null);
+        add_class(modal_dialog.$html, this.settings.fsize !== null ? 'modal-' + this.settings.fsize : null);
+        var modal_content = new this.fe.div({
+            class: 'modal-content',
+        });
+        var modal_header = new this.fe.div({
+            class: 'modal-header',
+        });
+        var h5 = new this.fe.hx({
+            size: 5,
+            id: null,
+            class: 'modal-title',
+            text: this.settings.header_text
+        });
+        add_class(h5.$html, this.settings.header_class);
 
-    //form_infield.prototype.init = function (options) {
-    //    this.init = true;
+        var bt_hclose = new this.fe.bs_button({
+            class: 'btn-close',
+            /*            fn_click: this.settings.fn_close,*/
+        });
+        add_tag(bt_hclose.$html, 'data-bs-dismiss', 'modal');
+        add_tag(bt_hclose.$html, 'aria-label', 'Close');
+
+        var modal_body = new this.fe.div({
+            class: 'modal-body',
+        });
+        add_class(modal_body.$html, this.settings.body_class);
+        append_text(modal_body.$html, this.settings.body_text);
+        var modal_footer = new this.fe.div({
+            class: 'modal-footer',
+        });
+        var bt_close = new this.fe.bs_button({
+            /*            class: 'btn-close',*/
+            color: 'secondary',
+            text: this.settings.bt_close_text
+        });
+        add_tag(bt_close.$html, 'data-bs-dismiss', 'modal');
+        var bt_ok = new this.fe.bs_button({
+            /*            class: 'btn-close',*/
+            color: 'primary',
+            text: this.settings.bt_ok_text,
+            fn_click: function (e) {
+                e.preventDefault();
+                this.result = true;
+                this.$modal_obj.modal('hide');
+            }.bind(this)
+        });
+
+        this.$header = h5.$html;
+        modal_header.$html.append(h5.$html).append(bt_hclose.$html);
+        this.$body = modal_body.$html;
+        modal_footer.$html.append(bt_close.$html).append(bt_ok.$html);
+        modal_content.$html.append(modal_header.$html).append(modal_body.$html).append(modal_footer.$html);
+        modal_dialog.$html.append(modal_content.$html);
+        modal.$html.append(modal_dialog.$html);
+        $('body').append(modal.$html);
+        //---------------------------------------------------------
+        // Инициализация модальной формы
+        this.$modal_obj = modal.$html.modal({
+            keyboard: this.settings.keyboard,
+            show: !this.settings.hidden
+        }).on('show.bs.modal', function (event) {
+            // do something...
+        }.bind(this)).on('hide.bs.modal', function (event) {
+            if (typeof this.settings.fn_close === 'function') {
+                this.settings.fn_close(this.result);
+            }
+        }.bind(this));
+    };
+    // Показать данные 
+    modal_confirm_form.prototype.open = function (title, message, fn_ok, fn_cancel) {
+        this.result = false;
+        this.$header.empty().append(title);
+        this.$body.empty().append(message);
+        this.settings.fn_close = function (res) {
+            if (res) {
+                // Ok
+                if (typeof fn_ok === 'function') {
+                    fn_ok();
+                }
+            } else {
+                // Отмена выполнения
+                if (typeof fn_cancel === 'function') {
+                    fn_cancel();
+                }
+            }
+        };
+        this.$modal_obj.modal('show');
+    };
+    //// Выполнить отображение и обработку результатов диалогового окна
+    //modal_confirm_form.prototype.action_view = function (options) {
+    //    if (!options) { throw new Error('Не указан опции'); }
     //    // Настройки формы правки строк таблицы
-    //    this.settings = $.extend({
-    //        alert: null,
-    //        mode: null,
-    //        fields: [],
-    //        id: null,
-    //        form_class: null,
-    //        validation: true,
-    //        fn_init: null,
-    //        fn_validation: null,
+    //    var settings = $.extend({
+    //        form_name: '',
+    //        form_message: '',
+    //        message_operation: '',
+    //        fn_run: null,
+    //        fn_cancel: null,
     //    }, options);
-    //    var form_add = new this.fe.bs_form({
-    //        id: this.settings.id,
-    //        class: this.settings.form_class,
-    //    });
-    //    var form_edit = new this.fe.bs_form({
-    //        id: this.settings.id,
-    //        class: this.settings.form_class,
-    //    });
-    //    /*        var form_edit = new this.fe.el_form(this.settings.id, this.settings.cl_form + ' text-left');*/
-
-    //    // Установим режим form по умолчанию ('add' & 'edit')
-    //    this.mode = this.settings.mode !== null && this.settings.mode !== '' ? this.settings.mode : null;
-    //    //var button_ok_edit = new this.fc.el_button('sm', 'btn-primary', null, 'Выполнить ', 'far fa-check-circle');
-
-    //    // Добавить кнопку выполнить
-    //    //if (this.settings.button_add_ok) {
-    //    //    var button_ok_add = new this.fc.el_button('sm', 'btn-primary', null, this.settings.button_add_ok.title, 'far fa-check-circle');
-    //    //    button_ok_add.$button.on('click', function (e) {
-    //    //        if (typeof this.settings.button_add_ok.click === 'function') {
-    //    //            this.settings.button_add_ok.click(e);
-    //    //        };
-    //    //    }.bind(this));
-    //    //    form_add.$form.append(button_ok_add.$button);
-    //    //}
-
-    //    this.$form_add = form_add.$html;
-    //    this.$form_edit = form_edit.$html;
-    //    this.alert_add = this.settings.alert;
-    //    this.alert_edit = this.settings.alert;
-    //    // Алерт
-    //    if (!this.settings.alert) {
-    //        var alert_add = new this.fe.bs_alert({
-    //            //id: null,
-    //            //class: null,
-    //            //style: null,
-    //            //color: null,
-    //            //bt_close: false,
-    //            //fn_click_close: null,
-    //        });
-    //        this.$form_add.append(alert_add.$html);
-    //        this.alert_add = new alert_form(alert_add.$html);
-
-    //        var alert_edit = new this.fe.bs_alert({
-    //            //id: null,
-    //            //class: null,
-    //            //style: null,
-    //            //color: null,
-    //            //bt_close: false,
-    //            //fn_click_close: null,
-    //        });
-    //        this.$form_edit.append(alert_edit.$html);
-    //        this.alert_edit = new alert_form(alert_edit.$html);
-    //    }
-
-    //    // Алерт
-    //    //if (!this.settings.alert) {
-    //    //    var $alert = new this.fc.el_alert();
-    //    //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
-    //    //        var $alert_add = $alert.$alert;
-    //    //        this.$form_add.append($alert_add);
-    //    //        this.alert_add = new alert_form($alert_add);
-    //    //        //TODO: решить вопрос привязки this.alert_add к общей валидации
-    //    //    }
-    //    //    var $alert = new this.fc.el_alert();
-    //    //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
-    //    //        var $alert_edit = $alert.$alert;
-    //    //        this.$form_edit.append($alert_edit);
-    //    //        this.alert_edit = new alert_form($alert_edit);
-    //    //        //TODO: решить вопрос привязки this.alert_edit к общей валидации
-    //    //    }
-
-
-    //    //};
-    //    // Привяжем событие submit
-    //    this.$form_add.on('submit', function (event) {
-    //        this.submit(event);
+    //    this.view(settings.form_name, settings.form_message, function (res) {
+    //        if (res) {
+    //            // Выполнить операцию
+    //            LockScreen(settings.message_operation);
+    //            if (typeof settings.fn_run === 'function') {
+    //                settings.fn_run();
+    //            }
+    //        } else {
+    //            // Отмена выполнения
+    //            if (typeof settings.fn_cancel === 'function') {
+    //                settings.fn_cancel();
+    //            }
+    //        }
     //    }.bind(this));
-    //    // Привяжем событие submit
-    //    this.$form_edit.on('submit', function (event) {
-    //        this.submit(event);
-    //    }.bind(this));
-    //    //---------------------------------------------------------
-    //    // Создаем элементы и отрисовываем их на форме
-    //    // Получим список элементов которые должны отображатся на форме
-    //    ////this.el_destroy = []; // Элементы которые нужно удалить методом destroy()
-    //    ////this.data = null;
-    //    /////*        this.el_validation = $([]); // Элементы для валидации*/
-    //    ////// Отсортируем элементы по row
-    //    ////var form_elements = this.settings.fields.filter(function (i) {
-    //    ////    return i.row !== null;
-    //    ////}).sort(function (a, b) {
-    //    ////    return a.row - b.row;
-    //    ////});
-    //    ////var row = 0;
-    //    ////var col = 0;
-    //    ////var row_add$ = null;
-    //    ////var row_edit$ = null;
-    //    ////// Пройдемся по элементам и отрисуем их на форме
-    //    ////$.each(form_elements, function (i, el_field) {
-    //    ////    if (el_field.row !== row) {
-    //    ////        // Это новая строка, создадим ее
-    //    ////        row = el_field.row; // запомним для следующей проверки
-    //    ////        col = 0;            // начнем счет col с 0;
-    //    ////        // Форма добавить
-    //    ////        var form_row_add$ = new this.fc.el_div_form_row();
-    //    ////        if (form_row_add$ && form_row_add$.$div && form_row_add$.$div.length > 0) {
-    //    ////            row_add$ = form_row_add$.$div;
-    //    ////            this.$form_add.append(row_add$); // добавим на форму
-    //    ////        } else {
-    //    ////            throw new Error('Не удалось создать элемент <div class="form-row">');
-    //    ////        };
-    //    ////        // форма править
-    //    ////        var form_row_edit$ = new this.fc.el_div_form_row();
-    //    ////        if (form_row_edit$ && form_row_edit$.$div && form_row_edit$.$div.length > 0) {
-    //    ////            row_edit$ = form_row_edit$.$div;
-    //    ////            this.$form_edit.append(row_edit$); // добавим на форму
-    //    ////        } else {
-    //    ////            throw new Error('Не удалось создать элемент <div class="form-row">');
-    //    ////        };
-    //    ////    };
-    //    ////    if (el_field.col !== col) {
-    //    ////        // Это новая ячейка сетки, строки
-    //    ////        col = el_field.col; // запомним для следующей проверки
-    //    ////        // Форма добавить
-    //    ////        var $form_col_add = new this.fc.el_col(el_field.col_prefix, el_field.col_size, (this.settings.mb ? 'mb-' + this.settings.mb : ''))
-    //    ////        if ($form_col_add && $form_col_add.$col && $form_col_add.$col.length > 0) {
-    //    ////            row_add$.append($form_col_add.$col); // добавим на форму
-    //    ////            this.add_element_form(el_field, 'add', $form_col_add.$col);
-    //    ////        } else {
-    //    ////            throw new Error('Не удалось создать элемент <div class="col-..-..">');
-    //    ////        };
-    //    ////        // форма править
-    //    ////        var $form_col_edit = new this.fc.el_col(el_field.col_prefix, el_field.col_size, (this.settings.mb ? 'mb-' + this.settings.mb : ''))
-    //    ////        if ($form_col_edit && $form_col_edit.$col && $form_col_edit.$col.length > 0) {
-    //    ////            row_edit$.append($form_col_edit.$col); // добавим на форму
-    //    ////            this.add_element_form(el_field, 'edit', $form_col_edit.$col);
-    //    ////        } else {
-    //    ////            throw new Error('Не удалось создать элемент <div class="col-..-..">');
-    //    ////        };
-    //    ////    }
-    //    ////}.bind(this));
-    //    ////// Пройдемся по зависимостям
-    //    ////$.each(form_elements.filter(function (i) { return i.control !== null }), function (i, el_control) {
-    //    ////    if (el_control.control) {
-    //    ////        var n_control = el_control.control;
-    //    ////        var element_control = form_elements.find(function (o) {
-    //    ////            return o.name === n_control;
-    //    ////        });
-    //    ////        if (element_control) {
-    //    ////            if (element_control.element_add && el_control.element_add) {
-    //    ////                el_control.element_add['element_control'] = element_control.element_add;
-    //    ////            }
-    //    ////            if (element_control.element_edit && el_control.element_edit) {
-    //    ////                el_control.element_edit['element_control'] = element_control.element_edit;
-    //    ////            }
-    //    ////        } else {
-    //    ////            throw new Error('Неопределен контролируемый элемент : ' + n_control);
-    //    ////        }
-    //    ////    }
-    //    ////}.bind(this));
-    //    ////// Валидация
-    //    ////if (this.settings.validation) {
-    //    ////    this.validation = new validation_form();
-    //    ////    var elements_add = this.$form_add.find('input, select, textarea');
-    //    ////    var elements_edit = this.$form_edit.find('input, select, textarea');
-    //    ////    var elements = [];
-    //    ////    elements = $.merge(elements_add, elements_edit);
-    //    ////    this.validation.init({
-    //    ////        alert: this.settings.alert, //TODO: решить вопрос привязки this.alert_add или this.alert_edit к общей валидации
-    //    ////        elements: elements,
-    //    ////    });
-    //    ////};
-    //    // Завершение инициализации
-    //    if (typeof this.settings.fn_init === 'function') {
-    //        this.settings.fn_init(this.init);
-    //    }
     //};
+    // Закрыть форму 
+    modal_confirm_form.prototype.close = function () {
+        this.$modal_obj.modal('hide');
+    };
+    // 
+    modal_confirm_form.prototype.destroy = function () {
+        if (this.$modal_obj) {
+            this.$modal_obj.modal('dispose');
+        }
+        // Удалить старый элемент
+        var $mcf = $('div#modal-form');
+        if ($mcf.length > 0) {
+            $mcf.remove();
+        }
+    };
 
-
-    //App.form_infield = form_infield;
+    App.modal_confirm_form = modal_confirm_form;
 
     //================================================================================
-    // Класс валидации элементов формы
-
+    // Класс окна формы "Диалог"
     function form_dialog() {
         this.fe = new form_element();
         this.el = {};       // Все элементы формы
@@ -2751,6 +2739,9 @@ var intVal = function (i) {
 
     App.form_dialog = form_dialog;
 
+
+    //================================================================================
+    // Класс валидации элементов формы
     function validation_form() {
 
     }
@@ -2857,7 +2848,6 @@ var intVal = function (i) {
         this.out_info_message(mes_ok);
         return true;
     };
-
     // --------------------------------------------------------------------------
     // Установить признак ошибка
     validation_form.prototype.set_form_element_error = function (o, mes_error, out_message) {
