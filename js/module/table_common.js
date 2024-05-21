@@ -523,11 +523,6 @@
         }
         //----------------------------------
     };
-    //table_common.prototype.select_rows = function () {
-    //    if (typeof this.settings.fn_enable_button === 'function') {
-    //        this.settings.fn_enable_button(this);
-    //    }
-    //};
     // Отображение кнопки добавить
     table_common.prototype.enable_button = function () {
         if (typeof this.settings.fn_enable_button === 'function') {
@@ -555,7 +550,15 @@
         //this.select_rows();
         this.enable_button();
     };
-
+    // Получить выбранные строки
+    table_common.prototype.get_select_row = function () {
+        var rowData = this.obj_t_report
+            .rows({ selected: true })
+            .data()
+            .toArray();
+        return rowData;
+    };
+    // Выбрать строку
     table_common.prototype.select_row = function (id_select) {
         if (id_select !== null) {
             this.id_select = id_select
