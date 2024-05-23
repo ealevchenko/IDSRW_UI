@@ -2158,9 +2158,9 @@ var intVal = function (i) {
         this.val = function (value) {
             if (value !== undefined && moment(value).isValid) {
                 switch (this.settings.format) {
-                    case 'datetime': { var dt = moment(value).format('YYYY-MM-DDThh:mm'); break; }
+                    case 'datetime': { var dt = moment(value).format('YYYY-MM-DDTHH:mm'); break; }
                     case 'date': { var dt = moment(value).format('YYYY-MM-DD'); break; }
-                    case 'time': { var dt = moment(value).format('hh:mm'); break; }
+                    case 'time': { var dt = moment(value).format('HH:mm'); break; }
                 }
                 this.$element.val(dt);
             } else {
