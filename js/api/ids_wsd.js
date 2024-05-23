@@ -76,6 +76,12 @@
     ids_wsd.prototype.getViewOpenWagonsOfOuterWaysStationOn = function (id, callback) {
         this.api_com.get('/WSD/view/wagons/outer_way/station_on/' + id, callback);
     };
+    //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Операции) =========================================================
+    //АРМ, Операция принять вагоны на внутреную станцию АМКР 
+    ids_wsd.prototype.postArrivalWagonsOfStation = function (operation, callback) {
+        this.api_com.post('/WSD/operation/arrival/', operation, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;
