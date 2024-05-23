@@ -25,6 +25,7 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
+    var MCF = App.modal_confirm_form;
 
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
@@ -77,6 +78,16 @@
         this.$main.append(this.offcanvas.$html);
         this.bs_offcanvas = new bootstrap.Offcanvas(this.offcanvas.$html);
 
+        this.mcf = new MCF(); // Создадим экземпляр окно сообщений
+        this.mcf.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'sm',
+            bt_close_text: 'Cancel',
+            bt_ok_text: 'Ok',
+        });
         // На проверку окончания инициализации
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
