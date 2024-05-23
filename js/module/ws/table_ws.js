@@ -1659,8 +1659,10 @@
                 this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-                this.tab_com.type_select_rows = 1; // Выбирать одну
-                this.tab_com.table_select = true;
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.wimId); // id строки дислокации вагона
@@ -1704,13 +1706,13 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_arrival_cars_way();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag([
                     {
                         name: 'select_all',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.tab_com.obj_t_report.rows(function (idx, data, node) {
-                                return data.outerWayEnd === null;
+                                return data.id_wim_arrival !== null;
                             }).select();
                         }.bind(this)
                     },
@@ -1955,7 +1957,7 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_wagons_outer_way();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag([
                     {
                         name: 'select_all',
                         action: function () {
