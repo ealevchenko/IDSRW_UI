@@ -122,7 +122,34 @@ var AJAXComplete = function () {
                 }
             },
             error: function (x, y, z) {
-                OnAJAXError("ids_directory" + api_url, x, y, z);
+                OnAJAXError("api_common" + api_url, x, y, z);
+            },
+            complete: function () {
+                AJAXComplete();
+            },
+        });
+    };
+
+    api_common.prototype.post = function (api_url, operation, callback) {
+        $.ajax({
+            type: 'POST',
+            url: this.settings.url_api + api_url,
+            data: JSON.stringify(operation),
+            async: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: "application/json;charset=utf-8",
+            beforeSend: function () {
+                AJAXBeforeSend();
+            },
+            success: function (data) {
+                if (typeof callback === 'function') {
+                    callback(data);
+                }
+            },
+            error: function (x, y, z) {
+                OnAJAXError("api_common" + api_url, x, y, z);
             },
             complete: function () {
                 AJAXComplete();
@@ -187,11 +214,6 @@ var AJAXComplete = function () {
         }
         return list;
     };
-    //// Вернуть строку с первой заглавной
-    //api_common.prototype.ucFirst = function (str) {
-    //    if (!str) return str;
-    //    return str[0].toUpperCase() + str.slice(1);
-    //};
 
     App.api_common = api_common;
 
