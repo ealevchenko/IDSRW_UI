@@ -156,6 +156,11 @@
             className: 'btn btn-warning'
         },
         {
+            button: 'eye',
+            text: '<i class="fa-solid fa-eye"></i>',
+            className: 'btn btn-warning'
+        },
+        {
             button: 'page_length',
             extend: 'pageLength',
         },
@@ -185,6 +190,7 @@
         }
         this.fe_ui = new FE();
         this.selector = this.$td_report.attr('id');
+        this.eye = false;
     }
 
     //------------------------------- Общие методы ----------------------------------------------------
@@ -328,6 +334,34 @@
         buttons.push({
             name: 'refresh',
             action: function (e, dt, node, config) {
+                this.button_action(config.button, e, dt, node, config);
+            }.bind(this)
+        });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
+        buttons.push({ name: 'page_length', action: null });
+        return this.init_buttons(buttons, this.list_buttons);
+    };
+    // инициализация кнопок стандартная 
+    table_common.prototype.init_button_Ex_Prn_Fld_Ref_EyE_Pag = function (btns) {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                this.button_action(config.button, e, dt, node, config);
+            }.bind(this)
+        });
+        buttons.push({
+            name: 'eye',
+            action: function (e, dt, node, config) {
+                this.eye = !this.eye;
+                node[0].innerHTML = '<span>' + (this.eye ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>' + '</span>');
                 this.button_action(config.button, e, dt, node, config);
             }.bind(this)
         });
@@ -560,6 +594,7 @@
     };
     // Выбрать строку
     table_common.prototype.select_row = function (id_select) {
+        this.obj_t_report.rows().deselect();
         if (id_select !== null) {
             this.id_select = id_select
             this.obj_t_report.row('#' + this.id_select).select();
