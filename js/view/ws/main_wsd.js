@@ -72,6 +72,7 @@
     var current_option_way = null;
     var current_num_wagon = null;
     var wagons = [];
+    var calc_wagons = [];
     var balance = [];
     var operators = [];
     var operators_way = [];
@@ -91,13 +92,40 @@
         var load_wagons_of_way = function (id_way, num, callback) {
             if (id_way !== null && id_way >= 0) {
                 wagons = [];
+                calc_wagons = [];
                 LockScreen(langView('mwsd_mess_load_wagons', App.Langs));
-                api_wsd.getViewWagonsOfIdWay(id_way, function (wagons) {
-                    wagons = wagons;
-                    if (typeof callback === 'function') {
-                        callback(wagons);
+                var pr_load = 2;
+                var out_load1 = function (pr_load) {
+                    if (pr_load === 0) {
+                        $.each(calc_wagons, function (i, el) {
+                            if (el.error === 0) {
+                                var wag = wagons.find(function (o) {
+                                    return o.num === el.num;
+                                }.bind(this));
+                                if (wag) {
+                                    wag.arrivalUsageFee = el.calcFeeAmount;
+                                }
+                            }
+                        }.bind(this));
+
+                        if (typeof callback === 'function') {
+                            callback(wagons);
+                        }
                     }
-                }.bind(this));
+                };
+
+                api_wsd.getViewWagonsOfIdWay(id_way, function (ws) {
+                    wagons = ws;
+                    pr_load--;
+                    out_load1(pr_load);
+                });
+
+                api_wsd.getCalcUsageFeeCarsOfWay(id_way, function (calc_ws) {
+                    calc_wagons = calc_ws;
+                    pr_load--;
+                    out_load1(pr_load);
+                });
+
             } else {
                 if (typeof callback === 'function') {
                     callback([]);

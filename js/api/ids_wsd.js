@@ -76,6 +76,11 @@
     ids_wsd.prototype.getViewOpenWagonsOfOuterWaysStationOn = function (id, callback) {
         this.api_com.get('/WSD/view/wagons/outer_way/station_on/' + id, callback);
     };
+    //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Плата за пользование) =========================================================
+    // Расчет платы за пользование вагонов на пути
+    ids_wsd.prototype.getCalcUsageFeeCarsOfWay = function (id, callback) {
+        this.api_com.get('/WSD/view/calc_wagon/way/' + id, callback);
+    };
     //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Операции) =========================================================
     //АРМ, Операция принять вагоны на внутреную станцию АМКР 
     ids_wsd.prototype.postArrivalWagonsOfStation = function (operation, callback) {
