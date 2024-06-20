@@ -15,6 +15,8 @@
         'default':  //default language: ru
         {
             'vopc_mess_init_module': 'Выполняю инициализацию модуля view_op_common',
+            'vopc_title_button_Ok': 'Ok',
+            'vopc_title_button_Cancel': 'Отмена',
         },
         'en':  //default language: English
         {
@@ -85,8 +87,8 @@
             hidden: true,
             centered: true,
             fsize: 'sm',
-            bt_close_text: 'Cancel',
-            bt_ok_text: 'Ok',
+            bt_close_text: langView('vopc_title_button_Cancel', App.Langs),
+            bt_ok_text: langView('vopc_title_button_Ok', App.Langs),
         });
         // На проверку окончания инициализации
         //----------------------------------

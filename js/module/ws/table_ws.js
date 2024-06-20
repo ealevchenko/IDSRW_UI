@@ -21,22 +21,22 @@
         {
             'tws_field_position': '№ поз.',
             'tws_field_num': '№ вагона',
-            'tws_field_operator_abbr': 'Оператор (аббр.)',
-            'tws_field_limiting_abbr': 'Огран. (аббр.)',
-            'tws_field_owner_wagon_abbr': 'Собст. УЗ (аббр.)',
+            'tws_field_operator_abbr': 'Оператор',
+            'tws_field_limiting_abbr': 'Огран.',
+            'tws_field_owner_wagon_abbr': 'Собст. УЗ',
             'tws_field_operator_paid': 'Приз. платн.',
-            'tws_field_wagon_rod_abbr': 'Род ваг.(аббр.)',
+            'tws_field_wagon_rod_abbr': 'Род',
             'tws_field_wagon_type': 'Тип вагона',
             'tws_field_arrival_condition_abbr': 'Разм.',
             'tws_field_current_condition_abbr': 'Разм. тек.',
-            'tws_field_wagon_date_rem_uz': 'Дата деповского ремонта по УЗ',
-            'tws_field_wagon_gruzp_doc': 'Груз-ть, тн (док.)',
-            'tws_field_wagon_gruzp_uz': 'Груз-ть, тн (УЗ.)',
-            'tws_field_wagon_adm': 'Код адм.',
+            'tws_field_wagon_date_rem_uz': 'Рем. УЗ',
+            'tws_field_wagon_gruzp_doc': 'ГП, тн (док.)',
+            'tws_field_wagon_gruzp_uz': 'ГП, тн (УЗ.)',
+            'tws_field_wagon_adm': 'Адм.',
             'tws_field_wagon_adm_name': 'Адм.',
             'tws_field_wagon_adm_abbr': 'Адм.',
-            'tws_field_arrival_cargo_group_name': 'Группа груза по прибытию',
-            'tws_field_arrival_cargo_name': 'Груз по прибытию ',
+            'tws_field_arrival_cargo_group_name': 'Группа груза',
+            'tws_field_arrival_cargo_name': 'Груз ПРИБ',
             'tws_field_arrival_sertification_data': 'Сертиф. данные',
             'tws_field_arrival_id_commercial_condition': 'id ком. сост.',
             'tws_field_arrival_commercial_condition': 'Комм. сост.',
@@ -46,7 +46,7 @@
             'tws_field_arrival_shipper_name': 'Отправитель',
             'tws_field_arrival_station_amkr_name': 'Стан. назн. АМКР',
             'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
-            'tws_field_current_loading_status': 'Груж/порож.',
+            'tws_field_current_loading_status': 'Статус',
             'tws_field_current_wagon_busy': 'Занят (операция)',
             'tws_field_current_operation_name': 'Последняя операция над вагоном',
             'tws_field_current_operation_start': 'Дата начала выполнения операции',
@@ -1923,7 +1923,7 @@
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.outerWayNumSostav); // id строки дислокации вагона
-                    if (data.countWagonsAccepted > 1) {
+                    if (data.countWagonsAccepted >= 1) {
                         $(row).addClass('yellow');
                     }
                     $('td', row).eq(0).attr('title', data.nameOuterWayRu);

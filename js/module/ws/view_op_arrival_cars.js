@@ -20,7 +20,7 @@
     {
         'default':  //default language: ru
         {
-            'vopac_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
+            'vopac_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
             'vopac_card_header_on': 'ПРИНЯТЬ НА СТАНЦИЮ',
             'vopac_card_header_from': 'СОСТАВЫ НА ПОДХОДАХ',
             'vopac_fieldset_on_table_title': 'Сформированный состав',
@@ -90,7 +90,7 @@
 
             'vopac_confirm_title': 'Внимание!',
             'vopac_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} прибытия? Все выбранные и перенесённые вагоны в количестве {1} будут сброшены! ',
-            'vopac_confirm_mess_apply_arrival_wagons': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР" в количестве: {0} (ваг.), станция отправки: [{1}]?',
+            'vopac_confirm_mess_apply_arrival_wagons': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР" в количестве: {0} (ваг.), станция отправки: {1}?',
 
         },
         'en':  //default language: English
@@ -1135,6 +1135,15 @@
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
         LockScreen(langView('vopac_mess_load_operation', App.Langs));
+        // Очистить сообщения и форму
+        this.form_on_setup.clear_all();
+        // Сбросим установки (время и локомотивы)
+        this.form_on_setup.el.datalist_locomotive1.val('');
+        this.form_on_setup.el.datalist_locomotive2.val('');
+        this.form_on_setup.el.input_datetime_time_aplly.val(moment());
+        this.wagons_add = []; 
+        this.form_from_setup.clear_all();
+        // Сбросим вагоны переноса
         var id_station_on = -1;
         this.id_station = -1;
         this.id_way = -1;
@@ -1457,7 +1466,12 @@
             }
         }.bind(this));
     };
-
+    // Очистить сообщения
+    view_op_arrival_cars.prototype.out_clear = function () {
+        if (this.settings.alert) {
+            this.settings.alert.clear_message()
+        }
+    }
     // Выбрать все вагоны выбранного состава 
     view_op_arrival_cars.prototype.destroy = function () {
         // удалим элементы этого модуля, затем view_com
