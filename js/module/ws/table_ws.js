@@ -1471,6 +1471,28 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
+    table_ws.prototype.init_columns_outgoing_cars_way = function () {
+        var collums = [];
+        collums.push({ field: 'position', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     table_ws.prototype.init_columns_total_balance = function () {
         var collums = [];
         collums.push({ field: 'remainder_type', title: null, class: null });
@@ -1583,6 +1605,29 @@
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_ws.prototype.init_columns_wagons_new_sostav_outer_way = function () {
+        var collums = [];
+        collums.push({ field: 'position_new', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -1647,6 +1692,7 @@
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
+            // Вагоны на пути прибытия
             case 'arrival_cars_way': {
                 this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
                 this.tab_com.pageLength = 10;
@@ -1740,6 +1786,47 @@
                     }
 
                 ]); 
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Вагоны на пути отправки
+            case 'outgoing_cars_way': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_outgoing_cars_way();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            this.tab_com.obj_t_report.rows().select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ]);
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
@@ -1926,6 +2013,9 @@
                     if (data.countWagonsAccepted >= 1) {
                         $(row).addClass('yellow');
                     }
+                    if (data.banSostav) {
+                        $(row).addClass('ban');  // Отметим вагон заблокирован
+                    }
                     $('td', row).eq(0).attr('title', data.nameOuterWayRu);
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_sostav_outer_ways();
@@ -1933,6 +2023,7 @@
                 this.tab_com.dom = 'Bfrtip'; //p
                 break;
             };
+            // Вагоны прибывшего сотава
             case 'wagons_outer_way': {
                 this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
                 this.tab_com.pageLength = 10;
@@ -1976,6 +2067,55 @@
                         enabled: false
                     }
                 ]);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Вагоны сформированого состава для отправки
+            case 'wagons_new_sostav_outer_way': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_wagons_new_sostav_outer_way();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            this.tab_com.obj_t_report.rows().select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'del_wagons_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            this.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+
+                ]); 
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };

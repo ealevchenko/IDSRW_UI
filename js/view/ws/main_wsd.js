@@ -43,6 +43,10 @@
     var VOAC = App.view_op_arrival_cars;
     var voac = new VOAC('main.container-fluid');
 
+    var VOOC = App.view_op_outgoing_cars;
+    var vooc = new VOOC('main.container-fluid');
+
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -216,7 +220,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 9;
+            var process = 10;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -268,7 +272,7 @@
             $('#btn-external-operations').on('click', 'button', function (event) {
                 switch (event.currentTarget.id) {
                     case 'send-cars': {
-                        //bs_operation_detali.show();
+                        vooc.view(current_id_way);
                         break;
                     };
                     case 'arrival-cars': {
@@ -581,6 +585,24 @@
             });
             // Операции прием вагонов
             voac.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции отправка вагонов
+            vooc.init({
                 alert: null,
                 api_dir: null,
                 api_wsd: null,

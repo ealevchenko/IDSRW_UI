@@ -73,6 +73,7 @@
     ids_wsd.prototype.getViewOperatorsArrivalOfIdStation = function (id, callback) {
         this.api_com.get('/WSD/view/operators/arrival/station/' + id, callback);
     };
+    // Вагоны на пути прибытия на станцию 
     ids_wsd.prototype.getViewOpenWagonsOfOuterWaysStationOn = function (id, callback) {
         this.api_com.get('/WSD/view/wagons/outer_way/station_on/' + id, callback);
     };
