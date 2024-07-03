@@ -84,10 +84,13 @@
     };
     //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Операции) =========================================================
     //АРМ, Операция принять вагоны на внутреную станцию АМКР 
-    ids_wsd.prototype.postArrivalWagonsOfStation = function (operation, callback) {
+    ids_wsd.prototype.postArrivalWagonsOfStationAMKR = function (operation, callback) {
         this.api_com.post('/WSD/operation/arrival/', operation, callback);
     };
-
+    //АРМ, Операция отправить вагоны на внутреную станцию АМКР 
+    ids_wsd.prototype.postOutgoingWagonsOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/outgoing/', operation, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
