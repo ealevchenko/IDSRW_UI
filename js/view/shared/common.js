@@ -1962,7 +1962,8 @@ var intVal = function (i) {
                     this.$element.prop("disabled", true);
                 }
             } else {
-                return this.$element.text();
+                //return this.$element.text();
+                return this.$element.find(":selected").text();
             };
         };
         this.update = function (data, default_value) {
