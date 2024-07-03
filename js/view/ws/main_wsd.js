@@ -28,6 +28,7 @@
     var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
     var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
+
     var TW = App.table_tree_way;
     var tw = new TW('DIV#tree-way');
 
