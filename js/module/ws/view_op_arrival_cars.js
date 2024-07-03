@@ -1437,7 +1437,7 @@
     // выполнить операцию
     view_op_arrival_cars.prototype.apply = function (data) {
         LockScreen(langView('vopac_mess_run_operation_arrival', App.Langs));
-        this.view_com.api_wsd.postArrivalWagonsOfStation(data, function (result) {
+        this.view_com.api_wsd.postArrivalWagonsOfStationAMKR(data, function (result) {
             if (result && result.result > 0) {
                 this.form_on_setup.validation_common.clear_all();
                 // Сбросим установки (время и локомотивы)
