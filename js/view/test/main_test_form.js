@@ -644,7 +644,7 @@
         //    form_text: 'Это help-element_check',
         //    form_text_class: null
         //});
-        //row.$html.append(element_check.$html);
+/*        row.$html.append(element_check.$html);*/
 
         //var element_switch = new fe_ui.bs_form_check({
         //    id: 'element_switch',
@@ -1409,6 +1409,76 @@
             childs: []
         };
 
+        var form_input_validationCheck = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common',
+                id: 'element_check',
+                name: 'element_check',
+                label: 'element_check',
+                element_type: 'checkbox',
+                element_switch: false,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: true,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                        //main_alert.clear_message(); main_alert.out_info_message('validationCustom02 : ' + value);
+                    }.bind(this),
+                },
+                validation: true,
+                feedback_invalid: 'error-element_check',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 6,
+                col_class: null,
+                form_text: 'Это help-element_check',
+                form_text_class: null
+            },
+            childs: []
+        };
+        var form_input_validationCheck1 = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common',
+                id: 'element_check1',
+                name: 'element_check1',
+                label: 'element_check1',
+                element_type: 'checkbox',
+                element_switch: false,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: false,
+                element_required: true,
+                element_readonly: false,
+                element_options: {
+                    default: false,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                        //main_alert.clear_message(); main_alert.out_info_message('validationCustom02 : ' + value);
+                    }.bind(this),
+                },
+                validation: true,
+                feedback_invalid: 'error-element_check',
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 6,
+                col_class: null,
+                form_text: 'Это help-element_check',
+                form_text_class: null
+            },
+            childs: []
+        };
 
         col1.childs.push(bt_1);
         col1.childs.push(bt_2);
@@ -1424,6 +1494,8 @@
         objs.push(form_input_validationDateTime);
         objs.push(form_input_validationDate);
         objs.push(form_input_validationTime);
+        objs.push(form_input_validationCheck);
+        objs.push(form_input_validationCheck1);
         this.form_test_dialog.init({
             alert: main_alert,
             objs: objs,

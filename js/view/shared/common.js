@@ -1583,7 +1583,7 @@ var intVal = function (i) {
         } else {
             this.$html = col.$html[0].innerHTML;
         }
-
+        this.$element = element.$html;
     }
     // bootstrap-components ----------------------------------
 
@@ -2191,7 +2191,45 @@ var intVal = function (i) {
         };
         this.init();
     };
-
+    // Инициализация текстового поля "INPUT"
+    form_element.prototype.init_checkbox = function (element, options) {
+        this.settings = $.extend({
+            default_value: null,
+            fn_change: null,
+        }, options);
+        this.type = element.attr('type');
+        this.$element = element;
+        this.init = function () {
+            this.update(this.settings.default_value);
+            if (typeof this.settings.fn_change === 'function') {
+                this.$element.on("change", this.settings.fn_change.bind(this));
+            }
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                this.$element.prop('checked', Boolean(value));
+            } else {
+                return this.$element.prop('checked');
+            };
+        };
+        this.update = function (default_value) {
+            this.$element.val(default_value);
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.$element.val(false);
+            this.$element.prop("disabled", true);
+        };
+        this.init();
+    };
     //----------------------------------------------------------------------------
     // Автоматически формируем документы на форме
     form_element.prototype.add_obj = function (content, objs, obj_form, callback) {
@@ -2322,6 +2360,23 @@ var intVal = function (i) {
                             validation_group: obj.options.validation_group,
                             type: 'input_datetime',
                             element: new this.fe.init_input_datetime(obj_html.$element, obj.options.element_options),
+                            $element: obj_html.$element,
+                            destroy: false
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+                };
+                if (obj.obj === 'bs_form_check') {
+                    obj.options.obj_form = obj_form;
+                    var obj_html = new this.bs_form_check(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'input_checkbox',
+                            element: new this.fe.init_checkbox(obj_html.$element, obj.options.element_options),
                             $element: obj_html.$element,
                             destroy: false
                         });

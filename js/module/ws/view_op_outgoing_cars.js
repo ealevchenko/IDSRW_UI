@@ -33,7 +33,7 @@
             'vopoc_text_label_way_from': 'Выберите путь отправления состава...',
 
 
-            'vopoc_title_placeholder_station_on': 'Станция прибытия:',
+            //'vopoc_title_placeholder_station_on': 'Станция прибытия:',
 
             'vopoc_title_label_outer_way': 'Внешний путь:',
             'vopoc_text_label_outer_way': 'Выберите путь примыкания',
@@ -1033,7 +1033,6 @@
         this.update_from_station_on(id_station_on, id_way_on, function () {
             pr_1--;
             out_pr1(pr_1);
-
         }.bind(this));
         // Обновим станцию прибытия и внешний путь и составы на пути
         this.update_from_station_outer_ways_of_on_station(id_station_on, this.id_station_from, this.id_outer_way, this.num_sostav, function () {

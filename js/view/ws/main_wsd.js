@@ -47,6 +47,8 @@
     var VOOC = App.view_op_outgoing_cars;
     var vooc = new VOOC('main.container-fluid');
 
+    var VORC = App.view_op_return_cars;
+    var vorc = new VORC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -221,7 +223,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 10;
+            var process = 11;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -281,7 +283,7 @@
                         break;
                     };
                     case 'return-cars': {
-                        //bs_operation_detali.show();
+                        vorc.view(current_id_way);
                         break;
                     };
                 };
@@ -620,7 +622,24 @@
                     }.bind(this));
                 }
             });
-
+            // Операции возврат вагонов
+            vorc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
 
 
         }.bind(this));
