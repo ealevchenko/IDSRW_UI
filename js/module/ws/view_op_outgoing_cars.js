@@ -247,7 +247,7 @@
             fn_db_update: this.settings.fn_db_update,
             fn_init: this.settings.fn_init,
             fn_close: this.settings.fn_close,
-        });
+        }, function () { }.bind(this));
         this.id_station_on = -1;        // Значения по умолчанию
         this.id_way_on = -1;            // Значения по умолчанию
         this.id_station_from = -1;      // Значения по умолчанию
@@ -281,13 +281,6 @@
         this.view_com.$title.append(langView('vopoc_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
-
-        //----------------------------------
-        if (typeof this.settings.fn_init === 'function') {
-            this.settings.fn_init(this.result_init);
-        }
-        //----------------------------------
-
         // Сообщение
         LockScreen(langView('vopoc_mess_init_panel', App.Langs));
         //----------------------------------
@@ -391,6 +384,7 @@
                 if (process === 0) {
                     //----------------------------------
                     if (typeof this.settings.fn_init === 'function') {
+                        console.log('Close view_op_outgoing_cars');
                         this.settings.fn_init(this.result_init);
                     }
                     //----------------------------------
@@ -708,6 +702,7 @@
                     this.on_setup.$html.append(this.form_on_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_outgoing_cars] [form_on_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
@@ -716,8 +711,8 @@
             var row_wagons_on = new this.view_com.fe_ui.bs_row({ id: 'wagons-new-sostav-outer-way', class: 'pt-2' });
 
             this.on_table.$html.append(row_sostav_on.$html).append(row_wagons_on.$html);
-            this.tsow = new TWS('div#sostav-outer-ways');
-            this.tsow.init({
+            this.tsow_opoc = new TWS('div#sostav-outer-ways');
+            this.tsow_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
                 detali_table: false,
@@ -727,6 +722,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_outgoing_cars] [tsow_opoc] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -754,8 +750,8 @@
                 }.bind(this),
             });
 
-            this.twnsow = new TWS('div#wagons-new-sostav-outer-way');
-            this.twnsow.init({
+            this.twnsow_opoc = new TWS('div#wagons-new-sostav-outer-way');
+            this.twnsow_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -765,6 +761,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_outgoing_cars] [twnsow_opoc] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -787,7 +784,7 @@
                     if (name === 'del_wagons_sostav') {
                         LockScreen(langView('vopoc_mess_clear_sostav', App.Langs));
                         var base = this;
-                        var rows = this.twnsow.tab_com.get_select_row();
+                        var rows = this.twnsow_opoc.tab_com.get_select_row();
                         // Убрать вагоны
                         wagons_del_async.call(this, rows, function () {
                             // Авто нумерация
@@ -924,6 +921,7 @@
                     this.from_setup.$html.append(this.form_from_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_outgoing_cars] [form_from_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
@@ -931,8 +929,8 @@
             var row_out_cars_way = new this.view_com.fe_ui.bs_row({ id: 'outgoing-cars-way', class: 'pt-2' });
             this.from_table.$html.append(row_out_cars_way.$html);
 
-            this.tocw = new TWS('div#outgoing-cars-way');
-            this.tocw.init({
+            this.tocw_opoc = new TWS('div#outgoing-cars-way');
+            this.tocw_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -942,6 +940,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_outgoing_cars] [tocw_opoc] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -965,7 +964,7 @@
                             var position_start = wagon_max_position && wagon_max_position.position_new !== null ? wagon_max_position.position_new + 1 : 1;
 
 
-                            var rows = this.tocw.tab_com.get_select_row();
+                            var rows = this.tocw_opoc.tab_com.get_select_row();
                             //if (rows && rows.length > 0) {
                             //    this.wagons_add = this.wagons_add.concat(rows);
                             //};
@@ -1360,7 +1359,7 @@
                 el.banSostav = true;
             }
         }.bind(this));
-        this.tsow.view(this.sostav_all, null);
+        this.tsow_opoc.view(this.sostav_all, null);
     };
     // Отобразить вагоны на пути отправки
     view_op_outgoing_cars.prototype.view_wagons_of_way = function () {
@@ -1368,13 +1367,13 @@
         var wagons_from = this.wagons.filter(function (i) {
             return i.position_new === null;
         });
-        this.tocw.view(wagons_from, null);
+        this.tocw_opoc.view(wagons_from, null);
 
         // Показать вагоны сформированного состава
         var wagons_on = this.wagons.filter(function (i) {
             return i.position_new !== null;
         });
-        this.twnsow.view(wagons_on, null);
+        this.twnsow_opoc.view(wagons_on, null);
     };
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных

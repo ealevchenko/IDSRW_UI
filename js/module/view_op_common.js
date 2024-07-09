@@ -46,8 +46,9 @@
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
-    view_op_common.prototype.init = function (options) {
+    view_op_common.prototype.init = function (options, fn_init) {
         this.result_init = true;
+        console.log('Init view_op_common');
         LockScreen(langView('vopc_mess_init_module', App.Langs));
         // теперь выполним инициализацию
         // Определим основные свойства
@@ -94,8 +95,9 @@
         });
         // На проверку окончания инициализации
         //----------------------------------
-        if (typeof this.settings.fn_init === 'function') {
-            this.settings.fn_init(this.result_init);
+        if (fn_init === 'function') {
+            console.log('Close view_op_common');
+            fn_init(this.result_init);
         }
         //----------------------------------
     };

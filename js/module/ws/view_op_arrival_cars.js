@@ -75,7 +75,7 @@
             'vopac_mess_cancel_operation': 'Операция "ПРИНЯТЬ НА СТАНЦИЮ АМКР" – отменена',
             'vopac_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
             'vopac_mess_not_select_way_on': 'Выберите путь для приема вагонов!',
-            'vopac_mess_ok_operation' : 'Состав принят, в количестве {0} (ваг.)',
+            'vopac_mess_ok_operation': 'Состав принят, в количестве {0} (ваг.)',
 
             'vopac_mess_load_operation': 'Загружаю операции...',
             'vopac_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -436,7 +436,7 @@
             fn_db_update: this.settings.fn_db_update,
             fn_init: this.settings.fn_init,
             fn_close: this.settings.fn_close,
-        });
+        },function () { }.bind(this));
         this.id_station = -1;       // По умолчанию не выбрана
         this.id_way = -1;           // По умолчанию не выбрана
         this.stations = [];         // Список станций (полный)
@@ -464,13 +464,6 @@
         this.view_com.$title.append(langView('vopac_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
-
-        //----------------------------------
-        if (typeof this.settings.fn_init === 'function') {
-            this.settings.fn_init(this.result_init);
-        }
-        //----------------------------------
-
         // Сообщение
         LockScreen(langView('vopac_mess_init_panel', App.Langs));
         //----------------------------------
@@ -574,6 +567,7 @@
                 if (process === 0) {
                     //----------------------------------
                     if (typeof this.settings.fn_init === 'function') {
+                        console.log('Close view_op_arrival_cars');
                         this.settings.fn_init(this.result_init);
                     }
                     //----------------------------------
@@ -850,14 +844,15 @@
                     this.on_setup.$html.append(this.form_on_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_arrival_cars] [form_on_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
 
             var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'arrival-cars-way', class: 'pt-2' });
             this.on_table.$html.append(row_arr_cars_way.$html);
-            this.tacw = new TWS('div#arrival-cars-way');
-            this.tacw.init({
+            this.tacw_opac = new TWS('div#arrival-cars-way');
+            this.tacw_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -867,6 +862,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_arrival_cars] [tacw_opac] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -893,7 +889,7 @@
                     if (name === 'del_wagons_sostav') {
                         LockScreen(langView('vopac_mess_clear_sostav', App.Langs));
                         var base = this;
-                        var rows = this.tacw.tab_com.get_select_row();
+                        var rows = this.tacw_opac.tab_com.get_select_row();
                         if (rows && rows.length > 0) {
                             var new_wagons_add = [];
                             $.each(this.wagons_add, function (i, el) {
@@ -1012,6 +1008,7 @@
                     this.from_setup.$html.append(this.form_from_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_arrival_cars] [form_from_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
@@ -1019,8 +1016,8 @@
             var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
             var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'wagons-outer-way', class: 'pt-2' });
             this.from_table.$html.append(row_sostav_from.$html).append(row_wagons_from.$html);
-            this.tsf = new TWS('div#sostav-outer-ways');
-            this.tsf.init({
+            this.tsf_opac = new TWS('div#sostav-outer-ways');
+            this.tsf_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
                 detali_table: false,
@@ -1030,6 +1027,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_arrival_cars] [tsf_opac] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -1044,7 +1042,7 @@
                             langView('vopac_confirm_mess_new_sostav', App.Langs).format(new_sostav, this.wagons_add.length),
                             function () {
                                 // новый сотав
-                                this.tsf.tab_com.select_row(new_sostav);
+                                this.tsf_opac.tab_com.select_row(new_sostav);
                             }.bind(this),
                             function () {
 
@@ -1070,8 +1068,8 @@
                 }.bind(this),
             });
 
-            this.twf = new TWS('div#wagons-outer-way');
-            this.twf.init({
+            this.twf_opac = new TWS('div#wagons-outer-way');
+            this.twf_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -1081,6 +1079,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_arrival_cars] [twf_opac] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -1104,7 +1103,7 @@
                         if (this.id_way >= 0) {
                             LockScreen(langView('vopac_mess_create_sostav', App.Langs));
                             // Выполнить операцию добавить вагоны
-                            var rows = this.twf.tab_com.get_select_row();
+                            var rows = this.twf_opac.tab_com.get_select_row();
                             if (rows && rows.length > 0) {
                                 this.wagons_add = this.wagons_add.concat(rows);
                             };
@@ -1141,7 +1140,7 @@
         this.form_on_setup.el.datalist_locomotive1.val('');
         this.form_on_setup.el.datalist_locomotive2.val('');
         this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-        this.wagons_add = []; 
+        this.wagons_add = [];
         this.form_from_setup.clear_all();
         // Сбросим вагоны переноса
         var id_station_on = -1;
@@ -1261,12 +1260,12 @@
     view_op_arrival_cars.prototype.view_wagons_arrival = function () {
         // Показать вагоны на пути приема
         var wagons = this.wagons;
-        if (this.tacw.tab_com.eye) {
+        if (this.tacw_opac.tab_com.eye) {
             wagons = wagons.filter(function (i) {
                 return i.id_wim_arrival !== null;
             });
         }
-        this.tacw.view(wagons, null);
+        this.tacw_opac.view(wagons, null);
     };
     //Обновим составы на пути перегона
     view_op_arrival_cars.prototype.update_sostavs_of_outer_ways = function (id_station, num_sostav, callback) {
@@ -1341,7 +1340,7 @@
         // Очистить сообщения и форму
         this.form_from_setup.clear_all();
         // Показать составы на перегоне
-        this.tsf.view(this.sostav_all, num_sostav); // сработает событие выбора и отработает view_wagons_of_sostav_outer_ways
+        this.tsf_opac.view(this.sostav_all, num_sostav); // сработает событие выбора и отработает view_wagons_of_sostav_outer_ways
         if (num_sostav === null) {
             this.view_wagons_of_sostav_outer_ways(num_sostav, function () { LockScreenOff(); }.bind(this));
         }
@@ -1352,24 +1351,24 @@
         this.form_from_setup.clear_all();
         // Показать вагоны состава на перегоне
         this.wagons_sostav = [];
-/*        if (this.num_sostav !== num_sostav) {*/
-            // выполнить сброс 
-            this.wagons_add = [];
-            this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
-            this.reverse = false;
-            this.update_ways_of_station(this.id_station, this.id_way, function () {
-                if (num_sostav !== null && this.wagons_all != null && this.wagons_all.length > 0) {
-                    LockScreen(langView('vopac_mess_load_wagons', App.Langs));
-                    this.num_sostav = num_sostav;
-                    this.wagons_sostav = this.wagons_all.filter(function (i) {
-                        return $.trim(i.outerWayNumSostav) === $.trim(num_sostav);
-                    }.bind(this))
-                }
-                this.view_wagons();
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }.bind(this))
+        /*        if (this.num_sostav !== num_sostav) {*/
+        // выполнить сброс 
+        this.wagons_add = [];
+        this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
+        this.reverse = false;
+        this.update_ways_of_station(this.id_station, this.id_way, function () {
+            if (num_sostav !== null && this.wagons_all != null && this.wagons_all.length > 0) {
+                LockScreen(langView('vopac_mess_load_wagons', App.Langs));
+                this.num_sostav = num_sostav;
+                this.wagons_sostav = this.wagons_all.filter(function (i) {
+                    return $.trim(i.outerWayNumSostav) === $.trim(num_sostav);
+                }.bind(this))
+            }
+            this.view_wagons();
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }.bind(this))
         //} else {
         //    if (typeof callback === 'function') {
         //        callback();
@@ -1381,12 +1380,12 @@
         var wagons = this.wagons_sostav.filter(function (i) {
             return i.id_way_arrival === undefined || i.id_way_arrival === null;
         });
-        if (this.twf.tab_com.eye) {
+        if (this.twf_opac.tab_com.eye) {
             wagons = wagons.filter(function (i) {
                 return i.outerWayEnd === null;
             });
         }
-        this.twf.view(wagons, null);
+        this.twf_opac.view(wagons, null);
     };
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
@@ -1461,7 +1460,7 @@
                 this.form_on_setup.validation_common.out_error_message(langView('vopac_mess_error_operation_run', App.Langs).format(result.result));
                 // Выведем ошибки по вагонно.
                 $.each(result.listResult, function (i, el) {
-                    if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vopac_mess_error_operation_wagons_run', App.Langs).format(el.num,el.result));
+                    if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vopac_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
                 }.bind(this));
             }
         }.bind(this));

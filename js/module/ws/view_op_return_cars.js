@@ -29,6 +29,8 @@
             'voprc_text_label_station_on': 'Выберите станцию отправления состава...',
             //'voprc_title_placeholder_station_on': 'Станция прибытия:',
 
+            'voprc_title_label_type_return': 'Отмена операции',
+            'voprc_title_text_type_return': 'Выберите тип операции отмена или возврат',
             'voprc_title_label_way_on': 'Путь возврата:',
             'voprc_title_text_way_on': 'Выберите путь возврата вагонов состава...',
 
@@ -439,7 +441,7 @@
             fn_db_update: this.settings.fn_db_update,
             fn_init: this.settings.fn_init,
             fn_close: this.settings.fn_close,
-        });
+        }, function () { }.bind(this));
         this.id_station = -1;       // По умолчанию не выбрана
         this.id_way = -1;           // По умолчанию не выбрана
         this.stations = [];         // Список станций (полный)
@@ -467,12 +469,6 @@
         this.view_com.$title.append(langView('voprc_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
-
-        //----------------------------------
-        if (typeof this.settings.fn_init === 'function') {
-            this.settings.fn_init(this.result_init);
-        }
-        //----------------------------------
 
         // Сообщение
         LockScreen(langView('voprc_mess_init_panel', App.Langs));
@@ -577,6 +573,7 @@
                 if (process === 0) {
                     //----------------------------------
                     if (typeof this.settings.fn_init === 'function') {
+                        console.log('Close view_op_return_cars');
                         this.settings.fn_init(this.result_init);
                     }
                     //----------------------------------
@@ -624,6 +621,49 @@
                         this.form_on_setup.$form.submit();
                     }.bind(this),
                 }
+            };
+            var form_checkbox_type_return = {
+                obj: 'bs_form_check',
+                options: {
+                    validation_group: 'common',
+                    id: 'type_return',
+                    name: 'type_return',
+                    label: langView('voprc_title_label_type_return', App.Langs),
+                    element_type: 'checkbox',
+                    element_switch: false,
+                    element_inline: false,
+                    element_class: null,
+                    element_value: null,
+                    element_title: null,
+                    element_checked: false,
+                    element_required: false,
+                    element_readonly: false,
+                    element_options: {
+                        default: false,
+                        fn_change: function (e) {
+                            var value = $(e.currentTarget).prop('checked');
+                            if (value) {
+                                this.form_on_setup.el.datalist_locomotive1.disable();
+                                this.form_on_setup.el.datalist_locomotive2.disable();
+                                this.form_on_setup.el.input_datetime_time_aplly.disable();
+                            } else {
+                                this.form_on_setup.el.datalist_locomotive1.enable();
+                                this.form_on_setup.el.datalist_locomotive2.enable();
+                                this.form_on_setup.el.input_datetime_time_aplly.enable();
+                            }
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: null,
+                    form_text: langView('voprc_title_text_type_return', App.Langs),
+                    form_text_class: null
+                },
+                childs: []
             };
             var form_select_way_on = {
                 obj: 'bs_form_select',
@@ -797,6 +837,7 @@
 
             col_bt_apply.childs.push(bt_bt_apply);
             objs_on_setup.push(col_bt_apply);
+            objs_on_setup.push(form_checkbox_type_return);
             objs_on_setup.push(form_select_way_on);
             objs_on_setup.push(form_input_datalist_locomotive1);
             objs_on_setup.push(form_input_datalist_locomotive2);
@@ -853,14 +894,15 @@
                     this.on_setup.$html.append(this.form_on_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_return_cars] [form_on_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
 
             var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'arrival-cars-way', class: 'pt-2' });
             this.on_table.$html.append(row_arr_cars_way.$html);
-            this.tacw = new TWS('div#arrival-cars-way');
-            this.tacw.init({
+            this.tacw_opr = new TWS('div#arrival-cars-way');
+            this.tacw_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -870,6 +912,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_return_cars] [tacw_opr] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -896,7 +939,7 @@
                     if (name === 'del_wagons_sostav') {
                         LockScreen(langView('voprc_mess_clear_sostav', App.Langs));
                         var base = this;
-                        var rows = this.tacw.tab_com.get_select_row();
+                        var rows = this.tacw_opr.tab_com.get_select_row();
                         if (rows && rows.length > 0) {
                             var new_wagons_add = [];
                             $.each(this.wagons_add, function (i, el) {
@@ -1015,6 +1058,7 @@
                     this.from_setup.$html.append(this.form_from_setup.$form);
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_return_cars] [form_from_setup] process ' + process);
                     out_init(process);
                 }.bind(this),
             });
@@ -1022,8 +1066,8 @@
             var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
             var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'wagons-outer-way', class: 'pt-2' });
             this.from_table.$html.append(row_sostav_from.$html).append(row_wagons_from.$html);
-            this.tsf = new TWS('div#sostav-outer-ways');
-            this.tsf.init({
+            this.tsf_opr = new TWS('div#sostav-outer-ways');
+            this.tsf_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
                 detali_table: false,
@@ -1033,6 +1077,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_return_cars] [tsf_opr] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -1047,7 +1092,7 @@
                             langView('voprc_confirm_mess_new_sostav', App.Langs).format(new_sostav, this.wagons_add.length),
                             function () {
                                 // новый сотав
-                                this.tsf.tab_com.select_row(new_sostav);
+                                this.tsf_opr.tab_com.select_row(new_sostav);
                             }.bind(this),
                             function () {
 
@@ -1098,8 +1143,8 @@
                 }.bind(this),
             });
 
-            this.twf = new TWS('div#wagons-outer-way');
-            this.twf.init({
+            this.twf_opr = new TWS('div#wagons-outer-way');
+            this.twf_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
@@ -1109,6 +1154,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
+                    //console.log('[view_op_return_cars] [twf_opr] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -1132,7 +1178,7 @@
                         if (this.id_way >= 0) {
                             LockScreen(langView('voprc_mess_create_sostav', App.Langs));
                             // Выполнить операцию добавить вагоны
-                            var rows = this.twf.tab_com.get_select_row();
+                            var rows = this.twf_opr.tab_com.get_select_row();
                             if (rows && rows.length > 0) {
                                 this.wagons_add = this.wagons_add.concat(rows);
                             };
@@ -1191,29 +1237,41 @@
             LockScreenOff();
         }.bind(this));
     };
+    //// Обновить информацию
+    //view_op_return_cars.prototype.update = function (id_station, id_way, callback) {
+    //    this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
+    //    this.reverse = false;
+    //    var pr_1 = 1;
+    //    var out_pr1 = function (pr_1) {
+    //        if (pr_1 === 0) {
+    //            this.view_wagons();
+    //            if (typeof callback === 'function') {
+    //                callback();
+    //            }
+    //        }
+    //    }.bind(this);
+    //    // Обновим пути по станции
+    //    this.update_outgoing_sostav(id_station, id_way, function () {
+    //        pr_1--;
+    //        out_pr1(pr_1);
+    //    }.bind(this));
+    //    // Обновим составы на пути перегона
+    //    //this.update_sostavs_of_outer_ways(id_station, num_sostav, function () {
+    //    //    pr_1--;
+    //    //    out_pr1(pr_1);
+    //    //}.bind(this));
+    //};
     // Обновить информацию
     view_op_return_cars.prototype.update = function (id_station, id_way, callback) {
         this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
         this.reverse = false;
-        var pr_1 = 1;
-        var out_pr1 = function (pr_1) {
-            if (pr_1 === 0) {
-                this.view_wagons();
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }
-        }.bind(this);
         // Обновим пути по станции
         this.update_outgoing_sostav(id_station, id_way, function () {
-            pr_1--;
-            out_pr1(pr_1);
+            this.view_wagons();
+            if (typeof callback === 'function') {
+                callback();
+            }
         }.bind(this));
-        // Обновим составы на пути перегона
-        //this.update_sostavs_of_outer_ways(id_station, num_sostav, function () {
-        //    pr_1--;
-        //    out_pr1(pr_1);
-        //}.bind(this));
     };
     // Обновим составы отправленные со станции
     view_op_return_cars.prototype.update_outgoing_sostav = function (id_station, id_way, callback) {
@@ -1444,12 +1502,12 @@
     view_op_return_cars.prototype.view_wagons_arrival = function () {
         // Показать вагоны на пути приема
         var wagons = this.wagons;
-        if (this.tacw.tab_com.eye) {
+        if (this.tacw_opr.tab_com.eye) {
             wagons = wagons.filter(function (i) {
                 return i.id_wim_arrival !== null;
             });
         }
-        this.tacw.view(wagons, null);
+        this.tacw_opr.view(wagons, null);
     };
 
     // Показать вагоны выбранного состава без учета уже перенесенных в состав
@@ -1457,12 +1515,12 @@
         var wagons = this.wagons_sostav.filter(function (i) {
             return i.id_way_arrival === undefined || i.id_way_arrival === null;
         });
-        if (this.twf.tab_com.eye) {
+        if (this.twf_opr.tab_com.eye) {
             wagons = wagons.filter(function (i) {
                 return i.outerWayEnd === null;
             });
         }
-        this.twf.view(wagons, null);
+        this.twf_opr.view(wagons, null);
     };
 
     // Показать составы отправленные со станции
@@ -1470,7 +1528,7 @@
         // Очистить сообщения и форму
         this.form_from_setup.clear_all();
         // Показать составы на перегоне
-        this.tsf.view(this.sostav_all, this.num_sostav); // сработает событие выбора и отработает view_wagons_of_sostav_outer_ways
+        this.tsf_opr.view(this.sostav_all, this.num_sostav); // сработает событие выбора и отработает view_wagons_of_sostav_outer_ways
         if (this.num_sostav !== null) {
             this.view_wagons_of_sostav_outer_ways(this.num_sostav, function () { LockScreenOff(); }.bind(this));
         }

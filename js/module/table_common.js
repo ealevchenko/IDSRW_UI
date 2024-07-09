@@ -422,6 +422,7 @@
     table_common.prototype.init = function (options) {
         this.result_init = true;
         LockScreen(langView('t_com_mess_init_module', App.Langs));
+        //console.log('Init ' + options.type_report );
         // теперь выполним инициализацию
         // Определим основные свойства
         this.settings = $.extend({
@@ -553,6 +554,7 @@
         // На проверку окончания инициализации
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
+            //console.log('Close Init ' + this.settings.type_report);
             this.settings.fn_init(this.result_init);
         }
         //----------------------------------
