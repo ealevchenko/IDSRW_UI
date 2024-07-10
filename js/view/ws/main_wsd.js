@@ -267,7 +267,7 @@
             api_wsd.getAdminInfo(function (info) {
                 user_info = info;
                 process--;
-                console.log('[main_wsd] [api_wsd] process ' + process);
+                //console.log('[main_wsd] [api_wsd] process ' + process);
                 out_init(process);
             })
 
@@ -387,7 +387,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [tw] process ' + process);
+                    //console.log('[main_wsd] [tw] process ' + process);
                     out_init(process);
                 },
                 fn_select_way: function (id_station, id_park, id_way, option) {
@@ -456,7 +456,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [tws] process ' + process);
+                    //console.log('[main_wsd] [tws] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -482,7 +482,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [ttb] process ' + process);
+                    //console.log('[main_wsd] [ttb] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -508,7 +508,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [tos] process ' + process);
+                    //console.log('[main_wsd] [tos] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -533,7 +533,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [tows] process ' + process);
+                    //console.log('[main_wsd] [tows] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -562,7 +562,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [toss] process ' + process);
+                    //console.log('[main_wsd] [toss] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -584,7 +584,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [toas] process ' + process);
+                    //console.log('[main_wsd] [toas] process ' + process);
                     out_init(process);
                 },
                 fn_action_view_detali: function (rows) {
@@ -603,7 +603,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [voac] process ' + process);
+                    //console.log('[main_wsd] [voac] process ' + process);
                     out_init(process);
                 },
                 fn_close: function () {
@@ -622,7 +622,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [vooc] process ' + process);
+                    //console.log('[main_wsd] [vooc] process ' + process);
                     out_init(process);
                 },
                 fn_close: function () {
@@ -641,7 +641,7 @@
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
-                    console.log('[main_wsd] [vorc] process ' + process);
+                    //console.log('[main_wsd] [vorc] process ' + process);
                     out_init(process);
                 },
                 fn_close: function () {

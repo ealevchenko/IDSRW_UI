@@ -707,11 +707,11 @@
                 }.bind(this),
             });
 
-            var row_sostav_on = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
-            var row_wagons_on = new this.view_com.fe_ui.bs_row({ id: 'wagons-new-sostav-outer-way', class: 'pt-2' });
+            var row_sostav_on = new this.view_com.fe_ui.bs_row({ id: 'op-oc-sostav-outer-ways', class: 'pt-2' });
+            var row_wagons_on = new this.view_com.fe_ui.bs_row({ id: 'op-oc-wagons-new-sostav-outer-way', class: 'pt-2' });
 
             this.on_table.$html.append(row_sostav_on.$html).append(row_wagons_on.$html);
-            this.tsow_opoc = new TWS('div#sostav-outer-ways');
+            this.tsow_opoc = new TWS('div#op-oc-sostav-outer-ways');
             this.tsow_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
@@ -750,7 +750,7 @@
                 }.bind(this),
             });
 
-            this.twnsow_opoc = new TWS('div#wagons-new-sostav-outer-way');
+            this.twnsow_opoc = new TWS('div#op-oc-wagons-new-sostav-outer-way');
             this.twnsow_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
@@ -926,10 +926,10 @@
                 }.bind(this),
             });
 
-            var row_out_cars_way = new this.view_com.fe_ui.bs_row({ id: 'outgoing-cars-way', class: 'pt-2' });
+            var row_out_cars_way = new this.view_com.fe_ui.bs_row({ id: 'op-oc-outgoing-cars-way', class: 'pt-2' });
             this.from_table.$html.append(row_out_cars_way.$html);
 
-            this.tocw_opoc = new TWS('div#outgoing-cars-way');
+            this.tocw_opoc = new TWS('div#op-oc-outgoing-cars-way');
             this.tocw_opoc.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',

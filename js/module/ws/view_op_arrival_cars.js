@@ -849,9 +849,9 @@
                 }.bind(this),
             });
 
-            var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'arrival-cars-way', class: 'pt-2' });
+            var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'op-ac-arrival-cars-way', class: 'pt-2' });
             this.on_table.$html.append(row_arr_cars_way.$html);
-            this.tacw_opac = new TWS('div#arrival-cars-way');
+            this.tacw_opac = new TWS('div#op-ac-arrival-cars-way');
             this.tacw_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
@@ -1013,10 +1013,10 @@
                 }.bind(this),
             });
 
-            var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
-            var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'wagons-outer-way', class: 'pt-2' });
+            var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'op-ac-sostav-outer-ways', class: 'pt-2' });
+            var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'op-ac-wagons-outer-way', class: 'pt-2' });
             this.from_table.$html.append(row_sostav_from.$html).append(row_wagons_from.$html);
-            this.tsf_opac = new TWS('div#sostav-outer-ways');
+            this.tsf_opac = new TWS('div#op-ac-sostav-outer-ways');
             this.tsf_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
@@ -1068,7 +1068,7 @@
                 }.bind(this),
             });
 
-            this.twf_opac = new TWS('div#wagons-outer-way');
+            this.twf_opac = new TWS('div#op-ac-wagons-outer-way');
             this.twf_opac.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
