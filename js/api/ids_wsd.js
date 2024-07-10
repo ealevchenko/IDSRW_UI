@@ -95,6 +95,11 @@
     ids_wsd.prototype.postOutgoingWagonsOfStationAMKR = function (operation, callback) {
         this.api_com.post('/WSD/operation/outgoing/', operation, callback);
     };
+    //АРМ, Операция вернуть-оменить вагоны на внутреную станцию АМКР
+    ids_wsd.prototype.postReturnWagonsOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/return/', operation, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;

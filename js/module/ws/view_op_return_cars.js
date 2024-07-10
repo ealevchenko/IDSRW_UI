@@ -64,20 +64,25 @@
             'voprc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
 
+            'voprc_mess_error_required_locomotive': 'Выберите Локомотив №1',
+            'voprc_mess_error_required_datetime': 'Укажите время',
+            'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
+            'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
+            'voprc_mess_error_not_wagons': 'Не выбраны вагоны для операции возврата или отмены (в окне «ОТПРАВЛЕННЫЕ СОСТАВЫ», выберите станцию, отправленный состав и сформируйте возврат или отмену).',
+            'voprc_mess_error_operation_run': 'При выполнении операции «ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ» произошла ошибка, код ошибки: {0}',
+            'voprc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
 
-            //'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
-            //'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
-            //'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
-            //'voprc_mess_error_not_wagons': 'Не выбраны вагоны для приема (в окне «СОСТАВЫ НА ПОДХОДАХ», выберите станцию, прибывающий состав и сформируйте прибытие).',
-            //'voprc_mess_error_operation_run': 'При выполнении операции «ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ» произошла ошибка, код ошибки: {0}',
-            //'voprc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
 
+            'voprc_mess_cancel_operation_cancel': 'Операция "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА" – отменена',
+            'voprc_mess_cancel_operation_return': 'Операция "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА" – отменена',
+            'voprc_mess_run_operation_cancel': 'Выполняю операцию "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА"',
+            'voprc_mess_run_operation_return': 'Выполняю операцию "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА"',
 
-            //'voprc_mess_cancel_operation': 'Операция "ПРИНЯТЬ НА СТАНЦИЮ АМКР" – отменена',
             //'voprc_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
             'voprc_mess_not_select_way_on': 'Выберите путь для возврата вагонов!',
-            //'voprc_mess_ok_operation' : 'Состав принят, в количестве {0} (ваг.)',
+            'voprc_mess_ok_operation' : 'Вагоны возвращены, в количестве {0} (ваг.)',
 
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -94,7 +99,8 @@
             'voprc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию отправления {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
             'voprc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь приема {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
             'voprc_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} для возврата? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            //'voprc_confirm_mess_apply_arrival_wagons': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР" в количестве: {0} (ваг.), станция отправки: {1}?',
+            'voprc_confirm_mess_apply_return_wagons': 'Выполнить операцию "ВОЗРАТ ВАГОНОВ ОТПРАВЛЕННОГО СОСТАВА" в количестве: {0} (ваг.), станция отправки: {1}? Будет выполнен возврат вагонов с перегона на указанный путь станции отправления. В отчетах будет зафиксировано возврат с перегона!',
+            'voprc_confirm_mess_apply_cancel_wagons': 'Выполнить операцию "ОТМЕНА ОТПРАВКИ ВАГОНОВ СОСТАВА" в количестве: {0} (ваг.), станция отправки: {1}? В отчетах будет отраженно что операция была выполнена ошибочно, вагоны будут возвращены на путь отправки!',
 
         },
         'en':  //default language: English
@@ -642,6 +648,9 @@
                         default: false,
                         fn_change: function (e) {
                             var value = $(e.currentTarget).prop('checked');
+                            // Очистить сообщения и форму
+                            this.form_on_setup.clear_all();
+                            this.form_from_setup.clear_all();
                             if (value) {
                                 this.form_on_setup.el.datalist_locomotive1.disable();
                                 this.form_on_setup.el.datalist_locomotive2.disable();
@@ -720,7 +729,7 @@
                     element_value: null,
                     element_title: null,
                     element_placeholder: langView('voprc_title_placeholder_locomotive', App.Langs),
-                    element_required: true,
+                    element_required: false,
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
@@ -805,7 +814,7 @@
                     element_value: null,
                     element_title: null,
                     element_placeholder: langView('voprc_title_placeholder_time_aplly', App.Langs),
-                    element_required: true,
+                    element_required: false,
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
@@ -853,11 +862,19 @@
                     if (result && result.valid) {
                         // Дополнительная проверка
                         var valid = this.validation(result);
+                        var message = null;
                         if (valid) {
                             var wagons = this.wagons.filter(function (i) { return i.position_new !== null && i.id_wim_arrival !== null; });// получить вагоны
+                            if (result.new.input_checkbox_type_return) {
+                                // отмена
+                                message = langView('voprc_confirm_mess_apply_cancel_wagons', App.Langs).format((wagons ? wagons.length : 0), this.station_from)
+                            } else {
+                                // возврат
+                                message = langView('voprc_confirm_mess_apply_return_wagons', App.Langs).format((wagons ? wagons.length : 0), this.station_from)
+                            }
                             this.view_com.mcf.open(
                                 langView('voprc_title_form_apply', App.Langs),
-                                langView('voprc_confirm_mess_apply_arrival_wagons', App.Langs).format((wagons ? wagons.length : 0), this.station_from),
+                                message,
                                 function () {
                                     // Принять
                                     // Проверим наличие вагонов 
@@ -871,19 +888,20 @@
                                         var operation = {
                                             id_outer_way: this.id_outer_way,
                                             wagons: list_wagons,
-                                            id_way_on: Number(result.new.select_id_way_on),
+                                            id_way_on: Number(result.new.select_id_way),
                                             head: this.head,
                                             lead_time: result.new.input_datetime_time_aplly._i,
                                             //lead_time: moment.utc(result.new.input_datetime_time_aplly).toISOString(),
                                             locomotive1: result.new.datalist_locomotive1,
                                             locomotive2: result.new.datalist_locomotive2,
+                                            type_return: result.new.input_checkbox_type_return,
                                             /*                                            user: App.User_Name*/
                                         };
                                         this.apply(operation);
                                     }
                                 }.bind(this),
                                 function () {
-                                    this.form_on_setup.validation_common.out_warning_message(langView('voprc_mess_cancel_operation', App.Langs));
+                                    this.form_on_setup.validation_common.out_warning_message(langView((result.new.input_checkbox_type_return ? 'voprc_mess_cancel_operation_cancel' : 'voprc_mess_cancel_operation_return'), App.Langs));
                                 }.bind(this));
                         }
                     }
@@ -899,9 +917,11 @@
                 }.bind(this),
             });
 
-            var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'arrival-cars-way', class: 'pt-2' });
+            var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'op-rc-arrival-cars-way', class: 'pt-2' });
+            this.on_table.$html.empty();
             this.on_table.$html.append(row_arr_cars_way.$html);
-            this.tacw_opr = new TWS('div#arrival-cars-way');
+            /*            console.log('add row_arr_cars_way');*/
+            this.tacw_opr = new TWS('div#op-rc-arrival-cars-way');
             this.tacw_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
@@ -1063,10 +1083,12 @@
                 }.bind(this),
             });
 
-            var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'sostav-outer-ways', class: 'pt-2' });
-            var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'wagons-outer-way', class: 'pt-2' });
+            var row_sostav_from = new this.view_com.fe_ui.bs_row({ id: 'op-rc-sostav-outer-ways', class: 'pt-2' });
+            var row_wagons_from = new this.view_com.fe_ui.bs_row({ id: 'op-rc-wagons-outer-way', class: 'pt-2' });
             this.from_table.$html.append(row_sostav_from.$html).append(row_wagons_from.$html);
-            this.tsf_opr = new TWS('div#sostav-outer-ways');
+            //console.log('add row_sostav_from');
+            //console.log('add row_wagons_from');
+            this.tsf_opr = new TWS('div#op-rc-sostav-outer-ways');
             this.tsf_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
@@ -1103,11 +1125,11 @@
                 fn_select_rows: function (rows, type) {
                     if (type === "select") {
                         var num_sostav = null;
-                        //this.station_from = null;
+                        this.station_from = null;
                         this.id_outer_way = null;   // id перегона
                         if (rows != null && rows.length > 0) {
                             num_sostav = rows[0].outerWayNumSostav;
-                            //this.station_from = rows[0]['fromStationAbbr' + ucFirst(App.Lang)]; // Станция отправления
+                            this.station_from = rows[0]['fromStationAbbr' + ucFirst(App.Lang)]; // Станция отправления
                             this.id_outer_way = rows[0].idOuterWay;   // id перегона
                             var id_way = rows[0].fromIdWay;
                             // Запустим паралельно
@@ -1143,7 +1165,7 @@
                 }.bind(this),
             });
 
-            this.twf_opr = new TWS('div#wagons-outer-way');
+            this.twf_opr = new TWS('div#op-rc-wagons-outer-way');
             this.twf_opr.init({
                 alert: this.from_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
@@ -1560,39 +1582,48 @@
     // Уточняющая валидация данных
     view_op_return_cars.prototype.validation = function (result) {
         var valid = true;
-        // Проверим локомотивы
-        var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
-        var loc2 = this.form_on_setup.el.datalist_locomotive2.text();
-        var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
-        var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;
-        var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
-        if (loc1 === loc2) {
-            this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('voprc_mess_error_equal_locomotive', App.Langs));
-            this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('voprc_mess_error_equal_locomotive', App.Langs));
-            valid = false;
+        if (!result.new.input_checkbox_type_return) {
+            // Проверим локомотивы
+            var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
+            var loc2 = this.form_on_setup.el.datalist_locomotive2.text();
+            var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
+            var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;
+            var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
+
+            valid = this.form_on_setup.validation_common.check_control_input_not_null($(el_loc1), langView('voprc_mess_error_required_locomotive', App.Langs), null, true);
+            if (valid) {
+                if (loc1 === loc2) {
+                    this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('voprc_mess_error_equal_locomotive', App.Langs));
+                    this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('voprc_mess_error_equal_locomotive', App.Langs));
+                    valid = false;
+                } else {
+                    if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
+                        this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('voprc_mess_error_not_locomotive', App.Langs).format(loc1));
+                        valid = false;
+                    }
+                    if ((loc2 !== null && loc2 !== '') && result.new && result.new.locomotive2 === null) {
+                        this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('voprc_mess_error_not_locomotive', App.Langs).format(loc2));
+                        valid = false;
+                    }
+                }
+            }
+            valid = valid & this.form_on_setup.validation_common.check_control_datetime_input($(el_dta), langView('voprc_mess_error_required_datetime', App.Langs), null, true);
+            // Проверим время
+            if (result.new && result.new.input_datetime_time_aplly) {
+                var curr = moment();
+                var aplly = moment(result.new.input_datetime_time_aplly);
+                var minutes = aplly.diff(curr, 'minutes');
+                if (minutes < min_dt_apply) {
+                    this.form_on_setup.validation_common.set_object_error($(el_dta), langView('voprc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+                    valid = false;
+                }
+                if (minutes > max_dt_apply) {
+                    this.form_on_setup.validation_common.set_object_error($(el_dta), langView('voprc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+                    valid = false;
+                }
+            }
         } else {
-            if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-                this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('voprc_mess_error_not_locomotive', App.Langs).format(loc1));
-                valid = false;
-            }
-            if ((loc2 !== null && loc2 !== '') && result.new && result.new.locomotive2 === null) {
-                this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('voprc_mess_error_not_locomotive', App.Langs).format(loc2));
-                valid = false;
-            }
-        }
-        // Проверим время
-        if (result.new && result.new.input_datetime_time_aplly) {
-            var curr = moment();
-            var aplly = moment(result.new.input_datetime_time_aplly);
-            var minutes = aplly.diff(curr, 'minutes');
-            if (minutes < min_dt_apply) {
-                this.form_on_setup.validation_common.set_object_error($(el_dta), langView('voprc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                valid = false;
-            }
-            if (minutes > max_dt_apply) {
-                this.form_on_setup.validation_common.set_object_error($(el_dta), langView('voprc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                valid = false;
-            }
+
         }
         // Проверим состав
         var wagons = this.wagons.filter(function (i) { return i.position_new !== null && i.id_wim_arrival !== null; });
@@ -1604,8 +1635,8 @@
     }
     // выполнить операцию
     view_op_return_cars.prototype.apply = function (data) {
-        LockScreen(langView('voprc_mess_run_operation_arrival', App.Langs));
-        this.view_com.api_wsd.postArrivalWagonsOfStationAMKR(data, function (result) {
+        LockScreen(langView((type_return ? 'voprc_mess_run_operation_cancel' : 'voprc_mess_run_operation_return'), App.Langs));
+        this.view_com.api_wsd.postReturnWagonsOfStationAMKR(data, function (result) {
             if (result && result.result > 0) {
                 this.form_on_setup.validation_common.clear_all();
                 // Сбросим установки (время и локомотивы)
