@@ -2738,6 +2738,9 @@ var intVal = function (i) {
                         if (!valid.valid) {
                             this.valid = false;
                             valid_element = false;
+                            if (valid.badInput) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - ошибка преобразования.");
+                            }
                             if (valid.valueMissing) {
                                 el_val.validation.set_object_error($(el), "Элемент [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не заполнен.");
                             }
@@ -2863,7 +2866,7 @@ var intVal = function (i) {
             }
         }
     };
-    // Вывести информационное сообщение
+    //* Вывести информационное сообщение
     validation_form.prototype.out_info_message = function (message) {
         if (this.$alert) {
             if (this.type_message === 0) {
@@ -2874,7 +2877,7 @@ var intVal = function (i) {
             }
         }
     };
-    //
+    //* Вывести сообщение под компонетном
     validation_form.prototype.set_control_error = function (o, message) {
         o.removeClass('is-valid').addClass('is-invalid');
         // Поиск замещенных компонентов
@@ -2932,12 +2935,13 @@ var intVal = function (i) {
     // Проверка на пустое значение "INPUT"
     validation_form.prototype.check_control_input_not_null = function (o, mes_error, mes_ok, out_message) {
         var val = o.val();
+        var element = o.$element ? o.$element : o;
         if (o.val() !== null && o.val() !== '') {
-            this.set_control_ok(o.$element, mes_ok);
+            this.set_control_ok(element, mes_ok);
             if (out_message) this.out_info_message(mes_ok);
             return true;
         } else {
-            this.set_control_error(o.$element, mes_error);
+            this.set_control_error(element, mes_error);
             if (out_message) this.out_error_message(mes_error);
             return false;
         }
@@ -2980,14 +2984,17 @@ var intVal = function (i) {
             return true;
         }
     };
-    // Проверка на пустое значение "SELECT"
+    //* Проверка на пустое значение "SELECT"
     validation_form.prototype.check_control_select_not_null = function (o, mes_error, mes_ok, out_message) {
-        if (Number(o.val()) >= 0) {
-            this.set_control_ok(o.$element, mes_ok);
+        //var res1 = o.val();
+        //var res = Number(o.val());
+        var element = o.$element ? o.$element : o;
+        if (o.val() !== '' && Number(o.val()) >= 0) {
+            this.set_control_ok(element, mes_ok);
             if (out_message) this.out_info_message(mes_ok);
             return true;
         } else {
-            this.set_control_error(o.$element, mes_error);
+            this.set_control_error(element, mes_error);
             if (out_message) this.out_error_message(mes_error);
             return false;
         }
