@@ -23,7 +23,7 @@ var OnAJAXError = function (metod, x, y, z, callback) {
     }
     alert('Metod js : ' + metod + '\nStatus : ' + data.status + '\nStatusText : ' + data.statusText + '\nMessage : ' + data.message);
     if (typeof callback === 'function') {
-        callback(data);
+        callback(x.responseJSON);
     }
 };
 // Событие после выполнения
@@ -130,7 +130,7 @@ var AJAXComplete = function () {
         });
     };
 
-    api_common.prototype.post = function (api_url, operation, callback) {
+    api_common.prototype.post = function (api_url, operation, callback, callback_error) {
         $.ajax({
             type: 'POST',
             url: this.settings.url_api + api_url,
@@ -149,7 +149,7 @@ var AJAXComplete = function () {
                 }
             },
             error: function (x, y, z) {
-                OnAJAXError("api_common" + api_url, x, y, z);
+                OnAJAXError("api_common" + api_url, x, y, z, callback_error);
             },
             complete: function () {
                 AJAXComplete();

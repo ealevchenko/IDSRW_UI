@@ -97,7 +97,7 @@
     };
     //АРМ, Операция вернуть-оменить вагоны на внутреную станцию АМКР
     ids_wsd.prototype.postReturnWagonsOfStationAMKR = function (operation, callback) {
-        this.api_com.post('/WSD/operation/return/', operation, callback);
+        this.api_com.post('/WSD/operation/return/', operation, callback, callback);
     };
 
     App.ids_wsd = ids_wsd;
