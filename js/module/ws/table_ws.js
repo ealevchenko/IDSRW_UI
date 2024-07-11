@@ -1479,6 +1479,7 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
+        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
@@ -1809,6 +1810,41 @@
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.wirHighlightColor !== null) {
+                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    }
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    //// Проверим если по оператору контролировать норму времени, тогда проверить
+                    //if (data.arrivalIdleTime < data.arrivalDuration) {
+                    //    // Превышена норма нахождения вагона на АМКР
+                    //    $('td', row).eq(29).addClass('idle-time-error');
+                    //    //$('td.arrival-duration', row).addClass('idle-time-error');
+                    //    if (data.operatorMonitoringIdleTime) {
+                    //        $('td', row).eq(1).addClass('idle-time-error');
+                    //    };
+                    //}
+                    // Прибыл
+                    if (data.currentIdOperation === 1) {
+                        //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
+                        $('td', row).eq(0).addClass('red');
+                        $('td', row).eq(1).addClass('red');
+                    }
+                    // Предъявлен или сдан
+                    if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
+                        if (data.outgoingSostavStatus === 2) {
+                            $('td', row).eq(0).addClass('green');
+                            $('td', row).eq(1).addClass('green');
+                        }
+                        if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
+                            $('td', row).eq(0).addClass('yellow');
+                            $('td', row).eq(1).addClass('yellow');
+                        }
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_outgoing_cars_way();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag([

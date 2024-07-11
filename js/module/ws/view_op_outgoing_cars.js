@@ -20,9 +20,9 @@
     {
         'default':  //default language: ru
         {
-            'vopoc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ОТПРАВИТЬ СОСТАВОВ НА СТАНЦИИ АМКР"',
+            'vopoc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ОТПРАВИТЬ СОСТАВ НА СТАНЦИИ АМКР"',
             'vopoc_card_header_on': 'ОТПРАВИТЬ НА СТАНЦИЮ',
-            'vopoc_card_header_from': 'ОТПРАВИТЬ СО СТАНЦИ',
+            'vopoc_card_header_from': 'ОТПРАВИТЬ СО СТАНЦИИ',
             'vopoc_fieldset_on_table_title': 'Сформированный состав',
             'vopoc_title_label_station_on': 'Станция прибытия:',
             'vopoc_text_label_station_on': 'Выберите станцию прибытия состава...',
@@ -60,6 +60,8 @@
 
             'vopoc_mess_warning_not_num_sostav': 'Нет названия состава!',
             'vopoc_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
+            'vopoc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+
             //'vopoc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
 
@@ -92,7 +94,7 @@
             'vopoc_confirm_title': 'Внимание!',
             'vopoc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             'vopoc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
-            'vopoc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" {0} в количестве: {1} (ваг.), со станции: {2}?',
+            'vopoc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" {0} в количестве: {1} (ваг.), на станцию: {2}?',
 
         },
         'en':  //default language: English
@@ -713,7 +715,7 @@
             this.on_table.$html.append(row_sostav_on.$html).append(row_wagons_on.$html);
             this.tsow_opoc = new TWS('div#op-oc-sostav-outer-ways');
             this.tsow_opoc.init({
-                alert: this.from_alert,
+                alert: this.on_alert,
                 class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'sostav_outer_ways',     //
@@ -752,7 +754,7 @@
 
             this.twnsow_opoc = new TWS('div#op-oc-wagons-new-sostav-outer-way');
             this.twnsow_opoc.init({
-                alert: this.from_alert,
+                alert: this.on_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'wagons_new_sostav_outer_way',     //
@@ -948,6 +950,10 @@
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_alert.clear_message();
+                    if (rowData && rowData.length > 0 && rowData[0].outgoingSostavStatus > 0) {
+                        e.preventDefault();
+                        this.from_alert.out_warning_message(langView('vopoc_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                    }
                 }.bind(this),
                 fn_select_rows: function (rows) {
 

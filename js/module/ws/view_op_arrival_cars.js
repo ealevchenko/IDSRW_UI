@@ -45,7 +45,7 @@
             'vopac_title_placeholder_time_aplly': 'Время выполнения',
 
             'vopac_title_form_apply': 'Выполнить',
-            'vopac_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
+            'vopac_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
 
             'vopac_title_button_export': 'Экспорт',
             'vopac_title_button_buffer': 'Буфер',
@@ -853,7 +853,7 @@
             this.on_table.$html.append(row_arr_cars_way.$html);
             this.tacw_opac = new TWS('div#op-ac-arrival-cars-way');
             this.tacw_opac.init({
-                alert: this.from_alert,
+                alert: this.on_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'arrival_cars_way',     //
@@ -1136,12 +1136,12 @@
         LockScreen(langView('vopac_mess_load_operation', App.Langs));
         // Очистить сообщения и форму
         this.form_on_setup.clear_all();
+        this.form_from_setup.clear_all();
         // Сбросим установки (время и локомотивы)
         this.form_on_setup.el.datalist_locomotive1.val('');
         this.form_on_setup.el.datalist_locomotive2.val('');
         this.form_on_setup.el.input_datetime_time_aplly.val(moment());
         this.wagons_add = [];
-        this.form_from_setup.clear_all();
         // Сбросим вагоны переноса
         var id_station_on = -1;
         this.id_station = -1;

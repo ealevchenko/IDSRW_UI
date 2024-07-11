@@ -73,7 +73,7 @@
             'voprc_mess_error_not_wagons': 'Не выбраны вагоны для операции возврата или отмены (в окне «ОТПРАВЛЕННЫЕ СОСТАВЫ», выберите станцию, отправленный состав и сформируйте возврат или отмену).',
             'voprc_mess_error_operation_run': 'При выполнении операции «ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ» произошла ошибка, код ошибки: {0}',
             'voprc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-
+            'voprc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
             'voprc_mess_cancel_operation_cancel': 'Операция "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА" – отменена',
             'voprc_mess_cancel_operation_return': 'Операция "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА" – отменена',
@@ -82,7 +82,7 @@
 
             //'voprc_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
             'voprc_mess_not_select_way_on': 'Выберите путь для возврата вагонов!',
-            'voprc_mess_ok_operation' : 'Вагоны возвращены, в количестве {0} (ваг.)',
+            'voprc_mess_ok_operation': 'Вагоны возвращены, в количестве {0} (ваг.)',
 
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -888,7 +888,7 @@
                                         var operation = {
                                             id_outer_way: this.id_outer_way,
                                             wagons: list_wagons,
-                                            id_way_on: Number(result.new.select_id_way),
+                                            id_way: Number(result.new.select_id_way),
                                             head: this.head,
                                             lead_time: result.new.input_datetime_time_aplly._i,
                                             //lead_time: moment.utc(result.new.input_datetime_time_aplly).toISOString(),
@@ -923,7 +923,7 @@
             /*            console.log('add row_arr_cars_way');*/
             this.tacw_opr = new TWS('div#op-rc-arrival-cars-way');
             this.tacw_opr.init({
-                alert: this.from_alert,
+                alert: this.on_alert,
                 class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'arrival_cars_way',     //
@@ -1637,32 +1637,68 @@
     view_op_return_cars.prototype.apply = function (data) {
         LockScreen(langView((type_return ? 'voprc_mess_run_operation_cancel' : 'voprc_mess_run_operation_return'), App.Langs));
         this.view_com.api_wsd.postReturnWagonsOfStationAMKR(data, function (result) {
-            if (result && result.result > 0) {
-                this.form_on_setup.validation_common.clear_all();
-                // Сбросим установки (время и локомотивы)
-                this.form_on_setup.el.datalist_locomotive1.val('');
-                this.form_on_setup.el.datalist_locomotive2.val('');
-                this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-                // Сбросим вагоны переноса
-                this.wagons_add = [];
-                // обновить таблицы вагоны на пути приема, составы, вагоны выбранного состава
-                this.update(this.id_station, this.id_way, this.num_sostav, function () {
-                    this.form_on_setup.validation_common.out_info_message(langView('voprc_mess_ok_operation', App.Langs).format(result.moved));
-                    if (typeof this.settings.fn_db_update === 'function') {
-                        //TODO: можно добавить возвращать перечень для обновления
-                        typeof this.settings.fn_db_update();
+            // Проверим на ошибку выполнения запроса api
+            if (result && result.status) {
+                var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+                console.log('[view_op_return_cars] [postReturnWagonsOfStationAMKR] :' + mess);
+                this.form_on_setup.validation_common.out_error_message(mess);
+                if (result.errors) {
+                    for (var err in result.errors) {
+                        this.form_on_setup.validation_common.out_error_message(err + ":" + result.errors[err]);
+                        console.log('[view_op_return_cars] [postReturnWagonsOfStationAMKR] :' + err + ":" + result.errors[err]);
                     }
-                    LockScreenOff();
-                }.bind(this));
-
-            } else {
+                }
                 LockScreenOff();
-                this.form_on_setup.validation_common.out_error_message(langView('voprc_mess_error_operation_run', App.Langs).format(result.result));
-                // Выведем ошибки по вагонно.
-                $.each(result.listResult, function (i, el) {
-                    if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('voprc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
-                }.bind(this));
+            } else {
+                // ошибки выполнения нет проверим ответ запроса
+                if (result && result.result > 0) {
+                    this.form_on_setup.validation_common.clear_all();
+                    // Сбросим установки (время и локомотивы)
+                    this.form_on_setup.el.datalist_locomotive1.val('');
+                    this.form_on_setup.el.datalist_locomotive2.val('');
+                    this.form_on_setup.el.input_datetime_time_aplly.val(moment());
+                    // Сбросим вагоны
+                    this.num_sostav = null;
+                    this.wagons_sostav = [];
+                    this.wagons_add = [];
+                    // Обновить таблицы. Запустим паралельно
+                    var pr_us = 2;
+                    var out_prus = function (pr_us) {
+                        if (pr_us === 0) {
+                            this.view_wagons();
+                            this.form_on_setup.validation_common.out_info_message(langView('voprc_mess_ok_operation', App.Langs).format(result.moved));
+                            if (typeof this.settings.fn_db_update === 'function') {
+                                //TODO: можно добавить возвращать перечень для обновления
+                                typeof this.settings.fn_db_update();
+                            }
+                            LockScreenOff();
+                        }
+                    }.bind(this);
+                    // загрузим составы отправленные состанции (первый поток)
+                    this.load_of_outer_ways(this.id_station,
+                        function () {
+                            pr_us--;
+                            out_prus(pr_us);
+                        }.bind(this)
+                    );
+                    // загрузим вагоны на пути (второй поток)
+                    this.load_of_way(this.id_way,
+                        function () {
+                            pr_us--;
+                            out_prus(pr_us);
+                        }.bind(this)
+                    );
+                } else {
+                    LockScreenOff();
+                    this.form_on_setup.validation_common.out_error_message(langView('voprc_mess_error_operation_run', App.Langs).format(result.result));
+                    // Выведем ошибки по вагонно.
+                    $.each(result.listResult, function (i, el) {
+                        if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('voprc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                    }.bind(this));
+                }
             }
+
+
         }.bind(this));
     };
     // Очистить сообщения
