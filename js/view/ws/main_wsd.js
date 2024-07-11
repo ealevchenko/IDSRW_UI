@@ -120,13 +120,13 @@
                         }
                     }
                 };
-
+                // Загрузить вагоны на пути
                 api_wsd.getViewWagonsOfIdWay(id_way, function (ws) {
                     wagons = ws;
                     pr_load--;
                     out_load1(pr_load);
                 });
-
+                // Расчитать плату за пользование
                 api_wsd.getCalcUsageFeeCarsOfWay(id_way, function (calc_ws) {
                     calc_wagons = calc_ws;
                     pr_load--;
@@ -206,13 +206,19 @@
                 }
             }.bind(this);
 
-            var pr_refresh = 2;
-
+            var pr_refresh = 3;
+            // Обновить дерево путей
             tw.update(function () {
                 pr_refresh--;
                 out_refresh(pr_refresh);
             });
-
+            // Загрузить вагоны на пути
+            load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
+                tws.view(wagons)
+                pr_refresh--;
+                out_refresh(pr_refresh);
+            });
+            // Показать баланс
             load_total_balance(function (balance) {
                 ttb.view(balance)
                 pr_refresh--;
