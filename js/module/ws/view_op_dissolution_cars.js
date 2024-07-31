@@ -26,48 +26,29 @@
             'voprc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
             'voprc_card_header_on': 'ПУТИ РОСПУСКА',
             'voprc_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
-            //'voprc_fieldset_on_table_title': 'Сформированный состав',
-
             'voprc_title_label_station': 'Станция роспуска:',
             'voprc_text_label_station': 'Выберите станцию роспуска ...',
-
-            //'voprc_title_label_type_return': 'Отмена операции',
-            //'voprc_title_text_type_return': 'Выберите тип операции отмена или возврат',
             'voprc_title_label_way_from': 'Путь роспуска:',
             'voprc_title_text_way_from': 'Выберите путь роспуска вагонов ...',
 
             'voprc_title_label_locomotive1': 'Локомотив №1:',
-            //'voprc_title_label_locomotive2': 'Локомотив №2:',
             'voprc_title_placeholder_locomotive': ' № локомотива',
             'voprc_title_time_start': 'Начало выполнения',
             'voprc_title_time_stop': 'Конец выполнения',
-            //'voprc_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
             'voprc_title_placeholder_time_start': 'Начало выполнения',
             'voprc_title_placeholder_time_stop': 'Конец выполнения',
             'voprc_title_form_apply': 'Выполнить',
-            //'voprc_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
-
-
-            //'voprc_title_button_export': 'Экспорт',
-            //'voprc_title_button_buffer': 'Буфер',
-            //'voprc_title_button_excel': 'Excel',
-            //'voprc_title_button_cancel': 'Отменить',
-            //'voprc_title_button_return': 'Вернуть',
-            //'voprc_title_button_head': 'Голова',
-            //'voprc_title_button_tail': 'Хвост',
+            'voprc_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
 
             'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
 
-            //'voprc_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
             'voprc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
-
 
             'voprc_mess_error_required_locomotive': 'Выберите Локомотив',
             'voprc_mess_error_required_datetime_start': 'Укажите время начала',
             'voprc_mess_error_required_datetime_stop': 'Укажите время конца',
-            //'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+
             'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             'voprc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
@@ -80,11 +61,6 @@
             'voprc_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР" – отменена',
             'voprc_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
 
-            //'voprc_mess_cancel_operation_cancel': 'Операция "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА" – отменена',
-            //'voprc_mess_cancel_operation_return': 'Операция "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА" – отменена',
-
-            //'voprc_mess_run_operation_return': 'Выполняю операцию "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА"',
-
             'vopoc_mess_not_select_way_on': 'Выберите путь для роспуска',
             'vopoc_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
             'vopoc_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
@@ -92,22 +68,14 @@
 
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
-            'voprc_mess_load_ways': 'Загружаю пути роспуска...',
-
-            //'voprc_mess_load_sostav_outer_ways': 'Загружаю отправленные составы...',
 
             'voprc_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
-            //'voprc_mess_create_sostav': 'Формирую возврат, переношу вагоны...',
             'voprc_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
-            //'voprc_mess_reverse_head_sostav': 'Формирую возврат, реверс голова-хвост',
-            //'voprc_mess_reverse_sostav': 'Формирую возврат, реверс вагонов...',
 
             'voprc_confirm_title': 'Внимание!',
             'voprc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
             'voprc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            //'voprc_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} для возврата? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            //'voprc_confirm_mess_apply_return_wagons': 'Выполнить операцию "ВОЗРАТ ВАГОНОВ ОТПРАВЛЕННОГО СОСТАВА" в количестве: {0} (ваг.), станция отправки: {1}? Будет выполнен возврат вагонов с перегона на указанный путь станции отправления. В отчетах будет зафиксировано возврат с перегона!',
             'voprc_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
         },
         'en':  //default language: English
@@ -160,20 +128,10 @@
         this.locomotives = [];      // Список локомотивов (полный)
         this.list_locomotive = [];  // Список локомотивов (value\text\desabled)
 
-        this.station = null;        // Станция отправления
-
-        //this.head = false;          // Признак голова(true)\хвост(false), по умолчанию хвост
-        //this.reverse = false;
+        //this.station = null;        // Станция отправления
         this.wagons = [];               // Список вагонов на пути отправки (рабочий)
         this.dissolution_ways = [];     // Список путей приема роспуска (рабочий)
         this.wagons_on = [];            // Список вагонов на пути выбранного приема (рабочий)
-        //this.wagons_add = [];           // Список вагонов которые нужно перенести на путь (рабочий)
-        //this.wagons_sostav = [];      // Список вагонов выбранного состава нп пути прибытия (рабочий)
-        //this.wagons_all = [];         // Список всех вагонов всех составов (используем для выборки вагонов по составу)
-        //this.sostav_all = [];         // Список всех составов (получаем из Списока всех вагонов всех составов this.wagons_all)
-        //this.station_from = null;
-        //this.way_from = null;
-
         this.view_com.$title.empty();
         this.view_com.$title.append(langView('voprc_card_header_panel', App.Langs));
         this.view_com.$op.empty();
@@ -377,11 +335,8 @@
                         minLength: 1,
                         searchContain: true,
                         fn_change: function (event, set, options) {
-                            //main_alert.clear_message();
-                            //main_alert.out_info_message('element_datalist_change value=: ' + set.value + ' text=' + set.text);
                         }.bind(this),
                         fn_select: function (event, set, options) {
-                            /*                        main_alert.out_info_message('element_datalist_select value=' + set.value + ' label=' + set.label);*/
                         }.bind(this),
                     },
                     validation: true,
@@ -421,9 +376,6 @@
                         format: 'datetime',
                         out_format: 'moment',
                         fn_change: function (e, dt) {
-                            //var text = $(e.currentTarget).val();
-                            //main_alert.clear_message();
-                            //main_alert.out_info_message('validationDatetime text=: ' + text + ' dt=' + dt);
                         }.bind(this),
                     },
                     validation: true,
@@ -463,9 +415,6 @@
                         format: 'datetime',
                         out_format: 'moment',
                         fn_change: function (e, dt) {
-                            //var text = $(e.currentTarget).val();
-                            //main_alert.clear_message();
-                            //main_alert.out_info_message('validationDatetime text=: ' + text + ' dt=' + dt);
                         }.bind(this),
                     },
                     validation: true,
@@ -521,7 +470,7 @@
                                             date_start: result.new.input_datetime_time_start._i,
                                             date_stop: result.new.input_datetime_time_stop._i,
                                             locomotive1: result.new.datalist_locomotive1,
-                                            /*                                            user: App.User_Name*/
+                                            /*user: App.User_Name*/
                                         };
                                         this.apply(operation);
                                     }
@@ -546,7 +495,7 @@
             var row_diss_way_cars = new this.view_com.fe_ui.bs_row({ id: 'op-dc-dissolution-way-cars', class: '' });
             //this.on_table.$html.empty();
             this.on_table.$html.append(row_diss_way_cars.$html);
-            /*            console.log('add row_arr_cars_way');*/
+            /*console.log('add row_arr_cars_way');*/
             this.tdw_opdc = new TWS('div#op-dc-dissolution-ways');
             this.tdw_opdc.init({
                 alert: this.on_alert,
@@ -570,7 +519,6 @@
                 fn_select_rows: function (rows, type, indexes) {
                     this.id_way_dissolution = null;
                     this.num_way_dissolution = null;
-                    //this.indexes_row_way = indexes;
                     if (type === "select") {
                         if (rows != null && rows.length > 0) {
                             this.id_way_dissolution = rows[0].id;
@@ -896,8 +844,6 @@
                                     el['num_way_dissolution'] = this.num_way_dissolution
                                     position_start++;
                                 }.bind(this));
-                                //var index = this.tdw_opdc.tab_com.obj_t_report.row('#' + this.id_way_dissolution).index();
-                                //var dd = this.tdw_opdc.tab_com.obj_t_report.cell([index], 2).data();
                                 var tr = this.tdw_opdc.tab_com.$table_report.find('tr.selected');
                                 if (tr && tr.length > 0) {
                                     var $td = $(tr[0].cells[2]);
@@ -943,8 +889,6 @@
         //this.form_on_setup.el.datalist_locomotive2.val('');
         this.form_on_setup.el.input_datetime_time_start.val(moment());
         this.form_on_setup.el.input_datetime_time_stop.val(moment().add(1, 'hour'));
-        //this.wagons_add = [];
-        //this.form_from_setup.clear_all();
         // Сбросим вагоны переноса
         var id_station = -1;
         this.id_station = -1;
@@ -963,34 +907,8 @@
         }.bind(this));
 
     };
-    //// Обновить информацию
-    //view_op_dissolution_cars.prototype.update = function (id_station, id_way, callback) {
-    //    this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
-    //    this.reverse = false;
-    //    var pr_1 = 1;
-    //    var out_pr1 = function (pr_1) {
-    //        if (pr_1 === 0) {
-    //            this.view_wagons();
-    //            if (typeof callback === 'function') {
-    //                callback();
-    //            }
-    //        }
-    //    }.bind(this);
-    //    // Обновим пути по станции
-    //    this.update_outgoing_sostav(id_station, id_way, function () {
-    //        pr_1--;
-    //        out_pr1(pr_1);
-    //    }.bind(this));
-    //    // Обновим составы на пути перегона
-    //    //this.update_sostavs_of_outer_ways(id_station, num_sostav, function () {
-    //    //    pr_1--;
-    //    //    out_pr1(pr_1);
-    //    //}.bind(this));
-    //};
     // Обновить информацию
     view_op_dissolution_cars.prototype.update = function (id_station, id_way, callback) {
-        //this.head = false;      // Признак голова(true)\хвост(false), по умолчанию хвост
-        //this.reverse = false;
         // Обновим пути по станции
         this.update_station(id_station, id_way, function () {
             this.view_wagons();
@@ -1269,7 +1187,7 @@
     view_op_dissolution_cars.prototype.view_wagons_dissolution_on = function () {
         var wagons = this.wagons_on;
         var wagons_add = this.wagons.filter(function (i) {
-            return i.id_way_dissolution === this.id_way_dissolution && this.id_way_dissolution!==null;
+            return i.id_way_dissolution === this.id_way_dissolution && this.id_way_dissolution !== null;
         }.bind(this));
         if (wagons_add !== null && wagons_add.length > 0) {
             wagons = wagons.concat(wagons_add)
