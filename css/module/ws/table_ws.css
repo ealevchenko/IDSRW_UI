@@ -38,17 +38,17 @@ table.table-sostav-outer-ways {
         padding: 0 0.5rem;
     }
 
-table.table-wagons-outer-way {
+table.table-small {
     font-size: .8rem;
     /*border-collapse: collapse;*/
 }
 
-    table.table-wagons-outer-way th {
+    table.table-small th {
         text-align: center;
         /*        padding: 0 0.5rem;*/
     }
 
-    table.table-wagons-outer-way td {
+    table.table-small td {
         padding: 0 0.5rem;
     }
 

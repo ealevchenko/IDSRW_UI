@@ -346,6 +346,32 @@
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная 
+    table_common.prototype.init_button_Ex_Prn_Ref_EyE = function (btns) {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                this.button_action(config.button, e, dt, node, config);
+            }.bind(this)
+        });
+        buttons.push({
+            name: 'eye',
+            action: function (e, dt, node, config) {
+                this.eye = !this.eye;
+                node[0].innerHTML = '<span>' + (this.eye ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>' + '</span>');
+                this.button_action(config.button, e, dt, node, config);
+            }.bind(this)
+        });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
+        return this.init_buttons(buttons, this.list_buttons);
+    };
+    // инициализация кнопок стандартная 
     table_common.prototype.init_button_Ex_Prn_Fld_Ref_EyE_Pag = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
@@ -431,6 +457,7 @@
             detali_table: false,
             type_report: null,
             link_num: false,
+            setup_buttons: [],
             fn_init: null,
             fn_user_select_rows: null,
             fn_select_rows: null,
@@ -539,7 +566,7 @@
                 this.enable_button();
                 // Обработать событие выбрана строка
                 if (typeof this.settings.fn_select_rows === 'function') {
-                    this.settings.fn_select_rows(this.selected_rows, e.type);
+                    this.settings.fn_select_rows(this.selected_rows, e.type, indexes);
                 }
             }.bind(this));
         }

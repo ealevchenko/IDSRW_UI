@@ -40,7 +40,7 @@
     var toss = new TWS('div#operators-send-station');
     var toas = new TWS('div#operators-arrival-station');
 
-
+    
     var VOAC = App.view_op_arrival_cars;
     var voac = new VOAC('main.container-fluid');
 
@@ -49,6 +49,9 @@
 
     var VORC = App.view_op_return_cars;
     var vorc = new VORC('main.container-fluid');
+
+    var VODC = App.view_op_dissolution_cars;
+    var vodc = new VODC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -229,7 +232,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 11;
+            var process = 12;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -247,8 +250,6 @@
                         //    };
                         //};
                     }.bind(this));
-
-
 
                     var pr_1 = 2;
                     var out_pr1 = function (pr_1) {
@@ -278,7 +279,7 @@
             })
 
 
-            // Кнопки основного меню
+            // Кнопки основного меню (Внешние операции)
             $('#btn-external-operations').on('click', 'button', function (event) {
                 switch (event.currentTarget.id) {
                     case 'send-cars': {
@@ -291,6 +292,15 @@
                     };
                     case 'return-cars': {
                         vorc.view(current_id_way);
+                        break;
+                    };
+                };
+            });
+            // Кнопки основного меню (Внутрение операции)
+            $('#btn-internal-operations').on('click', 'button', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'dissolution': {
+                        vodc.view(current_id_way);
                         break;
                     };
                 };
@@ -657,7 +667,25 @@
                     }.bind(this));
                 }
             });
-
+            // Операции дислокации
+            vodc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vodc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
 
         }.bind(this));
     });

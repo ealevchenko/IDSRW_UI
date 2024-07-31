@@ -854,9 +854,42 @@
             this.tacw_opac = new TWS('div#op-ac-arrival-cars-way');
             this.tacw_opac.init({
                 alert: this.on_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'arrival_cars_way',     //
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tacw_opac.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.id_wim_arrival !== null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'del_wagons_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opac.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'head_tail',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opac.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opac.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
@@ -1019,7 +1052,7 @@
             this.tsf_opac = new TWS('div#op-ac-sostav-outer-ways');
             this.tsf_opac.init({
                 alert: this.from_alert,
-                class_table: 'table table-sm table-success table-striped table-sostav-outer-ways table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-striped table-small table-bordered border-secondary',
                 detali_table: false,
                 type_report: 'sostav_outer_ways',     //
                 link_num: false,
@@ -1071,9 +1104,28 @@
             this.twf_opac = new TWS('div#op-ac-wagons-outer-way');
             this.twf_opac.init({
                 alert: this.from_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
-                type_report: 'wagons_outer_way',     //
+                type_report: 'wagons_outer_way',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.twf_opac.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.outerWayEnd === null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.twf_opac.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {

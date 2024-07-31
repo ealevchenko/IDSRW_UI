@@ -918,15 +918,48 @@
             });
 
             var row_arr_cars_way = new this.view_com.fe_ui.bs_row({ id: 'op-rc-arrival-cars-way', class: 'pt-2' });
-            this.on_table.$html.empty();
+            //this.on_table.$html.empty();
             this.on_table.$html.append(row_arr_cars_way.$html);
             /*            console.log('add row_arr_cars_way');*/
             this.tacw_opr = new TWS('div#op-rc-arrival-cars-way');
             this.tacw_opr.init({
                 alert: this.on_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
-                type_report: 'arrival_cars_way',     //
+                type_report: 'arrival_cars_way',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tacw_opr.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.id_wim_arrival !== null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'del_wagons_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opr.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'head_tail',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opr.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            this.tacw_opr.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
@@ -1168,9 +1201,28 @@
             this.twf_opr = new TWS('div#op-rc-wagons-outer-way');
             this.twf_opr.init({
                 alert: this.from_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
-                type_report: 'wagons_outer_way',     //
+                type_report: 'wagons_outer_way',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.twf_opr.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.outerWayEnd === null;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.twf_opr.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {

@@ -256,6 +256,9 @@
     ids_directory.prototype.GetViewStatusAllWayOfStationParkId = function (id_station, id_park, callback) {
         this.api_com.get('/DirectoryWay/status/station/' + id_station + '/park/' + id_park, callback);
     };
+    ids_directory.prototype.GetViewStatusAllWayOfStationId = function (id_station, callback) {
+        this.api_com.get('/DirectoryWay/status/station/' + id_station, callback);
+    };
     ids_directory.prototype.GetViewStatusWayOfId = function (id_way, callback) {
         this.api_com.get('/DirectoryWay/status/way/' + id_way, callback);
     };
@@ -333,7 +336,18 @@
             return !i.wayDelete && i.idStation === id_station
         });
     };
-
+    // Получить списки путей роспуска (Value, Text, Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextDissolutionWaysOfStation = function (id_station) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            return !i.wayDelete && i.idStation === id_station && i.dissolution
+        });
+    };
+    // Получить списки путей с которых производится роспуск (Value, Text, Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextOutDissolutionWaysOfStation = function (id_station) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            return !i.wayDelete && i.idStation === id_station && i.outputDissolution
+        });
+    };
     //*======= (Справочник station) ======================================
     // Получить все записи
     ids_directory.prototype.getAllStation = function () {

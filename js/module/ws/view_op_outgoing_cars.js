@@ -755,9 +755,32 @@
             this.twnsow_opoc = new TWS('div#op-oc-wagons-new-sostav-outer-way');
             this.twnsow_opoc.init({
                 alert: this.on_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
-                type_report: 'wagons_new_sostav_outer_way',     //
+                type_report: 'wagons_new_sostav_outer_way',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            this.twnsow_opoc.tab_com.obj_t_report.rows().select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'del_wagons_sostav',
+                        action: function (e, dt, node, config) {
+                            this.twnsow_opoc.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            this.twnsow_opoc.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
@@ -934,9 +957,25 @@
             this.tocw_opoc = new TWS('div#op-oc-outgoing-cars-way');
             this.tocw_opoc.init({
                 alert: this.from_alert,
-                class_table: 'table table-sm table-success table-wagons-outer-way table-striped table-bordered border-secondary',
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                 detali_table: false,
-                type_report: 'outgoing_cars_way',     //
+                type_report: 'outgoing_cars_way',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            this.tocw_opoc.tab_com.obj_t_report.rows().select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tocw_opoc.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 link_num: false,
                 ids_wsd: null,
                 fn_init: function () {
