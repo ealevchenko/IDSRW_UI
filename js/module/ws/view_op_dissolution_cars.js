@@ -68,6 +68,7 @@
 
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'voprc_mess_load_ways': 'Загружаю пути дислокации...',
 
             'voprc_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
