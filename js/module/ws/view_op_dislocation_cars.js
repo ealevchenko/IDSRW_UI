@@ -62,21 +62,21 @@
             'vodlc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_disl_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для дислокации)',
 
-            //'vodlc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'vodlc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
-            //'vodlc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
-            //'vodlc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
-            //'vodlc_mess_error_not_wagons': 'Не выбраны вагоны для отправки (в окне «ОТПРАВИТЬ СО СТАНЦИИ», выберите станцию, путь и вагоны для отправки).',
-            //'vodlc_mess_error_operation_run': 'При выполнении операции «ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР» произошла ошибка, код ошибки: {0}',
-            //'vodlc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vodlc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vodlc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vodlc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
+            'vodlc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
+            'vodlc_mess_error_not_wagons': 'Не выбраны вагоны для дислокации (в окне «ВАГОНЫ НА ПУТИ», выберите станцию, путь и вагоны для дислокации).',
+            'vodlc_mess_error_operation_run': 'При выполнении операции «ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ АМКР» произошла ошибка, код ошибки: {0}',
+            'vodlc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vodlc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
-
-            //'vodlc_mess_cancel_operation': 'Операция "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" – отменена',
-            //'vodlc_mess_run_operation_outgoing': 'Выполняю операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
+            'vodlc_mess_cancel_operation': 'Операция "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ АМКР" – отменена',
+            'vodlc_mess_run_operation_dislocation': 'Выполняю операцию "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ АМКР"',
             'vodlc_mess_not_select_wagon_from': 'Выберите вагоны для формирования дислокации!',
             'vodlc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
             'vodlc_mess_not_select_way_on': 'Выберите путь дислокации вагонов!',
-            //'vodlc_mess_ok_operation': 'Состав отправлен, в количестве {0} (ваг.)',
+            'vodlc_mess_ok_operation': 'Дислокация выполнена, перенесено {0} (ваг.)',
 
             'vodlc_mess_load_operation': 'Загружаю операции...',
             'vodlc_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -92,7 +92,7 @@
             'vodlc_confirm_title': 'Внимание!',
             //'vodlc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             //'vodlc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
-            //'vodlc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" {0} в количестве: {1} (ваг.), на станцию: {2}?',
+            'vodlc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ АМКР" {0} в количестве: {1} (ваг.), переместить вагоны с пути {2} на путь {3}?',
 
             'vodlc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все дислацированные вагоны в количестве {1} будут сброшены! ',
             'vodlc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь дислокации {0}? Все дислацированные вагоны в количестве {1} будут сброшены! ',
@@ -500,10 +500,10 @@
                         // Дополнительная проверка
                         var valid = this.validation(result);
                         if (valid) {
-                            var wagons = this.wagons.filter(function (i) { return i.position_new !== null; });// получить вагоны
+                            var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
                             this.view_com.mcf.open(
                                 langView('vodlc_title_form_apply', App.Langs),
-                                langView('vodlc_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_from_setup.el.select_id_station.text(), (wagons ? wagons.length : 0), this.form_on_setup.el.select_id_station.text()),
+                                langView('vodlc_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_from_setup.el.select_id_station.text(), (wagons ? wagons.length : 0), this.form_from_setup.el.select_id_way_from.text(), this.form_on_setup.el.select_id_way_on.text()),
                                 function () {
                                     // Принять
                                     // Проверим наличие вагонов 
@@ -514,19 +514,11 @@
                                             list_wagons.push({ wir_id: el.wirId, position: el.position_new })
                                         }.bind(this));
                                         // Сформируем операцию
-
-                                        //public int id_way_from { get; set; }
-                                        //public List < ListOperationWagon > wagons { get; set; }
-                                        //public int id_way_on { get; set; }
-                                        //public bool head { get; set; }
-                                        //public DateTime ? lead_time { get; set; }
-                                        //public string ? locomotive1 { get; set; }
-                                        //public string ? locomotive2 { get; set; }
-
                                         var operation = {
-                                            id_way_from: this.id_way_on,
+                                            id_way_from: this.id_way_from,
                                             wagons: list_wagons,
-                                            id_outer_way: this.id_outer_way,
+                                            id_way_on: this.id_way_on,
+                                            head: this.head,
                                             lead_time: result.new.input_datetime_time_aplly._i,
                                             locomotive1: result.new.datalist_locomotive1,
                                             locomotive2: result.new.datalist_locomotive2,
@@ -1209,333 +1201,6 @@
         };
         this.twon_opodl.view(wagons, null);
     };
-    //// Проверка и подтверждение изменений по станции отправки
-    //view_op_dislocation_cars.prototype.confirm_update_station = function (id_station_on, callback_ok, callback_cancel) {
-    //    if (this.id_station_on !== id_station_on) {
-    //        var wagons_add = this.wagons.filter(function (i) {
-    //            return i.position_new !== null;
-    //        });
-    //        if (wagons_add && wagons_add.length > 0) {
-    //            this.view_com.mcf.open(
-    //                langView('vodlc_confirm_title', App.Langs),
-    //                langView('vodlc_confirm_mess_new_sostav', App.Langs).format(wagons_add.length),
-    //                function () {
-    //                    if (typeof callback_ok === 'function') {
-    //                        callback_ok();
-    //                    }
-    //                }.bind(this),
-    //                function () {
-    //                    this.form_from_setup.el.select_id_station.val(this.id_station_on);
-    //                    if (typeof callback_cancel === 'function') {
-    //                        callback_cancel();
-    //                    }
-    //                }.bind(this)
-    //            );
-    //        } else {
-    //            if (typeof callback_ok === 'function') {
-    //                callback_ok();
-    //            }
-    //        }
-    //    } else {
-    //        if (typeof callback_cancel === 'function') {
-    //            callback_cancel();
-    //        }
-    //    }
-    //};
-    //// Проверка и подтверждение изменений по пути отправки
-    //view_op_dislocation_cars.prototype.confirm_update_way_on = function (id_way_on, callback_ok, callback_cancel) {
-    //    if (this.id_way_on !== id_way_on) {
-    //        var wagons_add = this.wagons.filter(function (i) {
-    //            return i.position_new !== null;
-    //        });
-    //        if (wagons_add && wagons_add.length > 0) {
-    //            this.view_com.mcf.open(
-    //                langView('vodlc_confirm_title', App.Langs),
-    //                langView('vodlc_confirm_mess_new_way', App.Langs).format(wagons_add.length),
-    //                function () {
-    //                    if (typeof callback_ok === 'function') {
-    //                        callback_ok();
-    //                    }
-    //                }.bind(this),
-    //                function () {
-    //                    this.form_from_setup.el.select_id_way.val(this.id_way_on);
-    //                    if (typeof callback_cancel === 'function') {
-    //                        callback_cancel();
-    //                    }
-    //                }.bind(this)
-    //            );
-    //        } else {
-    //            if (typeof callback_ok === 'function') {
-    //                callback_ok();
-    //            }
-    //        }
-    //    } else {
-    //        if (typeof callback_cancel === 'function') {
-    //            callback_cancel();
-    //        }
-    //    }
-    //};
-    //// Обновим пути по выбранной станции
-    //view_op_dislocation_cars.prototype.update_from_station_on = function (id_station_on, id_way_on, callback) {
-    //    this.confirm_update_station_on(
-    //        id_station_on,
-    //        function () { // Ok
-    //            // обновим компонент пути отправки
-    //            this.form_from_setup.el.select_id_way.update(this.view_com.api_dir.getListValueTextWaysOfStation(id_station_on), id_way_on);
-    //            // сбросим вагоны на пути
-    //            this.wagons = [];
-    //            // Обновим станции приема и внешние пути
-    //            this.list_station_on = this.get_list_station_on(id_station_on);
-    //            this.id_station_from = -1;
-    //            // Обновим элемент станции приема
-    //            this.form_on_setup.el.select_id_station.update(this.list_station_on, this.id_station_from);
-    //            // Обновим элемент внешних путей
-    //            this.list_outer_ways = []
-    //            this.id_outer_way = -1;
-    //            // обновим компонент списка внешних путей
-    //            this.form_on_setup.el.select_id_outer_way.update(this.list_outer_ways, this.id_outer_way);
-    //            // обновим составы и вагоны на внешнем пути
-    //            this.sostav_all = [];
-    //            this.wagons_all = [];
-    //            // обновим путь отправки
-    //            this.update_from_way_on(id_way_on, function () {
-    //                this.id_station_on = id_station_on;
-    //                if (typeof callback === 'function') {
-    //                    callback();
-    //                }
-    //            }.bind(this));
-    //        }.bind(this),
-    //        function () { // Cancel
-    //            // обновим компонент пути
-    //            this.update_from_way_on(id_way_on, function () {
-    //                if (typeof callback === 'function') {
-    //                    callback();
-    //                }
-    //            }.bind(this));
-    //        }.bind(this)
-    //    );
-    //};
-    //// Обновим пути по выбраному пути
-    //view_op_dislocation_cars.prototype.update_from_way_on = function (id_way_on, callback) {
-    //    this.confirm_update_way_on(id_way_on,
-    //        function () { // Ok
-    //            // Обновим путь
-    //            this.load_of_way(id_way_on, function () {
-    //                // Событие обновили данные
-    //                if (typeof callback === 'function') {
-    //                    callback();
-    //                }
-    //            }.bind(this));
-    //        }.bind(this),
-    //        function () { // Cancel
-    //            if (typeof callback === 'function') {
-    //                callback();
-    //            }
-    //        }.bind(this));
-    //};
-    //// Обновим станции приема и внешние пути по выбранной станции
-    //view_op_dislocation_cars.prototype.update_from_station_outer_ways_of_on_station = function (id_station_on, id_station_from, id_outer_way, num_sostav, callback) {
-    //    var id_station_from = id_station_from ? id_station_from : -1;
-    //    var id_outer_way = id_outer_way ? id_outer_way : -1;
-    //    // Обновим элемент станции приема
-    //    if (this.id_station_from !== id_station_from) {
-    //        // Обновим компоненты внешние пути
-    //        this.list_outer_ways = this.get_list_outer_ways(id_station_on, id_station_from);
-    //        this.id_outer_way = -1; // сбросим выбранный путь
-    //        // обновим компонент списка внешних путей
-    //        this.form_on_setup.el.select_id_outer_way.update(this.list_outer_ways, this.id_outer_way);
-    //        // Загрузим составы на внешних путях отправленные 
-    //        this.load_sostav_of_outer_ways(id_station_from, function (sostavs, wagons) {
-    //            this.id_station_from = id_station_from; // сохраним выбранный состав
-    //            // Событие обновили данные
-    //            if (typeof callback === 'function') {
-    //                callback();
-    //            }
-    //        }.bind(this));
-    //    } else {
-    //        this.id_outer_way = id_outer_way;
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback();
-    //        }
-    //    }
-    //}
-    //// Получить список станций прибытия
-    //view_op_dislocation_cars.prototype.get_list_station_on = function (id_station_from) {
-    //    // Обновим станции прибытия
-    //    var list_station_on = [];
-    //    // получим внешние пути пренадлежащие выбранной станции
-    //    var list_outer_ways = this.outer_ways.filter(function (i) {
-    //        return i.idStationFrom == id_station_from && !i.wayDelete;
-    //    }.bind(this));
-    //    // Получим уникальные станции прибытия
-    //    if (list_outer_ways && list_outer_ways.length > 0) {
-    //        // Поиск уникальных станций
-    //        $.each(list_outer_ways, function (i, el) {
-    //            var st_on = list_station_on.find(function (o) {
-    //                return o.value === el.idStationOn;
-    //            }.bind(this))
-    //            if (!st_on) {
-    //                var st = this.list_station.find(function (o) { return o.value === el.idStationOn }.bind(this));
-    //                if (st) list_station_on.push(st);
-    //            }
-    //        }.bind(this));
-    //    }
-    //    return list_station_on ? list_station_on.sort(function (a, b) { return a.value - b.value; }) : list_station_on;
-    //}
-    //// Получить список внешних путей
-    //view_op_dislocation_cars.prototype.get_list_outer_ways = function (id_station_from, id_station_on) {
-    //    var list = [];
-    //    var list_outer_ways = this.outer_ways.filter(function (i) {
-    //        return i.idStationFrom == id_station_from && i.idStationOn == id_station_on && !i.wayDelete;
-    //    }.bind(this));
-    //    $.each(list_outer_ways, function (i, el) {
-    //        list.push({ value: el.id, text: el['nameOuterWay' + ucFirst(App.Lang)], desabled: false });
-    //    }.bind(this));
-    //    return list;
-    //}
-    //// Загрузить вагоны на выбраном пути отправки в масив this.wagons (подготовить поля для вагонов отправки)
-    //view_op_dislocation_cars.prototype.load_of_way = function (id_way_from, callback) {
-    //    if (id_way_on !== null && id_way_on >= 0) {
-    //        if (this.id_way_from !== id_way_from) {
-    //            this.update_of_way(id_way_on, function (wagons) {
-    //                if (typeof callback === 'function') {
-    //                    callback(wagons);
-    //                }
-    //            }.bind(this));
-    //            //this.id_way_from = id_way_from;
-    //            //LockScreen(langView('vodlc_mess_load_wagons', App.Langs));
-    //            //this.view_com.api_wsd.getViewWagonsOfIdWay(id_way_from, function (wagons) {
-    //            //    // модифицировать данные взависимости от отчета
-    //            //    if (wagons) {
-    //            //        $.each(wagons, function (i, el) {
-    //            //            el['position_new'] = null;
-    //            //        });
-    //            //    }
-    //            //    this.wagons = wagons;
-    //            //    // Событие обновили данные
-    //            //    if (typeof callback === 'function') {
-    //            //        callback(this.wagons);
-    //            //    }
-    //            //}.bind(this));
-    //        } else {
-    //            // Событие данные ненужно обновлять
-    //            if (typeof callback === 'function') {
-    //                callback(this.wagons);
-    //            }
-    //        }
-    //    } else {
-    //        this.id_way_on = -1;
-    //        this.wagons = [];
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.wagons);
-    //        }
-    //    }
-    //};
-
-    //view_op_dislocation_cars.prototype.update_of_way = function (id_way_on, callback) {
-    //    this.id_way_on = id_way_on;
-    //    LockScreen(langView('vodlc_mess_load_wagons', App.Langs));
-    //    this.view_com.api_wsd.getViewWagonsOfIdWay(id_way_on, function (wagons) {
-    //        // модифицировать данные взависимости от отчета
-    //        if (wagons) {
-    //            $.each(wagons, function (i, el) {
-    //                el['position_new'] = null;
-    //            });
-    //        }
-    //        this.wagons = wagons;
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.wagons);
-    //        }
-    //    }.bind(this));
-    //};
-    //// Загрузить составы и вагоны на пути отправки прибывающие на станцию
-    //view_op_dislocation_cars.prototype.load_sostav_of_outer_ways = function (id_station_on, callback) {
-    //    this.sostav_all = [];
-    //    this.wagons_all = [];
-    //    // обновим состав
-    //    if (id_station_on !== null && id_station_on >= 0) {
-    //        LockScreen(langView('vodlc_mess_load_sostav_outer_ways', App.Langs));
-    //        this.view_com.api_wsd.getViewOpenWagonsOfOuterWaysStationOn(id_station_on, function (wagons) {
-    //            this.wagons_all = wagons;
-    //            $.each(wagons, function (key, el) {
-    //                var st = this.sostav_all.find(function (o) {
-    //                    return $.trim(o.outerWayNumSostav) === $.trim(el.outerWayNumSostav);
-    //                }.bind(this));
-    //                if (!st) {
-    //                    this.sostav_all.push({
-    //                        outerWayNumSostav: $.trim(el.outerWayNumSostav),
-    //                        idOuterWay: el.idOuterWay,
-    //                        nameOuterWayRu: el.nameOuterWayRu,
-    //                        nameOuterWayEn: el.nameOuterWayEn,
-    //                        fromStationNameRu: el.fromStationNameRu,
-    //                        fromStationNameEn: el.fromStationNameEn,
-    //                        fromStationAbbrRu: el.fromStationAbbrRu,
-    //                        fromStationAbbrEn: el.fromStationAbbrEn,
-    //                        fromIdWay: el.fromIdWay,
-    //                        fromIdPark: el.fromIdPark,
-    //                        fromWayNumRu: el.fromWayNumRu,
-    //                        fromWayNumEn: el.fromWayNumEn,
-    //                        fromWayNameRu: el.fromWayNameRu,
-    //                        fromWayNameEn: el.fromWayNameEn,
-    //                        fromWayAbbrRu: el.fromWayAbbrRu,
-    //                        fromWayAbbrEn: el.fromWayAbbrEn,
-    //                        fromOperationStart: el.fromOperationStart,
-    //                        fromOperationEnd: el.fromOperationEnd,
-    //                        fromOperationCreateUser: el.fromOperationCreateUser,
-    //                        fromOperationLocomotive1: el.fromOperationLocomotive1,
-    //                        fromOperationLocomotive2: el.fromOperationLocomotive2,
-    //                        countWagonsSend: 1,
-    //                        countWagonsArrival: el.onIdOperation === 6 ? 1 : 0,
-    //                        countWagonsReturn: el.onIdOperation === 11 || el.onIdOperation === 12 ? 1 : 0,
-    //                        countWagonsAccepted: el.outerWayEnd !== null ? 1 : 0,
-    //                        banSostav: false,
-    //                    });
-    //                } else {
-    //                    st.countWagonsSend++;
-    //                    st.countWagonsArrival += (el.onIdOperation === 6 ? 1 : 0);
-    //                    st.countWagonsReturn += (el.onIdOperation === 11 || el.onIdOperation === 12 ? 1 : 0)
-    //                    st.countWagonsAccepted += (el.outerWayEnd !== null ? 1 : 0)
-    //                }
-    //            }.bind(this));
-    //            if (typeof callback === 'function') {
-    //                callback(this.sostav_all, this.wagons_all);
-    //            }
-    //        }.bind(this));
-    //    } else {
-    //        if (typeof callback === 'function') {
-    //            callback(this.sostav_all, this.wagons_all);
-    //        }
-    //    }
-    //};
-
-    //// Показать состав с учетом выбранного внешнего пути
-    //view_op_dislocation_cars.prototype.view_sostav_outer_ways = function () {
-    //    $.each(this.sostav_all, function (key, el) {
-    //        if (this.id_outer_way === -1 || el.idOuterWay === this.id_outer_way) {
-    //            el.banSostav = false;
-    //        } else {
-    //            el.banSostav = true;
-    //        }
-    //    }.bind(this));
-    //    this.tsow_opoc.view(this.sostav_all, null);
-    //};
-    //// Отобразить вагоны на пути отправки
-    //view_op_dislocation_cars.prototype.view_wagons_of_way = function () {
-    //    // Показать вагоны на пути отправки
-    //    var wagons_from = this.wagons.filter(function (i) {
-    //        return i.position_new === null;
-    //    });
-    //    this.twfrom_opodl.view(wagons_from, null);
-
-    //    // Показать вагоны сформированного состава
-    //    var wagons_on = this.wagons.filter(function (i) {
-    //        return i.position_new !== null;
-    //    });
-    //    this.twon_opodl.view(wagons_on, null);
-    //};
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
     view_op_dislocation_cars.prototype.validation = function (result) {
@@ -1576,7 +1241,7 @@
         }
         // Проверим состав
         var wagons = this.wagons.filter(function (i) {
-            return i.position_new !== null;
+            return i.id_wir_from !== null;
         });
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common.out_error_message(langView('vodlc_mess_error_not_wagons', App.Langs))
@@ -1586,48 +1251,61 @@
     }
     // выполнить операцию
     view_op_dislocation_cars.prototype.apply = function (data) {
-        LockScreen(langView('vodlc_mess_run_operation_outgoing', App.Langs));
-        this.view_com.api_wsd.postOutgoingWagonsOfStationAMKR(data, function (result) {
-            if (result && result.result > 0) {
-                this.form_on_setup.validation_common.clear_all();
-                // Сбросим установки (время и локомотивы)
-                this.form_on_setup.el.datalist_locomotive1.val('');
-                this.form_on_setup.el.datalist_locomotive2.val('');
-                this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-                // Сбросим вагоны переноса
-                this.wagons = [];
-
-                var pr_2 = 2;
-                var out_pr2 = function (pr_2) {
-                    if (pr_2 === 0) {
-                        this.view_wagons();
-                        this.form_on_setup.validation_common.out_info_message(langView('vodlc_mess_ok_operation', App.Langs).format(result.moved));
-                        if (typeof this.settings.fn_db_update === 'function') {
-                            //TODO: можно добавить возвращать перечень для обновления
-                            typeof this.settings.fn_db_update();
-                        }
-                        LockScreenOff();
+        LockScreen(langView('vodlc_mess_run_operation_dislocation', App.Langs));
+        this.view_com.api_wsd.postDislocationWagonsOfStationAMKR(data, function (result) {
+            // Проверим на ошибку выполнения запроса api
+            if (result && result.status) {
+                var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+                console.log('[view_op_dislocation_cars] [postDislocationWagonsOfStationAMKR] :' + mess);
+                this.form_on_setup.validation_common.out_error_message(mess);
+                if (result.errors) {
+                    for (var err in result.errors) {
+                        this.form_on_setup.validation_common.out_error_message(err + ":" + result.errors[err]);
+                        console.log('[view_op_dislocation_cars] [postDislocationWagonsOfStationAMKR] :' + err + ":" + result.errors[err]);
                     }
-                }.bind(this);
-                // обновить таблицы вагоны на пути приема, составы, вагоны выбранного состава
-                var id_way_from = this.id_way_from;
-                this.id_way_from = -1;
-                this.update_of_way(id_way_from, function () {
-                    pr_2--;
-                    out_pr2(pr_2);
-                }.bind(this));
-
-                this.load_sostav_of_outer_ways(this.id_station_from, function (sostavs, wagons) {
-                    pr_2--;
-                    out_pr2(pr_2);
-                }.bind(this));
-            } else {
+                }
                 LockScreenOff();
-                this.form_on_setup.validation_common.out_error_message(langView('vodlc_mess_error_operation_run', App.Langs).format(result.result));
-                // Выведем ошибки по вагонно.
-                $.each(result.listResult, function (i, el) {
-                    if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vodlc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
-                }.bind(this));
+            } else {
+                if (result && result.result > 0) {
+                    this.form_on_setup.validation_common.clear_all();
+                    // Сбросим установки (время и локомотивы)
+                    this.form_on_setup.el.datalist_locomotive1.val('');
+                    this.form_on_setup.el.datalist_locomotive2.val('');
+                    this.form_on_setup.el.input_datetime_time_aplly.val(moment());
+
+                    var pr_2 = 2;
+                    var out_pr2 = function (pr_2) {
+                        if (pr_2 === 0) {
+                            this.view_wagons();
+                            this.form_on_setup.validation_common.out_info_message(langView('vodlc_mess_ok_operation', App.Langs).format(result.moved));
+                            if (typeof this.settings.fn_db_update === 'function') {
+                                //TODO: можно добавить возвращать перечень для обновления
+                                typeof this.settings.fn_db_update();
+                            }
+                            LockScreenOff();
+                        }
+                    }.bind(this);
+                    // Обновим пути отправки 1 поток
+                    this.load_of_way(this.id_way_from, function () {
+                        pr_2--;
+                        out_pr2(pr_2);
+                    }.bind(this));
+                    // Обновим пути приема 2 поток
+                    this.load_of_way_on(this.id_way_on, function () {
+                        pr_2--;
+                        out_pr2(pr_2);
+                    }.bind(this));
+                } else {
+                    LockScreenOff();
+                    this.form_on_setup.validation_common.out_error_message(langView('vodlc_mess_error_operation_run', App.Langs).format(result ? result.result : -1));
+                    // Выведем ошибки по вагонно.
+                    if (result && result.list_rs) {
+                        $.each(result.listResult, function (i, el) {
+                            if (el.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vodlc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                        }.bind(this));
+                    }
+
+                }
             }
         }.bind(this));
     };

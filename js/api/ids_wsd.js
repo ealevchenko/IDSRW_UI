@@ -103,6 +103,10 @@
     ids_wsd.prototype.postDissolutionWagonsOfStationAMKR = function (operation, callback) {
         this.api_com.post('/WSD/operation/dissolution/', operation, callback, callback);
     };
+    //АРМ, Операция дислокации вагонов на внутреней станции АМКР
+    ids_wsd.prototype.postDislocationWagonsOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/dislocation/', operation, callback, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;

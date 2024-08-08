@@ -17,6 +17,7 @@ var OnAJAXError = function (metod, x, y, z, callback) {
     }
     if (x && x.statusText) {
         data.statusText = x.statusText;
+
     }
     if (x && x.responseJSON) {
         data.message = x.responseJSON.Message;
