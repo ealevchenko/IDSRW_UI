@@ -1272,7 +1272,8 @@
                     this.form_on_setup.el.datalist_locomotive1.val('');
                     this.form_on_setup.el.datalist_locomotive2.val('');
                     this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-
+                    this.head = false;              // Признак голова(true)\хвост(false), по умолчанию хвост
+                    this.reverse = false;
                     var pr_2 = 2;
                     var out_pr2 = function (pr_2) {
                         if (pr_2 === 0) {
