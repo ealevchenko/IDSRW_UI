@@ -11,6 +11,8 @@
             'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
             'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
             'mwsd_mess_load_balance': 'Загружаю остаток...',
+
+            'mwsd_mess_war_not_way_provide': 'Операция предъявления недоступна, путь не имеет выхода на УЗ!',
         },
         'en':  //default language: English
         {
@@ -54,6 +56,9 @@
 
     var VODLC = App.view_op_dislocation_cars;
     var vodlc = new VODLC('main.container-fluid');
+
+    var VOPRC = App.view_op_provide_cars;
+    var voprc = new VOPRC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -119,7 +124,7 @@
                                 }
                             }
                         }.bind(this));
-
+                        main_alert.clear_message();
                         if (typeof callback === 'function') {
                             callback(wagons);
                         }
@@ -234,7 +239,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 13;
+            var process = 14;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -311,7 +316,20 @@
                     };
                 };
             });
-
+            // Кнопки основного меню (Внутрение операции)
+            $('#btn-uz-operations').on('click', 'button', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'provide': {
+                        if (current_option_way["crossing-uz"] === 1) {
+                            voprc.view(current_id_way);
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
+                        }
+                        break;
+                    };
+                };
+            });
             list_station = api_dir.getAllStation();
             // Настроим выбор станций
             var $el_dlg_select_station = $('#station-select')
@@ -694,6 +712,25 @@
             });
             // Операции дислокации
             vodlc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vodlc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции предъявления
+            voprc.init({
                 alert: null,
                 api_dir: null,
                 api_wsd: null,

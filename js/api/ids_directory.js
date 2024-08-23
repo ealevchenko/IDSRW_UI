@@ -336,6 +336,12 @@
             return !i.wayDelete && i.idStation === id_station
         });
     };
+    // Получить списки путей с выходом на УЗ (Value, Text, Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextCrossingUzWaysOfStation = function (id_station) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            return !i.wayDelete && i.idStation === id_station && i.crossingUz
+        });
+    };
     // Получить списки путей роспуска (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextDissolutionWaysOfStation = function (id_station) {
         return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {

@@ -326,6 +326,18 @@
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная 
+    table_common.prototype.init_button_Ex_Prn = function (btns) {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'print', action: null });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
+        return this.init_buttons(buttons, this.list_buttons);
+    };
+    // инициализация кнопок стандартная 
     table_common.prototype.init_button_Ex_Prn_Fld_Ref_Pag = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
@@ -453,6 +465,7 @@
         // Определим основные свойства
         this.settings = $.extend({
             alert: null,
+            caption : null,
             class_table: 'table',
             detali_table: false,
             type_report: null,
@@ -467,6 +480,7 @@
         }, options);
         //
         // Настройки отчета по умолчанию
+
         this.lengthMenu = null;
         this.pageLength = null;
         this.deferRender = true;
@@ -500,7 +514,7 @@
             class: this.settings.class_table,
             //class: 'table table-success table-striped',
             title: null,
-            //style: 'width: 100%',
+            style: this.settings.style_table,
         });
         if (this.html_footer !== '' && this.html_footer !== null) {
             this.$table_report = table_common.$html.append($(this.html_footer));
@@ -511,6 +525,7 @@
         this.$td_report.append(this.$table_report);
         // Инициализируем таблицу
         this.obj_t_report = this.$table_report.DataTable({
+            "caption": this.settings.caption,
             "lengthMenu": this.lengthMenu,
             "pageLength": this.pageLength,
             "deferRender": this.deferRender,
@@ -545,6 +560,10 @@
             stateSave: true,
             buttons: this.table_buttons,
         });
+        //
+        //if (this.settings.caption) {
+        //    this.obj_t_report.caption(this.settings.caption, 'top');
+        //}
         // Обработка события выбора
         if (this.table_select !== false) {
             this.obj_t_report.on('user-select', function (e, dt, type, cell, originalEvent) {

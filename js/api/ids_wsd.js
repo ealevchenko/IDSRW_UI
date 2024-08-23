@@ -49,6 +49,16 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
+
+    //================= ОТПРАВЛЕННЫЕ СОСТАВЫ(АРМ) =============================================
+    // Получить открытые отправленные составы
+    ids_wsd.prototype.getViewOpenOutgoingSostavOfIdWay = function (id, callback) {
+        this.api_com.get('/WSD/view/open/outgoing/sostav/way/' + id, callback);
+    };
+    ids_wsd.prototype.getViewWagonsOutgoingSostavOfIdSostav = function (id, callback) {
+        this.api_com.get('/WSD/view/wagon/outgoing/sostav/id/' + id, callback);
+    };
+    //================= ОСНОВНОЕ ОКНО (АРМ) =============================================
     // Вагоны на пути
     ids_wsd.prototype.getAdminInfo = function (callback) {
         this.api_com.get('/Admin/user_info', callback);
@@ -57,6 +67,10 @@
     ids_wsd.prototype.getViewWagonsOfIdWay = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/way/' + id, callback);
     };
+    ids_wsd.prototype.getViewDislocationAMKRWagonOfNum = function (num, callback) {
+        this.api_com.get('/WSD/view/dislocation/amkr/wagon/num/' + num, callback);
+    };
+
     // Баланс
     ids_wsd.prototype.getViewTotalBalance = function (callback) {
         this.api_com.get('/WSD/view/total_balance', callback);
@@ -81,7 +95,7 @@
     ids_wsd.prototype.getViewOpenWagonsOfOuterWaysStationFrom = function (id, callback) {
         this.api_com.get('/WSD/view/wagons/outer_way/station_from/' + id, callback);
     };
-    //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Плата за пользование) =========================================================
+    //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Плата за пользование) =============================================
     // Расчет платы за пользование вагонов на пути
     ids_wsd.prototype.getCalcUsageFeeCarsOfWay = function (id, callback) {
         this.api_com.get('/WSD/view/calc_wagon/way/' + id, callback);
@@ -106,6 +120,18 @@
     //АРМ, Операция дислокации вагонов на внутреней станции АМКР
     ids_wsd.prototype.postDislocationWagonsOfStationAMKR = function (operation, callback) {
         this.api_com.post('/WSD/operation/dislocation/', operation, callback, callback);
+    };
+    //АРМ, Операция предъявления вагонов на УЗ на внутреней станции АМКР
+    ids_wsd.prototype.postProvideWagonsOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/provide/', operation, callback, callback);
+    };
+    //АРМ, Операция правки даты и времени предъявления состава УЗ на внутреней станции АМКР
+    ids_wsd.prototype.postDateTimeProvideWagonsOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/provide/datetime/', operation, callback, callback);
+    };
+    //АРМ, Операция переноса вагонов на путь предъявления
+    ids_wsd.prototype.postMoveWagonsProvideWayOfStationAMKR = function (operation, callback) {
+        this.api_com.post('/WSD/operation/provide/move/wagons/', operation, callback, callback);
     };
     App.ids_wsd = ids_wsd;
 
