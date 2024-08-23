@@ -93,6 +93,33 @@ var intVal = function (i) {
             ? i
             : 0;
 };
+var isNumeric = function (value) {
+    return /^\d+$/.test(value);
+};
+var is_valid_num_wagon = function (num) {
+    if (num) {
+        if (!isNumeric(num)) return false;
+        if (!(Number(num) >= 10000000 && Number(num) <= 99999999)) return false;
+        var symbols = String(num).split(""); // разбиваем на массив символов
+        if (symbols.length !== 8) return false;
+        var cs = Number(symbols[7]);
+        symbols.length--;
+        var kof = [2, 1, 2, 1, 2, 1, 2];
+        var result = 0;
+        for (ni = 0; ni < symbols.length; ni++) {
+            var res_k = symbols[ni] * kof[ni];
+            if (res_k > 9) {
+                var symbols_k = String(res_k).split(""); // разбиваем на массив символов
+                res_k = Number(symbols_k[0]) + Number(symbols_k[1]);
+            }
+            result += Number(res_k);
+        }
+        result = Number(result) + cs;
+        var res = result % 10;
+        if (res === 0) { return true; } else { return false; }
+    }
+    return false;
+};
 
 (function (window) {
     'use strict';
@@ -118,6 +145,7 @@ var intVal = function (i) {
             'mess_checking_data': 'Проверяю данные...',
 
             'mess_error_not_cars': 'Введите номер вагона или несколько вагонов, разделитель номеров ";"',
+            'mess_error_cars': 'Ошибка ввода, номеров вагонов!',
             'mess_error_input_num_cars': 'Ошибка ввода, номер позиции :{0}, введен неправильный номер :{1}',
             'mess_error_input_num_cars1': 'Ошибка ввода, номер позиции :{0}, номер не может быть меньше или равен 0 :{1}',
             'mess_error_input_num_cars2': 'Ошибка ввода, номер позиции :{0}, не системная нумерация (ошибка контрольной суммы) :{1}',
@@ -3088,6 +3116,119 @@ var intVal = function (i) {
             if (out_message) this.out_info_message(mes_ok);
             return true;
         }
+
+    };
+    // Проверить элемент "textarea" на введенные номера вогонов с проверкой на системную нумерацию
+    validation_form.prototype.check_control_is_valid_nums = function (o, valid_sys_numbering, valid_not_null, out_message) {
+        var val = o.val();
+        var element = o.$element ? o.$element : o;
+        var mes_ok = 'ок';
+        var mes_error = langView('mess_error_cars', App.Langs);
+        var mes_warning = 'warning';
+        if (!val || val === null) {
+            if (!valid_not_null) {
+                mes_warning = langView('mess_error_not_cars', App.Langs);
+                this.set_control_error(element, mes_warning);
+                if (out_message) this.out_error_message(mes_warning);
+            }
+            return null;
+        }
+
+        //var isNumeric = function (value) {
+        //    return /^\d+$/.test(value);
+        //};
+
+        //// Проверка системной нумерации
+        //var is_valid_num_wagon = function (num) {
+        //    if (num) {
+        //        if (!isNumeric(num)) return false;
+        //        if (!(Number(num) >= 10000000 && Number(num) <= 99999999)) return false;
+        //        var symbols = String(num).split(""); // разбиваем на массив символов
+        //        if (symbols.length !== 8) return false;
+        //        var cs = Number(symbols[7]);
+        //        symbols.length--;
+        //        var kof = [2, 1, 2, 1, 2, 1, 2];
+        //        var result = 0;
+        //        for (ni = 0; ni < symbols.length; ni++) {
+        //            var res_k = symbols[ni] * kof[ni];
+        //            if (res_k > 9) {
+        //                var symbols_k = String(res_k).split(""); // разбиваем на массив символов
+        //                res_k = Number(symbols_k[0]) + Number(symbols_k[1]);
+        //            }
+        //            result += Number(res_k);
+        //        }
+        //        result = Number(result) + cs;
+        //        var res = result % 10;
+        //        if (res === 0) { return true; } else { return false; }
+        //    }
+        //    return false;
+        //};
+
+        // Провкерка на правильный ввод номеров
+        var valid = true;
+        var car_valid = [];
+        var car_out = [];
+        var cars = val.split(';');
+        $.each(cars, function (i, el) {
+            if (!isNumeric($.trim(el))) {
+                mes_warning = langView('mess_error_input_num_cars', App.Langs).format((i + 1), el);
+                if (out_message) this.out_error_message(mes_warning);
+                valid = false;
+            } else {
+                if (Number($.trim(el)) <= 0) {
+                    mes_warning = langView('mess_error_input_num_cars1', App.Langs).format((i + 1), el);
+                    if (out_message) this.out_error_message(mes_warning);
+                    valid = false;
+                } else {
+                    // Разрешена проверка системной нумерации
+                    if (valid_sys_numbering) {
+                        var num_val = is_valid_num_wagon(Number($.trim(el)));
+                        // Если валидный добавим в список
+                        if (num_val) {
+                            car_valid.push(Number($.trim(el)));
+                            car_out.push(Number($.trim(el)));
+                        } else {
+                            mes_warning = langView('mess_error_input_num_cars2', App.Langs).format((i + 1), el);
+                            if (out_message) this.out_error_message(mes_warning);
+                        }
+                        valid = valid & num_val;
+                    } else {
+                        // добавим в список
+                        car_valid.push(Number($.trim(el)));
+                        car_out.push(Number($.trim(el)));
+                    }
+                }
+            }
+        }.bind(this));
+        // Провкерка на повторяющиеся номера
+        var arr_res = [];
+        car_valid.sort();
+        for (var i = 1; i < car_valid.length; i++) {
+            if (car_valid[i] === car_valid[i - 1]) {
+                var is_unique = true;
+                for (var k = 0; k < arr_res.length; k++) {
+                    if (arr_res[k] === car_valid[i]) {
+                        is_unique = false;
+                        break;
+                    }
+                }
+                if (is_unique) {
+                    arr_res.push(car_valid[i]);
+                }
+            }
+        }
+        // Вывод сообщений повторяющихся номеров
+        $.each(arr_res, function (i, el) {
+            mes_warning = langView('mess_error_input_num_cars_duble', App.Langs).format(el);
+            if (out_message) this.out_error_message(mes_warning);
+            valid = false;
+        }.bind(this));
+        if (valid) {
+            this.set_control_ok(element, mes_ok);
+        } else {
+            this.set_control_error(element, mes_error);
+        }
+        return valid ? car_out : null;
 
     };
 
