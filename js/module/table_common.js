@@ -543,7 +543,8 @@
             select: this.table_select,
             "autoWidth": this.autoWidth,
             //"filter": true,
-            //"scrollY": "600px",
+/*            scrollCollapse: true,*/
+            //"scrollY": "200px",
             //sScrollX: "100%",
             scrollX: true,
             /*            sScrollXInner: "100%",*/

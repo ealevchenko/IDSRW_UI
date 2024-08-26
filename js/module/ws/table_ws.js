@@ -200,7 +200,8 @@
             h = h < 10 ? '0' + h : h;
             var m = minutes % 60;
             m = m < 10 ? '0' + m : m;
-            return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
+            //return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
+            return `${h.toString().padStart(1, '0')}:${m.toString().padStart(2, '0')}`;
         } else {
             return null;
         }
@@ -285,7 +286,7 @@
             {
                 field: 'operator_paid',
                 data: function (row, type, val, meta) {
-                    return row.operatoPaid ? langView('t_com_title_yes', App.Langs) : '';
+                    return row.operatorPaid ? langView('t_com_title_yes', App.Langs) : '';
                 },
                 className: 'dt-body-centr',
                 title: langView('tws_field_operator_paid', App.Langs), width: "30px", orderable: true, searchable: true
@@ -503,7 +504,7 @@
             {
                 field: 'arrival_idle_time',
                 data: function (row, type, val, meta) {
-                    return row.arrivalIdleTime !== null ? Number(row.arrivalIdleTime / 60) : null;
+                    return row.arrivalIdleTime !== null ? Number(row.arrivalIdleTime / 60).toFixed(1) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_arrival_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
@@ -526,8 +527,10 @@
                             //id: 'way',
                             //name: 'way',
                             class: 'm-1',
-                            value: (row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime) : 0),
-                            max: (row.currentStationDuration !== null ? Number(row.currentStationDuration) : 0),
+                            value: (row.currentStationDuration !== null ? Number(row.currentStationDuration) : 0),
+                            max :(row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime) : 0),
+                            //value: (row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime) : 0),
+                            //max: (row.currentStationDuration !== null ? Number(row.currentStationDuration) : 0),
                         });
                         if ($pb) {
                             return $pb.$html[0].outerHTML;
@@ -543,7 +546,7 @@
             {
                 field: 'current_station_idle_time',
                 data: function (row, type, val, meta) {
-                    return row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime / 60) : null;
+                    return row.currentStationIdleTime !== null ? Number(row.currentStationIdleTime / 60).toFixed(1) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_current_station_idle_time', App.Langs), width: "50px", orderable: true, searchable: true
@@ -2107,6 +2110,9 @@
                     if (data.id_way_dissolution === null) {
                         $(row).addClass('ban');  // Отметим вагон заблокирован
                     }
+                    if (data.id_wim_arrival === null) {
+                        $(row).addClass('ban');  // Отметим вагон заблокирован
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_arrival_cars_way();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
@@ -2202,6 +2208,7 @@
                 /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = false;
+                //"scrollY": "600px",
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
                     var api = this.api();
                     var count = api

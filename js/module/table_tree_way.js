@@ -20,13 +20,14 @@
             'title_inp_out': 'Прин.-Отпр.',
             'title_count': 'Всего',
             'title_count_amkr': 'АМКР',
-            'title_max': 'Мак.',
+            'title_max': 'max',
             'title_totals': 'ИТОГО:',
             'title_info_detali': 'Информация детально...',
             'title_open_tree_park': 'Открыть парки дерева путей...',
             'title_open_tree_way': 'Открыть все пути...',
             'title_close_tree': 'Закрыть дерево путей',
             'title_refresh_tree': 'Обновить дерево путей',
+            'title_button_total': 'Показать детально по операторам...',
             'mess_load_station': 'Загружаю список станций...',
             'mess_load_park': 'Загружаю список парков...',
             'mess_load_way': 'Загружаю список путей...',
@@ -40,13 +41,14 @@
             'title_inp_out': 'Receive-Send',
             'title_count': 'Total',
             'title_count_amkr': 'AMKR',
-            'title_max': 'Mac.',
+            'title_max': 'max',
             'title_totals': 'TOTAL:',
             'title_info_detali': 'Information in detail ...',
             'title_open_tree_park': 'Open path tree parks ...',
             'title_open_tree_way': 'Open all paths ...',
             'title_close_tree': 'Close path tree',
             'title_refresh_tree': 'Refresh path tree',
+            'title_button_total': 'Show details by operators...',
             'mess_load_station': 'Loading the list of stations ...',
             'mess_load_park': 'Loading list of parks ...',
             'mess_load_way': 'Loading the list of paths ...',
@@ -282,9 +284,10 @@
 
         var $bt_count = new base.fe_ui.bs_button({
             id: id,
-            color: 'btn-outline-dark',
+            color: 'outline-dark',
             class: 'btn-all btn-sm',
             text: count,
+            title: langView('title_button_total', App.Langs)
         })
         $bt_count.$html.attr('data-bs-toggle', 'offcanvas');
         $bt_count.$html.attr('data-bs-target', '#offcanvas-operator-detali');

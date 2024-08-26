@@ -45,6 +45,9 @@
             'vopoc_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
             'vopoc_title_placeholder_time_aplly': 'Время выполнения',
 
+            'vopoc_title_fieldset_sostav_on': 'Прибывающие составы на выбранную станцию',
+            'vopoc_title_fieldset_wagons_on': 'Сформированный состав',
+
             'vopoc_title_form_apply': 'Выполнить',
             'vopoc_title_form_apply_title': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
 
@@ -709,10 +712,13 @@
                 }.bind(this),
             });
 
+            var fieldset_sostav_on = new this.view_com.fe_ui.fieldset({ legend: langView('vopoc_title_fieldset_sostav_on', App.Langs) });
+            var fieldset_wagons_on = new this.view_com.fe_ui.fieldset({ legend: langView('vopoc_title_fieldset_wagons_on', App.Langs) });
+
             var row_sostav_on = new this.view_com.fe_ui.bs_row({ id: 'op-oc-sostav-outer-ways', class: 'pt-2' });
             var row_wagons_on = new this.view_com.fe_ui.bs_row({ id: 'op-oc-wagons-new-sostav-outer-way', class: 'pt-2' });
 
-            this.on_table.$html.append(row_sostav_on.$html).append(row_wagons_on.$html);
+            this.on_table.$html.append(fieldset_sostav_on.$html.append(row_sostav_on.$html)).append(fieldset_wagons_on.$html.append(row_wagons_on.$html));
             this.tsow_opoc = new TWS('div#op-oc-sostav-outer-ways');
             this.tsow_opoc.init({
                 alert: this.on_alert,

@@ -23,7 +23,7 @@
     {
         'default':  //default language: ru
         {
-            'vopss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
+            'vopss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
             'vopss_card_header_on': 'ПУТИ РОСПУСКА',
             'vopss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
             'vopss_title_label_station': 'Станция роспуска:',
@@ -38,7 +38,7 @@
             'vopss_title_placeholder_time_start': 'Начало выполнения',
             'vopss_title_placeholder_time_stop': 'Конец выполнения',
             'vopss_title_form_apply': 'Выполнить',
-            'vopss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
+            'vopss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
             'vopss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
@@ -54,12 +54,12 @@
             'vopss_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
 
             'vopss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
-            'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ АМКР» произошла ошибка, код ошибки: {0}',
+            'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
             'vopss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'vopss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
-            'vopss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР" – отменена',
-            'vopss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ АМКР"',
+            'vopss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
+            'vopss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
             'vopoc_mess_not_select_way_on': 'Выберите путь для роспуска',
             'vopoc_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',

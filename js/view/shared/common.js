@@ -541,6 +541,31 @@ var is_valid_num_wagon = function (num) {
             add_tag(this.$html, 'href', this.settings.href);
         }
     };
+    //<fieldset>
+    //    <legend>Do you agree?</legend>
+    //</fieldset>
+    form_element.prototype.fieldset = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            legend: null,
+            class_legend: null,
+        }, options);
+        this.$html = $('<fieldset></fieldset>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <fieldset></fieldset>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            if (this.settings.legend) {
+                this.$legend = $('<legend></legend>');
+                add_class(this.$legend, this.settings.class_legend);
+                append_text(this.$legend, this.settings.legend);
+                this.$html.append(this.$legend);
+            }
+        }
+    };
+
     // Элемент <label for="..." class="..">..</label>
     form_element.prototype.label = function (options) {
         this.settings = $.extend({
