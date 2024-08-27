@@ -10,7 +10,8 @@ var OnAJAXError = function (metod, x, y, z, callback) {
     var data = {
         message: null,
         status: null,
-        statusText: null
+        statusText: null,
+        responseText : null
     };
     if (x && x.status) {
         data.status = x.status;
@@ -22,7 +23,11 @@ var OnAJAXError = function (metod, x, y, z, callback) {
     if (x && x.responseJSON) {
         data.message = x.responseJSON.Message;
     }
-    alert('Metod js : ' + metod + '\nStatus : ' + data.status + '\nStatusText : ' + data.statusText + '\nMessage : ' + data.message);
+
+    if (x && x.responseText) {
+        data.responseText = x.responseText;
+    }
+    alert('Metod js : ' + metod + '\nStatus : ' + data.status + '\nStatusText : ' + data.statusText + '\nMessage : ' + data.message + '\nResponseText : ' + data.responseText);
     if (typeof callback === 'function') {
         callback(x.responseJSON);
     }
