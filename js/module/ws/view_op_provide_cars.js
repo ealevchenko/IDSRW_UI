@@ -125,6 +125,7 @@
             //'voprc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             //'voprc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             'voprc_confirm_mess_apply_provide_sostav': 'Выполнить операцию «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ» в количестве: {0} (ваг.), станция предъявления: {1}, путь предъявления: {2}?',
+            'voprc_confirm_mess_apply_add_provide_sostav': 'Добавить вагоны к предъявленному составу {0} в количестве: {1} (ваг.), станция предъявления: {2}, путь предъявления: {3}?',
             'voprc_confirm_mess_edit_dt_apply_provide_sostav': 'Выполнить правку даты и времени предъявления состава на УЗ, старое время предъявления: {0}, новое время предъявления: {1}?',
 
             'voprc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны выбранные для предъявления в количестве {1} будут сброшены! ',
@@ -173,6 +174,7 @@
         this.id_way = -1;                   // Значения по умолчанию
         this.id_station = -1;               // Значения по умолчанию
         this.id_sostav_provide = null;      // Значения по умолчанию
+        this.num_sostav = null;             // Значения по умолчанию
         this.datetime_time_aplly = null;    // Значения по умолчанию
         this.view_collect_sostav = false;
 
@@ -525,9 +527,15 @@
                         var valid = this.validation(result);
                         if (valid) {
                             var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
+                            var mess = "";
+                            if (this.id_sostav_provide !== null) {
+                                var mess = langView('voprc_confirm_mess_apply_add_provide_sostav', App.Langs).format(this.num_sostav, (wagons ? wagons.length : 0), this.form_on_setup.el.select_id_station.text(), this.form_on_setup.el.select_id_way.text())
+                            } else {
+                                var mess = langView('voprc_confirm_mess_apply_provide_sostav', App.Langs).format((wagons ? wagons.length : 0), this.form_on_setup.el.select_id_station.text(), this.form_on_setup.el.select_id_way.text())
+                            }
                             this.view_com.mcf.open(
                                 langView('voprc_title_form_apply', App.Langs),
-                                langView('voprc_confirm_mess_apply_provide_sostav', App.Langs).format((wagons ? wagons.length : 0), this.form_on_setup.el.select_id_station.text(), this.form_on_setup.el.select_id_way.text()),
+                                mess,
                                 function () {
                                     // Принять
                                     // Проверим наличие вагонов 
@@ -593,11 +601,13 @@
                     this.form_on_setup.el.button_edit_time.prop('disabled', true);
                     this.form_on_setup.el.input_datetime_time_aplly.val(moment());
                     this.id_sostav_provide = null;
+                    this.num_sostav = null;
                     this.datetime_time_aplly = null;
                     this.wagons_provide_sostav = [];
                     if (type === "select") {
                         if (rows != null && rows.length > 0) {
                             this.id_sostav_provide = rows[0].id;
+                            this.num_sostav = rows[0].numDoc;
                             if (rows[0].status === 0 || rows[0].status === 1) {
                                 this.form_on_setup.el.button_edit_time.prop('disabled', false);
                                 this.form_on_setup.el.input_datetime_time_aplly.val(moment(rows[0].dateReadinessAmkr));
@@ -1176,6 +1186,8 @@
         this.wagons = [];
         this.wagons_on = [];
         // Сбросим вагоны переноса
+        this.id_sostav_provide = null;
+        this.num_sostav = null;
         this.id_way = -1;
         this.id_station = -1;
         var id_station = -1;
@@ -1396,6 +1408,8 @@
                 //}
                 this.provide_sostav = provide_sostav;
                 this.wagons_provide_sostav = [];
+                this.id_sostav_provide = null;
+                this.num_sostav = null;
                 // Событие обновили данные
                 if (typeof callback === 'function') {
                     callback(this.provide_sostav);
@@ -1404,6 +1418,8 @@
         } else {
             this.provide_sostav = [];
             this.wagons_provide_sostav = [];
+            this.id_sostav_provide = null;
+            this.num_sostav = null;
             // Событие обновили данные
             if (typeof callback === 'function') {
                 callback(this.provide_sostav);
