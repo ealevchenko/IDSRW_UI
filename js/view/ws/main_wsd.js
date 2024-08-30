@@ -320,7 +320,7 @@
             $('#btn-uz-operations').on('click', 'button', function (event) {
                 switch (event.currentTarget.id) {
                     case 'provide': {
-                        if (current_option_way["crossing-uz"] === 1) {
+                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
                             voprc.view(current_id_way);
                         } else {
                             main_alert.clear_message();
