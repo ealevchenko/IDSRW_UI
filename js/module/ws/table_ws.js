@@ -2397,6 +2397,9 @@
                     if (data.outerWayEnd !== null) {
                         $(row).addClass('ban');  // Отметим вагон заблокирован
                     }
+                    if (data.return !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_wagons_outer_way();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
