@@ -108,7 +108,7 @@
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
             'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
 
-            //'voprc_mess_load_operation': 'Загружаю операции...',
+            'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю предъявленные и сданные вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю вагоны предъявленные в составе...',
