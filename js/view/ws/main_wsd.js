@@ -60,6 +60,9 @@
     var VOPRC = App.view_op_provide_cars;
     var voprc = new VOPRC('main.container-fluid');
 
+    var VOPSUZ = App.view_op_sending_uz;
+    var vopsuz = new VOPSUZ('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -239,7 +242,7 @@
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
-            var process = 14;
+            var process = 15;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -322,6 +325,15 @@
                     case 'provide': {
                         if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
                             voprc.view(current_id_way);
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
+                        }
+                        break;
+                    };
+                    case 'sending_uz': {
+                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
+                            vopsuz.view(current_id_way);
                         } else {
                             main_alert.clear_message();
                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
@@ -739,6 +751,25 @@
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[main_wsd] [vodlc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции отправить
+            vopsuz.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vopsuz] process ' + process);
                     out_init(process);
                 },
                 fn_close: function () {
