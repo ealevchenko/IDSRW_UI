@@ -3158,38 +3158,6 @@ var is_valid_num_wagon = function (num) {
             }
             return null;
         }
-
-        //var isNumeric = function (value) {
-        //    return /^\d+$/.test(value);
-        //};
-
-        //// Проверка системной нумерации
-        //var is_valid_num_wagon = function (num) {
-        //    if (num) {
-        //        if (!isNumeric(num)) return false;
-        //        if (!(Number(num) >= 10000000 && Number(num) <= 99999999)) return false;
-        //        var symbols = String(num).split(""); // разбиваем на массив символов
-        //        if (symbols.length !== 8) return false;
-        //        var cs = Number(symbols[7]);
-        //        symbols.length--;
-        //        var kof = [2, 1, 2, 1, 2, 1, 2];
-        //        var result = 0;
-        //        for (ni = 0; ni < symbols.length; ni++) {
-        //            var res_k = symbols[ni] * kof[ni];
-        //            if (res_k > 9) {
-        //                var symbols_k = String(res_k).split(""); // разбиваем на массив символов
-        //                res_k = Number(symbols_k[0]) + Number(symbols_k[1]);
-        //            }
-        //            result += Number(res_k);
-        //        }
-        //        result = Number(result) + cs;
-        //        var res = result % 10;
-        //        if (res === 0) { return true; } else { return false; }
-        //    }
-        //    return false;
-        //};
-
-        // Провкерка на правильный ввод номеров
         var valid = true;
         var car_valid = [];
         var car_out = [];
@@ -3256,6 +3224,26 @@ var is_valid_num_wagon = function (num) {
         return valid ? car_out : null;
 
     };
+    // Проверить элемент "input" на шаблон (пустое значение - нет допускается)
+    validation_form.prototype.check_control_regexp_not_null = function (o, regexp, mes_error, mes_ok, out_message) {
+        var val = o.val();
+        var element = o.$element ? o.$element : o;
+        if (val !== null && val !== '') {
+            if (!(regexp.test(val))) {
+                this.set_control_error(element, mes_error);
+                if (out_message) this.out_error_message(mes_error);
+                return false;
+            } else {
+                this.set_control_ok(element, mes_ok);
+                if (out_message) this.out_info_message(mes_ok);
+                return true;
+            }
+        } else {
+            this.set_control_error(element, mes_error);
+            if (out_message) this.out_error_message(mes_error);
+            return false;
+        }
+    }
 
     App.validation_form = validation_form;
 
