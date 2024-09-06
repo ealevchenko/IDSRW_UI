@@ -51,10 +51,11 @@
     //-------------------------------- Функции работы с БД через api ---------------
 
     //================= ОТПРАВЛЕННЫЕ СОСТАВЫ(АРМ) =============================================
-    // Получить открытые отправленные составы
+    // Получить открытые отправленные составы (ids.get_outgoing_sostav ... where ...)
     ids_wsd.prototype.getViewOpenOutgoingSostavOfIdWay = function (id, callback) {
         this.api_com.get('/WSD/view/open/outgoing/sostav/way/' + id, callback);
     };
+    // Получить вагоны по отправленному составу по id составу (ids.get_view_wagons_outgoing_sostav_of_id_sostav)
     ids_wsd.prototype.getViewWagonsOutgoingSostavOfIdSostav = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/outgoing/sostav/id/' + id, callback);
     };
@@ -133,6 +134,11 @@
     ids_wsd.prototype.postMoveWagonsProvideWayOfStationAMKR = function (operation, callback) {
         this.api_com.post('/WSD/operation/provide/move/wagons/', operation, callback, callback);
     };
+    //АРМ, Операция отправить состав на УЗ
+    ids_wsd.prototype.postOperationSendingSostavOnUZ = function (operation, callback) {
+        this.api_com.post('/WSD/operation/sending_uz/sostav/', operation, callback, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;
