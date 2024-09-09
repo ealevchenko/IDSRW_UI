@@ -99,7 +99,7 @@
             //'vopsuz_mess_error_edit_dt_apply_provide': 'При выполнении операции правки даты и времени предъявления состава на УЗ, произошла ошибка, код ошибки: {0}',
 
             'vopsuz_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-            //'vopsuz_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vopsuz_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
             'vopsuz_mess_cancel_operation': 'Операция «ОТПРАВИТЬ СОСТАВ НА УЗ» – отменена',
             //'vopsuz_mess_cancel_operation_edit_dt_apply': 'Операция правки даты и времени предъявления состава УЗ – отменена',

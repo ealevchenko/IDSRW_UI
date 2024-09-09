@@ -8,11 +8,38 @@
     {
         'default':  //default language: ru
         {
+            'mwsd_title_operation_auto': '«Автоматическая расстановка вагонов»',
+            'mwsd_title_operation_reverce': '«Реверс вагонов»',
+            'mwsd_title_button_Ok': 'Ok',
+            'mwsd_title_button_Cancel': 'Отмена',
+
             'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
             'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
             'mwsd_mess_load_balance': 'Загружаю остаток...',
 
             'mwsd_mess_war_not_way_provide': 'Операция предъявления недоступна, путь не имеет выхода на УЗ!',
+            'mwsd_mess_war_not_select_way': 'Операция {0} недоступна, невыбран путь!',
+            'mwsd_mess_war_not_wagons_way': 'Операция {0} недоступна, на пути нет вагонов!',
+
+            'mwsd_title_form_apply': 'ВЫПОЛНИТЬ',
+
+            'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
+            'mwsd_title_form_apply_operation_auto': 'Выполняю автоматическую расстановку вагонов',
+            'mwsd_mess_cancel_operation_auto': 'Операция «Автоматическая расстановка вагонов» – отменена',
+
+            'mwsd_confirm_mess_apply_operation_reverce': 'Выполнить операцию «Реверс вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
+            'mwsd_title_form_apply_operation_reverce': 'Выполняю реверс вагонов',
+            'mwsd_mess_cancel_operation_reverce': 'Операция «Реверс вагонов» – отменена',
+
+            'mwsd_mess_error_api': 'Ошибка выполнения запроса!',
+
+            'mwsd_mess_ok_operation_auto': 'Операция «Автоматическая расстановка вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_ok_operation_reverce': 'Операция «Реверс вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_reverce': 'При выполнении операции «Реверс вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_reverce': 'При выполнении операции «Реверс вагонов» по вагонам нет изменений!',
         },
         'en':  //default language: English
         {
@@ -30,6 +57,7 @@
     var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
     var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
+    var MCF = App.modal_confirm_form;
 
     var TW = App.table_tree_way;
     var tw = new TW('DIV#tree-way');
@@ -239,6 +267,17 @@
             });
         }
         //var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
+        var mcf = new MCF(); // Создадим экземпляр окно сообщений
+        mcf.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'lg',
+            bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
+            bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+        });
+
 
         // Загрузим справочники
         load_db(['station'], true, function (result) {
@@ -319,7 +358,7 @@
                     };
                 };
             });
-            // Кнопки основного меню (Внутрение операции)
+            // Кнопки основного меню (Отправка на УЗ)
             $('#btn-uz-operations').on('click', 'button', function (event) {
                 switch (event.currentTarget.id) {
                     case 'provide': {
@@ -337,6 +376,123 @@
                         } else {
                             main_alert.clear_message();
                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
+                        }
+                        break;
+                    };
+                };
+            });
+            // Кнопки основного меню (Маневры на пути)
+            $('#btn-way-operation').on('click', 'button', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'auto-position': {
+                        if (current_id_way) {
+                            if (wagons && wagons.length > 0) {
+                                mcf.open(
+                                    langView('mwsd_title_form_apply', App.Langs),
+                                    langView('mwsd_confirm_mess_apply_operation_auto', App.Langs).format(wagons.length),
+                                    function () {
+                                        LockScreen(langView('mwsd_title_form_apply_operation_auto', App.Langs));
+                                        var operation = {
+                                            id_way: current_id_way,
+                                            position: 1,
+                                            reverse: false
+                                        };
+                                        api_wsd.postAutoPosition(operation, function (result) {
+                                            // Проверим на ошибку выполнения запроса api
+                                            if (result === undefined || result === null) {
+                                                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
+                                                main_alert.clear_message();
+                                                main_alert.out_error_message(mess);
+                                                LockScreenOff();
+                                            } else {
+                                                if (result > 0) {
+                                                    refresh_tree_way(function () {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_auto', App.Langs).format(result));
+                                                        LockScreenOff();
+                                                    }.bind(this));
+
+                                                } else {
+                                                    if (result < 0) {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_auto', App.Langs).format(result));
+                                                    } else {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_auto', App.Langs));
+                                                    }
+                                                    LockScreenOff();
+                                                }
+                                            }
+                                        }.bind(this));
+                                    }.bind(this),
+                                    function () {
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_auto', App.Langs));
+                                    }.bind(this));
+                            } else {
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
+                            }
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
+                        }
+                        break;
+                    };
+                    case 'reverce-position': {
+                        if (current_id_way) {
+                            if (wagons && wagons.length > 0) {
+                                mcf.open(
+                                    langView('mwsd_title_form_apply', App.Langs),
+                                    langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
+                                    function () {
+                                        LockScreen(langView('mwsd_title_form_apply_operation_reverce', App.Langs));
+                                        var operation = {
+                                            id_way: current_id_way,
+                                            position: 1,
+                                            reverse : true
+                                        };
+                                        api_wsd.postAutoPosition(operation, function (result) {
+                                            // Проверим на ошибку выполнения запроса api
+                                            if (result === undefined || result === null) {
+                                                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
+                                                main_alert.clear_message();
+                                                main_alert.out_error_message(mess);
+                                                LockScreenOff();
+                                            } else {
+                                                if (result > 0) {
+                                                    refresh_tree_way(function () {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_reverce', App.Langs).format(result));
+                                                        LockScreenOff();
+                                                    }.bind(this));
+
+                                                } else {
+                                                    if (result < 0) {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_reverce', App.Langs).format(result));
+                                                    } else {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_reverce', App.Langs));
+                                                    }
+                                                    LockScreenOff();
+                                                }
+                                            }
+                                        }.bind(this));
+                                    }.bind(this),
+                                    function () {
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_reverce', App.Langs));
+                                    }.bind(this));
+                            } else {
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
+                            }
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
                         }
                         break;
                     };

@@ -138,6 +138,10 @@
     ids_wsd.prototype.postOperationSendingSostavOnUZ = function (operation, callback) {
         this.api_com.post('/WSD/operation/sending_uz/sostav/', operation, callback, callback);
     };
+    //АРМ, Операция авто-расстановка вагонов с позиции
+    ids_wsd.prototype.postAutoPosition = function (operation, callback) {
+        this.api_com.post('/WSD/operation/way/auto_position/', operation, callback, callback);
+    };
 
     App.ids_wsd = ids_wsd;
 
