@@ -842,12 +842,12 @@
                 this.view_way(id_station, id_park, null, function () {
                     // выбрать путь
                     this.select_way(id_way);
-                    LockScreenOff();
+                    //LockScreenOff();
                 }.bind(this));
             } else {
                 // пути раскрыты выбрать путь
                 this.select_way(id_way);
-                LockScreenOff();
+                //LockScreenOff();
             }
         }
     };
