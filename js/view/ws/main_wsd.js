@@ -22,9 +22,14 @@
             'mwsd_mess_war_not_wagons_way': 'Операция {0} недоступна, на пути нет вагонов!',
 
             'mwsd_title_form_apply': 'ВЫПОЛНИТЬ',
+            'mwsd_title_form_searsh': 'РЕЗУЛЬТАТ ПОИСКА',
+
+            'mwsd_title_mess_find_wagon': 'Поиск вагона на предприятии...',
 
             'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
             'mwsd_title_form_apply_operation_auto': 'Выполняю автоматическую расстановку вагонов',
+            'mwsd_title_form_apply_searsh_wagon': 'Выполняю поиск вагона...',
+
             'mwsd_mess_cancel_operation_auto': 'Операция «Автоматическая расстановка вагонов» – отменена',
 
             'mwsd_confirm_mess_apply_operation_reverce': 'Выполнить операцию «Реверс вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
@@ -40,6 +45,13 @@
             'mwsd_mess_ok_operation_reverce': 'Операция «Реверс вагонов» выполнена, перенумерованно {0} (ваг.)',
             'mwsd_mess_error_operation_reverce': 'При выполнении операции «Реверс вагонов» произошла ошибка, код ошибки: {0}',
             'mwsd_mess_0_operation_reverce': 'При выполнении операции «Реверс вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_error_searsh_wagon': 'Ошибка поиска вагона в системе ИДС, введен неправильный номер {0}',
+            'mwsd_mess_error_searsh_way': 'Ошибка определения пути в системе ИДС, id_way = {0}',
+            'mwsd_mess_error_not_searsh_wagon': 'Ошибка, вагон № {0} – не найден!',
+
+
+
         },
         'en':  //default language: English
         {
@@ -114,6 +126,7 @@
     };
 
     var list_station = [];
+    var list_way = [];
     var current_id_station = null;
     var current_id_park = null;
     var current_id_way = null;
@@ -127,14 +140,13 @@
     var operators_send = [];
     var operators_arrival = [];
     var user_info = {};
+
     //var userAgent = navigator.userAgent.toLowerCase();
     //var user = window.userID;
     ////var userInfo = window.ShowpadLib.getUserInfo();
     //var request = new XMLHttpRequest();
     //request.withCredentials = true;
     //request.open("GET", "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API/Admin/user_info");
-
-
     $(function () {
         // загрузить данные 
         var load_wagons_of_way = function (id_way, num, callback) {
@@ -267,6 +279,84 @@
             });
         }
         //var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
+
+        // Окно для ввода номера вагона - поиск
+        var $find_num_wagon = $('input#find-num-wagon').val('').on('keydown',
+            function (event) {
+                if (event.code == 'Enter') {
+                    var num = $find_num_wagon.val();
+                    searsh_wagon(num);
+                }
+            });
+        // Найти вагон
+        var $bt_find_wagon = $('button#find-wagon').on('click', function (e) {
+            $bt_find_wagon.prop("disabled", true);
+            var num = $find_num_wagon.val();
+            searsh_wagon(num);
+        });
+        // Функция поиска вагона
+        var searsh_wagon = function (num) {
+            main_alert.clear_message();
+            var view = false;
+            if (!isNumeric(num)) {
+                // Ошибка ввода
+                main_alert.out_error_message(langView('mwsd_mess_error_searsh_wagon', App.Langs).format(num));
+                $bt_find_wagon.prop("disabled", false);
+                //LockScreenOff();
+            } else {
+                LockScreen(langView('mwsd_title_mess_find_wagon', App.Langs));
+                api_wsd.getViewDislocationAMKRWagonOfNum(num, function (result) {
+                    LockScreenOff();
+                    if (result) {
+                        if (result.status > 0 && result.status < 4) {
+                            view = true;
+                        }
+                        mcf.open(
+                            langView('mwsd_title_form_searsh', App.Langs),
+                            result.info + (view ? " \nПоказать вагон?" : ""),
+                            function () {
+                                if (view) {
+                                    var way = list_way.find(function (o) {
+                                        return o.id === result.view_wagon_dislocation.idWay;
+                                    });
+                                    if (way) {
+                                        LockScreen(langView('mwsd_title_form_apply_searsh_wagon', App.Langs));
+                                        current_num_wagon = num;
+                                        var id_station = way.idStation;
+                                        var id_park = way.idPark;
+                                        var id_way = way.id;
+                                        tw.open_way(id_station, id_park, id_way);
+                                        //tw.open_way(id_station, id_park, id_way, function () {
+
+                                        //}.bind(this));
+                                    } else {
+                                        //main_alert.clear_message();
+                                        main_alert.out_error_message(langView('mwsd_mess_error_searsh_way', App.Langs).format(result.view_wagon_dislocation.idWay));
+                                        //LockScreenOff();
+                                    }
+                                    //result.status
+                                    //main_alert.clear_message();
+                                    $bt_find_wagon.prop("disabled", false);
+                                    //LockScreenOff();
+                                } else {
+                                    $bt_find_wagon.prop("disabled", false);
+                                    LockScreenOff();
+                                }
+
+                            }.bind(this),
+                            function () {
+                                //main_alert.clear_message();
+                                $bt_find_wagon.prop("disabled", false);
+                                LockScreenOff();
+                            }.bind(this));
+                    } else {
+                        main_alert.out_error_message(langView('mwsd_mess_error_not_searsh_wagon', App.Langs).format(num));
+                        $bt_find_wagon.prop("disabled", false);
+                    }
+                }.bind(this));
+            };
+        };
+
         var mcf = new MCF(); // Создадим экземпляр окно сообщений
         mcf.init({
             static: true,
@@ -278,9 +368,8 @@
             bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
         });
 
-
         // Загрузим справочники
-        load_db(['station'], true, function (result) {
+        load_db(['station', 'ways'], true, function (result) {
             var process = 15;
             // Выход из инициализации
             var out_init = function (process) {
@@ -451,7 +540,7 @@
                                         var operation = {
                                             id_way: current_id_way,
                                             position: 1,
-                                            reverse : true
+                                            reverse: true
                                         };
                                         api_wsd.postAutoPosition(operation, function (result) {
                                             // Проверим на ошибку выполнения запроса api
@@ -498,7 +587,9 @@
                     };
                 };
             });
+
             list_station = api_dir.getAllStation();
+            list_way = api_dir.getAllWays();
             // Настроим выбор станций
             var $el_dlg_select_station = $('#station-select')
             var $list_select_station = $el_dlg_select_station.find('.list-group');
@@ -605,7 +696,7 @@
                     current_id_way = id_way;
                     current_option_way = option;
                     load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
-                        tws.view(wagons)
+                        tws.view_of_tag(wagons, 'data-num', current_num_wagon);
                         LockScreenOff();
                     });
                 }.bind(this),
