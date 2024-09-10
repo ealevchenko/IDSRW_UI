@@ -2968,6 +2968,14 @@
     table_ws.prototype.view = function (data, id_select) {
         this.tab_com.view(data, id_select);
     };
+    // Показать данные
+    table_ws.prototype.view_of_tag = function (data, tag, id_tag) {
+        this.tab_com.view_of_tag(data, tag, id_tag);
+    };
+
+    table_ws.prototype.select_tag_row = function (tag, id_tag) {
+        this.tab_com.select_tag_row(tag, id_tag);
+    };
     //
     //table_ws.prototype.view_footer = function (data) {
     //    switch (this.settings.type_report) {
