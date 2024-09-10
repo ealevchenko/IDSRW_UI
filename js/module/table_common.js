@@ -465,7 +465,7 @@
         // Определим основные свойства
         this.settings = $.extend({
             alert: null,
-            caption : null,
+            caption: null,
             class_table: 'table',
             detali_table: false,
             type_report: null,
@@ -543,7 +543,7 @@
             select: this.table_select,
             "autoWidth": this.autoWidth,
             //"filter": true,
-/*            scrollCollapse: true,*/
+            /*            scrollCollapse: true,*/
             //"scrollY": "200px",
             //sScrollX: "100%",
             scrollX: true,
@@ -633,6 +633,20 @@
         //this.select_rows();
         this.enable_button();
     };
+    table_common.prototype.view_of_tag = function (data, tag, id_tag) {
+        this.data = data;
+        this.id_tag = id_tag;
+        this.out_clear();
+        LockScreen(langView('t_com_mess_view_report', App.Langs));
+        this.obj_t_report.clear();
+        this.obj_t_report.rows.add(data);
+        this.obj_t_report.order(this.order_column);
+        this.obj_t_report.draw();
+        this.select_tag_row(tag, id_tag);
+        this.view_footer(data);
+        //this.select_rows();
+        this.enable_button();
+    };
     // Получить выбранные строки
     table_common.prototype.get_select_row = function () {
         var rowData = this.obj_t_report
@@ -649,6 +663,16 @@
             this.obj_t_report.row('#' + this.id_select).select();
         } else {
             this.id_select = null;
+        }
+    };
+
+    table_common.prototype.select_tag_row = function (tag, id_tag) {
+        this.obj_t_report.rows().deselect();
+        if (id_tag !== null) {
+            this.id_tag = id_tag
+            this.obj_t_report.row('[' + tag + '=' + this.id_tag + ']').select();
+        } else {
+            this.id_tag = null;
         }
     };
     //
