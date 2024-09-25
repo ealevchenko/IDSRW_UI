@@ -18,6 +18,7 @@
             'mwsd_mess_load_balance': 'Загружаю остаток...',
 
             'mwsd_mess_war_not_way_provide': 'Операция предъявления недоступна, путь не имеет выхода на УЗ!',
+            'mwsd_mess_war_not_way_devision': 'Операция выгрузки-погрузки недоступна, путь не имеет выхода в цех!',
             'mwsd_mess_war_not_select_way': 'Операция {0} недоступна, невыбран путь!',
             'mwsd_mess_war_not_wagons_way': 'Операция {0} недоступна, на пути нет вагонов!',
 
@@ -102,6 +103,9 @@
 
     var VOPSUZ = App.view_op_sending_uz;
     var vopsuz = new VOPSUZ('main.container-fluid');
+
+    var VOPUNLC = App.view_op_unloading_cars;
+    var vopunlc = new VOPUNLC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -370,7 +374,7 @@
 
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
-            var process = 15;
+            var process = 16;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -443,6 +447,15 @@
                     };
                     case 'dislocation': {
                         vodlc.view(current_id_way);
+                        break;
+                    };
+                    case 'unloading': {
+                        if (current_option_way !== null && current_option_way["id-devision"] !== null) {
+                            vopunlc.view(current_id_way);
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                        }
                         break;
                     };
                 };
@@ -1026,7 +1039,25 @@
                     }.bind(this));
                 }
             });
-
+            // Операции выгрузка
+            vopunlc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vopunlc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
         }.bind(this));
     });
 
