@@ -1771,6 +1771,7 @@ var is_valid_num_wagon = function (num) {
     form_element.prototype.bs_card = function (options) {
         this.settings = $.extend({
             border_color: 'border-secondary',
+            id: null,
             class: null,
             header_class: null,
             header_color: null,
@@ -1789,7 +1790,7 @@ var is_valid_num_wagon = function (num) {
 
         }, options);
         this.fe = new form_element();
-        var card = new this.fe.div({ class: 'card mb-3' });
+        var card = new this.fe.div({ class: 'card', id : this.settings.id });
         add_class(card.$html, this.settings.border_color);
         add_class(card.$html, this.settings.class);
         if (this.settings.max_width !== null) card.$html.attr('style', 'max-width: ' + this.settings.max_width + 'rem;');
