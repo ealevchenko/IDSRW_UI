@@ -516,7 +516,7 @@
                 this.load_park(id_station, function (parks) {
                     //var base = this;
                     // Отобразим парки
-                    $.each(parks.sort(function (a, b) { return b.id - a.id; }), function (i, el) {
+                    $.each(parks.sort(function (a, b) { return b.position - a.position; }), function (i, el) {
                         var $trbody = new this.create_html_tr_park(this, id_station, el, i);
                         $trbody.$tr.$html.on('click', 'td.park-control', function (e) {
                             var tr = $(e.currentTarget).closest('tr');
@@ -586,6 +586,7 @@
         this.$tr.$html.attr('crossing-amkr', el.crossingAmkr ? '1' : '0');
         this.$tr.$html.attr('dissolution', el.dissolution ? '1' : '0');
         this.$tr.$html.attr('output-dissolution', el.outputDissolution ? '1' : '0');
+        this.$tr.$html.attr('id-devision', el.idDevision ? el.idDevision : '');
         var $td_img_tree_open_skeep = new base.fe_ui.td({
             width: '18px',
             class: end_tree === 0 ? 'icon-tree-open-skeep' : '',
@@ -755,11 +756,13 @@
             var crossing_amkr = Number(way.attr('crossing-amkr'));
             var dissolution = Number(way.attr('dissolution'));
             var output_dissolution = Number(way.attr('output-dissolution'));
+            var id_devision = Number(way.attr('id-devision'));
             var option = new Object;
             option['crossing-uz'] = crossing_uz;
             option['crossing-amkr'] = crossing_amkr;
             option['dissolution'] = dissolution;
             option['output-dissolution'] = output_dissolution;
+            option['id-devision'] = id_devision !== '' ? id_devision : null;
             if (typeof this.settings.fn_select_way === 'function') {
                 this.settings.fn_select_way(id_station, id_park, id_way, option);
             }
