@@ -1,5 +1,5 @@
 ﻿/* ===============================================
--= Модуль панель операции "ОТПРАВИТЬ СОСТАВЫ НА СТАНЦИЮ АМКР" =-
+-= Модуль панель операции "ПРЕДЪЯВИТЬ ВАГОНЫ" =-
   + js/view/shared/common.js
   + js/module/view_op_common.js
   + js/module/ws/table_ws.js
@@ -26,6 +26,7 @@
             'voprc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
             'voprc_card_header_on': 'ПРЕДЪЯВИТЬ СОСТАВ',
             'voprc_card_header_from': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
+            'voprc_card_header_collect_way': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
 
             'voprc_title_label_way': 'Путь для предъявления:',
             'voprc_text_label_way': 'Выберите путь для предъявления...',
@@ -45,6 +46,9 @@
             'voprc_text_append_vagon_searsh': 'Найти',
             'voprc_title_label_system_number': 'Контроль системной нумерации',
             'voprc_title_text_system_number': 'Выберите, проводить проверку системной нумерации введеных вагонов или нет',
+
+
+            'voprc_title_fieldset_sostav_formed': 'Сформированный состав',
 
             'voprc_title_form_apply': 'ВЫПОЛНИТЬ',
             'voprc_title_form_apply_title': 'Выполнить операцию «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
@@ -98,7 +102,7 @@
             'voprc_mess_cancel_operation_move': 'Операция сбора вагонов для предявления – отменена',
             'voprc_mess_run_operation_provide': 'Выполняю операцию «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
             'voprc_mess_run_edit_dt_apply_provide': 'Выполняю операцию правки даты и времени предъявления состава УЗ',
-            'voprc_mess_run_operation_move': 'Выполняю операцию сбора вагонов на пути прредъявления',
+            'voprc_mess_run_operation_move': 'Выполняю операцию сбора вагонов на пути предъявления',
             'voprc_mess_not_select_wagon_from': 'Выберите вагоны для предъявления!',
             'voprc_mess_not_select_wagon_on': 'Выберите вагоны для отмены предъявления!',
             //'voprc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
@@ -212,7 +216,7 @@
         // Создать макет панели
         this.card_on = new this.view_com.fe_ui.bs_card({
             border_color: 'border-primary',
-            class: 'text-bg-light',
+            class: 'mb-3 text-bg-light',
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
@@ -253,11 +257,28 @@
         //--
         this.card_from = new this.view_com.fe_ui.bs_card({
             border_color: 'border-primary',
-            class: 'text-bg-light',
+            class: 'mb-3 text-bg-light',
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
             header_text: langView('voprc_card_header_from', App.Langs),
+            body_color: null,
+            body_bg: null,
+            body_text: null,
+            footer: false,
+            footer_text: null,
+            footer_color: null,
+            footer_bg: null,
+            max_width: null,
+        });
+        this.card_collect_way = new this.view_com.fe_ui.bs_card({
+            border_color: 'border-primary',
+            id: 'collapse-collect',
+            class: 'text-bg-light col-5 collapse',
+            header_class: 'fw-bold text-uppercase',
+            header_color: null,
+            header_bg: null,
+            header_text: langView('voprc_card_header_collect_way', App.Langs),
             body_color: null,
             body_bg: null,
             body_text: null,
@@ -273,12 +294,12 @@
             //size: 6,
             class: 'rounded border border-secondary'
         });
-        this.from_collect = new this.view_com.fe_ui.bs_col({
-            //pref: 'xl',
-            //size: 6,
-            id: 'collapse-collect',
-            class: 'ms-2 rounded border border-secondary collapse'
-        });
+        //this.from_collect = new this.view_com.fe_ui.bs_col({
+        //    //pref: 'xl',
+        //    //size: 6,
+        //    id: 'collapse-collect',
+        //    class: 'ms-2 rounded border border-secondary collapse'
+        //});
         // Alert_from
         this.alert_from = new this.view_com.fe_ui.bs_alert({
             id: null,
@@ -291,7 +312,8 @@
         row.$html.append(this.alert_from.$html);
         //this.from_table.$html.append(this.alert_from.$html);
         this.from_alert = new ALERT(this.alert_from.$html);
-        row.$html.append(this.from_table.$html).append(this.from_collect.$html);
+        //row.$html.append(this.from_table.$html).append(this.from_collect.$html);
+        row.$html.append(this.from_table.$html).append(this.card_collect_way.$html);
         this.card_from.body.$html.append(row.$html);
         this.view_com.$op.append(this.card_from.$html);
         this.view_com.load_db(['station', 'ways'], false, function (result) {
@@ -572,6 +594,8 @@
                 }.bind(this),
             });
 
+            var fieldset_sostav_formed = new this.view_com.fe_ui.fieldset({ legend: langView('voprc_title_fieldset_sostav_formed', App.Langs) });
+
             // Таблица открытые предъявленые составы
             this.tprs_opprc = new TWS('div#op-prc-provide-sostav');
             this.tprs_opprc.init({
@@ -636,7 +660,9 @@
             });
             // Панель таблицы вагонов предявляемого состава
             var row_provide_wagon = new this.view_com.fe_ui.bs_row({ id: 'op-prc-provide-wagon', class: 'pt-2' });
-            this.on_table.$html.append(row_provide_wagon.$html);
+
+            this.on_table.$html.append(fieldset_sostav_formed.$html.append(row_provide_wagon.$html));
+/*            this.on_table.$html.append(row_provide_wagon.$html);*/
             // Таблица вагонов предявляемого состава
             this.tpwos_opprc = new TWS('div#op-prc-provide-wagon');
             this.tpwos_opprc.init({
@@ -840,9 +866,13 @@
                 }.bind(this),
             });
             // Панель собрать вагоны
-            this.row_collect_way = new this.view_com.fe_ui.bs_row({ id: 'op-prc-wagons-collect', class: 'pt-2' });
-            this.from_collect.$html.append(this.row_collect_way.$html);
+            // Создать макет панели
 
+            //this.card_collect_way.body.$html.append(row.$html);
+
+            //this.row_collect_way = new this.view_com.fe_ui.bs_row({ id: 'op-prc-wagons-collect', class: '' }); //'pt-2'
+            //this.from_collect.$html.append(this.row_collect_way.$html.append(this.card_collect_way.$html));
+            //this.from_collect.$html.append(this.card_collect_way.$html);
             // Создадим форму (this.form_collect_setup)
             this.form_collect_setup = new FD();
             var objs_collect_setup = [];
@@ -990,8 +1020,8 @@
                 fn_html_init: function (res) { }.bind(this),
                 fn_element_init: null,
                 fn_init: function (init) {
-
-                    this.row_collect_way.$html.append(this.form_collect_setup.$form)
+                    this.card_collect_way.body.$html.append(this.form_collect_setup.$form);
+                    //this.row_collect_way.$html.append(this.form_collect_setup.$form)
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[view_op_provide_cars] [form_on_setup] process ' + process);
