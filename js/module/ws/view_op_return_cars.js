@@ -493,7 +493,7 @@
         // Создать макет панели
         this.card_on = new this.view_com.fe_ui.bs_card({
             border_color: 'border-primary',
-            class: 'text-bg-light',
+            class: 'mb-3 text-bg-light',
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
@@ -534,7 +534,7 @@
         //--
         this.card_from = new this.view_com.fe_ui.bs_card({
             border_color: 'border-primary',
-            class: 'text-bg-light',
+            class: 'mb-3 text-bg-light',
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
