@@ -450,7 +450,7 @@
                         break;
                     };
                     case 'unloading': {
-                        if (current_option_way !== null && current_option_way["id-devision"] !== null) {
+                        if (current_option_way !== null && current_option_way["id-devision"] >0) {
                             vopunlc.view(current_id_way);
                         } else {
                             main_alert.clear_message();
