@@ -354,6 +354,12 @@
             return !i.wayDelete && i.idStation === id_station && i.outputDissolution
         });
     };
+    // Получить списки путей с которых производится погрузка\разгрузка (Value, Text, Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextLoadUnloadWaysOfStation = function (id_station) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            return !i.wayDelete && i.idStation === id_station && i.idDevision>0
+        });
+    };
     //*======= (Справочник station) ======================================
     // Получить все записи
     ids_directory.prototype.getAllStation = function () {

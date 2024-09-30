@@ -2683,9 +2683,9 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    //if (data.id_wir_from !== null) {
-                    //    $(row).addClass('ban red');  // Отметим вагон заблокирован
-                    //}
+                    if (data.id_wir_unload !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    }
                     // Прибыл
                     if (data.currentIdOperation === 1) {
                         //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
