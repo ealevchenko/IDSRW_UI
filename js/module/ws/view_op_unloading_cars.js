@@ -81,6 +81,9 @@
             'vounl_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
 
+            'voprc_mess_eror_add_new_filing': 'Выбранно № {0} вагонов, не могу сформировать новую подачу (ошибка определения станции {1}, парка {2}, пути {3})',
+            'voprc_mess_eror_new_filing_not_wagon': 'В новой подаче отсутсвуют вагоны',
+
             //'vounl_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             //'vounl_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             //'vounl_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
@@ -313,8 +316,8 @@
         row.$html.append(this.from_way_setup.$html).append(this.from_way_table.$html);
         this.card_from_way.body.$html.append(row.$html);
         this.view_com.$op.append(this.card_from_way.$html);
-        this.view_com.load_db(['station', 'ways'], false, function (result) {
-            var process = 4;
+        this.view_com.load_db(['station', 'park_ways', 'ways'], false, function (result) {
+            var process = 6;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -332,7 +335,7 @@
             //    return !i.stationUz && i.stationDelete === null;
             //}.bind(this))
             this.ways = this.view_com.api_dir.getAllWays();
-
+            this.park_ways = this.view_com.api_dir.getAllParkWays();
             // сформируем периоды { value: , text: , disabled: false }
             this.list_period = [];
             this.list_period.push({ value: 1, text: langView('vounl_title_period_1', App.Langs), disabled: false });
@@ -517,6 +520,110 @@
                     out_init(process);
                 }.bind(this),
             });
+            // Создадим таблицы (this.filing_table)
+            var row_list_filing = new this.view_com.fe_ui.bs_row({ id: 'op-unlc-list-filing', class: 'pt-2' });
+            this.filing_table.$html.append(row_list_filing.$html);
+
+            this.tlf_unlc = new TWS('div#op-unlc-list-filing');
+            this.tlf_unlc.init({
+                alert: this.from_way_alert,
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                detali_table: false,
+                type_report: 'list_filing',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tlf_unlc.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.position_new === null && !data.outgoingSostavStatus;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tlf_unlc.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[view_op_unloading_cars] [tlf_unlc] process ' + process);
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    this.filing_alert.clear_message();
+                    //if (rowData && rowData.length > 0) {
+                    //    if (rowData[0].outgoingSostavStatus > 0) {
+                    //        e.preventDefault();
+                    //        this.from_way_alert.out_warning_message(langView('vounl_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                    //    }
+                    //    if (rowData[0].id_wir_unload !== null) {
+                    //        e.preventDefault();
+                    //        this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_filing_way', App.Langs).format(rowData[0].num));
+                    //    }
+                    //}
+
+                }.bind(this),
+                fn_select_rows: function (rows, type) {
+                    if (type === "select") {
+                        var idWf = null;
+                        //this.station_from = null;
+                        //this.id_outer_way = null;   // id перегона
+                        if (rows != null && rows.length > 0) {
+                            idWf = rows[0].idWf;
+                            //this.station_from = rows[0]['fromStationAbbr' + ucFirst(App.Lang)]; // Станция отправления
+                            //this.id_outer_way = rows[0].idOuterWay;   // id перегона
+                        }
+                        this.view_wagons_of_filing(idWf, function () { LockScreenOff(); }.bind(this));
+                    } else {
+                        this.view_wagons_of_filing(null, function () { LockScreenOff(); }.bind(this));
+                    }
+                }.bind(this),
+                fn_select_link: function (link) {
+
+                }.bind(this),
+                fn_button_action: function (name, e, dt, node, config) {
+                    if (name === 'eye') {
+                        this.view_filing();
+                        LockScreenOff();
+                    }
+                    if (name === 'add_sostav') {
+                        //this.from_way_alert.clear_message();
+                        //if (this.id_way_unload >= 0) {
+                        //    var rows = this.tlf_unlc.tab_com.get_select_row();
+                        //    if (rows !== null && rows.length > 0) {
+                        //        LockScreen(langView('vounl_mess_create_filing', App.Langs));
+                        //        // Выполнить операцию добавить вагоны
+                        //        $.each(rows, function (i, el) {
+                        //            el['id_wir_unload'] = el.wirId;
+                        //        }.bind(this));
+                        //        this.view_wagons(); // Обновить вагоны на пути приема
+                        //        LockScreenOff();
+                        //    } else {
+                        //        this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
+
+                        //    }
+                        //} else {
+                        //    this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_way_from', App.Langs));
+                        //}
+                    }
+                }.bind(this),
+                fn_enable_button: function (tb) {
+
+                }.bind(this),
+            });
+
+
             //-------------------------------------------------------------------
             // Создадим форму (this.filing_wagons_setup)
             this.form_filing_wagons_setup = new FD();
@@ -803,7 +910,7 @@
                             var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
                             this.view_com.mcf.open(
                                 langView('vounl_title_form_apply', App.Langs),
-                                langView('vounl_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_from_setup.el.select_id_station_unload.text(), (wagons ? wagons.length : 0), this.form_from_setup.el.select_id_way_unload.text(), this.form_filing_wagons_setup.el.select_id_way_on.text()),
+                                langView('vounl_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(), (wagons ? wagons.length : 0), this.form_from_setup.el.select_id_way_unload.text(), this.form_filing_wagons_setup.el.select_id_way_on.text()),
                                 function () {
                                     // Принять
                                     // Проверим наличие вагонов 
@@ -842,9 +949,96 @@
                     out_init(process);
                 }.bind(this),
             });
+            // Создадим таблицы (this.filing_wagons_table)
+            var row_filing_wagons = new this.view_com.fe_ui.bs_row({ id: 'op-unlc-filing-wagons', class: 'pt-2' });
+            this.filing_wagons_table.$html.append(row_filing_wagons.$html);
 
-            //var row_wagons_on = new this.view_com.fe_ui.bs_row({ id: 'op-odl-wagons-on', class: 'pt-2' });
-            //this.filing_wagons_table.$html.append(row_wagons_on.$html);
+            this.tfws_unlc = new TWS('div#op-unlc-filing-wagons');
+            this.tfws_unlc.init({
+                alert: this.from_way_alert,
+                class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                detali_table: false,
+                type_report: 'filing_wagons',
+                setup_buttons: [
+                    {
+                        name: 'select_all',
+                        action: function () {
+                            // Выбрать только не принятые вагоны
+                            this.tfws_unlc.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return data.position_new === null && !data.outgoingSostavStatus;
+                            }).select();
+                        }.bind(this)
+                    },
+                    { name: 'select_none', action: null },
+                    {
+                        name: 'add_sostav',
+                        action: function (e, dt, node, config) {
+                            this.tfws_unlc.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
+                link_num: false,
+                ids_wsd: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[view_op_unloading_cars] [tfws_unlc] process ' + process);
+                    out_init(process);
+                },
+                fn_action_view_detali: function (rows) {
+
+                },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    this.filing_wagons_alert.clear_message();
+                    //if (rowData && rowData.length > 0) {
+                    //    if (rowData[0].outgoingSostavStatus > 0) {
+                    //        e.preventDefault();
+                    //        this.filing_wagons_alert.out_warning_message(langView('vounl_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                    //    }
+                    //    if (rowData[0].id_wir_unload !== null) {
+                    //        e.preventDefault();
+                    //        this.filing_wagons_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_filing_way', App.Langs).format(rowData[0].num));
+                    //    }
+                    //}
+
+                }.bind(this),
+                fn_select_rows: function (rows) {
+
+                }.bind(this),
+                fn_select_link: function (link) {
+
+                }.bind(this),
+                fn_button_action: function (name, e, dt, node, config) {
+                    if (name === 'eye') {
+                        this.view_wagons_from();
+                        LockScreenOff();
+                    }
+                    if (name === 'add_sostav') {
+                        //this.from_way_alert.clear_message();
+                        //if (this.id_way_unload >= 0) {
+                        //    var rows = this.tfws_unlc.tab_com.get_select_row();
+                        //    if (rows !== null && rows.length > 0) {
+                        //        LockScreen(langView('vounl_mess_create_filing', App.Langs));
+                        //        // Выполнить операцию добавить вагоны
+                        //        $.each(rows, function (i, el) {
+                        //            el['id_wir_unload'] = el.wirId;
+                        //        }.bind(this));
+                        //        this.view_wagons(); // Обновить вагоны на пути приема
+                        //        LockScreenOff();
+                        //    } else {
+                        //        this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
+
+                        //    }
+                        //} else {
+                        //    this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_way_from', App.Langs));
+                        //}
+                    }
+                }.bind(this),
+                fn_enable_button: function (tb) {
+
+                }.bind(this),
+            });
 
             //-------------------------------------------------------------------
             // Создадим форму (this.from_way_setup)
@@ -918,9 +1112,9 @@
                     out_init(process);
                 }.bind(this),
             });
-
-            var row_out_cars_way = new this.view_com.fe_ui.bs_row({ id: 'op-unlc-wagons-from', class: 'pt-2' });
-            this.from_way_table.$html.append(row_out_cars_way.$html);
+            // Создадим таблицы (this.from_way_table)
+            var row_wagons_from_way = new this.view_com.fe_ui.bs_row({ id: 'op-unlc-wagons-from', class: 'pt-2' });
+            this.from_way_table.$html.append(row_wagons_from_way.$html);
 
             this.twfrom_unlc = new TWS('div#op-unlc-wagons-from');
             this.twfrom_unlc.init({
@@ -1113,14 +1307,14 @@
                     // есть вагоны
                     this.view_com.mcf.open(
                         langView('vounl_confirm_title', App.Langs),
-                        langView('vounl_confirm_mess_change_station', App.Langs).format(this.form_on_setup.el.select_id_station_unload.text(), count),
+                        langView('vounl_confirm_mess_change_station', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(), count),
                         function () {
                             if (typeof callback_ok === 'function') {
                                 callback_ok();
                             }
                         }.bind(this),
                         function () {
-                            this.form_from_setup.el.select_id_station_unload.val(this.id_station_unload);
+                            this.form_filing_setup.el.select_id_station_unload.val(this.id_station_unload);
                             if (typeof callback_cancel === 'function') {
                                 callback_cancel();
                             }
@@ -1229,7 +1423,7 @@
                 this.sostav_filing = [];
                 $.each(wagons, function (key, el) {
                     var st = this.sostav_filing.find(function (o) {
-                        return $.trim(o.idWf) === $.trim(el.idWf);
+                        return o.idWf === el.idWf;
                     }.bind(this));
                     if (!st) {
                         this.sostav_filing.push({
@@ -1260,6 +1454,8 @@
                             arrivalDivisionAmkrNameEn: el.arrivalDivisionAmkrNameEn,
                             arrivalDivisionAmkrAbbrRu: el.arrivalDivisionAmkrAbbrRu,
                             arrivalDivisionAmkrAbbrEn: el.arrivalDivisionAmkrAbbrEn,
+                            startFiling: el.startFiling,
+                            endFiling: el.endFiling,
                             filingCreate: el.filingCreate,
                             filingCreateUser: el.filingCreateUser,
                             filingChange: el.filingChange,
@@ -1318,10 +1514,14 @@
     // Показать все (сотавы, вагоны)
     view_op_unloading_cars.prototype.view_wagons = function () {
         // Очистить сообщения и форму
+        this.form_filing_setup.clear_all();
         this.form_filing_wagons_setup.clear_all();
         this.form_from_setup.clear_all();
+        // Показать подачи
+        this.view_filing();
         // Показать вагоны на пути начала дислокации
         this.view_wagons_from();
+
         //// Показать вагоны на пути дислокации
         //this.view_wagons_on();
     };
@@ -1337,60 +1537,220 @@
     };
     // Показать список подач
     view_op_unloading_cars.prototype.view_filing = function () {
-        var wagons_filing = this.wagons_filing;
-        var wagons = this.wagons;
-        var wagons_filing_add = wagons_filing.filter(function (i) {
+
+        var sostav_filing = [];
+        // сделаем копию, что-бы небыло задвоения
+        sostav_filing = JSON.parse(JSON.stringify(this.sostav_filing));
+        var wagons_filing_add = this.wagons.filter(function (i) {
             return i.id_wir_unload !== null;
         });
         if (wagons_filing_add !== null && wagons_filing_add.length > 0) {
-            wagons_filing.push({
-                idWf: 0,
-                statusFiling: 0,
-                numFiling: null,
-                filingIdStation: this.id_station_unload,
-                filingStationNameRu: el.filingStationNameRu,
-                filingStationNameEn: el.filingStationNameEn,
-                filingStationAbbrRu: el.filingStationAbbrRu,
-                filingStationAbbrEn: el.filingStationAbbrEn,
-                filingIdPark: el.filingIdPark,
-                filingParkNameRu: el.filingParkNameRu,
-                filingParkNameEn: el.filingParkNameEn,
-                filingParkAbbrRu: el.filingParkAbbrRu,
-                filingParkAbbrEn: el.filingParkAbbrEn,
-                filingIdWay: this.id_way_unload,
-                filingWayNumRu: el.filingWayNumRu,
-                filingWayNumEn: el.filingWayNumEn,
-                filingWayNameRu: el.filingWayNameRu,
-                filingWayNameEn: el.filingWayNameEn,
-                filingWayAbbrRu: el.filingWayAbbrRu,
-                filingWayAbbrEn: el.filingWayAbbrEn,
-                countFilingWagons: 1,
-                countUnloadingWagons: el.filingWayEnd != null ? 1 : 0,
-                arrivalDivisionAmkrCode: el.arrivalDivisionAmkrCode,
-                arrivalDivisionAmkrNameRu: el.arrivalDivisionAmkrNameRu,
-                arrivalDivisionAmkrNameEn: el.arrivalDivisionAmkrNameEn,
-                arrivalDivisionAmkrAbbrRu: el.arrivalDivisionAmkrAbbrRu,
-                arrivalDivisionAmkrAbbrEn: el.arrivalDivisionAmkrAbbrEn,
-                filingCreate: el.filingCreate,
-                filingCreateUser: el.filingCreateUser,
-                filingChange: el.filingChange,
-                filingChangeUser: el.filingChangeUser,
-                filingClose: el.filingClose,
-                filingCloseUser: el.filingCloseUser,
 
+            var station = this.stations.find(function (o) { return o.id === this.id_station_unload }.bind(this));
+            var way = this.ways.find(function (o) { return o.id === this.id_way_unload }.bind(this));
+            var park = way ? this.park_ways.find(function (o) { return o.id === way.idPark }.bind(this)) : null;
+
+            if (station && way && park) {
+                sostav_filing.push({
+                    idWf: 0,
+                    statusFiling: 0,
+                    numFiling: null,
+                    filingIdStation: this.id_station_unload,
+                    filingStationNameRu: station.stationNameRu,
+                    filingStationNameEn: station.stationNameEn,
+                    filingStationAbbrRu: station.stationAbbrRu,
+                    filingStationAbbrEn: station.stationAbbrEn,
+                    filingIdPark: park.id,
+                    filingParkNameRu: park.parkNameRu,
+                    filingParkNameEn: park.parkNameEn,
+                    filingParkAbbrRu: park.parkAbbrRu,
+                    filingParkAbbrEn: park.parkAbbrEn,
+                    filingIdWay: this.id_way_unload,
+                    filingWayNumRu: way.wayNumRu,
+                    filingWayNumEn: way.wayNumEn,
+                    filingWayNameRu: way.wayNameRu,
+                    filingWayNameEn: way.wayNameEn,
+                    filingWayAbbrRu: way.wayAbbrRu,
+                    filingWayAbbrEn: way.wayAbbrEn,
+                    countFilingWagons: wagons_filing_add.length,
+                    countUnloadingWagons: 0,
+                    arrivalDivisionAmkrCode: null,
+                    arrivalDivisionAmkrNameRu: null,
+                    arrivalDivisionAmkrNameEn: null,
+                    arrivalDivisionAmkrAbbrRu: null,
+                    arrivalDivisionAmkrAbbrEn: null,
+                    startFiling: null,
+                    endFiling: null,
+                    filingCreate: null,
+                    filingCreateUser: null,
+                    filingChange: null,
+                    filingChangeUser: null,
+                    filingClose: null,
+                    filingCloseUser: null,
+                });
+            } else {
+                // Сообщение об ошибке
+                this.form_filing_setup.out_error_message(langView('voprc_mess_eror_add_new_filing', App.Langs).format(wagons_filing_add.length, !station ? 'error' : 'ok', !park ? 'error' : 'ok', !way ? 'error' : 'ok'));
+            }
+        }
+        if (this.tlf_unlc.tab_com.eye) {
+            sostav_filing = sostav_filing.filter(function (i) {
+                return i.statusFiling !== 2;
             });
         }
-
-
-        if (this.twfrom_unlc.tab_com.eye) {
-            wagons_filing_add = wagons_filing.filter(function (i) {
-                return i.id_wir_unload !== null;
-            });
-        }
-
-        //this.twfrom_unlc.view(wagons, null);
+        this.tlf_unlc.view(sostav_filing, null);
     };
-
+    // Показать вагоны подачи
+    view_op_unloading_cars.prototype.view_wagons_of_filing = function (id_filing, callback) {
+        var vagons_filing = [];
+        if (id_filing !== null) {
+            if (id_filing > 0) {
+                vagons_filing = this.wagons_filing.filter(function (i) {
+                    return i.idWf === id_filing;
+                }.bind(this));
+            } else {
+                var wagons_filing_add = this.wagons.filter(function (i) {
+                    return i.id_wir_unload !== null;
+                }).sort(function (a, b) { return a.position - b.position });
+                if (wagons_filing_add !== null && wagons_filing_add.length > 0) {
+                    // Получим список вагонов
+                    $.each(wagons_filing_add, function (key, el) {
+                        vagons_filing.push({
+                            idWim: el.wimId,
+                            idWir: el.wirId,
+                            idWf: 0,
+                            numFiling: null,
+                            idWio: el.wioId,
+                            note: null,
+                            startFiling: null,
+                            endFiling: null,
+                            filingCreate: null,
+                            filingCreateUser: null,
+                            filingChange: null,
+                            filingChangeUser: null,
+                            filingClose: null,
+                            filingCloseUser: null,
+                            num: el.num,
+                            position: el.position,
+                            filingWayStart: null,
+                            filingWayEnd: null,
+                            filingStart: null,
+                            filingEnd: null,
+                            filingWimCreate: null,
+                            filingWimCreateUser: null,
+                            filingWimClose: null,
+                            filingWimCloseUser: null,
+                            filingIdStation: null,
+                            filingStationNameRu: null,
+                            filingStationNameEn: null,
+                            filingStationAbbrRu: null,
+                            filingStationAbbrEn: null,
+                            filingIdPark: null,
+                            filingParkNameRu: null,
+                            filingParkNameEn: null,
+                            filingParkAbbrRu: null,
+                            filingParkAbbrEn: null,
+                            filingIdWay: null,
+                            filingWayNumRu: null,
+                            filingWayNumEn: null,
+                            filingWayNameRu: null,
+                            filingWayNameEn: null,
+                            filingWayAbbrRu: null,
+                            filingWayAbbrEn: null,
+                            filingWayCapacity: null,
+                            filingWayClose: null,
+                            filingWayDelete: null,
+                            filingWayNote: null,
+                            wagonAdm: el.wagonAdm,
+                            wagonAdmNameRu: el.wagonAdmNameRu,
+                            wagonAdmNameEn: el.wagonAdmNameEn,
+                            wagonAdmAbbrRu: el.wagonAdmAbbrRu,
+                            wagonAdmAbbrEn: el.wagonAdmAbbrEn,
+                            wagonRod: el.wagonRod,
+                            wagonRodNameRu: el.wagonRodNameRu,
+                            wagonRodNameEn: el.wagonRodNameEn,
+                            wagonRodAbbrRu: el.wagonRodAbbrRu,
+                            wagonRodAbbrEn: el.wagonRodAbbrEn,
+                            wagonTypeRu: el.wagonTypeRu,
+                            wagonTypeEn: el.wagonTypeEn,
+                            idOperator: el.idOperator,
+                            operatorsRu: el.operatorsRu,
+                            operatorsEn: el.operatorsEn,
+                            operatorAbbrRu: el.operatorAbbrRu,
+                            operatorAbbrEn: el.operatorAbbrEn,
+                            operatorRentStart: el.operatorRentStart,
+                            operatorRentEnd: el.operatorRentEnd,
+                            operatorPaid: el.operatorPaid,
+                            operatorColor: el.operatorColor,
+                            operatorMonitoringIdleTime: el.operatorMonitoringIdleTime,
+                            idLimitingLoading: el.idLimitingLoading,
+                            limitingNameRu: el.limitingNameRu,
+                            limitingNameEn: el.limitingNameEn,
+                            limitingAbbrRu: el.limitingAbbrRu,
+                            limitingAbbrEn: el.limitingAbbrEn,
+                            arrivalConditionNameRu: el.arrivalConditionNameRu,
+                            arrivalConditionNameEn: el.arrivalConditionNameEn,
+                            arrivalConditionAbbrRu: el.arrivalConditionAbbrRu,
+                            arrivalConditionAbbrEn: el.arrivalConditionAbbrEn,
+                            arrivalConditionRed: el.arrivalConditionRed,
+                            currentConditionNameRu: el.currentConditionNameRu,
+                            currentConditionNameEn: el.currentConditionNameEn,
+                            currentConditionAbbrRu: el.currentConditionAbbrRu,
+                            currentConditionAbbrEn: el.currentConditionAbbrEn,
+                            currentConditionRed: el.currentConditionRed,
+                            arrivalCargoGroupNameRu: el.arrivalCargoGroupNameRu,
+                            arrivalCargoGroupNameEn: el.arrivalCargoGroupNameEn,
+                            arrivalCargoNameRu: el.arrivalCargoNameRu,
+                            arrivalCargoNameEn: el.arrivalCargoNameEn,
+                            arrivalIdSertificationData: el.arrivalIdSertificationData,
+                            arrivalSertificationDataRu: el.arrivalSertificationDataRu,
+                            arrivalSertificationDataEn: el.arrivalSertificationDataEn,
+                            arrivalStationFromCode: el.arrivalStationFromCode,
+                            arrivalStationFromNameRu: el.arrivalStationFromNameRu,
+                            arrivalStationFromNameEn: el.arrivalStationFromNameEn,
+                            arrivalStationAmkrNameRu: el.arrivalStationAmkrNameRu,
+                            arrivalStationAmkrNameEn: el.arrivalStationAmkrNameEn,
+                            arrivalStationAmkrAbbrRu: el.arrivalStationAmkrAbbrRu,
+                            arrivalStationAmkrAbbrEn: el.arrivalStationAmkrAbbrEn,
+                            arrivalDivisionAmkrCode: el.arrivalDivisionAmkrCode,
+                            arrivalDivisionAmkrNameRu: el.arrivalDivisionAmkrNameRu,
+                            arrivalDivisionAmkrNameEn: el.arrivalDivisionAmkrNameEn,
+                            arrivalDivisionAmkrAbbrRu: el.arrivalDivisionAmkrAbbrRu,
+                            arrivalDivisionAmkrAbbrEn: el.arrivalDivisionAmkrAbbrEn,
+                            currentIdLoadingStatus: el.currentIdLoadingStatus,
+                            currentLoadingStatusRu: el.currentLoadingStatusRu,
+                            currentLoadingStatusEn: el.currentLoadingStatusEn,
+                            currentCargoGroupNameRu: el.currentCargoGroupNameRu,
+                            currentCargoGroupNameEn: el.currentCargoGroupNameEn,
+                            currentCargoNameRu: el.currentCargoNameRu,
+                            currentCargoNameEn: el.currentCargoNameEn,
+                            currentDivisionAmkrCode: el.currentDivisionAmkrCode,
+                            currentDivisionAmkrNameRu: el.currentDivisionAmkrNameRu,
+                            currentDivisionAmkrNameEn: el.currentDivisionAmkrNameEn,
+                            currentDivisionAmkrAbbrRu: el.currentDivisionAmkrAbbrRu,
+                            currentDivisionAmkrAbbrEn: el.currentDivisionAmkrAbbrEn,
+                            currentStationAmkrNameRu: el.currentStationAmkrNameRu,
+                            currentStationAmkrNameEn: el.currentStationAmkrNameEn,
+                            currentStationAmkrAbbrRu: el.currentStationAmkrAbbrRu,
+                            currentStationAmkrAbbrEn: el.currentStationAmkrAbbrEn
+                        });
+                    }.bind(this))
+                } else {
+                    this.form_filing_setup.out_error_message(langView('voprc_mess_eror_new_filing_not_wagon', App.Langs));
+                }
+            };
+            if (this.tfws_unlc.tab_com.eye) {
+                vagons_filing = vagons_filing.filter(function (i) {
+                    return i.statusFiling !== 2;
+                });
+            }
+        }
+        this.tfws_unlc.view(vagons_filing, null);
+        // Событие обновили данные
+        if (typeof callback === 'function') {
+            callback(vagons_filing);
+        }
+    };
     //// Показать вагоны на пути начала дислокации
     //view_op_unloading_cars.prototype.view_wagons_on = function () {
     //    var wagons = [];
