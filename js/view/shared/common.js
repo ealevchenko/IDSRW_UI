@@ -2,6 +2,8 @@
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
 var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
+var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
 
 /* ----------------------------------------------------------
         Вывод текста согласно региональных настроек
@@ -128,6 +130,37 @@ var is_valid_num_wagon = function (num) {
     var $ = window.jQuery;
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Url_Api = url_api_main;
+    //App.Url_Api = url_api_test;
+
+    // Определим AdminInfo - информацию об api которое подключено к UI
+    App.AdminInfo = {};
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.open("GET", App.Url_Api + "/Admin/user_info");
+    // обработчик получения ответа сервера
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            // если код ответа 200
+            App.AdminInfo = JSON.parse(xhr.responseText);
+            console.log("Server response: ", xhr.statusText);
+        } else {                                // иначе выводим текст статуса
+            App.AdminInfo = {};
+            console.log("Server response: ", xhr.statusText);
+        }
+    };
+    xhr.send();     // выполняем запрос
+
+    //let cnt = localStorage.getItem('visitCount');
+    //// Устанавливаем счетчик в 0, если посещение впервые
+    //if (cnt === null) { cnt = 0; };
+    //// Увеличиваем счетчик на 1
+    //cnt++;
+    //// Обновляем значение счетчика в localStorage
+    //localStorage.setItem('visitCount', cnt);
+    //// Выводим значение счетчика на страницу
+    //console.log("visitCount: ", cnt);
+
     /* ----------------------------------------------------------
                         Список слов
     -------------------------------------------------------------*/

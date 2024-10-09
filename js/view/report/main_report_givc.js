@@ -31,9 +31,10 @@
     var API_GIVC = App.api_givc;
     var API_DIRECTORY = App.ids_directory;
     var TRGIVC = App.table_report_givc;
-    var api_givc = new API_GIVC({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-    var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-
+    //var api_givc = new API_GIVC({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+    //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+    var api_givc = new API_GIVC({ url_api: App.Url_Api });
+    var api_dir = new API_DIRECTORY({ url_api: App.Url_Api });
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -372,13 +373,13 @@
                             nom_sost: el.nom_sost,
                             kol_vag: 1,
                             etsng: el.etsng,
-                            CargoETSNG : CargoETSNG,
-                            Cargo : CargoETSNG ? api_dir.getCargo_Of_IDETSNG(CargoETSNG.id) : null,
+                            CargoETSNG: CargoETSNG,
+                            Cargo: CargoETSNG ? api_dir.getCargo_Of_IDETSNG(CargoETSNG.id) : null,
                             mnk_esr_op: el.mnk_esr_op,
                             date_op: el.date_op,
                             esr_op: el.esr_op,
                             code_op: el.code_op,
-                            WagonOperationsUz : api_dir.getWagonOperationsUz_Of_mnkOp(el.mnk_op),
+                            WagonOperationsUz: api_dir.getWagonOperationsUz_Of_mnkOp(el.mnk_op),
                         });
                     } else {
                         ap.kol_vag += 1;
@@ -494,7 +495,7 @@
                                 get_reqDisvag_sheet(curr_data, function (result_list) {
                                     list_disl_cargo = result_list;
                                     table_reqDisvag_sheet.view(list_disl_cargo);
-                                LockScreenOff();
+                                    LockScreenOff();
                                 }.bind(this));
                             }.bind(this));
                         } else {

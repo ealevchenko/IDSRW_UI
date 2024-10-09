@@ -90,8 +90,9 @@
             fn_select_station: null,
         }, options);
         // определим библиотеку  dir
-        this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-
+        //this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+        this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
+;
         this.$tw.attr("style", "overflow-x:auto");
         this.$tw.empty();
         this.$table = new this.fe_ui.table({

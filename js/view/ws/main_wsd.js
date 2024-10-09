@@ -67,8 +67,12 @@
 
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
-    var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-    var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+    //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+    //var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+
+    var api_dir = new API_DIRECTORY({ url_api: App.Url_Api });
+    var api_wsd = new IDS_WSD({ url_api: App.Url_Api });
+
 
     var MCF = App.modal_confirm_form;
 
@@ -145,13 +149,25 @@
     var operators_arrival = [];
     var user_info = {};
 
-    //var userAgent = navigator.userAgent.toLowerCase();
+    var userAgent = navigator.userAgent.toLowerCase();
     //var user = window.userID;
-    ////var userInfo = window.ShowpadLib.getUserInfo();
-    //var request = new XMLHttpRequest();
-    //request.withCredentials = true;
-    //request.open("GET", "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API/Admin/user_info");
+    //var userInfo = window.ShowpadLib.getUserInfo();
+
+
     $(function () {
+
+        setInterval(function () {
+            $('label#user_name').text(moment().format("YYYY-MM-DD hh:mm:ss"));
+            $('label#curent_date').text(App.AdminInfo ? App.AdminInfo.name : '?');
+            $('label#data_source').text(App.AdminInfo ? App.AdminInfo.dataSource : '?');
+            //ids_gl.getCountClient(function (count) {
+            //    $('label#client_count').text(count);
+            //});
+
+        }, 1000);
+
+        //sessionStorage.setItem("username", "ediks");
+        //var d = sessionStorage.getItem("username");
         // загрузить данные 
         var load_wagons_of_way = function (id_way, num, callback) {
             if (id_way !== null && id_way >= 0) {
