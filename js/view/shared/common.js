@@ -130,8 +130,8 @@ var is_valid_num_wagon = function (num) {
     var $ = window.jQuery;
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-    App.Url_Api = url_api_main;
-    //App.Url_Api = url_api_test;
+    //App.Url_Api = url_api_main;
+    App.Url_Api = url_api_test;
 
     // Определим AdminInfo - информацию об api которое подключено к UI
     App.AdminInfo = {};
