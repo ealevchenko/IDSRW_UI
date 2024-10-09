@@ -338,7 +338,7 @@
     };
     // Получить списки путей с выходом на УЗ (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextCrossingUzWaysOfStation = function (id_station) {
-        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {getAllWays
             return !i.wayDelete && i.idStation === id_station && i.crossingUz
         });
     };
@@ -359,6 +359,24 @@
         return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
             return !i.wayDelete && i.idStation === id_station && i.idDevision>0
         });
+    };
+    //*======= (Справочник park_ways) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllParkWays = function () {
+        var obj = this.api_com.getAllObj('park_ways');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getParkWays_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('park_ways', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListParkWays = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('park_ways', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextParkWays = function (filter) {
+        return this.getListParkWays('id', 'parkName', ucFirst(App.Lang), filter);
     };
     //*======= (Справочник station) ======================================
     // Получить все записи
