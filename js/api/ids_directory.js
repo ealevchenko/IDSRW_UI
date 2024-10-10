@@ -53,6 +53,7 @@
                 { name: 'outer_ways', list: null, fn_get: this.getOuterWays.bind(this) },
                 { name: 'locomotive', list: null, fn_get: this.getLocomotive.bind(this) },
                 { name: 'divisions', list: null, fn_get: this.getDivisions.bind(this) },
+                { name: 'wagon_loading_status', list: null, fn_get: this.getWagonLoadingStatus.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -63,8 +64,11 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
-
-    //======= [Directory_Divisions] (Справочник подразделений предприятия) ======================================
+    //======= [Directory_WagonLoadingStatus] (Справочник статусов загрузки вагонов) ===============
+    ids_directory.prototype.getWagonLoadingStatus = function (callback) {
+        this.api_com.get('/DirectoryWagonLoadingStatus', callback);
+    };
+    //======= [Directory_Divisions] (Справочник подразделений предприятия) ========================
     ids_directory.prototype.getDivisions = function (callback) {
         this.api_com.get('/DirectoryDivision', callback);
     };
@@ -270,6 +274,24 @@
     };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
+    //*======= (Справочник wagon_loading_status) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllWagonLoadingStatus = function () {
+        var obj = this.api_com.getAllObj('wagon_loading_status');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getWagonLoadingStatus_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('wagon_loading_status', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListWagonLoadingStatus = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('wagon_loading_status', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextWagonLoadingStatus = function () {
+        return this.getListWagonLoadingStatus('id', 'loading_status', ucFirst(App.Lang));
+    };
     //*======= (Справочник divisions) ======================================
     // Получить все записи
     ids_directory.prototype.getAllDivisions = function () {
