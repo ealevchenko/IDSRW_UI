@@ -52,6 +52,7 @@
                 { name: 'ways', list: null, fn_get: this.getWays.bind(this) },
                 { name: 'outer_ways', list: null, fn_get: this.getOuterWays.bind(this) },
                 { name: 'locomotive', list: null, fn_get: this.getLocomotive.bind(this) },
+                { name: 'divisions', list: null, fn_get: this.getDivisions.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -62,6 +63,11 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
+
+    //======= [Directory_Divisions] (Справочник подразделений предприятия) ======================================
+    ids_directory.prototype.getDivisions = function (callback) {
+        this.api_com.get('/DirectoryDivision', callback);
+    };
     //======= [Directory_Locomotive] (Справочник локомотивов) ======================================
     ids_directory.prototype.getLocomotive = function (callback) {
         this.api_com.get('/DirectoryLocomotive', callback);
@@ -264,6 +270,24 @@
     };
     //****************************************************************************************
     //-------------------------------- функции для работы с таблицами ------------------------
+    //*======= (Справочник divisions) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllDivisions = function () {
+        var obj = this.api_com.getAllObj('divisions');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getDivision_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('divisions', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListDivisions = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('divisions', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextDivisions = function () {
+        return this.getListDivisions('id', 'name_division', ucFirst(App.Lang));
+    };
     //*======= (Справочник locomotive) ======================================
     // Получить все записи
     ids_directory.prototype.getAllLocomotive = function () {
