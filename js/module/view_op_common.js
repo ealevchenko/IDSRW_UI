@@ -96,6 +96,18 @@
             bt_close_text: langView('vopc_title_button_Cancel', App.Langs),
             bt_ok_text: langView('vopc_title_button_Ok', App.Langs),
         });
+
+        this.mcf_lg = new MCF(); // Создадим экземпляр окно сообщений
+        this.mcf_lg.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'lg',
+            bt_close_text: langView('vopc_title_button_Cancel', App.Langs),
+            bt_ok_text: langView('vopc_title_button_Ok', App.Langs),
+        });
+
         // На проверку окончания инициализации
         //----------------------------------
         if (fn_init === 'function') {
