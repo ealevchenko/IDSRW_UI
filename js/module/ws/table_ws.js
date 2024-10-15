@@ -156,6 +156,8 @@
             'tws_field_filing_way': 'Ж.д. путь',
             'tws_field_count_filing_wagons': 'Кол-во ваг поданых',
             'tws_field_count_unloading_wagons': 'Кол-во ваг выгруж',
+            'tws_field_filing_division_name': 'Цех выгрузки',
+            'tws_field_filing_division_abbr': 'Цех выгрузки',
             'tws_field_start_filing': 'Дата начала выгрузки',
             'tws_field_end_filing': 'Дата окончания выгрузки',
             'tws_field_filing_create': 'Дата создания',
@@ -193,9 +195,11 @@
             'tws_title_button_select_all_wagon': 'Все вагоны',
             'tws_title_button_deselect_all': 'Убрать выбор',
             'tws_title_button_add_sostav': 'Добавить в состав',
+            'tws_title_button_add_filing': 'Добавить в подачу',
             'tws_title_button_collect_sostav': 'Собрать',
             'tws_title_button_title_collect_sostav': 'Собрать вагоны для предъявления по номерам вагонов...',
             'tws_title_button_del_wagons_sostav': 'Убрать из состава',
+            'tws_title_button_del_wagons_filing': 'Убрать из подачи',
             'tws_title_button_head_tail': 'Голова\Хвост',
             'tws_title_button_reverse': 'Реверс',
             'tws_title_button_remove_wagons': 'Сбросить',
@@ -1520,6 +1524,23 @@
                 className: 'dt-body-centr',
                 title: langView('tws_field_count_unloading_wagons', App.Langs), width: "50px", orderable: true, searchable: true
             },
+            //
+            {
+                field: 'filing_division_name',
+                data: function (row, type, val, meta) {
+                    return row['filingDivisionName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_division_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'filing_division_abbr',
+                data: function (row, type, val, meta) {
+                    return row['filingDivisionAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_division_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // Даты
             // дата начала
             {
@@ -1613,6 +1634,11 @@
                 className: 'btn btn-info'
             },
             {
+                button: 'add_filing',
+                text: langView('tws_title_button_add_filing', App.Langs),
+                className: 'btn btn-info'
+            },
+            {
                 button: 'collect_sostav',
                 text: langView('tws_title_button_collect_sostav', App.Langs),
                 className: 'btn btn-success',
@@ -1627,6 +1653,11 @@
             {
                 button: 'del_wagons_sostav',
                 text: langView('tws_title_button_del_wagons_sostav', App.Langs),
+                className: 'btn btn-danger'
+            },
+            {
+                button: 'del_wagons_filing',
+                text: langView('tws_title_button_del_wagons_filing', App.Langs),
                 className: 'btn btn-danger'
             },
             {
@@ -2198,7 +2229,7 @@
         collums.push({ field: 'filing_way_abbr', title: null, class: null });
         collums.push({ field: 'count_filing_wagons', title: null, class: null });
         collums.push({ field: 'count_unloading_wagons', title: null, class: null });
-        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'filing_division_abbr', title: null, class: null });
         collums.push({ field: 'start_filing', title: null, class: null });
         collums.push({ field: 'end_filing', title: null, class: null });
         collums.push({ field: 'filing_create', title: null, class: null });

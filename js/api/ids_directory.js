@@ -290,7 +290,7 @@
     };
     // Получить списки (Value, Text, Desabled) по умолчанию
     ids_directory.prototype.getListValueTextWagonLoadingStatus = function () {
-        return this.getListWagonLoadingStatus('id', 'loading_status', ucFirst(App.Lang));
+        return this.getListWagonLoadingStatus('id', 'loadingStatus', ucFirst(App.Lang));
     };
     //*======= (Справочник divisions) ======================================
     // Получить все записи
@@ -308,7 +308,7 @@
     };
     // Получить списки (Value, Text, Desabled) по умолчанию
     ids_directory.prototype.getListValueTextDivisions = function () {
-        return this.getListDivisions('id', 'name_division', ucFirst(App.Lang));
+        return this.getListDivisions('id', 'nameDivision', ucFirst(App.Lang));
     };
     //*======= (Справочник locomotive) ======================================
     // Получить все записи
