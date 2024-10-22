@@ -1458,7 +1458,7 @@
                 this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('vopac_mess_error_not_locomotive', App.Langs).format(loc1));
                 valid = false;
             }
-            if ((loc2 !== null && loc2 !== '') && result.new && result.new.locomotive2 === null) {
+            if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
                 this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('vopac_mess_error_not_locomotive', App.Langs).format(loc2));
                 valid = false;
             }
