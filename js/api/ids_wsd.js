@@ -147,7 +147,10 @@
     ids_wsd.prototype.postAutoPosition = function (operation, callback) {
         this.api_com.post('/WSD/operation/way/auto_position/', operation, callback, callback);
     };
-
+    //АРМ, Операция создать подачу для выгрузки
+    ids_wsd.prototype.postAddFilingUnloading = function (operation, callback) {
+        this.api_com.post('/WSD/add/filing/operation/unloading/', operation, callback, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
