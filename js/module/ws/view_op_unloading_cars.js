@@ -72,13 +72,14 @@
             //'vounl_title_button_excel': 'Excel',
             //'vounl_title_button_cancel': 'Отменить',
             //'vounl_title_button_return': 'Вернуть',
-            //'vounl_title_button_head': 'Голова',
-            //'vounl_title_button_tail': 'Хвост',
+            'vounl_title_button_new_filing': 'Создать черновик',
+            'vounl_title_button_add_filing': 'Добавить в подачу',
 
             //'vounl_title_add_ok': 'ВЫПОЛНИТЬ',
 
             ////'vounl_mess_warning_not_num_sostav': 'Нет названия состава!',
             //'vounl_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
+            'vounl_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
             'vounl_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
 
@@ -610,6 +611,10 @@
                             this.create_filing = rows[0].filingCreate;
                             this.close_filing = rows[0].filingClose;
                         }
+                        // Убрать выбранные вагоны по которам совподают подачи
+                        this.twfrom_unlc.tab_com.obj_t_report.rows(function (idx, data) {
+                            return data.idFiling === this.id_filing;
+                        }.bind(this)).deselect();
 
                         this.view_wagons_of_filing(this.id_filing,
                             function (wagons) {
@@ -655,7 +660,6 @@
 
                 }.bind(this),
             });
-
 
             //-------------------------------------------------------------------
             // Создадим форму (this.filing_wagons_setup)
@@ -1297,6 +1301,10 @@
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_way_alert.clear_message();
                     if (rowData && rowData.length > 0) {
+                        if (rowData[0].idFiling !== null && rowData[0].idFiling == this.id_filing) {
+                            e.preventDefault();
+                            this.from_way_alert.out_warning_message(langView('vounl_mess_warning_wagon_ban_exists', App.Langs).format(rowData[0].num, this.id_filing));
+                        }
                         if (rowData[0].outgoingSostavStatus > 0) {
                             e.preventDefault();
                             this.from_way_alert.out_warning_message(langView('vounl_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
@@ -1930,7 +1938,10 @@
         this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
         this.form_filing_wagons_setup.el.select_id_status_load.val(this.status_load);
         this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
+        // Обновим кнопку добавить в подачу\создать черновик
+        var bts = this.twfrom_unlc.tab_com.obj_t_report.buttons([7]);
         if (this.id_filing !== null) {
+            bts.text(langView('vounl_title_button_add_filing', App.Langs));
             if (this.create_filing) {
                 this.form_filing_wagons_setup.el.button_filing_add.hide();
                 this.form_filing_wagons_setup.el.button_filing_apply.show();
@@ -1939,6 +1950,7 @@
                 this.form_filing_wagons_setup.el.button_filing_apply.hide();
             }
         } else {
+            bts.text(langView('vounl_title_button_new_filing', App.Langs));
             this.form_filing_wagons_setup.el.button_filing_add.hide();
             this.form_filing_wagons_setup.el.button_filing_apply.hide();
         }
@@ -2206,7 +2218,7 @@
                         out_pr2(pr_2);
                     }.bind(this));
                     // Обновим пути приема 2 поток
-                    this.load_of_way_on(this.id_way_on, function () {
+                    this.load_of_filing_wagon(this.id_station_unload, function () {
                         pr_2--;
                         out_pr2(pr_2);
                     }.bind(this));

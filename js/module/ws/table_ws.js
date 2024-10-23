@@ -21,6 +21,11 @@
         {
             'tws_field_position': '№ поз.',
             'tws_field_num': '№ вагона',
+            'tws_field_id_filing': 'id подачи',
+            'tws_field_start_filing': 'Начало подачи',
+            'tws_field_end_filing': 'Окончание подачи',
+            'tws_field_way_filing_start': 'Нач. опер. в подаче',
+            'tws_field_way_filing_end': 'Окон. опер. в подаче',
             'tws_field_operator_abbr': 'Оператор',
             'tws_field_limiting_abbr': 'Огран.',
             'tws_field_owner_wagon_abbr': 'Собст. УЗ',
@@ -47,7 +52,7 @@
             'tws_field_arrival_station_amkr_name': 'Стан. назн. АМКР',
             'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
             'tws_field_current_loading_status': 'Статус',
-            'tws_field_current_wagon_busy': 'Занят (операция)',
+            'tws_field_current_wagon_busy': 'Запрет (новых операций)',
             'tws_field_current_operation_name': 'Последняя операция над вагоном',
             'tws_field_current_operation_start': 'Дата начала выполнения операции',
             'tws_field_current_operation_end': 'Дата окончания выполнения операции',
@@ -151,6 +156,7 @@
             'tws_field_valid_sys_numbering': 'Тип нумерации',
             'tws_field_dislocation_vagon_of_amkr': 'Дислокация на АМКР',
             'tws_field_status_filing': 'Статус подачи',
+            'tws_field_num_filing': '№ подачи',
             'tws_field_filing_station_name': 'Станция',
             'tws_field_filing_park_abbr': 'Парк',
             'tws_field_filing_way': 'Ж.д. путь',
@@ -181,7 +187,7 @@
             'tws_title_status_3': 'Отправлен',
             'tws_title_status_4': 'Возврат',
 
-            'tws_title_status_filing_0': 'Новая',
+            'tws_title_status_filing_0': 'Черновик',
             'tws_title_status_filing_1': 'Начата',
             'tws_title_status_filing_2': 'Завершенная',
 
@@ -281,6 +287,47 @@
                 },
                 className: 'dt-body-center num-wagon',
                 title: langView('tws_field_num', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Подачи
+            {
+                field: 'id_filing',
+                data: function (row, type, val, meta) {
+                    return row.idFiling;
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'start_filing',
+                data: function (row, type, val, meta) {
+                    return row.startFiling ? moment(row.startFiling).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_start_filing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'end_filing',
+                data: function (row, type, val, meta) {
+                    return row.endFiling ? moment(row.endFiling).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_end_filing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'way_filing_start',
+                data: function (row, type, val, meta) {
+                    return row.wayFilingStart ? moment(row.wayFilingStart).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_way_filing_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'way_filing_end',
+                data: function (row, type, val, meta) {
+                    return row.wayFilingEnd ? moment(row.wayFilingEnd).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_way_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'operator_abbr',
@@ -1467,6 +1514,14 @@
             },
             // +++ ViewWagonsFiling
             {
+                field: 'id_wf',
+                data: function (row, type, val, meta) {
+                    return row.idWf;
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
                 field: 'status_filing',
                 data: function (row, type, val, meta) {
                     switch (row.statusFiling) {
@@ -1479,6 +1534,15 @@
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_status_filing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // num_filing
+            {
+                field: 'num_filing',
+                data: function (row, type, val, meta) {
+                    return row.numFiling;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_num_filing', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Станция
             {
@@ -2029,7 +2093,34 @@
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
-
+    table_ws.prototype.init_columns_unload_cars_from = function () {
+        var collums = [];
+        collums.push({ field: 'position', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+/*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
+        collums.push({ field: 'current_wagon_busy', title: null, class: null });
+        collums.push({ field: 'id_filing', title: null, class: null });
+        collums.push({ field: 'start_filing', title: null, class: null });
+        collums.push({ field: 'end_filing', title: null, class: null });
+        collums.push({ field: 'way_filing_start', title: null, class: null });
+        collums.push({ field: 'way_filing_end', title: null, class: null });
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     table_ws.prototype.init_columns_provide_cars_from = function () {
         var collums = [];
         collums.push({ field: 'position', title: null, class: null });
@@ -2224,6 +2315,8 @@
     table_ws.prototype.init_columns_list_filing = function () {
         var collums = [];
         collums.push({ field: 'status_filing', title: null, class: null });
+        //collums.push({ field: 'num_filing', title: null, class: null });
+        collums.push({ field: 'id_wf', title: null, class: null });
         collums.push({ field: 'filing_station_name', title: null, class: null });
         collums.push({ field: 'filing_park_abbr', title: null, class: null });
         collums.push({ field: 'filing_way_abbr', title: null, class: null });
@@ -2910,7 +3003,8 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    if (data.id_wir_unload !== null) {
+                    if (data.id_wir_unload !== null || data.currentWagonBusy || data.outgoingSostavStatus !==null) // || (data.startFiling !== null && data.endFiling === null)
+                    {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл
@@ -2931,7 +3025,7 @@
                         }
                     }
                 }.bind(this);
-                this.tab_com.table_columns = this.init_columns_dislocation_cars_from();
+                this.tab_com.table_columns = this.init_columns_unload_cars_from();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;
@@ -3263,7 +3357,9 @@
                     if (data.statusFiling === 1) {
                         $(row).addClass('yellow');
                     }
-
+                    if (data.statusFiling === 0) {
+                        $(row).addClass('red');
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_list_filing();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
