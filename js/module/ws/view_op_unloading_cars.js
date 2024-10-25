@@ -1373,13 +1373,13 @@
                                 // Добавить
                                 var rows = this.twfrom_unlc.tab_com.get_select_row();
                                 if (rows !== null && rows.length > 0) {
-                                //    LockScreen(langView('vounl_mess_create_filing', App.Langs));
-                                //    // Выполнить операцию добавить вагоны
-                                //    $.each(rows, function (i, el) {
-                                //        el['id_wir_unload'] = el.wirId;
-                                //    }.bind(this));
-                                //    this.view_wagons(); // Обновить вагоны на пути приема
-                                //    LockScreenOff();
+                                    LockScreen(langView('vounl_mess_create_filing', App.Langs));
+                                    // Выполнить операцию добавить вагоны
+                                    $.each(rows, function (i, el) {
+                                        el['id_wir_unload'] = el.wirId;
+                                    }.bind(this));
+                                    this.view_wagons(); // Обновить вагоны на пути приема
+                                    LockScreenOff();
                                 } else {
                                     this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
                                 }
