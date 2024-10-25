@@ -172,7 +172,8 @@
             'tws_field_filing_change_user': 'Правил',
             'tws_field_filing_close': 'Дата закрытия',
             'tws_field_filing_close_user': 'Закрыл',
-
+            'tws_field_filing_start': 'Дата начала выгрузки',
+            'tws_field_filing_end': 'Дата окончания выгрузки',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -1610,7 +1611,7 @@
             {
                 field: 'start_filing',
                 data: function (row, type, val, meta) {
-                    return row.startFiling ? moment(row.startFiling).format(format_date) : null;
+                    return row.startFiling ? moment(row.startFiling).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_start_filing', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1619,7 +1620,7 @@
             {
                 field: 'end_filing',
                 data: function (row, type, val, meta) {
-                    return row.endFiling ? moment(row.endFiling).format(format_date) : null;
+                    return row.endFiling ? moment(row.endFiling).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_end_filing', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1628,7 +1629,7 @@
             {
                 field: 'filing_create',
                 data: function (row, type, val, meta) {
-                    return row.filingCreate ? moment(row.filingCreate).format(format_date) : null;
+                    return row.filingCreate ? moment(row.filingCreate).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_create', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1645,7 +1646,7 @@
             {
                 field: 'filing_change',
                 data: function (row, type, val, meta) {
-                    return row.filingChange ? moment(row.filingChange).format(format_date) : null;
+                    return row.filingChange ? moment(row.filingChange).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_change', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1662,7 +1663,7 @@
             {
                 field: 'filing_close',
                 data: function (row, type, val, meta) {
-                    return row.filingClose ? moment(row.filingClose).format(format_date) : null;
+                    return row.filingClose ? moment(row.filingClose).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_close', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1674,6 +1675,22 @@
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_close_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'filing_start',
+                data: function (row, type, val, meta) {
+                    return row.filingStart ? moment(row.filingStart).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_filing_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'filing_end',
+                data: function (row, type, val, meta) {
+                    return row.filingEnd ? moment(row.filingEnd).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // --- ViewWagonsFiling
 
@@ -2101,7 +2118,7 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
-/*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
+        /*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
         collums.push({ field: 'current_wagon_busy', title: null, class: null });
         collums.push({ field: 'id_filing', title: null, class: null });
         collums.push({ field: 'start_filing', title: null, class: null });
@@ -2355,6 +2372,14 @@
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
         collums.push({ field: 'arrival_station_amkr_name', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'current_operation_name', title: null, class: null });
+        collums.push({ field: 'current_operation_start', title: null, class: null });
+        collums.push({ field: 'current_operation_end', title: null, class: null });
+        // ... Груз и цех текущий
+        collums.push({ field: 'filing_start', title: null, class: null });
+        collums.push({ field: 'filing_end', title: null, class: null });
+        collums.push({ field: 'filing_create', title: null, class: null });
+        collums.push({ field: 'filing_create_user', title: null, class: null });
 
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -2991,7 +3016,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(12).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -3003,7 +3028,7 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    if (data.id_wir_unload !== null || data.currentWagonBusy || data.outgoingSostavStatus !==null) // || (data.startFiling !== null && data.endFiling === null)
+                    if (data.id_wir_unload !== null || data.currentWagonBusy || data.outgoingSostavStatus !== null) // || (data.startFiling !== null && data.endFiling === null)
                     {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
@@ -3349,7 +3374,7 @@
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
-                    $(row).attr('id', data.id);
+                    $(row).attr('id', data.idWf);
                     // Предъявлен или сдан
                     if (data.statusFiling === 2) {
                         $(row).addClass('green');
@@ -3392,19 +3417,24 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(2).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //if (data.id_wir_unload !== null) {
                     //    $(row).addClass('ban red');  // Отметим вагон заблокирован
                     //}
-                    if (data.filingWayStart !== null) {
-                        if (data.filingWayEnd !== null) {
-                            $(row).addClass('green');
-                        } else {
-                            $(row).addClass('yellow');
+                    if (data.idWim === data.currIdWim) {
+                        if (data.filingStart !== null) {
+                            if (data.filingEnd !== null) {
+                                $(row).addClass('green');
+                            } else {
+                                $(row).addClass('yellow');
+                            }
                         }
+                    } else {
+                        $(row).addClass('blue');
                     }
+
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_filing_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);

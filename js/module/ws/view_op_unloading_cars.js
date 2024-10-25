@@ -99,15 +99,19 @@
             'vounl_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
             'vounl_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
             'vounl_mess_error_operation_run_add_filing': 'При создании подачи для «ВЫГРУЗКИ ВАГОНОВ» произошла ошибка, код ошибки: {0}',
+            'vounl_mess_error_operation_run_add_wagon_filing': 'При добавлении вагонов в подачу, произошла ошибка, код ошибки: {0}',
+
             'vounl_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'voprc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
             'vounl_mess_cancel_operation_create_filing': 'Отмена операции cоздать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
             'vounl_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
+            'vounl_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу',
             'vounl_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vounl_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
             //'vounl_mess_not_select_way_on': 'Выберите путь дислокации вагонов!',
             'vounl_mess_ok_operation_add_filing': 'Подача создана, определено {0} (ваг.)',
+            'vounl_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
 
             'vounl_mess_load_operation': 'Загружаю операции...',
             'vounl_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -116,7 +120,8 @@
             ////'vounl_mess_update_operation': 'Обновляю операции...',
             'vounl_mess_init_panel': 'Выполняю инициализацию модуля ...',
             ////'vounl_mess_destroy_operation': 'Закрываю форму...',
-            'vounl_mess_create_filing': 'Формирую список подачи, переношу вагоны...',
+            'vounl_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
+            'vounl_mess_add_filing': 'Переношу вагоны в существующую подачу',
             //'vounl_mess_clear_sostav': 'Формирую маршрут дислокации, убираю выбранные вагоны...',
             //'vounl_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
             //'vounl_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
@@ -1373,13 +1378,33 @@
                                 // Добавить
                                 var rows = this.twfrom_unlc.tab_com.get_select_row();
                                 if (rows !== null && rows.length > 0) {
-                                    LockScreen(langView('vounl_mess_create_filing', App.Langs));
-                                    // Выполнить операцию добавить вагоны
-                                    $.each(rows, function (i, el) {
-                                        el['id_wir_unload'] = el.wirId;
-                                    }.bind(this));
-                                    this.view_wagons(); // Обновить вагоны на пути приема
-                                    LockScreenOff();
+                                    if (this.id_filing == null) {
+                                        // Создать черновик
+                                        LockScreen(langView('vounl_mess_create_filing', App.Langs));
+                                        // Выполнить операцию добавить вагоны
+                                        $.each(rows, function (i, el) {
+                                            el['id_wir_unload'] = el.wirId;
+                                        }.bind(this));
+                                        this.view_wagons(); // Обновить вагоны на пути приема
+                                        LockScreenOff();
+
+                                    } else {
+                                        // добавить вагоны в существующую подачу
+                                        LockScreen(langView('vounl_mess_add_filing', App.Langs));
+
+                                        var list_wagons = [];
+                                        $.each(rows, function (i, el) {
+                                            list_wagons.push(el.wimId);
+                                        }.bind(this));
+                                        var operation = {
+                                            id_filing: this.id_filing,
+                                            wagons: list_wagons
+                                        };
+                                        this.apply_add_wagon_filing(operation);
+                                        //LockScreenOff();
+                                    }
+
+
                                 } else {
                                     this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
                                 }
@@ -1710,13 +1735,13 @@
     //    }
     //};
     // Показать все (сотавы, вагоны)
-    view_op_unloading_cars.prototype.view_wagons = function () {
+    view_op_unloading_cars.prototype.view_wagons = function (id_filing) {
         // Очистить сообщения и форму
         this.form_filing_setup.clear_all();
         this.form_filing_wagons_setup.clear_all();
         this.form_from_setup.clear_all();
         // Показать подачи
-        this.view_filing();
+        this.view_filing(id_filing);
         // Показать вагоны на пути формирования подачи
         this.view_wagons_from();
 
@@ -1734,7 +1759,7 @@
         this.twfrom_unlc.view(wagons, null);
     };
     // Показать список подач
-    view_op_unloading_cars.prototype.view_filing = function () {
+    view_op_unloading_cars.prototype.view_filing = function (id_filing) {
 
         var sostav_filing = [];
         // сделаем копию, что-бы небыло задвоения
@@ -1800,7 +1825,7 @@
                 return i.statusFiling !== 2 && i.filingIdWay === this.id_way_unload;
             }.bind(this));
         }
-        this.tlf_unlc.view(sostav_filing, null);
+        this.tlf_unlc.view(sostav_filing, id_filing);
     };
     // Показать вагоны подачи
     view_op_unloading_cars.prototype.view_wagons_of_filing = function (id_filing, callback) {
@@ -1821,6 +1846,7 @@
                         this.filing_wagons.push({
                             idWim: el.wimId,
                             idWir: el.wirId,
+                            currIdWim: el.currIdWim,
                             idWf: 0,
                             numFiling: null,
                             note: null,
@@ -1931,6 +1957,11 @@
                             currentIdLoadingStatus: el.currentIdLoadingStatus,
                             currentLoadingStatusRu: el.currentLoadingStatusRu,
                             currentLoadingStatusEn: el.currentLoadingStatusEn,
+                            currentIdOperation: el.currentIdOperation,
+                            currentOperationNameRu: el.currentOperationNameRu,
+                            currentOperationNameEn: el.currentOperationNameEn,
+                            currentOperationStart: el.currentOperationStart,
+                            currentOperationEnd: el.currentOperationEnd,
                             //TODO: После исправления функции вагоны на пути
                             // (будут добавлены новые поля текущий груз, тек цех пол, тек цех погр..)
                             // а пока предварительно эти с null
@@ -2277,6 +2308,73 @@
             }
         }.bind(this));
     };
+    // выполнить операцию добавить в подачу подачу
+    view_op_unloading_cars.prototype.apply_add_wagon_filing = function (data) {
+        LockScreen(langView('vounl_mess_run_operation_add_wagon_filing', App.Langs));
+        this.view_com.api_wsd.postAddWagonFiling(data, function (result) {
+            // Проверим на ошибку выполнения запроса api
+            if (result && result.status) {
+                var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+                console.log('[view_op_unloading_cars] [postAddWagonFiling] :' + mess);
+                this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+                if (result.errors) {
+                    for (var err in result.errors) {
+                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+                        console.log('[view_op_unloading_cars] [postAddWagonFiling] :' + err + ":" + result.errors[err]);
+                    }
+                }
+                LockScreenOff();
+            } else {
+                if (result && result.result > 0) {
+                    // Очистить сообщения и форму
+                    this.form_filing_setup.clear_all();
+                    this.form_filing_wagons_setup.clear_all();
+                    //this.form_filing_wagons_setup.validation_common_filing_wagons.clear_all();
+                    // Сбросим установки (время и локомотивы)
+                    this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
+                    this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
+                    this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
+                    this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
+                    this.form_filing_wagons_setup.el.button_filing_add.hide();
+                    this.form_filing_wagons_setup.el.button_filing_apply.hide();
+                    var pr_2 = 2;
+                    var out_pr2 = function (pr_2) {
+                        if (pr_2 === 0) {
+                            // Покажем вагоны и выберем подачу
+                            this.view_wagons(this.id_filing);
+                            this.form_filing_wagons_setup.validation_common_filing_wagons.out_info_message(langView('vounl_mess_ok_operation_add_wagon_filing', App.Langs).format(result.count, this.id_filing));
+                            if (typeof this.settings.fn_db_update === 'function') {
+                                //TODO: можно добавить возвращать перечень для обновления
+                                typeof this.settings.fn_db_update();
+                            }
+                            LockScreenOff();
+                        }
+                    }.bind(this);
+                    // Обновим пути отправки 1 поток
+                    this.load_of_way(this.id_way_unload, function () {
+                        pr_2--;
+                        out_pr2(pr_2);
+                    }.bind(this));
+                    // Обновим пути приема 2 поток
+                    this.load_of_filing_wagon(this.id_station_unload, function () {
+                        pr_2--;
+                        out_pr2(pr_2);
+                    }.bind(this));
+                } else {
+                    LockScreenOff();
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_operation_run_add_wagon_filing', App.Langs).format(result ? result.result : -1));
+                    // Выведем ошибки по вагонно.
+                    if (result && result.listResult) {
+                        $.each(result.listResult, function (i, el) {
+                            if (el.result <= 0) this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                        }.bind(this));
+                    }
+                }
+            }
+        }.bind(this));
+    }
+
+
     // Очистить сообщения
     view_op_unloading_cars.prototype.out_clear = function () {
         if (this.settings.alert) {

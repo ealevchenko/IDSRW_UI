@@ -151,6 +151,10 @@
     ids_wsd.prototype.postAddFilingUnloading = function (operation, callback) {
         this.api_com.post('/WSD/add/filing/operation/unloading/', operation, callback, callback);
     };
+    //АРМ, Операция добавить вагоны в подачу для выгрузки
+    ids_wsd.prototype.postAddWagonFiling = function (operation, callback) {
+        this.api_com.post('/WSD/add/wagon/filing/', operation, callback, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
