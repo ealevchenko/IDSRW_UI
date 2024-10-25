@@ -58,9 +58,9 @@
             'vounl_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
             'vounl_title_placeholder_time_stop': 'Время окончания',
 
-            'vounl_title_form_add': 'Создать',
+            'vounl_title_form_add': 'Создать подачу',
             'vounl_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
-            'vounl_title_form_apply': 'Выполнить',
+            'vounl_title_form_apply': 'Править подачу',
             'vounl_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
 
             'vounl_title_period_1': 'ЖД сутки',
@@ -79,9 +79,13 @@
 
             ////'vounl_mess_warning_not_num_sostav': 'Нет названия состава!',
             //'vounl_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
+
             'vounl_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
-            'vounl_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vounl_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
+            'voprc_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
+            'voprc_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :[{0}] не закрытая подача [{1}]. Операция создания новой - невозможна!',
+            /*            'voprc_mess_warning_wagon_ban_add_wagon_filing': 'Запрет, на пути :{0} не закрытая подача [{1}]. Операция создания новой невозможна!',*/
 
             'voprc_mess_eror_add_new_filing': 'Выбранно № {0} вагонов, не могу сформировать новую подачу (ошибка определения станции {1}, парка {2}, пути {3})',
             'voprc_mess_eror_new_filing_not_wagon': 'В новой подаче отсутсвуют вагоны',
@@ -170,7 +174,9 @@
         this.stop = moment().add(1, 'days').format("YYYY-MM-DDThh:mm");
         this.id_station_unload = -1;      // Значения по умолчанию
         this.id_way_unload = -1;
+
         this.id_filing = null;          // id подачи (изменяется при выборе подачи)
+        this.id_way_filing = null;      // id пути (изменяется при выборе подачи)
         this.station_on = -1;           // станция подачи (изменяется при выборе подачи)
         this.division_on = -1;          // подразделение подачи (изменяется при выборе подачи)
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
@@ -597,6 +603,7 @@
                 }.bind(this),
                 fn_select_rows: function (rows, type) {
                     this.id_filing = null;
+                    this.id_way_filing = this.id_way_unload; // По умолчанию текущее
                     this.station_on = -1;
                     this.division_on = -1;
                     this.status_load = -1;
@@ -608,17 +615,34 @@
                             this.id_filing = rows[0].idWf;
                             this.station_on = rows[0].filingIdStation;
                             this.division_on = rows[0].filingDivisionIdDivision;
+                            this.id_way_filing = rows[0].filingIdWay;
                             this.create_filing = rows[0].filingCreate;
                             this.close_filing = rows[0].filingClose;
                         }
-                        // Убрать выбранные вагоны по которам совподают подачи
-                        this.twfrom_unlc.tab_com.obj_t_report.rows(function (idx, data) {
-                            return data.idFiling === this.id_filing;
-                        }.bind(this)).deselect();
-
+                        // Запустим 2 потока
+                        var pr_2 = 2;
+                        var out_pr2 = function (pr_2) {
+                            if (pr_2 === 0) {
+                                // Показать вагоны на пути формирования подачи
+                                this.view_wagons_from();
+                                // Убрать выбранные вагоны по которам совподают подачи
+                                this.twfrom_unlc.tab_com.obj_t_report.rows(function (idx, data) {
+                                    return data.idFiling === this.id_filing;
+                                }.bind(this)).deselect();
+                                LockScreenOff();
+                            }
+                        }.bind(this);
+                        // Обновим пути отправки 1 поток
+                        this.update_from_way(this.id_way_filing,
+                            function (wagons) {
+                                pr_2--;
+                                out_pr2(pr_2);
+                            }.bind(this));
+                        // Обновим вагоны подачи 2 поток
                         this.view_wagons_of_filing(this.id_filing,
                             function (wagons) {
-                                LockScreenOff();
+                                pr_2--;
+                                out_pr2(pr_2);
                             }.bind(this));
                     } else {
                         this.view_wagons_of_filing(this.id_filing,
@@ -1301,6 +1325,10 @@
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_way_alert.clear_message();
                     if (rowData && rowData.length > 0) {
+                        if (rowData[0].currentWagonBusy) {
+                            e.preventDefault();
+                            this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_busy', App.Langs).format(rowData[0].num));
+                        }
                         if (rowData[0].idFiling !== null && rowData[0].idFiling == this.id_filing) {
                             e.preventDefault();
                             this.from_way_alert.out_warning_message(langView('vounl_mess_warning_wagon_ban_exists', App.Langs).format(rowData[0].num, this.id_filing));
@@ -1329,19 +1357,32 @@
                     }
                     if (name === 'add_filing') {
                         this.from_way_alert.clear_message();
+                        this.form_filing_setup.clear_all();
+                        this.form_filing_wagons_setup.clear_all();
+                        this.form_from_setup.clear_all();
                         if (this.id_way_unload >= 0) {
-                            var rows = this.twfrom_unlc.tab_com.get_select_row();
-                            if (rows !== null && rows.length > 0) {
-                                LockScreen(langView('vounl_mess_create_filing', App.Langs));
-                                // Выполнить операцию добавить вагоны
-                                $.each(rows, function (i, el) {
-                                    el['id_wir_unload'] = el.wirId;
-                                }.bind(this));
-                                this.view_wagons(); // Обновить вагоны на пути приема
-                                LockScreenOff();
-                            } else {
-                                this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
+                            var open_filing = this.sostav_filing.find(function (o) {
+                                return o.filingCreate !== null && o.filingClose === null && o.filingIdWay === this.id_way_unload;
+                            }.bind(this));
+                            // Проверка на открытую подачу на пути создания новой
 
+                            if (this.id_filing == null && open_filing) {
+                                e.preventDefault();
+                                this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idWf));
+                            } else {
+                                // Добавить
+                                var rows = this.twfrom_unlc.tab_com.get_select_row();
+                                if (rows !== null && rows.length > 0) {
+                                //    LockScreen(langView('vounl_mess_create_filing', App.Langs));
+                                //    // Выполнить операцию добавить вагоны
+                                //    $.each(rows, function (i, el) {
+                                //        el['id_wir_unload'] = el.wirId;
+                                //    }.bind(this));
+                                //    this.view_wagons(); // Обновить вагоны на пути приема
+                                //    LockScreenOff();
+                                } else {
+                                    this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
+                                }
                             }
                         } else {
                             this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_way_from', App.Langs));
@@ -1676,13 +1717,13 @@
         this.form_from_setup.clear_all();
         // Показать подачи
         this.view_filing();
-        // Показать вагоны на пути начала дислокации
+        // Показать вагоны на пути формирования подачи
         this.view_wagons_from();
 
         //// Показать вагоны на пути дислокации
         //this.view_wagons_on();
     };
-    // Показать вагоны на пути начала дислокации
+    // Показать вагоны на пути формирования подачи
     view_op_unloading_cars.prototype.view_wagons_from = function () {
         var wagons = this.wagons;
         if (this.twfrom_unlc.tab_com.eye) {
@@ -1754,9 +1795,10 @@
             }
         }
         if (this.tlf_unlc.tab_com.eye) {
+            // Показать открытые на выбнаном пути
             sostav_filing = sostav_filing.filter(function (i) {
-                return i.statusFiling !== 2;
-            });
+                return i.statusFiling !== 2 && i.filingIdWay === this.id_way_unload;
+            }.bind(this));
         }
         this.tlf_unlc.view(sostav_filing, null);
     };

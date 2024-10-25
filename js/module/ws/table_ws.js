@@ -201,7 +201,7 @@
             'tws_title_button_select_all_wagon': 'Все вагоны',
             'tws_title_button_deselect_all': 'Убрать выбор',
             'tws_title_button_add_sostav': 'Добавить в состав',
-            'tws_title_button_add_filing': 'Добавить в подачу',
+            'tws_title_button_add_filing': 'Создать черновик',
             'tws_title_button_collect_sostav': 'Собрать',
             'tws_title_button_title_collect_sostav': 'Собрать вагоны для предъявления по номерам вагонов...',
             'tws_title_button_del_wagons_sostav': 'Убрать из состава',
