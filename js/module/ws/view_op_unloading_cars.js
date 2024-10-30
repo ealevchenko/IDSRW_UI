@@ -15,7 +15,7 @@
     var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     var min_period = 5; // TODO: Минимальный период операции 
-    var max_period = 120; // TODO: Максимальный период операции 
+    var max_period = 60 * 24 * 6; // TODO: Максимальный период операции 
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -104,11 +104,14 @@
 
             'vounl_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             'vounl_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vounl_mess_error_time_aplly': 'Укажите дату завершения операции',
             'vounl_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             'vounl_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             'vounl_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавте вагоны в подачу).',
             'vounl_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
             'vounl_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
+            'vounl_mess_error_filing_division': 'Выберите цех получатель',
+            'vounl_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',
             'vounl_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
             'vounl_mess_error_operation_run_add_filing': 'При создании подачи для «ВЫГРУЗКИ ВАГОНОВ» произошла ошибка, код ошибки: {0}',
             'vounl_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
@@ -116,7 +119,13 @@
             'vounl_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'voprc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
-            'vounl_mess_cancel_operation_create_filing': 'Отмена операции cоздать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
+            'vounl_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
+            'vounl_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ВЫГРУЗКИ ВАГОНОВ"!',
+            'vounl_mess_cancel_operation_mode_2': 'Отмена операции начала "ВЫГРУЗКИ" над вагонами подачи!',
+            'vounl_mess_cancel_operation_mode_3': 'Отмена завершения операции "ВЫГРУЗКИ" над вагонами подачи!',
+            'vounl_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
+            'vounl_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
+
             'vounl_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
             'vounl_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
             'vounl_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
@@ -148,6 +157,12 @@
             ////'vounl_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             ////'vounl_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             'vounl_confirm_mess_apply_create_filing': 'Создать подачу для операции "ВЫГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для выгрузки {4} ваг., закрыта выгрузка по {5} вагонам.',
+            'vounl_confirm_mess_apply_update_filing': 'Править подачу {0}, выбранна станция АМКР: [{1}], выбранно подразделение: [{2}]? Станция и подразделение будет обновлено по всем вагонам подачи!',
+            'vounl_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала выгрузки {2} ваг., закрыта выгрузка по {3} вагонам.',
+            'vounl_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта выгрузка по {2} вагонам.',
+
+            'vounl_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
+            'vounl_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
 
             'vounl_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
             'vounl_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь для подачи {0}? Все выбранные для подачи в количестве {1} будут сброшены! ',
@@ -985,94 +1000,94 @@
                 },
                 childs: []
             };
-            var form_input_datalist_locomotive1 = {
-                obj: 'bs_form_input_datalist',
-                options: {
-                    validation_group: 'common',
-                    id: 'locomotive1',
-                    name: 'locomotive1',
-                    label: langView('vounl_title_label_locomotive1', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: 'flexdatalist',
-                    element_value: null,
-                    element_title: null,
-                    element_placeholder: langView('vounl_title_placeholder_locomotive', App.Langs),
-                    element_required: true,
-                    element_maxlength: null,
-                    element_pattern: null,
-                    element_readonly: false,
-                    element_options: {
-                        data: this.list_locomotive,
-                        out_value: false,
-                        default: null,
-                        minLength: 1,
-                        searchContain: true,
-                        fn_change: function (event, set, options) {
-                        }.bind(this),
-                        fn_select: function (event, set, options) {
-                        }.bind(this),
-                    },
-                    validation: true,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 6,
-                    col_class: 'mt-0',
-                    form_text: null,
-                    form_text_class: null
-                },
-                childs: []
-            };
-            var form_input_datalist_locomotive2 = {
-                obj: 'bs_form_input_datalist',
-                options: {
-                    validation_group: 'common',
-                    id: 'locomotive2',
-                    name: 'locomotive2',
-                    label: langView('vounl_title_label_locomotive2', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: 'flexdatalist',
-                    element_value: null,
-                    element_title: null,
-                    element_placeholder: langView('vounl_title_placeholder_locomotive', App.Langs),
-                    element_required: false,
-                    element_maxlength: null,
-                    element_pattern: null,
-                    element_readonly: false,
-                    element_options: {
-                        data: this.list_locomotive,
-                        out_value: false,
-                        default: null,
-                        minLength: 1,
-                        searchContain: true,
-                        fn_change: function (event, set, options) {
+            //var form_input_datalist_locomotive1 = {
+            //    obj: 'bs_form_input_datalist',
+            //    options: {
+            //        validation_group: 'common',
+            //        id: 'locomotive1',
+            //        name: 'locomotive1',
+            //        label: langView('vounl_title_label_locomotive1', App.Langs),
+            //        element_fsize: 'sm',
+            //        element_class: 'flexdatalist',
+            //        element_value: null,
+            //        element_title: null,
+            //        element_placeholder: langView('vounl_title_placeholder_locomotive', App.Langs),
+            //        element_required: true,
+            //        element_maxlength: null,
+            //        element_pattern: null,
+            //        element_readonly: false,
+            //        element_options: {
+            //            data: this.list_locomotive,
+            //            out_value: false,
+            //            default: null,
+            //            minLength: 1,
+            //            searchContain: true,
+            //            fn_change: function (event, set, options) {
+            //            }.bind(this),
+            //            fn_select: function (event, set, options) {
+            //            }.bind(this),
+            //        },
+            //        validation: false,
+            //        feedback_invalid: null,
+            //        feedback_valid: null,
+            //        feedback_class: null,
+            //        col_prefix: 'md',
+            //        col_size: 6,
+            //        col_class: 'mt-0',
+            //        form_text: null,
+            //        form_text_class: null
+            //    },
+            //    childs: []
+            //};
+            //var form_input_datalist_locomotive2 = {
+            //    obj: 'bs_form_input_datalist',
+            //    options: {
+            //        validation_group: 'common',
+            //        id: 'locomotive2',
+            //        name: 'locomotive2',
+            //        label: langView('vounl_title_label_locomotive2', App.Langs),
+            //        element_fsize: 'sm',
+            //        element_class: 'flexdatalist',
+            //        element_value: null,
+            //        element_title: null,
+            //        element_placeholder: langView('vounl_title_placeholder_locomotive', App.Langs),
+            //        element_required: false,
+            //        element_maxlength: null,
+            //        element_pattern: null,
+            //        element_readonly: false,
+            //        element_options: {
+            //            data: this.list_locomotive,
+            //            out_value: false,
+            //            default: null,
+            //            minLength: 1,
+            //            searchContain: true,
+            //            fn_change: function (event, set, options) {
 
-                        }.bind(this),
-                        fn_select: function (event, set, options) {
+            //            }.bind(this),
+            //            fn_select: function (event, set, options) {
 
-                        }.bind(this),
-                    },
-                    validation: true,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 6,
-                    col_class: 'mt-0',
-                    form_text: null,
-                    form_text_class: null
-                },
-                childs: []
-            };
+            //            }.bind(this),
+            //        },
+            //        validation: false,
+            //        feedback_invalid: null,
+            //        feedback_valid: null,
+            //        feedback_class: null,
+            //        col_prefix: 'md',
+            //        col_size: 6,
+            //        col_class: 'mt-0',
+            //        form_text: null,
+            //        form_text_class: null
+            //    },
+            //    childs: []
+            //};
             col_bt_apply.childs.push(bt_bt_add);
             col_bt_apply.childs.push(bt_bt_apply);
             col_bt_apply.childs.push(bt_bt_operation);
             objs_filing_wagons_setup.push(col_bt_apply);
             objs_filing_wagons_setup.push(form_input_datetime_time_start);
             objs_filing_wagons_setup.push(form_input_datetime_time_stop);
-            objs_filing_wagons_setup.push(form_input_datalist_locomotive1);
-            objs_filing_wagons_setup.push(form_input_datalist_locomotive2);
+            //objs_filing_wagons_setup.push(form_input_datalist_locomotive1);
+            //objs_filing_wagons_setup.push(form_input_datalist_locomotive2);
             objs_filing_wagons_setup.push(form_select_devision_on);
             objs_filing_wagons_setup.push(form_select_status_load);
             objs_filing_wagons_setup.push(form_select_station_amkr_on);
@@ -1087,62 +1102,121 @@
                     // Валидация успешна
                     if (result && result.valid) {
                         // Дополнительная проверка
-                        var valid = this.validation_filing(result);
-                        var dt_start = this.form_filing_wagons_setup.el.input_datetime_time_start.val();
-                        var dt_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
-                        var rows = this.tfws_unlc.tab_com.get_select_row()
-                        if (valid) {
+                        // Определим режим
+                        var mode = null;
+                        var rows = this.tfws_unlc.tab_com.get_select_row();
+                        if (this.id_filing !== null) {
                             if (this.id_filing === 0) {
-                                var message = langView('vounl_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
-                                    this.form_from_setup.el.select_id_way_unload.text(),
-                                    this.form_filing_wagons_setup.el.select_id_devision_on.text(),
-                                    (this.filing_wagons ? this.filing_wagons.length : 0),
-                                    (rows ? rows.length : 0),
-                                    (dt_stop !== null ? (rows ? rows.length : 0) : 0));
+                                mode = 0;
                             } else {
-
-                            }
-                            //var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
-                            this.view_com.mcf_lg.open(
-                                langView('vounl_title_form_apply', App.Langs),
-                                message,
-                                function () {
-                                    // Принять
-                                    // Проверим наличие вагонов 
-                                    var list_wagons = [];
-                                    if (this.filing_wagons && this.filing_wagons.length > 0) {
-                                        // Получим перечень вагонов и новую позицию
-                                        $.each(this.filing_wagons.sort(function (a, b) {
-                                            return a.position - b.position;
-                                        }), function (i, el) {
-                                            var row = rows.find(function (o) { return o.num === el.num }.bind(this));
-                                            list_wagons.push(
-                                                {
-                                                    id_wim: el.idWim,
-                                                    start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
-                                                    stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
-                                                    id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
-                                                    id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
-                                                }
-                                            )
-                                        }.bind(this));
-                                        // Сформируем операцию
-
-                                        var operation = {
-                                            id_filing: this.id_filing, // 0 новая, >0 Правим существующую
-                                            id_way: this.id_way_unload, // !только новая подача
-                                            id_division: this.division_on,// можно править
-                                            create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
-                                            locomotive1: result.new.datalist_locomotive1,
-                                            locomotive2: result.new.datalist_locomotive2,
-                                            wagons: list_wagons
-                                        };
-                                        this.apply_add_filing(operation);
+                                if (!rows || rows.length === 0) {
+                                    mode = 1;
+                                } else {
+                                    if (this.fw_status !== null) {
+                                        mode = 2 + this.fw_status;
                                     }
-                                }.bind(this),
-                                function () {
-                                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vounl_mess_cancel_operation_create_filing', App.Langs));
-                                }.bind(this));
+                                }
+                            }
+                        }
+                        if (mode !== null) {
+                            var valid = this.validation_filing(result, mode);
+                            //var dt_start = this.form_filing_wagons_setup.el.input_datetime_time_start.val();
+                            var dt_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
+                            if (valid && mode) {
+                                var message = "";
+                                switch (mode) {
+                                    case 0: {
+                                        message = langView('vounl_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
+                                            this.form_from_setup.el.select_id_way_unload.text(),
+                                            this.form_filing_wagons_setup.el.select_id_devision_on.text(),
+                                            (this.filing_wagons ? this.filing_wagons.length : 0),
+                                            (rows ? rows.length : 0),
+                                            (dt_stop !== null ? (rows ? rows.length : 0) : 0));
+                                        break;
+                                    }
+                                    case 1: {
+                                        message = langView('vounl_confirm_mess_apply_update_filing', App.Langs).format(this.id_filing, this.form_filing_setup.el.select_id_station_unload.text(), this.form_filing_wagons_setup.el.select_id_devision_on.text());
+                                        break;
+                                    }
+                                    case 2: {
+                                        message = langView('vounl_confirm_mess_apply_update_filing_start_operation', App.Langs).format(this.id_filing,
+                                            (rows ? rows.length : 0),
+                                            (rows ? rows.length : 0),
+                                            (dt_stop !== null ? (rows ? rows.length : 0) : 0));
+                                        break;
+                                    }
+                                    case 3: {
+                                        message = langView('vounl_confirm_mess_apply_update_filing_stop_operation', App.Langs).format(this.id_filing,
+                                            (rows ? rows.length : 0),
+                                            (rows ? rows.length : 0),
+                                            (dt_stop !== null ? (rows ? rows.length : 0) : 0));
+                                        break;
+                                    }
+                                }
+                                this.view_com.mcf_lg.open(
+                                    langView('vounl_title_form_apply', App.Langs),
+                                    message,
+                                    function () {
+                                        // Принять
+                                        //// Проверим наличие вагонов
+                                        //var list_wagons = [];
+                                        //if (this.filing_wagons && this.filing_wagons.length > 0) {
+                                        //    // Получим перечень вагонов и новую позицию
+                                        //    $.each(this.filing_wagons.sort(function (a, b) {
+                                        //        return a.position - b.position;
+                                        //    }), function (i, el) {
+                                        //        var row = rows.find(function (o) { return o.num === el.num }.bind(this));
+                                        //        list_wagons.push(
+                                        //            {
+                                        //                id_wim: el.idWim,
+                                        //                start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
+                                        //                stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
+                                        //                id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
+                                        //                id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
+                                        //            }
+                                        //        )
+                                        //    }.bind(this));
+                                        //    // Сформируем операцию
+
+                                        //    var operation = {
+                                        //        id_filing: this.id_filing, // 0 новая, >0 Правим существующую
+                                        //        id_way: this.id_way_unload, // !только новая подача
+                                        //        id_division: this.division_on,// можно править
+                                        //        create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
+                                        //        locomotive1: result.new.datalist_locomotive1,
+                                        //        locomotive2: result.new.datalist_locomotive2,
+                                        //        wagons: list_wagons
+                                        //    };
+                                        //    this.apply_add_filing(operation);
+                                        //}
+                                    }.bind(this),
+                                    function () {
+                                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vounl_mess_cancel_operation_mode_' + mode, App.Langs));
+                                    }.bind(this));
+                                //if (this.id_filing !== null) {
+                                //    if (this.id_filing === 0) {
+                                //        // Создать новую подачу
+                                //        var message = langView('vounl_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
+                                //            this.form_from_setup.el.select_id_way_unload.text(),
+                                //            this.form_filing_wagons_setup.el.select_id_devision_on.text(),
+                                //            (this.filing_wagons ? this.filing_wagons.length : 0),
+                                //            (rows ? rows.length : 0),
+                                //            (dt_stop !== null ? (rows ? rows.length : 0) : 0));
+                                //    } else {
+                                //        // Править выбранную подачу
+                                //        if (rows && rows.length > 0) {
+                                //            // править вагоны
+                                //        } else {
+                                //            // править подачу
+                                //            if (this.fw_status !== null) {
+
+                                //            }
+                                //        }
+                                //    }
+                                //    //var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
+
+                                //}
+                            }
                         }
                     }
                 }.bind(this),
@@ -1264,17 +1338,26 @@
                                     LockScreenOff();
 
                                 } else {
-                                    // убрать вагоны из подачи
-                                    LockScreen(langView('vounl_mess_del_filing', App.Langs));
-                                    var list_wagons = [];
-                                    $.each(rows, function (i, el) {
-                                        list_wagons.push(el.idWim);
-                                    }.bind(this));
-                                    var operation = {
-                                        id_filing: this.id_filing,
-                                        wagons: list_wagons
-                                    };
-                                    this.apply_del_wagon_filing(operation);
+                                    this.view_com.mcf_lg.open(
+                                        langView('vounl_title_form_apply', App.Langs),
+                                        langView('vounl_confirm_mess_apply_delete_wagon_filing', App.Langs).format(rows.length, this.id_filing),
+                                        function () {
+                                            // убрать вагоны из подачи
+                                            LockScreen(langView('vounl_mess_del_filing', App.Langs));
+                                            var list_wagons = [];
+                                            $.each(rows, function (i, el) {
+                                                list_wagons.push(el.idWim);
+                                            }.bind(this));
+                                            var operation = {
+                                                id_filing: this.id_filing,
+                                                wagons: list_wagons
+                                            };
+                                            this.apply_del_wagon_filing(operation);
+                                        }.bind(this),
+                                        function () {
+                                            this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vounl_mess_cancel_operation_mode_delete_wagon', App.Langs));
+                                        }.bind(this)
+                                    );
                                 }
                             } else {
                                 this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_return', App.Langs));
@@ -1464,19 +1547,25 @@
                                         LockScreenOff();
 
                                     } else {
-                                        // добавить вагоны в существующую подачу
-                                        LockScreen(langView('vounl_mess_add_filing', App.Langs));
-
-                                        var list_wagons = [];
-                                        $.each(rows, function (i, el) {
-                                            list_wagons.push(el.wimId);
-                                        }.bind(this));
-                                        var operation = {
-                                            id_filing: this.id_filing,
-                                            wagons: list_wagons
-                                        };
-                                        this.apply_add_wagon_filing(operation);
-                                        //LockScreenOff();
+                                        this.view_com.mcf_lg.open(
+                                            langView('vounl_title_form_apply', App.Langs),
+                                            langView('vounl_confirm_mess_apply_add_wagon_filing', App.Langs).format(rows.length, this.id_filing),
+                                            function () {
+                                                // Добавить вагоны в существующую подачу
+                                                LockScreen(langView('vounl_mess_add_filing', App.Langs));
+                                                var list_wagons = [];
+                                                $.each(rows, function (i, el) {
+                                                    list_wagons.push(el.wimId);
+                                                }.bind(this));
+                                                var operation = {
+                                                    id_filing: this.id_filing,
+                                                    wagons: list_wagons
+                                                };
+                                                this.apply_add_wagon_filing(operation);
+                                            }.bind(this),
+                                            function () {
+                                                this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vounl_mess_cancel_operation_mode_add_wagon', App.Langs));
+                                            }.bind(this));
                                     }
                                 } else {
                                     this.from_way_alert.out_warning_message(langView('vounl_mess_not_select_wagon_from', App.Langs));
@@ -1509,8 +1598,8 @@
         this.form_filing_wagons_setup.el.button_filing_apply.hide();
         this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
-        this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
-        this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
+        //this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
+        //this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
         this.wagons = [];
         // Сбросим вагоны переноса
         this.id_station_unload = -1;
@@ -2102,16 +2191,16 @@
 
         this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
-        this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
-        this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
+        //this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
+        //this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
         this.form_filing_wagons_setup.el.select_id_devision_on.val(-1);
         this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
         this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(-1);
 
         this.form_filing_wagons_setup.el.input_datetime_time_start.disable();
         this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();
-        this.form_filing_wagons_setup.el.datalist_locomotive1.disable();
-        this.form_filing_wagons_setup.el.datalist_locomotive2.disable();
+        //this.form_filing_wagons_setup.el.datalist_locomotive1.disable();
+        //this.form_filing_wagons_setup.el.datalist_locomotive2.disable();
         this.form_filing_wagons_setup.el.select_id_devision_on.disable();
         this.form_filing_wagons_setup.el.select_id_status_load.disable();
         this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
@@ -2124,8 +2213,8 @@
             this.form_filing_wagons_setup.el.button_operation_apply.hide();
             this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
             this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-            this.form_filing_wagons_setup.el.datalist_locomotive1.enable();
-            this.form_filing_wagons_setup.el.datalist_locomotive2.enable();
+            //this.form_filing_wagons_setup.el.datalist_locomotive1.enable();
+            //this.form_filing_wagons_setup.el.datalist_locomotive2.enable();
             this.form_filing_wagons_setup.el.select_id_devision_on.enable();
             this.form_filing_wagons_setup.el.select_id_status_load.enable();
             this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
@@ -2188,7 +2277,7 @@
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
                     this.form_filing_wagons_setup.el.button_filing_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_apply.show();
-                    this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                    /*                    this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();*/
                     this.form_filing_wagons_setup.el.select_id_status_load.enable();
                     this.form_filing_wagons_setup.el.select_id_devision_on.disable();
                     this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
@@ -2263,36 +2352,21 @@
     //};
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
-    view_op_unloading_cars.prototype.validation_filing = function (result) {
+    view_op_unloading_cars.prototype.validation_filing = function (result, mode) {
 
         // 0- add; >0 id ; null -not edit
         if (this.id_filing === null) { return false; }
         var valid = true;
-        // Проверим локомотивы
-        var loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.text();
-        var loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.text();
-        var el_loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.$element;
-        var el_loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.$element;
-        if (loc1 === loc2) {
-            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_equal_locomotive', App.Langs));
-            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_equal_locomotive', App.Langs));
-            valid = false;
-        } else {
-            if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc1));
-                valid = false;
-            }
-            if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc2));
-                valid = false;
-            }
-        };
         //var status_load = this.form_filing_wagons_setup.el.new.select_id_status_load.val();
         var el_dtstart = this.form_filing_wagons_setup.el.input_datetime_time_start.$element;
         var el_dtstop = this.form_filing_wagons_setup.el.input_datetime_time_stop.$element;
         var el_sl = this.form_filing_wagons_setup.el.select_id_status_load.$element;
-        if (this.id_filing === 0) {
-            // добавить
+        var el_dv = this.form_filing_wagons_setup.el.select_id_devision_on.$element;
+        var el_stamkr = this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element;
+
+        // Время начала
+        if (mode === 0 || mode === 2) {
+            // Создать подачу и операции над вагонами
             // Проверим время начала
             if (result.new && result.new.input_datetime_time_start) {
                 var curr = moment();
@@ -2307,13 +2381,16 @@
                     valid = false;
                 }
             }
-            // Проверим вагоны в подаче
-            if (this.filing_wagons === null || this.filing_wagons.length === 0) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons_filing', App.Langs));
+        }
+        // Время конца 
+        if (mode === 3) {
+            if (result.new && result.new.input_datetime_time_stop === null) {
+                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vounl_mess_error_time_aplly', App.Langs));
                 valid = false;
             }
-            // Проверим выбранные вагоны для открытия и закрытия операции
-            var rows = this.tfws_unlc.tab_com.get_select_row();
+        }
+        // Время конца
+        if (mode === 0 || mode === 2 || mode === 3) {
             // Проверим время окончания
             if (result.new && result.new.input_datetime_time_stop) {
                 var curr = moment();
@@ -2327,13 +2404,10 @@
                     this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopss_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
                     valid = false;
                 }
-                if (rows === null || rows.length === 0) {
-                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons_close_filing', App.Langs));
-                    valid = false;
-                }
-                valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_sl), langView('vounl_mess_error_not_wagons_status_close_filing', App.Langs), null, true)
-
             }
+        }
+        // Проверим соотношение начало и конца
+        if (mode === 0 || mode === 2 || mode === 3) {
             // Проверим время начала и окончания
             if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
                 var dtstart = moment(result.new.input_datetime_time_start);
@@ -2344,88 +2418,99 @@
                     valid = false;
                 }
             }
-
-        } else {
-            // править
-
         }
-        // Проверим локомотивы
-        //var loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.text();
-        //var loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.text();
-        //var el_loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.$element;
-        //var el_loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.$element;
-        //var el_dta = this.form_filing_wagons_setup.el.input_datetime_time_aplly.$element;
-        //if (loc1 === loc2) {
-        //    this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_equal_locomotive', App.Langs));
-        //    this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_equal_locomotive', App.Langs));
-        //    valid = false;
-        //} else {
-        //    if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-        //        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc1));
-        //        valid = false;
-        //    }
-        //    if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
-        //        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc2));
-        //        valid = false;
-        //    }
-        //}
-
-        //// Проверим состав
-        //var wagons = this.wagons.filter(function (i) {
-        //    return i.id_wir_from !== null;
-        //});
-        //if (wagons === null || wagons.length === 0) {
-        //    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons', App.Langs))
-        //    valid = false;
-        //}
-        return valid;
-    }
-    view_op_unloading_cars.prototype.validation = function (result) {
-        var valid = true;
-        // Проверим локомотивы
-        var loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.text();
-        var loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.text();
-        var el_loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.$element;
-        var el_loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.$element;
-        var el_dta = this.form_filing_wagons_setup.el.input_datetime_time_aplly.$element;
-        if (loc1 === loc2) {
-            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_equal_locomotive', App.Langs));
-            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_equal_locomotive', App.Langs));
-            valid = false;
-        } else {
-            if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc1));
-                valid = false;
-            }
-            if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc2));
+        // Проверим вагоны в подаче
+        if (mode === 0) {
+            // Проверим вагоны в подаче
+            if (this.filing_wagons === null || this.filing_wagons.length === 0) {
+                this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons_filing', App.Langs));
                 valid = false;
             }
         }
-        // Проверим время
-        if (result.new && result.new.input_datetime_time_aplly) {
-            var curr = moment();
-            var aplly = moment(result.new.input_datetime_time_aplly);
-            var minutes = aplly.diff(curr, 'minutes');
-            if (minutes < min_dt_apply) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dta), langView('vounl_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                valid = false;
-            }
-            if (minutes > max_dt_apply) {
-                this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dta), langView('vounl_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                valid = false;
+        // проверка выбранных вагонов
+        if (mode === 0 || mode === 2 || mode === 3) {
+            // Проверим выбранные вагоны для открытия и закрытия операции
+            var rows = this.tfws_unlc.tab_com.get_select_row();
+        }
+        // проверка выбранных для операций вагонов
+        if (mode === 0 || mode === 2 || mode === 3) {
+            // должно быть выставлено время конца
+            if (result.new && result.new.input_datetime_time_stop) {
+                if (!rows || rows.length === 0) {
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons_close_filing', App.Langs));
+                    valid = false;
+                }
+            } else {
+                if (result.new && result.new.select_id_status_load >= 0) {
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vounl_mess_error_time_aplly', App.Langs));
+                    valid = false;
+                }
             }
         }
-        // Проверим состав
-        var wagons = this.wagons.filter(function (i) {
-            return i.id_wir_from !== null;
-        });
-        if (wagons === null || wagons.length === 0) {
-            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons', App.Langs))
-            valid = false;
+        // проверка статуса
+        if (mode === 0 || mode === 2 || mode === 3) {
+            // должно быть выставлено время конца
+            if (result.new && result.new.input_datetime_time_stop) {
+                valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_sl), langView('vounl_mess_error_not_wagons_status_close_filing', App.Langs), null, true)
+            }
+        }
+        // проверка подразделения
+        if (mode === 1) {
+            valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_dv), langView('vounl_mess_error_filing_division', App.Langs), null, true)
+        }
+        // проверка подразделения
+        if (mode === 1) {
+            valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_stamkr), langView('vounl_mess_error_filing_station_amkr', App.Langs), null, true)
         }
         return valid;
     }
+
+    //view_op_unloading_cars.prototype.validation = function (result) {
+    //    var valid = true;
+    //    // Проверим локомотивы
+    //    var loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.text();
+    //    var loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.text();
+    //    var el_loc1 = this.form_filing_wagons_setup.el.datalist_locomotive1.$element;
+    //    var el_loc2 = this.form_filing_wagons_setup.el.datalist_locomotive2.$element;
+    //    var el_dta = this.form_filing_wagons_setup.el.input_datetime_time_aplly.$element;
+    //    if (loc1 === loc2) {
+    //        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_equal_locomotive', App.Langs));
+    //        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_equal_locomotive', App.Langs));
+    //        valid = false;
+    //    } else {
+    //        if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
+    //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc1), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc1));
+    //            valid = false;
+    //        }
+    //        if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
+    //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_loc2), langView('vounl_mess_error_not_locomotive', App.Langs).format(loc2));
+    //            valid = false;
+    //        }
+    //    }
+    //    // Проверим время
+    //    if (result.new && result.new.input_datetime_time_aplly) {
+    //        var curr = moment();
+    //        var aplly = moment(result.new.input_datetime_time_aplly);
+    //        var minutes = aplly.diff(curr, 'minutes');
+    //        if (minutes < min_dt_apply) {
+    //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dta), langView('vounl_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+    //            valid = false;
+    //        }
+    //        if (minutes > max_dt_apply) {
+    //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dta), langView('vounl_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+    //            valid = false;
+    //        }
+    //    }
+    //    // Проверим состав
+    //    var wagons = this.wagons.filter(function (i) {
+    //        return i.id_wir_from !== null;
+    //    });
+    //    if (wagons === null || wagons.length === 0) {
+    //        this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vounl_mess_error_not_wagons', App.Langs))
+    //        valid = false;
+    //    }
+    //    return valid;
+    //}
     // выполнить операцию создать подачу
     view_op_unloading_cars.prototype.apply_add_filing = function (data) {
         LockScreen(langView('vounl_mess_run_operation_add_filing', App.Langs));
@@ -2449,8 +2534,8 @@
                     this.form_filing_wagons_setup.clear_all();
                     //this.form_filing_wagons_setup.validation_common_filing_wagons.clear_all();
                     // Сбросим установки (время и локомотивы)
-                    this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
-                    this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
+                    //this.form_filing_wagons_setup.el.datalist_locomotive1.val('');
+                    //this.form_filing_wagons_setup.el.datalist_locomotive2.val('');
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
