@@ -1120,9 +1120,9 @@
                         }
                         if (mode !== null) {
                             var valid = this.validation_filing(result, mode);
-                            //var dt_start = this.form_filing_wagons_setup.el.input_datetime_time_start.val();
+                            var dt_start = this.form_filing_wagons_setup.el.input_datetime_time_start.val();
                             var dt_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
-                            if (valid && mode) {
+                            if (valid) {
                                 var message = "";
                                 switch (mode) {
                                     case 0: {
@@ -1157,65 +1157,55 @@
                                     langView('vounl_title_form_apply', App.Langs),
                                     message,
                                     function () {
-                                        // Принять
-                                        //// Проверим наличие вагонов
-                                        //var list_wagons = [];
-                                        //if (this.filing_wagons && this.filing_wagons.length > 0) {
-                                        //    // Получим перечень вагонов и новую позицию
-                                        //    $.each(this.filing_wagons.sort(function (a, b) {
-                                        //        return a.position - b.position;
-                                        //    }), function (i, el) {
-                                        //        var row = rows.find(function (o) { return o.num === el.num }.bind(this));
-                                        //        list_wagons.push(
-                                        //            {
-                                        //                id_wim: el.idWim,
-                                        //                start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
-                                        //                stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
-                                        //                id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
-                                        //                id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
-                                        //            }
-                                        //        )
-                                        //    }.bind(this));
-                                        //    // Сформируем операцию
+                                        // Создать подачу
+                                        if (mode === 0) {
+                                            // Проверим наличие вагонов
+                                            var list_wagons = [];
+                                            if (this.filing_wagons && this.filing_wagons.length > 0) {
+                                                // Получим перечень вагонов и новую позицию
+                                                $.each(this.filing_wagons.sort(function (a, b) {
+                                                    return a.position - b.position;
+                                                }), function (i, el) {
+                                                    var row = rows.find(function (o) { return o.num === el.num }.bind(this));
+                                                    list_wagons.push(
+                                                        {
+                                                            id_wim: el.idWim,
+                                                            start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
+                                                            stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
+                                                            id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
+                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
+                                                        }
+                                                    )
+                                                }.bind(this));
+                                                // Сформируем операцию
 
-                                        //    var operation = {
-                                        //        id_filing: this.id_filing, // 0 новая, >0 Правим существующую
-                                        //        id_way: this.id_way_unload, // !только новая подача
-                                        //        id_division: this.division_on,// можно править
-                                        //        create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
-                                        //        locomotive1: result.new.datalist_locomotive1,
-                                        //        locomotive2: result.new.datalist_locomotive2,
-                                        //        wagons: list_wagons
-                                        //    };
-                                        //    this.apply_add_filing(operation);
-                                        //}
+                                                var operation = {
+                                                    id_filing: this.id_filing, // 0 новая, >0 Правим существующую
+                                                    id_way: this.id_way_unload, // !только новая подача
+                                                    id_division: this.division_on,// можно править
+                                                    create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
+                                                    wagons: list_wagons
+                                                };
+                                                this.apply_add_filing(operation);
+                                            }
+                                        };
+                                        // Править подачи
+                                        if (mode === 1) {
+
+                                        };
+                                        // Править открыть операцию
+                                        if (mode === 2) {
+
+                                        };
+                                        // Править закрыть операцию
+                                        if (mode === 3) {
+
+                                        };
                                     }.bind(this),
                                     function () {
                                         this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vounl_mess_cancel_operation_mode_' + mode, App.Langs));
-                                    }.bind(this));
-                                //if (this.id_filing !== null) {
-                                //    if (this.id_filing === 0) {
-                                //        // Создать новую подачу
-                                //        var message = langView('vounl_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
-                                //            this.form_from_setup.el.select_id_way_unload.text(),
-                                //            this.form_filing_wagons_setup.el.select_id_devision_on.text(),
-                                //            (this.filing_wagons ? this.filing_wagons.length : 0),
-                                //            (rows ? rows.length : 0),
-                                //            (dt_stop !== null ? (rows ? rows.length : 0) : 0));
-                                //    } else {
-                                //        // Править выбранную подачу
-                                //        if (rows && rows.length > 0) {
-                                //            // править вагоны
-                                //        } else {
-                                //            // править подачу
-                                //            if (this.fw_status !== null) {
-
-                                //            }
-                                //        }
-                                //    }
-                                //    //var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
-
-                                //}
+                                    }.bind(this)
+                                );
                             }
                         }
                     }
@@ -2217,12 +2207,12 @@
             //this.form_filing_wagons_setup.el.datalist_locomotive2.enable();
             this.form_filing_wagons_setup.el.select_id_devision_on.enable();
             this.form_filing_wagons_setup.el.select_id_status_load.enable();
-            this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
+            //this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
             //--
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
             this.form_filing_wagons_setup.el.select_id_devision_on.enable();
-            this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
+            //this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
             this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
             this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
         };
@@ -2241,7 +2231,7 @@
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
             this.form_filing_wagons_setup.el.select_id_devision_on.enable();
-            this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
+            //this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
             this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
             this.form_filing_wagons_setup.el.select_id_status_load.val(this.status_load);
             this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
@@ -2255,7 +2245,7 @@
                     this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                     this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                    this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+                    //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
                     this.form_filing_wagons_setup.el.select_id_status_load.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
@@ -2267,7 +2257,7 @@
                     this.form_filing_wagons_setup.el.button_operation_apply.show();
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                     this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                    this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+                    //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
                     this.form_filing_wagons_setup.el.select_id_status_load.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
@@ -2280,7 +2270,7 @@
                     /*                    this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();*/
                     this.form_filing_wagons_setup.el.select_id_status_load.enable();
                     this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                    this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+                    //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 ? moment(rows[0].filingEnd) : null);
                     this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
@@ -2291,7 +2281,7 @@
                     this.form_filing_wagons_setup.el.button_filing_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                     this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                    this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+                    //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
                     this.form_filing_wagons_setup.el.select_id_status_load.disable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 ? moment(rows[0].filingEnd) : null);
