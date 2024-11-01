@@ -159,6 +159,15 @@
     ids_wsd.prototype.postDeleteWagonFiling = function (operation, callback) {
         this.api_com.post('/WSD/delete/wagon/filing/', operation, callback, callback);
     };
+    //АРМ, Операция править подачу начать операцию, закончить операцию, админка (выгрузка, погрузка, ...)
+    ids_wsd.prototype.postUpdateFilingOperationUnloading = function (operation, callback) {
+        this.api_com.post('/WSD/update/filing/operation/unloading/', operation, callback, callback);
+    };
+    //АРМ, Операция править подачу цех получатель
+    ids_wsd.prototype.postUpdateFilingUnloading = function (operation, callback) {
+        this.api_com.post('/WSD/update/filing/', operation, callback, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;
