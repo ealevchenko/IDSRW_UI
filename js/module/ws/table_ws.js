@@ -204,6 +204,7 @@
             'tws_title_button_add_sostav': 'Добавить в состав',
             'tws_title_button_add_filing': 'Создать черновик',
             'tws_title_button_clear_filing': 'Открыть подачу',
+            'tws_title_button_clear_draft': 'Убрать черновик',
             'tws_title_button_collect_sostav': 'Собрать',
             'tws_title_button_title_collect_sostav': 'Собрать вагоны для предъявления по номерам вагонов...',
             'tws_title_button_del_wagons_sostav': 'Убрать из состава',
@@ -1731,6 +1732,15 @@
                 attr: {
                     title: '',
                     id: 'clear-filing'
+                },
+            },
+            {
+                button: 'clear_draft',
+                text: langView('tws_title_button_clear_draft', App.Langs),
+                className: 'btn btn-info',
+                attr: {
+                    title: '',
+                    id: 'clear-draft'
                 },
             },
             {
