@@ -2317,6 +2317,40 @@ var is_valid_num_wagon = function (num) {
         };
         this.init();
     };
+
+    //form_element.prototype.init_alert = function (element, options) {
+    //    this.settings = $.extend({
+    //        id: null,
+    //        class: null,
+    //        style: null,
+    //        color: null,
+    //        bt_close: false,
+    //        fn_click_close: null,
+    //    }, options);
+    //    this.$element = new ALERT(element) ;
+    //    this.init = function () {
+
+    //    };
+    //    this.val = function (value) {
+
+    //    };
+    //    this.update = function (default_value) {
+
+    //    };
+    //    this.show = function () {
+
+    //    };
+    //    this.hide = function () {
+
+    //    };
+    //    this.enable = function () {
+
+    //    };
+    //    this.disable = function (clear) {
+
+    //    };
+    //    this.init();
+    //};
     //----------------------------------------------------------------------------
     // Автоматически формируем документы на форме
     form_element.prototype.add_obj = function (content, objs, obj_form, callback) {
@@ -2351,6 +2385,18 @@ var is_valid_num_wagon = function (num) {
                 if (obj.obj === 'bs_col') {
                     var obj_html = new this.bs_col(obj.options);
                     add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_alert') {
+                    var obj_html = new this.bs_alert(obj.options);
+                    add_element(obj_html.$html, content, obj);
+                    //obj_form.views.push({
+                    //    name: obj.options.id,
+                    //    validation_group: null,
+                    //    type: 'alert',
+                    //    //element: new this.fe.init_alert(obj_html.$html, obj.options),
+                    //    $element: obj_html.$html,
+                    //    destroy: false
+                    //});
                 };
                 if (obj.obj === 'bs_button') {
                     var obj_html = new this.bs_button(obj.options);
