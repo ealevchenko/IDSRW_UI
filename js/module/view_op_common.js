@@ -69,7 +69,6 @@
 
         //this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: "https://localhost:7280" });
 
-
         this.offcanvas = new this.fe_ui.bs_offcanvas({
             id: null,
             class: 'offcanvas-operation-detal',
