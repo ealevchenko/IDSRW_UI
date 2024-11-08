@@ -2144,22 +2144,32 @@
         }
         /*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
         collums.push({ field: 'current_wagon_busy', title: null, class: null });
-        collums.push({ field: 'id_filing', title: null, class: null });
-        collums.push({ field: 'start_filing', title: null, class: null });
-        collums.push({ field: 'end_filing', title: null, class: null });
-        collums.push({ field: 'way_filing_start', title: null, class: null });
-        collums.push({ field: 'way_filing_end', title: null, class: null });
+        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
+        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
+        // Номер путевой
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
-        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        //collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_sertification_data', title: null, class: null });
-        collums.push({ field: 'current_loading_status', title: null, class: null });
+        // Станция отправления ТЕКУЩАЯ
+        // Станция назначения ТЕКУЩАЯ
+        // Цех погрузки ТЕКУЩАЯ
+        // Цех получатель ТЕКУЩАЯ
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_operation_name', title: null, class: null });
+        collums.push({ field: 'current_operation_start', title: null, class: null });
+        collums.push({ field: 'current_operation_end', title: null, class: null });
+        //collums.push({ field: 'id_filing', title: null, class: null });
+        //collums.push({ field: 'start_filing', title: null, class: null });
+        //collums.push({ field: 'end_filing', title: null, class: null });
+        //collums.push({ field: 'way_filing_start', title: null, class: null });
+        //collums.push({ field: 'way_filing_end', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     table_ws.prototype.init_columns_provide_cars_from = function () {
@@ -2383,6 +2393,8 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
+        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
+        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });

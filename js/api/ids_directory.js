@@ -310,6 +310,10 @@
     ids_directory.prototype.getListValueTextDivisions = function () {
         return this.getListDivisions('id', 'nameDivision', ucFirst(App.Lang));
     };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextAbbrDivisions = function () {
+        return this.getListDivisions('id', 'divisionAbbr', ucFirst(App.Lang));
+    };
     //*======= (Справочник locomotive) ======================================
     // Получить все записи
     ids_directory.prototype.getAllLocomotive = function () {
