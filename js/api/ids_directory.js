@@ -68,6 +68,9 @@
     ids_directory.prototype.getWagonLoadingStatus = function (callback) {
         this.api_com.get('/DirectoryWagonLoadingStatus', callback);
     };
+    ids_directory.prototype.getWagonLoadingStatusOfWagonOperations = function (id, callback) {
+        this.api_com.get('/DirectoryWagonLoadingStatus/wagon_operations/' + id, callback);
+    };
     //======= [Directory_Divisions] (Справочник подразделений предприятия) ========================
     ids_directory.prototype.getDivisions = function (callback) {
         this.api_com.get('/DirectoryDivision', callback);
@@ -338,9 +341,9 @@
         var list = [];
         var fvalue = 'locomotive';
         var ftext = 'locomotive';
-            $.each(list_obj.list, function (i, el) {
-                list.push({ value: el[fvalue], text: el[ftext], disabled: el.idLocomotiveStatus !== 1 });
-            }.bind(this));
+        $.each(list_obj.list, function (i, el) {
+            list.push({ value: el[fvalue], text: el[ftext], disabled: el.idLocomotiveStatus !== 1 });
+        }.bind(this));
         return list;
     };
 
@@ -388,7 +391,8 @@
     };
     // Получить списки путей с выходом на УЗ (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextCrossingUzWaysOfStation = function (id_station) {
-        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {getAllWays
+        return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
+            getAllWays
             return !i.wayDelete && i.idStation === id_station && i.crossingUz
         });
     };
@@ -407,7 +411,7 @@
     // Получить списки путей с которых производится погрузка\разгрузка (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextLoadUnloadWaysOfStation = function (id_station) {
         return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
-            return !i.wayDelete && i.idStation === id_station && i.idDevision>0
+            return !i.wayDelete && i.idStation === id_station && i.idDevision > 0
         });
     };
     //*======= (Справочник park_ways) ======================================

@@ -220,7 +220,24 @@ var AJAXComplete = function () {
         }
         return list;
     };
-
+    // Вернуть спсисок объектов таблицы в формате {value:, text:}
+    api_common.prototype.getListObjOfList = function (list_obj, fvalue, ftext, lang, filter) {
+        var list = [];
+        var list_filtr = null;
+        if (list_obj && list_obj.length>0) {
+            if (typeof filter === 'function') {
+                list_filtr = list_obj.filter(filter);
+            } else { list_filtr = list_obj; }
+            $.each(list_filtr, function (i, el) {
+                if (lang) {
+                    list.push({ value: el[fvalue], text: el[ftext + lang], disabled: false });
+                } else {
+                    list.push({ value: el[fvalue], text: el[ftext], disabled: false });
+                }
+            }.bind(this));
+        }
+        return list;
+    };
     App.api_common = api_common;
 
     window.App = App;

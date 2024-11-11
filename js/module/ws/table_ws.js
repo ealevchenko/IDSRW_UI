@@ -3459,7 +3459,7 @@
                     //if (data.id_wir_unload !== null) {
                     //    $(row).addClass('ban red');  // Отметим вагон заблокирован
                     //}
-                    if (data.idWim === data.currIdWim) {
+                    if (!data.isMoving) {
                         if (data.filingStart !== null) {
                             if (data.filingEnd !== null) {
                                 $(row).addClass('green');
