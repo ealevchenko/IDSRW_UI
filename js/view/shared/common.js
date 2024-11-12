@@ -3343,7 +3343,9 @@ var is_valid_num_wagon = function (num) {
         }
         this.$alert = $alert;
         this.$mess = $alert.find('.message');
-        if (!this.$mess) this.$mess = $alert;
+        if (!this.$mess || this.$mess.length === 0) {
+            this.$mess = this.$alert;
+        }
         //this.selector = this.$alert.attr('id');
         this.clear_message();
     };
