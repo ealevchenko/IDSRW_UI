@@ -1525,10 +1525,25 @@
                 title: langView('tws_field_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
+                field: 'type_filing',
+                data: function (row, type, val, meta) {
+                    switch (row.typeFiling) {
+                        default: return row.typeFiling;
+                        case 0: return '<i class="fa-solid fa-question"></i>';
+                        case 1: return '<i class="fa-solid fa-upload"></i>';
+                        case 2: return '<i class="fa-solid fa-download"></i>';
+                        case 3: return '<i class="fa-solid fa-broom"></i>';
+                    }
+                    //return row.outgoing_sostav_status;
+                },
+                className: 'dt-body-center',
+                title: '', width: "18px", orderable: true, searchable: true
+            },
+            {
                 field: 'status_filing',
                 data: function (row, type, val, meta) {
                     switch (row.statusFiling) {
-                        default: return row.status;
+                        default: return row.statusFiling;
                         case 0: return langView('tws_title_status_filing_0', App.Langs);
                         case 1: return langView('tws_title_status_filing_1', App.Langs);
                         case 2: return langView('tws_title_status_filing_2', App.Langs);
@@ -2365,6 +2380,7 @@
 
     table_ws.prototype.init_columns_list_filing = function () {
         var collums = [];
+        collums.push({ field: 'type_filing', title: null, class: null });
         collums.push({ field: 'status_filing', title: null, class: null });
         //collums.push({ field: 'num_filing', title: null, class: null });
         collums.push({ field: 'id_wf', title: null, class: null });
@@ -3405,7 +3421,7 @@
                 //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 //this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.order_column = [2, 'asc'];
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
