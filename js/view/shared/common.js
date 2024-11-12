@@ -813,7 +813,11 @@ var is_valid_num_wagon = function (num) {
             id: this.settings.id,
             style: this.settings.style,
         });
+        var div_message = new this.fe.div({
+            class: 'message',
+        });
         add_tag(div.$html, 'role', 'alert');
+
         if (this.settings.color !== null) {
             add_class(div.$html, 'alert-' + this.settings.color);
         }
@@ -822,9 +826,10 @@ var is_valid_num_wagon = function (num) {
                 class: 'btn-close',
                 fn_click: this.settings.fn_click_close,
             });
+            add_class(div.$html, 'd-flex justify-content-end') // если будет кнопка добавим прижим к правому краю
             add_tag(button.$html, 'data-bs-dismiss', 'alert');
             add_tag(button.$html, 'aria-label', 'Close');
-            div.$html.append(button.$html);
+            div.$html.append(div_message.$html).append(button.$html);
         }
         this.$html = div.$html;
     };
@@ -1823,7 +1828,7 @@ var is_valid_num_wagon = function (num) {
 
         }, options);
         this.fe = new form_element();
-        var card = new this.fe.div({ class: 'card', id : this.settings.id });
+        var card = new this.fe.div({ class: 'card', id: this.settings.id });
         add_class(card.$html, this.settings.border_color);
         add_class(card.$html, this.settings.class);
         if (this.settings.max_width !== null) card.$html.attr('style', 'max-width: ' + this.settings.max_width + 'rem;');
@@ -3337,32 +3342,39 @@ var is_valid_num_wagon = function (num) {
             throw new Error('Элемент $alert - неопределен');
         }
         this.$alert = $alert;
+        this.$mess = $alert.find('.message');
+        if (!this.$mess) this.$mess = $alert;
         //this.selector = this.$alert.attr('id');
         this.clear_message();
     };
     // Очистить сообщения
     alert_form.prototype.clear_message = function () {
-        this.$alert.hide().text('').removeClass('alert-success alert-warning alert-danger');
+        var $div_mes = this.$alert.find('.message');
+        this.$mess.text('');
+        this.$alert.hide().removeClass('alert-success alert-warning alert-danger');
     };
     // Вывести сообщение об ошибке
     alert_form.prototype.out_error_message = function (message) {
         this.$alert.show().removeClass('alert-success alert-warning').addClass('alert-danger');
         if (message) {
-            this.$alert.append(message).append($('<br />'));
+            this.$mess.append(message).append($('<br />'));
+            //this.$alert.append(message).append($('<br />'));
         }
     };
     // Вывести сообщение об ошибке
     alert_form.prototype.out_warning_message = function (message) {
         this.$alert.show().removeClass('alert-success alert-danger').addClass('alert-warning');
         if (message) {
-            this.$alert.append(message).append($('<br />'));
+            this.$mess.append(message).append($('<br />'));
+            //this.$alert.append(message).append($('<br />'));
         }
     };
     // Вывести информационное сообщение
     alert_form.prototype.out_info_message = function (message) {
         this.$alert.show().removeClass('alert-danger alert-warning').addClass('alert-success');
         if (message) {
-            this.$alert.append(message).append($('<br />'));
+            this.$mess.append(message).append($('<br />'));
+            //this.$alert.append(message).append($('<br />'));
         }
     };
 
