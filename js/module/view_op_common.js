@@ -109,10 +109,16 @@
 
         // На проверку окончания инициализации
         //----------------------------------
-        if (fn_init === 'function') {
+        //if (fn_init === 'function') {
+        //    console.log('Close view_op_common');
+        //    fn_init(this.result_init);
+        //}
+        if (typeof this.settings.fn_init === 'function') {
             console.log('Close view_op_common');
-            fn_init(this.result_init);
+
+            this.settings.fn_init(this.result_init);
         }
+
         //----------------------------------
     };
     // Показать данные

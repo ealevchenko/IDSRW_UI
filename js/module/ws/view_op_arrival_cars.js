@@ -434,7 +434,7 @@
             api_dir: this.settings.api_dir,
             api_wsd: this.settings.api_wsd,
             fn_db_update: this.settings.fn_db_update,
-            fn_init: this.settings.fn_init,
+            fn_init: null,
             fn_close: this.settings.fn_close,
         },function () { }.bind(this));
         this.id_station = -1;       // По умолчанию не выбрана
