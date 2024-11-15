@@ -21,101 +21,102 @@
     {
         'default':  //default language: ru
         {
-            'vopulc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ВЫГРУЗКА ВАГОНОВ"',
+            'voplc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПОГРУЗКА ВАГОНОВ"',
 
-            'vopulc_title_form_add': 'Создать подачу',
-            'vopulc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
-            'vopulc_title_form_apply': 'Править подачу',
-            'vopulc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
-            'vopulc_title_form_operation_apply': 'Править операцию',
-            'vopulc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
+            'voplc_title_form_add': 'Создать подачу',
+            'voplc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
+            'voplc_title_form_apply': 'Править подачу',
+            'voplc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
+            'voplc_title_form_operation_apply': 'Править операцию',
+            'voplc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
 
-            'vopulc_title_time_start': 'Время начала',
-            'vopulc_text_time_start': 'Время начала операции ограниченно +(-)1день',
-            'vopulc_title_placeholder_time_start': 'Время начала',
+            'voplc_title_time_start': 'Время начала',
+            'voplc_text_time_start': 'Время начала операции ограниченно +(-)1день',
+            'voplc_title_placeholder_time_start': 'Время начала',
 
-            'vopulc_title_time_stop': 'Время окончания',
-            'vopulc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
-            'vopulc_title_placeholder_time_stop': 'Время окончания',
+            'voplc_title_time_stop': 'Время окончания',
+            'voplc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
+            'voplc_title_placeholder_time_stop': 'Время окончания',
 
-            'vopulc_title_label_devision_on': 'Цех получатель:',
-            'vopulc_text_label_devision_on': 'Выберите цех получатель...',
-            'vopulc_title_label_status_load': 'Статус:',
-            'vopulc_text_label_status_load': 'Выберите статус (груж./порож.)...',
-            'vopulc_title_label_station_amkr_on': 'Станция приб. АМКР:',
-            'vopulc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
-
-
-
-
-            //'vopulc_title_label_period': 'Выборка за:',
-            //'vopulc_title_time_period_start': 'С даты',
-            //'vopulc_text_time_period_start': 'Выборка с указаной даты',
-            //'vopulc_title_placeholder_time_period_start': 'Время начала',
-            //'vopulc_title_label_station': 'Станция выгрузки:',
-            //'vopulc_text_label_station': 'Выберите станцию выгрузки...',
-            //'vopulc_title_label_devision_on': 'Цех получатель:',
-            //'vopulc_text_label_devision_on': 'Выберите цех получатель...',
-            //'vopulc_title_label_status_load': 'Статус:',
-            //'vopulc_text_label_status_load': 'Выберите статус (груж./порож.)...',
-            //'vopulc_title_label_station_amkr_on': 'Станция приб. АМКР:',
-            //'vopulc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
-
-            //'vopulc_title_label_way_from': 'Путь отправления:',
-            //'vopulc_text_label_way_from': 'Выберите путь начала дислокации...',
+            'voplc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
+            'voplc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать операцию, для этого укажите дату начала операции и по необходимости дату завершения, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
+            'voplc_mess_info_filing': 'Выбрана подача. Чтобы исправить цех погрузки укажите новый цех и нажмите «Править подачу». Чтобы выполнить операции над вагонами выберите вагон(ы).',
+            'voplc_mess_info_filing_close': 'Выбрана закрытая подача. Операции не доступны!',
+            'voplc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции и по необходимости дату завершения и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны», если нужно выбрать вагоны с открытыми и закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_1': 'Выбран(ы) вагоны, по которым открыта операция. Укажите дату завершения операции и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с открытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только статус, укажите другой статус и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с закрытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
+            'voplc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
 
 
+            //'voplc_title_label_period': 'Выборка за:',
+            //'voplc_title_time_period_start': 'С даты',
+            //'voplc_text_time_period_start': 'Выборка с указаной даты',
+            //'voplc_title_placeholder_time_period_start': 'Время начала',
+            //'voplc_title_label_station': 'Станция выгрузки:',
+            //'voplc_text_label_station': 'Выберите станцию выгрузки...',
+            //'voplc_title_label_devision_on': 'Цех получатель:',
+            //'voplc_text_label_devision_on': 'Выберите цех получатель...',
+            //'voplc_title_label_status_load': 'Статус:',
+            //'voplc_text_label_status_load': 'Выберите статус (груж./порож.)...',
+            //'voplc_title_label_station_amkr_on': 'Станция приб. АМКР:',
+            //'voplc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
 
-            //'vopulc_title_label_locomotive1': 'Локомотив №1:',
-            //'vopulc_title_label_locomotive2': 'Локомотив №2:',
-            //'vopulc_title_placeholder_locomotive': ' № локомотива',
-
-            //'vopulc_title_time_start': 'Время начала',
-            //'vopulc_text_time_start': 'Время начала операции ограниченно +(-)1день',
-            //'vopulc_title_placeholder_time_start': 'Время начала',
-
-            //'vopulc_title_time_stop': 'Время окончания',
-            //'vopulc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
-            //'vopulc_title_placeholder_time_stop': 'Время окончания',
-
-            //'vopulc_title_form_add': 'Создать подачу',
-            //'vopulc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
-            //'vopulc_title_form_apply': 'Править подачу',
-            //'vopulc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
-            //'vopulc_title_form_operation_apply': 'Править операцию',
-            //'vopulc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
-
-            //'vopulc_title_period_1': 'ЖД сутки',
-            //'vopulc_title_period_2': 'Календарные сутки',
-            //'vopulc_title_period_3': 'От начала месяца',
-
-            //'vopulc_title_status_null': 'Неопределен?',
-            //'vopulc_title_status_0': 'Без операции',
-            //'vopulc_title_status_1': 'Операция начата',
-            //'vopulc_title_status_2': 'Операция завершена',
-            //'vopulc_title_status_3': 'Вагон покинул путь',
-
-            //'vopulc_title_button_new_period': 'Обновить данные, применить новый период выборки.',
-            'vopulc_title_button_new_filing': 'Создать черновик',
-            //'vopulc_title_attr_button_new_filing': 'Создать черновик подачи по выбранным вагонам.',
-            'vopulc_title_button_add_filing': 'Добавить в подачу',
-            //'vopulc_title_attr__button_add_filing': 'Добавить в текущую подачу выбранные вагоны.',
-
-            'vopulc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
-            'vopulc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать операцию, для этого укажите дату начала операции и по необходимости дату завершения, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
-            'vopulc_mess_info_filing': 'Выбрана подача. Чтобы исправить цех погрузки укажите новый цех и нажмите «Править подачу». Чтобы выполнить операции над вагонами выберите вагон(ы).',
-            'vopulc_mess_info_filing_close': 'Выбрана закрытая подача. Операции не доступны!',
-            'vopulc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции и по необходимости дату завершения и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны», если нужно выбрать вагоны с открытыми и закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
-            'vopulc_mess_info_wagon_mode_1': 'Выбран(ы) вагоны, по которым открыта операция. Укажите дату завершения операции и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с открытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
-            'vopulc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только статус, укажите другой статус и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с закрытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
-            'vopulc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
-            'vopulc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
+            //'voplc_title_label_way_from': 'Путь отправления:',
+            //'voplc_text_label_way_from': 'Выберите путь начала дислокации...',
 
 
-            //'vopulc_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
-            //'vopulc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
-            //'vopulc_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
-            //'vopulc_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
+
+            //'voplc_title_label_locomotive1': 'Локомотив №1:',
+            //'voplc_title_label_locomotive2': 'Локомотив №2:',
+            //'voplc_title_placeholder_locomotive': ' № локомотива',
+
+            //'voplc_title_time_start': 'Время начала',
+            //'voplc_text_time_start': 'Время начала операции ограниченно +(-)1день',
+            //'voplc_title_placeholder_time_start': 'Время начала',
+
+            //'voplc_title_time_stop': 'Время окончания',
+            //'voplc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
+            //'voplc_title_placeholder_time_stop': 'Время окончания',
+
+            //'voplc_title_form_add': 'Создать подачу',
+            //'voplc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
+            //'voplc_title_form_apply': 'Править подачу',
+            //'voplc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
+            //'voplc_title_form_operation_apply': 'Править операцию',
+            //'voplc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
+
+            //'voplc_title_period_1': 'ЖД сутки',
+            //'voplc_title_period_2': 'Календарные сутки',
+            //'voplc_title_period_3': 'От начала месяца',
+
+            //'voplc_title_status_null': 'Неопределен?',
+            //'voplc_title_status_0': 'Без операции',
+            //'voplc_title_status_1': 'Операция начата',
+            //'voplc_title_status_2': 'Операция завершена',
+            //'voplc_title_status_3': 'Вагон покинул путь',
+
+            //'voplc_title_button_new_period': 'Обновить данные, применить новый период выборки.',
+            'voplc_title_button_new_filing': 'Создать черновик',
+            //'voplc_title_attr_button_new_filing': 'Создать черновик подачи по выбранным вагонам.',
+            'voplc_title_button_add_filing': 'Добавить в подачу',
+            //'voplc_title_attr__button_add_filing': 'Добавить в текущую подачу выбранные вагоны.',
+
+            'voplc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
+            'voplc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать операцию, для этого укажите дату начала операции и по необходимости дату завершения, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
+            'voplc_mess_info_filing': 'Выбрана подача. Чтобы исправить цех погрузки укажите новый цех и нажмите «Править подачу». Чтобы выполнить операции над вагонами выберите вагон(ы).',
+            'voplc_mess_info_filing_close': 'Выбрана закрытая подача. Операции не доступны!',
+            'voplc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции и по необходимости дату завершения и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны», если нужно выбрать вагоны с открытыми и закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_1': 'Выбран(ы) вагоны, по которым открыта операция. Укажите дату завершения операции и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с открытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только статус, укажите другой статус и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с закрытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
+            'voplc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
+            'voplc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
+
+
+            //'voplc_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
+            //'voplc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
+            //'voplc_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
+            //'voplc_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
 
 
             //'voprc_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
@@ -125,78 +126,75 @@
             //'voprc_mess_eror_add_new_filing': 'Выбранно № {0} вагонов, не могу сформировать новую подачу (ошибка определения станции {1}, парка {2}, пути {3})',
             //'voprc_mess_eror_new_filing_not_wagon': 'В новой подаче отсутствуют вагоны',
 
-            //'vopulc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'vopulc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
-            'vopulc_mess_error_time_aplly': 'Укажите дату завершения операции',
-            'vopulc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
-            'vopulc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
-            'vopulc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
-            'vopulc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
-            'vopulc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
-            'vopulc_mess_error_filing_division': 'Выберите цех получатель',
-            'vopulc_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',
-            'vopulc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
-            //'vopulc_mess_error_operation_run_add_filing': 'При создании подачи для «ВЫГРУЗКИ ВАГОНОВ» произошла ошибка, код ошибки: {0}',
-            //'vopulc_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
+            //'voplc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            //'voplc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            //'voplc_mess_error_time_aplly': 'Укажите дату завершения операции',
+            //'voplc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
+            //'voplc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
+            //'voplc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
+            //'voplc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
+            //'voplc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
+            //'voplc_mess_error_filing_division': 'Выберите цех получатель',
+            //'voplc_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',
+            //'voplc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
+            //'voplc_mess_error_operation_run_add_filing': 'При создании подачи для «ВЫГРУЗКИ ВАГОНОВ» произошла ошибка, код ошибки: {0}',
+            //'voplc_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
 
-            //'vopulc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            //'voplc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             //'voprc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
+            //'voplc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
+            //'voplc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ВЫГРУЗКИ ВАГОНОВ"!',
+            //'voplc_mess_cancel_operation_mode_2': 'Отмена операции начала "ВЫГРУЗКИ" над вагонами подачи!',
+            //'voplc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ВЫГРУЗКИ" над вагонами подачи!',
+            //'voplc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ВЫГРУЗКИ"!',
 
-            'vopulc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
-            'vopulc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ВЫГРУЗКИ ВАГОНОВ"!',
-            'vopulc_mess_cancel_operation_mode_2': 'Отмена операции начала "ВЫГРУЗКИ" над вагонами подачи!',
-            'vopulc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ВЫГРУЗКИ" над вагонами подачи!',
-            'vopulc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ВЫГРУЗКИ"!',
+            //'voplc_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
+            //'voplc_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
+            //'voplc_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
 
+            //'voplc_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
+            //'voplc_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции "ВЫГРУЗКА ВАГОНОВ" в подаче.',
+            //'voplc_mess_run_operation_update_filing': 'Выполняю операцию править подачу "ВЫГРУЗКИ ВАГОНОВ"',
+            //'voplc_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
+            //'voplc_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
+            //'voplc_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
+            //'voplc_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
+            //'voplc_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
+            //'voplc_mess_not_select_way_return': 'Выберите путь на который будут возвращены вагоны!',
 
+            //'voplc_mess_ok_operation_add_filing': 'Подача создана, определено {0} (ваг.)',
+            //'voplc_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
+            //'voplc_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
+            //'voplc_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
+            //'voplc_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
 
-            //'vopulc_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
+            'voplc_mess_load_operation': 'Загружаю операции...',
+            //'voplc_mess_load_wagons': 'Загружаю вагоны на пути...',
+            //'voplc_mess_load_filing_wagon': 'Загружаю вагоны подач...',
 
-            //'vopulc_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции "ВЫГРУЗКА ВАГОНОВ" в подаче.',
-            //'vopulc_mess_run_operation_update_filing': 'Выполняю операцию править подачу "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
-            //'vopulc_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
-            //'vopulc_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
-            //'vopulc_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
-            //'vopulc_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
-            //'vopulc_mess_not_select_way_return': 'Выберите путь на который будут возвращены вагоны!',
+            'voplc_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            //'voplc_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
+            //'voplc_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
+            //'voplc_mess_add_filing': 'Переношу вагоны в существующую подачу.',
+            //'voplc_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
+            //'voplc_mess_clear_draft': 'Удаляю черновик подачи.',
 
-            //'vopulc_mess_ok_operation_add_filing': 'Подача создана, определено {0} (ваг.)',
-            //'vopulc_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
-            //'vopulc_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
-            //'vopulc_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
-            //'vopulc_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
-
-            'vopulc_mess_load_operation': 'Загружаю операции...',
-            //'vopulc_mess_load_wagons': 'Загружаю вагоны на пути...',
-            //'vopulc_mess_load_filing_wagon': 'Загружаю вагоны подач...',
-
-            'vopulc_mess_init_panel': 'Выполняю инициализацию модуля ...',
-            //'vopulc_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
-            //'vopulc_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
-            //'vopulc_mess_add_filing': 'Переношу вагоны в существующую подачу.',
-            //'vopulc_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
-            //'vopulc_mess_clear_draft': 'Удаляю черновик подачи.',
-
-            'vopulc_confirm_title': 'Внимание!',
-            'vopulc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ВЫГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для выгрузки {4} ваг., закрыта выгрузка по {5} вагонам.',
-            'vopulc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: [{1}], выбранно подразделение: [{2}]? Станция и подразделение будет обновлено по всем вагонам подачи!',
-            'vopulc_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала выгрузки {2} ваг., закрыта выгрузка по {3} вагонам.',
-            'vopulc_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта выгрузка по {2} вагонам.',
-            'vopulc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
-            'vopulc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути [{0}]?.',
+            //'voplc_confirm_title': 'Внимание!',
+            //'voplc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ВЫГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для выгрузки {4} ваг., закрыта выгрузка по {5} вагонам.',
+            //'voplc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: [{1}], выбранно подразделение: [{2}]? Станция и подразделение будет обновлено по всем вагонам подачи!',
+            //'voplc_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала выгрузки {2} ваг., закрыта выгрузка по {3} вагонам.',
+            //'voplc_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта выгрузка по {2} вагонам.',
+            //'voplc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
+            //'voplc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути [{0}]?.',
 
 
-            //'vopulc_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
-            //'vopulc_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
-            //'vopulc_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
+            //'voplc_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
+            //'voplc_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
+            //'voplc_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
 
-            //'vopulc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
-            //'vopulc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь для подачи {0}? Все выбранные для подачи в количестве {1} будут сброшены! ',
+            //'voplc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
+            //'voplc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь для подачи {0}? Все выбранные для подачи в количестве {1} будут сброшены! ',
 
         },
         'en':  //default language: English
@@ -214,13 +212,13 @@
     var FD = App.form_dialog;
     // js/module/ws/table_ws.js
     var TWS = App.table_ws;
-    function view_op_unloading_cars(selector) {
+    function view_op_loading_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
         this.cfiling = new VIEW_CFILING();
     }
 
     // инициализация модуля
-    view_op_unloading_cars.prototype.init = function (options) {
+    view_op_loading_cars.prototype.init = function (options) {
         this.result_init = true;
         // теперь выполним инициализацию, определим основные свойства
         this.settings = $.extend({
@@ -272,8 +270,8 @@
                     class: null,
                     fsize: 'sm',
                     color: 'primary',
-                    text: langView('vopulc_title_form_add', App.Langs),
-                    title: langView('vopulc_title_form_add_title', App.Langs),
+                    text: langView('voplc_title_form_add', App.Langs),
+                    title: langView('voplc_title_form_add_title', App.Langs),
                     icon_fa_left: 'fa-regular fa-square-plus',  //<i class="fa-regular fa-square-plus"></i>
                     icon_fa_right: null,
                     fn_click: function (event) {
@@ -290,8 +288,8 @@
                     class: null,
                     fsize: 'sm',
                     color: 'primary',
-                    text: langView('vopulc_title_form_apply', App.Langs),
-                    title: langView('vopulc_title_form_apply_title', App.Langs),
+                    text: langView('voplc_title_form_apply', App.Langs),
+                    title: langView('voplc_title_form_apply_title', App.Langs),
                     icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
                     icon_fa_right: null,
                     fn_click: function (event) {
@@ -308,8 +306,8 @@
                     class: null,
                     fsize: 'sm',
                     color: 'primary',
-                    text: langView('vopulc_title_form_operation_apply', App.Langs),
-                    title: langView('vopulc_title_form_operation_apply_title', App.Langs),
+                    text: langView('voplc_title_form_operation_apply', App.Langs),
+                    title: langView('voplc_title_form_operation_apply_title', App.Langs),
                     icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
                     icon_fa_right: null,
                     fn_click: function (event) {
@@ -337,13 +335,13 @@
                     validation_group: 'common_filing_wagons',
                     id: 'time_start',
                     name: 'time_start',
-                    label: langView('vopulc_title_time_start', App.Langs),
+                    label: langView('voplc_title_time_start', App.Langs),
                     element_type: 'datetime-local',
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopulc_title_placeholder_time_start', App.Langs),
+                    element_placeholder: langView('voplc_title_placeholder_time_start', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -365,7 +363,7 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
-                    form_text: langView('vopulc_text_time_start', App.Langs),
+                    form_text: langView('voplc_text_time_start', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -376,13 +374,13 @@
                     validation_group: 'common_filing_wagons',
                     id: 'time_stop',
                     name: 'time_stop',
-                    label: langView('vopulc_title_time_stop', App.Langs),
+                    label: langView('voplc_title_time_stop', App.Langs),
                     element_type: 'datetime-local',
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopulc_title_placeholder_time_stop', App.Langs),
+                    element_placeholder: langView('voplc_title_placeholder_time_stop', App.Langs),
                     element_required: false,
                     element_maxlength: null,
                     element_pattern: null,
@@ -404,127 +402,127 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
-                    form_text: langView('vopulc_text_time_stop', App.Langs),
+                    form_text: langView('voplc_text_time_stop', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
             };
-            var form_select_devision_on = {
-                obj: 'bs_form_select',
-                options: {
-                    validation_group: 'common_filing_wagons',
-                    id: 'id_devision_on',
-                    name: 'id_devision_on',
-                    label: langView('vopulc_title_label_devision_on', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: null,
-                    element_value: null,
-                    element_multiple: false,
-                    element_title: null,
-                    element_required: true,
-                    element_readonly: false,
-                    element_size: null,
-                    element_options: {
-                        data: this.list_devision_on,
-                        default: 1,
-                        fn_change: function (e) {
-                            e.preventDefault();
-                            // Обработать выбор
-                            var id = Number($(e.currentTarget).val());
-                        }.bind(this),
-                        fn_check: function (text) {
+            //var form_select_devision_on = {
+            //    obj: 'bs_form_select',
+            //    options: {
+            //        validation_group: 'common_filing_wagons',
+            //        id: 'id_devision_on',
+            //        name: 'id_devision_on',
+            //        label: langView('vopcf_title_label_devision_on', App.Langs),
+            //        element_fsize: 'sm',
+            //        element_class: null,
+            //        element_value: null,
+            //        element_multiple: false,
+            //        element_title: null,
+            //        element_required: true,
+            //        element_readonly: false,
+            //        element_size: null,
+            //        element_options: {
+            //            data: this.list_devision_on,
+            //            default: 1,
+            //            fn_change: function (e) {
+            //                e.preventDefault();
+            //                // Обработать выбор
+            //                var id = Number($(e.currentTarget).val());
+            //            }.bind(this),
+            //            fn_check: function (text) {
 
-                        }.bind(this),
-                    },
-                    validation: true,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 6,
-                    col_class: 'mt-0',
-                    form_text: langView('vopulc_text_label_devision_on', App.Langs),
-                    form_text_class: null,
-                },
-                childs: []
-            };
-            var form_select_status_load = {
-                obj: 'bs_form_select',
-                options: {
-                    validation_group: 'common_filing_wagons',
-                    id: 'id_status_load',
-                    name: 'id_status_load',
-                    label: langView('vopulc_title_label_status_load', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: null,
-                    element_value: null,
-                    element_multiple: false,
-                    element_title: null,
-                    element_required: false,
-                    element_readonly: false,
-                    element_size: null,
-                    element_options: {
-                        data: this.list_status_load,
-                        default: 1,
-                        fn_change: function (e) {
-                            e.preventDefault();
-                            // Обработать выбор
-                            var id = Number($(e.currentTarget).val());
-                        }.bind(this),
-                        fn_check: function (text) {
+            //            }.bind(this),
+            //        },
+            //        validation: true,
+            //        feedback_invalid: null,
+            //        feedback_valid: null,
+            //        feedback_class: null,
+            //        col_prefix: 'md',
+            //        col_size: 6,
+            //        col_class: 'mt-0',
+            //        form_text: langView('vopcf_text_label_devision_on', App.Langs),
+            //        form_text_class: null,
+            //    },
+            //    childs: []
+            //};
+            //var form_select_status_load = {
+            //    obj: 'bs_form_select',
+            //    options: {
+            //        validation_group: 'common_filing_wagons',
+            //        id: 'id_status_load',
+            //        name: 'id_status_load',
+            //        label: langView('vopcf_title_label_status_load', App.Langs),
+            //        element_fsize: 'sm',
+            //        element_class: null,
+            //        element_value: null,
+            //        element_multiple: false,
+            //        element_title: null,
+            //        element_required: false,
+            //        element_readonly: false,
+            //        element_size: null,
+            //        element_options: {
+            //            data: this.list_status_load,
+            //            default: 1,
+            //            fn_change: function (e) {
+            //                e.preventDefault();
+            //                // Обработать выбор
+            //                var id = Number($(e.currentTarget).val());
+            //            }.bind(this),
+            //            fn_check: function (text) {
 
-                        }.bind(this),
-                    },
-                    validation: false,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 6,
-                    col_class: 'mt-0',
-                    form_text: langView('vopulc_text_label_status_load', App.Langs),
-                    form_text_class: null,
-                },
-                childs: []
-            };
-            var form_select_station_amkr_on = {
-                obj: 'bs_form_select',
-                options: {
-                    validation_group: 'common_filing_wagons',
-                    id: 'id_station_amkr_on',
-                    name: 'id_station_amkr_on',
-                    label: langView('vopulc_title_label_station_amkr_on', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: null,
-                    element_value: null,
-                    element_multiple: false,
-                    element_title: null,
-                    element_required: true,
-                    element_readonly: false,
-                    element_size: null,
-                    element_options: {
-                        data: this.list_station_amkr_on,
-                        default: 1,
-                        fn_change: function (e) {
-                            e.preventDefault();
-                            // Обработать выбор
-                        }.bind(this),
-                        fn_check: function (text) {
+            //            }.bind(this),
+            //        },
+            //        validation: false,
+            //        feedback_invalid: null,
+            //        feedback_valid: null,
+            //        feedback_class: null,
+            //        col_prefix: 'md',
+            //        col_size: 6,
+            //        col_class: 'mt-0',
+            //        form_text: langView('vopcf_text_label_status_load', App.Langs),
+            //        form_text_class: null,
+            //    },
+            //    childs: []
+            //};
+            //var form_select_station_amkr_on = {
+            //    obj: 'bs_form_select',
+            //    options: {
+            //        validation_group: 'common_filing_wagons',
+            //        id: 'id_station_amkr_on',
+            //        name: 'id_station_amkr_on',
+            //        label: langView('vopcf_title_label_station_amkr_on', App.Langs),
+            //        element_fsize: 'sm',
+            //        element_class: null,
+            //        element_value: null,
+            //        element_multiple: false,
+            //        element_title: null,
+            //        element_required: true,
+            //        element_readonly: false,
+            //        element_size: null,
+            //        element_options: {
+            //            data: this.list_station_amkr_on,
+            //            default: 1,
+            //            fn_change: function (e) {
+            //                e.preventDefault();
+            //                // Обработать выбор
+            //            }.bind(this),
+            //            fn_check: function (text) {
 
-                        }.bind(this),
-                    },
-                    validation: true,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 6,
-                    col_class: 'mt-0',
-                    form_text: langView('vopulc_text_label_station_amkr_on', App.Langs),
-                    form_text_class: null,
-                },
-                childs: []
-            };
+            //            }.bind(this),
+            //        },
+            //        validation: true,
+            //        feedback_invalid: null,
+            //        feedback_valid: null,
+            //        feedback_class: null,
+            //        col_prefix: 'md',
+            //        col_size: 6,
+            //        col_class: 'mt-0',
+            //        form_text: langView('vopcf_text_label_station_amkr_on', App.Langs),
+            //        form_text_class: null,
+            //    },
+            //    childs: []
+            //};
             col_bt_apply.childs.push(bt_bt_add);
             col_bt_apply.childs.push(bt_bt_apply);
             col_bt_apply.childs.push(bt_bt_operation);
@@ -533,9 +531,9 @@
             objs_filing_wagons_setup.push(col_alert);
             objs_filing_wagons_setup.push(form_input_datetime_time_start);
             objs_filing_wagons_setup.push(form_input_datetime_time_stop);
-            objs_filing_wagons_setup.push(form_select_devision_on);
-            objs_filing_wagons_setup.push(form_select_status_load);
-            objs_filing_wagons_setup.push(form_select_station_amkr_on);
+            //objs_filing_wagons_setup.push(form_select_devision_on);
+            //objs_filing_wagons_setup.push(form_select_status_load);
+            //objs_filing_wagons_setup.push(form_select_station_amkr_on);
 
             this.form_filing_wagons_setup.init({
                 alert: this.main_alert,
@@ -546,7 +544,8 @@
                 fn_validation: function (result) {
                     // Валидация успешна
                     if (result && result.valid) {
-                        // Дополнительная проверка. Определим режим
+                        // Дополнительная проверка
+                        // Определим режим
                         var mode = null;
                         var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                         if (this.id_filing !== null) {
@@ -570,7 +569,7 @@
                                 var message = "";
                                 switch (mode) {
                                     case 0: {
-                                        message = langView('vopulc_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
+                                        message = langView('vopcf_confirm_mess_apply_create_filing', App.Langs).format(this.form_filing_setup.el.select_id_station_unload.text(),
                                             this.form_from_setup.el.select_id_way_unload.text(),
                                             this.form_filing_wagons_setup.el.select_id_devision_on.text(),
                                             (this.filing_wagons ? this.filing_wagons.length : 0),
@@ -579,32 +578,32 @@
                                         break;
                                     }
                                     case 1: {
-                                        message = langView('vopulc_confirm_mess_apply_update_filing', App.Langs).format(this.id_filing, this.form_filing_setup.el.select_id_station_unload.text(), this.form_filing_wagons_setup.el.select_id_devision_on.text());
+                                        message = langView('vopcf_confirm_mess_apply_update_filing', App.Langs).format(this.id_filing, this.form_filing_setup.el.select_id_station_unload.text(), this.form_filing_wagons_setup.el.select_id_devision_on.text());
                                         break;
                                     }
                                     case 2: {
-                                        message = langView('vopulc_confirm_mess_apply_update_filing_start_operation', App.Langs).format(this.id_filing,
+                                        message = langView('vopcf_confirm_mess_apply_update_filing_start_operation', App.Langs).format(this.id_filing,
                                             (rows ? rows.length : 0),
                                             (rows ? rows.length : 0),
                                             (dt_stop !== null ? (rows ? rows.length : 0) : 0));
                                         break;
                                     }
                                     case 3: {
-                                        message = langView('vopulc_confirm_mess_apply_update_filing_stop_operation', App.Langs).format(this.id_filing,
+                                        message = langView('vopcf_confirm_mess_apply_update_filing_stop_operation', App.Langs).format(this.id_filing,
                                             (rows ? rows.length : 0),
                                             (rows ? rows.length : 0),
                                             (dt_stop !== null ? (rows ? rows.length : 0) : 0));
                                         break;
                                     }
                                     case 4: {
-                                        message = langView('vopulc_confirm_mess_apply_update_filing_status_operation', App.Langs).format(this.id_filing,
+                                        message = langView('vopcf_confirm_mess_apply_update_filing_status_operation', App.Langs).format(this.id_filing,
                                             (rows ? rows.length : 0),
                                             this.form_filing_wagons_setup.el.select_id_status_load.text());
                                         break;
                                     }
                                 }
                                 this.view_com.mcf_lg.open(
-                                    langView('vopulc_title_form_apply', App.Langs),
+                                    langView('vopcf_title_form_apply', App.Langs),
                                     message,
                                     function () {
                                         // Создать подачу
@@ -661,10 +660,10 @@
                                                     list_wagons.push(
                                                         {
                                                             id_wim: el.idWim,
-                                                            start: dt_start ? result.new.input_datetime_time_start._i : null,   // можно править пока подача не закрыта
-                                                            stop: dt_stop ? result.new.input_datetime_time_stop._i : null,      // можно править пока подача не закрыта
-                                                            id_wagon_operations: el.currentCargoIdCargo === null ? 13 : 14,     // (13,14) можно править пока подача не закрыта
-                                                            id_status_load: Number(result.new.select_id_status_load)            // можно править пока подача не закрыта
+                                                            start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
+                                                            stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
+                                                            id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
+                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -688,9 +687,9 @@
                                                         {
                                                             id_wim: el.idWim,
                                                             start: null,
-                                                            stop: dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
+                                                            stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load: Number(result.new.select_id_status_load)            // можно править пока подача не закрыта
+                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -714,9 +713,9 @@
                                                         {
                                                             id_wim: el.idWim,
                                                             start: null,
-                                                            stop: null,                                                     // можно править пока подача не закрыта
+                                                            stop: null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load:  Number(result.new.select_id_status_load)       // можно править пока подача не закрыта
+                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -731,7 +730,7 @@
                                         };
                                     }.bind(this),
                                     function () {
-                                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopulc_mess_cancel_operation_mode_' + mode, App.Langs));
+                                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_operation_mode_' + mode, App.Langs));
                                     }.bind(this)
                                 );
                             }
@@ -760,7 +759,7 @@
         var out_init_cfiling = function () {
             // Выход с общей инициализации
             if (typeof this.settings.fn_init === 'function') {
-                console.log('Close view_op_unloading_cars');
+                console.log('Close view_op_loading_cars');
 
                 this.settings.fn_init(this.result_init);
             }
@@ -953,19 +952,18 @@
                 //-------------------------------------------------
             };
         }
-        //
         var view_setup_filing = function () {
             this.form_filing_setup.clear_all();
             this.form_filing_wagons_setup.clear_all();
             this.filing_wagons_alert_info.clear_message();
-            this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_start', App.Langs));
+            this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_start', App.Langs));
 
             // Обновим кнопку добавить в подачу\создать черновик
             var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
             var bts = this["twwf_" + this.type_filing].tab_com.obj_t_report.buttons([7]);
             bts.enable();
-            bts.text(langView('vopulc_title_button_new_filing', App.Langs));
-            //bts.titleAttr(langView('vopulc_title_attr_button_new_filing', App.Langs));
+            bts.text(langView('voplc_title_button_new_filing', App.Langs));
+            //bts.titleAttr(langView('voplc_title_attr_button_new_filing', App.Langs));
             var fws_bts = this["tfw_" + this.type_filing].tab_com.obj_t_report.buttons([7]);
             fws_bts.disable();
 
@@ -976,40 +974,40 @@
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
-            this.form_filing_wagons_setup.el.select_id_devision_on.val(-1);
-            this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
-            this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(-1);
+            //this.form_filing_wagons_setup.el.select_id_devision_on.val(-1);
+            //this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
+            //this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(-1);
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.disable();
             this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();
-            this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-            this.form_filing_wagons_setup.el.select_id_status_load.disable();
-            this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+            //this.form_filing_wagons_setup.el.select_id_devision_on.disable();
+            //this.form_filing_wagons_setup.el.select_id_status_load.disable();
+            //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
 
             if (this.id_filing === 0) {
                 // черновик
                 fws_bts.enable();
                 this.filing_wagons_alert_info.clear_message();
-                this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_draft', App.Langs));
+                this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_draft', App.Langs));
                 this.form_filing_wagons_setup.el.button_filing_add.show();
                 this.form_filing_wagons_setup.el.button_filing_apply.hide();
                 this.form_filing_wagons_setup.el.button_operation_apply.hide();
                 this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                this.form_filing_wagons_setup.el.select_id_devision_on.enable();
-                this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                //this.form_filing_wagons_setup.el.select_id_devision_on.enable();
+                //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                 //--
                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
-                this.form_filing_wagons_setup.el.select_id_devision_on.enable();
-                this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
-                this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
+                //this.form_filing_wagons_setup.el.select_id_devision_on.enable();
+                //this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
+                //this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
             };
             if (this.id_filing > 0) {
-                bts.text(langView('vopulc_title_button_add_filing', App.Langs));
+                bts.text(langView('voplc_title_button_add_filing', App.Langs));
                 this.filing_wagons_alert_info.clear_message();
 
-                //bts.titleAttr(langView('vopulc_title_attr__button_add_filing', App.Langs));
+                //bts.titleAttr(langView('voplc_title_attr__button_add_filing', App.Langs));
                 if (this.close_filing !== null) bts.disable();
                 // Выбрана подача (покажем данные по подаче)
                 if (this.create_filing) {
@@ -1024,41 +1022,41 @@
                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
                 if (this.close_filing === null) {
-                    this.form_filing_wagons_setup.el.select_id_devision_on.enable();
-                    this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_filing', App.Langs));
+                    //this.form_filing_wagons_setup.el.select_id_devision_on.enable();
+                    this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_filing', App.Langs));
                 } else {
-                    this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_filing_close', App.Langs));
+                    this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_filing_close', App.Langs));
                 }
-                this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
-                this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
-                this.form_filing_wagons_setup.el.select_id_status_load.val(this.status_load);
-                this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
+                //this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
+                //this.form_filing_wagons_setup.el.select_id_devision_on.val(this.division_on);
+                //this.form_filing_wagons_setup.el.select_id_status_load.val(this.status_load);
+                //this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(this.station_on);
 
                 switch (this.fw_status) {
                     case 0: {
                         fws_bts.enable();
                         this.filing_wagons_alert_info.clear_message();
-                        this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_0', App.Langs));
+                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_0', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                        //this.form_filing_wagons_setup.el.select_id_devision_on.disable();
+                        //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
                         break;
                     }
                     case 1: {
                         this.filing_wagons_alert_info.clear_message();
-                        this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_1', App.Langs));
+                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                        //this.form_filing_wagons_setup.el.select_id_devision_on.disable();
+                        //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
                         break;
@@ -1067,152 +1065,48 @@
                         this.filing_wagons_alert_info.clear_message();
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
-                        this.form_filing_wagons_setup.el.select_id_devision_on.disable();
+                        //this.form_filing_wagons_setup.el.select_id_devision_on.disable();
 
                         if (this.close_filing === null) {
-                            this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                            //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                             this.form_filing_wagons_setup.el.button_operation_apply.show();
-                            this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_2', App.Langs));
+                            this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2', App.Langs));
 
                         } else {
-                            this.form_filing_wagons_setup.el.select_id_status_load.disable();
+                            //this.form_filing_wagons_setup.el.select_id_status_load.disable();
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                            this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_2_close', App.Langs));
+                            this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2_close', App.Langs));
                         }
-                        this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
+                        //this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 ? moment(rows[0].filingEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
                         break;
                     }
                     case 3: {
                         this.filing_wagons_alert_info.clear_message();
-                        this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_3', App.Langs));
+                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_3', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        this.form_filing_wagons_setup.el.select_id_devision_on.disable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.disable();
+                        //this.form_filing_wagons_setup.el.select_id_devision_on.disable();
+                        //this.form_filing_wagons_setup.el.select_id_status_load.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 ? moment(rows[0].filingEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
                         break;
                     }
                 }
             }
         }
-        //
-        var validation = function (result, mode) {
-            // 0- add; >0 id ; null -not edit
-            if (this.id_filing === null) { return false; }
-            var valid = true;
-            var el_dtstart = this.form_filing_wagons_setup.el.input_datetime_time_start.$element;
-            var el_dtstop = this.form_filing_wagons_setup.el.input_datetime_time_stop.$element;
-            var el_sl = this.form_filing_wagons_setup.el.select_id_status_load.$element;
-            var el_dv = this.form_filing_wagons_setup.el.select_id_devision_on.$element;
-            var el_stamkr = this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element;
 
-            // Время начала
-            if (mode === 0 || mode === 2) {
-                // Создать подачу и операции над вагонами
-                // Проверим время начала
-                if (result.new && result.new.input_datetime_time_start) {
-                    var curr = moment();
-                    var aplly = moment(result.new.input_datetime_time_start);
-                    var minutes = aplly.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstart), langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                        valid = false;
-                    }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstart), langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                        valid = false;
-                    }
-                }
-            }
-            // Время конца 
-            if (mode === 3) {
-                if (result.new && result.new.input_datetime_time_stop === null) {
-                    this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_time_aplly', App.Langs));
-                    valid = false;
-                }
-            }
-            // Время конца
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // Проверим время окончания
-                if (result.new && result.new.input_datetime_time_stop) {
-                    var curr = moment();
-                    var dtstop = moment(result.new.input_datetime_time_stop);
-                    var minutes = dtstop.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                        valid = false;
-                    }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                        valid = false;
-                    }
-                }
-            }
-            // Проверим соотношение начало и конца
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // Проверим время начала и окончания
-                if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
-                    var dtstart = moment(result.new.input_datetime_time_start);
-                    var dtstop = moment(result.new.input_datetime_time_stop);
-                    var minutes = dtstop.diff(dtstart, 'minutes');
-                    if (minutes < min_period || minutes > max_period) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_period_time', App.Langs).format(min_period, max_period));
-                        valid = false;
-                    }
-                }
-            }
-            // Проверим вагоны в подаче
-            if (mode === 0) {
-                // Проверим вагоны в подаче
-                if (this.filing_wagons === null || this.filing_wagons.length === 0) {
-                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopulc_mess_error_not_wagons_filing', App.Langs));
-                    valid = false;
-                }
-            }
-            // проверка выбранных вагонов
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // Проверим выбранные вагоны для открытия и закрытия операции
-                var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
-            }
-            // проверка выбранных для операций вагонов
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // должно быть выставлено время конца
-                if (result.new && result.new.input_datetime_time_stop) {
-                    if (!rows || rows.length === 0) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopulc_mess_error_not_wagons_close_filing', App.Langs));
-                        valid = false;
-                    }
-                } else {
-                    if (result.new && result.new.select_id_status_load >= 0) {
-                        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_time_aplly', App.Langs));
-                        valid = false;
-                    }
-                }
-            }
-            // проверка статуса
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // должно быть выставлено время конца
-                if (result.new && result.new.input_datetime_time_stop) {
-                    valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_sl), langView('vopulc_mess_error_not_wagons_status_close_filing', App.Langs), null, true)
-                }
-            }
-            // проверка подразделения
-            if (mode === 1) {
-                valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_dv), langView('vopulc_mess_error_filing_division', App.Langs), null, true)
-            }
-            // проверка подразделения
-            if (mode === 1) {
-                valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_stamkr), langView('vopulc_mess_error_filing_station_amkr', App.Langs), null, true)
-            }
-            return valid;
+        var validation = function (result, mode) {
+            return false;
         }
         var apply_add_filing = function (data) {
+            return false;
+        }
+        var apply_update_filing = function (data) {
             return false;
         }
         // Завершенеие инициализации [this.view_com]
@@ -1221,7 +1115,7 @@
             this.cfiling.init({
                 alert: this.settings.alert,
 
-                type_filing: 1, // Выгрузка
+                type_filing: 2, // Погрузка
                 wagon_operation: 13, // операция над вагоном
                 fn_get_sostav_filing: function (row, station, way, park, division, wagons) {
                     return get_sostav_filing.call(this, row, station, way, park, division, wagons);
@@ -1264,11 +1158,11 @@
             fn_db_update: this.settings.fn_db_update,
             fn_init: function () {
                 this.view_com.$title.empty();
-                this.view_com.$title.append(langView('vopulc_card_header_panel', App.Langs));
+                this.view_com.$title.append(langView('voplc_card_header_panel', App.Langs));
                 this.view_com.$op.empty();
                 this.view_com.close();
                 // Сообщение
-                LockScreen(langView('vopulc_mess_init_panel', App.Langs));
+                LockScreen(langView('voplc_mess_init_panel', App.Langs));
                 out_init_view_com();
             }.bind(this),
             fn_close: this.settings.fn_close,
@@ -1277,11 +1171,11 @@
 
     };
 
-    view_op_unloading_cars.prototype.view = function (id_way) {
+    view_op_loading_cars.prototype.view = function (id_way) {
         this.cfiling.view(id_way);
     }
 
-    App.view_op_unloading_cars = view_op_unloading_cars;
+    App.view_op_loading_cars = view_op_loading_cars;
 
     window.App = App;
 

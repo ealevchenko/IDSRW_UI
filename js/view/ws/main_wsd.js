@@ -111,6 +111,9 @@
     var VOPUNLC = App.view_op_unloading_cars;
     var vopunlc = new VOPUNLC('main.container-fluid');
 
+    var VOPLC = App.view_op_loading_cars;
+    var voplc = new VOPLC('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -390,7 +393,7 @@
 
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
-            var process = 16;
+            var process = 17;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -468,6 +471,15 @@
                     case 'unloading': {
                         if (current_option_way !== null && current_option_way["id-devision"] >0) {
                             vopunlc.view(current_id_way);
+                        } else {
+                            main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                        }
+                        break;
+                    };
+                    case 'loading': {
+                        if (current_option_way !== null && current_option_way["id-devision"] >0) {
+                            voplc.view(current_id_way);
                         } else {
                             main_alert.clear_message();
                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
@@ -1065,6 +1077,25 @@
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[main_wsd] [vopunlc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function () {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции погрузка
+            voplc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [voplc] process ' + process);
                     out_init(process);
                 },
                 fn_close: function () {
