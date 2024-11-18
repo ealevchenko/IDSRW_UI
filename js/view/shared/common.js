@@ -660,7 +660,7 @@ var is_valid_num_wagon = function (num) {
         } else {
             add_class(this.$html, this.settings.class);
             add_id(this.$html, this.settings.id);
-            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'name', this.settings.name ? this.settings.name : this.settings.id);
             add_tag(this.$html, 'type', this.settings.type);
             add_tag(this.$html, 'value', this.settings.value);
             add_tag(this.$html, 'checked', this.settings.checked);
@@ -698,7 +698,7 @@ var is_valid_num_wagon = function (num) {
         } else {
             add_class(this.$html, this.settings.class);
             add_id(this.$html, this.settings.id);
-            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'name', this.settings.name ? this.settings.name : this.settings.id);
             add_tag(this.$html, 'value', this.settings.value);
             add_tag(this.$html, 'multiple', this.settings.multiple);
             add_tag(this.$html, 'title', this.settings.title);
@@ -737,7 +737,7 @@ var is_valid_num_wagon = function (num) {
         } else {
             add_class(this.$html, this.settings.class);
             add_id(this.$html, this.settings.id);
-            add_tag(this.$html, 'name', this.settings.id);
+            add_tag(this.$html, 'name', this.settings.name ? this.settings.name : this.settings.id);
             add_tag(this.$html, 'value', this.settings.value);
             add_tag(this.$html, 'title', this.settings.title);
             add_tag(this.$html, 'placeholder', this.settings.placeholder);
@@ -852,12 +852,15 @@ var is_valid_num_wagon = function (num) {
     };
     //<div class="col-6">.col-6</div>
     form_element.prototype.bs_col = function (options) {
+        this.fe = new form_element();
         this.settings = $.extend({
             id: null,
             pref: null,
             size: null,
             class: null,
             style: null,
+            obj_form: null,
+            append_objs: null,
         }, options);
         this.$html = $('<div></div>');
         if (!this.$html || this.$html.length === 0) {
@@ -875,6 +878,11 @@ var is_valid_num_wagon = function (num) {
             add_id(this.$html, this.settings.id);
             add_class(this.$html, this.settings.class);
             add_tag(this.$html, 'style', this.settings.style);
+            if (this.settings.obj_form !== null && this.settings.append_objs !== null && this.settings.append_objs.length > 0) {
+                this.fe.add_obj(this.$html, this.settings.append_objs, this.settings.obj_form, function (content) {
+
+                }.bind(this));
+            }
         }
     };
     // Элемент <div class="input-group"></div>
@@ -1611,7 +1619,7 @@ var is_valid_num_wagon = function (num) {
             feedback_invalid: null,
             feedback_valid: null,
             feedback_class: null,
-            col: true,
+            col: null,
             col_prefix: null,
             col_size: null,
             col_class: null,
@@ -1629,11 +1637,14 @@ var is_valid_num_wagon = function (num) {
             required: this.settings.element_required,
             readonly: this.settings.element_readonly,
         });
-        var col = new this.fe.bs_col({
-            pref: this.settings.col_prefix,
-            size: this.settings.col_size,
-            class: this.settings.col_class,
-        });
+        //var col = this.settings.col;
+        //if (!this.settings.col) {
+            var col = new this.fe.bs_col({
+                pref: this.settings.col_prefix,
+                size: this.settings.col_size,
+                class: this.settings.col_class,
+            });
+        //}
         var div_form_check = new this.fe.bs_div_form_check({
             //class: this.settings.validation ? 'has-validation' : null,
         });
@@ -1676,6 +1687,103 @@ var is_valid_num_wagon = function (num) {
         }
         this.$element = element.$html;
     }
+    //< div class="form-check form-check-inline" >
+    //  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+    //  <label class="form-check-label" for="inlineRadio1">1</label>
+    //</div>
+    //<div class="form-check form-check-inline">
+    //  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+    //  <label class="form-check-label" for="inlineRadio2">2</label>
+    //</div>
+    //<div class="form-check form-check-inline">
+    //  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+    //  <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+    //</div >
+    //form_element.prototype.bs_form_list_check = function (options) {
+    //    this.fe = new form_element();
+    //    this.settings = $.extend({
+    //        id: null,
+    //        name: null,
+    //        label: null,
+    //        element_type: 'checkbox',
+    //        element_switch: false,
+    //        element_inline: false,
+    //        element_class: null,
+    //        element_value: null,
+    //        element_title: null,
+    //        element_checked: null,
+    //        element_required: null,
+    //        element_readonly: false,
+    //        validation: false,
+    //        feedback_invalid: null,
+    //        feedback_valid: null,
+    //        feedback_class: null,
+    //        col: true,
+    //        col_prefix: null,
+    //        col_size: null,
+    //        col_class: null,
+    //        form_text: null,
+    //        form_text_class: null,
+    //    }, options);
+    //    var element = new this.fe.bs_check_input({
+    //        id: this.settings.id,
+    //        name: this.settings.name,
+    //        type: this.settings.element_type,
+    //        class: this.settings.element_class,
+    //        value: this.settings.element_value,
+    //        title: this.settings.element_title,
+    //        checked: this.settings.element_checked,
+    //        required: this.settings.element_required,
+    //        readonly: this.settings.element_readonly,
+    //    });
+    //    var col = new this.fe.bs_col({
+    //        pref: this.settings.col_prefix,
+    //        size: this.settings.col_size,
+    //        class: this.settings.col_class,
+    //    });
+    //    var div_form_check = new this.fe.bs_div_form_check({
+    //        //class: this.settings.validation ? 'has-validation' : null,
+    //    });
+    //    if (this.settings.element_switch) {
+    //        add_class(div_form_check.$html, 'form-switch');
+    //        add_tag(element.$html, 'role', 'switch');
+    //    }
+    //    if (this.settings.element_inline) {
+    //        add_class(div_form_check.$html, 'form-check-inline');
+    //    }
+    //    var label = new this.fe.label({
+    //        class: 'form-check-label',
+    //        for: this.settings.id,
+    //        label: this.settings.label
+    //    });
+    //    div_form_check.$html.prepend(element.$html);
+    //    div_form_check.$html.prepend(label.$html);
+    //    if (this.settings.validation) {
+    //        var feedback = new this.fe.div({
+    //            class: 'invalid-feedback' + (this.settings.feedback_class !== null ? this.settings.feedback_class : ''),
+    //        });
+    //        add_class(feedback.$html, this.settings.feedback_class);
+    //        feedback.$html.append(this.settings.feedback_invalid);
+    //        div_form_check.$html.append(feedback.$html);
+    //    }
+    //    col.$html.append(div_form_check.$html);
+    //    if (this.settings.form_text !== null) {
+    //        var ftext = new this.fe.div({
+    //            id: this.settings.id + '-help',
+    //            class: 'form-text',
+    //        });
+    //        add_class(ftext.$html, this.settings.form_text_class);
+    //        ftext.$html.append(this.settings.form_text);
+    //        col.$html.append(ftext.$html);
+    //    }
+    //    if (this.settings.col) {
+    //        this.$html = col.$html;
+    //    } else {
+    //        this.$html = col.$html[0].innerHTML;
+    //    }
+    //    this.$element = element.$html;
+    //}
+
     // bootstrap-components ----------------------------------
 
 
@@ -2388,8 +2496,16 @@ var is_valid_num_wagon = function (num) {
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_col') {
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_col(obj.options);
                     add_element(obj_html.$html, content, obj);
+                    //obj_form.views.push({
+                    //    name: obj.options.id,
+                    //    validation_group: null,
+                    //    type: 'col',
+                    //    $element: obj_html.$html,
+                    //    destroy: false
+                    //});
                 };
                 if (obj.obj === 'bs_alert') {
                     var obj_html = new this.bs_alert(obj.options);
