@@ -425,7 +425,7 @@
                     element_readonly: false,
                     element_size: null,
                     element_options: {
-                        data: this.list_devision_on,
+                        data: this.list_devision,
                         default: 1,
                         fn_change: function (e) {
                             e.preventDefault();
