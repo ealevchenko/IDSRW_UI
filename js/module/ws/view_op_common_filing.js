@@ -385,7 +385,7 @@
                     }
                 }.bind(this));
 
-                this.list_devision_on = this.view_com.api_dir.getListValueTextAbbrDivisions();
+                this.list_devision = this.view_com.api_dir.getListValueTextAbbrDivisions();
                 //this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatus();
                 this.list_station_amkr_on = this.view_com.api_dir.getListValueTextStation(function (i) {
                     return !i.stationUz && i.stationDelete === null;
