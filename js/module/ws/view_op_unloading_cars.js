@@ -232,6 +232,13 @@
             fn_close: null,
         }, options);
 
+        var load_db = function (callback) {
+            this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
+
         // Инициализация формы выбора периода и станции подач
         var init_form_filing_setup = function (callback) {
             //-------------------------------------------------------------------
@@ -716,7 +723,7 @@
                                                             start: null,
                                                             stop: null,                                                     // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load:  Number(result.new.select_id_status_load)       // можно править пока подача не закрыта
+                                                            id_status_load: Number(result.new.select_id_status_load)       // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -1223,6 +1230,10 @@
 
                 type_filing: 1, // Выгрузка
                 wagon_operation: 13, // операция над вагоном
+                add_db_names: [],
+                fn_load_db: function (callback) {
+                    load_db.call(this, callback);
+                },
                 fn_get_sostav_filing: function (row, station, way, park, division, wagons) {
                     return get_sostav_filing.call(this, row, station, way, park, division, wagons);
                 },

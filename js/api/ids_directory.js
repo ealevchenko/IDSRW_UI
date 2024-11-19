@@ -47,6 +47,7 @@
                 { name: 'wagons_rent', list: null, fn_get: this.getWagonsRent.bind(this) },
                 { name: 'owners_wagons', list: null, fn_get: this.getOwnersWagons.bind(this) },
                 { name: 'owners_operations_uz', list: null, fn_get: this.getWagonOperationsUz.bind(this) },
+                { name: 'wagon_operations', list: null, fn_get: this.getWagonOperations.bind(this) },
                 { name: 'station', list: null, fn_get: this.getStation.bind(this) },
                 { name: 'park_ways', list: null, fn_get: this.getParkWays.bind(this) },
                 { name: 'ways', list: null, fn_get: this.getWays.bind(this) },
@@ -228,6 +229,10 @@
     // Получить аренды по номеру вагона
     ids_directory.prototype.getWagonsRentOfNum = function (num, callback) {
         this.api_com.get('/DirectoryWagonsRent/num/' + num, callback);
+    };
+    //======= Directory_WagonOperations (Операции над вагонами) ======================================
+    ids_directory.prototype.getWagonOperations = function (callback) {
+        this.api_com.get('/DirectoryWagonOperation', callback);
     };
     //======= Directory_WagonOperationsUz (Довідник Операції) ======================================
     ids_directory.prototype.getWagonOperationsUz = function (callback) {
@@ -458,7 +463,43 @@
     ids_directory.prototype.getListValueTextStation = function (filter) {
         return this.getListStation('id', 'stationName', ucFirst(App.Lang), filter);
     };
-
+    //*======= (Справочник wagon_operations) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllWagonOperations = function () {
+        var obj = this.api_com.getAllObj('wagon_operations');
+        return obj ? obj.list : null;
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getWagonOperations_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('wagon_operations', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListWagonOperations = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('wagon_operations', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextWagonOperations = function (filter) {
+        return this.getListWagonOperations('id', 'operation_name', ucFirst(App.Lang), filter);
+    };
+    // Получить списки (Value, Text, Desabled) статусов погрузки по указаной операции
+    ids_directory.prototype.getListValueTextWagonLoadingStatusOfWagonOperation = function (id) {
+        var list_status_load = [];
+        var list = this.getAllWagonOperations();
+        if (list && list.length) {
+            $.each(list.filter(function (i) {
+                return i.id === id;
+            }.bind(this)), function (i, el) {
+                if (el.directoryWagonOperationsLoadingStatuses && el.directoryWagonOperationsLoadingStatuses.length) {
+                    $.each(el.directoryWagonOperationsLoadingStatuses, function (ix, el_ls) {
+                        if (el_ls.idWagonLoadingStatusNavigation) {
+                            list_status_load.push({ value: el_ls.idWagonLoadingStatusNavigation.id, text: el_ls.idWagonLoadingStatusNavigation['loadingStatus' + ucFirst(App.Lang)], disabled: false });
+                        }
+                    }.bind(this));
+                };
+            }.bind(this));
+        };
+        return list_status_load;
+    };
     //*======= (Справочник owners_operations_uz) ======================================
     // Получить все записи
     ids_directory.prototype.getAllWagonOperationsUz = function () {

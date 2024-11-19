@@ -47,20 +47,42 @@
 
             'voplc_title_label_station_amkr_from': 'Станция погр. ТЕКУЩ:',
             'voplc_text_label_station_amkr_from': 'Выберите станцию погр. ТЕКУЩУЮ...',
-            'vopoc_title_label_devision_from': 'Цех погр. ТЕКУЩ:',
-            'vopoc_title_placeholder_devision_from': 'Цех погр. ТЕКУЩ',
+            'voplc_title_label_devision_from': 'Цех погр. ТЕКУЩ:',
+            'voplc_title_placeholder_devision_from': 'Цех погр. ТЕКУЩ',
             'voplc_text_label_devision_from': 'Выберите цех погр. ТЕКУЩИЙ ...',
 
             'voplc_title_label_station_amkr_on': 'Станция назн. ТЕКУЩ:',
             'voplc_text_label_station_amkr_on': 'Выберите станцию назн. ТЕКУЩУЮ...',
-            'vopoc_title_label_devision_on': 'Цех получ. ТЕКУЩ:',
-            'vopoc_title_placeholder_devision_on': 'Цех получ. ТЕКУЩ',
+            'voplc_title_label_devision_on': 'Цех получ. ТЕКУЩ:',
+            'voplc_title_placeholder_devision_on': 'Цех получ. ТЕКУЩ',
             'voplc_text_label_devision_on': 'Выберите цех получ. ТЕКУЩИЙ ...',
 
-            'vopoc_title_label_num_nakl': 'Номер  накл.  В/З:',
-            'vopoc_title_placeholder_num_nakl': '№ накладной  В/З',
+            'voplc_title_label_num_nakl': 'Номер  накл.  В/З:',
+            'voplc_title_placeholder_num_nakl': '№ накладной  В/З',
             'voplc_text_label_num_nakl': 'Введите № накладной В/З ...',
 
+            'voplc_title_label_amkr_cargo': 'Груз В/З:',
+            'voplc_title_placeholder_amkr_cargo': 'Груз ТЕКУЩИЙ',
+            'voplc_text_label_amkr_cargo': 'Введите груз В/З ТЕКУЩИЙ ...',
+
+            'voplc_title_label_station_uz': 'Станция назначения (УЗ):',
+            'voplc_title_placeholder_station_uz': 'Ст. назн. ТЕКУЩАЯ',
+            'voplc_text_label_station_uz': 'Введите cтанцию назначения (УЗ) ТЕКУЩАЯ ...',
+
+            'voplc_title_label_code_etsng': 'Код ЕТСНГ:',
+            'voplc_title_placeholder_code_etsng': 'Код ЕТСНГ',
+            'voplc_text_label_code_etsng': 'Введите код ЕТСНГ ...',
+
+            'voplc_title_label_cargo_etsng': 'Название груза по ЕТСНГ:',
+            'voplc_title_placeholder_cargo_etsng': 'Груз ЕТСНГ',
+            'voplc_text_label_cargo_etsng': 'Введите название груза по ЕТСНГ ...',
+
+            'voplc_title_label_vesg': 'Вес:',
+            'voplc_title_placeholder_vesg': 'Вес',
+            'voplc_text_label_vesg': 'Введите вес груза ...',
+
+            'voplc_title_label_status_load': 'Статус:',
+            'voplc_text_label_status_load': 'Выберите статус (груж./порож.)...',
 
             'voplc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
             'voplc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать операцию, для этого укажите дату начала операции и по необходимости дату завершения, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
@@ -254,6 +276,13 @@
             fn_close: null,
         }, options);
 
+        // Загрузка
+        var load_db = function (callback) {
+            this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
         // Инициализация формы выбора периода и станции подач
         var init_form_filing_setup = function (callback) {
             //-------------------------------------------------------------------
@@ -476,12 +505,12 @@
                     validation_group: 'common_filing_wagons',
                     id: 'id_devision_from',
                     name: 'id_devision_from',
-                    label: langView('vopoc_title_label_devision_from', App.Langs),
+                    label: langView('voplc_title_label_devision_from', App.Langs),
                     element_fsize: 'sm',
                     element_class: 'flexdatalist',
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopoc_title_placeholder_devision_from', App.Langs),
+                    element_placeholder: langView('voplc_title_placeholder_devision_from', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -596,12 +625,12 @@
                     validation_group: 'common_filing_wagons',
                     id: 'id_devision_on',
                     name: 'id_devision_on',
-                    label: langView('vopoc_title_label_devision_on', App.Langs),
+                    label: langView('voplc_title_label_devision_on', App.Langs),
                     element_fsize: 'sm',
                     element_class: 'flexdatalist',
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopoc_title_placeholder_devision_on', App.Langs),
+                    element_placeholder: langView('voplc_title_placeholder_devision_on', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -635,16 +664,236 @@
             var form_input_num_nakl = {
                 obj: 'bs_form_input',
                 options: {
-                    validation_group: 'common',
+                    validation_group: 'common_filing_wagons',
                     id: 'num_nakl',
                     name: 'num_nakl',
-                    label: langView('vopoc_title_label_num_nakl', App.Langs),
+                    label: langView('voplc_title_label_num_nakl', App.Langs),
                     element_type: 'text',
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopoc_title_placeholder_num_nakl', App.Langs),
+                    element_placeholder: langView('voplc_title_placeholder_num_nakl', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_min: null,
+                    element_max: null,
+                    element_step: null,
+                    element_options: {
+                        default: '',
+                        fn_change: function (e) {
+                            var value = $(e.currentTarget).val();
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 4,
+                    col_class: 'mt-0',
+                    form_text: langView('voplc_text_label_num_nakl', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            var bt_append_amkr_cargo = {
+                obj: 'bs_button',
+                options: {
+                    id: null,
+                    name: null,
+                    class: null,
+                    fsize: 'sm',
+                    color: 'success',
+                    text: null,
+                    title: 'append',
+                    icon_fa_left: 'fa-solid fa-plus',//<i class="fa-solid fa-plus"></i>
+                    icon_fa_right: null,
+                    fn_click: null,
+                }
+            };
+            var form_input_datalist_amkr_cargo = {
+                obj: 'bs_form_input_datalist',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'id_amkr_cargo',
+                    name: 'id_amkr_cargo',
+                    label: langView('voplc_title_label_amkr_cargo', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: 'flexdatalist',
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('voplc_title_placeholder_amkr_cargo', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_options: {
+                        data: this.list_amkr_cargo,
+                        out_value: false,
+                        default: null,
+                        minLength: 1,
+                        searchContain: true,
+                        fn_change: function (event, set, options) {
+
+                        }.bind(this),
+                        fn_select: function (event, set, options) {
+
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 8,
+                    col_class: 'mt-0',
+                    group_append_class: null,
+                    group_append_id: null,
+                    group_append_html: null,
+                    group_append_objs: [bt_append_amkr_cargo],
+                    form_text: langView('voplc_text_label_amkr_cargo', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+
+            var form_input_datalist_station_uz = {
+                obj: 'bs_form_input_datalist',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'code_station_uz',
+                    name: 'code_station_uz',
+                    label: langView('voplc_title_label_station_uz', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: 'flexdatalist',
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('voplc_title_placeholder_station_uz', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_options: {
+                        data: this.list_devision,
+                        out_value: false,
+                        default: null,
+                        minLength: 1,
+                        searchContain: true,
+                        fn_change: function (event, set, options) {
+
+                        }.bind(this),
+                        fn_select: function (event, set, options) {
+
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 8,
+                    col_class: 'mt-0',
+                    form_text: langView('voplc_text_label_station_uz', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            var form_input_code_etsng = {
+                obj: 'bs_form_input',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'code_etsng',
+                    name: 'code_etsng',
+                    label: langView('voplc_title_label_code_etsng', App.Langs),
+                    element_type: 'number',
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('voplc_title_placeholder_code_etsng', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_min: null,
+                    element_max: null,
+                    element_step: null,
+                    element_options: {
+                        default: '',
+                        fn_change: function (e) {
+                            var value = $(e.currentTarget).val();
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 4,
+                    col_class: 'mt-0',
+                    form_text: langView('voplc_text_label_code_etsng', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            var form_textarea_datalist_cargo_etsng = {
+                obj: 'bs_form_input_datalist',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'cargo_etsng',
+                    name: 'cargo_etsng',
+                    label: langView('voplc_title_label_cargo_etsng', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: 'flexdatalist',
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('voplc_title_placeholder_cargo_etsng', App.Langs),
+                    element_required: true,
+                    element_maxlength: null,
+                    element_pattern: null,
+                    element_readonly: false,
+                    element_options: {
+                        data: this.list_devision,
+                        out_value: false,
+                        default: null,
+                        minLength: 1,
+                        searchContain: true,
+                        fn_change: function (event, set, options) {
+
+                        }.bind(this),
+                        fn_select: function (event, set, options) {
+
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: 'mt-0',
+                    form_text: langView('voplc_text_label_cargo_etsng', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+
+            var form_input_vesg = {
+                obj: 'bs_form_input',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'vesg',
+                    name: 'vesg',
+                    label: langView('voplc_title_label_vesg', App.Langs),
+                    element_type: 'number',
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_title: null,
+                    element_placeholder: langView('voplc_title_placeholder_vesg', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -665,7 +914,46 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
-                    form_text: langView('voplc_text_label_num_nakl', App.Langs),
+                    form_text: langView('voplc_text_label_vesg', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
+            var form_select_status_load = {
+                obj: 'bs_form_select',
+                options: {
+                    validation_group: 'common_filing_wagons',
+                    id: 'id_status_load',
+                    name: 'id_status_load',
+                    label: langView('voplc_title_label_status_load', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_multiple: false,
+                    element_title: null,
+                    element_required: false,
+                    element_readonly: false,
+                    element_size: null,
+                    element_options: {
+                        data: this.list_status_load,
+                        default: 1,
+                        fn_change: function (e) {
+                            e.preventDefault();
+                            // Обработать выбор
+                            var id = Number($(e.currentTarget).val());
+                        }.bind(this),
+                        fn_check: function (text) {
+
+                        }.bind(this),
+                    },
+                    validation: false,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 6,
+                    col_class: 'mt-0',
+                    form_text: langView('voplc_text_label_status_load', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -754,122 +1042,7 @@
                 childs: []
             };
 
-            //var form_select_devision_on = {
-            //    obj: 'bs_form_select',
-            //    options: {
-            //        validation_group: 'common_filing_wagons',
-            //        id: 'id_devision_on',
-            //        name: 'id_devision_on',
-            //        label: langView('voplc_title_label_devision_on', App.Langs),
-            //        element_fsize: 'sm',
-            //        element_class: null,
-            //        element_value: null,
-            //        element_multiple: false,
-            //        element_title: null,
-            //        element_required: true,
-            //        element_readonly: false,
-            //        element_size: null,
-            //        element_options: {
-            //            data: this.list_devision_on,
-            //            default: 1,
-            //            fn_change: function (e) {
-            //                e.preventDefault();
-            //                // Обработать выбор
-            //                var id = Number($(e.currentTarget).val());
-            //            }.bind(this),
-            //            fn_check: function (text) {
 
-            //            }.bind(this),
-            //        },
-            //        validation: true,
-            //        feedback_invalid: null,
-            //        feedback_valid: null,
-            //        feedback_class: null,
-            //        col_prefix: 'md',
-            //        col_size: 6,
-            //        col_class: 'mt-0',
-            //        form_text: langView('voplc_text_label_devision_on', App.Langs),
-            //        form_text_class: null,
-            //    },
-            //    childs: []
-            //};
-            //var form_select_status_load = {
-            //    obj: 'bs_form_select',
-            //    options: {
-            //        validation_group: 'common_filing_wagons',
-            //        id: 'id_status_load',
-            //        name: 'id_status_load',
-            //        label: langView('voplc_title_label_status_load', App.Langs),
-            //        element_fsize: 'sm',
-            //        element_class: null,
-            //        element_value: null,
-            //        element_multiple: false,
-            //        element_title: null,
-            //        element_required: false,
-            //        element_readonly: false,
-            //        element_size: null,
-            //        element_options: {
-            //            data: this.list_status_load,
-            //            default: 1,
-            //            fn_change: function (e) {
-            //                e.preventDefault();
-            //                // Обработать выбор
-            //                var id = Number($(e.currentTarget).val());
-            //            }.bind(this),
-            //            fn_check: function (text) {
-
-            //            }.bind(this),
-            //        },
-            //        validation: false,
-            //        feedback_invalid: null,
-            //        feedback_valid: null,
-            //        feedback_class: null,
-            //        col_prefix: 'md',
-            //        col_size: 6,
-            //        col_class: 'mt-0',
-            //        form_text: langView('voplc_text_label_status_load', App.Langs),
-            //        form_text_class: null,
-            //    },
-            //    childs: []
-            //};
-            //var form_select_station_amkr_on = {
-            //    obj: 'bs_form_select',
-            //    options: {
-            //        validation_group: 'common_filing_wagons',
-            //        id: 'id_station_amkr_on',
-            //        name: 'id_station_amkr_on',
-            //        label: langView('voplc_title_label_station_amkr_on', App.Langs),
-            //        element_fsize: 'sm',
-            //        element_class: null,
-            //        element_value: null,
-            //        element_multiple: false,
-            //        element_title: null,
-            //        element_required: true,
-            //        element_readonly: false,
-            //        element_size: null,
-            //        element_options: {
-            //            data: this.list_station_amkr_on,
-            //            default: 1,
-            //            fn_change: function (e) {
-            //                e.preventDefault();
-            //                // Обработать выбор
-            //            }.bind(this),
-            //            fn_check: function (text) {
-
-            //            }.bind(this),
-            //        },
-            //        validation: true,
-            //        feedback_invalid: null,
-            //        feedback_valid: null,
-            //        feedback_class: null,
-            //        col_prefix: 'md',
-            //        col_size: 6,
-            //        col_class: 'mt-0',
-            //        form_text: langView('voplc_text_label_station_amkr_on', App.Langs),
-            //        form_text_class: null,
-            //    },
-            //    childs: []
-            //};
             col_bt_apply.childs.push(bt_bt_add);
             col_bt_apply.childs.push(bt_bt_apply);
             col_bt_apply.childs.push(bt_bt_operation);
@@ -884,11 +1057,14 @@
             objs_filing_wagons_setup.push(col_loading);
             objs_filing_wagons_setup.push(form_select_station_amkr_on);
             objs_filing_wagons_setup.push(form_input_datalist_devision_on);
+            objs_filing_wagons_setup.push(form_input_num_nakl);
+            objs_filing_wagons_setup.push(form_input_datalist_amkr_cargo);
+            objs_filing_wagons_setup.push(form_input_datalist_station_uz);
+            objs_filing_wagons_setup.push(form_input_code_etsng);
+            objs_filing_wagons_setup.push(form_textarea_datalist_cargo_etsng);
 
-            //objs_filing_wagons_setup.push(form_input_num_nakl);
-            //objs_filing_wagons_setup.push(form_radio_loading_uz);
-            //objs_filing_wagons_setup.push(form_select_status_load);
-            //objs_filing_wagons_setup.push(form_select_station_amkr_on);
+            objs_filing_wagons_setup.push(form_input_vesg);
+            objs_filing_wagons_setup.push(form_select_status_load);
 
             this.form_filing_wagons_setup.init({
                 alert: this.main_alert,
@@ -1471,7 +1647,11 @@
                 alert: this.settings.alert,
 
                 type_filing: 2, // Погрузка
-                wagon_operation: 13, // операция над вагоном
+                wagon_operation: 15, // операция над вагоном
+                add_db_names: [],
+                fn_load_db: function (callback) {
+                    load_db.call(this, callback);
+                },
                 fn_get_sostav_filing: function (row, station, way, park, division, wagons) {
                     return get_sostav_filing.call(this, row, station, way, park, division, wagons);
                 },
