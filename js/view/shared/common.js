@@ -835,10 +835,13 @@ var is_valid_num_wagon = function (num) {
     };
     //<div class="row">
     form_element.prototype.bs_row = function (options) {
+        this.fe = new form_element();
         this.settings = $.extend({
             id: null,
             class: null,
             style: null,
+            obj_form: null,
+            append_objs: null,
         }, options);
         this.$html = $('<div></div>');
         if (!this.$html || this.$html.length === 0) {
@@ -848,6 +851,11 @@ var is_valid_num_wagon = function (num) {
             add_id(this.$html, this.settings.id);
             add_class(this.$html, this.settings.class);
             add_tag(this.$html, 'style', this.settings.style);
+            if (this.settings.obj_form !== null && this.settings.append_objs !== null && this.settings.append_objs.length > 0) {
+                this.fe.add_obj(this.$html, this.settings.append_objs, this.settings.obj_form, function (content) {
+
+                }.bind(this));
+            }
         }
     };
     //<div class="col-6">.col-6</div>
@@ -1639,11 +1647,11 @@ var is_valid_num_wagon = function (num) {
         });
         //var col = this.settings.col;
         //if (!this.settings.col) {
-            var col = new this.fe.bs_col({
-                pref: this.settings.col_prefix,
-                size: this.settings.col_size,
-                class: this.settings.col_class,
-            });
+        var col = new this.fe.bs_col({
+            pref: this.settings.col_prefix,
+            size: this.settings.col_size,
+            class: this.settings.col_class,
+        });
         //}
         var div_form_check = new this.fe.bs_div_form_check({
             //class: this.settings.validation ? 'has-validation' : null,
@@ -2207,11 +2215,12 @@ var is_valid_num_wagon = function (num) {
         var get_alist = function (data) {
             var alist = [];
             $.each(data, function (i, el) {
-                if (this.settings.out_value) {
-                    alist.push({ value: (el.text !== null ? $.trim(el.text) : el.text), label: el.value + '-' + (el.text !== null ? $.trim(el.text) : el.text), disabled: el.disabled ? el.disabled : null });
-                } else {
-                    alist.push({ value: el.text !== null ? $.trim(el.text) : el.text, label: el.text !== null ? $.trim(el.text) : el.text, disabled: el.disabled ? el.disabled : null });
-                }
+                //if (this.settings.out_value) {
+                //    alist.push({ value: (el.text !== null ? $.trim(el.text) : el.text), label: el.value + '-' + (el.text !== null ? $.trim(el.text) : el.text), disabled: el.disabled ? el.disabled : null });
+                //} else {
+                //    alist.push({ value: el.text !== null ? $.trim(el.text) : el.text, label: el.text !== null ? $.trim(el.text) : el.text, disabled: el.disabled ? el.disabled : null });
+                //}
+                alist.push({ value: el.value, label: el.text, group: el.group, disabled: el.disabled ? el.disabled : null });
             }.bind(this));
             return alist;
         }.bind(this);
@@ -2220,6 +2229,7 @@ var is_valid_num_wagon = function (num) {
         this.settings = $.extend({
             data: [],
             out_value: false,
+            out_group: false,
             default: null,
             minLength: 1,
             searchContain: true,
@@ -2234,14 +2244,31 @@ var is_valid_num_wagon = function (num) {
             this.$element = content.find('#' + element[0].id).flexdatalist({
                 minLength: this.settings.minLength,
                 searchContain: this.settings.searchContain,
+                valueProperty: 'value',
+                textProperty: this.settings.out_value ? '{value}, {label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']) : '{label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']),
+                visibleProperties: this.settings.out_value ? ["value", "label", "group"] : ["label", "group"],
+                searchIn:  this.settings.out_value ? ['label', 'value', "group"] : ['label', "group"],
                 data: this.alist,
             });
             this.$element_flexdatalist = content.find('#' + element[0].id + '-flexdatalist');
+            //if (typeof this.settings.fn_change === 'function') {
+            //    this.$element.on('change:flexdatalist', this.settings.fn_change.bind(this));
+
+            //}
             if (typeof this.settings.fn_change === 'function') {
-                this.$element.on('change:flexdatalist', this.settings.fn_change.bind(this));
+                this.$element.on('change:flexdatalist', function (event, set, options) {
+                    //console.log(set.value);
+                    //console.log(set.text);
+                    this.settings.fn_change(event, set, options);//.bind(this);
+                }.bind(this));
             }
             if (typeof this.settings.fn_select === 'function') {
-                this.$element.on('select:flexdatalist', this.settings.fn_select.bind(this));
+                this.$element.on('select:flexdatalist', function (event, set, options) {
+                    //console.log(set.value);
+                    //console.log(set.text);
+                    this.settings.fn_select(event, set, options);//.bind(this);
+                }.bind(this));
+                //this.$element.on('select:flexdatalist', this.settings.fn_select.bind(this));
             }
         };
         this.update = function (data, value) {
@@ -2396,6 +2423,7 @@ var is_valid_num_wagon = function (num) {
         this.settings = $.extend({
             default_value: null,
             fn_change: null,
+            fn_click: null,
         }, options);
         this.type = element.attr('type');
         this.$element = element;
@@ -2492,6 +2520,7 @@ var is_valid_num_wagon = function (num) {
         $.each(objs, function (i, obj) {
             if (obj && obj.obj) {
                 if (obj.obj === 'bs_row') {
+                    obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_row(obj.options);
                     add_element(obj_html.$html, content, obj);
                 };
@@ -3038,11 +3067,53 @@ var is_valid_num_wagon = function (num) {
             this.settings.fn_validation({ valid: Boolean(this.valid), old: this.data_val, new: result });
         }
     };
+    // Работа с элементами
+    form_dialog.prototype.get_element = function (id) {
+        if (this.obj_form.views) {
+            var element = this.obj_form.views.find(function (o) {
+                return o.name === id;
+            });
+            if (element && element.element) {
+                return element;
+            }
+        }
+        return undefined;
+    };
 
     form_dialog.prototype.clear_validation = function () {
         $.each(this.obj_form.validations, function (i, el_val) {
             el_val.validation.clear_all();
         }.bind(this));
+    };
+    //
+    form_dialog.prototype.set_element_validation_ok = function (id, message, not_alert) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.validation_group && this['validation_' + element.validation_group]) {
+                if (not_alert) {
+                    this['validation_' + element.validation_group].set_control_ok(element.$element, message);
+                } else {
+                    this['validation_' + element.validation_group].set_object_ok(element.$element, message);
+                }
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
+    };
+    //
+    form_dialog.prototype.set_element_validation_error = function (id, message, not_alert) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.validation_group && this['validation_' + element.validation_group]) {
+                if (not_alert) {
+                    this['validation_' + element.validation_group].set_control_error(element.$element, message);
+                } else {
+                    this['validation_' + element.validation_group].set_object_error(element.$element, message);
+                }
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
     };
     // Выполнить очистку сообщений на форме
     form_dialog.prototype.clear_all = function (not_clear_message) {
@@ -3068,6 +3139,24 @@ var is_valid_num_wagon = function (num) {
         this.$alert = null;
         if (this.settings.alert && this.settings.alert.$alert) {
             this.$alert = this.settings.alert.$alert;
+        }
+    };
+
+    validation_form.prototype.view_element = function (value, fn_ok, fn_null, fn_undefined) {
+        if (value) {
+            if (typeof fn_ok === 'function') {
+                fn_ok(value);
+            }
+        } else {
+            if (value === null) {
+                if (typeof fn_null === 'function') {
+                    fn_null(value);
+                }
+            } else {
+                if (typeof fn_undefined === 'function') {
+                    fn_undefined(value);
+                }
+            }
         }
     };
 
