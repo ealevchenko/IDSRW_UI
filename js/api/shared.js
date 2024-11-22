@@ -11,7 +11,7 @@ var OnAJAXError = function (metod, x, y, z, callback) {
         message: null,
         status: null,
         statusText: null,
-        responseText : null
+        responseText: null
     };
     if (x && x.status) {
         data.status = x.status;
@@ -220,11 +220,31 @@ var AJAXComplete = function () {
         }
         return list;
     };
+    // Вернуть спсисок объектов таблицы в формате {value:, text:} с учетом языковых полей
+    api_common.prototype.getListObj2L = function (name_list_obj, fvalue, ftext1, ftext2, lang1, lang2, filter) {
+        var list_obj = this.getAllObj(name_list_obj);
+        var list = [];
+        var list_filtr = null;
+        if (list_obj && list_obj.list) {
+            if (typeof filter === 'function') {
+                list_filtr = list_obj.list.filter(filter);
+            } else { list_filtr = list_obj.list; }
+            for (var i = 0, j = list_filtr.length; i < j; i++) {
+                var l = list_filtr[i];
+                if (lang1 || lang2) {
+                    list.push({ value: l[fvalue], text: l[ftext1 + (lang1 !== null ? lang1 : '')] + ' - ' + l[ftext2 + (lang2 !== null ? lang2 : '')], disabled: false });
+                } else {
+                    list.push({ value: l[fvalue], text: l[ftext1] + ' - ' + l[ftext2], disabled: false });
+                }
+            }
+        }
+        return list;
+    };
     // Вернуть спсисок объектов таблицы в формате {value:, text:}
     api_common.prototype.getListObjOfList = function (list_obj, fvalue, ftext, lang, filter) {
         var list = [];
         var list_filtr = null;
-        if (list_obj && list_obj.length>0) {
+        if (list_obj && list_obj.length > 0) {
             if (typeof filter === 'function') {
                 list_filtr = list_obj.filter(filter);
             } else { list_filtr = list_obj; }
