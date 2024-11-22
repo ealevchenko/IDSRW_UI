@@ -41,6 +41,8 @@
                 { name: 'cargo', list: null, fn_get: this.getCargo.bind(this) },
                 { name: 'cargo_group', list: null, fn_get: this.getCargoGroup.bind(this) },
                 { name: 'cargo_etsng', list: null, fn_get: this.getCargoETSNG.bind(this) },
+                { name: 'internal_cargo', list: null, fn_get: this.getInternalCargo.bind(this) },
+                //{ name: 'internal_cargo_group', list: null, fn_get: this.getInternalCargoGroup.bind(this) },
                 { name: 'genus_wagon', list: null, fn_get: this.getGenusWagons.bind(this) },
                 { name: 'operators_wagons', list: null, fn_get: this.getOperatorsWagons.bind(this) },
                 { name: 'wagons', list: null, fn_get: this.getWagons.bind(this) },
@@ -49,6 +51,7 @@
                 { name: 'owners_operations_uz', list: null, fn_get: this.getWagonOperationsUz.bind(this) },
                 { name: 'wagon_operations', list: null, fn_get: this.getWagonOperations.bind(this) },
                 { name: 'station', list: null, fn_get: this.getStation.bind(this) },
+                { name: 'external_station', list: null, fn_get: this.getExternalStation.bind(this) },
                 { name: 'park_ways', list: null, fn_get: this.getParkWays.bind(this) },
                 { name: 'ways', list: null, fn_get: this.getWays.bind(this) },
                 { name: 'outer_ways', list: null, fn_get: this.getOuterWays.bind(this) },
@@ -142,6 +145,15 @@
     ids_directory.prototype.getCargoETSNG = function (callback) {
         this.api_com.get('/DirectoryCargoEtsng', callback);
     };
+    //======= Directory_InternalCargo (Справочник внутрених грузов) ======================================
+    ids_directory.prototype.getInternalCargo = function (callback) {
+        this.api_com.get('/DirectoryInternalCargo', callback);
+    };
+    //======= Directory_InternalCargoGroup (Справочник группа грузов) ======================================
+    //ids_directory.prototype.getInternalCargoGroup = function (callback) {
+    //    this.api_com.get('/DirectoryInternalCargoGroup', callback);
+    //};
+
     //======= Directory_Countrys (Справочник стран) ======================================
     //ids_directory.prototype.getCountrys = function (callback) {
     //    $.ajax({
@@ -254,6 +266,14 @@
     ids_directory.prototype.getViewStatusStationOfId = function (id, callback) {
         this.api_com.get('/DirectoryStation/status/' + id, callback);
     };
+    //======= Directory_ExternalStation (Справочник станций) ======================================
+    ids_directory.prototype.getExternalStation = function (callback) {
+        this.api_com.get('/DirectoryExternalStation', callback);
+    };
+    ids_directory.prototype.getExternalStationOfCode = function (code, callback) {
+        this.api_com.get('/DirectoryExternalStation/' + code, callback);
+    };
+
     //======= Directory_ParkWays (Справочник парков станций) ======================================
     ids_directory.prototype.getParkWays = function (callback) {
         this.api_com.get('/DirectoryParkWay', callback);
@@ -463,6 +483,54 @@
     ids_directory.prototype.getListValueTextStation = function (filter) {
         return this.getListStation('id', 'stationName', ucFirst(App.Lang), filter);
     };
+    //*======= (Справочник external_station) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllExternalStation = function () {
+        var obj = this.api_com.getAllObj('external_station');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по code
+    ids_directory.prototype.getExternalStation_Of_Code = function (code) {
+        return this.api_com.getObj_Of_field('external_station', 'code', code);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getExternalStation_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('external_station', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListExternalStation = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('external_station', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextExternalStation = function (filter) {
+        return this.getListExternalStation('code', 'stationName', ucFirst(App.Lang), filter);
+    };
+    // Поиск элементов по id и названию
+    ids_directory.prototype.getExistExternalStation = function (code, name) {
+        var obj_db = null;
+        var result = {};
+        if (code && code !== '') {
+            var obj = this.getExternalStation_Of_Code(code);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getExternalStation_Of_Name('stationName' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.code = obj_db.code;
+            result.name = obj_db['stationName' + ucFirst(App.Lang)];
+            result.ir_name = null;
+            if (obj_db.codeInlandrailwayNavigation) {
+                result.ir_name = obj_db.codeInlandrailwayNavigation['inlandrailwayName' + ucFirst(App.Lang)];
+            }
+            return result;
+        } else return null; // Объект не найден
+    };
+
     //*======= (Справочник wagon_operations) ======================================
     // Получить все записи
     ids_directory.prototype.getAllWagonOperations = function () {
@@ -637,7 +705,48 @@
     ids_directory.prototype.getListValueTextCargo = function () {
         return this.getListCargo('id', 'cargoName', ucFirst(App.Lang));
     };
-
+    // Получить списки (Value, Text, Code-етснг, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextCodeCargo = function () {
+        var list_obj = this.getAllCargo();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj, function (i, el) {
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.idCargoEtsngNavigation.code, disabled: false });
+            }.bind(this));
+        }
+        return list;
+    };
+    // Получить существующий 
+    ids_directory.prototype.getExistCargo = function (id, name) {
+        var obj_db = null;
+        var result = {};
+        if (id && id !== '') {
+            var obj = this.getCargo_Of_ID(id);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getCargo_Of_Name('cargoName' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.id = obj_db.id;
+            result.name = obj_db['cargoName' + ucFirst(App.Lang)];
+            result.id_group = null;
+            result.group = null;
+            result.code = null;
+            if (obj_db.idCargoEtsngNavigation) {
+                result.code = obj_db.idCargoEtsngNavigation.code;
+            }
+            if (obj_db.idGroupNavigation) {
+                result.id_group = obj_db.idGroupNavigation.id;
+                result.group = obj_db.idGroupNavigation['cargoGroupName' + ucFirst(App.Lang)];
+            }
+            return result;
+        } else return null; // Объект не найден
+    };
     //*======= ids_directory.list_cargo_group  (Справочник группы грузов) ======================================
     // Получить все записи
     ids_directory.prototype.getAllCargoGroup = function () {
@@ -688,13 +797,85 @@
     ids_directory.prototype.getListValueTextCargoETSNG = function () {
         return this.getListCargoETSNG('id', 'cargoEtsngName', ucFirst(App.Lang));
     };
-    // Получим первую строку в указаным поле которых есть текст text (проверка убирает все пробелы и выравнивает буквы)
-    //ids_directory.prototype.getCargoETSNG_Of_Name_find = function (name, text, lang) {
-    //    if (this.list_cargo_etsng) {
-    //        return this.getObjs_Of_text_find(this.list_cargo_etsng, name, text, lang);
-    //    }
-    //    return null;
+    //*======= ids_directory.list_internal_cargo  (Справочник внутрених грузов) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllInternalCargo = function () {
+        var obj = this.api_com.getAllObj('internal_cargo');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getInternalCargo_Of_ID = function (id) {
+        return this.api_com.getObj_Of_field('internal_cargo', 'id', id);
+    };
+    // Получить записи по code_sap
+    ids_directory.prototype.getInternalCargo_Of_sap = function (code) {
+        return this.api_com.getObj_Of_field('internal_cargo', 'codeSap', code);
+    };
+    // Получить записи по id ЕБД (АСУТП)
+    ids_directory.prototype.getInternalCargo_Of_ID_EBD = function (id) {
+        return this.api_com.getObj_Of_field('internal_cargo', 'idCargoEbd', id);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getInternalCargo_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('internal_cargo', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListInternalCargo = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('internal_cargo', fvalue, ftext, lang, filter);
+    };
+    //ids_directory.prototype.getListInternalCargo2 = function (fvalue, ftext1, ftext2, lang, filter) {
+    //    return this.api_com.getListObj2('internal_cargo', fvalue, ftext1, ftext2, lang, filter);
     //};
+    ids_directory.prototype.getListInternalCargo2L = function (fvalue, ftext1, ftext2, lang1, lang2, filter) {
+        return this.api_com.getListObj2L('internal_cargo', fvalue, ftext1, ftext2, lang1, lang2, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextInternalCargo = function () {
+        return this.getListInternalCargo('id', 'cargoName', ucFirst(App.Lang));
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextInternalCargo2L = function () {
+        return this.getListInternalCargo2L('id', 'cargoName', 'codeSap', ucFirst(App.Lang), null);
+    };
+    // Получить списки (Value, Text, Group, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextGroupInternalCargo = function () {
+        var list_obj = this.getAllInternalCargo();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj, function (i, el) {
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.codeSap, disabled: false });
+            }.bind(this));
+        }
+        return list;
+    };
+    // Получить существующий 
+    ids_directory.prototype.getExistInternalCargo = function (id, name) {
+        var obj_db = null;
+        var result = {};
+        if (id && id !== '') {
+            var obj = this.getInternalCargo_Of_ID(id);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getInternalCargo_Of_Name('cargoName' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.id = obj_db.id;
+            result.name = obj_db['cargoName' + ucFirst(App.Lang)];
+            result.id_group = null;
+            result.group = null;
+            result.code = obj_db.codeSap;
+            if (obj_db.idGroupNavigation) {
+                result.id_group = obj_db.idGroupNavigation.id;
+                result.group = obj_db.idGroupNavigation['cargoGroupName' + ucFirst(App.Lang)];
+            }
+            return result;
+        } else return null; // Объект не найден
+    };
 
     App.ids_directory = ids_directory;
 
