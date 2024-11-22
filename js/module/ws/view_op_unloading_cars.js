@@ -231,14 +231,24 @@
             fn_init: null,
             fn_close: null,
         }, options);
+        // Инициализация при старте (обявдение доп переменных)
+        var start_init = function () {
 
-        var load_db = function (callback) {
+        }
+        // Загрузка дополнительных библиотек ()
+        var load_db_operation = function (callback) {
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
+        // Продолжение инициализации после загрузки всех библиотек (привязка к новым переменным)
+        var after_loading_init = function (callback) {
+
             this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
             if (typeof callback === 'function') {
                 callback();
             }
         }
-
         // Инициализация формы выбора периода и станции подач
         var init_form_filing_setup = function (callback) {
             //-------------------------------------------------------------------
@@ -772,7 +782,7 @@
                 this.settings.fn_init(this.result_init);
             }
         }
-
+        // Получение строки подача из списка вагонов (для операции)
         var get_sostav_filing = function (row, station, way, park, division, wagons) {
             return {
                 idWf: row ? row.idWf : 0,
@@ -815,7 +825,7 @@
                 filingCloseUser: row ? row.filingCloseUser : null,
             }
         }
-
+        // Получение строки вагона в подаче (для операции)
         var get_filing_wagons = function (row) {
             return {
                 idWim: row.wimId,
@@ -960,7 +970,7 @@
                 //-------------------------------------------------
             };
         }
-        //
+        // Отображение элементов окна правки и создания подачи и операции (в зависимости от операции)
         var view_setup_filing = function () {
             this.form_filing_setup.clear_all();
             this.form_filing_wagons_setup.clear_all();
@@ -1108,7 +1118,7 @@
                 }
             }
         }
-        //
+        // Валидация правки подачи и операций над вагонами
         var validation = function (result, mode) {
             // 0- add; >0 id ; null -not edit
             if (this.id_filing === null) { return false; }
@@ -1230,10 +1240,27 @@
 
                 type_filing: 1, // Выгрузка
                 wagon_operation: 13, // операция над вагоном
-                add_db_names: [],
-                fn_load_db: function (callback) {
-                    load_db.call(this, callback);
+                view_com: this.view_com,
+                api_dir: this.settings.api_dir,
+                api_wsd: this.settings.api_wsd,
+                fn_start_init: function () {
+                    start_init.call(this);
                 },
+                fn_load_db_operation: function (callback) {
+                    load_db_operation.call(this, callback);
+                },
+                fn_after_loading_init: function (callback) {
+                    after_loading_init.call(this, callback);
+                },
+                fn_init_form_filing_setup: null,
+                fn_init_form_filing_wagons_setup: function (callback) {
+                    init_form_filing_wagons_setup.call(this, callback);
+                },
+                fn_init_form_from_setup: null,
+                fn_init: function () {
+                    out_init_cfiling.call(this);
+                }.bind(this),
+
                 fn_get_sostav_filing: function (row, station, way, park, division, wagons) {
                     return get_sostav_filing.call(this, row, station, way, park, division, wagons);
                 },
@@ -1252,18 +1279,7 @@
                 fn_apply_add_wagon_filing: null,
                 fn_apply_del_wagon_filing: null,
                 fn_apply_update: null,
-                view_com: this.view_com,
-                api_dir: this.settings.api_dir,
-                api_wsd: this.settings.api_wsd,
                 fn_db_update: this.settings.fn_db_update,
-                fn_init_form_filing_setup: null,
-                fn_init_form_filing_wagons_setup: function (callback) {
-                    init_form_filing_wagons_setup.call(this, callback);
-                },
-                fn_init_form_from_setup: null,
-                fn_init: function () {
-                    out_init_cfiling.call(this);
-                }.bind(this),
                 fn_close: this.settings.fn_close,
             });
         }.bind(this);
