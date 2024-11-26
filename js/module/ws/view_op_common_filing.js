@@ -188,8 +188,8 @@
         this.id_filing = null;          // id подачи (изменяется при выборе подачи)
         this.id_filing_old = null;      // id подачи (изменяется при выборе подачи)
         this.id_way_filing = null;      // id пути (изменяется при выборе подачи)
-        this.station_on = -1;           // станция подачи (изменяется при выборе подачи)
-        this.division_on = -1;          // подразделение подачи (изменяется при выборе подачи)
+        this.station_from = -1;           // станция подачи (изменяется при выборе подачи)
+        this.division_from = -1;          // подразделение подачи (изменяется при выборе подачи)
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
@@ -407,7 +407,7 @@
                     }
                 }.bind(this));
 
-                this.list_devision = this.view_com.api_dir.getListValueTextAbbrDivisions();
+                this.list_devision = this.view_com.api_dir.getListValueTextCodeAbbrDivisions();
                 //this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatus();
                 this.list_station_amkr_on = this.view_com.api_dir.getListValueTextStation(function (i) {
                     return !i.stationUz && i.stationDelete === null;
@@ -646,7 +646,7 @@
                         // На проверку окончания инициализации
                         process--;
                         //console.log('[view_op_unloading_cars] [tlf_unlc]process: ' + process);
-                        out_init(process);
+                        out_init(process);this.division_from
                     },
                     fn_action_view_detali: function (rows) {
 
@@ -666,8 +666,8 @@
                     fn_select_rows: function (rows, type) {
                         this.id_filing = null;
                         this.id_way_filing = this.id_way_unload; // По умолчанию текущее
-                        this.station_on = -1;
-                        this.division_on = -1;
+                        this.station_from = -1;
+                        this.division_from = -1;
                         this.status_load = -1;
                         this.create_filing = null;
                         this.close_filing = null;
@@ -679,8 +679,8 @@
                             if (rows != null && rows.length > 0) {
                                 this.id_filing = rows[0].idWf;
                                 if (this.id_filing === 0) bts.enable(); // активируем очистить черновик
-                                this.station_on = rows[0].filingIdStation;
-                                this.division_on = rows[0].filingDivisionIdDivision;
+                                this.station_from = rows[0].filingIdStation;
+                                this.division_from = rows[0].filingDivisionIdDivision;
                                 this.id_way_filing = rows[0].filingIdWay;
                                 this.create_filing = rows[0].filingCreate;
                                 this.close_filing = rows[0].filingClose;
@@ -1204,8 +1204,8 @@
         this.id_filing = null;          // id подачи (изменяется при выборе подачи)
         this.id_filing_old = null;
         this.id_way_filing = null;      // id пути (изменяется при выборе подачи)
-        this.station_on = -1;           // станция подачи (изменяется при выборе подачи)
-        this.division_on = -1;          // подразделение подачи (изменяется при выборе подачи)
+        this.station_from = -1;           // станция подачи (изменяется при выборе подачи)
+        this.division_from = -1;          // подразделение подачи (изменяется при выборе подачи)
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
