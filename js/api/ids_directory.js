@@ -330,6 +330,10 @@
     ids_directory.prototype.getDivision_Of_Id = function (id) {
         return this.api_com.getObj_Of_field('divisions', 'id', id);
     };
+    // Получить записи по имени
+    ids_directory.prototype.getDivision_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('divisions', name, text);
+    };
     // Получить списки (Value, Text, Desabled) по указоным полям
     ids_directory.prototype.getListDivisions = function (fvalue, ftext, lang, filter) {
         return this.api_com.getListObj('divisions', fvalue, ftext, lang, filter);
@@ -341,6 +345,45 @@
     // Получить списки (Value, Text, Desabled) по умолчанию
     ids_directory.prototype.getListValueTextAbbrDivisions = function () {
         return this.getListDivisions('id', 'divisionAbbr', ucFirst(App.Lang));
+    };
+    // Получить списки (Value, Text, Code-етснг, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextCodeAbbrDivisions = function () {
+        var list_obj = this.getAllDivisions();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj, function (i, el) {
+                list.push({ value: el['id'], text: el['divisionAbbr' + ucFirst(App.Lang)], group: el.code, disabled: false });
+            }.bind(this));
+        }
+        return list;
+    };
+    // Получить существующий 
+    ids_directory.prototype.getExistDivisions = function (id, name) {
+        var obj_db = null;
+        var result = {};
+        if (id && id !== '') {
+            var obj = this.getDivision_Of_Id(id);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getDivision_Of_Name('nameDivision' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.id = obj_db.id;
+            result.name = obj_db['nameDivision' + ucFirst(App.Lang)];
+            result.code = obj_db.code;
+            result.id_type = null;
+            result.name_type = null;
+            if (obj_db.idTypeDevisionNavigation) {
+                result.id_type = obj_db.idTypeDevisionNavigation.id;
+                result.name_type = obj_db.idTypeDevisionNavigation['typeDevisions' + ucFirst(App.Lang)];
+            }
+            return result;
+        } else return null; // Объект не найден
     };
     //*======= (Справочник locomotive) ======================================
     // Получить все записи
@@ -417,7 +460,6 @@
     // Получить списки путей с выходом на УЗ (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextCrossingUzWaysOfStation = function (id_station) {
         return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
-            getAllWays
             return !i.wayDelete && i.idStation === id_station && i.crossingUz
         });
     };
