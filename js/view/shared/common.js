@@ -2224,7 +2224,6 @@ var is_valid_num_wagon = function (num) {
             }.bind(this));
             return alist;
         }.bind(this);
-        //this.$element = element;
         // Настройки формы правки строк таблицы
         this.settings = $.extend({
             data: [],
@@ -2238,23 +2237,21 @@ var is_valid_num_wagon = function (num) {
             val_inp: 'value',
             check: null,
         }, options);
-
         this.init = function () {
+            this.id = element[0].id;
             this.alist = get_alist(this.settings.data);
-            this.$element = content.find('#' + element[0].id).flexdatalist({
+            //var el = content.find('#' + element[0].id);
+            var el = content.find('#' + this.id);
+            this.$element = el.flexdatalist({
                 minLength: this.settings.minLength,
                 searchContain: this.settings.searchContain,
                 valueProperty: 'value',
                 textProperty: this.settings.out_value ? '{value}, {label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']) : '{label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']),
                 visibleProperties: this.settings.out_value ? ["value", "label", "group"] : ["label", "group"],
-                searchIn:  this.settings.out_value ? ['label', 'value', "group"] : ['label', "group"],
+                searchIn: this.settings.out_value ? ['label', 'value', 'group'] : ['label', 'group'],
                 data: this.alist,
             });
-            this.$element_flexdatalist = content.find('#' + element[0].id + '-flexdatalist');
-            //if (typeof this.settings.fn_change === 'function') {
-            //    this.$element.on('change:flexdatalist', this.settings.fn_change.bind(this));
-
-            //}
+/*            this.$element_flexdatalist = content.find('#' + element[0].id + '-flexdatalist');*/
             if (typeof this.settings.fn_change === 'function') {
                 this.$element.on('change:flexdatalist', function (event, set, options) {
                     //console.log(set.value);
@@ -2268,7 +2265,6 @@ var is_valid_num_wagon = function (num) {
                     //console.log(set.text);
                     this.settings.fn_select(event, set, options);//.bind(this);
                 }.bind(this));
-                //this.$element.on('select:flexdatalist', this.settings.fn_select.bind(this));
             }
         };
         this.update = function (data, value) {
@@ -2280,23 +2276,22 @@ var is_valid_num_wagon = function (num) {
         // вернуть value
         this.val = function (value) {
             if (value !== undefined) {
-                var text_out = value;
-                if (this.settings.val_inp === 'value') {
-                    var select = this.settings.data.find(function (o) {
-                        if (value === null) {
-                            return o.value === value;
-                        } else {
-                            return o.value == $.trim(value);
-                        };
-                    }.bind(this));
-                    text_out = select ? select.text : null;
-                }
-                this.$element.val(text_out !== null ? $.trim(text_out) : text_out);
-            } else {
-                var text = this.$element.val();
-                if (text !== "" && text !== null) {
+                var text_out = null;
+                if (value !== -1 && value !== "-1" && value !== null) {
+
                     var select = this.alist.find(function (o) {
-                        return o.label === $.trim(text);
+                        return o.value == $.trim(value);
+                    }.bind(this));
+                    //text_out = select ? select.label : "";
+                    text_out = select ? select.value : null;
+                };
+                this.$element.flexdatalist("value", { value: text_out });
+            } else {
+                // чтение
+                var value = this.$element.flexdatalist("value");
+                if (value !== "" && value !== null) {
+                    var select = this.alist.find(function (o) {
+                        return o.value == $.trim(value);
                     }.bind(this));
                     return select ? select.value : undefined;
                 } else {
@@ -2307,10 +2302,9 @@ var is_valid_num_wagon = function (num) {
         // вернуть техт
         this.text = function (text) {
             if (text !== undefined) {
-                this.$element.val(text);
+                this.$element_flexdatalist.val(text);
             } else {
-                //return this.$element.val();
-                var text = this.$element.val();
+                var text = this.$element_flexdatalist.val();
                 return text !== "" && text !== null ? text : null;
             };
         };
@@ -2600,7 +2594,8 @@ var is_valid_num_wagon = function (num) {
                 };
                 if (obj.obj === 'bs_form_input_datalist') {
                     obj.options.obj_form = obj_form;
-                    var obj_html = new this.bs_form_input_datalist(obj.options);
+                    //var obj_html = new this.bs_form_input_datalist(obj.options);
+                    var obj_html = new this.bs_form_input(obj.options);
                     if (obj_html && obj_html.$element) {
                         add_element(obj_html.$html, content, obj);
                         var element = new this.fe.init_datalist(obj_html.$element, obj.options.element_options, content);
@@ -2911,6 +2906,7 @@ var is_valid_num_wagon = function (num) {
         // Создаем элементы и отрисовываем их на форме
         // Получим список элементов которые должны отображатся на форме
         this.obj_form = {
+            //ini_el: [],
             alerts: [],
             views: [],
             buttons: [],
@@ -2918,6 +2914,8 @@ var is_valid_num_wagon = function (num) {
         };
         // Пройдемся по элементам
         this.fe.add_obj(this.$form, this.settings.objs, this.obj_form, function (form) {
+            // Отложенная инициализация
+
             // Построение HTML закончена, обработаем событие
             if (typeof this.settings.fn_html_init === 'function') {
                 this.settings.fn_html_init();
@@ -3115,6 +3113,23 @@ var is_valid_num_wagon = function (num) {
             throw new Error('Не удалось найти элемент ' + id);
         }
     };
+    // Сбросить элемент
+    form_dialog.prototype.set_element_clear = function (id, not_alert) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.validation_group && this['validation_' + element.validation_group]) {
+                if (not_alert) {
+                    this['validation_' + element.validation_group].clear_error(element.$element);
+                } else {
+                    this.clear_message();
+                    this['validation_' + element.validation_group].clear_error(element.$element);
+                }
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
+    };
+
     // Выполнить очистку сообщений на форме
     form_dialog.prototype.clear_all = function (not_clear_message) {
         if (!not_clear_message && this.settings.alert !== null) this.settings.alert.clear_message();
