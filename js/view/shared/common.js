@@ -2251,7 +2251,7 @@ var is_valid_num_wagon = function (num) {
                 searchIn: this.settings.out_value ? ['label', 'value', 'group'] : ['label', 'group'],
                 data: this.alist,
             });
-/*            this.$element_flexdatalist = content.find('#' + element[0].id + '-flexdatalist');*/
+            this.$element_fl = content.find('#' + element[0].id + '-flexdatalist');
             if (typeof this.settings.fn_change === 'function') {
                 this.$element.on('change:flexdatalist', function (event, set, options) {
                     //console.log(set.value);
@@ -3083,7 +3083,7 @@ var is_valid_num_wagon = function (num) {
             el_val.validation.clear_all();
         }.bind(this));
     };
-    //
+    // Вывести сообщение по элементу валидация ок
     form_dialog.prototype.set_element_validation_ok = function (id, message, not_alert) {
         var element = this.get_element(id);
         if (element) {
@@ -3098,7 +3098,7 @@ var is_valid_num_wagon = function (num) {
             throw new Error('Не удалось найти элемент ' + id);
         }
     };
-    //
+    // Вывести сообщение по элементу валидация error
     form_dialog.prototype.set_element_validation_error = function (id, message, not_alert) {
         var element = this.get_element(id);
         if (element) {
@@ -3108,6 +3108,39 @@ var is_valid_num_wagon = function (num) {
                 } else {
                     this['validation_' + element.validation_group].set_object_error(element.$element, message);
                 }
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
+    };
+    //
+    form_dialog.prototype.set_element_add_class = function (id, name_class) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.$element) {
+                element.$element.addClass(name_class);
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
+    };
+    //
+    form_dialog.prototype.set_element_delete_class = function (id, name_class) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.$element) {
+                element.$element.removeClass(name_class);
+            }
+        } else {
+            throw new Error('Не удалось найти элемент ' + id);
+        }
+    };
+    //
+    form_dialog.prototype.set_element_chenge_class = function (id, name_class_delete, name_class_add) {
+        var element = this.get_element(id);
+        if (element) {
+            if (element.$element) {
+                element.$element.removeClass(name_class_delete).addClass(name_class_add);
             }
         } else {
             throw new Error('Не удалось найти элемент ' + id);

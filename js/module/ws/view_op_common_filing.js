@@ -161,6 +161,7 @@
             fn_init: null,                          // Окончание инициализации
             fn_get_sostav_filing: null,             // Получение строки подача из списка вагонов (в зависимости от операции)
             fn_get_filing_wagons: null,             // Получение строки вагона в подаче (в зависимости от операции)
+            fn_view_open: null,                     // Открытие панели (дополнительная обработка перед открытием выбранной панели)
             fn_view_setup_filing: null,             // Отображение элементов окна правки и создания подачи и операции (в зависимости от операции)
             fn_validation: null,                    // Валидация правки подачи и операций над вагонами (в зависимости от операции)
             fn_apply_add_filing: null,              // Выполнить операцию создать подачу
@@ -1254,6 +1255,11 @@
 
             }
         };
+        // Дополнительная обработка в панели выбранной операции
+        if (typeof this.settings.fn_view_open === 'function') {
+            this.settings.fn_view_open.call(this, function () {
+            }.bind(this));
+        };
         this.update(id_station, id_way, function () {
             LockScreenOff();
         }.bind(this));
@@ -1616,7 +1622,7 @@
     };
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
-    view_op_common_filing.prototype.validation_filing = function (result, mode) {
+    view_op_common_filing.prototype.validation = function (result, mode) {
         if (typeof this.settings.fn_validation === 'function') {
             return this.settings.fn_validation.call(this, result, mode);
         }

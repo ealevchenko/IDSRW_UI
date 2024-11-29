@@ -580,7 +580,7 @@
                             }
                         }
                         if (mode !== null) {
-                            var valid = this.validation_filing(result, mode);
+                            var valid = this.validation(result, mode);
                             var dt_start = this.form_filing_wagons_setup.el.input_datetime_time_start.val();
                             var dt_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
                             if (valid) {
