@@ -2278,7 +2278,6 @@ var is_valid_num_wagon = function (num) {
             if (value !== undefined) {
                 var text_out = null;
                 if (value !== -1 && value !== "-1" && value !== null) {
-
                     var select = this.alist.find(function (o) {
                         return o.value == $.trim(value);
                     }.bind(this));
@@ -2302,10 +2301,23 @@ var is_valid_num_wagon = function (num) {
         // вернуть техт
         this.text = function (text) {
             if (text !== undefined) {
-                this.$element_flexdatalist.val(text);
+                var select = this.alist.find(function (o) {
+                    return o.label == $.trim(text);
+                }.bind(this));
+                this.$element.flexdatalist("value", { value: select ? select.value : null });
             } else {
-                var text = this.$element_flexdatalist.val();
-                return text !== "" && text !== null ? text : null;
+                // чтение
+                var value = this.$element.flexdatalist("value");
+                if (value !== "" && value !== null) {
+                    var select = this.alist.find(function (o) {
+                        return o.value == $.trim(value);
+                    }.bind(this));
+                    return select ? select.label : undefined;
+                } else {
+                    return null;
+                }
+                //var text = this.$element_flexdatalist.val();
+                //return text !== "" && text !== null ? text : null;
             };
         };
 
