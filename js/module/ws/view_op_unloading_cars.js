@@ -155,6 +155,7 @@
             //'vopulc_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
             //'vopulc_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
 
+            //'vopulc_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             //'vopulc_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
             //'vopulc_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции "ВЫГРУЗКА ВАГОНОВ" в подаче.',
             //'vopulc_mess_run_operation_update_filing': 'Выполняю операцию править подачу "ВЫГРУЗКИ ВАГОНОВ"',
@@ -785,8 +786,8 @@
         // Получение строки подача из списка вагонов (для операции)
         var get_sostav_filing = function (row, station, way, park, division, wagons) {
             return {
-                idWf: row ? row.idWf : 0,
-                statusFiling: row ? (row.filingCreate !== null ? (row.filingClose !== null ? 2 : 1) : 0) : 0,
+                idFiling: row ? row.idFiling : 0,
+                statusFiling: row ? (row.createFiling !== null ? (row.closeFiling !== null ? 2 : 1) : 0) : 0,
                 numFiling: row ? row.numFiling : null,
                 typeFiling: row ? row.typeFiling : this.type_filing,
                 filingIdStation: row ? row.filingIdStation : this.id_station_unload,
@@ -817,12 +818,12 @@
                 filingDivisionAbbrEn: row ? row.filingDivisionAbbrEn : division ? division.divisionAbbrEn : null,
                 startFiling: row ? row.startFiling : null,
                 endFiling: row ? row.endFiling : null,
-                filingCreate: row ? row.filingCreate : null,
-                filingCreateUser: row ? row.filingCreateUser : null,
-                filingChange: row ? row.filingChange : null,
-                filingChangeUser: row ? row.filingChangeUser : null,
-                filingClose: row ? row.filingClose : null,
-                filingCloseUser: row ? row.filingCloseUser : null,
+                createFiling: row ? row.createFiling : null,
+                createUserFiling: row ? row.createUserFiling : null,
+                changeFiling: row ? row.changeFiling : null,
+                changeUserFiling: row ? row.changeUserFiling : null,
+                closeFiling: row ? row.closeFiling : null,
+                closeUserFiling: row ? row.closeUserFiling : null,
             }
         }
         // Получение строки вагона в подаче (для операции)
@@ -831,17 +832,17 @@
                 idWim: row.wimId,
                 idWir: row.wirId,
                 isMoving: 0,
-                idWf: 0,
+                idFiling: 0,
                 numFiling: null,
                 note: null,
                 startFiling: null,
                 endFiling: null,
-                filingCreate: null,
-                filingCreateUser: null,
-                filingChange: null,
-                filingChangeUser: null,
-                filingClose: null,
-                filingCloseUser: null,
+                createFiling: null,
+                createUserFiling: null,
+                changeFiling: null,
+                changeUserFiling: null,
+                closeFiling: null,
+                closeUserFiling: null,
                 num: row.num,
                 position: row.position,
                 filingWayStart: null,
@@ -1229,8 +1230,13 @@
             }
             return valid;
         }
-        var apply_add_filing = function (data) {
-            return false;
+        // Создать подачу для выгрузки
+        var apply_add_filing = function (data, callback) {
+            this.view_com.api_wsd.postAddFilingUnloading(data, function (result) {
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }.bind(this));
         }
         // Завершенеие инициализации [this.view_com]
         var out_init_view_com = function () {
@@ -1273,7 +1279,11 @@
                 fn_validation: function (result, mode) {
                     return validation.call(this, result, mode);
                 },
-                fn_apply_add_filing: null,
+                fn_apply_add_filing: function (data, callback) {
+                    apply_add_filing.call(this, data, callback);
+                }
+
+                ,
                 fn_apply_update_filing: null,
                 fn_apply_update_operation_filing: null,
                 fn_apply_add_wagon_filing: null,

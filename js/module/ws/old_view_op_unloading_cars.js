@@ -653,7 +653,7 @@
                         if (rowData && rowData.length > 0) {
                             var wagons_filing_add = this.wagons.filter(function (i) { return i.id_wir_unload !== null; });
 
-                            if (rowData[0].idWf !== 0 && wagons_filing_add.length > 0) {
+                            if (rowData[0].idFiling !== 0 && wagons_filing_add.length > 0) {
                                 e.preventDefault();
                                 this.filing_alert.out_warning_message(langView('vounl_mess_warning_change_filing_ban', App.Langs));
                             }
@@ -673,7 +673,7 @@
                         if (type === "select") {
 
                             if (rows != null && rows.length > 0) {
-                                this.id_filing = rows[0].idWf;
+                                this.id_filing = rows[0].idFiling;
                                 if (this.id_filing === 0) bts.enable(); // активируем очистить черновик
                                 this.station_on = rows[0].filingIdStation;
                                 this.division_on = rows[0].filingDivisionIdDivision;
@@ -1599,7 +1599,7 @@
 
                                 if (this.id_filing == null && open_filing) {
                                     e.preventDefault();
-                                    this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idWf));
+                                    this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idFiling));
                                 } else {
                                     // Добавить
                                     var rows = this.twfrom_unlc.tab_com.get_select_row();
@@ -1924,11 +1924,11 @@
                 var wagons = wagons.filter(function (i) { return i.typeFiling === this.type_filing }.bind(this));
                 $.each(wagons, function (key, el) {
                     var st = this.sostav_filing.find(function (o) {
-                        return o.idWf === el.idWf;
+                        return o.idFiling === el.idFiling;
                     }.bind(this));
                     if (!st) {
                         this.sostav_filing.push({
-                            idWf: el.idWf,
+                            idFiling: el.idFiling,
                             statusFiling: (el.filingCreate !== null ? (el.filingClose !== null ? 2 : 1) : 0),
                             numFiling: el.numFiling,
                             typeFiling: el.typeFiling,
@@ -2031,7 +2031,7 @@
 
             if (station && way && park) {
                 sostav_filing.push({
-                    idWf: 0,
+                    idFiling: 0,
                     statusFiling: 0,
                     numFiling: null,
                     typeFiling: this.type_filing,
@@ -2089,7 +2089,7 @@
         if (id_filing !== null) {
             if (id_filing > 0) {
                 this.filing_wagons = this.wagons_filing.filter(function (i) {
-                    return i.idWf === id_filing;
+                    return i.idFiling === id_filing;
                 }.bind(this));
                 if (!this.filing_wagons || this.filing_wagons.length === 0) {
                     this.id_filing = null; this.id_filing_old = null;
@@ -2105,7 +2105,7 @@
                             idWim: el.wimId,
                             idWir: el.wirId,
                             isMoving: 0,
-                            idWf: 0,
+                            idFiling: 0,
                             numFiling: null,
                             note: null,
                             startFiling: null,

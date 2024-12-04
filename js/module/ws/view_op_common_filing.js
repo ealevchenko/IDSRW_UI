@@ -647,7 +647,7 @@
                         // На проверку окончания инициализации
                         process--;
                         //console.log('[view_op_unloading_cars] [tlf_unlc]process: ' + process);
-                        out_init(process);this.division_from
+                        out_init(process); this.division_from
                     },
                     fn_action_view_detali: function (rows) {
 
@@ -658,7 +658,7 @@
                         if (rowData && rowData.length > 0) {
                             var wagons_filing_add = this.wagons.filter(function (i) { return i.id_wir_unload !== null; });
 
-                            if (rowData[0].idWf !== 0 && wagons_filing_add.length > 0) {
+                            if (rowData[0].idFiling !== 0 && wagons_filing_add.length > 0) {
                                 e.preventDefault();
                                 this.filing_alert.out_warning_message(langView('vopcf_mess_warning_change_filing_ban', App.Langs));
                             }
@@ -678,13 +678,13 @@
                         if (type === "select") {
 
                             if (rows != null && rows.length > 0) {
-                                this.id_filing = rows[0].idWf;
+                                this.id_filing = rows[0].idFiling;
                                 if (this.id_filing === 0) bts.enable(); // активируем очистить черновик
                                 this.station_from = rows[0].filingIdStation;
                                 this.division_from = rows[0].filingDivisionIdDivision;
                                 this.id_way_filing = rows[0].filingIdWay;
-                                this.create_filing = rows[0].filingCreate;
-                                this.close_filing = rows[0].filingClose;
+                                this.create_filing = rows[0].createFiling;
+                                this.close_filing = rows[0].closeFiling;
                             }
 
                             var out_pr2 = function () {
@@ -1110,13 +1110,13 @@
                             this.form_from_setup.clear_all();
                             if (this.id_way_unload >= 0) {
                                 var open_filing = this.sostav_filing.find(function (o) {
-                                    return o.filingCreate !== null && o.filingClose === null && o.filingIdWay === this.id_way_unload;
+                                    return o.createFiling !== null && o.closeFiling === null && o.filingIdWay === this.id_way_unload;
                                 }.bind(this));
                                 // Проверка на открытую подачу на пути создания новой
 
                                 if (this.id_filing == null && open_filing) {
                                     e.preventDefault();
-                                    this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idWf));
+                                    this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idFiling));
                                 } else {
                                     // Добавить
                                     var rows = this["twwf_" + this.type_filing].tab_com.get_select_row();
@@ -1460,7 +1460,7 @@
                 var wagons = wagons.filter(function (i) { return i.typeFiling === this.type_filing }.bind(this));
                 $.each(wagons, function (key, el) {
                     var st = this.sostav_filing.find(function (o) {
-                        return o.idWf === el.idWf;
+                        return o.idFiling === el.idFiling;
                     }.bind(this));
                     if (!st) {
                         if (typeof this.settings.fn_get_sostav_filing === 'function') {
@@ -1552,7 +1552,7 @@
         if (id_filing !== null) {
             if (id_filing > 0) {
                 this.filing_wagons = this.wagons_filing.filter(function (i) {
-                    return i.idWf === id_filing;
+                    return i.idFiling === id_filing;
                 }.bind(this));
                 if (!this.filing_wagons || this.filing_wagons.length === 0) {
                     this.id_filing = null; this.id_filing_old = null;
@@ -1629,11 +1629,10 @@
     }
     // Выполнить операцию создать подачу
     view_op_common_filing.prototype.apply_add_filing = function (data) {
+        LockScreen(langView('vopcf_mess_run_operation_add_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
         if (typeof this.settings.fn_apply_add_filing === 'function') {
-            this.settings.fn_apply_add_filing.call(this, data);
-        } else {
-            LockScreen(langView('vopcf_mess_run_operation_add_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
-            this.view_com.api_wsd.postAddFilingUnloading(data, function (result) {
+            this.settings.fn_apply_add_filing.call(this, data, callback);
+            if (typeof callback === 'function') {
                 // Проверим на ошибку выполнения запроса api
                 if (result && result.status) {
                     var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
@@ -1649,8 +1648,26 @@
                 } else {
                     this.apply_update(result, langView('vopcf_mess_ok_operation_add_filing', App.Langs).format(result.count));
                 }
-            }.bind(this));
+            }
         }
+        //    LockScreen(langView('vopcf_mess_run_operation_add_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
+        //    this.view_com.api_wsd.postAddFilingUnloading(data, function (result) {
+        //        // Проверим на ошибку выполнения запроса api
+        //        if (result && result.status) {
+        //            var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
+        //            console.log('[view_op_common_filing] [postAddFilingUnloading] :' + mess);
+        //            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+        //            if (result.errors) {
+        //                for (var err in result.errors) {
+        //                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+        //                    console.log('[view_op_common_filing] [postAddFilingUnloading] :' + err + ":" + result.errors[err]);
+        //                }
+        //            }
+        //            LockScreenOff();
+        //        } else {
+        //            this.apply_update(result, langView('vopcf_mess_ok_operation_add_filing', App.Langs).format(result.count));
+        //        }
+        //    }.bind(this));
     };
     // Выполнить операцию править подачу 
     view_op_common_filing.prototype.apply_update_filing = function (data) {

@@ -147,9 +147,13 @@
     ids_wsd.prototype.postAutoPosition = function (operation, callback) {
         this.api_com.post('/WSD/operation/way/auto_position/', operation, callback, callback);
     };
-    //АРМ, Операция создать подачу (выгрузка, погрузка, ...)
+    //АРМ, Операция создать подачу (выгрузка)
     ids_wsd.prototype.postAddFilingUnloading = function (operation, callback) {
         this.api_com.post('/WSD/add/filing/operation/unloading/', operation, callback, callback);
+    };
+    //АРМ, Операция создать подачу (погрузка)
+    ids_wsd.prototype.postAddFilingLoading = function (operation, callback) {
+        this.api_com.post('/WSD/add/filing/operation/loading/', operation, callback, callback);
     };
     //АРМ, Операция добавить вагоны в подачу (выгрузка, погрузка, ...)
     ids_wsd.prototype.postAddWagonFiling = function (operation, callback) {
@@ -167,6 +171,7 @@
     ids_wsd.prototype.postUpdateFilingUnloading = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
     };
+
 
     App.ids_wsd = ids_wsd;
 

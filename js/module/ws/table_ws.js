@@ -1519,7 +1519,7 @@
             {
                 field: 'id_wf',
                 data: function (row, type, val, meta) {
-                    return row.idWf;
+                    return row.idFiling;
                 },
                 className: 'dt-body-center',
                 title: langView('tws_field_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
@@ -1644,51 +1644,51 @@
             },
             // дата создания
             {
-                field: 'filing_create',
+                field: 'create_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingCreate ? moment(row.filingCreate).format(format_datetime) : null;
+                    return row.createFiling ? moment(row.createFiling).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_create', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
-                field: 'filing_create_user',
+                field: 'create_user_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingCreateUser;
+                    return row.createUserFiling;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_create_user', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // дата правки
             {
-                field: 'filing_change',
+                field: 'change_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingChange ? moment(row.filingChange).format(format_datetime) : null;
+                    return row.changeFiling ? moment(row.changeFiling).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_change', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
-                field: 'filing_change_user',
+                field: 'change_user_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingChangeUser;
+                    return row.changeUserFiling;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_change_user', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // дата закрытия
             {
-                field: 'filing_close',
+                field: 'close_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingClose ? moment(row.filingClose).format(format_datetime) : null;
+                    return row.closeFiling ? moment(row.closeFiling).format(format_datetime) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_close', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
-                field: 'filing_close_user',
+                field: 'close_user_filing',
                 data: function (row, type, val, meta) {
-                    return row.filingCloseUser;
+                    return row.closeUserFiling;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_close_user', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2392,12 +2392,12 @@
         collums.push({ field: 'filing_division_abbr', title: null, class: null });
         collums.push({ field: 'start_filing', title: null, class: null });
         collums.push({ field: 'end_filing', title: null, class: null });
-        collums.push({ field: 'filing_create', title: null, class: null });
-        collums.push({ field: 'filing_create_user', title: null, class: null });
-        collums.push({ field: 'filing_change', title: null, class: null });
-        collums.push({ field: 'filing_change_user', title: null, class: null });
-        collums.push({ field: 'filing_close', title: null, class: null });
-        collums.push({ field: 'filing_close_user', title: null, class: null });
+        collums.push({ field: 'create_filing', title: null, class: null });
+        collums.push({ field: 'create_user_filing', title: null, class: null });
+        collums.push({ field: 'change_filing', title: null, class: null });
+        collums.push({ field: 'change_user_filing', title: null, class: null });
+        collums.push({ field: 'close_filing', title: null, class: null });
+        collums.push({ field: 'close_user_filing', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -2430,8 +2430,8 @@
         // ... Груз и цех текущий
         collums.push({ field: 'filing_start', title: null, class: null });
         collums.push({ field: 'filing_end', title: null, class: null });
-        collums.push({ field: 'filing_create', title: null, class: null });
-        collums.push({ field: 'filing_create_user', title: null, class: null });
+        collums.push({ field: 'create_filing', title: null, class: null });
+        collums.push({ field: 'create_user_filing', title: null, class: null });
 
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -3426,7 +3426,7 @@
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
-                    $(row).attr('id', data.idWf);
+                    $(row).attr('id', data.idFiling);
                     // Предъявлен или сдан
                     if (data.statusFiling === 2) {
                         $(row).addClass('green');
