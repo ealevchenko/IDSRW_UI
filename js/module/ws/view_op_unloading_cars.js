@@ -654,7 +654,7 @@
                                                     vesg: null,                             // для погрузки
                                                     id_way: this.id_way_unload,             // !только новая подача
                                                     id_division: this.division_from,          // можно править
-                                                    create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
+                                                    //create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
                                                     wagons: list_wagons
                                                 };
                                                 this.apply_add_filing(operation);
@@ -1238,6 +1238,15 @@
                 }
             }.bind(this));
         }
+        // Открыть(закрыть) операцию выгрузки над вагонами подачи 
+        var apply_update_operation_filing = function (data, callback) {
+            this.view_com.api_wsd.postUpdateFilingOperationUnloading(data, function (result) {
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }.bind(this));
+        }
+
         // Завершенеие инициализации [this.view_com]
         var out_init_view_com = function () {
 
@@ -1281,11 +1290,11 @@
                 },
                 fn_apply_add_filing: function (data, callback) {
                     apply_add_filing.call(this, data, callback);
-                }
-
-                ,
+                },
                 fn_apply_update_filing: null,
-                fn_apply_update_operation_filing: null,
+                fn_apply_update_operation_filing: function (data, callback) {
+                    apply_update_operation_filing.call(this, data, callback);
+                },
                 fn_apply_add_wagon_filing: null,
                 fn_apply_del_wagon_filing: null,
                 fn_apply_update: null,

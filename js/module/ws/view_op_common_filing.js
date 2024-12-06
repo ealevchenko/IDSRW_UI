@@ -1631,8 +1631,7 @@
     view_op_common_filing.prototype.apply_add_filing = function (data) {
         LockScreen(langView('vopcf_mess_run_operation_add_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
         if (typeof this.settings.fn_apply_add_filing === 'function') {
-            this.settings.fn_apply_add_filing.call(this, data, callback);
-            if (typeof callback === 'function') {
+            this.settings.fn_apply_add_filing.call(this, data, function (result) {
                 // Проверим на ошибку выполнения запроса api
                 if (result && result.status) {
                     var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
@@ -1648,26 +1647,8 @@
                 } else {
                     this.apply_update(result, langView('vopcf_mess_ok_operation_add_filing', App.Langs).format(result.count));
                 }
-            }
+            }.bind(this));
         }
-        //    LockScreen(langView('vopcf_mess_run_operation_add_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
-        //    this.view_com.api_wsd.postAddFilingUnloading(data, function (result) {
-        //        // Проверим на ошибку выполнения запроса api
-        //        if (result && result.status) {
-        //            var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
-        //            console.log('[view_op_common_filing] [postAddFilingUnloading] :' + mess);
-        //            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
-        //            if (result.errors) {
-        //                for (var err in result.errors) {
-        //                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
-        //                    console.log('[view_op_common_filing] [postAddFilingUnloading] :' + err + ":" + result.errors[err]);
-        //                }
-        //            }
-        //            LockScreenOff();
-        //        } else {
-        //            this.apply_update(result, langView('vopcf_mess_ok_operation_add_filing', App.Langs).format(result.count));
-        //        }
-        //    }.bind(this));
     };
     // Выполнить операцию править подачу 
     view_op_common_filing.prototype.apply_update_filing = function (data) {
@@ -1696,11 +1677,10 @@
     };
     // Выполнить операцию открыть-закрыть операции над вагонами (+ админка)
     view_op_common_filing.prototype.apply_update_operation_filing = function (data) {
+        LockScreen(langView('vopcf_mess_run_operation_update_operation_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
+
         if (typeof this.settings.fn_apply_update_operation_filing === 'function') {
-            this.settings.fn_apply_update_operation_filing.call(this, data);
-        } else {
-            LockScreen(langView('vopcf_mess_run_operation_update_operation_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
-            this.view_com.api_wsd.postUpdateFilingOperationUnloading(data, function (result) {
+            this.settings.fn_apply_update_operation_filing.call(this, data, function (result) {
                 // Проверим на ошибку выполнения запроса api
                 if (result && result.status) {
                     var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
@@ -1718,6 +1698,28 @@
                 }
             }.bind(this));
         }
+        //if (typeof this.settings.fn_apply_update_operation_filing === 'function') {
+        //    this.settings.fn_apply_update_operation_filing.call(this, data);
+        //} else {
+        //    LockScreen(langView('vopcf_mess_run_operation_update_operation_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
+        //    this.view_com.api_wsd.postUpdateFilingOperationUnloading(data, function (result) {
+        //        // Проверим на ошибку выполнения запроса api
+        //        if (result && result.status) {
+        //            var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+        //            console.log('[view_op_common_filing] [postUpdateFilingOperationUnloading] :' + mess);
+        //            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+        //            if (result.errors) {
+        //                for (var err in result.errors) {
+        //                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+        //                    console.log('[view_op_common_filing] [postUpdateFilingOperationUnloading] :' + err + ":" + result.errors[err]);
+        //                }
+        //            }
+        //            LockScreenOff();
+        //        } else {
+        //            this.apply_update(result, langView('vopcf_mess_ok_operation_update_operation_filing', App.Langs).format(result.count, this.id_filing));
+        //        }
+        //    }.bind(this));
+        //}
     };
     // Выполнить операцию добавить в подачу вагоны
     view_op_common_filing.prototype.apply_add_wagon_filing = function (data) {
