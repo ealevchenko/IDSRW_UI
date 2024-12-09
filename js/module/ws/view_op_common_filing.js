@@ -777,7 +777,7 @@
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
-                    type_report: 'filing_wagons',
+                    type_report: 'filing_wagons_' + this.type_filing,
                     setup_buttons: [
                         {
                             name: 'select_all',

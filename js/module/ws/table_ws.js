@@ -174,6 +174,20 @@
             'tws_field_filing_close_user': 'Закрыл',
             'tws_field_filing_start': 'Дата начала выгрузки',
             'tws_field_filing_end': 'Дата окончания выгрузки',
+            'tws_field_current_cargo_group_name': 'Группа груза ТЕКЩ',
+            'tws_field_current_cargo_name': 'Груз ТЕКЩ',
+            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКЩ',
+            'tws_field_current_internal_cargo_name': 'Груз ТЕКЩ',
+            'tws_field_current_common_cargo_name': 'Груз ТЕКЩ',
+            'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
+            'tws_field_current_division_on_abbr': 'Цех получатель ТЕКЩ',
+            'tws_field_current_station_from_amkr_abbr': 'Станция отправления ТЕКУЩ',
+            'tws_field_current_station_on_amkr_abbr': 'Станция назначения ТЕКУЩ',
+            'tws_field_current_external_station_on_name': 'Станция УЗ назначения ТЕКУЩ',
+
+            'tws_field_current_vesg': 'Вес',
+
+
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -1709,6 +1723,109 @@
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            // Груз группа ТЕКЩ
+            {
+                field: 'current_cargo_group_name',
+                data: function (row, type, val, meta) {
+                    return row['currentCargoGroupName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Груз ТЕКЩ
+            {
+                field: 'current_cargo_name',
+                data: function (row, type, val, meta) {
+                    return row['currentCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Группа груза внутреняя 
+            {
+                field: 'current_internal_cargo_group_name',
+                data: function (row, type, val, meta) {
+                    return row['currentInternalCargoGroupName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_internal_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Груз внутрений 
+            {
+                field: 'current_internal_cargo_name',
+                data: function (row, type, val, meta) {
+                    return row['currentInternalCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Груз текущий (ЕТСНГ или внутрений) 
+            {
+                field: 'current_common_cargo_name',
+                data: function (row, type, val, meta) {
+                    if (row.currentCargoIdGroup !== null) {
+                        return row['currentCargoName' + ucFirst(App.Lang)];
+                    } else {
+                        return row['currentInternalCargoName' + ucFirst(App.Lang)];
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // текущий вес
+            {
+                field: 'current_vesg',
+                data: function (row, type, val, meta) {
+                    return row.currentVesg;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_current_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // цех отправления текущй
+            {
+                field: 'current_division_from_abbr',
+                data: function (row, type, val, meta) {
+                    return row['currentDivisionFromAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // цех прибытия текущй
+            {
+                field: 'current_division_on_abbr',
+                data: function (row, type, val, meta) {
+                    return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция отправления ТЕКУЩ
+            {
+                field: 'current_external_station_on_name',
+                data: function (row, type, val, meta) {
+                    return row['currentExternalStationOnName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция отправления ТЕКУЩ
+            {
+                field: 'current_station_from_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция прибытия ТЕКУЩ
+            {
+                field: 'current_station_on_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // --- ViewWagonsFiling
 
         ];
@@ -2401,7 +2518,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_ws.prototype.init_columns_filing_wagons = function () {
+    table_ws.prototype.init_columns_filing_wagons_1 = function () {
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         if (this.tab_com.settings.link_num) {
@@ -2436,7 +2553,35 @@
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
-
+    table_ws.prototype.init_columns_filing_wagons_2 = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_vesg', title: null, class: null });
+        collums.push({ field: 'current_operation_name', title: null, class: null });
+        collums.push({ field: 'current_operation_start', title: null, class: null });
+        collums.push({ field: 'current_operation_end', title: null, class: null });
+        collums.push({ field: 'create_filing', title: null, class: null });
+        collums.push({ field: 'create_user_filing', title: null, class: null });
+        collums.push({ field: 'change_filing', title: null, class: null });
+        collums.push({ field: 'change_user_filing', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -3443,8 +3588,8 @@
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
-            // Вагоны в подаче
-            case 'filing_wagons': {
+            // Вагоны в подаче выгрузка
+            case 'filing_wagons_1': {
                 this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
                 this.tab_com.pageLength = 10;
                 this.tab_com.deferRender = true;
@@ -3488,7 +3633,57 @@
                     }
 
                 }.bind(this);
-                this.tab_com.table_columns = this.init_columns_filing_wagons();
+                this.tab_com.table_columns = this.init_columns_filing_wagons_1();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Вагоны в подаче погрузка
+            case 'filing_wagons_2': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.idWim); // id строки дислокации вагона в момент отправки
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.wirHighlightColor !== null) {
+                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    }
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(2).attr('style', 'background-color:' + data.operatorColor)
+                        //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    //if (data.id_wir_unload !== null) {
+                    //    $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    //}
+                    if (!data.isMoving) {
+                        if (data.filingStart !== null) {
+                            if (data.filingEnd !== null) {
+                                $(row).addClass('green');
+                            } else {
+                                $(row).addClass('yellow');
+                            }
+                        }
+                    } else {
+                        $(row).addClass('blue');
+                    }
+
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_filing_wagons_2();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;
