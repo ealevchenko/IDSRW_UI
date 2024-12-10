@@ -1970,6 +1970,15 @@
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
+
+        collums.push({ field: 'current_common_cargo_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'current_vesg', title: null, class: 'lgreen' });
+
         collums.push({ field: 'arrival_duration', title: null, class: null });
         collums.push({ field: 'arrival_idle_time', title: null, class: null });
         collums.push({ field: 'arrival_usage_fee', title: null, class: null });
