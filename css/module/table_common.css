@@ -495,3 +495,8 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td
     border-color: yellow;
     border-width: 2px;
 }
+
+.check-field {
+    border-color: blue;
+    border-width: 2px;
+}
