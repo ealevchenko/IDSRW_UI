@@ -1632,9 +1632,9 @@
         return 0;
     }
     // Показать настройки подачи
-    view_op_common_filing.prototype.view_setup_filing = function () {
+    view_op_common_filing.prototype.view_setup_filing = function (command) {
         if (typeof this.settings.fn_view_setup_filing === 'function') {
-            this.settings.fn_view_setup_filing.call(this)
+            this.settings.fn_view_setup_filing.call(this, command)
         }
     };
     //--------------------------------------------------------------------------------
