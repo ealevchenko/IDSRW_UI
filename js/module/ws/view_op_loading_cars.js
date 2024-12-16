@@ -18,7 +18,7 @@
     var max_dt_docum = 60 * 3; // TODO: Максимальная разница в минутах даты и времени получения документа от текущей даты (перенести в общие настройки)
 
     var min_period = 5; // TODO: Минимальный период операции 
-    var max_period = 60 * 10 * 10; // TODO: Максимальный период операции 
+    var max_period = 60 * 50 * 10; // TODO: Максимальный период операции 
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -1610,35 +1610,43 @@
                                                     mode: mode,
                                                     wagons: list_wagons
                                                 };
-                                                //this.apply_update_operation_filing(operation);
+                                                this.apply_update_operation_filing(operation);
                                             }
                                         };
-                                        //// Править закрыть операцию
-                                        //if (mode === 3) {
-                                        //    // Проверим наличие вагонов
-                                        //    var list_wagons = [];
-                                        //    if (rows && rows.length > 0 && this.id_filing !== null) {
-                                        //        $.each(rows, function (i, el) {
-                                        //            list_wagons.push(
-                                        //                {
-                                        //                    id_wim: el.idWim,
-                                        //                    start: null,
-                                        //                    stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
-                                        //                    id_wagon_operations: el.currentIdOperation,
-                                        //                    id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
-                                        //                }
-                                        //            )
-                                        //        }.bind(this));
-                                        //        // Сформируем операцию
+                                        // Править закрыть операцию
+                                        if (mode === 3) {
+                                            // Проверим наличие вагонов
+                                            var list_wagons = [];
+                                            if (rows && rows.length > 0 && this.id_filing !== null) {
+                                                $.each(rows, function (i, el) {
+                                                    list_wagons.push(
+                                                        {
+                                                            id_wim: el.idWim,
+                                                            start: null,    // можно править пока подача не закрыта
+                                                            stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,                                                                 // только начало
+                                                            id_wagon_operations: uz_select ? 15 : 16,                      // (15,16) можно править пока подача не закрыта
+                                                            doc_received: result.new.input_datetime_time_document !== null ? result.new.input_datetime_time_document._i : null,                                                         // документ получен
+                                                            id_cargo: uz_select ? result.new.datalist_cargo_etsng : null,                 // Груз ЕТСНГ
+                                                            code_station_uz: uz_select ? result.new.datalist_code_station_uz : null,         // Станция УЗ
+                                                            id_station_amkr_on: !uz_select ? result.new.select_id_station_amkr_on : null,    // Станция АМКР прибытия
+                                                            id_devision_on: !uz_select ? result.new.datalist_id_devision_on : null,          // Подразделение АМКР прибытия
+                                                            num_nakl: !uz_select ? result.new.input_text_num_nakl : null,                    // Накладная на вагон
+                                                            id_internal_cargo: !uz_select ? result.new.datalist_id_internal_cargo : null,    // Внутрений груз
+                                                            vesg: result.new.input_text_vesg,                                                                             // Вес груза
+                                                            id_status_load: result.new.select_id_status_load  
+                                                        }
+                                                    )
+                                                }.bind(this));
+                                                // Сформируем операцию
 
-                                        //        var operation = {
-                                        //            id_filing: this.id_filing,
-                                        //            mode: mode,
-                                        //            wagons: list_wagons
-                                        //        };
-                                        //        this.apply_update_operation_filing(operation);
-                                        //    }
-                                        //};
+                                                var operation = {
+                                                    id_filing: this.id_filing,
+                                                    mode: mode,
+                                                    wagons: list_wagons
+                                                };
+                                                this.apply_update_operation_filing(operation);
+                                            }
+                                        };
                                         //// Править закрытую операцию (статус)
                                         //if (mode === 4) {
                                         //    // Проверим наличие вагонов
@@ -2455,7 +2463,6 @@
                 }
 
             }
-
             // Время конца операции
             if (mode === 3 && mode_close > 0) {
                 if (result.new && result.new.input_datetime_time_stop === null) {
@@ -2538,7 +2545,6 @@
                     this.form_filing_wagons_setup.set_element_validation_error('vesg', langView('voplc_mess_error_max_vesg', App.Langs).format(gruzp), false);
                 }
             }
-
             // проверка статуса закрытия операции
             if (mode_close > 0) {
                 // Обязательно при закрытии операции время конца и статус операции
@@ -2547,7 +2553,6 @@
                     valid = false;
                 }
             }
-
             // Проверим вагоны в подаче
             if (mode === 0) {
                 // Проверим вагоны в подаче
