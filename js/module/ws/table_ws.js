@@ -184,10 +184,9 @@
             'tws_field_current_station_from_amkr_abbr': 'Станция отправления ТЕКУЩ',
             'tws_field_current_station_on_amkr_abbr': 'Станция назначения ТЕКУЩ',
             'tws_field_current_external_station_on_name': 'Станция УЗ назначения ТЕКУЩ',
-
             'tws_field_current_vesg': 'Вес',
-
-
+            'tws_field_internal_doc_num': '№ накладной',
+            'tws_field_move_cargo_doc_received': 'Док. получен',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -196,7 +195,18 @@
             'tws_field_id_2': 'ОСТАТОК ВНЕШНИХ',
             'tws_field_id_3': 'УЧЕТНЫЙ ОСТАТОК',
 
-            'tws_title_status_0': 'Предъявлен',
+
+            'tws_title_filing_operation_wagon_0': 'Вагон без операций.',
+            'tws_title_filing_operation_wagon_1': 'По вагону открыта операция.',
+            'tws_title_filing_operation_wagon_load_2_1': 'По вагону закрыта операция, но документ еще не получен!',
+            'tws_title_filing_operation_wagon_load_2_2': 'По вагону закрыта операция, документ получен.',
+            'tws_title_filing_operation_wagon_load_3_1': 'По вагону закрыта операция и вагон перемещен, но документ еще не получен!',
+            'tws_title_filing_operation_wagon_load_3_2': 'По вагону закрыта операция, документ получен и вагон перемещен.',
+
+
+
+
+
             'tws_title_status_1': 'В работе',
             'tws_title_status_2': 'Сдан',
             'tws_title_status_3': 'Отправлен',
@@ -1826,6 +1836,24 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            // num_filing
+            {
+                field: 'internal_doc_num',
+                data: function (row, type, val, meta) {
+                    return row.internalDocNum;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_internal_doc_num', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // дата создания
+            {
+                field: 'move_cargo_doc_received',
+                data: function (row, type, val, meta) {
+                    return row.moveCargoDocReceived ? moment(row.moveCargoDocReceived).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_move_cargo_doc_received', App.Langs), width: "50px", orderable: true, searchable: true
+            },
             // --- ViewWagonsFiling
 
         ];
@@ -2574,6 +2602,8 @@
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'internal_doc_num', title: null, class: null });
+        collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'current_common_cargo_name', title: null, class: null });
         collums.push({ field: 'current_division_from_abbr', title: null, class: null });
@@ -3682,12 +3712,26 @@
                     if (!data.isMoving) {
                         if (data.filingStart !== null) {
                             if (data.filingEnd !== null) {
-                                $(row).addClass('green');
+                                if (data.moveCargoDocReceived !== null) {
+                                    $(row).addClass('green');
+                                    $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_2', App.Langs));
+                                } else {
+                                    $(row).addClass('pink');
+                                    $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_1', App.Langs));
+                                }
                             } else {
                                 $(row).addClass('yellow');
+                                $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
                             }
+                        } else {
+                            $(row).attr('title', langView('tws_title_filing_operation_wagon_0', App.Langs));
                         }
                     } else {
+                        if (data.moveCargoDocReceived !== null) {
+                            $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_2', App.Langs));
+                        } else {
+                            $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_1', App.Langs));
+                        }
                         $(row).addClass('blue');
                     }
 
