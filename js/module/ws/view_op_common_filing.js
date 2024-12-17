@@ -12,6 +12,10 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
+    var operation_load_uz = 15; // TODO: загружать 
+    var operation_load_vz = 16; // TODO: загружать 
+
+
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -97,8 +101,11 @@
             'vopcf_mess_warning_wagon_ban_error_operation': 'Вагон № {0} для выбора заблокирован (операция вагона отличается от операций выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
-            'vopcf_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
+            //'vopcf_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
+            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
+            //'vopcf_mess_warning_wagon_ban_filing_load_doc': 'Вагон № {0} для операций заблокирован (вагон погружен, но документ не получен!)',
             'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :[{0}] не закрытая подача [{1}]. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
 
@@ -1057,7 +1064,7 @@
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
-                    type_report: 'unload_cars_from',
+                    type_report: 'unload_cars_from_' + this.type_filing,
                     setup_buttons: [
                         {
                             name: 'select_all',
@@ -1099,14 +1106,25 @@
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_exists', App.Langs).format(rowData[0].num, this.id_filing));
                             }
-                            if (rowData[0].outgoingSostavStatus > 0) {
-                                e.preventDefault();
-                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
-                            }
+                            //if (rowData[0].outgoingSostavStatus > 0) {
+                            //    e.preventDefault();
+                            //    this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                            //}
                             if (rowData[0].id_wir_unload !== null) {
                                 e.preventDefault();
-                                this.from_way_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_filing_way', App.Langs).format(rowData[0].num));
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_filing_way', App.Langs).format(rowData[0].num));
                             }
+                            if (this.type_filing === 1 && rowData[0].currentUnloadBusy) {
+                                e.preventDefault();
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)], rowData[0].moveCargoDocReceived));
+
+                            }
+                            if (this.type_filing === 2 && rowData[0].currentLoadBusy) {
+                                e.preventDefault();
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
+
+                            }
+
                         }
 
                     }.bind(this),
