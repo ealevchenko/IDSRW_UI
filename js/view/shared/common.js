@@ -123,6 +123,14 @@ var is_valid_num_wagon = function (num) {
     return false;
 };
 
+var get_result_select = function (value) {
+    if (!isNaN(Number(value))) {
+        var val = Number(value);
+        return val === -1 ? null : val;
+    }
+    return value;
+};
+
 (function (window) {
     'use strict';
 
@@ -2284,7 +2292,16 @@ var is_valid_num_wagon = function (num) {
                     //text_out = select ? select.label : "";
                     text_out = select ? select.value : null;
                 };
+                var disabled = this.$element.flexdatalist("disabled");
+                if (disabled) {
+                    this.$element.flexdatalist("disabled", !disabled);
+                    //this.$element.prop("disabled", !disabled);
+                }
                 this.$element.flexdatalist("value", { value: text_out });
+                this.$element.flexdatalist("disabled", disabled);
+                //if (disabled) {
+                //    this.$element.prop("disabled", disabled);
+                //}
             } else {
                 // чтение
                 var value = this.$element.flexdatalist("value");
