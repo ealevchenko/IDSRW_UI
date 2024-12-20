@@ -99,6 +99,8 @@
             'vopcf_title_form_apply': 'Править подачу',
             'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
             'vopcf_mess_warning_wagon_ban_error_operation': 'Вагон № {0} для выбора заблокирован (операция вагона отличается от операций выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
+
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
             //'vopcf_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
@@ -197,8 +199,12 @@
         this.id_filing = null;          // id подачи (изменяется при выборе подачи)
         this.id_filing_old = null;      // id подачи (изменяется при выборе подачи)
         this.id_way_filing = null;      // id пути (изменяется при выборе подачи)
-        this.station_from = -1;           // станция подачи (изменяется при выборе подачи)
-        this.division_from = -1;          // подразделение подачи (изменяется при выборе подачи)
+        this.station_from = -1;         // станция подачи (изменяется при выборе подачи)
+        this.division_from = -1;        // подразделение подачи (изменяется при выборе подачи)
+        this.num_filing = null;         // номер накладной подачи (изменяется при выборе подачи)
+        this.vesg_filing = null;        // вес всей подачи (изменяется при выборе подачи)
+        this.doc_received_filing = null;// дата получения документа (изменяется при выборе подачи)
+
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
@@ -677,6 +683,9 @@
                         this.id_way_filing = this.id_way_unload; // По умолчанию текущее
                         this.station_from = -1;
                         this.division_from = -1;
+                        this.num_filing = null;         // номер накладной подачи (изменяется при выборе подачи)
+                        this.vesg_filing = null;        // вес всей подачи (изменяется при выборе подачи)
+                        this.doc_received_filing = null;// дата получения документа (изменяется при выборе подачи)
                         this.status_load = -1;
                         this.create_filing = null;
                         this.close_filing = null;
@@ -690,6 +699,9 @@
                                 if (this.id_filing === 0) bts.enable(); // активируем очистить черновик
                                 this.station_from = rows[0].filingIdStation;
                                 this.division_from = rows[0].filingDivisionIdDivision;
+                                this.num_filing = rows[0].numFiling;
+                                this.vesg_filing = rows[0].vesgFiling;
+                                this.doc_received_filing = rows[0].docReceivedFiling;
                                 this.id_way_filing = rows[0].filingIdWay;
                                 this.create_filing = rows[0].createFiling;
                                 this.close_filing = rows[0].closeFiling;
@@ -790,18 +802,28 @@
                         {
                             name: 'select_all',
                             action: function () {
+                                var sel_rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
+                                var id_operation = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].currentIdOperation : null;
+                                var data_doc = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].moveCargoDocReceived : null;
                                 // Выбрать только не принятые вагоны
                                 switch (this.fw_status) {
                                     case 1: {
                                         this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                            return !data.isMoving && data.filingStart !== null && data.filingEnd === null;
+                                            return !data.isMoving && data.filingStart !== null && data.filingEnd === null && data.currentIdOperation === id_operation;
                                         }).select();
                                         break;
                                     }
                                     case 2: {
-                                        this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                            return !data.isMoving && data.filingStart !== null && data.filingEnd !== null;
-                                        }).select();
+                                        if (this.type_filing === 2) {
+                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.moveCargoDocReceived === data_doc;
+                                            }).select();
+                                        } else {
+                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation;
+                                            }).select();
+                                        }
+
                                         break;
                                     }
                                     case 3: {
@@ -855,7 +877,12 @@
                                     e.preventDefault();
                                     this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
                                 } else {
-                                    this.fw_status = curr_status;
+                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
+                                        e.preventDefault();
+                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_doc_received', App.Langs).format(rowData[0].num));
+                                    } else {
+                                        this.fw_status = curr_status;
+                                    }
                                 }
                             }
                             //if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
