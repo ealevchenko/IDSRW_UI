@@ -2327,10 +2327,13 @@
         collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_sertification_data', title: null, class: null });
-        // Станция отправления ТЕКУЩАЯ
-        // Станция назначения ТЕКУЩАЯ
-        // Цех погрузки ТЕКУЩАЯ
-        // Цех получатель ТЕКУЩАЯ
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_vesg', title: null, class: null });
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
@@ -2365,10 +2368,13 @@
         collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_sertification_data', title: null, class: null });
-        // Станция отправления ТЕКУЩАЯ
-        // Станция назначения ТЕКУЩАЯ
-        // Цех погрузки ТЕКУЩАЯ
-        // Цех получатель ТЕКУЩАЯ
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_vesg', title: null, class: null });
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
