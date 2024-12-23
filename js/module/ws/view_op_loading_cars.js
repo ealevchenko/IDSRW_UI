@@ -104,13 +104,15 @@
             'voplc_text_label_status_load': 'Выберите статус (груж./порож.)...',
 
             'voplc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
-            'voplc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать начало операции , для этого укажите дату начала тип погрузки и если известно станцию и цех получатель и груз отправки, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
+            'voplc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать начало операции , для этого укажите дату начала тип погрузки и если известно станцию, цех получатель и груз отправки, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
             'voplc_mess_info_filing': 'Выбрана подача. Чтобы исправить цех погрузки укажите новый цех и нажмите «Править подачу». Чтобы выполнить операции над вагонами выберите вагон(ы).',
             'voplc_mess_info_filing_close': 'Выбрана закрытая подача. Операции не доступны!',
-            'voplc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции и по необходимости дату завершения и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны», если нужно выбрать вагоны с открытыми и закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
-            'voplc_mess_info_wagon_mode_1': 'Выбран(ы) вагоны, по которым открыта операция. Укажите дату завершения операции и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с открытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
-            'voplc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только статус, укажите другой статус и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с закрытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
-            'voplc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
+            'voplc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции тип погрузки УЗ-ВЗ и необязательные данные: станция и цех назначения, груз, и нажмите “Открыть операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны». Обязательные для заполнения поля выделены красным контуром, необязательные желтым.)',            'voplc_mess_info_wagon_mode_1_stop': 'Выбран(ы) вагоны, по которым открыта операция и указано время окончания операции. Проверьте статус и укажите необязательные данные станция, цех назначения, груз и (вес и дату получения документа если выбран 1 вагон). Если выбраны все вагоны подачи вы можете указать дату получения общего документа, общей накладной, общий вес на подачу. (ВНИМАНИЕ! Обязательные для заполнения поля выделены красным контуром, необязательные желтым, если выбрано несколько вагонов и по ним не совпадают поля эти поля выделены синим).',
+            'voplc_mess_info_wagon_mode_1_edit': 'Выбран(ы) вагоны, по которым открыта операция. Вы можете изменить данные: станция и цех назначения, груз, (вес если выбран 1 вагон) нажав «Править операцию». Указав время окончания, вы можете закрыть операцию. Указав документ получен (если выбран 1 вагон), вы можете полностью закрыть документ на вагон. (ВНИМАНИЕ! Обязательные для заполнения поля выделены красным контуром, необязательные желтым, если выбрано несколько вагонов и по ним не совпадают поля эти поля выделены синим).',
+            'voplc_mess_info_wagon_mode_1_close': 'Выбран(ы) вагоны, по которым открыта операция и указана дата получения документа. Заполните все обязательные поля и нажмите «закрыть операцию». (ВНИМАНИЕ! Обязательные для заполнения поля выделены красным контуром, необязательные желтым, если выбрано несколько вагонов и по ним не совпадают поля эти поля выделены синим).',
+            'voplc_mess_info_wagon_mode_1_stop': 'Выбран(ы) вагоны, по которым открыта операция и указано время окончания операции. Проверьте статус и укажите необязательные данные: станция, цех назначения, груз и (вес и дату получения документа если выбран 1 вагон). Если выбраны все вагоны подачи вы можете указать дату получения общего документа, общей накладной, общий вес на подачу. (ВНИМАНИЕ! Обязательные для заполнения поля выделены красным контуром, необязательные желтым, если выбрано несколько вагонов и по ним не совпадают поля эти поля выделены синим).',
+            'voplc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция, но нет подтверждения получения документа. Укажите дату получения документа и заполните все обязательные поля и нажмите «Править операцию». (ВНИМАНИЕ! Обязательные для заполнения поля выделены красным контуром, необязательные желтым, если выбрано несколько вагонов и по ним не совпадают поля эти поля выделены синим).',
+            'voplc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача или указана дата получения документа. Операции не доступны!.',
             'voplc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
 
             'voplc_mess_valid_station_uz': 'Указанной станции УЗ нет в справочнике ИДС',
@@ -1633,22 +1635,21 @@
                                                     vesg: null,                             // для погрузки
                                                     id_way: this.id_way_unload,             // !только новая подача
                                                     id_division: this.division_from,          // можно править
-                                                    //create: result.new.input_datetime_time_start._i,// дата новая, null - Правим существующую
                                                     wagons: list_wagons
                                                 };
                                                 this.apply_add_filing(operation);
                                             }
                                         };
-                                        //// Править подачи
-                                        //if (mode === 1 && result.new.datalist_id_devision_from) {
-                                        //    if (this.id_filing !== null) { }
-                                        //    var operation = {
-                                        //        id_filing: this.id_filing,
-                                        //        mode: mode,
-                                        //        id_division: Number(result.new.datalist_id_devision_from),
-                                        //    };
-                                        //    this.apply_update_filing(operation);
-                                        //};
+                                        // Править подачи
+                                        if (mode === 1 && result.new.datalist_id_devision_from) {
+                                            if (this.id_filing !== null) { }
+                                            var operation = {
+                                                id_filing: this.id_filing,
+                                                mode: mode,
+                                                id_division: Number(result.new.datalist_id_devision_from),
+                                            };
+                                            this.apply_update_filing(operation);
+                                        };
                                         // Править открыть операцию
                                         if (mode === 2) {
                                             // Проверим наличие вагонов
@@ -2078,8 +2079,8 @@
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.addClass('not-required-field');
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.addClass('not-required-field');
-                            this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
-                            this.form_filing_wagons_setup.el.input_text_num_nakl.$element.addClass('not-required-field');
+                            //this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
+                            //this.form_filing_wagons_setup.el.input_text_num_nakl.$element.addClass('not-required-field');
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.addClass('not-required-field');
                         }
@@ -2101,6 +2102,12 @@
                     var date_document_total = this.form_filing_wagons_setup.el.input_datetime_time_document_total.val();
                     // Проверим введена дата окончания или дата документа
                     if (isValid || (date_document !== null && date_document._isValid) || (date_document_total !== null && date_document_total._isValid)) {
+                        this.filing_wagons_alert_info.clear_message();
+                        if ((date_document !== null && date_document._isValid) || (date_document_total !== null && date_document_total._isValid)) {
+                            this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_close', App.Langs));
+                        } else {
+                            this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_stop', App.Langs));
+                        }
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_close.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
@@ -2109,6 +2116,8 @@
                         this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, this.default_status_load)
                     } else {
+                        this.filing_wagons_alert_info.clear_message();
+                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_edit', App.Langs));
                         this.form_filing_wagons_setup.el.button_operation_apply.show();
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
@@ -2192,6 +2201,7 @@
                         }
                     }
                     if (this.fw_status === 1) view_set_date_stop.call(this, date_stop !== null ? date_stop._isValid : false); // отобразить закрыть операцию и обязательный ввод данных по закрытию
+
                 }
             }
             // Проверка на ввод даты получения общего документа (режимы закрыть все по операции)
@@ -2431,7 +2441,7 @@
 
                 this.form_filing_wagons_setup.el.input_text_num_nakl_total.val(this.num_filing);
                 this.form_filing_wagons_setup.el.input_text_vesg_total.val(this.vesg_filing);
-                this.form_filing_wagons_setup.el.input_datetime_time_document_total.val(this.doc_received_filing); 
+                this.form_filing_wagons_setup.el.input_datetime_time_document_total.val(this.doc_received_filing);
                 // Проверим выбраны вагоны
                 switch (this.fw_status) {
                     case 0: {
@@ -2471,7 +2481,7 @@
                         this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(rows[0].currentIdOperation);
 
                         this.filing_wagons_alert_info.clear_message();
-                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1', App.Langs));
+                        this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_stop', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
@@ -2964,8 +2974,12 @@
             }.bind(this));
         }
         //
-        var apply_update_filing = function (data) {
-            return false;
+        var apply_update_filing = function (data, callback) {
+            this.view_com.api_wsd.postUpdateFiling(data, function (result) {
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }.bind(this));
         }
         // Открыть(закрыть) операцию погрузки над вагонами подачи
         var apply_update_operation_filing = function (data, callback) {
@@ -3022,7 +3036,9 @@
                 fn_apply_add_filing: function (data, callback) {
                     apply_add_filing.call(this, data, callback);
                 },
-                fn_apply_update_filing: null,
+                fn_apply_update_filing: function (data, callback) {
+                    apply_update_filing.call(this, data, callback);
+                },
                 fn_apply_update_operation_filing: function (data, callback) {
                     apply_update_operation_filing.call(this, data, callback);
                 },

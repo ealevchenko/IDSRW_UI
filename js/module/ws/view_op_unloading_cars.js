@@ -1271,6 +1271,14 @@
                 }
             }.bind(this));
         }
+        // Править подачу
+        var apply_update_filing = function (data, callback) {
+            this.view_com.api_wsd.postUpdateFiling(data, function (result) {
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }.bind(this));
+        }
         // Открыть(закрыть) операцию выгрузки над вагонами подачи 
         var apply_update_operation_filing = function (data, callback) {
             this.view_com.api_wsd.postUpdateFilingOperationUnloading(data, function (result) {
@@ -1324,7 +1332,9 @@
                 fn_apply_add_filing: function (data, callback) {
                     apply_add_filing.call(this, data, callback);
                 },
-                fn_apply_update_filing: null,
+                fn_apply_update_filing: function (data, callback) {
+                    apply_update_filing.call(this, data, callback);
+                },
                 fn_apply_update_operation_filing: function (data, callback) {
                     apply_update_operation_filing.call(this, data, callback);
                 },

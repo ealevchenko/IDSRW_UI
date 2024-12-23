@@ -1714,11 +1714,9 @@
     };
     // Выполнить операцию править подачу 
     view_op_common_filing.prototype.apply_update_filing = function (data) {
-        if (typeof this.settings.fn_apply_update_filing === 'function') {
-            this.settings.fn_apply_update_filing.call(this, data);
-        } else {
             LockScreen(langView('vopcf_mess_run_operation_update_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
-            this.view_com.api_wsd.postUpdateFilingUnloading(data, function (result) {
+        if (typeof this.settings.fn_apply_update_filing === 'function') {
+            this.settings.fn_apply_update_filing.call(this, data, function (result) {
                 // Проверим на ошибку выполнения запроса api
                 if (result && result.status) {
                     var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
