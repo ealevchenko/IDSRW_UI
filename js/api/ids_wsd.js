@@ -172,7 +172,7 @@
         this.api_com.post('/WSD/update/filing/operation/loading/', operation, callback, callback);
     };
     //АРМ, Операция править подачу цех получатель
-    ids_wsd.prototype.postUpdateFilingUnloading = function (operation, callback) {
+    ids_wsd.prototype.postUpdateFiling = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
     };
 
