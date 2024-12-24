@@ -156,7 +156,7 @@
             'tws_field_valid_sys_numbering': 'Тип нумерации',
             'tws_field_dislocation_vagon_of_amkr': 'Дислокация на АМКР',
             'tws_field_status_filing': 'Статус подачи',
-            'tws_field_num_filing': '№ подачи',
+            'tws_field_num_filing': '№ общ. накл.',
             'tws_field_filing_station_name': 'Станция',
             'tws_field_filing_park_abbr': 'Парк',
             'tws_field_filing_way': 'Ж.д. путь',
@@ -187,6 +187,8 @@
             'tws_field_current_vesg': 'Вес',
             'tws_field_internal_doc_num': '№ накладной',
             'tws_field_move_cargo_doc_received': 'Док. получен',
+            'tws_field_doc_received_filing': 'Док. под. получен',
+            'tws_field_vesg_filing': 'Вес подачи',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -203,10 +205,7 @@
             'tws_title_filing_operation_wagon_load_3_1': 'По вагону закрыта операция и вагон перемещен, но документ еще не получен!',
             'tws_title_filing_operation_wagon_load_3_2': 'По вагону закрыта операция, документ получен и вагон перемещен.',
 
-
-
-
-
+            'tws_title_status_0': 'Предъявлен',
             'tws_title_status_1': 'В работе',
             'tws_title_status_2': 'Сдан',
             'tws_title_status_3': 'Отправлен',
@@ -1586,6 +1585,24 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_num_filing', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            // doc_received_filing
+            {
+                field: 'doc_received_filing',
+                data: function (row, type, val, meta) {
+                    return row.docReceivedFiling ? moment(row.docReceivedFiling).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_doc_received_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // вес наклад
+            {
+                field: 'vesg_filing',
+                data: function (row, type, val, meta) {
+                    return row.vesgFiling;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_vesg_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
             // Станция
             {
                 field: 'filing_station_name',
@@ -2581,7 +2598,9 @@
         var collums = [];
         collums.push({ field: 'type_filing', title: null, class: null });
         collums.push({ field: 'status_filing', title: null, class: null });
-        //collums.push({ field: 'num_filing', title: null, class: null });
+        collums.push({ field: 'doc_received_filing', title: null, class: null });
+        collums.push({ field: 'num_filing', title: null, class: null });
+        collums.push({ field: 'vesg_filing', title: null, class: null });
         collums.push({ field: 'id_wf', title: null, class: null });
         collums.push({ field: 'filing_station_name', title: null, class: null });
         collums.push({ field: 'filing_park_abbr', title: null, class: null });
@@ -2623,6 +2642,13 @@
         collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
         collums.push({ field: 'arrival_station_amkr_name', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_vesg', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
