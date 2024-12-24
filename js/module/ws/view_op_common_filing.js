@@ -99,6 +99,7 @@
             'vopcf_title_form_apply': 'Править подачу',
             'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
             'vopcf_mess_warning_wagon_ban_error_operation': 'Вагон № {0} для выбора заблокирован (операция вагона отличается от операций выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статусов выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
@@ -468,7 +469,8 @@
                                 icon_fa_right: null,
                                 fn_click: function (event) {
                                     event.preventDefault();
-                                    this.filing_alert.clear_message();
+                                    // Очистить сообщения и форму
+                                    this.clear_all();
                                     this.view(this.id_way_unload);
                                 }.bind(this),
                             }
@@ -873,16 +875,31 @@
                                 e.preventDefault();
                                 this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_select_status', App.Langs).format(rowData[0].num, this.view_status_fw_wagons(curr_status), this.view_status_fw_wagons(this.fw_status)));
                             } else {
-                                if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
-                                    e.preventDefault();
-                                    this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
-                                } else {
-                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
+                                // Погрузки
+                                if (this.type_filing == 2) {
+                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
                                         e.preventDefault();
-                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_doc_received', App.Langs).format(rowData[0].num));
+                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
+                                    } else {
+                                        if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
+                                            e.preventDefault();
+                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_doc_received', App.Langs).format(rowData[0].num));
+                                        } else {
+                                            this.fw_status = curr_status;
+                                        }
+                                    }
+                                }
+                                // выгрузки
+                                if (this.type_filing == 1) {
+
+                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
+                                        e.preventDefault();
+                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_status', App.Langs).format(rowData[0].num));
                                     } else {
                                         this.fw_status = curr_status;
                                     }
+
+
                                 }
                             }
                             //if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
@@ -1098,8 +1115,11 @@
                             action: function () {
                                 // Выбрать только не принятые вагоны
                                 this["twwf_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                    return !data.currentWagonBusy && !(data.idFiling !== null && data.wayFilingEnd === null) && data.id_wir_unload === null;
-                                }).select();
+                                    return !data.currentWagonBusy &&
+                                        !(this.type_filing === 2 && data.currentLoadBusy) &&
+                                        !(this.type_filing === 1 && data.currentUnloadBusy) &&
+                                        !(data.idFiling !== null && data.wayFilingEnd === null) && data.id_wir_unload === null;
+                                }.bind(this)).select();
                             }.bind(this)
                         },
                         { name: 'select_none', action: null },
@@ -1714,7 +1734,7 @@
     };
     // Выполнить операцию править подачу 
     view_op_common_filing.prototype.apply_update_filing = function (data) {
-            LockScreen(langView('vopcf_mess_run_operation_update_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
+        LockScreen(langView('vopcf_mess_run_operation_update_filing', App.Langs).format(langView('vopcf_title_operation_type_filing_' + this.type_filing, App.Langs)));
         if (typeof this.settings.fn_apply_update_filing === 'function') {
             this.settings.fn_apply_update_filing.call(this, data, function (result) {
                 // Проверим на ошибку выполнения запроса api
@@ -1870,6 +1890,17 @@
             });
         };
     }
+    // 
+    view_op_common_filing.prototype.clear_all = function () {
+        this.filing_alert.clear_message();
+        this.filing_wagons_alert.clear_message();
+        this.from_way_alert.clear_message();
+        this.form_filing_setup.clear_all();
+        this.form_filing_wagons_setup.clear_all();
+        this.form_from_setup.clear_all();
+
+    }
+
     //------------------------------- УДАЛЕНИЕ ОБЪЕКТОВ ---------------------------------------------
     // Очистить объект
     view_op_common_filing.prototype.destroy = function () {
