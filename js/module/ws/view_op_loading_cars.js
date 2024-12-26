@@ -2126,8 +2126,6 @@
                     //    }
                     //}
                 }
-                // rows
-                //this.form_filing_wagons_setup.el.select_id_status_load.disable();
                 //-- Заполним
                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
@@ -2925,111 +2923,6 @@
                     valid = valid & this.validation_exist_internal_cargo(result.new.datalist_id_internal_cargo, 'id_internal_cargo', mode_close === 2, false);
                 }
             }
-
-            //// проверка выбранных для операций вагонов
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // должно быть выставлено время конца
-            //    if (result.new && result.new.input_datetime_time_stop) {
-            //        if (!rows || rows.length === 0) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopulc_mess_error_not_wagons_close_filing', App.Langs));
-            //            valid = false;
-            //        }
-            //    } else {
-            //        if (result.new && result.new.select_id_status_load >= 0) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_time_aplly', App.Langs));
-            //            valid = false;
-            //        }
-            //    }
-            //}
-
-
-            //// Время начала
-            //if (mode === 0 || mode === 2) {
-            //    // Создать подачу и операции над вагонами
-            //    // Проверим время начала
-            //    if (result.new && result.new.input_datetime_time_start) {
-            //        var curr = moment();
-            //        var aplly = moment(result.new.input_datetime_time_start);
-            //        var minutes = aplly.diff(curr, 'minutes');
-            //        if (minutes < min_dt_apply) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstart), langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-            //            valid = false;
-            //        }
-            //        if (minutes > max_dt_apply) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstart), langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-            //            valid = false;
-            //        }
-            //    }
-            //}
-            //// Время конца 
-            //if (mode === 3) {
-            //    if (result.new && result.new.input_datetime_time_stop === null) {
-            //        this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_time_aplly', App.Langs));
-            //        valid = false;
-            //    }
-            //}
-            //// Время конца
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // Проверим время окончания
-            //    if (result.new && result.new.input_datetime_time_stop) {
-            //        var curr = moment();
-            //        var dtstop = moment(result.new.input_datetime_time_stop);
-            //        var minutes = dtstop.diff(curr, 'minutes');
-            //        if (minutes < min_dt_apply) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-            //            valid = false;
-            //        }
-            //        if (minutes > max_dt_apply) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-            //            valid = false;
-            //        }
-            //    }
-            //}
-            //// Проверим соотношение начало и конца
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // Проверим время начала и окончания
-            //    if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
-            //        var dtstart = moment(result.new.input_datetime_time_start);
-            //        var dtstop = moment(result.new.input_datetime_time_stop);
-            //        var minutes = dtstop.diff(dtstart, 'minutes');
-            //        if (minutes < min_period || minutes > max_period) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_period_time', App.Langs).format(min_period, max_period));
-            //            valid = false;
-            //        }
-            //    }
-            //}
-
-
-            //// проверка выбранных для операций вагонов
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // должно быть выставлено время конца
-            //    if (result.new && result.new.input_datetime_time_stop) {
-            //        if (!rows || rows.length === 0) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopulc_mess_error_not_wagons_close_filing', App.Langs));
-            //            valid = false;
-            //        }
-            //    } else {
-            //        if (result.new && result.new.select_id_status_load >= 0) {
-            //            this.form_filing_wagons_setup.validation_common_filing_wagons.set_object_error($(el_dtstop), langView('vopulc_mess_error_time_aplly', App.Langs));
-            //            valid = false;
-            //        }
-            //    }
-            //}
-            //// проверка статуса
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // должно быть выставлено время конца
-            //    if (result.new && result.new.input_datetime_time_stop) {
-            //        valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_sl), langView('vopulc_mess_error_not_wagons_status_close_filing', App.Langs), null, true)
-            //    }
-            //}
-            //// проверка подразделения
-            //if (mode === 1) {
-            //    valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_dv), langView('vopulc_mess_error_filing_division', App.Langs), null, true)
-            //}
-            //// проверка подразделения
-            //if (mode === 1) {
-            //    valid = valid & this.form_filing_wagons_setup.validation_common_filing_wagons.check_control_select_not_null($(el_stamkr), langView('vopulc_mess_error_filing_station_amkr', App.Langs), null, true)
-            //}
             return valid;
         }
         // Создать подачу для погрузки
