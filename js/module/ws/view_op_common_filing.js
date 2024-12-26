@@ -807,6 +807,7 @@
                                 var sel_rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                                 var id_operation = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].currentIdOperation : null;
                                 var data_doc = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].moveCargoDocReceived : null;
+                                var id_loading = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].currentIdLoadingStatus : null;
                                 // Выбрать только не принятые вагоны
                                 switch (this.fw_status) {
                                     case 1: {
@@ -835,9 +836,16 @@
                                         break;
                                     }
                                     default: {
-                                        this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                            return data.filingStart === null && data.filingEnd === null;
-                                        }).select();
+                                        if (this.type_filing === 1) {
+                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                return data.filingStart === null && data.filingEnd === null && data.currentIdLoadingStatus === id_loading;
+                                            }).select();
+                                        }
+                                        if (this.type_filing === 2) {
+                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                return data.filingStart === null && data.filingEnd === null;
+                                            }).select();
+                                        }
                                         break;
                                     }
                                 }
