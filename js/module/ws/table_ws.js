@@ -1790,6 +1790,22 @@
             {
                 field: 'current_common_cargo_name',
                 data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        if (row.currentCargoIdGroup !== null) {
+                            return row['currentCargoName' + ucFirst(App.Lang)];
+                        } else {
+                            return row['currentInternalCargoName' + ucFirst(App.Lang)];
+                        }
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'last_common_cargo_name',
+                data: function (row, type, val, meta) {
                     if (row.currentCargoIdGroup !== null) {
                         return row['currentCargoName' + ucFirst(App.Lang)];
                     } else {
@@ -1803,6 +1819,19 @@
             {
                 field: 'current_vesg',
                 data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row.currentVesg;
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_current_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // текущий вес
+            {
+                field: 'last_vesg',
+                data: function (row, type, val, meta) {
                     return row.currentVesg;
                 },
                 className: 'dt-body-right mw-50',
@@ -1811,6 +1840,19 @@
             // цех отправления текущй
             {
                 field: 'current_division_from_abbr',
+                data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row['currentDivisionFromAbbr' + ucFirst(App.Lang)];
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // цех отправления текущй
+            {
+                field: 'last_division_from_abbr',
                 data: function (row, type, val, meta) {
                     return row['currentDivisionFromAbbr' + ucFirst(App.Lang)];
                 },
@@ -1821,6 +1863,19 @@
             {
                 field: 'current_division_on_abbr',
                 data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // цех прибытия текущй
+            {
+                field: 'last_division_on_abbr',
+                data: function (row, type, val, meta) {
                     return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
@@ -1829,6 +1884,19 @@
             // Станция отправления ТЕКУЩ
             {
                 field: 'current_external_station_on_name',
+                data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row['currentExternalStationOnName' + ucFirst(App.Lang)];
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция отправления ТЕКУЩ
+            {
+                field: 'last_external_station_on_name',
                 data: function (row, type, val, meta) {
                     return row['currentExternalStationOnName' + ucFirst(App.Lang)];
                 },
@@ -1839,6 +1907,20 @@
             {
                 field: 'current_station_from_amkr_abbr',
                 data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
+                    } else {
+                        return null;
+                    }
+
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция отправления ТЕКУЩ
+            {
+                field: 'last_station_from_amkr_abbr',
+                data: function (row, type, val, meta) {
                     return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
@@ -1847,6 +1929,19 @@
             // Станция прибытия ТЕКУЩ
             {
                 field: 'current_station_on_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                        return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_current_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция прибытия ТЕКУЩ
+            {
+                field: 'last_station_on_amkr_abbr',
                 data: function (row, type, val, meta) {
                     return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
                 },
