@@ -48,6 +48,7 @@
     // Инициализация
     view_op_common.prototype.init = function (options, fn_init) {
         this.result_init = true;
+
         console.log('Init view_op_common');
         LockScreen(langView('vopc_mess_init_module', App.Langs));
         // теперь выполним инициализацию
@@ -67,6 +68,8 @@
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
 
+        this.update_wsd = 0; // Признак обновлять данны после закрытия окна (0-нет, 1-только дерево, 2-обновить все)
+
         //this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: "https://localhost:7280" });
 
         this.offcanvas = new this.fe_ui.bs_offcanvas({
@@ -76,7 +79,8 @@
             position: 'offcanvas-start',
             fn_close: function (even) {
                 if (typeof this.settings.fn_close === 'function') {
-                    this.settings.fn_close();
+                    this.settings.fn_close(this.update_wsd);
+                    this.update_wsd = 0;
                 }
             }.bind(this),
         });

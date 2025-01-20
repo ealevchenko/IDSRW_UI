@@ -408,20 +408,28 @@
 
                 // Создадим список станций по которым есть выход в цеха
                 this.list_station = [];
-                $.each(this.ways, function (i, el) {
-                    if (el.idDevision !== null && el.wayDelete === null && el.wayClose === null) {
-                        var st = this.list_station.find(function (o) {
-                            return o.value === el.idStation
-                        }.bind(this));
-                        if (!st) {
-                            var dst = this.stations.find(function (o) {
-                                return o.id === el.idStation && !o.stationUz && o.stationDelete === null;
+                if (App.wsd_setup.control_way_devision) {
+                    $.each(this.ways, function (i, el) {
+                        if (el.idDevision !== null && el.wayDelete === null && el.wayClose === null) {
+                            var st = this.list_station.find(function (o) {
+                                return o.value === el.idStation
                             }.bind(this));
-                            if (dst)
-                                this.list_station.push({ value: dst.id, text: dst['stationName' + ucFirst(App.Lang)], disabled: false });
+                            if (!st) {
+                                var dst = this.stations.find(function (o) {
+                                    return o.id === el.idStation && !o.stationUz && o.stationDelete === null;
+                                }.bind(this));
+                                if (dst)
+                                    this.list_station.push({ value: dst.id, text: dst['stationName' + ucFirst(App.Lang)], disabled: false });
+                            }
                         }
-                    }
-                }.bind(this));
+                    }.bind(this));
+                } else {
+                    this.list_station = this.view_com.api_dir.getListValueTextStation(function (i) {
+                        return !i.stationUz && i.stationDelete === null;
+                    }.bind(this))
+                }
+
+
 
                 this.list_devision = this.view_com.api_dir.getListValueTextCodeAbbrDivisions();
                 //this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatus();
@@ -663,7 +671,7 @@
                         // На проверку окончания инициализации
                         process--;
                         //console.log('[view_op_unloading_cars] [tlf_unlc]process: ' + process);
-                        out_init(process); this.division_from
+                        out_init(process);
                     },
                     fn_action_view_detali: function (rows) {
 
@@ -1384,7 +1392,11 @@
         this.confirm_update_station(id_station,
             function () { // Ok
                 // обновим компонент пути отправки
-                this.list_way = this.view_com.api_dir.getListValueTextLoadUnloadWaysOfStation(id_station);
+                if (App.wsd_setup.control_way_devision) {
+                    this.list_way = this.view_com.api_dir.getListValueTextLoadUnloadWaysOfStation(id_station);
+                } else {
+                    this.list_way = this.view_com.api_dir.getListValueTextWaysOfStation(id_station);
+                }
                 this.form_from_setup.el.select_id_way_unload.update(this.list_way, id_way);
                 // Обновим станцию
                 this.id_station_unload = id_station;
@@ -1838,12 +1850,10 @@
                 }
             }.bind(this));
         }
-
-
-
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     view_op_common_filing.prototype.apply_update = function (result, mess_ok, mess_err) {
+        this.settings.view_com.update_wsd = 1;
         if (typeof this.settings.fn_apply_update === 'function') {
             this.settings.fn_apply_update.call(this, result, mess_ok, mess_err);
         } else {

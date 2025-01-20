@@ -65,6 +65,10 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
 
+    App.wsd_setup = {
+        control_way_devision: false, // TODO: загружать, контроль выхода пути на цех 
+    }
+
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
     //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
@@ -273,33 +277,38 @@
             };
         };
         // Обновить данные
-        var refresh_tree_way = function (callback) {
-            var out_refresh = function (pr_refresh) {
-                if (pr_refresh === 0) {
-                    if (typeof callback === 'function') {
-                        callback(balance);
-                    }
-                }
-            }.bind(this);
+        var refresh_tree_way = function (upd, callback) {
 
-            var pr_refresh = 3;
-            // Обновить дерево путей
-            tw.update(function () {
-                pr_refresh--;
-                out_refresh(pr_refresh);
-            });
-            // Загрузить вагоны на пути
-            load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
-                tws.view(wagons)
-                pr_refresh--;
-                out_refresh(pr_refresh);
-            });
-            // Показать баланс
-            load_total_balance(function (balance) {
-                ttb.view(balance)
-                pr_refresh--;
-                out_refresh(pr_refresh);
-            });
+            if (upd > 0) {
+                var out_refresh = function (pr_refresh) {
+                    if (pr_refresh === 0) {
+                        if (typeof callback === 'function') {
+                            callback(balance);
+                        }
+                    }
+                }.bind(this);
+
+                var pr_refresh = upd === 1 ? 2 : 3;
+                // Обновить дерево путей
+                tw.update(function () {
+                    pr_refresh--;
+                    out_refresh(pr_refresh);
+                });
+                // Загрузить вагоны на пути
+                load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
+                    tws.view(wagons)
+                    pr_refresh--;
+                    out_refresh(pr_refresh);
+                });
+                if (upd === 2) {
+                    // Показать баланс
+                    load_total_balance(function (balance) {
+                        ttb.view(balance)
+                        pr_refresh--;
+                        out_refresh(pr_refresh);
+                    });
+                }
+            }
         }
         //var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
 
@@ -469,20 +478,28 @@
                         break;
                     };
                     case 'unloading': {
-                        if (current_option_way !== null && current_option_way["id-devision"] >0) {
-                            vopunlc.view(current_id_way);
+                        if (App.wsd_setup.control_way_devision) {
+                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
+                                vopunlc.view(current_id_way);
+                            } else {
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                            }
                         } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                            vopunlc.view(current_id_way);
                         }
                         break;
                     };
                     case 'loading': {
-                        if (current_option_way !== null && current_option_way["id-devision"] >0) {
-                            voplc.view(current_id_way);
+                        if (App.wsd_setup.control_way_devision) {
+                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
+                                voplc.view(current_id_way);
+                            } else {
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                            }
                         } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                            voplc.view(current_id_way);
                         }
                         break;
                     };
@@ -537,7 +554,7 @@
                                                 LockScreenOff();
                                             } else {
                                                 if (result > 0) {
-                                                    refresh_tree_way(function () {
+                                                    refresh_tree_way(1, function () {
                                                         main_alert.clear_message();
                                                         main_alert.out_info_message(langView('mwsd_mess_ok_operation_auto', App.Langs).format(result));
                                                         LockScreenOff();
@@ -593,7 +610,7 @@
                                                 LockScreenOff();
                                             } else {
                                                 if (result > 0) {
-                                                    refresh_tree_way(function () {
+                                                    refresh_tree_way(1, function () {
                                                         main_alert.clear_message();
                                                         main_alert.out_info_message(langView('mwsd_mess_ok_operation_reverce', App.Langs).format(result));
                                                         LockScreenOff();
@@ -770,7 +787,7 @@
                         break;
                     };
                     case 'refresh-tree': {
-                        refresh_tree_way(function () {
+                        refresh_tree_way(2, function () {
                             LockScreenOff();
                         }.bind(this));
 
@@ -946,9 +963,9 @@
                     //console.log('[main_wsd] [voac] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -965,9 +982,9 @@
                     //console.log('[main_wsd] [vooc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -984,9 +1001,9 @@
                     //console.log('[main_wsd] [vorc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1003,9 +1020,9 @@
                     //console.log('[main_wsd] [vodc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1022,9 +1039,9 @@
                     //console.log('[main_wsd] [vodlc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1041,9 +1058,9 @@
                     //console.log('[main_wsd] [vodlc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1060,9 +1077,9 @@
                     //console.log('[main_wsd] [vopsuz] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(2, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1079,9 +1096,9 @@
                     //console.log('[main_wsd] [vopunlc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(upd, function () {
                         LockScreenOff();
                     }.bind(this));
                 }
@@ -1098,9 +1115,9 @@
                     //console.log('[main_wsd] [voplc] process ' + process);
                     out_init(process);
                 },
-                fn_close: function () {
+                fn_close: function (upd) {
                     // На обновления дерева путей, баланса ....
-                    refresh_tree_way(function () {
+                    refresh_tree_way(upd, function () {
                         LockScreenOff();
                     }.bind(this));
                 }

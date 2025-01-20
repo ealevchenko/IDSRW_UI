@@ -1640,7 +1640,8 @@
                                                     type_filing: this.type_filing,          // 2 = погрузка
                                                     vesg: null,                             // для погрузки
                                                     id_way: this.id_way_unload,             // !только новая подача
-                                                    id_division: this.division_from,          // можно править
+                                                    //id_division: this.division_from,          // можно править
+                                                    id_division: Number(result.new.datalist_id_devision_from),  // можно править
                                                     wagons: list_wagons
                                                 };
                                                 this.apply_add_filing(operation);
