@@ -1656,7 +1656,7 @@
             if (id_filing > 0) {
                 this.filing_wagons = this.wagons_filing.filter(function (i) {
                     return i.idFiling === id_filing;
-                }.bind(this));
+                }.bind(this)).sort(function (a, b) { return a.position - b.position });
                 if (!this.filing_wagons || this.filing_wagons.length === 0) {
                     this.id_filing = null; this.id_filing_old = null;
                 }
