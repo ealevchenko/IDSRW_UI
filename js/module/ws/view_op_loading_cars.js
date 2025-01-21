@@ -3041,7 +3041,6 @@
     }
     // Отображение после нажатия выбора погрузка уз\вз 
 
-
     App.view_op_loading_cars = view_op_loading_cars;
 
     window.App = App;
