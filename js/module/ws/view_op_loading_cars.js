@@ -11,14 +11,6 @@
     var $ = window.jQuery;
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
-    var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var min_dt_docum = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени получения документа от текущей даты (перенести в общие настройки)
-    var max_dt_docum = 60 * 3; // TODO: Максимальная разница в минутах даты и времени получения документа от текущей даты (перенести в общие настройки)
-
-    var min_period = 5; // TODO: Минимальный период операции 
-    var max_period = 60 * 50 * 10; // TODO: Максимальный период операции 
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -199,12 +191,13 @@
             'voplc_mess_error_max_vesg': 'Указанный вес больше грузоподъемности {0}т. вагона.',
             'voplc_mess_error_max_vesg_total': 'Указанный вес больше общей грузоподъемности {0}т. по всем вагонам.',
             'voplc_mess_error_time_aplly': 'Укажите дату завершения операции',
+            'voplc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'voplc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             'voplc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             'voplc_mess_error_min_time_docum': 'Дата получения документа не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             'voplc_mess_error_max_time_docum': 'Дата получения документа не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             'voplc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
-            //'voplc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
+            //'voplc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧЕ», выберите вагоны).',
             'voplc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
 
             //'voplc_mess_error_filing_division': 'Выберите цех получатель',
@@ -2741,6 +2734,10 @@
             if (this.id_filing === null) { return false; }
             var valid = true;
             var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
+            // Получим последнюю дату операции
+            var operation_end = get_max_element(rows, 'currentOperationEnd');
+            var start_date = get_max_element(rows, 'filingStart');
+
             var uz_select = $(this.$radio_loading[0]).prop('checked');
 
             var mode_close = 0;     // режим закрытия операции 0-правка, 1-закрыть только операцию, 2-закрыть все по грузу (введена дата документа)
@@ -2758,16 +2755,24 @@
             if (mode === 0 && rows && rows.length > 0) {
                 // Проверим время начала
                 if (result.new && result.new.input_datetime_time_start) {
-                    var curr = moment();
                     var aplly = moment(result.new.input_datetime_time_start);
-                    var minutes = aplly.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-
-                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voplc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1), false);
+                    // проверим на последнюю операцию
+                    var old = moment(operation_end);
+                    var minutes = old.diff(aplly, 'minutes');
+                    if (minutes > 0) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voplc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
                         valid = false;
                     }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voplc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply), false);
+                    // проверим на тек дату
+                    var curr = moment();
+                    var minutes = aplly.diff(curr, 'minutes');
+                    if (minutes < App.wsd_setup.load_start_dt_min) {
+
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voplc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.load_start_dt_min * -1), false);
+                        valid = false;
+                    }
+                    if (minutes > App.wsd_setup.load_start_dt_max) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voplc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.load_start_dt_max), false);
                         valid = false;
                     }
                 }
@@ -2780,26 +2785,26 @@
                     valid = false;
                 } else {
                     // Проверим время окончания
-                    var curr = moment();
+                    //var curr = moment();
                     var dtstop = moment(result.new.input_datetime_time_stop);
-                    var minutes = dtstop.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1), false);
-                        valid = false;
-                    }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply), false);
-                        valid = false;
-                    }
-                    var res = rows.filter(function (i) { return i.filingStart; }.bind(this)).sort(function (a, b) { return new Date(b.filingStart) - new Date(a.filingStart); }.bind(this));
-                    var start_date = res && res.length > 0 ? res[0].filingStart : null;
+                    //var minutes = dtstop.diff(curr, 'minutes');
+                    //if (minutes < min_dt_apply) {
+                    //    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1), false);
+                    //    valid = false;
+                    //}
+                    //if (minutes > max_dt_apply) {
+                    //    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply), false);
+                    //    valid = false;
+                    //}
+                    //var res = rows.filter(function (i) { return i.filingStart; }.bind(this)).sort(function (a, b) { return new Date(b.filingStart) - new Date(a.filingStart); }.bind(this));
+                    //var start_date = res && res.length > 0 ? res[0].filingStart : null;
                     if (start_date) {
                         // Проверим время начала и окончания
                         var dtstart = moment(start_date);
                         var dtstop = moment(result.new.input_datetime_time_stop);
                         var minutes = dtstop.diff(dtstart, 'minutes');
-                        if (minutes < min_period || minutes > max_period) {
-                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_period_time', App.Langs).format(min_period, max_period), false);
+                        if (minutes < App.wsd_setup.load_period_min || minutes > App.wsd_setup.load_period_max) {
+                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_period_time', App.Langs).format(App.wsd_setup.load_period_min, App.wsd_setup.load_period_max), false);
                             valid = false;
                         }
                     }
@@ -2812,13 +2817,14 @@
                     var curr = moment();
                     var aplly = moment(result.new.input_datetime_time_document);
                     var minutes = aplly.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
+                    
+                    if (minutes < App.wsd_setup.load_document_dt_min) {
 
-                        this.form_filing_wagons_setup.set_element_validation_error('time_document', langView('voplc_mess_error_min_time_docum', App.Langs).format(min_dt_docum * -1), false);
+                        this.form_filing_wagons_setup.set_element_validation_error('time_document', langView('voplc_mess_error_min_time_docum', App.Langs).format(App.wsd_setup.load_document_dt_min * -1), false);
                         valid = false;
                     }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_document', langView('voplc_mess_error_max_time_docum', App.Langs).format(max_dt_docum), false);
+                    if (minutes > App.wsd_setup.load_document_dt_max) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_document', langView('voplc_mess_error_max_time_docum', App.Langs).format(App.wsd_setup.load_document_dt_max), false);
                         valid = false;
                     }
                 }
@@ -2830,13 +2836,13 @@
                     var curr = moment();
                     var aplly = moment(result.new.input_datetime_time_document_total);
                     var minutes = aplly.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
+                    if (minutes < App.wsd_setup.load_document_dt_min) {
 
-                        this.form_filing_wagons_setup.set_element_validation_error('time_document_total', langView('voplc_mess_error_min_time_docum', App.Langs).format(min_dt_docum * -1), false);
+                        this.form_filing_wagons_setup.set_element_validation_error('time_document_total', langView('voplc_mess_error_min_time_docum', App.Langs).format(App.wsd_setup.load_document_dt_min * -1), false);
                         valid = false;
                     }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_document_total', langView('voplc_mess_error_max_time_docum', App.Langs).format(max_dt_docum), false);
+                    if (minutes > App.wsd_setup.load_document_dt_max) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_document_total', langView('voplc_mess_error_max_time_docum', App.Langs).format(App.wsd_setup.load_document_dt_max), false);
                         valid = false;
                     }
                 }

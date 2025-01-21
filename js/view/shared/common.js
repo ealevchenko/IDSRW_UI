@@ -130,6 +130,14 @@ var get_result_select = function (value) {
     }
     return value;
 };
+// Получить максимальное значение
+var get_max_element = function (rows, name_field) {
+    if (rows && rows.length > 0) {
+        var oe = rows.filter(function (i) { return i[name_field]; }.bind(this)).sort(function (a, b) { return new Date(b[name_field]) - new Date(a[name_field]); }.bind(this));
+        return oe && oe.length > 0 ? oe[0][name_field] : null;
+    }
+    return null;
+};
 
 (function (window) {
     'use strict';

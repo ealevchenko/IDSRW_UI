@@ -23,7 +23,7 @@
         {
             'vopcf_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
-            'vopcf_card_header_filing_wagons': 'ВАГОНЫ В ПОДАЧИ',
+            'vopcf_card_header_filing_wagons': 'ВАГОНЫ В ПОДАЧЕ',
             'vopcf_card_header_from_way': 'ВАГОНЫ НА ПУТИ',
             'vopcf_mess_init_module': 'Инициализация модуля view_op_common_filing',
 

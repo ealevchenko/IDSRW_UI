@@ -24,7 +24,7 @@
             //'vounl_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ВЫГРУЗКА ВАГОНОВ"',
             //'vounl_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
-            //'vounl_card_header_filing_wagons': 'ВАГОНЫ В ПОДАЧИ',
+            //'vounl_card_header_filing_wagons': 'ВАГОНЫ В ПОДАЧЕ',
             //'vounl_card_header_from_way': 'ВАГОНЫ НА ПУТИ',
 
 
@@ -111,7 +111,7 @@
             //'vounl_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             //'vounl_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             //'vounl_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
-            //'vounl_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
+            //'vounl_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧЕ», выберите вагоны).',
             //'vounl_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
             //'vounl_mess_error_filing_division': 'Выберите цех получатель',
             //'vounl_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',

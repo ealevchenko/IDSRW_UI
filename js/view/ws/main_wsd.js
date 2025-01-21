@@ -66,7 +66,17 @@
     //App.User_Name = $('input#username').val();
 
     App.wsd_setup = {
-        control_way_devision: false, // TODO: загружать, контроль выхода пути на цех 
+        control_way_devision: false, // TODO: загружать, контроль выхода пути на цех
+        load_start_dt_min: -1440,
+        load_start_dt_max: 180,
+        load_document_dt_min: -180,
+        load_document_dt_max: 180,
+        load_period_min: 5,
+        load_period_max: 1440,
+        unload_start_dt_min: -1440,
+        unload_start_dt_max: 180,
+        unload_period_min: 5,
+        unload_period_max: 1440,
     }
 
     var API_DIRECTORY = App.ids_directory;

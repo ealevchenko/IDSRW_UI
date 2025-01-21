@@ -12,10 +12,6 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var min_period = 5; // TODO: Минимальный период операции 
-    var max_period = 60 * 24 * 10; // TODO: Максимальный период операции 
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -134,10 +130,11 @@
             //'vopulc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             //'vopulc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             'vopulc_mess_error_time_aplly': 'Укажите дату завершения операции',
+            'vopulc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'vopulc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
             'vopulc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
             'vopulc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
-            'vopulc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧИ», выберите вагоны).',
+            'vopulc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧЕ», выберите вагоны).',
             'vopulc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
             'vopulc_mess_error_filing_division': 'Выберите цех получатель',
             'vopulc_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',
@@ -1313,58 +1310,64 @@
             // 0- add; >0 id ; null -not edit
             if (this.id_filing === null) { return false; }
             var valid = true;
-
+            var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
+            // Получим последнюю дату операции
+            var operation_end = get_max_element(rows, 'currentOperationEnd');
+            var start_date = get_max_element(rows, 'filingStart');
             // Время начала
             if (mode === 0 || mode === 2) {
                 // Создать подачу и операции над вагонами
                 // Проверим время начала
                 if (result.new && result.new.input_datetime_time_start) {
-                    var curr = moment();
                     var aplly = moment(result.new.input_datetime_time_start);
-                    var minutes = aplly.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1), false);
+                    // проверим на последнюю операцию
+                    var old = moment(operation_end);
+                    var minutes = old.diff(aplly, 'minutes');
+                    if (minutes > 0) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopulc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
                         valid = false;
                     }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply), false);
+                    // проверим на тек дату
+                    var curr = moment();
+                    var minutes = aplly.diff(curr, 'minutes');
+                    if (minutes < App.wsd_setup.unload_start_dt_min) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopulc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.unload_start_dt_min * -1), false);
+                        valid = false;
+                    }
+                    if (minutes > App.wsd_setup.unload_start_dt_max) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopulc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.unload_start_dt_max), false);
                         valid = false;
                     }
                 }
             }
             // Время конца 
-            if (mode === 3) {
+            if (mode === 3 && rows && rows.length > 0) {
                 if (result.new && result.new.input_datetime_time_stop === null) {
                     this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_time_aplly', App.Langs), false);
                     valid = false;
-                }
-            }
-            // Время конца
-            if (mode === 0 || mode === 2 || mode === 3) {
-                // Проверим время окончания
-                if (result.new && result.new.input_datetime_time_stop) {
-                    var curr = moment();
+                } else {
                     var dtstop = moment(result.new.input_datetime_time_stop);
-                    var minutes = dtstop.diff(curr, 'minutes');
-                    if (minutes < min_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1), false);
-                        valid = false;
-                    }
-                    if (minutes > max_dt_apply) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply), false);
-                        valid = false;
+                    if (start_date) {
+                        // Проверим время начала и окончания
+                        var dtstart = moment(start_date);
+                        var dtstop = moment(result.new.input_datetime_time_stop);
+                        var minutes = dtstop.diff(dtstart, 'minutes');
+                        if (minutes < App.wsd_setup.unload_period_min || minutes > App.wsd_setup.unload_period_max) {
+                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_period_time', App.Langs).format(App.wsd_setup.unload_period_min, App.wsd_setup.unload_period_max), false);
+                            valid = false;
+                        }
                     }
                 }
             }
             // Проверим соотношение начало и конца
-            if (mode === 0 || mode === 2 || mode === 3) {
+            if ((mode === 0 || mode === 2) && rows && rows.length > 0) {
                 // Проверим время начала и окончания
                 if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
                     var dtstart = moment(result.new.input_datetime_time_start);
                     var dtstop = moment(result.new.input_datetime_time_stop);
                     var minutes = dtstop.diff(dtstart, 'minutes');
-                    if (minutes < min_period || minutes > max_period) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_period_time', App.Langs).format(min_period, max_period), false);
+                    if (minutes < App.wsd_setup.unload_period_min || minutes > App.wsd_setup.unload_period_max) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_period_time', App.Langs).format(App.wsd_setup.unload_period_min, App.wsd_setup.unload_period_max), false);
                         valid = false;
                     }
                 }
