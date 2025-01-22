@@ -720,7 +720,7 @@
                                                             stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: row ? el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if : null,    // (13,14) можно править пока подача не закрыта
                                                             id_status_load: row ? Number(result.new.select_id_status_load) : null,         // можно править пока подача не закрыта
-                                                            clear_cargo: row ? get_clear_cargo_of_status_load(Number(result.new.select_id_status_load)) : null
+                                                            clear_cargo: row ? this.get_clear_cargo_of_status_load(Number(result.new.select_id_status_load)) : null
                                                         }
                                                     )
                                                 }.bind(this));
@@ -762,7 +762,7 @@
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,      // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if,     // (13,14) можно править пока подача не закрыта
                                                             id_status_load: Number(result.new.select_id_status_load),           // можно править пока подача не закрыта
-                                                            clear_cargo: get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
+                                                            clear_cargo: this.get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
                                                         }
                                                     )
                                                 }.bind(this));
@@ -789,7 +789,7 @@
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
                                                             id_status_load: Number(result.new.select_id_status_load),            // можно править пока подача не закрыта
-                                                            clear_cargo: get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
+                                                            clear_cargo: this.get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
                                                         }
                                                     )
                                                 }.bind(this));
