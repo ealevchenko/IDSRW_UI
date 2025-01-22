@@ -1612,7 +1612,7 @@
                                                             id_wim: el.idWim,
                                                             start: row && dt_start ? result.new.input_datetime_time_start._i : null,    // можно править пока подача не закрыта
                                                             stop: null,                                                                 // только начало
-                                                            id_wagon_operations: row ? uz_select ? 15 : 16 : null,                      // (15,16) можно править пока подача не закрыта
+                                                            id_wagon_operations: row ? uz_select ? App.wsd_setup.operations.loading_uz : App.wsd_setup.operations.loading_if : null,                      // (15,16) можно править пока подача не закрыта
                                                             doc_received: null,                                                         // документ получен
                                                             id_cargo: row && uz_select ? result.new.datalist_cargo_etsng : null,                 // Груз ЕТСНГ
                                                             code_station_uz: row && uz_select ? result.new.datalist_code_station_uz : null,         // Станция УЗ
@@ -1660,7 +1660,7 @@
                                                         id_wim: el.idWim,
                                                         start: result.new.input_datetime_time_start._i,                                                     // можно править пока подача не закрыта
                                                         stop: null,                                                                                         // только начало
-                                                        id_wagon_operations: uz_select ? 15 : 16,                                                           // (15,16) можно править пока подача не закрыта
+                                                        id_wagon_operations: uz_select ? App.wsd_setup.operations.loading_uz : App.wsd_setup.operations.loading_if,                                                           // (15,16) можно править пока подача не закрыта
                                                         doc_received: null,                                                                                 // документ получен
                                                         id_cargo: uz_select ? result.new.datalist_cargo_etsng : null,                                       // Груз ЕТСНГ
                                                         code_station_uz: uz_select ? result.new.datalist_code_station_uz : null,                            // Станция УЗ
@@ -1692,7 +1692,7 @@
                                                             id_wim: el.idWim,
                                                             start: null,    // можно править пока подача не закрыта
                                                             stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,                                                                 // только начало
-                                                            id_wagon_operations: uz_select ? 15 : 16,                      // (15,16) можно править пока подача не закрыта
+                                                            id_wagon_operations: uz_select ? App.wsd_setup.operations.loading_uz : App.wsd_setup.operations.loading_if,                      // (15,16) можно править пока подача не закрыта
                                                             doc_received: result.new.input_datetime_time_document !== null ? result.new.input_datetime_time_document._i : null,                                                         // документ получен
                                                             id_cargo: uz_select ? result.new.datalist_cargo_etsng : null,                 // Груз ЕТСНГ
                                                             code_station_uz: uz_select ? result.new.datalist_code_station_uz : null,         // Станция УЗ
@@ -1729,7 +1729,7 @@
                                                             id_wim: el.idWim,
                                                             start: null,    // можно править пока подача не закрыта
                                                             stop: null,                                                                 // только начало
-                                                            id_wagon_operations: uz_select ? 15 : 16,                      // (15,16) можно править пока подача не закрыта
+                                                            id_wagon_operations: uz_select ? App.wsd_setup.operations.loading_uz : App.wsd_setup.operations.loading_if,                      // (15,16) можно править пока подача не закрыта
                                                             doc_received: result.new.input_datetime_time_document !== null ? result.new.input_datetime_time_document._i : null,                                                         // документ получен
                                                             id_cargo: uz_select ? result.new.datalist_cargo_etsng : null,                 // Груз ЕТСНГ
                                                             code_station_uz: uz_select ? result.new.datalist_code_station_uz : null,         // Станция УЗ
@@ -2065,12 +2065,12 @@
                     }.bind(this));
 
                     //if (ip_select && !amkr_vz) {
-                    //    //this.default_status_load = 6; // по умолчанию гружонный уз
+                    //    //this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                     //    this.$radio_loading[0].click();
                     //    return;
                     //}
                     if (uz_select && amkr_vz) {
-                        //this.default_status_load = 2 // по умолчанию гружонный вз
+                        //this.default_status_load = App.wsd_setup.loading_status.loaded_ip // по умолчанию гружонный вз
                         this.$radio_loading[1].click();
                         return;
                     }
@@ -2489,25 +2489,26 @@
                     }
                     case 1: {
                         // выбраны вагоны операция открыта
-                        this.default_status_load = 6; // по умолчанию гружонный уз
+                        this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                         // выбор уз или вз
-                        if (ip_select && rows[0].currentIdOperation === 15) {
-                            //this.default_status_load = 6; // по умолчанию гружонный уз
+                        //App.wsd_setup.operations.loading_uz
+                        if (ip_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                             this.$radio_loading[0].click();
                             return;
                         }
-                        if (uz_select && rows[0].currentIdOperation === 16) {
-                            //this.default_status_load = 2 // по умолчанию гружонный вз
+                        if (uz_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_if) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_ip // по умолчанию гружонный вз
                             this.$radio_loading[1].click();
                             return;
                         }
 
-                        if (rows[0].currentIdOperation === 15) {
-                            this.default_status_load = 6; // по умолчанию гружонный уз
+                        if (rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
+                            this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                             this.$div_loading_uz.show();
                             this.$div_loading_ip.hide();
                         } else {
-                            this.default_status_load = 2 // по умолчанию гружонный вз
+                            this.default_status_load = App.wsd_setup.loading_status.loaded_ip // по умолчанию гружонный вз
                             this.$div_loading_uz.hide();
                             this.$div_loading_ip.show();
                         }
@@ -2579,17 +2580,17 @@
                     }
                     case 2: {
                         // выбор уз или вз
-                        if (ip_select && rows[0].currentIdOperation === 15) {
-                            //this.default_status_load = 6; // по умолчанию гружонный уз
+                        if (ip_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                             this.$radio_loading[0].click();
                             return;
                         }
-                        if (uz_select && rows[0].currentIdOperation === 16) {
-                            //this.default_status_load = 2 // по умолчанию гружонный вз
+                        if (uz_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_if) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_ip // по умолчанию гружонный вз
                             this.$radio_loading[1].click();
                             return;
                         }
-                        if (rows[0].currentIdOperation === 15) {
+                        if (rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
                             this.$div_loading_uz.show();
                             this.$div_loading_ip.hide();
                         } else {
@@ -2693,17 +2694,17 @@
                     }
                     case 3: {
                         // выбор уз или вз
-                        if (ip_select && rows[0].currentIdOperation === 15) {
-                            //this.default_status_load = 6; // по умолчанию гружонный уз
+                        if (ip_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_uz; // по умолчанию гружонный уз
                             this.$radio_loading[0].click();
                             return;
                         }
-                        if (uz_select && rows[0].currentIdOperation === 16) {
-                            //this.default_status_load = 2 // по умолчанию гружонный вз
+                        if (uz_select && rows[0].currentIdOperation === App.wsd_setup.operations.loading_if) {
+                            //this.default_status_load = App.wsd_setup.loading_status.loaded_ip // по умолчанию гружонный вз
                             this.$radio_loading[1].click();
                             return;
                         }
-                        if (rows[0].currentIdOperation === 15) {
+                        if (rows[0].currentIdOperation === App.wsd_setup.operations.loading_uz) {
                             this.$div_loading_uz.show();
                             this.$div_loading_ip.hide();
                         } else {
@@ -2817,7 +2818,7 @@
                     var curr = moment();
                     var aplly = moment(result.new.input_datetime_time_document);
                     var minutes = aplly.diff(curr, 'minutes');
-                    
+
                     if (minutes < App.wsd_setup.load_document_dt_min) {
 
                         this.form_filing_wagons_setup.set_element_validation_error('time_document', langView('voplc_mess_error_min_time_docum', App.Langs).format(App.wsd_setup.load_document_dt_min * -1), false);
@@ -2963,7 +2964,7 @@
                 alert: this.settings.alert,
 
                 type_filing: 2,         // Погрузка
-                wagon_operation: 15,    // операция над вагоном
+                wagon_operation: App.wsd_setup.operations.loading_uz,    // операция над вагоном
                 view_com: this.view_com,
                 api_dir: this.settings.api_dir,
                 api_wsd: this.settings.api_wsd,

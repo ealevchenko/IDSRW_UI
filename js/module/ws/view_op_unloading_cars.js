@@ -239,7 +239,7 @@
         var start_init = function () {
             this.select_devision_from = null;       // Выбранный элемент
 
-            this.default_status_unload = 0;
+            this.default_status_unload = App.wsd_setup.loading_status.empty;;
 
             this.validation_exist_divisions = function (code, id, not_null, not_alert) {
                 // Нет данных
@@ -285,16 +285,27 @@
             }
             // Получить операцию в зависимости от статуса загрузки (Переделать через базу)
             this.get_operation_of_status_load = function (id_status) {
-                if (id_status === 1 || id_status === 6) {
-                    this.default_status_unload = 0;
-                    return 13;
+                if (id_status === App.wsd_setup.loading_status.loaded_arr || id_status === App.wsd_setup.loading_status.loaded_uz) {
+                    this.default_status_unload = App.wsd_setup.loading_status.empty;
+                    return App.wsd_setup.operations.unloading_uz;
+
                 }
-                if (id_status === 2) {
-                    this.default_status_unload = 0;
-                    return 14;
+                if (id_status === App.wsd_setup.loading_status.loaded_ip) {
+                    this.default_status_unload = App.wsd_setup.loading_status.empty;
+                    return App.wsd_setup.operations.unloading_if;
                 }
                 return null;
             }
+            // Получить сотояние очистки груза
+            this.get_clear_cargo_of_status_load = function (id_status) {
+                if (id_status === App.wsd_setup.loading_status.frozen ||
+                    id_status === App.wsd_setup.loading_status.tech_malfunction||
+                    id_status === App.wsd_setup.loading_status.re_edging) {
+                    return false;
+                }
+                return true;
+            }
+
         }
         // Загрузка дополнительных библиотек ()
         var load_db_operation = function (callback) {
@@ -707,8 +718,9 @@
                                                             id_wim: el.idWim,
                                                             start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
                                                             stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
-                                                            id_wagon_operations: row ? el.currentCargoIdCargo === null ? 13 : 14 : null,    // (13,14) можно править пока подача не закрыта
-                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null           // можно править пока подача не закрыта
+                                                            id_wagon_operations: row ? el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if : null,    // (13,14) можно править пока подача не закрыта
+                                                            id_status_load: row ? Number(result.new.select_id_status_load) : null,         // можно править пока подача не закрыта
+                                                            clear_cargo: row ? get_clear_cargo_of_status_load(Number(result.new.select_id_status_load)) : null
                                                         }
                                                     )
                                                 }.bind(this));
@@ -748,8 +760,9 @@
                                                             id_wim: el.idWim,
                                                             start: dt_start ? result.new.input_datetime_time_start._i : null,   // можно править пока подача не закрыта
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,      // можно править пока подача не закрыта
-                                                            id_wagon_operations: el.currentCargoIdCargo === null ? 13 : 14,     // (13,14) можно править пока подача не закрыта
-                                                            id_status_load: Number(result.new.select_id_status_load)            // можно править пока подача не закрыта
+                                                            id_wagon_operations: el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if,     // (13,14) можно править пока подача не закрыта
+                                                            id_status_load: Number(result.new.select_id_status_load),           // можно править пока подача не закрыта
+                                                            clear_cargo: get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
                                                         }
                                                     )
                                                 }.bind(this));
@@ -775,7 +788,8 @@
                                                             start: null,
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load: Number(result.new.select_id_status_load)            // можно править пока подача не закрыта
+                                                            id_status_load: Number(result.new.select_id_status_load),            // можно править пока подача не закрыта
+                                                            clear_cargo: get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
                                                         }
                                                     )
                                                 }.bind(this));
@@ -801,7 +815,8 @@
                                                             start: null,
                                                             stop: null,                                                     // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load: Number(result.new.select_id_status_load)       // можно править пока подача не закрыта
+                                                            id_status_load: Number(result.new.select_id_status_load),     // можно править пока подача не закрыта
+                                                            clear_cargo: null
                                                         }
                                                     )
                                                 }.bind(this));
@@ -1094,7 +1109,7 @@
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.addClass('not-required-field');
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
                 }
-/*                this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();*/
+                /*                this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();*/
                 this.form_filing_wagons_setup.el.datalist_id_devision_from.val(this.division_from);
                 this.form_filing_wagons_setup.el.select_id_station_amkr_from.val(this.station_from);
                 view_set_date_stop.call(this, false);
@@ -1453,7 +1468,7 @@
                 alert: this.settings.alert,
 
                 type_filing: 1, // Выгрузка
-                wagon_operation: 13, // операция над вагоном
+                wagon_operation: App.wsd_setup.operations.unloading_uz, // операция над вагоном
                 view_com: this.view_com,
                 api_dir: this.settings.api_dir,
                 api_wsd: this.settings.api_wsd,

@@ -65,6 +65,25 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
 
+    // Состояние загрузки
+    var loading_status = {
+        empty: 0,              //Порожний
+        loaded_arr: 1,         //Груженый ПРИБ
+        loaded_ip: 2,          //Груженый В/З
+        dirty: 3,              //Грязный
+        frozen: 4,             //Мерзлый
+        tech_malfunction: 5,   //Тех.неисправность
+        loaded_uz: 6,          //Груженый УЗ
+        re_edging: 7,          //Перекантовка
+    }
+    // Операции
+    var operations = {
+        unloading_uz: 13,
+        unloading_if: 14,
+        loading_uz: 15,
+        loading_if: 16,
+    }
+
     App.wsd_setup = {
         control_way_devision: false, // TODO: загружать, контроль выхода пути на цех
         load_start_dt_min: -1440,
@@ -77,6 +96,8 @@
         unload_start_dt_max: 180,
         unload_period_min: 5,
         unload_period_max: 1440,
+        operations: operations,
+        loading_status: loading_status,
     }
 
     var API_DIRECTORY = App.ids_directory;
