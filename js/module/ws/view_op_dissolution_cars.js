@@ -42,6 +42,9 @@
 
             'vopss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
+            'vopss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+            
 
             'vopss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
@@ -773,8 +776,10 @@
                         name: 'select_all',
                         action: function () {
                             // Выбрать только не принятые вагоны
+                            this.from_alert.clear_message();
+                            this.form_from_setup.clear_all();
                             this.todcf_opdc.tab_com.obj_t_report.rows(function (idx, data, node) {
-                                return data.id_way_dissolution === null && !data.outgoingSostavStatus;
+                                return data.id_way_dissolution === null && !data.currentMoveBusy && !data.outgoingSostavStatus;
                             }).select();
                         }.bind(this)
                     },
@@ -800,6 +805,7 @@
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_alert.clear_message();
+                    this.form_from_setup.clear_all();
                     if (rowData && rowData.length > 0) {
                         if (rowData[0].outgoingSostavStatus > 0) {
                             e.preventDefault();
@@ -808,6 +814,10 @@
                         if (rowData[0].num_way_dissolution !== null) {
                             e.preventDefault();
                             this.from_alert.out_warning_message(langView('vopss_mess_warning_wagon_ban_dess_way', App.Langs).format(rowData[0].num, rowData[0].num_way_dissolution));
+                        }
+                        if (rowData[0].currentMoveBusy) {
+                            e.preventDefault();
+                            this.from_alert.out_warning_message(langView('vopss_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                         }
                     }
                 }.bind(this),

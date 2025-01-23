@@ -53,6 +53,10 @@
             'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
             'tws_field_current_loading_status': 'Статус',
             'tws_field_current_wagon_busy': 'Запрет (новых операций)',
+            'tws_field_current_move_busy': 'Запрет (перемещений)',
+            'tws_field_current_load_busy': 'Запрет (погрузки)',
+            'tws_field_current_unload_busy': 'Запрет (выгрузки)',
+
             'tws_field_current_operation_name': 'Последняя операция над вагоном',
             'tws_field_current_operation_start': 'Дата начала выполнения операции',
             'tws_field_current_operation_end': 'Дата окончания выполнения операции',
@@ -563,6 +567,30 @@
                 },
                 className: 'dt-body-center',
                 title: langView('tws_field_current_wagon_busy', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'current_move_busy',
+                data: function (row, type, val, meta) {
+                    return row.currentMoveBusy ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_current_move_busy', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'current_load_busy',
+                data: function (row, type, val, meta) {
+                    return row.currentLoadBusy ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_current_load_busy', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'current_unload_busy',
+                data: function (row, type, val, meta) {
+                    return row.currentUnloadBusy ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_current_unload_busy', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'current_operation_name',
@@ -2096,6 +2124,12 @@
         }
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
+
+        //collums.push({ field: 'current_wagon_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_load_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_unload_busy', title: null, class: 'pink' });
+
         collums.push({ field: 'owner_wagon_abbr', title: null, class: null });
         collums.push({ field: 'operator_paid', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
@@ -2234,6 +2268,7 @@
             collums.push({ field: 'num', title: null, class: null });
         }
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
+        collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
@@ -2392,6 +2427,7 @@
             collums.push({ field: 'num', title: null, class: null });
         }
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
+        collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         collums.push({ field: 'dissolution_way', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
@@ -2425,6 +2461,7 @@
             collums.push({ field: 'num', title: null, class: null });
         }
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
+        collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
@@ -2531,6 +2568,7 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
+        collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
         collums.push({ field: 'operator_paid', title: null, class: null });//        
@@ -2972,7 +3010,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(8).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -2984,6 +3022,10 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
+                    if (data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) 
+                    {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    }
                     // Прибыл
                     if (data.currentIdOperation === 1) {
                         //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
@@ -3285,8 +3327,14 @@
                     //}
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(9).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    if (data.num_way_dissolution) {
+                        $(row).addClass('red');
+                    };
+                    if (data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
                     //if (data.arrivalIdleTime < data.arrivalDuration) {
@@ -3379,8 +3427,11 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(8).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    if (data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
                     //if (data.arrivalIdleTime < data.arrivalDuration) {
@@ -3573,7 +3624,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(3).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(4).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -3585,7 +3636,7 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    if (data.id_wir_from !== null) {
+                    if (data.id_wir_from !== null || data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл

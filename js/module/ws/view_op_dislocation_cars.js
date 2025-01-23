@@ -61,6 +61,7 @@
             'vodlc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
             'vodlc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_disl_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для дислокации)',
+            'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
             'vodlc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             'vodlc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
@@ -800,8 +801,10 @@
                         name: 'select_all',
                         action: function () {
                             // Выбрать только не принятые вагоны
+                            this.from_alert.clear_message();
+                            this.form_from_setup.clear_all();
                             this.twfrom_opodl.tab_com.obj_t_report.rows(function (idx, data, node) {
-                                return data.position_new === null && !data.outgoingSostavStatus;
+                                return data.position_new === null && !data.currentMoveBusy && !data.outgoingSostavStatus;
                             }).select();
                         }.bind(this)
                     },
@@ -827,6 +830,7 @@
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_alert.clear_message();
+                    this.form_from_setup.clear_all();
                     if (rowData && rowData.length > 0) {
                         if (rowData[0].outgoingSostavStatus > 0) {
                             e.preventDefault();
@@ -835,6 +839,10 @@
                         if (rowData[0].id_wir_from !== null) {
                             e.preventDefault();
                             this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_disl_way', App.Langs).format(rowData[0].num));
+                        }
+                        if (rowData[0].currentMoveBusy) {
+                            e.preventDefault();
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                         }
                     }
 

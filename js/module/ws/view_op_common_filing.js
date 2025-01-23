@@ -12,10 +12,6 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var operation_load_uz = 15; // TODO: загружать 
-    var operation_load_vz = 16; // TODO: загружать 
-
-
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -1179,8 +1175,7 @@
                             }
                             if (this.type_filing === 1 && rowData[0].currentUnloadBusy) {
                                 e.preventDefault();
-                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)], rowData[0].moveCargoDocReceived));
-
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_unload_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)], rowData[0].moveCargoDocReceived));
                             }
                             if (this.type_filing === 2 && rowData[0].currentLoadBusy) {
                                 e.preventDefault();

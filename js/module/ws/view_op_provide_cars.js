@@ -78,6 +78,8 @@
             //'voprc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
             'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
+            'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+           
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
@@ -763,8 +765,9 @@
                         name: 'select_all',
                         action: function () {
                             // Выбрать только не принятые вагоны
+                            this.from_alert.clear_message();
                             this.twfrom_opprc.tab_com.obj_t_report.rows(function (idx, data, node) {
-                                return data.id_wir_from === null && data.outgoingSostavStatus === null;
+                                return data.id_wir_from === null && data.outgoingSostavStatus === null && !data.currentWagonBusy && !data.currentMoveBusy;
                             }).select();
                         }.bind(this)
                     },
@@ -805,6 +808,10 @@
                         if (rowData[0].id_wir_from !== null) {
                             e.preventDefault();
                             this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_provide_way', App.Langs).format(rowData[0].num));
+                        }
+                        if (rowData[0].currentMoveBusy) {
+                            e.preventDefault();
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                         }
                     }
 
@@ -917,7 +924,6 @@
                             var value = $(e.currentTarget).prop('checked');
                             //// Очистить сообщения и форму
                             //this.form_on_setup.clear_all();
-                            //this.form_from_setup.clear_all();
                             //if (value) {
                             //    this.form_on_setup.el.datalist_locomotive1.disable();
                             //    this.form_on_setup.el.datalist_locomotive2.disable();
@@ -1212,7 +1218,6 @@
         this.form_on_setup.clear_all();
         // Сбросим установки (время)
         this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-        //this.form_from_setup.clear_all();
         this.wagons = [];
         this.wagons_on = [];
         // Сбросим вагоны переноса
@@ -1486,7 +1491,6 @@
     view_op_provide_cars.prototype.view_wagons = function () {
         // Очистить сообщения и форму
         this.form_on_setup.clear_all();
-        //this.form_from_setup.clear_all();
         // Показать вагоны на пути начала дислокации
         this.view_wagons_from();
         this.view_provide_sostav();

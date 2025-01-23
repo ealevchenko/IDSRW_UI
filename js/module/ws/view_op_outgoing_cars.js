@@ -64,6 +64,7 @@
             'vopoc_mess_warning_not_num_sostav': 'Нет названия состава!',
             'vopoc_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
             'vopoc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vopoc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
             //'vopoc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
@@ -970,7 +971,11 @@
                     {
                         name: 'select_all',
                         action: function () {
-                            this.tocw_opoc.tab_com.obj_t_report.rows().select();
+                            this.from_alert.clear_message();
+                            this.form_from_setup.clear_all();
+                            this.tocw_opoc.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                return !data.currentMoveBusy && !data.outgoingSostavStatus;
+                            }).select();
                         }.bind(this)
                     },
                     { name: 'select_none', action: null },
@@ -995,9 +1000,14 @@
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_alert.clear_message();
+                    this.form_from_setup.clear_all();
                     if (rowData && rowData.length > 0 && rowData[0].outgoingSostavStatus > 0) {
                         e.preventDefault();
                         this.from_alert.out_warning_message(langView('vopoc_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                    }
+                    if (rowData && rowData.length > 0 && rowData[0].currentMoveBusy) {
+                        e.preventDefault();
+                        this.from_alert.out_warning_message(langView('vopoc_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                     }
                 }.bind(this),
                 fn_select_rows: function (rows) {
