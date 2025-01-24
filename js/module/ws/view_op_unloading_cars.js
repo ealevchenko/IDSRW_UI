@@ -33,9 +33,7 @@
             'vopulc_title_time_stop': 'Время окончания',
             'vopulc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
             'vopulc_title_placeholder_time_stop': 'Время окончания',
-
-            //'vopulc_title_label_devision_on': 'Цех получатель:',
-            //'vopulc_text_label_devision_on': 'Выберите цех получатель...',
+ 
             'vopulc_title_label_devision_from': 'Цех получатель. ТЕКУЩ:',
             'vopulc_title_placeholder_devision_from': 'Цех пол. ТЕКУЩ',
             'vopulc_text_label_devision_from': 'Выберите цех пол. ТЕКУЩИЙ ...',
@@ -45,61 +43,8 @@
             'vopulc_title_label_station_amkr_on': 'Станция приб. АМКР:',
             'vopulc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
 
-
-
-
-            //'vopulc_title_label_period': 'Выборка за:',
-            //'vopulc_title_time_period_start': 'С даты',
-            //'vopulc_text_time_period_start': 'Выборка с указаной даты',
-            //'vopulc_title_placeholder_time_period_start': 'Время начала',
-            //'vopulc_title_label_station': 'Станция выгрузки:',
-            //'vopulc_text_label_station': 'Выберите станцию выгрузки...',
-            //'vopulc_title_label_devision_on': 'Цех получатель:',
-            //'vopulc_text_label_devision_on': 'Выберите цех получатель...',
-            //'vopulc_title_label_status_load': 'Статус:',
-            //'vopulc_text_label_status_load': 'Выберите статус (груж./порож.)...',
-            //'vopulc_title_label_station_amkr_on': 'Станция приб. АМКР:',
-            //'vopulc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
-
-            //'vopulc_title_label_way_from': 'Путь отправления:',
-            //'vopulc_text_label_way_from': 'Выберите путь начала дислокации...',
-
-
-
-            //'vopulc_title_label_locomotive1': 'Локомотив №1:',
-            //'vopulc_title_label_locomotive2': 'Локомотив №2:',
-            //'vopulc_title_placeholder_locomotive': ' № локомотива',
-
-            //'vopulc_title_time_start': 'Время начала',
-            //'vopulc_text_time_start': 'Время начала операции ограниченно +(-)1день',
-            //'vopulc_title_placeholder_time_start': 'Время начала',
-
-            //'vopulc_title_time_stop': 'Время окончания',
-            //'vopulc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
-            //'vopulc_title_placeholder_time_stop': 'Время окончания',
-
-            //'vopulc_title_form_add': 'Создать подачу',
-            //'vopulc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
-            //'vopulc_title_form_apply': 'Править подачу',
-            //'vopulc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
-            //'vopulc_title_form_operation_apply': 'Править операцию',
-            //'vopulc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
-
-            //'vopulc_title_period_1': 'ЖД сутки',
-            //'vopulc_title_period_2': 'Календарные сутки',
-            //'vopulc_title_period_3': 'От начала месяца',
-
-            //'vopulc_title_status_null': 'Неопределен?',
-            //'vopulc_title_status_0': 'Без операции',
-            //'vopulc_title_status_1': 'Операция начата',
-            //'vopulc_title_status_2': 'Операция завершена',
-            //'vopulc_title_status_3': 'Вагон покинул путь',
-
-            //'vopulc_title_button_new_period': 'Обновить данные, применить новый период выборки.',
             'vopulc_title_button_new_filing': 'Создать черновик',
-            //'vopulc_title_attr_button_new_filing': 'Создать черновик подачи по выбранным вагонам.',
             'vopulc_title_button_add_filing': 'Добавить в подачу',
-            //'vopulc_title_attr__button_add_filing': 'Добавить в текущую подачу выбранные вагоны.',
 
             'vopulc_mess_info_start': 'Выберите существующую подачу для правки или создаете черновик подачи.',
             'vopulc_mess_info_draft': 'Выбран черновик подачи, создайте подачу или удалите черновик!  (ВНИМАНИЕ! выбрав вагоны в черновике, вы можете задать операцию, для этого укажите дату начала операции и по необходимости дату завершения, если вагоны не выбраны тогда будет создана пустая подача с вагонами без операции).',
@@ -114,37 +59,17 @@
             'vopulc_mess_valid_devision': 'Указанного цеха нет в справочнике ИДС',
             'vopulc_mess_valid_not_devision': 'Укажите цех',
 
-            //'vopulc_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
-            //'vopulc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
-            //'vopulc_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
-            //'vopulc_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
-
-
-            //'voprc_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
-            //'voprc_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
-            //'voprc_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :[{0}] не закрытая подача [{1}]. Операция создания новой - невозможна!',
-
-            //'voprc_mess_eror_add_new_filing': 'Выбранно № {0} вагонов, не могу сформировать новую подачу (ошибка определения станции {1}, парка {2}, пути {3})',
-            //'voprc_mess_eror_new_filing_not_wagon': 'В новой подаче отсутствуют вагоны',
-
-            //'vopulc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'vopulc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             'vopulc_mess_error_time_aplly': 'Укажите дату завершения операции',
             'vopulc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
-            'vopulc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, мин. отклонение (мин) = {0}',
-            'vopulc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, мак. отклонение (мин) = {0}',
+            'vopulc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopulc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'vopulc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
             'vopulc_mess_error_not_wagons_close_filing': 'Выберите вагоны для завершения операции вподаче (в окне «ВАГОНЫ В ПОДАЧЕ», выберите вагоны).',
             'vopulc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
             'vopulc_mess_error_filing_division': 'Выберите цех получатель',
             'vopulc_mess_error_filing_station_amkr': 'Выберите станцию выгрузки',
             'vopulc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
-            //'vopulc_mess_error_operation_run_add_filing': 'При создании подачи для «ВЫГРУЗКИ ВАГОНОВ» произошла ошибка, код ошибки: {0}',
-            //'vopulc_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
-
-            //'vopulc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-            //'voprc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
-
+            'vopulc_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
 
             'vopulc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
             'vopulc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ВЫГРУЗКИ ВАГОНОВ"!',
@@ -152,56 +77,17 @@
             'vopulc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ВЫГРУЗКИ" над вагонами подачи!',
             'vopulc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ВЫГРУЗКИ"!',
 
-
-
-            //'vopulc_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
-
-            //'vopulc_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции "ВЫГРУЗКА ВАГОНОВ" в подаче.',
-            //'vopulc_mess_run_operation_update_filing': 'Выполняю операцию править подачу "ВЫГРУЗКИ ВАГОНОВ"',
-            //'vopulc_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
-            //'vopulc_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
-            //'vopulc_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
-            //'vopulc_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
-            //'vopulc_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
-            //'vopulc_mess_not_select_way_return': 'Выберите путь на который будут возвращены вагоны!',
-
-            //'vopulc_mess_ok_operation_add_filing': 'Подача создана, определено {0} (ваг.)',
-            //'vopulc_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
-            //'vopulc_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
-            //'vopulc_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
-            //'vopulc_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
-
             'vopulc_mess_load_operation': 'Загружаю операции...',
-            //'vopulc_mess_load_wagons': 'Загружаю вагоны на пути...',
-            //'vopulc_mess_load_filing_wagon': 'Загружаю вагоны подач...',
 
             'vopulc_mess_init_panel': 'Выполняю инициализацию модуля ...',
-            //'vopulc_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
-            //'vopulc_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
-            //'vopulc_mess_add_filing': 'Переношу вагоны в существующую подачу.',
-            //'vopulc_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
-            //'vopulc_mess_clear_draft': 'Удаляю черновик подачи.',
 
             'vopulc_confirm_title': 'Внимание!',
             'vopulc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ВЫГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для выгрузки {4} ваг., закрыта выгрузка по {5} вагонам.',
-            'vopulc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: [{1}], выбранно подразделение: [{2}]? Станция и подразделение будет обновлено по всем вагонам подачи!',
+            'vopulc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, выбранно подразделение: {2}? Станция и подразделение будет обновлено по всем вагонам подачи!',
             'vopulc_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала выгрузки {2} ваг., закрыта выгрузка по {3} вагонам.',
             'vopulc_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта выгрузка по {2} вагонам.',
             'vopulc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
-            'vopulc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути [{0}]?.',
-
-
-            //'vopulc_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
-            //'vopulc_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
-            //'vopulc_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
-
-            //'vopulc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
-            //'vopulc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь для подачи {0}? Все выбранные для подачи в количестве {1} будут сброшены! ',
-
+            'vopulc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
         },
         'en':  //default language: English
         {
@@ -1120,19 +1006,12 @@
                 if (this.fw_status === 0 || this.fw_status === 1) {
                     // Проверим введена дата окончания или дата документа
                     if (isValid) {
-                        /*                        this.filing_wagons_alert_info.clear_message();*/
-                        //this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        //this.form_filing_wagons_setup.el.button_operation_close.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('not-required-field check-field is-valid is-invalid').addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_unload, this.default_status_unload)
                     } else {
-                        //this.filing_wagons_alert_info.clear_message();
-                        //this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_edit', App.Langs));
-                        //this.form_filing_wagons_setup.el.button_operation_apply.show();
-                        //this.form_filing_wagons_setup.el.button_operation_close.hide();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('check-field is-valid required-field is-invalid').addClass('not-required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
@@ -1195,20 +1074,6 @@
                 this.form_filing_wagons_setup.el.button_filing_add.show();
                 this.form_filing_wagons_setup.el.button_filing_apply.hide();
                 this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                //// есть выбранные вагоны
-                //if (rows !== null && rows.length > 0) {
-                //    var id_operation = this.get_operation_of_status_load(rows[0].currentIdLoadingStatus);
-                //    this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(id_operation);
-                //    this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
-                //    this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                //    this.form_filing_wagons_setup.el.input_datetime_time_start.$element.addClass('required-field');
-                //    this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.addClass('not-required-field');
-                //    this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
-                //}
-                //this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();
-                //this.form_filing_wagons_setup.el.datalist_id_devision_from.val(this.division_from);
-                //this.form_filing_wagons_setup.el.select_id_station_amkr_from.val(this.station_from);
-                //view_set_date_stop.call(this, false);
                 view_setup_operation_open.call(this);
             };
             if (this.id_filing > 0) {
@@ -1246,12 +1111,6 @@
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.show();
-                        //this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
-                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        //this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
-                        //this.form_filing_wagons_setup.el.select_id_status_load.enable();
-                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
-                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
                         view_setup_operation_open.call(this);
                         break;
                     }
@@ -1312,9 +1171,6 @@
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : null);
                         this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].currentIdLoadingStatus : this.default_status_unload);
-                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 ? moment(rows[0].filingStart) : null);
-                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 ? moment(rows[0].filingEnd) : null);
-                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 ? rows[0].currentIdLoadingStatus : -1);
                         break;
                     }
                 }
@@ -1367,9 +1223,14 @@
                         var dtstart = moment(start_date);
                         var dtstop = moment(result.new.input_datetime_time_stop);
                         var minutes = dtstop.diff(dtstart, 'minutes');
-                        if (minutes < App.wsd_setup.unload_period_min || minutes > App.wsd_setup.unload_period_max) {
-                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_period_time', App.Langs).format(App.wsd_setup.unload_period_min, App.wsd_setup.unload_period_max), false);
+                        if (minutes <= 0) {
+                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_stop_time_aplly', App.Langs), false);
                             valid = false;
+                        } else {
+                            if (minutes < App.wsd_setup.unload_period_min || minutes > App.wsd_setup.unload_period_max) {
+                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopulc_mess_error_period_time', App.Langs).format(App.wsd_setup.unload_period_min, App.wsd_setup.unload_period_max), false);
+                                valid = false;
+                            }
                         }
                     }
                 }

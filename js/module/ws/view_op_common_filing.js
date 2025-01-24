@@ -85,7 +85,6 @@
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
             'vopcf_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
-            //'vopcf_mess_not_select_way_return': 'Выберите путь на который будут возвращены вагоны!',
 
             'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
             'vopcf_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
@@ -100,12 +99,10 @@
 
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
-            //'vopcf_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу подготовленому к отправке, который имеет статус :[{1}])',
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
             'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
             'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
-            //'vopcf_mess_warning_wagon_ban_filing_load_doc': 'Вагон № {0} для операций заблокирован (вагон погружен, но документ не получен!)',
-            'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :[{0}] не закрытая подача [{1}]. Операция создания новой - невозможна!',
+            'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
 
             'vopcf_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
@@ -116,9 +113,7 @@
             'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
 
-            'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути [{0}]?.',
-
-
+            'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
 
         },
         'en':  //default language: English
@@ -378,10 +373,6 @@
                     if (process === 0) {
                         // На проверку окончания инициализации
                         //----------------------------------
-                        //if (fn_init === 'function') {
-                        //    console.log('Close view_op_common_filing');
-                        //    fn_init(this.result_init);
-                        //}
                         if (typeof this.settings.fn_init === 'function') {
                             console.log('Close view_op_common_filing');
 
@@ -789,7 +780,6 @@
                     }.bind(this));
                 } else {
                     // На проверку окончания инициализации
-                    // На проверку окончания инициализации
                     process--;
                     //console.log('[view_op_common_filing] [form_filing_setup]process: ' + process);
                     out_init(process);
@@ -914,19 +904,7 @@
 
                                 }
                             }
-                            //if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
-                            //    e.preventDefault();
-                            //    this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
-                            //} else {
-                            //    if (rows !== null && rows.length > 0 && this.fw_status !== curr_status) {
-                            //        e.preventDefault();
-                            //        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_select_status', App.Langs).format(rowData[0].num, this.view_status_fw_wagons(curr_status), this.view_status_fw_wagons(this.fw_status)));
-                            //    } else {
-                            //        this.fw_status = curr_status;
-                            //    }
-                            //}
                         }
-
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         // Сбросим статусы 
@@ -1165,10 +1143,6 @@
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_exists', App.Langs).format(rowData[0].num, this.id_filing));
                             }
-                            //if (rowData[0].outgoingSostavStatus > 0) {
-                            //    e.preventDefault();
-                            //    this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
-                            //}
                             if (rowData[0].id_wir_unload !== null) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_filing_way', App.Langs).format(rowData[0].num));
@@ -1180,11 +1154,8 @@
                             if (this.type_filing === 2 && rowData[0].currentLoadBusy) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
-
                             }
-
                         }
-
                     }.bind(this),
                     fn_select_rows: function (rows) {
 
@@ -1254,8 +1225,6 @@
                             } else {
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_not_select_way_from', App.Langs));
                             }
-
-
                         }
                     }.bind(this),
                     fn_enable_button: function (tb) {
