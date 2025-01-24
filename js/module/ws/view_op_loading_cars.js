@@ -134,6 +134,7 @@
             'voplc_mess_error_max_time_docum': 'Дата получения документа не может быть больше текущей даты, отклонение {0} мин.',
             'voplc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
             'voplc_mess_error_not_wagons_status_close_filing': 'Выберите статус вагонов после операции',
+            'voplc_mess_error_not_wagons_cargo_not_status': 'Выбранный груз несоответствует статусу.',
 
             'voplc_mess_error_filing_station_on_amkr': 'Выберите станцию назначения',
             'voplc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
@@ -1697,7 +1698,7 @@
                 filingWayAbbrEn: row ? row.filingWayAbbrEn : way.wayAbbrEn,
                 filingWayIdDevision: row ? row.filingWayIdDevision : way.idDevision,
                 countFilingWagons: row ? 1 : wagons.length,
-                countUnloadingWagons: row ? (row.filingWayEnd !== null ? 1 : 0) : 0,
+                countLoadingWagons: row ? (row.filingWayEnd !== null ? 1 : 0) : 0,
                 filingDivisionIdDivision: row ? row.filingDivisionIdDivision : division ? division.id : null,
                 filingDivisionCode: row ? row.filingDivisionCode : division ? division.code : null,
                 filingDivisionNameRu: row ? row.filingDivisionNameRu : division ? division.nameDivisionRu : null,
@@ -2722,8 +2723,23 @@
 
             if ((mode === 0 || mode === 3 || mode === 4) && rows && rows.length > 0) {
                 if (uz_select) {
-                    valid = valid & this.validation_exist_external_station(result.new.datalist_code_station_uz, 'code_station_uz', mode_close === 2, false);
+                    // станция обязательна если не порожний и закрытие
+                    valid = valid & this.validation_exist_external_station(result.new.datalist_code_station_uz, 'code_station_uz', (get_result_select(result.new.select_id_status_load) !== App.wsd_setup.loading_status.empty) && mode_close === 2, false);
                     valid = valid & this.validation_exist_cargo(result.new.datalist_cargo_etsng, 'cargo_etsng', mode_close === 2, false);
+                    // Проверим соотношение груз - сотояние
+                    if (result.new.datalist_cargo_etsng !== null && result.new.select_id_status_load !== null) {
+                        var cargo = this.cargo.find(function (o) {
+                            return o.id === result.new.datalist_cargo_etsng;
+                        }.bind(this));
+                        if (cargo) {
+                            if ((get_result_select(result.new.select_id_status_load) === App.wsd_setup.loading_status.empty && App.wsd_setup.list_empty_group.indexOf(cargo.idGroup) === -1) ||
+                                (get_result_select(result.new.select_id_status_load) !== App.wsd_setup.loading_status.empty && App.wsd_setup.list_empty_group.indexOf(cargo.idGroup) >= 0)) {
+                                this.form_filing_wagons_setup.set_element_validation_error('id_status_load', langView('voplc_mess_error_not_wagons_cargo_not_status', App.Langs), false);
+                                this.form_filing_wagons_setup.set_element_validation_error('cargo_etsng', langView('voplc_mess_error_not_wagons_cargo_not_status', App.Langs), false);
+                                valid = false;
+                            }
+                        }
+                    }
                 } else {
                     valid = valid & this.validation_exist_divisions(result.new.datalist_id_devision_on, 'id_devision_on', mode_close === 2, false);
                     valid = valid & this.validation_exist_internal_cargo(result.new.datalist_id_internal_cargo, 'id_internal_cargo', mode_close === 2, false);

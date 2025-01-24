@@ -642,7 +642,7 @@
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
-                    type_report: 'list_filing',
+                    type_report: 'list_filing_' + this.type_filing,
                     setup_buttons: [
                         {
                             name: 'clear_draft',
@@ -1179,7 +1179,7 @@
                                 }.bind(this));
                                 // Проверка на открытую подачу на пути создания новой
 
-                                if (this.id_filing == null && open_filing) {
+                                if (this.id_filing == null && open_filing && this.type_filing !== 2) {
                                     e.preventDefault();
                                     this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_new_filing', App.Langs).format(this.form_from_setup.el.select_id_way_unload.text(), open_filing.idFiling));
                                 } else {

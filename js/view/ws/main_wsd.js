@@ -98,6 +98,7 @@
         unload_period_max: 1440,
         operations: operations,
         loading_status: loading_status,
+        list_empty_group : [11,16, 20],
     }
 
     var API_DIRECTORY = App.ids_directory;
