@@ -813,11 +813,11 @@
                                     case 2: {
                                         if (this.type_filing === 2) {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.moveCargoDocReceived === data_doc;
+                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.moveCargoDocReceived === data_doc && data.currentIdLoadingStatus === id_loading;
                                             }).select();
                                         } else {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation;
+                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.currentIdLoadingStatus === id_loading;
                                             }).select();
                                         }
 
