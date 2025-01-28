@@ -2012,6 +2012,7 @@
                     this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('required-field not-required-field is-valid check-field');
                     this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass('required-field not-required-field is-valid check-field');
                     this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass('required-field not-required-field is-valid check-field');
+                    this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass('required-field not-required-field is-valid check-field').addClass('required-field');
 
                     if (isValid) {
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
@@ -2021,6 +2022,7 @@
                         this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
                         this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
                         this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
+                        //this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
                         if (rows.length === 1 && ip_select) {
                             this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
                             this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
@@ -2488,6 +2490,7 @@
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                            this.form_filing_wagons_setup.el.select_id_status_load.enable();
                             // выбран 1
                             if (rows.length === 1) {
                                 this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
@@ -2677,7 +2680,7 @@
                 }
                 // Проверка накладной и веса 
                 if (rows !== null && rows.length === 1) {
-                    if (result.new.input_text_vesg === null && !uz_select) {
+                    if (result.new.input_text_vesg === null && !uz_select && (get_result_select(result.new.select_id_status_load) !== App.wsd_setup.loading_status.empty)) {
                         this.form_filing_wagons_setup.set_element_validation_error('vesg', langView('voplc_mess_error_vesg', App.Langs), false);
                         valid = false;
                     }
@@ -2743,6 +2746,20 @@
                 } else {
                     valid = valid & this.validation_exist_divisions(result.new.datalist_id_devision_on, 'id_devision_on', mode_close === 2, false);
                     valid = valid & this.validation_exist_internal_cargo(result.new.datalist_id_internal_cargo, 'id_internal_cargo', mode_close === 2, false);
+                    var cargo = this.internal_cargo.find(function (o) {
+                        return o.id === result.new.datalist_id_internal_cargo;
+                    }.bind(this));
+                    if (cargo) {
+                        if ((get_result_select(result.new.select_id_status_load) === App.wsd_setup.loading_status.empty && !cargo.emptyWeight) ||
+                            (get_result_select(result.new.select_id_status_load) !== App.wsd_setup.loading_status.empty && cargo.emptyWeight)) {
+                            this.form_filing_wagons_setup.set_element_validation_error('id_status_load', langView('voplc_mess_error_not_wagons_cargo_not_status', App.Langs), false);
+                            this.form_filing_wagons_setup.set_element_validation_error('id_internal_cargo', langView('voplc_mess_error_not_wagons_cargo_not_status', App.Langs), false);
+                            valid = false;
+                        }
+
+
+                    }
+
                 }
             }
             return valid;
