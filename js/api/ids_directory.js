@@ -894,7 +894,7 @@
     ids_directory.prototype.getExistInternalCargo = function (id, name) {
         var obj_db = null;
         var result = {};
-        if (id && id !== '') {
+        if (id !== null && id !== '') {
             var obj = this.getInternalCargo_Of_ID(id);
             obj_db = obj ? obj : null;
         } else {
