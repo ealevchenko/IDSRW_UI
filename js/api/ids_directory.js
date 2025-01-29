@@ -753,7 +753,7 @@
         var list = [];
         if (list_obj && list_obj.length > 0) {
             $.each(list_obj, function (i, el) {
-                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.idCargoEtsngNavigation.code, disabled: false });
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.idCargoEtsngNavigation.code, disabled: false, empty: el.emptyWeight });
             }.bind(this));
         }
         return list;
@@ -885,7 +885,7 @@
         var list = [];
         if (list_obj && list_obj.length > 0) {
             $.each(list_obj, function (i, el) {
-                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.codeSap, disabled: false });
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.codeSap, disabled: false, empty: el.emptyWeight });
             }.bind(this));
         }
         return list;
