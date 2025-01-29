@@ -2286,7 +2286,7 @@ var get_max_element = function (rows, name_field) {
         this.update = function (data, value) {
             this.settings.data = data;
             this.alist = get_alist(this.settings.data);
-            this.$element.flexdatalist(data, this.alist);
+            this.$element.flexdatalist("data", this.alist);
             this.val(value);
         };
         // вернуть value
