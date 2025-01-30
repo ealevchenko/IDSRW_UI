@@ -124,6 +124,7 @@ var is_valid_num_wagon = function (num) {
 };
 
 var get_result_select = function (value) {
+    if (value === null) return value;
     if (!isNaN(Number(value))) {
         var val = Number(value);
         return val === -1 ? null : val;
