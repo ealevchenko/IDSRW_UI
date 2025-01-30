@@ -218,8 +218,10 @@
             'tws_title_filing_operation_wagon_1': 'По вагону открыта операция.',
             'tws_title_filing_operation_wagon_load_2_1': 'По вагону закрыта операция, но документ еще не получен!',
             'tws_title_filing_operation_wagon_load_2_2': 'По вагону закрыта операция, документ получен.',
+            'tws_title_filing_operation_wagon_load_2_3': 'По вагону закрыта операция как вагон порожний.',
             'tws_title_filing_operation_wagon_load_3_1': 'По вагону закрыта операция и вагон перемещен, но документ еще не получен!',
             'tws_title_filing_operation_wagon_load_3_2': 'По вагону закрыта операция, документ получен и вагон перемещен.',
+            'tws_title_filing_operation_wagon_load_3_3': 'По вагону операция закрыта как порожний, вагон перемещен.',
 
             'tws_title_status_0': 'Предъявлен',
             'tws_title_status_1': 'В работе',
@@ -2864,7 +2866,7 @@
         collums.push({ field: 'current_external_station_on_name', title: null, class: null });
         collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
-/*        collums.push({ field: 'current_vesg', title: null, class: null });*/
+        /*        collums.push({ field: 'current_vesg', title: null, class: null });*/
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'note_2', title: null, class: null });
         //collums.push({ field: 'current_operation_start', title: null, class: null });
@@ -2901,8 +2903,8 @@
         collums.push({ field: 'current_vesg', title: null, class: null });
         collums.push({ field: 'note_2', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
-        collums.push({ field: 'filing_way_start', title: langView('tws_field_filing_way_start_load', App.Langs), class: null });
-        collums.push({ field: 'filing_way_end', title: langView('tws_field_filing_way_end_load', App.Langs), class: null });
+        collums.push({ field: 'filing_start', title: langView('tws_field_filing_way_start_load', App.Langs), class: null });
+        collums.push({ field: 'filing_end', title: langView('tws_field_filing_way_end_load', App.Langs), class: null });
         //collums.push({ field: 'current_operation_start', title: null, class: null });
         //collums.push({ field: 'current_operation_end', title: null, class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
@@ -3083,8 +3085,7 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    if (data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) 
-                    {
+                    if (data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл
@@ -4118,8 +4119,13 @@
                                     $(row).addClass('green');
                                     $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_2', App.Langs));
                                 } else {
-                                    $(row).addClass('pink');
-                                    $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_1', App.Langs));
+                                    if (data.currentIdLoadingStatus === 0 && data.filingEnd !== null) {
+                                        $(row).addClass('lgreen');
+                                        $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_3', App.Langs));
+                                    } else {
+                                        $(row).addClass('pink');
+                                        $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_1', App.Langs));
+                                    }
                                 }
                             } else {
                                 $(row).addClass('yellow');
@@ -4132,7 +4138,11 @@
                         if (data.moveCargoDocReceived !== null) {
                             $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_2', App.Langs));
                         } else {
-                            $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_1', App.Langs));
+                            if (data.currentIdLoadingStatus === 0 && data.filingEnd !== null) {
+                                $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_3', App.Langs));
+                            } else {
+                                $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_1', App.Langs));
+                            }
                         }
                         $(row).addClass('blue');
                     }

@@ -94,6 +94,7 @@
             'vopcf_title_form_apply': 'Править подачу',
             'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
             'vopcf_mess_warning_wagon_ban_error_operation': 'Вагон № {0} для выбора заблокирован (операция вагона отличается от операций выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_loading_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статуса выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_error_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статусов выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
@@ -872,36 +873,41 @@
                             // Определим статус выбранной строки
                             var curr_status = 0;
                             var curr_status = this.get_status_fw_wagons(rowData);
-
-                            if (rows !== null && rows.length > 0 && this.fw_status !== curr_status) {
-                                e.preventDefault();
-                                this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_select_status', App.Langs).format(rowData[0].num, this.view_status_fw_wagons(curr_status), this.view_status_fw_wagons(this.fw_status)));
-                            } else {
-                                // Погрузки
-                                if (this.type_filing == 2) {
-                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
-                                        e.preventDefault();
-                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
-                                    } else {
-                                        if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
+                            if (rows !== null && rows.length > 0) {
+                                if (this.fw_status !== curr_status) {
+                                    e.preventDefault();
+                                    this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_select_status', App.Langs).format(rowData[0].num, this.view_status_fw_wagons(curr_status), this.view_status_fw_wagons(this.fw_status)));
+                                } else {
+                                    // Погрузки
+                                    if (this.type_filing == 2) {
+                                        if (rows[0].currentIdOperation !== rowData[0].currentIdOperation) {
                                             e.preventDefault();
-                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_doc_received', App.Langs).format(rowData[0].num));
+                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
+                                        } else {
+                                            if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
+                                            e.preventDefault();
+                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_loading_status', App.Langs).format(rowData[0].num));
+
+                                            } else {
+                                                if (rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
+                                                    e.preventDefault();
+                                                    this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_doc_received', App.Langs).format(rowData[0].num));
+                                                } else {
+                                                    this.fw_status = curr_status;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // выгрузки
+                                    if (this.type_filing == 1) {
+
+                                        if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
+                                            e.preventDefault();
+                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_status', App.Langs).format(rowData[0].num));
                                         } else {
                                             this.fw_status = curr_status;
                                         }
                                     }
-                                }
-                                // выгрузки
-                                if (this.type_filing == 1) {
-
-                                    if (rows !== null && rows.length > 0 && rowData !== null && rowData.length > 0 && rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
-                                        e.preventDefault();
-                                        this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_status', App.Langs).format(rowData[0].num));
-                                    } else {
-                                        this.fw_status = curr_status;
-                                    }
-
-
                                 }
                             }
                         }
