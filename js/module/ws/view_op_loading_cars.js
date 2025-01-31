@@ -1611,7 +1611,7 @@
                                                             id_wim: el.idWim,
                                                             start: null,    // можно править пока подача не закрыта
                                                             //stop: null,                                                                 // только начало
-                                                            stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,     
+                                                            stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,
                                                             id_wagon_operations: uz_select ? App.wsd_setup.operations.loading_uz : App.wsd_setup.operations.loading_if,                      // (15,16) можно править пока подача не закрыта
                                                             doc_received: result.new.input_datetime_time_document !== null ? result.new.input_datetime_time_document._i : null,                                                         // документ получен
                                                             id_cargo: uz_select ? result.new.datalist_cargo_etsng : null,                 // Груз ЕТСНГ
@@ -1932,7 +1932,8 @@
             var s_not_reg = 'not-required-field';
             var s_check = 'check-field';
             var s_valid = 'is-valid';
-            var s_all = s_reg + ' ' + s_not_reg + ' ' + s_check + ' ' + s_not_reg + ' ' + s_valid;
+            var s_invalid = 'is-invalid';
+            var s_all = s_reg + ' ' + s_not_reg + ' ' + s_check + ' ' + s_not_reg + ' ' + s_valid + ' ' + s_invalid;
 
             // Отобразить настройки для открытии операции
             var view_setup_operation_open = function () {
@@ -1976,6 +1977,7 @@
                         //this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
                         //this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.addClass('not-required-field');
                         this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), -1);
                         this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.addClass('not-required-field');
                     }
                 }
@@ -2002,7 +2004,7 @@
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_close.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('not-required-field').addClass('required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, this.default_status_load)
@@ -2013,13 +2015,12 @@
                         this.form_filing_wagons_setup.el.button_operation_apply.show();
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('required-field').addClass('not-required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all);
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
                         this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
                         view_set_status_load.call(this, -1);
                     }
-
                 }
             }
             // Проверка на ввод даты получения документа (режимы закрыть все по операции)
@@ -2029,70 +2030,69 @@
                     var ip_select = $(this.$radio_loading[1]).prop('checked');
                     var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                     var date_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
-                    this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass('required-field not-required-field is-valid check-field').addClass('required-field');
+                    this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all).addClass('required-field');
 
                     if (isValid) {
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('required-field');
                         //this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
                         if (rows.length === 1 && ip_select) {
-                            this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                            this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
+                            this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass(s_all).addClass('required-field');
+                            this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass(s_all).addClass('required-field');
                         }
                     } else {
                         // Дата документа
-                        this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass(s_all).addClass('not-required-field');
                         // Станцияназначения уз
                         if (this.not_equal_code_external_station) {
-                            this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         //
                         if (this.not_equal_current_cargo_id_cargo) {
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         //
                         if (this.not_equal_id_station_on_amkr) {
-                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('not-required-field');
                         }
                         //
                         if (this.not_equal_id_division_on) {
-                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         if (this.not_equal_current_internal_cargo_id_internal_cargo) {
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         if (rows.length === 1) {
                             if (ip_select) {
                                 // только если вз
-                                this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass('required-field is-valid').addClass('not-required-field');
-                                this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('required-field is-valid').addClass('not-required-field');
+                                this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass(s_all).addClass('not-required-field');
+                                this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass(s_all).addClass('not-required-field');
                             }
                         } else {
                             //this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass(s_all);
                         }
                     }
                     //if (this.fw_status === 1) view_set_date_stop.call(this, date_stop !== null ? date_stop._isValid : false); // отобразить закрыть операцию и обязательный ввод данных по закрытию
-
                 }
             }
             // Проверка на ввод даты получения общего документа (режимы закрыть все по операции)
@@ -2103,25 +2103,25 @@
                     var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                     var select_all = this.filing_wagons !== null && rows !== null && this.filing_wagons.length === rows.length;
                     var date_stop = this.form_filing_wagons_setup.el.input_datetime_time_stop.val();
-                    this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass('required-field not-required-field is-valid check-field');
-                    this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass('required-field not-required-field is-valid check-field');
+                    this.form_filing_wagons_setup.el.input_datetime_time_document.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_num_nakl.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_vesg.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass(s_all);
+                    this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass(s_all);
                     if (isValid) {
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('not-required-field is-valid check-field').addClass('required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('required-field');
+                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('required-field');
                         if (rows.length !== 1 && select_all && ip_select) {
-                            this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
-                            this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass('not-required-field is-valid check-field').addClass('required-field');
+                            this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass(s_all).addClass('required-field');
+                            this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass(s_all).addClass('required-field');
                         }
                     } else {
-                        this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_document_total.$element.removeClass(s_all).addClass('not-required-field');
                         // Станцияназначения уз
                         if (this.not_equal_code_external_station) {
                             this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
@@ -2130,30 +2130,30 @@
                         }
                         //
                         if (this.not_equal_current_cargo_id_cargo) {
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         //
                         if (this.not_equal_id_station_on_amkr) {
-                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all).addClass('not-required-field');
                         }
                         //
                         if (this.not_equal_id_division_on) {
-                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         if (this.not_equal_current_internal_cargo_id_internal_cargo) {
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('not-required-field is-valid required-field').addClass('check-field');
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('check-field');
                         } else {
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass('check-field is-valid required-field').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all).addClass('not-required-field');
                         }
                         if (rows.length !== 1 && select_all && ip_select) {
-                            this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass('required-field is-valid').addClass('not-required-field');
-                            this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass('required-field is-valid').addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.input_text_num_nakl_total.$element.removeClass(s_all).addClass('not-required-field');
+                            this.form_filing_wagons_setup.el.input_text_vesg_total.$element.removeClass(s_all).addClass('not-required-field');
                         }
                     }
                     //if (this.fw_status === 1) view_set_date_stop.call(this, date_stop !== null ? date_stop._isValid : false); // отобразить закрыть операцию и обязательный ввод данных по закрытию
@@ -2248,48 +2248,45 @@
                 if (id !== -1) {
                     // статус оперделен
                     if (this.fw_status === 1 || this.fw_status === 2) {
-                        //this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all).addClass('not-required-field');
                         if (!ip_select) this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
                         if (ip_select) this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
-                        ////this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
-                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
-                        //view_set_date_stop.call(this, true); // отобразить закрыть
                         // общие
                         this.form_filing_wagons_setup.el.input_text_num_nakl_total.disable();
                         this.form_filing_wagons_setup.el.input_text_vesg_total.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_document_total.disable();
-
-                        //get_change_field.call(this, rows);
                         // Проверим пустой груженый
                         if (id === App.wsd_setup.loading_status.empty) {
                             // пустой (только дата, статус и груз порожний)
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty === true }.bind(this)), -1);
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty === true }.bind(this)), -1);
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty === true }.bind(this)), rows[0].currentCargoIdCargo);
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty === true }.bind(this)), rows[0].currentInternalCargoIdInternalCargo);
                         } else {
                             // не пустой
                             this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].currentCargoIdCargo);
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].currentInternalCargoIdInternalCargo);
                             // Выбраны все вагоны или не все но остальные закрыты как порожние
-                            if (rows_all || (rows !== null && rows.length > 0 && exist_rows_empty && !rows_all)) {
+                            if ((rows_all && rows !== null && rows.length > 1) || (rows !== null && rows.length > 0 && exist_rows_empty && !rows_all)) {
                                 // общие
                                 this.form_filing_wagons_setup.el.input_datetime_time_document_total.enable();
                                 view_set_date_document_total.call(this, false);
                                 if (ip_select) {
                                     this.form_filing_wagons_setup.el.input_text_vesg_total.enable();
+                                    this.form_filing_wagons_setup.el.input_text_vesg_total.val(rows[0].vesgFiling);
                                     this.form_filing_wagons_setup.el.input_text_num_nakl_total.enable();
+                                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.val(rows[0].numFiling);
                                 }
-
                             }
                             // выбрана 1 запись и это не все
                             if (rows !== null && rows.length === 1 && !rows_all) {
-                                if (ip_select) this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
-                                if (ip_select) this.form_filing_wagons_setup.el.input_text_vesg.enable();
+                                if (ip_select) {
+                                    this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
+                                    this.form_filing_wagons_setup.el.input_text_num_nakl.val(rows[0].internalDocNum);
+                                    this.form_filing_wagons_setup.el.input_text_vesg.enable();
+                                    this.form_filing_wagons_setup.el.input_text_vesg.val(rows[0].currentVesg);
+                                }
                                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows[0].currentOperationStart);
                                 this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
                                 this.form_filing_wagons_setup.el.input_datetime_time_document.val(null);
                                 view_set_date_document.call(this, rows[0].moveCargoDocReceived !== null);
-                                //view_set_date_stop.call(this, true); // отобразить закрыть
                             } else {
                                 this.form_filing_wagons_setup.el.input_text_num_nakl.disable();
                                 this.form_filing_wagons_setup.el.input_text_vesg.disable();
@@ -2306,37 +2303,14 @@
                             if (ip_select) this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
                             //this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all);
                             if (ip_select) this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
-
                             // Отобразим значения
                             this.form_filing_wagons_setup.el.datalist_code_station_uz.val(rows[0].codeExternalStation)//code_external_station
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(rows[0].idStationOnAmkr === null ? -1 : rows[0].idStationOnAmkr); // id_station_on_amkr
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.val(rows[0].idDivisionOn);// id_division_on
-
-                            //this.form_filing_wagons_setup.el.datalist_cargo_etsng.val(rows[0].currentCargoIdCargo)//current_cargo_id_cargo
-                            //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.val(rows[0].currentInternalCargoIdInternalCargo);//current_internal_cargo_id_internal_cargo
-
-
-
-
-                            //this.form_filing_wagons_setup.el.input_text_num_nakl.val(null);
-                            //this.form_filing_wagons_setup.el.input_text_vesg.val(null);
                         }
-                        //view_set_date_document.call(this, rows[0].moveCargoDocReceived !== null);
-                        // Выбраны все вагоны
-                        //if (rows.length !== 1 && this.filing_wagons !== null && this.filing_wagons.length === rows.length) {
-                        //    this.form_filing_wagons_setup.el.input_datetime_time_document_total.enable();
-                        //    if (ip_select) {
-                        //        this.form_filing_wagons_setup.el.input_text_num_nakl_total.enable();
-                        //        this.form_filing_wagons_setup.el.input_text_vesg_total.enable();
-                        //    }
-                        //    view_set_date_document_total.call(this, false);
-                        //}
-
-
                     }
                 }
             }
-
             // Определим поля которые не повторяются (подсветим синим)
             var get_change_field = function (rows) {
                 // Проврим выбраные стрики на равны между собой поля
@@ -2368,6 +2342,8 @@
                     }.bind(this));
                 }
             }
+            //
+            this.clear_all();
             // Проверка на команды вызова функций
             if (command) {
                 if (typeof command.time_stop === "boolean") { view_set_date_stop.call(this, command.time_stop); return; }
@@ -2375,8 +2351,7 @@
                 if (typeof command.time_document_total === "boolean") { view_set_date_document_total.call(this, command.time_document_total); return; }
                 if (typeof command.status_load === "number") { view_set_status_load.call(this, command.status_load); return; }
             }
-
-            this.clear_all();
+            //
             this.filing_wagons_alert_info.clear_message();
             this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_start', App.Langs));
 
@@ -2599,7 +2574,6 @@
                         this.form_filing_wagons_setup.el.button_operation_open.hide();
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
 
-
                         this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows[0].currentOperationEnd);
                         this.form_filing_wagons_setup.el.input_datetime_time_document.val(rows[0].moveCargoDocReceived); // move_cargo_doc_received
@@ -2634,88 +2608,7 @@
                             this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                             //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows[0].currentOperationEnd);
                             view_set_date_stop.call(this, true); // отобразить закрыть (там же отображение согласно статуса)
-
                         }
-
-
-
-
-
-
-
-
-
-                        //if (rows.length === 1) {
-                        //    this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows[0].currentOperationStart);
-                        //    this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows[0].currentOperationEnd);
-                        //    this.form_filing_wagons_setup.el.input_text_num_nakl.val(rows[0].internalDocNum);
-                        //    this.form_filing_wagons_setup.el.input_text_vesg.val(rows[0].currentVesg);
-                        //    this.form_filing_wagons_setup.el.select_id_status_load.val(rows[0].currentIdLoadingStatus);
-
-                        //} else {
-                        //    this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
-                        //    this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
-                        //    this.form_filing_wagons_setup.el.input_text_num_nakl.val(null);
-                        //    this.form_filing_wagons_setup.el.input_text_vesg.val(null);
-                        //    this.form_filing_wagons_setup.el.select_id_status_load.val(null);
-                        //}
-
-                        //this.form_filing_wagons_setup.el.input_datetime_time_document.val(rows[0].moveCargoDocReceived);
-                        //this.form_filing_wagons_setup.el.datalist_code_station_uz.val(rows[0].codeExternalStation)//code_external_station
-                        //this.form_filing_wagons_setup.el.datalist_cargo_etsng.val(rows[0].currentCargoIdCargo)//current_cargo_id_cargo
-                        //this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(rows[0].idStationOnAmkr === null ? -1 : rows[0].idStationOnAmkr); // id_station_on_amkr
-                        //this.form_filing_wagons_setup.el.datalist_id_devision_on.val(rows[0].idDivisionOn);// id_division_on
-                        //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.val(rows[0].currentInternalCargoIdInternalCargo);//current_internal_cargo_id_internal_cargo
-
-                        //this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
-                        //this.form_filing_wagons_setup.el.select_id_status_load.disable();
-                        //// документ введен
-                        //if (rows[0].moveCargoDocReceived !== null || this.close_filing !== null) {
-                        //    // Подача закрыта или документ введен
-                        //    this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        //    this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2_close', App.Langs));
-                        //    // this.form_filing_wagons_setup.el.input_datetime_time_document.val(rows[0].moveCargoDocReceived);
-
-                        //    this.form_filing_wagons_setup.el.datalist_code_station_uz.disable();
-                        //    this.form_filing_wagons_setup.el.datalist_cargo_etsng.disable();
-                        //    this.form_filing_wagons_setup.el.select_id_station_amkr_on.disable();
-                        //    this.form_filing_wagons_setup.el.datalist_id_devision_on.disable();
-                        //    this.form_filing_wagons_setup.el.datalist_id_internal_cargo.disable();
-                        //    this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
-                        //    this.form_filing_wagons_setup.el.select_id_status_load.disable();
-                        //} else {
-                        //    this.form_filing_wagons_setup.el.button_operation_apply.show();
-                        //    this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2', App.Langs));
-
-                        //    get_change_field.call(this, rows);
-                        //    view_set_date_document.call(this, rows[0].moveCargoDocReceived !== null);
-                        //    // выбраны не все
-                        //    this.form_filing_wagons_setup.el.datalist_code_station_uz.enable();
-                        //    this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
-                        //    this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
-                        //    this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
-                        //    this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
-                        //    this.form_filing_wagons_setup.el.select_id_status_load.enable();
-                        //    // выбран 1
-                        //    if (rows.length === 1) {
-                        //        this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
-                        //        this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
-                        //        this.form_filing_wagons_setup.el.input_text_vesg.enable();
-                        //    }
-                        //    // выбраны все
-                        //    if (rows.length > 1 && this.filing_wagons !== null && this.filing_wagons.length === rows.length) {
-                        //        this.form_filing_wagons_setup.el.input_datetime_time_document.disable();
-
-                        //        this.form_filing_wagons_setup.el.input_text_num_nakl.disable();
-                        //        this.form_filing_wagons_setup.el.input_text_vesg.disable();
-                        //        //
-                        //        this.form_filing_wagons_setup.el.input_text_num_nakl_total.enable();
-                        //        this.form_filing_wagons_setup.el.input_text_vesg_total.enable();
-                        //        this.form_filing_wagons_setup.el.input_datetime_time_document_total.enable();
-
-                        //        // Засветить общие
-                        //    }
-                        //}
                         break;
                     }
                     case 3: {
@@ -3088,7 +2981,6 @@
             }.bind(this),
             fn_close: this.settings.fn_close,
         }, function () { }.bind(this));
-
     };
 
     view_op_loading_cars.prototype.view = function (id_way) {

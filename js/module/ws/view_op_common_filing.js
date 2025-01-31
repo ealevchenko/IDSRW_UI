@@ -807,7 +807,7 @@
                                 switch (this.fw_status) {
                                     case 1: {
                                         this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                            return !data.isMoving && data.filingStart !== null && data.filingEnd === null && data.currentIdOperation === id_operation;
+                                            return !data.isMoving && data.filingStart !== null && data.filingEnd === null;// && data.currentIdOperation === id_operation;
                                         }).select();
                                         break;
                                     }
@@ -818,10 +818,9 @@
                                             }).select();
                                         } else {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.currentIdLoadingStatus === id_loading;
+                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdLoadingStatus === id_loading;
                                             }).select();
                                         }
-
                                         break;
                                     }
                                     case 3: {
@@ -832,9 +831,15 @@
                                     }
                                     default: {
                                         if (this.type_filing === 1) {
-                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                                return data.filingStart === null && data.filingEnd === null && data.currentIdLoadingStatus === id_loading;
-                                            }).select();
+                                            if (id_loading === null) {
+                                                this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                    return data.filingStart === null && data.filingEnd === null && data.currentIdLoadingStatus === 1;
+                                                }).select();
+                                            } else {
+                                                this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                    return data.filingStart === null && data.filingEnd === null && data.currentIdLoadingStatus === id_loading;
+                                                }).select();
+                                            }
                                         }
                                         if (this.type_filing === 2) {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
@@ -885,8 +890,8 @@
                                             this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
                                         } else {
                                             if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
-                                            e.preventDefault();
-                                            this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_loading_status', App.Langs).format(rowData[0].num));
+                                                e.preventDefault();
+                                                this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_loading_status', App.Langs).format(rowData[0].num));
 
                                             } else {
                                                 if (rows[0].moveCargoDocReceived !== rowData[0].moveCargoDocReceived) {
@@ -1542,7 +1547,8 @@
 
                     } else {
                         st.countFilingWagons++;
-                        st.countUnloadingWagons += (el.filingWayEnd !== null ? 1 : 0);
+                        st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
                     }
                 }.bind(this));
                 this.wagons_filing = wagons;

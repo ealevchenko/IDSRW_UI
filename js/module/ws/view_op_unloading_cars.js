@@ -180,18 +180,12 @@
                     this.default_status_unload = App.wsd_setup.loading_status.empty;
                     return App.wsd_setup.operations.unloading_if;
                 }
+                if (id_status === App.wsd_setup.loading_status.tech_malfunction || id_status === App.wsd_setup.loading_status.frozen) {
+                    this.default_status_unload = App.wsd_setup.loading_status.empty;
+                    return App.wsd_setup.operations.unloading_uz;
+                }
                 return null;
             }
-            // Получить сотояние очистки груза
-            //this.get_clear_cargo_of_status_load = function (id_status) {
-            //    if (id_status === App.wsd_setup.loading_status.frozen ||
-            //        id_status === App.wsd_setup.loading_status.tech_malfunction||
-            //        id_status === App.wsd_setup.loading_status.re_edging) {
-            //        return false;
-            //    }
-            //    return true;
-            //}
-
         }
         // Загрузка дополнительных библиотек ()
         var load_db_operation = function (callback) {
@@ -741,7 +735,6 @@
             //-------------------------------------------------------------------
             // Создадим форму (this.from_way_setup)
         }
-
         // Завершенеие инициализации [this.cfiling]
         var out_init_cfiling = function () {
             // Выход с общей инициализации
@@ -1021,6 +1014,7 @@
                 }
             }
 
+            this.clear_all();
             // Проверка на команды вызова функций
             if (command) {
                 if (typeof command.time_stop === "boolean") {
@@ -1028,8 +1022,6 @@
                 }
             }
 
-
-            this.clear_all();
             this.filing_wagons_alert_info.clear_message();
             this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_start', App.Langs));
 
@@ -1396,8 +1388,6 @@
             }.bind(this),
             fn_close: this.settings.fn_close,
         }, function () { }.bind(this));
-
-
     };
 
     view_op_unloading_cars.prototype.view = function (id_way) {
