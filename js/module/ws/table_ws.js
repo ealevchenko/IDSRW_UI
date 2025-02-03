@@ -4115,7 +4115,7 @@
                     if (!data.isMoving) {
                         if (data.filingStart !== null) {
                             if (data.filingEnd !== null) {
-                                if (data.moveCargoDocReceived !== null) {
+                                if (data.moveCargoDocReceived || (data.docReceivedFiling !== null && data.currentIdLoadingStatus !== 0)) {
                                     $(row).addClass('green');
                                     $(row).attr('title', langView('tws_title_filing_operation_wagon_load_2_2', App.Langs));
                                 } else {
@@ -4135,7 +4135,7 @@
                             $(row).attr('title', langView('tws_title_filing_operation_wagon_0', App.Langs));
                         }
                     } else {
-                        if (data.moveCargoDocReceived !== null) {
+                        if (data.moveCargoDocReceived !== null || (data.docReceivedFiling !== null && data.currentIdLoadingStatus !== 0)) {
                             $(row).attr('title', langView('tws_title_filing_operation_wagon_load_3_2', App.Langs));
                         } else {
                             if (data.currentIdLoadingStatus === 0 && data.filingEnd !== null) {
