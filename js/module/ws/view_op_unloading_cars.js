@@ -180,7 +180,7 @@
                     this.default_status_unload = App.wsd_setup.loading_status.empty;
                     return App.wsd_setup.operations.unloading_if;
                 }
-                if (id_status === App.wsd_setup.loading_status.tech_malfunction || id_status === App.wsd_setup.loading_status.frozen) {
+                if (id_status === App.wsd_setup.loading_status.tech_malfunction || id_status === App.wsd_setup.loading_status.frozen || id_status === App.wsd_setup.loading_status.re_edging) {
                     this.default_status_unload = App.wsd_setup.loading_status.empty;
                     return App.wsd_setup.operations.unloading_uz;
                 }
