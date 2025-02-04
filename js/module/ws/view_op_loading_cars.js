@@ -137,7 +137,7 @@
             'voplc_mess_error_not_wagons_cargo_not_status': 'Выбранный груз несоответствует статусу.',
 
             'voplc_mess_error_filing_station_on_amkr': 'Выберите станцию назначения',
-            'voplc_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
+            'voplc_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
             'voplc_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
 
             'voplc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ПОГРУЗКИ ВАГОНОВ"!',
@@ -2753,9 +2753,9 @@
                     valid = false;
                 } else {
                     // Проверим время окончания
-                    var dtstop = moment(result.new.input_datetime_time_stop);
+                    //var dtstop = moment(result.new.input_datetime_time_stop);
                     if (start_date) {
-                        // Проверим время начала и окончания
+                        // Проверим на период
                         var dtstart = moment(start_date);
                         var dtstop = moment(result.new.input_datetime_time_stop);
                         var minutes = dtstop.diff(dtstart, 'minutes');
@@ -2763,9 +2763,22 @@
                             this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_stop_time_aplly', App.Langs), false);
                             valid = false;
                         } else {
-                            if (minutes < App.wsd_setup.load_period_min || minutes > App.wsd_setup.load_period_max) {
-                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_period_time', App.Langs).format(App.wsd_setup.load_period_min, App.wsd_setup.load_period_max), false);
+                            if (minutes < App.wsd_setup.load_period_min) {
+                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_period_time', App.Langs).format(App.wsd_setup.load_period_min), false);
                                 valid = false;
+                            } else {
+                                // проверим на тек дату
+                                var curr = moment();
+                                var minutes = dtstop.diff(curr, 'minutes');
+                                if (minutes < App.wsd_setup.load_stop_dt_min) {
+
+                                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.load_stop_dt_min * -1), false);
+                                    valid = false;
+                                }
+                                if (minutes > App.wsd_setup.load_stop_dt_max) {
+                                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.load_stop_dt_max), false);
+                                    valid = false;
+                                }
                             }
                         }
                     }
