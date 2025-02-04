@@ -56,7 +56,7 @@
             'tws_field_current_move_busy': 'Запрет (перемещений)',
             'tws_field_current_load_busy': 'Запрет (погрузки)',
             'tws_field_current_unload_busy': 'Запрет (выгрузки)',
-
+            'tws_field_exist_load_document': 'Наличие документа',
             'tws_field_current_operation_name': 'Последняя операция над вагоном',
             'tws_field_current_operation_start': 'Дата начала выполнения операции',
             'tws_field_current_operation_end': 'Дата окончания выполнения операции',
@@ -604,6 +604,14 @@
                 },
                 className: 'dt-body-center',
                 title: langView('tws_field_current_unload_busy', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'exist_load_document',
+                data: function (row, type, val, meta) {
+                    return row.existLoadDocument ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_exist_load_document', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'current_operation_name',
@@ -1934,7 +1942,7 @@
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
                         return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
                     } else {
-                        return null;
+                        return row['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)];;
                     }
                 },
                 className: 'dt-body-left shorten mw-100',
@@ -1956,7 +1964,7 @@
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
                         return row['currentExternalStationOnName' + ucFirst(App.Lang)];
                     } else {
-                        return null;
+                        return row['arrivalStationFromName' + ucFirst(App.Lang)];;
                     }
                 },
                 className: 'dt-body-left shorten mw-100',
@@ -1978,7 +1986,7 @@
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
                         return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
                     } else {
-                        return null;
+                        return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
                     }
 
                 },
@@ -2205,7 +2213,7 @@
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
         //29
-        collums.push({ field: 'doc_outgoing_car', title: null, class: 'lgreen' });
+        collums.push({ field: 'exist_load_document', title: null, class: 'lgreen' });
         collums.push({ field: 'current_common_cargo_name', title: null, class: 'lgreen' });
         collums.push({ field: 'current_division_from_abbr', title: null, class: 'lgreen' });
         collums.push({ field: 'current_division_on_abbr', title: null, class: 'lgreen' });
