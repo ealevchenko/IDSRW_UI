@@ -541,6 +541,14 @@
                         }
                         break;
                     };
+                    case 'cleaning': {
+                        //voplc.view(current_id_way);
+                        break;
+                    };
+                    case 'processing': {
+                        //voplc.view(current_id_way);
+                        break;
+                    };
                 };
             });
             // Кнопки основного меню (Отправка на УЗ)
