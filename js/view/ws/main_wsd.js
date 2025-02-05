@@ -75,6 +75,7 @@
         tech_malfunction: 5,   //Тех.неисправность
         loaded_uz: 6,          //Груженый УЗ
         re_edging: 7,          //Перекантовка
+        empty_clean: 8,        //Порожний чист
     }
     // Операции
     var operations = {
@@ -82,6 +83,8 @@
         unloading_if: 14,
         loading_uz: 15,
         loading_if: 16,
+        cleaning: 17,
+        processing: 18,
     }
 
     App.wsd_setup = {
@@ -101,6 +104,13 @@
         //unload_period_max: 1440,
         unload_stop_dt_min: -180,
         unload_stop_dt_max: 180,
+
+        cleaning_start_dt_min: -1440,
+        cleaning_start_dt_max: 180,
+        cleaning_period_min: 5,
+        //cleaning_period_max: 1440,
+        cleaning_stop_dt_min: -180,
+        cleaning_stop_dt_max: 180,
 
         operations: operations,
         loading_status: loading_status,
@@ -155,6 +165,9 @@
 
     var VOPLC = App.view_op_loading_cars;
     var voplc = new VOPLC('main.container-fluid');
+
+    var VOPCLC = App.view_op_cleaning_cars;
+    var vopclc = new VOPCLC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -440,7 +453,7 @@
 
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
-            var process = 17;
+            var process = 18;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -542,7 +555,7 @@
                         break;
                     };
                     case 'cleaning': {
-                        //voplc.view(current_id_way);
+                        vopclc.view(current_id_way);
                         break;
                     };
                     case 'processing': {
@@ -1159,6 +1172,25 @@
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[main_wsd] [voplc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function (upd) {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(upd, function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции очистки
+            vopclc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vopclc] process ' + process);
                     out_init(process);
                 },
                 fn_close: function (upd) {

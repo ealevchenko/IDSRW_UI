@@ -32,10 +32,14 @@
             'vopcf_title_type_filing_0': '',
             'vopcf_title_type_filing_1': 'выгрузки',
             'vopcf_title_type_filing_2': 'погрузки',
+            'vopcf_title_type_filing_3': 'очистки',
+            'vopcf_title_type_filing_4': 'обработки',
 
             'vopcf_title_operation_type_filing_0': '',
             'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
+            'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
+            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',
 
             'vopcf_title_label_period': 'Выборка за:',
             'vopcf_text_label_period': 'Выборка за указанный период',
@@ -102,6 +106,7 @@
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
             'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_current_not_empty': 'Вагон № {0} для операций очистка заблокирован (несоответствие статуса {1})',
             'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
             'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
@@ -1119,6 +1124,7 @@
                                     return !data.currentWagonBusy &&
                                         !(this.type_filing === 2 && data.currentLoadBusy) &&
                                         !(this.type_filing === 1 && data.currentUnloadBusy) &&
+                                        !(this.type_filing === 3 && (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) &&
                                         !(data.idFiling !== null && data.wayFilingEnd === null) && data.id_wir_unload === null;
                                 }.bind(this)).select();
                             }.bind(this)
@@ -1165,6 +1171,10 @@
                             if (this.type_filing === 2 && rowData[0].currentLoadBusy) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
+                            }
+                            if (this.type_filing === 3 && (rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) {
+                                e.preventDefault();
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_not_empty', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
                             }
                         }
                     }.bind(this),
