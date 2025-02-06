@@ -23,8 +23,16 @@
             'vopclc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
             'vopclc_title_form_apply': 'Править подачу',
             'vopclc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
+            'vopclc_title_form_operation_open': 'Открыть операцию',
+            'vopclc_title_form_operation_open_title': 'Открыть операцию по вагону(ам) в подаче.',
+            'vopclc_title_form_operation_close': 'Закрыть операцию',
+            'vopclc_title_form_operation_close_title': 'Закрыть операцию по вагону(ам) в подаче.',
             'vopclc_title_form_operation_apply': 'Править операцию',
             'vopclc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
+
+
+            //'vopclc_title_form_operation_apply': 'Править операцию',
+            //'vopclc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
 
             'vopclc_title_time_start': 'Время начала',
             'vopclc_text_time_start': 'Время начала операции ограниченно +(-)1день',
@@ -55,7 +63,7 @@
             'vopclc_mess_info_filing_close': 'Выбрана закрытая подача. Операции не доступны!',
             'vopclc_mess_info_wagon_mode_0': 'Выбран(ы) вагоны, по которым неопределенна операция. Укажите дату начала операции и по необходимости дату завершения и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны без операций нажмите «все вагоны», если нужно выбрать вагоны с открытыми и закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
             'vopclc_mess_info_wagon_mode_1': 'Выбран(ы) вагоны, по которым открыта операция. Укажите дату завершения операции и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с открытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или закрытыми операциями нажмите «убрать выбор» и выберите нужные вагоны).',
-            'vopclc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только статус, укажите другой статус и нажмите “править операцию”. (ВНИМАНИЕ! Если необходимо выбрать все вагоны с закрытой операцией нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
+            'vopclc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только организацию и время выполнения операции, укажите другую организацию, время выполнения и нажмите “править операцию”.',
             'vopclc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
             'vopclc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
 
@@ -75,11 +83,11 @@
             'vopclc_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
             'vopclc_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
 
-            'vopclc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ВЫГРУЗКИ ВАГОНОВ"!',
-            'vopclc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ВЫГРУЗКИ ВАГОНОВ"!',
-            'vopclc_mess_cancel_operation_mode_2': 'Отмена операции начала "ВЫГРУЗКИ" над вагонами подачи!',
-            'vopclc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ВЫГРУЗКИ" над вагонами подачи!',
-            'vopclc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ВЫГРУЗКИ"!',
+            'vopclc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ОЧИСТКИ ВАГОНОВ"!',
+            'vopclc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ОЧИСТКИ ВАГОНОВ"!',
+            'vopclc_mess_cancel_operation_mode_2': 'Отмена операции начала "ОЧИСТКИ" над вагонами подачи!',
+            'vopclc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ОЧИСТКИ" над вагонами подачи!',
+            'vopclc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ОЧИСТКИ"!',
 
             'vopclc_mess_load_operation': 'Загружаю операции...',
 
@@ -89,8 +97,10 @@
             'vopclc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ОЧИСТКА ВАГОНОВ" на станции {0}, на пути {1}. Определено для подачи {2} ваг., определено для очистки {3} ваг., закрыта очистка по {4} вагонам, очистку выполняет {5}.',
             //'vopclc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, выбранно подразделение: {2}? Станция и подразделение будет обновлено по всем вагонам подачи!',
             'vopclc_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала очистки {2} ваг., закрыта очистка по {3} вагонам, очистку выполняет {4}.',
+            'vopclc_confirm_mess_apply_update_filing_edit_operation': 'Править подачу {0}. Определено для правки {1} ваг., очистку выполняет {2}.',
             'vopclc_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта очистка по {2} вагонам, очистку выполняет {3}.',
-            'vopclc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
+            'vopclc_confirm_mess_apply_update_filing_organization_operation': 'Править подачу {0}. Определено для правки {1} ваг., указана новая организация {2}.',
+            'vopclc_confirm_mess_apply_update_filing_organization_operation_stop': 'Править подачу {0}. Определено для правки {1} ваг., указана новая организация {2} и новая дата завершения {3}.',
             'vopclc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
         },
         'en':  //default language: English
@@ -275,17 +285,36 @@
                     }.bind(this),
                 }
             };
-            var bt_bt_operation = {
+            //var bt_bt_operation = {
+            //    obj: 'bs_button',
+            //    options: {
+            //        id: 'operation_apply',
+            //        name: null,
+            //        class: null,
+            //        fsize: 'sm',
+            //        color: 'primary',
+            //        text: langView('vopclc_title_form_operation_apply', App.Langs),
+            //        title: langView('vopclc_title_form_operation_apply_title', App.Langs),
+            //        icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
+            //        icon_fa_right: null,
+            //        fn_click: function (event) {
+            //            event.preventDefault();
+            //            this.form_filing_wagons_setup.$form.submit();
+            //        }.bind(this),
+            //    }
+            //};
+
+            var bt_operation_open = {
                 obj: 'bs_button',
                 options: {
-                    id: 'operation_apply',
+                    id: 'operation_open',
                     name: null,
                     class: null,
                     fsize: 'sm',
-                    color: 'primary',
-                    text: langView('vopclc_title_form_operation_apply', App.Langs),
-                    title: langView('vopclc_title_form_operation_apply_title', App.Langs),
-                    icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
+                    color: 'warning',
+                    text: langView('vopclc_title_form_operation_open', App.Langs),
+                    title: langView('vopclc_title_form_operation_open_title', App.Langs),
+                    icon_fa_left: 'fa-regular fa-folder-open',  //<i class="fa-regular fa-folder-open"></i>
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
@@ -293,6 +322,43 @@
                     }.bind(this),
                 }
             };
+            var bt_operation_close = {
+                obj: 'bs_button',
+                options: {
+                    id: 'operation_close',
+                    name: null,
+                    class: null,
+                    fsize: 'sm',
+                    color: 'danger',
+                    text: langView('vopclc_title_form_operation_close', App.Langs),
+                    title: langView('vopclc_title_form_operation_close_title', App.Langs),
+                    icon_fa_left: 'fa-regular fa-folder-closed',  //<i class="fa-regular fa-folder-closed"></i>
+                    icon_fa_right: null,
+                    fn_click: function (event) {
+                        event.preventDefault();
+                        this.form_filing_wagons_setup.$form.submit();
+                    }.bind(this),
+                }
+            };
+            var bt_operation_apply = {
+                obj: 'bs_button',
+                options: {
+                    id: 'operation_apply',
+                    name: null,
+                    class: null,
+                    fsize: 'sm',
+                    color: 'success',
+                    text: langView('vopclc_title_form_operation_apply', App.Langs),
+                    title: langView('vopclc_title_form_operation_apply_title', App.Langs),
+                    icon_fa_left: 'fa-solid fa-pen-to-square',  //<i class="fa-solid fa-pen-to-square"></i>
+                    icon_fa_right: null,
+                    fn_click: function (event) {
+                        event.preventDefault();
+                        this.form_filing_wagons_setup.$form.submit();
+                    }.bind(this),
+                }
+            };
+
             var alert_info = {
                 obj: 'bs_alert',
                 options: {
@@ -467,7 +533,10 @@
             };
             col_bt_apply.childs.push(bt_bt_add);
             col_bt_apply.childs.push(bt_bt_apply);
-            col_bt_apply.childs.push(bt_bt_operation);
+            /*            col_bt_apply.childs.push(bt_bt_operation);*/
+            col_bt_apply.childs.push(bt_operation_open);
+            col_bt_apply.childs.push(bt_operation_close);
+            col_bt_apply.childs.push(bt_operation_apply);
             col_alert.childs.push(alert_info)
             objs_filing_wagons_setup.push(col_bt_apply);
             objs_filing_wagons_setup.push(col_alert);
@@ -532,17 +601,33 @@
                                         break;
                                     }
                                     case 3: {
-                                        message = langView('vopclc_confirm_mess_apply_update_filing_stop_operation', App.Langs).format(this.id_filing,
-                                            (rows ? rows.length : 0),
-                                            (dt_stop !== null ? (rows ? rows.length : 0) : 0),
-                                            (rows ? this.form_filing_wagons_setup.el.select_id_organization_service.text() : '')
-                                        );
+                                        if (dt_stop !== null) {
+                                            message = langView('vopclc_confirm_mess_apply_update_filing_stop_operation', App.Langs).format(this.id_filing,
+                                                (rows ? rows.length : 0),
+                                                (dt_stop !== null ? (rows ? rows.length : 0) : 0),
+                                                (rows ? this.form_filing_wagons_setup.el.select_id_organization_service.text() : '')
+                                            );
+                                        } else {
+                                            message = langView('vopclc_confirm_mess_apply_update_filing_edit_operation', App.Langs).format(this.id_filing,
+                                                (rows ? rows.length : 0),
+                                                (rows ? this.form_filing_wagons_setup.el.select_id_organization_service.text() : '')
+                                            );
+                                        }
                                         break;
                                     }
                                     case 4: {
-                                        message = langView('vopclc_confirm_mess_apply_update_filing_status_operation', App.Langs).format(this.id_filing,
-                                            (rows ? rows.length : 0),
-                                            this.form_filing_wagons_setup.el.select_id_status_load.text());
+                                        if (dt_stop !== null) {
+                                            message = langView('vopclc_confirm_mess_apply_update_filing_organization_operation_stop', App.Langs).format(this.id_filing,
+                                                (rows ? rows.length : 0),
+                                                (rows ? this.form_filing_wagons_setup.el.select_id_organization_service.text() : ''),
+                                                this.form_filing_wagons_setup.el.input_datetime_time_stop.val().format(format_datetime)
+                                            );
+                                        } else {
+                                            message = langView('vopclc_confirm_mess_apply_update_filing_organization_operation', App.Langs).format(this.id_filing,
+                                                (rows ? rows.length : 0),
+                                                (rows ? this.form_filing_wagons_setup.el.select_id_organization_service.text() : '')
+                                            );
+                                        }
                                         break;
                                     }
                                 }
@@ -567,6 +652,7 @@
                                                             stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
                                                             id_wagon_operations: row ? App.wsd_setup.operations.cleaning : null,            // (17) можно править пока подача не закрыта
                                                             id_status_load: row ? Number(result.new.select_id_status_load) : null,         // можно править пока подача не закрыта
+                                                            id_organization_service: rows ? Number(result.new.select_id_organization_service) : null,         // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -576,7 +662,6 @@
                                                     id_filing: this.id_filing,              // 0 новая, >0 Правим существующую
                                                     type_filing: this.type_filing,          // 3 = очистка
                                                     id_way: this.id_way_unload,             // !только новая подача
-                                                    id_organization_service: rows ? Number(result.new.select_id_organization_service) : null,         // можно править пока подача не закрыта
                                                     wagons: list_wagons,
                                                 };
                                                 this.apply_add_filing(operation);
@@ -605,6 +690,7 @@
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,      // можно править пока подача не закрыта
                                                             id_wagon_operations: App.wsd_setup.operations.cleaning,             // (17) можно править пока подача не закрыта
                                                             id_status_load: Number(result.new.select_id_status_load),           // можно править пока подача не закрыта
+                                                            id_organization_service: Number(result.new.select_id_organization_service),         // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -613,7 +699,6 @@
                                                 var operation = {
                                                     id_filing: this.id_filing,
                                                     mode: mode,
-                                                    id_organization_service: Number(result.new.select_id_organization_service),         // можно править пока подача не закрыта
                                                     wagons: list_wagons
                                                 };
                                                 this.apply_update_operation_filing(operation);
@@ -629,9 +714,10 @@
                                                         {
                                                             id_wim: el.idWim,
                                                             start: null,
-                                                            stop: dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
+                                                            stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,
                                                             id_wagon_operations: el.currentIdOperation,
                                                             id_status_load: Number(result.new.select_id_status_load),            // можно править пока подача не закрыта
+                                                            id_organization_service: Number(result.new.select_id_organization_service),
                                                         }
                                                     )
                                                 }.bind(this));
@@ -640,7 +726,6 @@
                                                 var operation = {
                                                     id_filing: this.id_filing,
                                                     mode: mode,
-                                                    id_organization_service: Number(result.new.select_id_organization_service), 
                                                     wagons: list_wagons
                                                 };
                                                 this.apply_update_operation_filing(operation);
@@ -656,10 +741,10 @@
                                                         {
                                                             id_wim: el.idWim,
                                                             start: null,
-                                                            stop: null,                                                     // можно править пока подача не закрыта
+                                                            stop: result.new.input_datetime_time_stop !== null ? result.new.input_datetime_time_stop._i : null,                                                              // можно править пока подача не закрыта
                                                             id_wagon_operations: el.currentIdOperation,
-                                                            id_status_load: Number(result.new.select_id_status_load),     // можно править пока подача не закрыта
-                                                            //clear_cargo: null
+                                                            id_status_load: null,
+                                                            id_organization_service: Number(result.new.select_id_organization_service), // можно править пока подача не закрыта
                                                         }
                                                     )
                                                 }.bind(this));
@@ -956,24 +1041,33 @@
             // Проверка на ввод даты окончания операции (режимы править или закрыть)
             var view_set_date_stop = function (isValid) {
                 if (this.fw_status === 0 || this.fw_status === 1) {
+                    this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                    this.form_filing_wagons_setup.el.button_operation_open.hide();
+                    this.form_filing_wagons_setup.el.button_operation_close.hide();
                     // Проверим введена дата окончания или дата документа
                     if (isValid) {
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_organization_service.enable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.$element.addClass('required-field');
+                        this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.enable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning)
+                        this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning);
+                        this.form_filing_wagons_setup.el.button_operation_close.show();
                     } else {
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
-                        this.form_filing_wagons_setup.el.select_id_organization_service.disable();
-                        this.form_filing_wagons_setup.el.select_id_organization_service.val(-1);
-                        this.form_filing_wagons_setup.el.select_id_organization_service.$element.removeClass(s_all);
+                        this.form_filing_wagons_setup.el.select_id_organization_service.enable();
+                        //this.form_filing_wagons_setup.el.select_id_organization_service.val(-1);
+                        this.form_filing_wagons_setup.el.select_id_organization_service.$element.removeClass(s_all).addClass('not-required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
                         this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all);
+                        if (this.fw_status === 1) {
+                            this.form_filing_wagons_setup.el.button_operation_apply.show();
+                        } else {
+                            this.form_filing_wagons_setup.el.button_operation_open.show();
+                        }
                     }
                 }
             }
@@ -1000,7 +1094,10 @@
             // Сбросим все настройки
             this.form_filing_wagons_setup.el.button_filing_add.hide();
             this.form_filing_wagons_setup.el.button_filing_apply.hide();
+            /*this.form_filing_wagons_setup.el.button_operation_apply.hide();*/
             this.form_filing_wagons_setup.el.button_operation_apply.hide();
+            this.form_filing_wagons_setup.el.button_operation_open.hide();
+            this.form_filing_wagons_setup.el.button_operation_close.hide();
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.$element.removeClass(s_all);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all);
@@ -1026,6 +1123,8 @@
                 this.form_filing_wagons_setup.el.button_filing_add.show();
                 this.form_filing_wagons_setup.el.button_filing_apply.hide();
                 this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                this.form_filing_wagons_setup.el.button_operation_open.hide();
+                this.form_filing_wagons_setup.el.button_operation_close.hide();
                 view_setup_operation_open.call(this);
             };
             if (this.id_filing > 0) {
@@ -1037,10 +1136,14 @@
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
                     if (this.close_filing === null) this.form_filing_wagons_setup.el.button_filing_apply.show();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                    this.form_filing_wagons_setup.el.button_operation_open.hide();
+                    this.form_filing_wagons_setup.el.button_operation_close.hide();
                 } else {
                     this.form_filing_wagons_setup.el.button_filing_add.show();
                     this.form_filing_wagons_setup.el.button_filing_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                    this.form_filing_wagons_setup.el.button_operation_open.hide();
+                    this.form_filing_wagons_setup.el.button_operation_close.hide();
                 }
                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
@@ -1058,7 +1161,9 @@
                         this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_0', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
-                        this.form_filing_wagons_setup.el.button_operation_apply.show();
+                        this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                        this.form_filing_wagons_setup.el.button_operation_open.show();
+                        this.form_filing_wagons_setup.el.button_operation_close.hide();
                         view_setup_operation_open.call(this);
                         break;
                     }
@@ -1070,7 +1175,9 @@
                         this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_1', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
-                        this.form_filing_wagons_setup.el.button_operation_apply.show();
+                        this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                        this.form_filing_wagons_setup.el.button_operation_open.hide();
+                        this.form_filing_wagons_setup.el.button_operation_close.show();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
 
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
@@ -1091,19 +1198,23 @@
                         //this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
 
                         if (this.close_filing === null) {
-                            this.form_filing_wagons_setup.el.select_id_status_load.enable();
+
+                            this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass('required-field');
+                            this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                             this.form_filing_wagons_setup.el.button_operation_apply.show();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2', App.Langs));
 
                         } else {
-                            this.form_filing_wagons_setup.el.select_id_status_load.disable();
+                            this.form_filing_wagons_setup.el.select_id_organization_service.disable();
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2_close', App.Langs));
                         }
                         //this.form_filing_wagons_setup.el.select_id_station_amkr_from.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].currentIdLoadingStatus : this.default_status_cleaning);
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : moment());
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? 1 : 1);
                         break;
                     }
                     case 3: {
@@ -1159,42 +1270,72 @@
                     }
                 }
             }
-            // Время конца 
-            if (mode === 3 && rows && rows.length > 0) {
-                if (result.new && result.new.input_datetime_time_stop === null) {
-                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_time_aplly', App.Langs), false);
-                    valid = false;
-                } else {
-                    if (start_date) {
-                        // Проверим на минимальный период
-                        var dtstart = moment(start_date);
-                        var dtstop = moment(result.new.input_datetime_time_stop);
-                        var minutes = dtstop.diff(dtstart, 'minutes');
-                        if (minutes <= 0) {
-                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_stop_time_aplly', App.Langs), false);
+            // Время конца
+            if (mode === 3 && rows && rows.length > 0 && result.new && result.new.input_datetime_time_stop !== null) {
+                if (start_date) {
+                    // Проверим на минимальный период
+                    var dtstart = moment(start_date);
+                    var dtstop = moment(result.new.input_datetime_time_stop);
+                    var minutes = dtstop.diff(dtstart, 'minutes');
+                    if (minutes <= 0) {
+                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_stop_time_aplly', App.Langs), false);
+                        valid = false;
+                    } else {
+                        if (minutes < App.wsd_setup.cleaning_period_min) {
+                            this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_period_time', App.Langs).format(App.wsd_setup.cleaning_period_min), false);
                             valid = false;
                         } else {
-                            if (minutes < App.wsd_setup.cleaning_period_min) {
-                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_period_time', App.Langs).format(App.wsd_setup.cleaning_period_min), false);
-                                valid = false;
-                            } else {
-                                // проверим на тек дату
-                                var curr = moment();
-                                var minutes = dtstop.diff(curr, 'minutes');
-                                if (minutes < App.wsd_setup.cleaning_stop_dt_min) {
+                            // проверим на тек дату
+                            var curr = moment();
+                            var minutes = dtstop.diff(curr, 'minutes');
+                            if (minutes < App.wsd_setup.cleaning_stop_dt_min) {
 
-                                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_min * -1), false);
-                                    valid = false;
-                                }
-                                if (minutes > App.wsd_setup.cleaning_stop_dt_max) {
-                                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_max), false);
-                                    valid = false;
-                                }
+                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_min * -1), false);
+                                valid = false;
+                            }
+                            if (minutes > App.wsd_setup.cleaning_stop_dt_max) {
+                                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_max), false);
+                                valid = false;
                             }
                         }
                     }
                 }
             }
+            //if (mode === 3 && rows && rows.length > 0) {
+            //    if (result.new && result.new.input_datetime_time_stop === null) {
+            //        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_time_aplly', App.Langs), false);
+            //        valid = false;
+            //    } else {
+            //        if (start_date) {
+            //            // Проверим на минимальный период
+            //            var dtstart = moment(start_date);
+            //            var dtstop = moment(result.new.input_datetime_time_stop);
+            //            var minutes = dtstop.diff(dtstart, 'minutes');
+            //            if (minutes <= 0) {
+            //                this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_stop_time_aplly', App.Langs), false);
+            //                valid = false;
+            //            } else {
+            //                if (minutes < App.wsd_setup.cleaning_period_min) {
+            //                    this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_period_time', App.Langs).format(App.wsd_setup.cleaning_period_min), false);
+            //                    valid = false;
+            //                } else {
+            //                    // проверим на тек дату
+            //                    var curr = moment();
+            //                    var minutes = dtstop.diff(curr, 'minutes');
+            //                    if (minutes < App.wsd_setup.cleaning_stop_dt_min) {
+
+            //                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_min * -1), false);
+            //                        valid = false;
+            //                    }
+            //                    if (minutes > App.wsd_setup.cleaning_stop_dt_max) {
+            //                        this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('vopclc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.cleaning_stop_dt_max), false);
+            //                        valid = false;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             // Проверим соотношение начало и конца
             if ((mode === 0 || mode === 2) && rows && rows.length > 0) {
                 // Проверим время начала и окончания
