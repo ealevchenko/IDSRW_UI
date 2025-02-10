@@ -1919,6 +1919,9 @@
                 moveCargoChangeUser: row.moveCargoChangeUser,
                 moveCargoClose: row.moveCargoClose,
                 moveCargoCloseUser: row.moveCargoCloseUser,
+                currentIdOrganizationService: row.currentIdOrganizationService,
+                currentOrganizationServiceRu: row.currentOrganizationServiceRu,
+                currentOrganizationServiceEn: row.currentOrganizationServiceEn,
                 //-------------------------------------------------
             };
         }
