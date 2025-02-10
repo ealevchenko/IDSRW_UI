@@ -197,19 +197,20 @@
             'tws_field_filing_close_user': 'Закрыл',
             'tws_field_filing_start': 'Дата начала выгрузки',
             'tws_field_filing_end': 'Дата окончания выгрузки',
-            'tws_field_current_cargo_group_name': 'Группа груза ТЕКЩ',
-            'tws_field_current_cargo_name': 'Груз ТЕКЩ',
-            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКЩ',
-            'tws_field_current_internal_cargo_name': 'Груз ТЕКЩ',
-            'tws_field_filing_cargo_group_name': 'Группа груза ТЕКЩ',
-            'tws_field_filing_cargo_name': 'Груз ТЕКЩ',
-            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКЩ',
-            'tws_field_filing_internal_cargo_name': 'Груз ТЕКЩ',
-            'tws_field_current_common_cargo_name': 'Груз ТЕКЩ',
+            'tws_field_current_cargo_group_name': 'Группа груза ТЕКУЩ',
+            'tws_field_current_cargo_name': 'Груз ТЕКУЩ',
+            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',
+            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',
+            'tws_field_filing_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
+            'tws_field_filing_cargo_name': 'Груз ТЕКУЩ (подача)',
+            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
+            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',
+            'tws_field_current_common_cargo_name': 'Груз ТЕКУЩ',
+            'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
             'tws_field_filing_division_from_abbr': 'Цех погрузки ТЕКУЩ (подача)',
-            'tws_field_current_division_on_abbr': 'Цех получатель ТЕКЩ',
-            'tws_field_filing_division_on_abbr': 'Цех получатель ТЕКЩ (подача)',
+            'tws_field_current_division_on_abbr': 'Цех получатель ТЕКУЩ',
+            'tws_field_filing_division_on_abbr': 'Цех получатель ТЕКУЩ (подача)',
             'tws_field_current_station_from_amkr_abbr': 'Станция отправления ТЕКУЩ',
             'tws_field_filing_station_from_amkr_abbr': 'Станция отправления ТЕКУЩ (подача)',
             'tws_field_current_station_on_amkr_abbr': 'Станция назначения ТЕКУЩ',
@@ -1865,7 +1866,7 @@
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            // Груз группа ТЕКЩ
+            // Груз группа ТЕКУЩ
             {
                 field: 'current_cargo_group_name',
                 data: function (row, type, val, meta) {
@@ -1874,7 +1875,7 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            // Груз ТЕКЩ
+            // Груз ТЕКУЩ
             {
                 field: 'current_cargo_name',
                 data: function (row, type, val, meta) {
@@ -1901,7 +1902,7 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            // Груз группа ТЕКЩ
+            // Груз группа ТЕКУЩ
             {
                 field: 'filing_cargo_group_name',
                 data: function (row, type, val, meta) {
@@ -1910,7 +1911,7 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            // Груз ТЕКЩ
+            // Груз ТЕКУЩ
             {
                 field: 'filing_cargo_name',
                 data: function (row, type, val, meta) {
@@ -1966,6 +1967,20 @@
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            //
+            // Груз текущий (ЕТСНГ или внутрений) 
+            {
+                field: 'filing_common_cargo_name',
+                data: function (row, type, val, meta) {
+                    if (row.filingCargoIdGroup !== null) {
+                        return row['filingCargoName' + ucFirst(App.Lang)];
+                    } else {
+                        return row['filingInternalCargoName' + ucFirst(App.Lang)];
+                    }
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // текущий вес
             {
@@ -2100,7 +2115,8 @@
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
                         return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
                     } else {
-                        return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
+                        return null;
+                        //return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
                     }
 
                 },
@@ -2131,7 +2147,7 @@
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
                         return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
                     } else {
-                        return null;
+                        return row['arrivalStationAmkrName' + ucFirst(App.Lang)];                        
                     }
                 },
                 className: 'dt-body-left shorten mw-100',
@@ -3137,8 +3153,9 @@
         collums.push({ field: 'filing_operation_end', title: null, class: 'pink' });
         collums.push({ field: 'filing_internal_doc_num', title: null, class: 'pink' });
         collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: 'pink' });
-        collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });
-        collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });
+        collums.push({ field: 'filing_common_cargo_name', title: null, class: 'pink' }); // 31
+        //collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });
+        //collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });
         collums.push({ field: 'filing_vesg', title: null, class: 'pink' });
         collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: 'pink' });
         collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: 'pink' });
@@ -3188,8 +3205,9 @@
         collums.push({ field: 'filing_operation_end', title: null, class: 'pink' });
         collums.push({ field: 'filing_internal_doc_num', title: null, class: 'pink' });
         collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: 'pink' });
-        collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });
-        collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });
+        collums.push({ field: 'filing_common_cargo_name', title: null, class: 'pink' });
+        //collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });
+        //collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });
         collums.push({ field: 'filing_vesg', title: null, class: 'pink' });
         collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: 'pink' });
         collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: 'pink' });
@@ -4464,17 +4482,18 @@
                     //    $(row).addClass('ban red');  // Отметим вагон заблокирован
                     //}
                     if (!data.isMoving) {
-                        if (data.filingEnd !== null) {
-                            $(row).addClass('green');
-                            $(row).attr('title', langView('tws_title_filing_operation_wagon_2', App.Langs));
-                        } else {
-                            $(row).addClass('yellow');
-                            $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
+                        if (data.filingStart !== null) {
+                            if (data.filingEnd !== null) {
+                                $(row).addClass('green');
+                                $(row).attr('title', langView('tws_title_filing_operation_wagon_2', App.Langs));
+                            } else {
+                                $(row).addClass('yellow');
+                                $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
+                            }
                         }
                     } else {
                         $(row).addClass('blue');
                     }
-
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_filing_wagons_1();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
