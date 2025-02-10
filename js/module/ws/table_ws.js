@@ -187,6 +187,8 @@
             'tws_field_end_filing_load': 'Дата окончания погрузки',
             'tws_field_start_filing_unload': 'Дата начала выгрузки',
             'tws_field_end_filing_unload': 'Дата окончания выгрузки',
+            'tws_field_start_filing_cleaning': 'Дата начала очистки',
+            'tws_field_end_filing_cleaning': 'Дата окончания очистки',
             'tws_field_filing_create': 'Дата создания',
             'tws_field_filing_create_user': 'Создал',
             'tws_field_filing_change': 'Дата корректировки',
@@ -3078,8 +3080,8 @@
         collums.push({ field: 'filing_way_abbr', title: null, class: null });
         collums.push({ field: 'count_filing_wagons', title: null, class: null });
         collums.push({ field: 'count_cleaning_wagons', title: null, class: null });
-        collums.push({ field: 'start_filing', title: langView('tws_field_start_filing_load', App.Langs), class: null });
-        collums.push({ field: 'end_filing', title: langView('tws_field_end_filing_load', App.Langs), class: null });
+        collums.push({ field: 'start_filing', title: langView('tws_field_start_filing_cleaning', App.Langs), class: null });
+        collums.push({ field: 'end_filing', title: langView('tws_field_end_filing_cleaning', App.Langs), class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
         collums.push({ field: 'create_user_filing', title: null, class: null });
         collums.push({ field: 'change_filing', title: null, class: null });
