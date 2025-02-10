@@ -196,6 +196,7 @@
         // Продолжение инициализации после загрузки всех библиотек (привязка к новым переменным)
         var after_loading_init = function (callback) {
 
+            this.id_operation_default = null;
             this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
             if (typeof callback === 'function') {
                 callback();
@@ -598,9 +599,11 @@
                                                             id_wim: el.idWim,
                                                             start: row && dt_start ? result.new.input_datetime_time_start._i : null,        // можно править пока подача не закрыта
                                                             stop: row && dt_stop ? result.new.input_datetime_time_stop._i : null,           // можно править пока подача не закрыта
-                                                            id_wagon_operations: row ? el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if : null,    // (13,14) можно править пока подача не закрыта
+                                                            id_wagon_operations: row ? this.id_operation_default : null,
+                                                            //id_wagon_operations: row ? el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if : null,    // (13,14) можно править пока подача не закрыта
                                                             id_status_load: row ? Number(result.new.select_id_status_load) : null,         // можно править пока подача не закрыта
-                                                            //clear_cargo: row ? this.get_clear_cargo_of_status_load(Number(result.new.select_id_status_load)) : null
+
+                                                            //row.moveCargoCreate !== null && row.moveCargoClose === null
                                                         }
                                                     )
                                                 }.bind(this));
@@ -640,8 +643,9 @@
                                                             id_wim: el.idWim,
                                                             start: dt_start ? result.new.input_datetime_time_start._i : null,   // можно править пока подача не закрыта
                                                             stop: dt_stop ? result.new.input_datetime_time_stop._i : null,      // можно править пока подача не закрыта
-                                                            id_wagon_operations: el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if,     // (13,14) можно править пока подача не закрыта
-                                                            id_status_load: Number(result.new.select_id_status_load),           // можно править пока подача не закрыта
+                                                            id_wagon_operations: this.id_operation_default,
+                                                            //id_wagon_operations: el.currentCargoIdCargo === null ? App.wsd_setup.operations.unloading_uz : App.wsd_setup.operations.unloading_if,     // (13,14) можно править пока подача не закрыта
+                                                                 id_status_load: Number(result.new.select_id_status_load),           // можно править пока подача не закрыта
                                                             //clear_cargo: this.get_clear_cargo_of_status_load(Number(result.new.select_id_status_load))
                                                         }
                                                     )
@@ -967,6 +971,57 @@
                 currentIdOrganizationService: row.currentIdOrganizationService,
                 currentOrganizationServiceRu: row.currentOrganizationServiceRu,
                 currentOrganizationServiceEn: row.currentOrganizationServiceEn,
+                //--filing
+                filingConditionAbbrRu: row && row.filingConditionAbbrRu ? row.filingConditionAbbrRu : null,
+                filingConditionAbbrEn: row && row.filingConditionAbbrRu ? row.filingConditionAbbrEn : null,
+                filingIdLoadingStatus: row && row.filingIdLoadingStatus ? row.filingIdLoadingStatus : null,
+                filingLoadingStatusRu: row && row.filingtLoadingStatusRu ? row.filingtLoadingStatusRu : null,
+                filingLoadingStatusEn: row && row.filingLoadingStatusEn ? row.filingLoadingStatusEn : null,
+                filingIdOperation: row && row.filingIdOperation ? row.filingIdOperation : null,
+                filingOperationNameRu: row && row.filingOperationNameRu ? row.filingOperationNameRu : null,
+                filingOperationNameEn: row && row.filingOperationNameEn ? row.filingOperationNameEn : null,
+                filingOperationStart: row && row.filingOperationStart ? row.filingOperationStart : null,
+                filingOperationEnd: row && row.filingOperationEnd ? row.filingOperationEnd : null,
+                filingInternalDocNum: row && row.filingInternalDocNum ? row.filingInternalDocNum : null,
+                filingMoveCargoDocReceived: row && row.filingMoveCargoDocReceived ? row.filingMoveCargoDocReceived : null,
+                filingCargoIdGroup: row && row.filingCargoIdGroup ? row.filingCargoIdGroup : null,
+                filingCargoGroupNameRu: row && row.filingCargoGroupNameRu ? row.filingCargoGroupNameRu : null,
+                filingCargoGroupNameEn: row && row.filingCargoGroupNameEn ? row.filingCargoGroupNameEn : null,
+                filingCargoIdCargo: row && row.filingCargoIdCargo ? row.filingCargoIdCargo : null,
+                filingCargoNameRu: row && row.filingCargoNameRu ? row.filingCargoNameRu : null,
+                filingCargoNameEn: row && row.filingCargoNameEn ? row.filingCargoNameEn : null,
+                filingInternalCargoIdGroup: row && row.filingInternalCargoIdGroup ? row.filingInternalCargoIdGroup : null,
+                filingInternalCargoGroupNameRu: row && row.filingInternalCargoGroupNameRu ? row.filingInternalCargoGroupNameRu : null,
+                filingInternalCargoGroupNameEn: row && row.filingInternalCargoGroupNameEn ? row.filingInternalCargoGroupNameEn : null,
+                filingInternalCargoIdInternalCargo: row && row.filingInternalCargoIdInternalCargo ? row.filingInternalCargoIdInternalCargo : null,
+                filingInternalCargoNameRu: row && row.filingInternalCargoNameRu ? row.filingInternalCargoNameRu : null,
+                filingInternalCargoNameEn: row && row.filingInternalCargoNameEn ? row.filingInternalCargoNameEn : null,
+                filingVesg: row && row.filingVesg ? row.filingVesg : null,
+                filingIdStationFromAmkr: row && row.filingIdStationFromAmkr ? row.filingIdStationFromAmkr : null,
+                filingStationFromAmkrNameRu: row && row.filingStationFromAmkrNameRu ? row.filingStationFromAmkrNameRu : null,
+                filingStationFromAmkrNameEn: row && row.filingStationFromAmkrNameEn ? row.filingStationFromAmkrNameEn : null,
+                filingStationFromAmkrAbbrRu: row && row.filingStationFromAmkrAbbrRu ? row.filingStationFromAmkrAbbrRu : null,
+                filingStationFromAmkrAbbrEn: row && row.filingStationFromAmkrAbbrEn ? row.filingStationFromAmkrAbbrEn : null,
+                filingIdDivisionFrom: row && row.filingIdDivisionFrom ? row.filingIdDivisionFrom : null,
+                filingDivisionFromCode: row && row.filingDivisionFromCode ? row.filingDivisionFromCode : null,
+                filingDivisionFromNameRu: row && row.filingDivisionFromNameRu ? row.filingDivisionFromNameRu : null,
+                filingDivisionFromNameEn: row && row.filingDivisionFromNameEn ? row.filingDivisionFromNameEn : null,
+                filingDivisionFromAbbrRu: row && row.filingDivisionFromAbbrRu ? row.filingDivisionFromAbbrRu : null,
+                filingDivisionFromAbbrEn: row && row.filingDivisionFromAbbrEn ? row.filingDivisionFromAbbrEn : null,
+                filingCodeExternalStation: row && row.filingCodeExternalStation ? row.filingCodeExternalStation : null,
+                filingExternalStationOnNameRu: row && row.filingExternalStationOnNameRu ? row.filingExternalStationOnNameRu : null,
+                filingExternalStationOnNameEn: row && row.filingExternalStationOnNameEn ? row.filingExternalStationOnNameEn : null,
+                filingIdStationOnAmkr: row && row.filingIdStationOnAmkr ? row.filingIdStationOnAmkr : null,
+                filingStationOnAmkrNameRu: row && row.filingStationOnAmkrNameRu ? row.filingStationOnAmkrNameRu : null,
+                filingStationOnAmkrNameEn: row && row.filingStationOnAmkrNameEn ? row.filingStationOnAmkrNameEn : null,
+                filingStationOnAmkrAbbrRu: row && row.filingStationOnAmkrAbbrRu ? row.filingStationOnAmkrAbbrRu : null,
+                filingStationOnAmkrAbbrEn: row && row.filingStationOnAmkrAbbrEn ? row.filingStationOnAmkrAbbrEn : null,
+                filingIdDivisionOn: row && row.filingIdDivisionOn ? row.filingIdDivisionOn : null,
+                filingDivisionOnCode: row && row.filingDivisionOnCode ? row.filingDivisionOnCode : null,
+                filingDivisionOnNameRu: row && row.filingDivisionOnNameRu ? row.filingDivisionOnNameRu : null,
+                filingDivisionOnNameEn: row && row.filingDivisionOnNameEn ? row.filingDivisionOnNameEn : null,
+                filingDivisionOnAbbrRu: row && row.filingDivisionOnAbbrRu ? row.filingDivisionOnAbbrRu : null,
+                filingDivisionOnAbbrEn: row && row.filingDivisionOnAbbrEn ? row.filingDivisionOnAbbrEn : null,
                 //-------------------------------------------------
             };
         }
@@ -983,8 +1038,8 @@
                 }
                 // есть выбранные вагоны
                 if (rows !== null && rows.length > 0) {
-                    var id_operation = this.get_operation_of_status_load(rows[0].currentIdLoadingStatus);
-                    this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(id_operation);
+                    this.id_operation_default = this.get_operation_of_status_load(rows[0].currentIdLoadingStatus);
+                    this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.id_operation_default);
                     this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.$element.addClass('required-field');
