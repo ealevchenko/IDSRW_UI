@@ -1632,12 +1632,18 @@
             var station = this.stations.find(function (o) { return o.id === this.id_station_unload }.bind(this));
             var way = this.ways.find(function (o) { return o.id === this.id_way_unload }.bind(this));
             var park = way ? this.park_ways.find(function (o) { return o.id === way.idPark }.bind(this)) : null;
-            var division = way ? this.divisions.find(function (o) { return o.id === way.idDevision }.bind(this)) : null;
+            // Получим цех из текущего груза или прибытия
+            var division_curr = this.divisions.find(function (o) {
+                return o.id === wagons_filing_add[0].idDivisionOn
+            }.bind(this));
+            var division_arr = this.divisions.find(function (o) {
+                return o.divisionAbbrRu === wagons_filing_add[0].arrivalDivisionAmkrAbbrRu;
+            }.bind(this));
 
             if (station && way && park) {
 
                 if (typeof this.settings.fn_get_sostav_filing === 'function') {
-                    sostav_filing.push(this.settings.fn_get_sostav_filing.call(this, null, station, way, park, division, wagons_filing_add));
+                    sostav_filing.push(this.settings.fn_get_sostav_filing.call(this, null, station, way, park, division_curr ? division_curr : division_arr, wagons_filing_add));
                 }
             } else {
                 // Сообщение об ошибке
