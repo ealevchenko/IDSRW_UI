@@ -58,6 +58,7 @@
                 { name: 'locomotive', list: null, fn_get: this.getLocomotive.bind(this) },
                 { name: 'divisions', list: null, fn_get: this.getDivisions.bind(this) },
                 { name: 'wagon_loading_status', list: null, fn_get: this.getWagonLoadingStatus.bind(this) },
+                { name: 'organization_service', list: null, fn_get: this.getOrganizationService.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -68,6 +69,14 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
+    //======= [Directory_getOrganizationService] (Справочник статусов загрузки вагонов) ===============
+    ids_directory.prototype.getOrganizationService = function (callback) {
+        this.api_com.get('/DirectoryOrganizationService', callback);
+    };
+    ids_directory.prototype.getOrganizationServiceID = function (id, callback) {
+        this.api_com.get('/DirectoryOrganizationService/' + id, callback);
+    };
+
     //======= [Directory_WagonLoadingStatus] (Справочник статусов загрузки вагонов) ===============
     ids_directory.prototype.getWagonLoadingStatus = function (callback) {
         this.api_com.get('/DirectoryWagonLoadingStatus', callback);
@@ -918,6 +927,25 @@
             return result;
         } else return null; // Объект не найден
     };
+    //*======= (Справочник organization_service) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllOrganizationService = function () {
+        var obj = this.api_com.getAllObj('organization_service');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getOrganizationService_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('organization_service', 'id', id);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListOrganizationService = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('organization_service', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextOrganizationService = function () {
+        return this.getListOrganizationService('id', 'organizationService', ucFirst(App.Lang), function (i) { return i.delete === null }.bind(this));
+    };
+
 
     App.ids_directory = ids_directory;
 
