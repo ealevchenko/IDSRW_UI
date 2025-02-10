@@ -212,14 +212,14 @@
         this.park_ways = [];            // Список парков (полный)
         this.divisions = [];            // Список подразделений (полный)
         this.wagon_operations = [];     // Список операций над вагонами (полный)
-
+        this.organizations_service = [];// Список организаций (полный)
 
         this.list_period = [];          // Список периодов (value\text\desabled)
         this.list_station = [];         // Список станций всех (value\text\desabled)
         this.list_way = [];             // Список путей (value\text\desabled)
         this.list_devision = [];        // Список подразделений АМКР (value\text\desabled)
         this.list_amkr_cargo = [];      // Список грузов АМКР (value\text\desabled)
-
+        this.list_organization_service = [];    // Список организаций выполняющих обслуживание (value\text\desabled)
 
         this.wagons = [];               // Список вагонов на пути отправки (рабочий)
         this.wagons_filing = [];        // Список вагонов подач (рабочий)
@@ -393,6 +393,7 @@
                 this.park_ways = this.view_com.api_dir.getAllParkWays();
                 this.divisions = this.view_com.api_dir.getAllDivisions();
                 this.wagon_operations = this.view_com.api_dir.getAllWagonOperations();
+                this.organizations_service = this.view_com.api_dir.getAllOrganizationService();
                 // сформируем периоды { value: , text: , disabled: false }
                 this.list_period = [];
                 this.list_period.push({ value: 1, text: langView('vopcf_title_period_1', App.Langs), disabled: false });
@@ -423,7 +424,7 @@
                 }
 
 
-
+                this.list_organization_service = this.view_com.api_dir.getListValueTextOrganizationService();
                 this.list_devision = this.view_com.api_dir.getListValueTextCodeAbbrDivisions();
                 //this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatus();
                 this.list_station_amkr_on = this.view_com.api_dir.getListValueTextStation(function (i) {
@@ -851,6 +852,11 @@
                                                 return data.filingStart === null && data.filingEnd === null;
                                             }).select();
                                         }
+                                        if (this.type_filing === 3) {
+                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                return data.filingStart === null && data.filingEnd === null;
+                                            }).select();
+                                        }
                                         break;
                                     }
                                 }
@@ -917,6 +923,17 @@
                                         } else {
                                             this.fw_status = curr_status;
                                         }
+                                    }
+                                    // очистка
+                                    if (this.type_filing == 3) {
+
+                                        this.fw_status = curr_status;
+                                        //if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
+                                        //    e.preventDefault();
+                                        //    this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_status', App.Langs).format(rowData[0].num));
+                                        //} else {
+                                        //    this.fw_status = curr_status;
+                                        //}
                                     }
                                 }
                             }
@@ -1256,7 +1273,7 @@
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = ['station', 'park_ways', 'ways', 'divisions', 'wagon_operations'];
+        this.default_db_names = ['station', 'park_ways', 'ways', 'divisions', 'wagon_operations', 'organization_service'];
         // Загружаем стандартные библиотеки
         this.view_com.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка

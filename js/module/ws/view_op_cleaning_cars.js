@@ -138,9 +138,9 @@
         // Инициализация при старте (обявдение доп переменных)
         var start_init = function () {
             this.list_status_cleaning = [];
-            this.list_organization_service = [];
-            this.select_devision_from = null;       // Выбранный элемент
-
+            //this.list_organization_service = [];
+            //this.select_devision_from = null;       // Выбранный элемент
+            this.default_organization_service = 1;
             this.default_status_cleaning = App.wsd_setup.loading_status.empty_clean;
 
             //this.validation_exist_divisions = function (code, id, not_null, not_alert) {
@@ -211,7 +211,7 @@
         }
         // Продолжение инициализации после загрузки всех библиотек (привязка к новым переменным)
         var after_loading_init = function (callback) {
-            this.list_organization_service = [{ value: 0, text: 'АМКР' }, { value: 1, text: 'Макстайп' }];
+            //this.list_organization_service = [{ value: 0, text: 'АМКР' }, { value: 1, text: 'Макстайп' }];
             this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
             if (typeof callback === 'function') {
                 callback();
@@ -1012,6 +1012,12 @@
                 moveCargoChangeUser: row.moveCargoChangeUser,
                 moveCargoClose: row.moveCargoClose,
                 moveCargoCloseUser: row.moveCargoCloseUser,
+                currentIdOrganizationService: row.currentIdOrganizationService,
+                currentOrganizationServiceRu: row.currentOrganizationServiceRu,
+                currentOrganizationServiceEn: row.currentOrganizationServiceEn,
+                //filingIdOrganizationService: row.filingIdOrganizationService,
+                //filingOrganizationServiceRu: row.filingOrganizationServiceRu,
+                //filingOrganizationServiceEn: row.filingOrganizationServiceEn,
                 //-------------------------------------------------
             };
         }
@@ -1030,11 +1036,11 @@
                     //this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(id_operation);
                     this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                    this.form_filing_wagons_setup.el.input_datetime_time_start.$element.addClass('required-field');
-                    this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.addClass('not-required-field');
+                    this.form_filing_wagons_setup.el.input_datetime_time_start.$element.removeClass(s_all).addClass('required-field');
+                    this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
+                    this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                 }
-                this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                 view_set_date_stop.call(this, false);
             }
 
@@ -1048,12 +1054,14 @@
                     if (isValid) {
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
-                        this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass('required-field');
+                        this.form_filing_wagons_setup.el.select_id_organization_service.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.enable();
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning);
-                        this.form_filing_wagons_setup.el.button_operation_close.show();
+                        if (this.id_filing !== 0) {
+                            this.form_filing_wagons_setup.el.button_operation_close.show();
+                        }
                     } else {
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
@@ -1063,11 +1071,17 @@
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
                         this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all);
-                        if (this.fw_status === 1) {
-                            this.form_filing_wagons_setup.el.button_operation_apply.show();
-                        } else {
-                            this.form_filing_wagons_setup.el.button_operation_open.show();
+                        if (this.id_filing !== 0) {
+                            if (this.fw_status === 0) {
+                                this.form_filing_wagons_setup.el.button_operation_open.show();
+                            } else {
+                                this.form_filing_wagons_setup.el.button_operation_apply.show();
+                            }
+
                         }
+                        //else {
+                        //    //this.form_filing_wagons_setup.el.button_operation_open.show();
+                        //}
                     }
                 }
             }
@@ -1107,7 +1121,7 @@
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
-            this.form_filing_wagons_setup.el.select_id_organization_service.val(1);
+            this.form_filing_wagons_setup.el.select_id_organization_service.val(this.default_organization_service);
             this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.disable();
@@ -1186,7 +1200,7 @@
                         view_set_date_stop.call(this, true); // отобразить закрыть
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
                         //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
-                        this.form_filing_wagons_setup.el.select_id_organization_service.val(1); // Заменить на поле организации
+                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].currentIdOrganizationService : this.default_organization_service); // Заменить на поле организации
                         break;
                     }
                     case 2: {
@@ -1199,37 +1213,38 @@
 
                         if (this.close_filing === null) {
 
-                            this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass('required-field');
-                            this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                             this.form_filing_wagons_setup.el.button_operation_apply.show();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2', App.Langs));
-
+                            this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass('required-field');
+                            this.form_filing_wagons_setup.el.select_id_organization_service.enable();
+                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
+                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : moment());
+                            this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
+                            this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                            this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].currentIdOrganizationService : this.default_organization_service);
                         } else {
-                            this.form_filing_wagons_setup.el.select_id_organization_service.disable();
+                            //this.form_filing_wagons_setup.el.select_id_organization_service.disable();
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2_close', App.Langs));
+                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
+                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : null);
+                            this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].currentIdLoadingStatus : -1);
+                            this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].currentIdOrganizationService : -1);
                         }
-                        //this.form_filing_wagons_setup.el.select_id_station_amkr_from.disable();
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : moment());
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
-                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? 1 : 1);
                         break;
                     }
                     case 3: {
-                        var id_operation = this.get_operation_of_status_load(rows[0].currentIdLoadingStatus);
-                        this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(id_operation);
                         this.filing_wagons_alert_info.clear_message();
                         this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_3', App.Langs));
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        //this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.disable();
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].currentOperationEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].currentIdLoadingStatus : this.default_status_cleaning);
+                        this.form_filing_wagons_setup.el.select_id_status_load.disable();
+                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].currentIdLoadingStatus : -1);
+                        this.form_filing_wagons_setup.el.select_id_organization_service.disable();
+                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].currentIdOrganizationService : -1);
                         break;
                     }
                 }
