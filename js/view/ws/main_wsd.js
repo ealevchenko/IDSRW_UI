@@ -112,6 +112,13 @@
         cleaning_stop_dt_min: -180,
         cleaning_stop_dt_max: 180,
 
+        processing_start_dt_min: -1440,
+        processing_start_dt_max: 180,
+        processing_period_min: 5,
+        //processing_period_max: 1440,
+        processing_stop_dt_min: -180,
+        processing_stop_dt_max: 180,
+
         operations: operations,
         loading_status: loading_status,
         list_empty_group : [11,16, 20],
@@ -168,6 +175,9 @@
 
     var VOPCLC = App.view_op_cleaning_cars;
     var vopclc = new VOPCLC('main.container-fluid');
+
+    var VOPPSC = App.view_op_processing_cars;
+    var voppsc = new VOPPSC('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -453,7 +463,7 @@
 
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
-            var process = 18;
+            var process = 19;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -498,7 +508,6 @@
                 //console.log('[main_wsd] [api_wsd] process ' + process);
                 out_init(process);
             })
-
 
             // Кнопки основного меню (Внешние операции)
             $('#btn-external-operations').on('click', 'button', function (event) {
@@ -559,7 +568,7 @@
                         break;
                     };
                     case 'processing': {
-                        //voplc.view(current_id_way);
+                        voppsc.view(current_id_way);
                         break;
                     };
                 };
@@ -1183,6 +1192,25 @@
             });
             // Операции очистки
             vopclc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vopclc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function (upd) {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(upd, function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // Операции обработки
+            voppsc.init({
                 alert: null,
                 api_dir: null,
                 api_wsd: null,

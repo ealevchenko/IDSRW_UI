@@ -107,6 +107,7 @@
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
             'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
             'vopcf_mess_warning_wagon_current_not_empty': 'Вагон № {0} для операций очистка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_ban_processing': 'Вагон № {0} для операций обработки заблокирован (предъявлен,незакрытая подача, незаконченая операция, операция не очистка)',
             'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
             'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
@@ -1138,11 +1139,14 @@
                             action: function () {
                                 // Выбрать только не принятые вагоны
                                 this["twwf_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                    return !data.currentWagonBusy &&
+                                    return !(this.type_filing !== 4 && data.currentWagonBusy) &&
                                         !(this.type_filing === 2 && data.currentLoadBusy) &&
                                         !(this.type_filing === 1 && data.currentUnloadBusy) &&
                                         !(this.type_filing === 3 && (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) &&
-                                        !(data.idFiling !== null && data.wayFilingEnd === null) && data.id_wir_unload === null;
+                                        !(this.type_filing === 4 && data.currentProcessingBusy) &&
+                                        //!(data.idFiling !== null && data.wayFilingEnd === null) &&
+                                        !(data.idFiling !== null && data.startFiling !== null && data.endFiling === null) &&
+                                        data.id_wir_unload === null;
                                 }.bind(this)).select();
                             }.bind(this)
                         },
@@ -1169,7 +1173,7 @@
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                         this.from_way_alert.clear_message();
                         if (rowData && rowData.length > 0) {
-                            if (rowData[0].currentWagonBusy) {
+                            if (rowData[0].currentWagonBusy && this.type_filing !== 4) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_busy', App.Langs).format(rowData[0].num));
                             }
@@ -1192,6 +1196,10 @@
                             if (this.type_filing === 3 && (rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_not_empty', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
+                            }
+                            if (this.type_filing === 4 && rowData[0].currentProcessingBusy) {
+                                e.preventDefault();
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_processing', App.Langs).format(rowData[0].num));
                             }
                         }
                     }.bind(this),
@@ -1273,7 +1281,7 @@
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = ['station', 'park_ways', 'ways', 'divisions', 'wagon_operations', 'organization_service'];
+        this.default_db_names = ['station', 'park_ways', 'ways', 'divisions', 'wagon_operations', 'organization_service', 'wagon_loading_status'];
         // Загружаем стандартные библиотеки
         this.view_com.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка

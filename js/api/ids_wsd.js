@@ -159,6 +159,10 @@
     ids_wsd.prototype.postAddFilingCleaning = function (operation, callback) {
         this.api_com.post('/WSD/add/filing/operation/cleaning/', operation, callback, callback);
     };
+    //АРМ, Операция создать подачу (обработка)
+    ids_wsd.prototype.postAddFilingProcessing = function (operation, callback) {
+        this.api_com.post('/WSD/add/filing/operation/processing/', operation, callback, callback);
+    };
     //АРМ, Операция добавить вагоны в подачу (выгрузка, погрузка, ...)
     ids_wsd.prototype.postAddWagonFiling = function (operation, callback) {
         this.api_com.post('/WSD/add/wagon/filing/', operation, callback, callback);
@@ -178,6 +182,10 @@
     //АРМ, Операция править подачу начать операцию, закончить операцию, админка (очистка)
     ids_wsd.prototype.postUpdateFilingOperationCleaning = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/operation/cleaning/', operation, callback, callback);
+    };
+    //АРМ, Операция править подачу начать операцию, закончить операцию, админка (обработка)
+    ids_wsd.prototype.postUpdateFilingOperationProcessing = function (operation, callback) {
+        this.api_com.post('/WSD/update/filing/operation/processing/', operation, callback, callback);
     };
     //АРМ, Операция править подачу цех получатель
     ids_wsd.prototype.postUpdateFiling = function (operation, callback) {
