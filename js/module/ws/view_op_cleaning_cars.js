@@ -30,10 +30,6 @@
             'vopclc_title_form_operation_apply': 'Править операцию',
             'vopclc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
 
-
-            //'vopclc_title_form_operation_apply': 'Править операцию',
-            //'vopclc_title_form_operation_apply_title': 'Править операцию по вагону(ам) в подаче.',
-
             'vopclc_title_time_start': 'Время начала',
             'vopclc_text_time_start': 'Время начала операции ограниченно +(-)1день',
             'vopclc_title_placeholder_time_start': 'Время начала',
@@ -42,17 +38,11 @@
             'vopclc_text_time_stop': 'Время окончания операции ограниченно +(-)1день',
             'vopclc_title_placeholder_time_stop': 'Время окончания',
 
-            //'vopclc_title_label_devision_from': 'Цех получатель. ТЕКУЩ:',
-            //'vopclc_title_placeholder_devision_from': 'Цех пол. ТЕКУЩ',
-            //'vopclc_text_label_devision_from': 'Выберите цех пол. ТЕКУЩИЙ ...',
-
             'vopclc_title_label_status_load': 'Статус:',
             'vopclc_text_label_status_load': 'Выберите статус (груж./порож.)...',
 
             'vopclc_title_label_organization_service': 'Организация:',
             'vopclc_text_label_organization_service': 'Выберите организацию обслуживания...',
-            //'vopclc_title_label_station_amkr_on': 'Станция приб. АМКР:',
-            //'vopclc_text_label_station_amkr_on': 'Выберите станцию приб. АМКР...',
 
             'vopclc_title_button_new_filing': 'Создать черновик',
             'vopclc_title_button_add_filing': 'Добавить в подачу',
@@ -66,9 +56,6 @@
             'vopclc_mess_info_wagon_mode_2': 'Выбран(ы) вагоны, по которым закрыта операция. Вы можете править только организацию и время выполнения операции, укажите другую организацию, время выполнения и нажмите “править операцию”.',
             'vopclc_mess_info_wagon_mode_2_close': 'Выбран(ы) вагоны, по которым закрыта операция и закрыта подача. Операции не доступны!',
             'vopclc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
-
-            'vopclc_mess_valid_devision': 'Указанного цеха нет в справочнике ИДС',
-            'vopclc_mess_valid_not_devision': 'Укажите цех',
 
             'vopclc_mess_error_time_aplly': 'Укажите дату завершения операции',
             'vopclc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
@@ -89,13 +76,12 @@
             'vopclc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ОЧИСТКИ" над вагонами подачи!',
             'vopclc_mess_cancel_operation_mode_4': 'Отмена правки статуса вагона после "ОЧИСТКИ"!',
 
-            'vopclc_mess_load_operation': 'Загружаю операции...',
+            //'vopclc_mess_load_operation': 'Загружаю операции...',
 
             'vopclc_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
-            'vopclc_confirm_title': 'Внимание!',
+            //'vopclc_confirm_title': 'Внимание!',
             'vopclc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ОЧИСТКА ВАГОНОВ" на станции {0}, на пути {1}. Определено для подачи {2} ваг., определено для очистки {3} ваг., закрыта очистка по {4} вагонам, очистку выполняет {5}.',
-            //'vopclc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, выбранно подразделение: {2}? Станция и подразделение будет обновлено по всем вагонам подачи!',
             'vopclc_confirm_mess_apply_update_filing_start_operation': 'Править подачу {0}. Определено для правки {1} ваг., определено для начала очистки {2} ваг., закрыта очистка по {3} вагонам, очистку выполняет {4}.',
             'vopclc_confirm_mess_apply_update_filing_edit_operation': 'Править подачу {0}. Определено для правки {1} ваг., очистку выполняет {2}.',
             'vopclc_confirm_mess_apply_update_filing_stop_operation': 'Править подачу {0}. Определено для правки {1} ваг., закрыта очистка по {2} вагонам, очистку выполняет {3}.',
