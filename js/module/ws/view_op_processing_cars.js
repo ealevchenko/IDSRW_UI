@@ -58,7 +58,7 @@
             'voppsc_mess_info_wagon_mode_3': 'Выбран(ы) вагоны, по которым закрыта операция и они покинули путь подачи. По данным вагонам операции невозможны. (ВНИМАНИЕ! Если необходимо выбрать все вагоны которые покинули путь нажмите «все вагоны», если нужно выбрать вагоны без операции или открытой и закрытой операцией нажмите «убрать выбор» и выберите нужные вагоны).',
 
             'voppsc_mess_error_time_aplly': 'Укажите дату завершения операции',
-            'voppsc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'voppsc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты [{0}] выполнения последней операции [{1}]',
             'voppsc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
             'voppsc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voppsc_mess_error_not_wagons_filing': 'Нет вагонов для формирования подачи (в окне «ВАГОНЫ НА ПУТИ», выберите путь и вагоны, затем добавьте вагоны в подачу).',
@@ -1162,6 +1162,9 @@
             var valid = true;
             var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
             // Получим последнюю дату операции
+            var is_cleaning = get_belongs_element(rows, 'currentIdOperation', App.wsd_setup.operations.cleaning);
+            var is_processing = get_belongs_element(rows, 'currentIdOperation', App.wsd_setup.operations.processing);
+            var operation_start = get_max_element(rows, 'currentOperationStart');
             var operation_end = get_max_element(rows, 'currentOperationEnd');
             var start_date = get_max_element(rows, 'filingStart');
             // Время начала
@@ -1171,10 +1174,10 @@
                 if (result.new && result.new.input_datetime_time_start) {
                     var aplly = moment(result.new.input_datetime_time_start);
                     // проверим на последнюю операцию
-                    var old = moment(operation_end);
+                    var old = moment(is_cleaning ? operation_start : operation_end); // если выбранные операции очистка тогда обработка может быть равна начлу очистки
                     var minutes = old.diff(aplly, 'minutes');
                     if (minutes > 0) {
-                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voppsc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
+                        this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('voppsc_mess_error_start_time_aplly', App.Langs).format((is_cleaning ? operation_start : operation_end), (is_cleaning ? "Очитка" : "Не очистка")), false);
                         valid = false;
                     }
                     // проверим на тек дату
@@ -1263,14 +1266,6 @@
                 //    }
                 //}
             }
-            //// проверка статуса
-            //if (mode === 0 || mode === 2 || mode === 3) {
-            //    // должно быть выставлено время конца
-            //    if (result.new && result.new.input_datetime_time_stop && result.new.select_id_status_load < 0) {
-            //        this.form_filing_wagons_setup.set_element_validation_error('id_status_load', langView('voppsc_mess_error_not_wagons_status_close_filing', App.Langs), false);
-            //        valid = false;
-            //    }
-            //}
             // проверка исполнителя
             if (mode === 0 || mode === 1) {
                 if (result.new && result.new.select_id_organization_service < 0) {

@@ -2750,6 +2750,7 @@
         }
         /*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
         collums.push({ field: 'current_wagon_busy', title: null, class: null });
+        collums.push({ field: 'type_filing', title: null, class: null });
         collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
         collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         collums.push({ field: 'current_internal_doc_num', title: null, class: null });
@@ -2792,6 +2793,7 @@
         }
         /*        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });*/
         collums.push({ field: 'current_wagon_busy', title: null, class: null });
+        collums.push({ field: 'type_filing', title: null, class: null });
         //collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
         //collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         // Номер путевой
@@ -2833,6 +2835,7 @@
             collums.push({ field: 'num', title: null, class: null });
         }
         collums.push({ field: 'current_wagon_busy', title: null, class: null });
+        collums.push({ field: 'type_filing', title: null, class: null });
         // Номер путевой
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
@@ -2843,6 +2846,14 @@
         collums.push({ field: 'current_common_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'note_2', title: null, class: null });
+        //--- Убрать
+        collums.push({ field: 'current_operation_name', title: null, class: null });
+        collums.push({ field: 'current_operation_start', title: null, class: null });
+        collums.push({ field: 'current_operation_end', title: null, class: null });
+        collums.push({ field: 'type_filing', title: null, class: null });
+        collums.push({ field: 'status_filing', title: null, class: null });
+        collums.push({ field: 'start_filing', title: null, class: null });
+        collums.push({ field: 'end_filing', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     table_ws.prototype.init_columns_unload_cars_from4 = function () {
@@ -3940,7 +3951,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(12).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(13).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -4005,7 +4016,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(6).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -4070,7 +4081,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(6).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     if (data.id_wir_unload !== null ||

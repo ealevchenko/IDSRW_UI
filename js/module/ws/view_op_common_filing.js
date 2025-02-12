@@ -824,9 +824,16 @@
                                                 return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.moveCargoDocReceived === data_doc && data.currentIdLoadingStatus === id_loading;
                                             }).select();
                                         } else {
-                                            this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
-                                                return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdLoadingStatus === id_loading;
-                                            }).select();
+                                            if (this.type_filing === 3 || this.type_filing === 4) {
+                                                this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                    return !data.isMoving && data.filingStart !== null && data.filingEnd !== null;
+                                                }).select();
+                                            } else {
+                                                this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
+                                                    return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdLoadingStatus === id_loading;
+                                                }).select();
+                                            }
+
                                         }
                                         break;
                                     }
@@ -853,7 +860,7 @@
                                                 return data.filingStart === null && data.filingEnd === null;
                                             }).select();
                                         }
-                                        if (this.type_filing === 3) {
+                                        if (this.type_filing === 3 || this.type_filing === 4) {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
                                                 return data.filingStart === null && data.filingEnd === null;
                                             }).select();
@@ -926,7 +933,7 @@
                                         }
                                     }
                                     // очистка
-                                    if (this.type_filing == 3) {
+                                    if (this.type_filing == 3 || this.type_filing == 4) {
 
                                         this.fw_status = curr_status;
                                         //if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {

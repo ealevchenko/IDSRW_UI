@@ -139,6 +139,13 @@ var get_max_element = function (rows, name_field) {
     }
     return null;
 };
+var get_belongs_element = function (rows, name_field, id) {
+    if (rows && rows.length > 0) {
+        var oe = rows.filter(function (i) { return i[name_field] === id; }.bind(this));
+        return oe && oe.length === rows.length ? true : false;
+    }
+    return false;
+};
 
 (function (window) {
     'use strict';
