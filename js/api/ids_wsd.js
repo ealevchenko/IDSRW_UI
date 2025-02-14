@@ -59,6 +59,12 @@
     ids_wsd.prototype.getViewWagonsOutgoingSostavOfIdSostav = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/outgoing/sostav/id/' + id, callback);
     };
+    //================= ПРИБЫВШИЕ СОСТАВЫ(АРМ) =============================================
+    // Получить все вагоны принятого состава по id состава (View)
+    ids_wsd.prototype.getViewIncomingCarsOfIdSostav = function (id, callback) {
+        this.api_com.get('/WSD/view/wagon/incoming/sostav/id/' + id, callback);
+    };
+
     //================= ОСНОВНОЕ ОКНО (АРМ) =============================================
     // Вагоны на пути
     ids_wsd.prototype.getAdminInfo = function (callback) {
