@@ -33,13 +33,13 @@
             'vopcf_title_type_filing_1': 'выгрузки',
             'vopcf_title_type_filing_2': 'погрузки',
             'vopcf_title_type_filing_3': 'очистки',
-            'vopcf_title_type_filing_4': 'обработки',
+/*            'vopcf_title_type_filing_4': 'обработки',*/
 
             'vopcf_title_operation_type_filing_0': '',
             'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
-            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',
+/*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
 
             'vopcf_title_label_period': 'Выборка за:',
             'vopcf_text_label_period': 'Выборка за указанный период',
@@ -824,7 +824,8 @@
                                                 return !data.isMoving && data.filingStart !== null && data.filingEnd !== null && data.currentIdOperation === id_operation && data.moveCargoDocReceived === data_doc && data.currentIdLoadingStatus === id_loading;
                                             }).select();
                                         } else {
-                                            if (this.type_filing === 3 || this.type_filing === 4) {
+                                            // || this.type_filing === 4
+                                            if (this.type_filing === 3) {
                                                 this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
                                                     return !data.isMoving && data.filingStart !== null && data.filingEnd !== null;
                                                 }).select();
@@ -860,7 +861,8 @@
                                                 return data.filingStart === null && data.filingEnd === null;
                                             }).select();
                                         }
-                                        if (this.type_filing === 3 || this.type_filing === 4) {
+                                        // || this.type_filing === 4
+                                        if (this.type_filing === 3) {
                                             this["tfw_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
                                                 return data.filingStart === null && data.filingEnd === null;
                                             }).select();
@@ -1150,7 +1152,7 @@
                                         !(this.type_filing === 2 && data.currentLoadBusy) &&
                                         !(this.type_filing === 1 && data.currentUnloadBusy) &&
                                         !(this.type_filing === 3 && (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) &&
-                                        !(this.type_filing === 4 && data.currentProcessingBusy) &&
+/*                                        !(this.type_filing === 4 && data.currentProcessingBusy) &&*/
                                         //!(data.idFiling !== null && data.wayFilingEnd === null) &&
                                         !(data.idFiling !== null && data.startFiling !== null && data.endFiling === null) &&
                                         data.id_wir_unload === null;
@@ -1204,10 +1206,10 @@
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_not_empty', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
                             }
-                            if (this.type_filing === 4 && rowData[0].currentProcessingBusy) {
-                                e.preventDefault();
-                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_processing', App.Langs).format(rowData[0].num));
-                            }
+                            //if (this.type_filing === 4 && rowData[0].currentProcessingBusy) {
+                            //    e.preventDefault();
+                            //    this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_processing', App.Langs).format(rowData[0].num));
+                            //}
                         }
                     }.bind(this),
                     fn_select_rows: function (rows) {

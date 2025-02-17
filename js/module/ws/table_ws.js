@@ -174,7 +174,7 @@
             'tws_field_filing_way_end': 'Дата окончания операции',
             'tws_field_filing_way_start_load': 'Дата начала погрузки',
             'tws_field_filing_way_end_load': 'Дата окончания погрузки',
-            'tws_field_count_filing_wagons': 'Кол-во ваг поданых',
+            'tws_field_count_filing_wagons': 'Кол-во ваг поданных',
             'tws_field_count_unloading_wagons': 'Кол-во ваг выгруж',
             'tws_field_count_loading_wagons': 'Кол-во ваг погружено',
             'tws_field_count_cleaning_wagons': 'Кол-во ваг очищено',
@@ -2850,42 +2850,42 @@
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
-        collums.push({ field: 'type_filing', title: null, class: null });
-        collums.push({ field: 'status_filing', title: null, class: null });
-        collums.push({ field: 'start_filing', title: null, class: null });
-        collums.push({ field: 'end_filing', title: null, class: null });
+        //collums.push({ field: 'type_filing', title: null, class: null });
+        //collums.push({ field: 'status_filing', title: null, class: null });
+        //collums.push({ field: 'start_filing', title: null, class: null });
+        //collums.push({ field: 'end_filing', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
-    table_ws.prototype.init_columns_unload_cars_from4 = function () {
-        var collums = [];
-        collums.push({ field: 'position', title: null, class: null });
-        if (this.tab_com.settings.link_num) {
-            collums.push({ field: 'num_link', title: null, class: null });
-        } else {
-            collums.push({ field: 'num', title: null, class: null });
-        }
-        collums.push({ field: 'current_wagon_busy', title: null, class: null });
-        collums.push({ field: 'current_processing_busy', title: null, class: null });
-        // Номер путевой
-        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
-        collums.push({ field: 'wagon_adm', title: null, class: null });
-        collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
-        collums.push({ field: 'limiting_abbr', title: null, class: null });
-        collums.push({ field: 'current_loading_status', title: null, class: null });
-        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
-        //--- Убрать
-        collums.push({ field: 'current_operation_name', title: null, class: null });
-        collums.push({ field: 'current_operation_start', title: null, class: null });
-        collums.push({ field: 'current_operation_end', title: null, class: null });
-        collums.push({ field: 'type_filing', title: null, class: null });
-        collums.push({ field: 'status_filing', title: null, class: null });
-        collums.push({ field: 'start_filing', title: null, class: null });
-        collums.push({ field: 'end_filing', title: null, class: null });
-        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
-    };
+    //table_ws.prototype.init_columns_unload_cars_from4 = function () {
+    //    var collums = [];
+    //    collums.push({ field: 'position', title: null, class: null });
+    //    if (this.tab_com.settings.link_num) {
+    //        collums.push({ field: 'num_link', title: null, class: null });
+    //    } else {
+    //        collums.push({ field: 'num', title: null, class: null });
+    //    }
+    //    collums.push({ field: 'current_wagon_busy', title: null, class: null });
+    //    collums.push({ field: 'current_processing_busy', title: null, class: null });
+    //    // Номер путевой
+    //    collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+    //    collums.push({ field: 'wagon_adm', title: null, class: null });
+    //    collums.push({ field: 'current_condition_abbr', title: null, class: null });
+    //    collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+    //    collums.push({ field: 'limiting_abbr', title: null, class: null });
+    //    collums.push({ field: 'current_loading_status', title: null, class: null });
+    //    collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+    //    collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+    //    collums.push({ field: 'note_2', title: null, class: null });
+    //    //--- Убрать
+    //    collums.push({ field: 'current_operation_name', title: null, class: null });
+    //    collums.push({ field: 'current_operation_start', title: null, class: null });
+    //    collums.push({ field: 'current_operation_end', title: null, class: null });
+    //    //collums.push({ field: 'type_filing', title: null, class: null });
+    //    //collums.push({ field: 'status_filing', title: null, class: null });
+    //    //collums.push({ field: 'start_filing', title: null, class: null });
+    //    //collums.push({ field: 'end_filing', title: null, class: null });
+    //    return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    //};
     table_ws.prototype.init_columns_provide_cars_from = function () {
         var collums = [];
         collums.push({ field: 'position', title: null, class: null });
@@ -3137,24 +3137,24 @@
         collums.push({ field: 'change_user_filing', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
-    table_ws.prototype.init_columns_list_filing_4 = function () {
-        var collums = [];
-        collums.push({ field: 'type_filing', title: null, class: null });
-        collums.push({ field: 'status_filing', title: null, class: null });
-        collums.push({ field: 'id_wf', title: null, class: null });
-        collums.push({ field: 'filing_station_name', title: null, class: null });
-        collums.push({ field: 'filing_park_abbr', title: null, class: null });
-        collums.push({ field: 'filing_way_abbr', title: null, class: null });
-        collums.push({ field: 'count_filing_wagons', title: null, class: null });
-        collums.push({ field: 'count_cleaning_wagons', title: null, class: null });
-        collums.push({ field: 'start_filing', title: langView('tws_field_start_filing_cleaning', App.Langs), class: null });
-        collums.push({ field: 'end_filing', title: langView('tws_field_end_filing_cleaning', App.Langs), class: null });
-        collums.push({ field: 'create_filing', title: null, class: null });
-        collums.push({ field: 'create_user_filing', title: null, class: null });
-        collums.push({ field: 'change_filing', title: null, class: null });
-        collums.push({ field: 'change_user_filing', title: null, class: null });
-        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
-    };
+    //table_ws.prototype.init_columns_list_filing_4 = function () {
+    //    var collums = [];
+    //    collums.push({ field: 'type_filing', title: null, class: null });
+    //    collums.push({ field: 'status_filing', title: null, class: null });
+    //    collums.push({ field: 'id_wf', title: null, class: null });
+    //    collums.push({ field: 'filing_station_name', title: null, class: null });
+    //    collums.push({ field: 'filing_park_abbr', title: null, class: null });
+    //    collums.push({ field: 'filing_way_abbr', title: null, class: null });
+    //    collums.push({ field: 'count_filing_wagons', title: null, class: null });
+    //    collums.push({ field: 'count_cleaning_wagons', title: null, class: null });
+    //    collums.push({ field: 'start_filing', title: langView('tws_field_start_filing_cleaning', App.Langs), class: null });
+    //    collums.push({ field: 'end_filing', title: langView('tws_field_end_filing_cleaning', App.Langs), class: null });
+    //    collums.push({ field: 'create_filing', title: null, class: null });
+    //    collums.push({ field: 'create_user_filing', title: null, class: null });
+    //    collums.push({ field: 'change_filing', title: null, class: null });
+    //    collums.push({ field: 'change_user_filing', title: null, class: null });
+    //    return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    //};
     table_ws.prototype.init_columns_filing_wagons_1 = function () {
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
@@ -3287,27 +3287,27 @@
         collums.push({ field: 'current_organization_service', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
-    table_ws.prototype.init_columns_filing_wagons_4 = function () {
-        var collums = [];
-        collums.push({ field: 'numeration', title: null, class: null });
-        if (this.tab_com.settings.link_num) {
-            collums.push({ field: 'num_link', title: null, class: null });
-        } else {
-            collums.push({ field: 'num', title: null, class: null });
-        }
-        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
-        collums.push({ field: 'wagon_adm', title: null, class: null });
-        collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
-        collums.push({ field: 'limiting_abbr', title: null, class: null });
-        //collums.push({ field: 'internal_doc_num', title: null, class: null });
-        //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
-        collums.push({ field: 'current_loading_status', title: null, class: null });
-        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
-        collums.push({ field: 'current_organization_service', title: null, class: null });
-        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
-    };
+    //table_ws.prototype.init_columns_filing_wagons_4 = function () {
+    //    var collums = [];
+    //    collums.push({ field: 'numeration', title: null, class: null });
+    //    if (this.tab_com.settings.link_num) {
+    //        collums.push({ field: 'num_link', title: null, class: null });
+    //    } else {
+    //        collums.push({ field: 'num', title: null, class: null });
+    //    }
+    //    collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+    //    collums.push({ field: 'wagon_adm', title: null, class: null });
+    //    collums.push({ field: 'current_condition_abbr', title: null, class: null });
+    //    collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+    //    collums.push({ field: 'limiting_abbr', title: null, class: null });
+    //    //collums.push({ field: 'internal_doc_num', title: null, class: null });
+    //    //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
+    //    collums.push({ field: 'current_loading_status', title: null, class: null });
+    //    collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+    //    collums.push({ field: 'note_2', title: null, class: null });
+    //    collums.push({ field: 'current_organization_service', title: null, class: null });
+    //    return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    //};
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -4783,52 +4783,52 @@
                 break;
             };
             // Вагоны в подаче обработки
-            case 'filing_wagons_4': {
-                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
-                this.tab_com.pageLength = 10;
-                this.tab_com.deferRender = true;
-                this.tab_com.paging = true;
-                this.tab_com.searching = true;
-                this.tab_com.ordering = true;
-                this.tab_com.info = true;
-                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 2;
-                this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [0, 'asc'];
-                this.tab_com.type_select_rows = 2; // Выбирать одну
-                this.tab_com.table_select = {
-                    style: 'multi'
-                };
-                this.tab_com.autoWidth = true;
-                this.tab_com.createdRow = function (row, data, index) {
-                    $(row).attr('id', data.idWim); // id строки дислокации вагона в момент отправки
-                    $(row).attr('data-num', data.num); // data-num номер вагона
-                    if (data.wirHighlightColor !== null) {
-                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
-                    }
-                    // Цвет оператора
-                    if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(5).attr('style', 'background-color:' + data.operatorColor)
-                    }
-                    if (!data.isMoving) {
-                        if (data.filingStart !== null) {
-                            if (data.filingEnd !== null) {
-                                $(row).addClass('green');
-                                $(row).attr('title', langView('tws_title_filing_operation_wagon_2', App.Langs));
-                            } else {
-                                $(row).addClass('yellow');
-                                $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
-                            }
-                        }
-                    } else {
-                        $(row).addClass('blue');
-                    }
-                }.bind(this);
-                this.tab_com.table_columns = this.init_columns_filing_wagons_4();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
-                this.tab_com.dom = 'Bfrtip';
-                break;
-            };
+            //case 'filing_wagons_4': {
+            //    this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+            //    this.tab_com.pageLength = 10;
+            //    this.tab_com.deferRender = true;
+            //    this.tab_com.paging = true;
+            //    this.tab_com.searching = true;
+            //    this.tab_com.ordering = true;
+            //    this.tab_com.info = true;
+            //    this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+            //    this.tab_com.leftColumns = 2;
+            //    this.tab_com.columnDefs = null;
+            //    this.tab_com.order_column = [0, 'asc'];
+            //    this.tab_com.type_select_rows = 2; // Выбирать одну
+            //    this.tab_com.table_select = {
+            //        style: 'multi'
+            //    };
+            //    this.tab_com.autoWidth = true;
+            //    this.tab_com.createdRow = function (row, data, index) {
+            //        $(row).attr('id', data.idWim); // id строки дислокации вагона в момент отправки
+            //        $(row).attr('data-num', data.num); // data-num номер вагона
+            //        if (data.wirHighlightColor !== null) {
+            //            $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+            //        }
+            //        // Цвет оператора
+            //        if (data.operatorColor && data.operatorColor !== '') {
+            //            $('td', row).eq(5).attr('style', 'background-color:' + data.operatorColor)
+            //        }
+            //        if (!data.isMoving) {
+            //            if (data.filingStart !== null) {
+            //                if (data.filingEnd !== null) {
+            //                    $(row).addClass('green');
+            //                    $(row).attr('title', langView('tws_title_filing_operation_wagon_2', App.Langs));
+            //                } else {
+            //                    $(row).addClass('yellow');
+            //                    $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
+            //                }
+            //            }
+            //        } else {
+            //            $(row).addClass('blue');
+            //        }
+            //    }.bind(this);
+            //    this.tab_com.table_columns = this.init_columns_filing_wagons_4();
+            //    this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
+            //    this.tab_com.dom = 'Bfrtip';
+            //    break;
+            //};
 
             default: {
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
