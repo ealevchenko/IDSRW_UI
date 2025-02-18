@@ -2727,6 +2727,7 @@
         }
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
         collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
+        collums.push({ field: 'type_filing', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
