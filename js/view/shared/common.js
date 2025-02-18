@@ -131,6 +131,7 @@ var get_result_select = function (value) {
     }
     return value;
 };
+
 // Получить максимальное значение
 var get_max_element = function (rows, name_field) {
     if (rows && rows.length > 0) {
@@ -3087,6 +3088,9 @@ var get_belongs_element = function (rows, name_field, id) {
                             }
                             if (valid.typeMismatch) {
                                 el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не соответствует требуемому синтаксису (" + el[0].type + ").");
+                            }
+                            if (valid.stepMismatch) {
+                                el_val.validation.set_object_error($(el), "Значение элемента [" + (el[0].placeholder !== "" ? el[0].placeholder : el[0].id) + "] - не соответствует ограничению step (" + el[0].step + ").");
                             }
                         } else {
                             if (valid_element) el_val.validation.set_control_ok($(el), "");
