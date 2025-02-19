@@ -89,6 +89,13 @@
 
     App.wsd_setup = {
         control_way_devision: false, // TODO: загружать, контроль выхода пути на цех
+        arrival_start_dt_min: -180,
+        arrival_start_dt_max: 180,
+        outgoing_start_dt_min: -180,
+        outgoing_start_dt_max: 180,
+        return_start_dt_min: -180,
+        return_start_dt_max: 180,
+
         load_start_dt_min: -1440,
         load_start_dt_max: 180,
         load_document_dt_min: -180,

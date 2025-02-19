@@ -12,8 +12,8 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
 
     // Массив текстовых сообщений 
     $.Text_View =
@@ -72,6 +72,7 @@
 
             'vopoc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             'vopoc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vopoc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'vopoc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
             'vopoc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'vopoc_mess_error_not_wagons': 'Не выбраны вагоны для отправки (в окне «ОТПРАВИТЬ СО СТАНЦИИ», выберите станцию, путь и вагоны для отправки).',
@@ -1443,20 +1444,22 @@
         // Проверим локомотивы
         var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
         var loc2 = this.form_on_setup.el.datalist_locomotive2.text();
-        var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
-        var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;
-        var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
+        //var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
+        //var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;
+        /*        var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;*/
+        var wagons = this.wagons.filter(function (i) { return i.position_new !== null; });
+        var operation_end = get_max_element(wagons, 'currentOperationEnd');
         if (loc1 === loc2) {
-            this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('vopoc_mess_error_equal_locomotive', App.Langs));
-            this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('vopoc_mess_error_equal_locomotive', App.Langs));
+            this.form_on_setup.set_element_validation_error('locomotive1', langView('vopoc_mess_error_equal_locomotive', App.Langs), false);
+            this.form_on_setup.set_element_validation_error('locomotive2', langView('vopoc_mess_error_equal_locomotive', App.Langs), false);
             valid = false;
         } else {
             if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-                this.form_on_setup.validation_common.set_object_error($(el_loc1), langView('vopoc_mess_error_not_locomotive', App.Langs).format(loc1));
+                this.form_on_setup.set_element_validation_error('locomotive1', langView('vopoc_mess_error_not_locomotive', App.Langs).format(loc1), false);
                 valid = false;
             }
             if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
-                this.form_on_setup.validation_common.set_object_error($(el_loc2), langView('vopoc_mess_error_not_locomotive', App.Langs).format(loc2));
+                this.form_on_setup.set_element_validation_error('locomotive2', langView('vopoc_mess_error_not_locomotive', App.Langs).format(loc2), false);
                 valid = false;
             }
         }
@@ -1464,20 +1467,24 @@
         if (result.new && result.new.input_datetime_time_aplly) {
             var curr = moment();
             var aplly = moment(result.new.input_datetime_time_aplly);
-            var minutes = aplly.diff(curr, 'minutes');
-            if (minutes < min_dt_apply) {
-                this.form_on_setup.validation_common.set_object_error($(el_dta), langView('vopoc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+            var old = moment(operation_end);
+
+            var minutes = old.diff(aplly, 'minutes');
+            if (minutes > 0) {
+                this.form_on_setup.set_element_validation_error('time_aplly', langView('vopoc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
                 valid = false;
             }
-            if (minutes > max_dt_apply) {
-                this.form_on_setup.validation_common.set_object_error($(el_dta), langView('vopoc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+            var minutes = aplly.diff(curr, 'minutes');
+            if (minutes < App.wsd_setup.outgoing_start_dt_min) {
+                this.form_on_setup.set_element_validation_error('time_aplly', langView('vopoc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.outgoing_start_dt_min * -1), false);
+                valid = false;
+            }
+            if (minutes > App.wsd_setup.outgoing_start_dt_max) {
+                this.form_on_setup.set_element_validation_error('time_aplly', langView('vopoc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.outgoing_start_dt_max), false);
                 valid = false;
             }
         }
         // Проверим состав
-        var wagons = this.wagons.filter(function (i) {
-            return i.position_new !== null;
-        });
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common.out_error_message(langView('vopoc_mess_error_not_wagons', App.Langs))
             valid = false;
