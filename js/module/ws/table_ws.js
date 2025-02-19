@@ -2033,11 +2033,13 @@
             {
                 field: 'current_division_from_abbr',
                 data: function (row, type, val, meta) {
-                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row['currentDivisionFromAbbr' + ucFirst(App.Lang)];
-                    } else {
-                        return null;
-                    }
+                    if (row.currentIdLoadingStatus !== 0 && row.currentIdLoadingStatus !== 3 && row.currentIdLoadingStatus !== 8) {
+                        if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                            return row['currentDivisionFromAbbr' + ucFirst(App.Lang)];
+                        } else {
+                            return null;
+                        }
+                    } else return null;
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2064,11 +2066,13 @@
             {
                 field: 'current_division_on_abbr',
                 data: function (row, type, val, meta) {
-                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
-                    } else {
-                        return row['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)];;
-                    }
+                    if (row.currentIdLoadingStatus !== 0 && row.currentIdLoadingStatus !== 3 && row.currentIdLoadingStatus !== 8) {
+                        if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                            return row['currentDivisionOnAbbr' + ucFirst(App.Lang)];
+                        } else {
+                            return row['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)];;
+                        }
+                    } else return null;
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2094,11 +2098,13 @@
             {
                 field: 'current_external_station_on_name',
                 data: function (row, type, val, meta) {
-                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row['currentExternalStationOnName' + ucFirst(App.Lang)];
-                    } else {
-                        return row['arrivalStationFromName' + ucFirst(App.Lang)];;
-                    }
+                    if (row.currentIdLoadingStatus !== 0 && row.currentIdLoadingStatus !== 3 && row.currentIdLoadingStatus !== 8) {
+                        if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                            return row['currentExternalStationOnName' + ucFirst(App.Lang)];
+                        } else {
+                            return row['arrivalStationFromName' + ucFirst(App.Lang)];;
+                        }
+                    } else return null;
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2156,11 +2162,13 @@
             {
                 field: 'current_station_on_amkr_abbr',
                 data: function (row, type, val, meta) {
-                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
-                    } else {
-                        return row['arrivalStationAmkrName' + ucFirst(App.Lang)];                        
-                    }
+                    if (row.currentIdLoadingStatus !== 0 && row.currentIdLoadingStatus !== 3 && row.currentIdLoadingStatus !== 8) {
+                        if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                            return row['currentStationOnAmkrAbbr' + ucFirst(App.Lang)];
+                        } else {
+                            return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
+                        }
+                    } else return null;
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -4089,8 +4097,7 @@
                         data.currentWagonBusy ||
                         data.outgoingSostavStatus !== null ||
                         (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty &&
-                        data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) 
-                    {
+                            data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл
@@ -4146,8 +4153,7 @@
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     if (data.id_wir_unload !== null ||
-                        data.currentProcessingBusy) 
-                    {
+                        data.currentProcessingBusy) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл
