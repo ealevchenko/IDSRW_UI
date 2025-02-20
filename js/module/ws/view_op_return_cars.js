@@ -12,8 +12,8 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
 
     // Массив текстовых сообщений 
     $.Text_View =
@@ -69,6 +69,7 @@
             'vortc_mess_error_required_datetime': 'Укажите время',
             'vortc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             'vortc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vortc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'vortc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
             'vortc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'vortc_mess_error_not_wagons': 'Не выбраны вагоны для операции возврата или отмены (в окне «ОТПРАВЛЕННЫЕ СОСТАВЫ», выберите станцию, отправленный состав и сформируйте возврат или отмену).',
@@ -120,310 +121,6 @@
     var FD = App.form_dialog;
     // js/module/ws/table_ws.js
     var TWS = App.table_ws;
-
-    //// ассинхроная функция (нумерации вагонов)
-    //var wagons_enumerate_async = function (row, field, position, callback) {
-    //    var len = row.length;
-    //    if (len === 0) {
-    //        if (typeof callback === 'function') {
-    //            callback(position);
-    //        }
-    //        return 0;
-    //    }
-    //    function EnumerateWagonsAsync(i) {
-    //        if (i < len) {
-    //            // Поместим следующий вызов функции в цикл событий.
-    //            setTimeout(function () {
-    //                row[i][field] = position;
-    //                position++;
-    //                EnumerateWagonsAsync.call(this, i + 1);
-    //            }.bind(this), 0);
-    //        } else {
-    //            // Так как достигнут конец массива, мы вызываем коллбэк
-    //            if (typeof callback === 'function') {
-    //                callback(position);
-    //            } else return 0;
-    //        }
-    //    }
-    //    EnumerateWagonsAsync.call(this, 0);
-    //}.bind(this);
-    //// ассинхроная функция (Реверса нумерации вагонов)
-    //var wagons_reverse_enumerate_async = function (callback) {
-    //    var row = this.wagons.filter(function (i) {
-    //        return i.id_wim_arrival !== null;
-    //    })
-    //    if (row && row.length > 0) {
-    //        row = row.sort(function (a, b) {
-    //            return a.position_new - b.position_new;
-    //        });
-    //    };
-    //    var len = row.length;
-    //    if (len === 0) {
-    //        if (typeof callback === 'function') {
-    //            callback();
-    //        } else return 0;
-    //    } else {
-    //        var position = row[row.length - 1].position_new;
-    //    };
-    //    //row = row.sort(function (a, b) { return a[field] - b[field]; });
-    //    function ReverseEnumerateWagonsAsync(i) {
-    //        if (len > 0) {
-    //            // Поместим следующий вызов функции в цикл событий.
-    //            setTimeout(function () {
-    //                row[i].position_new = position;
-    //                position--;
-    //                len--;
-    //                ReverseEnumerateWagonsAsync.call(this, i + 1);
-    //            }.bind(this), 0);
-    //        } else {
-    //            // Так как достигнут конец массива, мы вызываем коллбэк
-    //            if (typeof callback === 'function') {
-    //                callback();
-    //            } else return 0;
-    //        }
-    //    }
-    //    ReverseEnumerateWagonsAsync.call(this, 0);
-    //};
-    //// ассинхроная функция (Убрать вагоны)
-    //var wagons_del_async = function (row, callback) {
-    //    var len = row.length;
-    //    if (len === 0) {
-    //        if (typeof callback === 'function') {
-    //            callback();
-    //        };
-    //        return 0;
-    //    }
-    //    function DelWagonsAsync(i) {
-    //        if (i < len) {
-    //            // Поместим следующий вызов функции в цикл событий.
-    //            setTimeout(function () {
-    //                // Найти и удалить с пути приема
-    //                var wagon = this.wagons.find(
-    //                    function (o) { return o.wimId === row[i].wimId });
-    //                if (wagon !== null) {
-    //                    // Удалить
-    //                    var index = this.wagons.indexOf(wagon);
-    //                    this.wagons.splice(index, 1);
-    //                };
-    //                // Пометим вагон в составе перегона
-    //                var wagon_sostav = this.wagons_sostav.find(
-    //                    function (o) { return o.fromIdWim === row[i].wimId });
-    //                if (wagon_sostav !== null) {
-    //                    wagon_sostav.id_way_arrival = null;
-    //                }
-    //                DelWagonsAsync.call(this, i + 1);
-    //            }.bind(this), 0);
-    //        } else {
-    //            // Так как достигнут конец массива, мы вызываем коллбэк
-    //            if (typeof callback === 'function') {
-    //                callback();
-    //            } else return 0;
-    //        }
-    //    }
-    //    DelWagonsAsync.call(this, 0);
-    //};
-    //// ассинхроная функция (Добавить вагоны на путь прибытия)
-    //var wagons_add_async = function (row, position, callback) {
-    //    var len = row.length;
-    //    this.position = position;
-
-    //    function AddWagonsAsync(i) {
-    //        if (i < len) {
-    //            // Поместим следующий вызов функции в цикл событий.
-    //            setTimeout(function () {
-    //                // Создадим строку вагон на пути
-    //                var new_car_way = {
-    //                    position_new: this.position,
-    //                    id_wim_arrival: row[i].fromIdWim,
-    //                    arrivalCargoGroupNameEn: row[i].arrivalCargoGroupNameEn,
-    //                    arrivalCargoGroupNameRu: row[i].arrivalCargoGroupNameRu,
-    //                    arrivalCargoNameEn: row[i].arrivalCargoNameEn,
-    //                    arrivalCargoNameRu: row[i].arrivalCargoNameRu,
-    //                    arrivalCommercialConditionEn: null,
-    //                    arrivalCommercialConditionRu: null,
-    //                    arrivalCompositionIndex: null,
-    //                    arrivalConditionAbbrEn: row[i].arrivalConditionAbbrEn,
-    //                    arrivalConditionAbbrRu: row[i].arrivalConditionAbbrRu,
-    //                    arrivalConditionNameEn: row[i].arrivalConditionNameEn,
-    //                    arrivalConditionNameRu: row[i].arrivalConditionNameRu,
-    //                    arrivalConditionRed: row[i].arrivalCompositionRed,
-    //                    arrivalDateAdoption: null,
-    //                    arrivalDivisionAmkrAbbrEn: row[i].arrivalDivisionAmkrAbbrEn,
-    //                    arrivalDivisionAmkrAbbrRu: row[i].arrivalDivisionAmkrAbbrRu,
-    //                    arrivalDivisionAmkrCode: row[i].arrivalDivisionAmkrCode,
-    //                    arrivalDivisionAmkrNameEn: row[i].arrivalDivisionAmkrNameEn,
-    //                    arrivalDivisionAmkrNameRu: row[i].arrivalDivisionAmkrNameRu,
-    //                    arrivalDuration: null,
-    //                    arrivalIdCommercialCondition: null,
-    //                    arrivalIdSertificationData: row[i].arrivalIdSertificationData,
-    //                    arrivalIdleTime: null,
-    //                    arrivalNomDoc: row[i].arrivalNomDoc,
-    //                    arrivalNomMainDoc: row[i].arrivalNomMainDoc,
-    //                    arrivalSertificationDataEn: row[i].arrivalSertificationDataEn,
-    //                    arrivalSertificationDataRu: row[i].arrivalSertificationDataRu,
-    //                    arrivalShipperCode: null,
-    //                    arrivalShipperNameEn: null,
-    //                    arrivalShipperNameRu: null,
-    //                    arrivalStationAmkrAbbrEn: null,
-    //                    arrivalStationAmkrAbbrRu: null,
-    //                    arrivalStationAmkrNameEn: null,
-    //                    arrivalStationAmkrNameRu: null,
-    //                    arrivalStationFromCode: null,
-    //                    arrivalStationFromNameEn: null,
-    //                    arrivalStationFromNameRu: null,
-    //                    arrivalUsageFee: null,
-    //                    currentConditionAbbrEn: row[i].fromOperationConditionAbbrEn,
-    //                    currentConditionAbbrRu: row[i].fromOperationConditionAbbrRu,
-    //                    currentConditionNameEn: row[i].fromOperationConditionNameEn,
-    //                    currentConditionNameRu: row[i].fromOperationConditionNameRu,
-    //                    currentConditionRed: null,
-    //                    currentIdLoadingStatus: row[i].fromOperationIdLoadingStatus,
-    //                    currentIdOperation: row[i].fromIdOperation,
-    //                    currentLoadingStatusEn: row[i].fromOperationLoadingStatusEn,
-    //                    currentLoadingStatusRu: row[i].fromOperationLoadingStatusRu,
-    //                    currentOperationEnd: row[i].fromOperationEnd,
-    //                    currentOperationNameEn: row[i].fromOperationNameEn,
-    //                    currentOperationNameRu: row[i].fromOperationNameRu,
-    //                    currentOperationStart: row[i].fromOperationStart,
-    //                    currentStationDuration: null,
-    //                    currentStationIdleTime: null,
-    //                    currentWagonBusy: row[i].fromBusy,
-    //                    currentWayDuration: null,
-    //                    diffVesg: null,
-    //                    docOutgoingCar: row[i].docOutgoingCar,
-    //                    idLimitingLoading: row[i].idLimitingLoading,
-    //                    idOperator: row[i].idOperator,
-    //                    idOwnerWagon: null,
-    //                    instructionalLettersDatetime: null,
-    //                    instructionalLettersNote: null,
-    //                    instructionalLettersNum: null,
-    //                    instructionalLettersStationCode: null,
-    //                    instructionalLettersStationName: null,
-    //                    limitingAbbrEn: row[i].limitingAbbrEn,
-    //                    limitingAbbrRu: row[i].limitingAbbrRu,
-    //                    limitingNameEn: row[i].limitingNameEn,
-    //                    limitingNameRu: row[i].limitingNameRu,
-    //                    num: row[i].num,
-    //                    operatorAbbrEn: row[i].operatorAbbrEn,
-    //                    operatorAbbrRu: row[i].operatorAbbrRu,
-    //                    operatorColor: null,
-    //                    operatorMonitoringIdleTime: null,
-    //                    operatorPaid: null,
-    //                    operatorRentEnd: null,
-    //                    operatorRentStart: null,
-    //                    operatorsEn: row[i].operatorsEn,
-    //                    operatorsRu: row[i].operatorsRu,
-    //                    outgoingDate: null,
-    //                    outgoingIdReturn: null,
-    //                    outgoingReturnCauseEn: null,
-    //                    outgoingReturnCauseRu: null,
-    //                    outgoingSostavStatus: null,
-    //                    ownerWagonAbbrEn: null,
-    //                    ownerWagonAbbrRu: null,
-    //                    ownerWagonEn: null,
-    //                    ownerWagonRu: null,
-    //                    position: null,
-    //                    sapIncomingSupplyCargoCode: null,
-    //                    sapIncomingSupplyCargoName: null,
-    //                    sapIncomingSupplyDate: null,
-    //                    sapIncomingSupplyNum: null,
-    //                    sapIncomingSupplyPos: null,
-    //                    sapIncomingSupplyTime: null,
-    //                    sapIncomingSupplyWarehouseCode: null,
-    //                    sapIncomingSupplyWarehouseName: null,
-    //                    wagonAdm: row[i].wagonAdm,
-    //                    wagonAdmAbbrEn: row[i].wagonAdmAbbrEn,
-    //                    wagonAdmAbbrRu: row[i].wagonAdmAbbrRu,
-    //                    wagonAdmNameEn: row[i].wagonAdmNameEn,
-    //                    wagonAdmNameRu: row[i].wagonAdmNameRu,
-    //                    wagonBanUz: null,
-    //                    wagonBruttoAmkr: null,
-    //                    wagonBruttoDoc: null,
-    //                    wagonClosedRoute: null,
-    //                    wagonDateRemUz: null,
-    //                    wagonGruzpDoc: null,
-    //                    wagonGruzpUz: null,
-    //                    wagonRod: row[i].wagonRod,
-    //                    wagonRodAbbrEn: row[i].wagonRodAbbrEn,
-    //                    wagonRodAbbrRu: row[i].wagonRodAbbrRu,
-    //                    wagonRodNameEn: row[i].wagonRodNameEn,
-    //                    wagonRodNameRu: row[i].wagonRodNameRu,
-    //                    wagonTaraArcDoc: null,
-    //                    wagonTaraDoc: null,
-    //                    wagonTaraUz: null,
-    //                    wagonTypeEn: null,
-    //                    wagonTypeRu: null,
-    //                    wagonVesgAmkr: null,
-    //                    wagonVesgDoc: null,
-    //                    wimId: row[i].fromIdWim,
-    //                    wioId: 0,
-    //                    wirId: row[i].idWir,
-    //                };
-    //                this.wagons.push(new_car_way);
-    //                this.position++;
-    //                // Пометим вагон в составе перегона
-    //                var wagon_sostav = this.wagons_sostav.find(
-    //                    function (o) { return o.fromIdWim === row[i].fromIdWim });
-    //                if (wagon_sostav !== null) {
-    //                    wagon_sostav.id_way_arrival = this.id_way;
-    //                }
-    //                AddWagonsAsync.call(this, i + 1);
-    //            }.bind(this), 0);
-    //        } else {
-    //            // Так как достигнут конец массива, мы вызываем коллбэк
-    //            if (typeof callback === 'function') {
-    //                callback(this.position);
-    //            } else return 0;
-    //        }
-    //    };
-    //    // получим вагоны на пути существующие
-    //    var row_old = this.wagons.filter(function (i) {
-    //        return i.id_wim_arrival === null;
-    //    }).sort(function (a, b) {
-    //        return a.position_new - b.position_new;
-    //    });
-    //    // получим вагоны на пути ранее добавленные
-    //    var row_new = this.wagons.filter(function (i) {
-    //        return i.id_wim_arrival !== null;
-    //    }).sort(function (a, b) {
-    //        return a.position_new - b.position_new;
-    //    });
-    //    // выполним добавление
-    //    if (!this.head) {
-    //        // добавим в хвост
-    //        wagons_enumerate_async.call(this, row_old, 'position_new', 1, function (position) {
-    //            this.position = position;
-    //            wagons_enumerate_async.call(this, row_new, 'position_new', position, function (position) {
-    //                // Если указан вагоны для добавления тогда добавить иначе пропустить
-    //                if (len === 0) {
-    //                    if (typeof callback === 'function') {
-    //                        callback(this.position);
-    //                    };
-    //                    return 0;
-    //                } else {
-    //                    this.position = position;
-    //                    AddWagonsAsync.call(this, 0);
-    //                }
-    //            }.bind(this))
-    //        }.bind(this))
-    //    } else {
-    //        // добавим в голову
-    //        wagons_enumerate_async.call(this, row_new, 'position_new', 1, function (position) {
-    //            this.position = position;
-    //            wagons_enumerate_async.call(this, row_old, 'position_new', position + len, function (position) {
-    //                // Если указан вагоны для добавления тогда добавить иначе пропустить
-    //                if (len === 0) {
-    //                    if (typeof callback === 'function') {
-    //                        callback(this.position);
-    //                    };
-    //                    return 0;
-    //                } else {
-    //                    AddWagonsAsync.call(this, 0);
-    //                }
-    //            }.bind(this));
-    //        }.bind(this));
-    //    }
-    //};
     function view_op_return_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
     }
@@ -654,6 +351,15 @@
                                 LockScreenOff();
                             }.bind(this));
                         }.bind(this),
+                        //fn_click: function (e) {
+                        //    var value = $(e.currentTarget).prop('checked');
+                        //    this.enableCancel(value, function () {
+                        //        this.view_wagons_arrival();
+                        //        this.view_wagons_of_sostav();
+                        //        LockScreenOff();
+                        //    }.bind(this));
+                        //}.bind(this),
+
                     },
                     validation: true,
                     feedback_invalid: null,
@@ -722,7 +428,7 @@
                     element_value: null,
                     element_title: null,
                     element_placeholder: langView('vortc_title_placeholder_locomotive', App.Langs),
-                    element_required: false,
+                    element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
@@ -1122,6 +828,9 @@
                 fn_element_init: null,
                 fn_init: function (init) {
                     this.from_setup.$html.append(this.form_from_setup.$form);
+                    //this.$radio_loading = $('input[name="type_return"]').change(function (event) {
+                    //    //
+                    //}.bind(this));
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[view_op_return_cars] [form_from_setup] process ' + process);
@@ -1338,7 +1047,7 @@
                                 $.each(rows, function (i, el) {
                                     el['return'] = true;
                                 });
-/*                                this.view_wagons(); // Обновить вагоны на пути приема*/
+                                /*                                this.view_wagons(); // Обновить вагоны на пути приема*/
                                 this.view_wagons_arrival(); // Обновить
                                 this.view_wagons_of_sostav();
                                 LockScreenOff();
@@ -2192,9 +1901,6 @@
         }
         this.twf_opr.view(wagons, null);
     };
-
-
-
     // Показать вагоны состава на перегоне
     //view_op_return_cars.prototype.view_wagons_of_sostav_outer_ways = function (num_sostav, callback) {
     //    // Очистить сообщения и форму
@@ -2223,43 +1929,62 @@
     // Уточняющая валидация данных
     view_op_return_cars.prototype.validation = function (result) {
         var valid = true;
+        var wagons = this.wagons_sostav.filter(function (i) { return i.return !== null; }.bind(this));
         if (!result.new.input_checkbox_type_return) {
             // Проверим локомотивы
             var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
             var loc2 = this.form_on_setup.el.datalist_locomotive2.text();
-            var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
-            var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;
-            var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
-
-            valid = this.form_on_setup.validation_common_on.check_control_input_not_null($(el_loc1), langView('vortc_mess_error_required_locomotive', App.Langs), null, true);
-            if (valid) {
-                if (loc1 === loc2) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_loc1), langView('vortc_mess_error_equal_locomotive', App.Langs));
-                    this.form_on_setup.validation_common_on.set_object_error($(el_loc2), langView('vortc_mess_error_equal_locomotive', App.Langs));
+            var operation_end = get_max_element(wagons, 'currentOperationEnd');
+            if (loc1 === loc2) {
+                this.form_on_setup.set_element_validation_error('locomotive1', langView('vortc_mess_error_equal_locomotive', App.Langs), false);
+                this.form_on_setup.set_element_validation_error('locomotive2', langView('vortc_mess_error_equal_locomotive', App.Langs), false);
+                valid = false;
+            } else {
+                if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
+                    this.form_on_setup.set_element_validation_error('locomotive1', langView('vortc_mess_error_not_locomotive', App.Langs).format(loc1), false);
                     valid = false;
-                } else {
-                    if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
-                        this.form_on_setup.validation_common_on.set_object_error($(el_loc1), langView('vortc_mess_error_not_locomotive', App.Langs).format(loc1));
-                        valid = false;
-                    }
-                    if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
-                        this.form_on_setup.validation_common_on.set_object_error($(el_loc2), langView('vortc_mess_error_not_locomotive', App.Langs).format(loc2));
-                        valid = false;
-                    }
+                }
+                if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
+                    this.form_on_setup.set_element_validation_error('locomotive2', langView('vortc_mess_error_not_locomotive', App.Langs).format(loc2), false);
+                    valid = false;
                 }
             }
-            valid = valid & this.form_on_setup.validation_common_on.check_control_datetime_input($(el_dta), langView('vortc_mess_error_required_datetime', App.Langs), null, true);
+            //valid = this.form_on_setup.validation_common_on.check_control_input_not_null($(el_loc1), langView('vortc_mess_error_required_locomotive', App.Langs), null, true);
+            //if (valid) {
+            //    if (loc1 === loc2) {
+            //        this.form_on_setup.validation_common_on.set_object_error($(el_loc1), langView('vortc_mess_error_equal_locomotive', App.Langs));
+            //        this.form_on_setup.validation_common_on.set_object_error($(el_loc2), langView('vortc_mess_error_equal_locomotive', App.Langs));
+            //        valid = false;
+            //    } else {
+            //        if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
+            //            this.form_on_setup.validation_common_on.set_object_error($(el_loc1), langView('vortc_mess_error_not_locomotive', App.Langs).format(loc1));
+            //            valid = false;
+            //        }
+            //        if ((loc2 !== null && loc2 !== '') && result.new && !result.new.datalist_locomotive2) {
+            //            this.form_on_setup.validation_common_on.set_object_error($(el_loc2), langView('vortc_mess_error_not_locomotive', App.Langs).format(loc2));
+            //            valid = false;
+            //        }
+            //    }
+            //}
+            //valid = valid & this.form_on_setup.validation_common_on.check_control_datetime_input($(el_dta), langView('vortc_mess_error_required_datetime', App.Langs), null, true);
             // Проверим время
             if (result.new && result.new.input_datetime_time_aplly) {
                 var curr = moment();
                 var aplly = moment(result.new.input_datetime_time_aplly);
-                var minutes = aplly.diff(curr, 'minutes');
-                if (minutes < min_dt_apply) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('vortc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+                var old = moment(operation_end);
+
+                var minutes = old.diff(aplly, 'minutes');
+                if (minutes > 0) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
                     valid = false;
                 }
-                if (minutes > max_dt_apply) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('vortc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+                var minutes = aplly.diff(curr, 'minutes');
+                if (minutes < App.wsd_setup.return_start_dt_min) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_min * -1), false);
+                    valid = false;
+                }
+                if (minutes > App.wsd_setup.return_start_dt_max) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_max), false);
                     valid = false;
                 }
             }
@@ -2267,9 +1992,6 @@
 
         }
         // Проверим состав
-        var wagons = this.wagons_sostav.filter(function (i) {
-            return i.return !== null;
-        }.bind(this));
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common_on.out_error_message(langView('vortc_mess_error_not_wagons', App.Langs))
             valid = false;
