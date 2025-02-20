@@ -12,12 +12,6 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3);           // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3;                  // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var min_provide_dt_apply = -1 * (60 * 12);  // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_provide_dt_apply = 60 * 12;         // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-
-
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -26,7 +20,8 @@
             'voprc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
             'voprc_card_header_on': 'ПРЕДЪЯВИТЬ СОСТАВ',
             'voprc_card_header_from': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
-            'voprc_card_header_collect_way': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
+            //'voprc_card_header_collect_way': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
+            'voprc_card_header_collect_way': 'СОБРАТЬ ПО ВСЕМ СТАНЦИЯМ',
 
             'voprc_title_label_way': 'Путь для предъявления:',
             'voprc_text_label_way': 'Выберите путь для предъявления...',
@@ -79,13 +74,15 @@
             'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
             'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
             'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
-           
+
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
 
             //'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
             //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'voprc_mess_error_not_time_aplly': 'Введите дату предъявления',
+            'voprc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
             'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voprc_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
@@ -175,7 +172,19 @@
             api_wsd: this.settings.api_wsd,
             fn_db_update: this.settings.fn_db_update,
             fn_init: null,
-            fn_close: this.settings.fn_close,
+            fn_close: function (upd) {
+                if (this.view_collect_sostav) {
+                    // сбросим
+                    this.form_collect_setup.el.textarea_vagon_searsh.val('');
+                    this.list_collect_wagons = [];
+                    this.tcw_opprc.view(this.list_collect_wagons, null);
+                    $('#collapse-collect').collapse('hide');
+                    this.collect_sostav();
+                    LockScreenOff();
+                }
+                this.settings.fn_close
+            }.bind(this)
+            ,
         }, function () { }.bind(this));
         this.id_way = -1;                   // Значения по умолчанию
         this.id_station = -1;               // Значения по умолчанию
@@ -664,7 +673,7 @@
             var row_provide_wagon = new this.view_com.fe_ui.bs_row({ id: 'op-prc-provide-wagon', class: 'pt-2' });
 
             this.on_table.$html.append(fieldset_sostav_formed.$html.append(row_provide_wagon.$html));
-/*            this.on_table.$html.append(row_provide_wagon.$html);*/
+            /*            this.on_table.$html.append(row_provide_wagon.$html);*/
             // Таблица вагонов предявляемого состава
             this.tpwos_opprc = new TWS('div#op-prc-provide-wagon');
             this.tpwos_opprc.init({
@@ -859,13 +868,14 @@
 
                     }
                     if (name === 'collect_sostav') {
-                        if (this.view_collect_sostav) {
-                            this.from_table.$html.removeClass('col-7').addClass('col');
-                        } else {
-                            this.from_table.$html.removeClass('col').addClass('col-7');
-                            $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
-                        }
-                        this.view_collect_sostav = !this.view_collect_sostav;
+                        this.collect_sostav();
+                        //if (this.view_collect_sostav) {
+                        //    this.from_table.$html.removeClass('col-7').addClass('col');
+                        //} else {
+                        //    this.from_table.$html.removeClass('col').addClass('col-7');
+                        //    $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+                        //}
+                        //this.view_collect_sostav = !this.view_collect_sostav;
                     }
                 }.bind(this),
                 fn_enable_button: function (tb) {
@@ -1209,6 +1219,15 @@
 
         }.bind(this)); //------- {end this.view_com.load_db}
     };
+    view_op_provide_cars.prototype.collect_sostav = function () {
+        if (this.view_collect_sostav) {
+            this.from_table.$html.removeClass('col-7').addClass('col');
+        } else {
+            this.from_table.$html.removeClass('col').addClass('col-7');
+            $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+        }
+        this.view_collect_sostav = !this.view_collect_sostav;
+    }
     // Показать данные 
     view_op_provide_cars.prototype.view = function (id_way) {
         // Если указана станция выполним коррекцию по станции
@@ -1539,37 +1558,77 @@
     // Уточняющая валидация данных
     view_op_provide_cars.prototype.validation = function (result) {
         var valid = true;
-        var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
+        //var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
+        var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });
+        var operation_end = get_max_element(wagons, 'currentOperationEnd');
+        //
+        //if (result.new && result.new.input_datetime_time_aplly) {
+        //    var curr = moment();
+        //    var aplly = moment(result.new.input_datetime_time_aplly);
+        //    var old = moment(operation_end);
+
+        //    var minutes = old.diff(aplly, 'minutes');
+        //    if (minutes > 0) {
+        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
+        //        valid = false;
+        //    }
+        //    var minutes = aplly.diff(curr, 'minutes');
+        //    if (minutes < App.wsd_setup.return_start_dt_min) {
+        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_min * -1), false);
+        //        valid = false;
+        //    }
+        //    if (minutes > App.wsd_setup.return_start_dt_max) {
+        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_max), false);
+        //        valid = false;
+        //    }
+        //}
         // Проверим время
         if (result.new && result.new.input_datetime_time_aplly) {
             //this.id_sostav_provide
-
             if (this.id_sostav_provide !== null) {
                 var curr = moment(this.datetime_time_aplly);
                 var aplly = moment(result.new.input_datetime_time_aplly);
                 var minutes = aplly.diff(curr, 'minutes');
                 if (minutes !== 0) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_sostav_provide_time_aplly', App.Langs).format(moment(this.datetime_time_aplly).format(format_datetime)));
+                    //this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_sostav_provide_time_aplly', App.Langs).format(moment(this.datetime_time_aplly).format(format_datetime)));
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_sostav_provide_time_aplly', App.Langs).format(moment(this.datetime_time_aplly).format(format_datetime)), false);
                     valid = false;
                 }
             } else {
                 var curr = moment();
                 var aplly = moment(result.new.input_datetime_time_aplly);
+                var old = moment(operation_end);
+
+                var minutes = old.diff(aplly, 'minutes');
+                if (minutes > 0) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
+                    valid = false;
+                }
                 var minutes = aplly.diff(curr, 'minutes');
-                if (minutes < min_dt_apply) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+                if (minutes < App.wsd_setup.provide_start_dt_min) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.provide_start_dt_min * -1), false);
                     valid = false;
                 }
-                if (minutes > max_dt_apply) {
-                    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+                if (minutes > App.wsd_setup.provide_start_dt_max) {
+                    this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.provide_start_dt_max), false);
                     valid = false;
                 }
+
+                //var curr = moment();
+                //var aplly = moment(result.new.input_datetime_time_aplly);
+                //var minutes = aplly.diff(curr, 'minutes');
+                //if (minutes < min_dt_apply) {
+                //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+                //    valid = false;
+                //}
+                //if (minutes > max_dt_apply) {
+                //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+                //    valid = false;
+                //}
             }
         }
         // Проверим состав
-        var wagons = this.wagons.filter(function (i) {
-            return i.id_wir_from !== null;
-        });
+
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common_on.out_error_message(langView('voprc_mess_error_not_wagons', App.Langs))
             valid = false;
@@ -1645,23 +1704,38 @@
     view_op_provide_cars.prototype.edit_dt_provide = function () {
         this.form_on_setup.clear_all();
         var valid = true;
-        var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
+        //var old = moment(operation_end);
+        //var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
         // Проверим время
         var curr = moment(this.datetime_time_aplly);
         var aplly = moment(this.form_on_setup.el.input_datetime_time_aplly.val());
+
+        if (!aplly._isValid) {
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_not_time_aplly', App.Langs), false);
+            valid = false;
+        }
         var minutes = aplly.diff(curr, 'minutes');
         if (minutes === 0) {
-            this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_equals_provide_time_aplly', App.Langs));
+            //this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_equals_provide_time_aplly', App.Langs));
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_equals_provide_time_aplly', App.Langs), false);
             valid = false;
         }
-        if (minutes < min_provide_dt_apply) {
-            this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_min_provide_time_aplly', App.Langs).format(min_provide_dt_apply * -1));
+        if (minutes < App.wsd_setup.provide_dt_apply_min) {
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_min * -1), false);
             valid = false;
         }
-        if (minutes > max_provide_dt_apply) {
-            this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_max_provide_time_aplly', App.Langs).format(max_provide_dt_apply));
+        if (minutes > App.wsd_setup.provide_dt_apply_max) {
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_max), false);
             valid = false;
         }
+        //if (minutes < min_provide_dt_apply) {
+        //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_min_provide_time_aplly', App.Langs).format(min_provide_dt_apply * -1));
+        //    valid = false;
+        //}
+        //if (minutes > max_provide_dt_apply) {
+        //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_max_provide_time_aplly', App.Langs).format(max_provide_dt_apply));
+        //    valid = false;
+        //}
         if (valid) {
             this.view_com.mcf.open(
                 langView('voprc_title_form_apply', App.Langs),
