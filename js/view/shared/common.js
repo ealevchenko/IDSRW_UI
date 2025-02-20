@@ -2459,20 +2459,25 @@ var get_belongs_element = function (rows, name_field, id) {
         this.init();
     };
     // Инициализация текстового поля "INPUT"
-    form_element.prototype.init_checkbox = function (element, options) {
+    form_element.prototype.init_checkbox = function (element, options, content) {
         this.settings = $.extend({
             default_value: null,
             fn_change: null,
             fn_click: null,
         }, options);
         this.type = element.attr('type');
-        this.$element = element;
+        //this.$element = element;
+        this.id = element[0].id;
+        //var el = content.find('#' + this.id);
+        this.$element = content.find('#' + this.id);
         this.init = function () {
             this.update(this.settings.default_value);
-            if (typeof this.settings.fn_change === 'function') {
-                this.$element.on("change", this.settings.fn_change.bind(this));
-            }
+            this.$element.on('change', function (event) {
+                this.settings.fn_change(event);//.bind(this);
+            }.bind(this));
         };
+
+
         this.val = function (value) {
             if (value !== undefined) {
                 this.$element.prop('checked', Boolean(value));
@@ -2696,11 +2701,12 @@ var get_belongs_element = function (rows, name_field, id) {
                     var obj_html = new this.bs_form_check(obj.options);
                     if (obj_html && obj_html.$element) {
                         add_element(obj_html.$html, content, obj);
+                        var element = new this.fe.init_checkbox(obj_html.$element, obj.options.element_options, content);
                         obj_form.views.push({
                             name: obj.options.id,
                             validation_group: obj.options.validation_group,
                             type: 'input_checkbox',
-                            element: new this.fe.init_checkbox(obj_html.$element, obj.options.element_options),
+                            element: element,
                             $element: obj_html.$element,
                             destroy: false
                         });
