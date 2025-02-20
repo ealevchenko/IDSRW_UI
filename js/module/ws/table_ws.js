@@ -2130,13 +2130,14 @@
             {
                 field: 'current_station_from_amkr_abbr',
                 data: function (row, type, val, meta) {
-                    if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
-                    } else {
-                        return null;
-                        //return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
-                    }
-
+                    if (row.currentIdLoadingStatus !== 0 && row.currentIdLoadingStatus !== 3 && row.currentIdLoadingStatus !== 8) {
+                        if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
+                            return row['currentStationFromAmkrAbbr' + ucFirst(App.Lang)];
+                        } else {
+                            return null;
+                            //return row['arrivalStationAmkrName' + ucFirst(App.Lang)];
+                        }
+                    } else return null;
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -3291,7 +3292,7 @@
         //collums.push({ field: 'internal_doc_num', title: null, class: null });
         //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
-        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
         collums.push({ field: 'note_2', title: null, class: null });
         collums.push({ field: 'current_organization_service', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
