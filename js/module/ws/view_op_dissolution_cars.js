@@ -12,10 +12,10 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var min_period = 5; // TODO: Минимальный период операции 
-    var max_period = 120; // TODO: Максимальный период операции 
+    //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
+    //var min_period = 5; // TODO: Минимальный период операции 
+    //var max_period = 120; // TODO: Максимальный период операции 
 
 
     // Массив текстовых сообщений 
@@ -44,17 +44,18 @@
             'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
             'vopss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
-            
+
 
             'vopss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
-            'vopss_mess_error_required_locomotive': 'Выберите Локомотив',
-            'vopss_mess_error_required_datetime_start': 'Укажите время начала',
-            'vopss_mess_error_required_datetime_stop': 'Укажите время конца',
-
+            //'vopss_mess_error_required_locomotive': 'Выберите Локомотив',
+            //'vopss_mess_error_required_datetime_start': 'Укажите время начала',
+            //'vopss_mess_error_required_datetime_stop': 'Укажите время конца',
+            'vopss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
             'vopss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
             'vopss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
-            'vopss_mess_error_period_time': 'Операция должна длиться в диапазоне от {0} до {1} мин.',
+            'vopss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
 
             'vopss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
             'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
@@ -368,7 +369,7 @@
                     element_value: null,
                     element_title: null,
                     element_placeholder: langView('vopss_title_placeholder_time_start', App.Langs),
-                    element_required: false,
+                    element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
@@ -407,7 +408,7 @@
                     element_value: null,
                     element_title: null,
                     element_placeholder: langView('vopss_title_placeholder_time_stop', App.Langs),
-                    element_required: false,
+                    element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
@@ -1214,64 +1215,66 @@
     // Уточняющая валидация данных
     view_op_dissolution_cars.prototype.validation = function (result) {
         var valid = true;
-        if (!result.new.input_checkbox_type_return) {
-            // Проверим локомотивы
-            var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
-            /*            var loc2 = this.form_on_setup.el.datalist_locomotive2.text();*/
-            var el_loc1 = this.form_on_setup.el.datalist_locomotive1.$element;
-            /*            var el_loc2 = this.form_on_setup.el.datalist_locomotive2.$element;*/
-            var el_dtstart = this.form_on_setup.el.input_datetime_time_start.$element;
-            var el_dtstop = this.form_on_setup.el.input_datetime_time_stop.$element;
+        var wagons = this.wagons.filter(function (i) { return i.id_way_dissolution !== null; }.bind(this));
+        var operation_end = get_max_element(wagons, 'currentOperationEnd');
+        // Проверим локомотивы
+        var loc1 = this.form_on_setup.el.datalist_locomotive1.text();
+        if (result.new && !result.new.datalist_locomotive1 && (loc1 !== null || loc1 !== '')) {
+            this.form_on_setup.set_element_validation_error('locomotive1', langView('vodlc_mess_error_not_locomotive', App.Langs).format(loc1), false);
+            valid = false;
+        }
+        // Проверим время начала
+        if (result.new && result.new.input_datetime_time_start) {
+            var aplly = moment(result.new.input_datetime_time_start);
+            // проверим на последнюю операцию
+            var old = moment(operation_end);
+            var minutes = old.diff(aplly, 'minutes');
+            if (minutes > 0) {
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
+                valid = false;
+            }
+            // проверим на тек дату
+            var curr = moment();
+            var minutes = aplly.diff(curr, 'minutes');
+            if (minutes < App.wsd_setup.dissolution_start_dt_min) {
 
-            valid = this.form_on_setup.validation_common.check_control_input_not_null($(el_loc1), langView('vopss_mess_error_required_locomotive', App.Langs), null, true);
-            valid = valid & this.form_on_setup.validation_common.check_control_datetime_input($(el_dtstart), langView('vopss_mess_error_required_datetime_start', App.Langs), null, true);
-            valid = valid & this.form_on_setup.validation_common.check_control_datetime_input($(el_dtstop), langView('vopss_mess_error_required_datetime_stop', App.Langs), null, true);
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_min * -1), false);
+                valid = false;
+            }
+            if (minutes > App.wsd_setup.dissolution_start_dt_max) {
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_max), false);
+                valid = false;
+            }
+        }
+        // Проверим время начала и конца времени
+        if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
+            var dtstart = moment(result.new.input_datetime_time_start);
+            var dtstop = moment(result.new.input_datetime_time_stop);
+            var minutes = dtstop.diff(dtstart, 'minutes');
+            if (minutes <= 0) {
+                this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_stop_time_aplly', App.Langs), false);
+                valid = false;
+            } else {
+                if (minutes < App.wsd_setup.dissolution_period_min) {
+                    this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_period_time', App.Langs).format(App.wsd_setup.dissolution_period_min), false);
+                    valid = false;
+                } else {
+                    // проверим на тек дату
+                    var curr = moment();
+                    var minutes = dtstop.diff(curr, 'minutes');
+                    if (minutes < App.wsd_setup.dissolution_stop_dt_min) {
 
-            // Проверим время начала
-            if (result.new && result.new.input_datetime_time_start) {
-                var curr = moment();
-                var dtstart = moment(result.new.input_datetime_time_start);
-                var minutes = dtstart.diff(curr, 'minutes');
-                if (minutes < min_dt_apply) {
-                    this.form_on_setup.validation_common.set_object_error($(el_dtstart), langView('vopss_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                    valid = false;
-                }
-                if (minutes > max_dt_apply) {
-                    this.form_on_setup.validation_common.set_object_error($(el_dtstart), langView('vopss_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                    valid = false;
+                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_min * -1), false);
+                        valid = false;
+                    }
+                    if (minutes > App.wsd_setup.dissolution_stop_dt_max) {
+                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_max), false);
+                        valid = false;
+                    }
                 }
             }
-            // Проверим время конца
-            if (result.new && result.new.input_datetime_time_stop) {
-                var curr = moment();
-                var dtstop = moment(result.new.input_datetime_time_stop);
-                var minutes = dtstop.diff(curr, 'minutes');
-                if (minutes < min_dt_apply) {
-                    this.form_on_setup.validation_common.set_object_error($(el_dtstop), langView('vopss_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
-                    valid = false;
-                }
-                if (minutes > max_dt_apply) {
-                    this.form_on_setup.validation_common.set_object_error($(el_dtstop), langView('vopss_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
-                    valid = false;
-                }
-            }
-            // 
-            if (result.new && result.new.input_datetime_time_start && result.new.input_datetime_time_stop) {
-                var dtstart = moment(result.new.input_datetime_time_start);
-                var dtstop = moment(result.new.input_datetime_time_stop);
-                var minutes = dtstop.diff(dtstart, 'minutes');
-                if (minutes < min_period || minutes > max_period) {
-                    this.form_on_setup.validation_common.set_object_error($(el_dtstop), langView('vopss_mess_error_period_time', App.Langs).format(min_period, max_period));
-                    valid = false;
-                }
-            }
-        } else {
-
         }
         // Проверим вагоны на путях роспуска
-        var wagons = this.wagons.filter(function (i) {
-            return i.id_way_dissolution !== null;
-        }.bind(this));
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common.out_error_message(langView('vopss_mess_error_not_wagons', App.Langs))
             valid = false;

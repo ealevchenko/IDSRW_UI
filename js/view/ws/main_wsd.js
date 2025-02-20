@@ -95,6 +95,15 @@
         outgoing_start_dt_max: 180,
         return_start_dt_min: -180,
         return_start_dt_max: 180,
+        dislocation_start_dt_min: -180,
+        dislocation_start_dt_max: 180,
+
+        dissolution_start_dt_min: -180,
+        dissolution_start_dt_max: 180,
+        dissolution_period_min: 5,
+        //dissolution_period_max: 1440,
+        dissolution_stop_dt_min: -180,
+        dissolution_stop_dt_max: 180,
 
         load_start_dt_min: -1440,
         load_start_dt_max: 180,
