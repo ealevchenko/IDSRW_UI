@@ -44,7 +44,7 @@
             'vortc_title_placeholder_time_aplly': 'Время выполнения',
 
             'vortc_title_form_apply': 'Выполнить',
-            'vortc_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВОВ НА СТАНЦИЮ АМКР"',
+            'vortc_title_form_apply_title': 'Выполнить операцию "ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ"',
 
             'vortc_title_button_export': 'Экспорт',
             'vortc_title_button_buffer': 'Буфер',

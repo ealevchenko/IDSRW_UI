@@ -83,12 +83,14 @@
             //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             'voprc_mess_error_not_time_aplly': 'Введите дату предъявления',
             'voprc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
-            'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
             'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voprc_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
             'voprc_mess_error_sostav_provide_time_aplly': 'Состав уже предъявлен с датой {0}, при добавлении вагонов нельзя изменить дату предъявления!',
-            'voprc_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
-            'voprc_mess_error_max_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мак. отклонение (мин) = {0}',
+            //'voprc_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
+            //'voprc_mess_error_max_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мак. отклонение (мин) = {0}',
+            'voprc_mess_error_min_provide_time_aplly': 'Время выполнения- меньше текущей даты {0} мин',
+            'voprc_mess_error_max_provide_time_aplly': 'Время выполнения- больше текущей даты {0} мин',
             'voprc_mess_error_not_wagons': 'Не выбраны вагоны для предъявления (в окне «ПРЕДЪЯВИТЬ СОСТАВ» , выберите станцию и путь, в окне «ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ» выберите вагоны).',
             'voprc_mess_error_operation_run': 'При выполнении операции «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ» произошла ошибка, код ошибки: {0}',
             'voprc_mess_error_edit_dt_apply_provide': 'При выполнении операции правки даты и времени предъявления состава на УЗ, произошла ошибка, код ошибки: {0}',
@@ -511,7 +513,7 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: moment().subtract(1, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
+                    element_min: moment().subtract(3, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
                     element_max: moment().add(1, 'days').format("YYYY-MM-DDThh:mm"),
                     element_step: null,
                     element_options: {
@@ -1721,11 +1723,11 @@
             valid = false;
         }
         if (minutes < App.wsd_setup.provide_dt_apply_min) {
-            this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_min * -1), false);
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_min_provide_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_min * -1), false);
             valid = false;
         }
         if (minutes > App.wsd_setup.provide_dt_apply_max) {
-            this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_max), false);
+            this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_max_provide_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_max), false);
             valid = false;
         }
         //if (minutes < min_provide_dt_apply) {

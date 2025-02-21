@@ -107,8 +107,8 @@
 
         provide_start_dt_min: -180,
         provide_start_dt_max: 180,
-        provide_dt_apply_min: -720,
-        provide_dt_apply_max: 720,
+        provide_dt_apply_min: -2880,
+        provide_dt_apply_max: 180,
 
         load_start_dt_min: -1440,
         load_start_dt_max: 180,
