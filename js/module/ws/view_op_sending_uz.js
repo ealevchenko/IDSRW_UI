@@ -12,12 +12,6 @@
     // Определим язык
     App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
 
-    var min_dt_apply = -1 * (60 * 3);           // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_dt_apply = 60 * 3;                  // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var min_provide_dt_apply = -1 * (60 * 12);  // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-    var max_provide_dt_apply = 60 * 12;         // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
-
-
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -85,8 +79,8 @@
             //'vopsuz_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             //'vopsuz_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
 
-            //'vopsuz_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
-            //'vopsuz_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopsuz_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
+            'vopsuz_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             //'vopsuz_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
             //'vopsuz_mess_error_sostav_provide_time_aplly': 'Состав уже предъявлен с датой {0}, при добавлении вагонов нельзя изменить дату предъявления!',
             //'vopsuz_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
@@ -938,7 +932,7 @@
     // Уточняющая валидация данных
     view_op_sending_uz.prototype.validation = function (result) {
         var valid = true;
-        var el_dta = this.form_send_setup.el.input_datetime_time_aplly.$element;
+        //var el_dta = this.form_send_setup.el.input_datetime_time_aplly.$element;
         var el_ci = this.form_send_setup.el.input_text_composition_index;
         valid = valid & this.form_send_setup.validation_common_send.check_control_regexp_not_null(el_ci, /[0-9]{4}[-]{1}[0-9]{3}[-]{1}[0-9]{4}/, "Индекс поезда должен быть в формате (XXXX-XXX-XXXX)", null, true);
         if (!this.id_sostav) {
@@ -955,12 +949,12 @@
             var curr = moment();
             var aplly = moment(result.new.input_datetime_time_aplly);
             var minutes = aplly.diff(curr, 'minutes');
-            if (minutes < min_dt_apply) {
-                this.form_send_setup.validation_common_send.set_object_error($(el_dta), langView('vopsuz_mess_error_min_time_aplly', App.Langs).format(min_dt_apply * -1));
+            if (minutes < App.wsd_setup.sending_uz_start_dt_min) {
+                this.form_send_setup.set_element_validation_error('time_aplly', langView('vopsuz_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.sending_uz_start_dt_min * -1), false);
                 valid = false;
             }
-            if (minutes > max_dt_apply) {
-                this.form_send_setup.validation_common_send.set_object_error($(el_dta), langView('vopsuz_mess_error_max_time_aplly', App.Langs).format(max_dt_apply));
+            if (minutes > App.wsd_setup.sending_uz_start_dt_max) {
+                this.form_send_setup.set_element_validation_error('time_aplly', langView('vopsuz_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.sending_uz_start_dt_max), false);
                 valid = false;
             }
         }

@@ -110,6 +110,9 @@
         provide_dt_apply_min: -2880,
         provide_dt_apply_max: 180,
 
+        sending_uz_start_dt_min: -180,
+        sending_uz_start_dt_max: 180,
+
         load_start_dt_min: -1440,
         load_start_dt_max: 180,
         load_document_dt_min: -180,
