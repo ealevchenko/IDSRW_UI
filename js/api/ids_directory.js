@@ -267,6 +267,10 @@
     ids_directory.prototype.getStation = function (callback) {
         this.api_com.get('/DirectoryStation', callback);
     };
+    // Получить станцию по id 
+    ids_directory.prototype.getStationOfId = function (id, callback) {
+        this.api_com.get('/DirectoryStation/' + id, callback);
+    };
     // Получить состояние всех станций 
     ids_directory.prototype.getViewStatusAllStation = function (callback) {
         this.api_com.get('/DirectoryStation/status', callback);
