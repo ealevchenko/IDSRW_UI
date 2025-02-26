@@ -4,20 +4,23 @@
 
 @page page_a4_landscape {
     size: A4 landscape;
-    margin: 1cm auto;
+    margin: 0;
     padding: 0;
 }
 
 @page page_a4 {
     size: A4;
-    margin: 1cm auto;
-    padding: 0;
+    margin: 0; /* избежание лишних отступов */
 }
 
 body {
     background-color: #ffffff;
-    min-height: 0;
-    padding: 0;
+    /*    min-height: 0;*/
+    padding: 5mm;
+    width: 210mm;
+    height: 297mm;
+    margin: auto; /* обеспечение симметрии */
+    page-break-after: always; /* для начала следующего элемента с новой страницы */
 }
 
     body.a4 {
