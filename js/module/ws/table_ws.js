@@ -280,6 +280,8 @@
             'tws_title_button_reverse': 'Реверс',
             'tws_title_button_remove_wagons': 'Сбросить',
             'tws_title_button_move_wagons': 'Перенести на путь',
+            'tws_title_button_statement1': 'Ведомость1',
+            'tws_title_button_statement2': 'Ведомость2',
         },
         'en':  //default language: English
         {
@@ -2396,6 +2398,16 @@
                 text: langView('tws_title_button_move_wagons', App.Langs),
                 className: 'btn btn-success'
             },
+            {
+                button: 'statement1',
+                text: langView('tws_title_button_statement1', App.Langs),
+                className: 'btn btn-secondary'
+            },
+            {
+                button: 'statement2',
+                text: langView('tws_title_button_statement2', App.Langs),
+                className: 'btn btn-secondary'
+            },
         ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
     }
@@ -3378,7 +3390,7 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_cars_way();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(); //   this.init_button_req1892();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };

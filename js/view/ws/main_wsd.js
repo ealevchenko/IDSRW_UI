@@ -84,7 +84,7 @@
         loading_uz: 15,
         loading_if: 16,
         cleaning: 17,
-/*        processing: 18,*/
+        /*        processing: 18,*/
     }
 
     App.wsd_setup = {
@@ -145,7 +145,7 @@
 
         operations: operations,
         loading_status: loading_status,
-        list_empty_group : [11,16, 20],
+        list_empty_group: [11, 16, 20],
     }
 
     var API_DIRECTORY = App.ids_directory;
@@ -902,6 +902,22 @@
                 type_report: 'cars_way',     //
                 link_num: true,
                 ids_wsd: null,
+                setup_buttons: [
+                    {
+                        name: 'statement1',
+                        action: function (e, dt, node, config) {
+                            tws.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'statement2',
+                        action: function (e, dt, node, config) {
+                            tws.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
+                    }
+                ],
                 fn_init: function () {
                     // На проверку окончания инициализации
                     process--;
@@ -911,12 +927,43 @@
                 fn_action_view_detali: function (rows) {
 
                 },
+                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    //this.on_alert.clear_message();
+                    //if (rowData && rowData.length > 0 && rowData[0].id_wim_arrival === null) {
+                    //    e.preventDefault();
+                    //    this.on_alert.out_warning_message(langView('vortc_mess_warning_wagon_existing_way', App.Langs).format(rowData[0].num));
+                    //}
+                }.bind(this),
                 fn_select_rows: function (rows) {
 
                 }.bind(this),
                 fn_select_link: function (link) {
 
                 }.bind(this),
+                fn_button_action: function (name, e, dt, node, config) {
+                    if (name === 'statement1') {
+                        if (current_id_way !== null) {
+                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&id=" + current_id_way, "Print");
+                        }
+                    }
+                    if (name === 'statement2') {
+                        if (current_id_way !== null) {
+                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&id=" + current_id_way, "Print");
+                        }
+                    }
+                }.bind(this),
+                fn_enable_button: function (tb) {
+
+                }.bind(this),
+                //fn_action_view_detali: function (rows) {
+
+                //},
+                //fn_select_rows: function (rows) {
+
+                //}.bind(this),
+                //fn_select_link: function (link) {
+
+                //}.bind(this),
             });
             //-----------------------------------------------------
             // Инициализация модуля "Таблица остаток"
