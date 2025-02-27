@@ -943,12 +943,12 @@
                 fn_button_action: function (name, e, dt, node, config) {
                     if (name === 'statement1') {
                         if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&id=" + current_id_way, "Print");
+                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&format=A4L&id=" + current_id_way, "Print");
                         }
                     }
                     if (name === 'statement2') {
                         if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&id=" + current_id_way, "Print");
+                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
                         }
                     }
                 }.bind(this),

@@ -279,7 +279,7 @@
     //    $body.append($table);
     //};
     // Натурная ведомость
-    print_ws.prototype.view_ws_statement = function (type, id) {
+    print_ws.prototype.view_ws_statement = function (type, format, id) {
         LockScreen(langView('prn_ws_mess_load_info', App.Langs));
         var wagons = [];
         var way_name = '';
@@ -339,7 +339,7 @@
                 if (!re) { rods.push({ id: wagons[iw].wagonRod, text: wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)], count: 1 }) } else { re.count += 1; }
                 var oe = operations.find(function (o) { return o.id == wagons[iw].currentIdOperation && o.cargo == curr_cargo }.bind(this));
                 if (!oe) { operations.push({ id: wagons[iw].currentIdOperation, text: wagons[iw]['operatorAbbr' + ucFirst(App.Lang)], cargo: curr_cargo, count: 1 }) } else { oe.count += 1; }
-                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)]}.bind(this));
+                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] }.bind(this));
                 if (!ce) { conditions.push({ text: wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)], count: 1 }) } else { ce.count += 1; }
                 if (wagons[iw].instructionalLettersNum) { liters_count += 1; }
                 var $tr = $('<tr></tr>');
@@ -419,7 +419,7 @@
                 if (!re) { rods.push({ id: wagons[iw].wagonRod, text: wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)], count: 1 }) } else { re.count += 1; }
                 var cge = cargos.find(function (o) { return o.text == wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)] }.bind(this));
                 if (!cge) { cargos.push({ text: wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)], count: 1 }) } else { cge.count += 1; }
-                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)]}.bind(this));
+                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] }.bind(this));
                 if (!ce) { conditions.push({ text: wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)], count: 1 }) } else { ce.count += 1; }
                 if (wagons[iw].instructionalLettersNum) { liters_count += 1; }
                 var $tr = $('<tr></tr>');
@@ -435,7 +435,7 @@
                 $tr.append('<td>' + wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw]['arrivalSertificationData' + ucFirst(App.Lang)]) + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)] + '</td>');
-                $tr.append('<td>' + wagons[iw]['arrivalDivisionAmkrName' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + '' + '</td>');
                 $tbody.append($tr);
             }
@@ -472,7 +472,12 @@
                     LockScreen(langView('prn_ws_mess_load_print', App.Langs));
                     $('head').prepend('<title>' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</title>');
                     $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');
-                    $('body').addClass('a4');
+                    if (format == 'A4') {
+                        $('body').addClass('a4');
+                    }
+                    if (format == 'A4L') {
+                        $('body').addClass('a4-landscape');
+                    }
                     $('body').append('<h2 style="text-align:center;">' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</h2>');
                     $('body').append('<p style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title1', App.Langs).format(station_name, moment().format(format_datetime_ru)) + '</p>');
                     $('body').append('<p style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title2', App.Langs).format(way_name) + '</p>');

@@ -31,6 +31,7 @@
 
     // Считаем строку с дополнительными параметрами
     var report = getUrlVar('report');
+    var format = getUrlVar('format');
     var id = getUrlVar('id');
 
     $(document).ready(function ($) {
@@ -43,10 +44,10 @@
                     view_incoming_report.view(id);
                 }
                 if (report === 'ws_statement1') {
-                    prnws.view_ws_statement(1, id);
+                    prnws.view_ws_statement(1, format, id);
                 }
                 if (report === 'ws_statement2') {
-                    prnws.view_ws_statement(2, id);
+                    prnws.view_ws_statement(2, format, id);
                 }
             }
         }.bind(this);
