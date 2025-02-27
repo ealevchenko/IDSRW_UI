@@ -71,6 +71,21 @@
         return obj !== null ? obj : '';
     }
 
+    var OutGroupField = function (i, objs, field) {
+        if (field) {
+            return (i < objs.length ? objs[i][field] : '')
+        } else {
+            return (i < objs.length ? '-' : '');
+        }
+    }
+    var OutGroupText = function (i, count, text) {
+        if (text) {
+            return (i < count ? text : '')
+        } else {
+            return (i < count ? '-' : '');
+        }
+    }
+
     function print_ws() {
 
     }
@@ -264,6 +279,11 @@
         var wagons = [];
         var way_name = '';
         var station_name = '';
+        var rods = [];
+        var operations = [];
+        var conditions = [];
+        var liters_count = 0;
+
         var table_statement1 = function ($body, wagons) {
             var $table = $('<table class="table-info"></table>');
             var $thead = $('<thead></thead>');
@@ -290,6 +310,32 @@
             for (var iw = 0; iw < wagons.length; iw++) {
                 var curr_cargo = '';
                 var ext_station = '';
+                //curr_cargo
+                if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
+                    if (wagons[iw].currentCargoIdGroup !== null) {
+                        curr_cargo = wagons[iw]['currentCargoName' + ucFirst(App.Lang)];
+                    } else {
+                        curr_cargo = wagons[iw]['currentInternalCargoName' + ucFirst(App.Lang)];
+                    }
+                } else {
+                    curr_cargo = wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)];;
+                }
+                //ext_station
+                if (wagons[iw].currentIdLoadingStatus !== 0 && wagons[iw].currentIdLoadingStatus !== 3 && wagons[iw].currentIdLoadingStatus !== 8) {
+                    if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
+                        ext_station = wagons[iw]['currentExternalStationOnName' + ucFirst(App.Lang)];
+                    } else {
+                        ext_station = wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)];;
+                    }
+                };
+                // группировка элементов
+                var re = rods.find(function (o) { return o.id == wagons[iw].wagonRod }.bind(this));
+                if (!re) { rods.push({ id: wagons[iw].wagonRod, text: wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)], count: 1 }) } else { re.count += 1; }
+                var oe = operations.find(function (o) { return o.id == wagons[iw].currentIdOperation && o.cargo == curr_cargo }.bind(this));
+                if (!oe) { operations.push({ id: wagons[iw].currentIdOperation, text: wagons[iw]['operatorAbbr' + ucFirst(App.Lang)], cargo: curr_cargo, count: 1 }) } else { oe.count += 1; }
+                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)]}.bind(this));
+                if (!ce) { conditions.push({ text: wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)], count: 1 }) } else { ce.count += 1; }
+                if (wagons[iw].instructionalLettersNum) { liters_count += 1; }
                 var $tr = $('<tr></tr>');
                 $tr.append('<td>' + wagons[iw].position + '</td>');
                 $tr.append('<td>' + wagons[iw].num + '</td>');
@@ -303,23 +349,7 @@
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersDatetime) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersStationName) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersNote) + '</td>');
-                if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
-                    if (wagons[iw].currentCargoIdGroup !== null) {
-                        curr_cargo = wagons[iw]['currentCargoName' + ucFirst(App.Lang)];
-                    } else {
-                        curr_cargo = wagons[iw]['currentInternalCargoName' + ucFirst(App.Lang)];
-                    }
-                } else {
-                    curr_cargo = wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)];;
-                }
                 $tr.append('<td>' + curr_cargo + '</td>');
-                if (wagons[iw].currentIdLoadingStatus !== 0 && wagons[iw].currentIdLoadingStatus !== 3 && wagons[iw].currentIdLoadingStatus !== 8) {
-                    if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
-                        ext_station = wagons[iw]['currentExternalStationOnName' + ucFirst(App.Lang)];
-                    } else {
-                        ext_station = wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)];;
-                    }
-                };
                 $tr.append('<td>' + ext_station + '</td>');
                 $tr.append('<td>' + (wagons[iw].docOutgoingCar ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].idFiling) + '</td>');
@@ -328,6 +358,33 @@
             }
             $table.append($tbody);
             $body.append($table);
+            $body.append('<br />');
+            var $table_gr = $('<table class=""></table>');
+            var $tbody_gr = $('<tbody></tbody>');
+            var count = Math.max(rods.length, operations.length, conditions.length, liters_count);
+            for (var ig = 0; ig < count; ig++) {
+                var $tr_gr = $('<tr></tr>');
+                $tr_gr.append('<td>&nbsp;</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, rods, 'count') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, rods) + '</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, rods, 'text') + '</td>');
+                $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, operations, 'text') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, operations) + '</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, operations, 'count') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, operations) + '</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, operations, 'cargo') + '</td>');
+                $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, conditions, 'text') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, conditions) + '</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, conditions, 'count') + '</td>');
+                $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>');
+                $tr_gr.append('<td class="total">' + OutGroupText(ig, liters_count, 'Писем :') + '</td>');
+                $tr_gr.append('<td class="total">' + OutGroupText(ig, liters_count, liters_count) + '</td>');
+                $table_gr.append($tbody_gr.append($tr_gr));
+            }
+            $body.append($table_gr);
+
         }
 
         var pr_load = 2;
@@ -340,8 +397,8 @@
                     $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');
                     $('body').addClass('a4');
                     $('body').append('<h2 style="text-align:center;">' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</h2>');
-                    $('body').append('<h4 style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title1', App.Langs).format(station_name, moment().format(format_datetime_ru)) + '</h2>');
-                    $('body').append('<h4 style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title2', App.Langs).format(way_name) + '</h2>');
+                    $('body').append('<p style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title1', App.Langs).format(station_name, moment().format(format_datetime_ru)) + '</p>');
+                    $('body').append('<p style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title2', App.Langs).format(way_name) + '</p>');
                     $('body').append('<br />');
                     if (type === 1) {
                         table_statement1($('body'), wagons);
