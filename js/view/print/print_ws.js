@@ -43,7 +43,7 @@
             'prn_ws_table_title_arr_uz_station': 'Стан. отправ.',
             'prn_ws_table_title_devision_on': 'Цех получ.',
             'prn_ws_table_title_curr_uz_station': 'Станция УЗ назначения ТЕКУЩ',
-            'prn_ws_table_title_availability_doc': 'Наличие документа для сдачи на З',
+            'prn_ws_table_title_availability_doc': 'Наличие документа для сдачи на УЗ',
             'prn_ws_table_title_id_filing': 'Id подачи',
             'prn_ws_table_title_note2': 'Примечание 2',
 
