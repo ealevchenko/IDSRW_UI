@@ -29,6 +29,7 @@
             'prn_ws_table_title_rod': 'Род',
             'prn_ws_table_title_adm': 'Адм.',
             'prn_ws_table_title_operator': 'Оператор',
+            'prn_ws_table_title_adoption_date': 'Дата приема на АМКР',
             'prn_ws_table_title_status': 'Статус',
             'prn_ws_table_title_arr_condition': 'Разм.',
             'prn_ws_table_title_curr_condition': 'Разм. тек.',
@@ -37,6 +38,10 @@
             'prn_ws_table_title_station_letter': 'Станция назначения',
             'prn_ws_table_title_text_letter': 'Текст',
             'prn_ws_table_title_curr_cargo': 'Груз ТЕКЩ',
+            'prn_ws_table_title_arrival_cargo': 'Груз ПРИБ',
+            'prn_ws_table_title_sertification': 'Сертиф. данные',
+            'prn_ws_table_title_arr_uz_station': 'Стан. отправ.',
+            'prn_ws_table_title_devision_on': 'Цех получ.',
             'prn_ws_table_title_curr_uz_station': 'Станция УЗ назначения ТЕКУЩ',
             'prn_ws_table_title_availability_doc': 'Наличие документа для сдачи на З',
             'prn_ws_table_title_id_filing': 'Id подачи',
@@ -280,6 +285,7 @@
         var way_name = '';
         var station_name = '';
         var rods = [];
+        var cargos = [];
         var operations = [];
         var conditions = [];
         var liters_count = 0;
@@ -387,6 +393,77 @@
 
         }
 
+        var table_statement2 = function ($body, wagons) {
+            var $table = $('<table class="table-info"></table>');
+            var $thead = $('<thead></thead>');
+            var $tr = $('<tr></tr>');
+            $tr.append('<th scope="col">№</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_num_wagon', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_rod', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_adm', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_operator', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_adoption_date', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_status', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_arr_condition', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_curr_condition', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_arrival_cargo', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_sertification', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_arr_uz_station', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_devision_on', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_note2', App.Langs) + '</th>');
+            $table.append($thead.append($tr));
+            var $tbody = $('<tbody></tbody>');
+            for (var iw = 0; iw < wagons.length; iw++) {
+                // группировка элементов
+                var re = rods.find(function (o) { return o.id == wagons[iw].wagonRod }.bind(this));
+                if (!re) { rods.push({ id: wagons[iw].wagonRod, text: wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)], count: 1 }) } else { re.count += 1; }
+                var cge = cargos.find(function (o) { return o.text == wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)] }.bind(this));
+                if (!cge) { cargos.push({ text: wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)], count: 1 }) } else { cge.count += 1; }
+                var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)]}.bind(this));
+                if (!ce) { conditions.push({ text: wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)], count: 1 }) } else { ce.count += 1; }
+                if (wagons[iw].instructionalLettersNum) { liters_count += 1; }
+                var $tr = $('<tr></tr>');
+                $tr.append('<td>' + wagons[iw].position + '</td>');
+                $tr.append('<td>' + wagons[iw].num + '</td>');
+                $tr.append('<td>' + wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw].wagonAdm + '</td>');
+                $tr.append('<td>' + wagons[iw]['operatorAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + (wagons[iw].arrivalDateAdoption ? moment(wagons[iw].arrivalDateAdoption).format(format_datetime_ru) : '') + '</td>');
+                $tr.append('<td>' + wagons[iw]['currentLoadingStatus' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['arrivalConditionAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw]['arrivalSertificationData' + ucFirst(App.Lang)]) + '</td>');
+                $tr.append('<td>' + wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['arrivalDivisionAmkrName' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + '' + '</td>');
+                $tbody.append($tr);
+            }
+            $table.append($tbody);
+            $body.append($table);
+            $body.append('<br />');
+            var $table_gr = $('<table class=""></table>');
+            var $tbody_gr = $('<tbody></tbody>');
+            var count = Math.max(rods.length, cargos.length, conditions.length);
+            for (var ig = 0; ig < count; ig++) {
+                var $tr_gr = $('<tr></tr>');
+                $tr_gr.append('<td>&nbsp;</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, rods, 'count') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, rods) + '</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, rods, 'text') + '</td>');
+                $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, conditions, 'text') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, conditions) + '</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, conditions, 'count') + '</td>');
+                $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, cargos, 'count') + '</td>');
+                $tr_gr.append('<td>' + OutGroupField(ig, cargos) + '</th>');
+                $tr_gr.append('<td class="total">' + OutGroupField(ig, cargos, 'text') + '</td>');
+                $table_gr.append($tbody_gr.append($tr_gr));
+            }
+            $body.append($table_gr);
+
+        }
         var pr_load = 2;
 
         var out_load = function (pr_load) {
@@ -402,6 +479,9 @@
                     $('body').append('<br />');
                     if (type === 1) {
                         table_statement1($('body'), wagons);
+                    }
+                    if (type === 2) {
+                        table_statement2($('body'), wagons);
                     }
                 }
                 LockScreenOff();
@@ -428,22 +508,6 @@
             pr_load--;
             out_load(pr_load);
         }.bind(this));
-        //this.type_report = null;
-        //this.load_sostav(id_sostav, function (wagons) {
-        //    if (wagons && wagons.length > 0) {
-        //        LockScreen(langView('prn_ws_mess_load_print', App.Langs));
-        //        $('head').prepend('<title>' + langView('prn_ws_title_report_nvt', App.Langs).format(this.sostav.num_doc) + '</title>');
-        //        $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');
-        //        $('body').addClass('a4');
-        //        $('body').append('<h2>' + langView('prn_ws_title_report_nvt', App.Langs).format(this.sostav.num_doc) + '</h2>');
-        //        this.title_report($('body'));      // Заголовок
-        //        this.view_table_info_car_fst($('body'), wagons);  // Вагоны в составе
-        //        $('body').append('<br />');
-        //        $('body').append('<br />');
-        //        $('body').append('<div>' + langView('prn_ws_title_report_podp_priem', App.Langs) + '</div>');
-
-        //    }
-        //}.bind(this));
     }
     // Выбрать все вагоны выбранного состава 
     print_ws.prototype.destroy = function () {
