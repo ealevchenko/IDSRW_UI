@@ -105,19 +105,13 @@
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group me-2" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Операции
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <li><a class="dropdown-item" href="#">«Отправить состав на станции АМКР»</a></li>
-                                    <li><a class="dropdown-item" href="#">«Прибытия составов на станции АМКР»</a></li>
-                                </ul>
-                            </div>
-                            <div class="btn-group me-2" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Отчеты
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                     <li><a class="dropdown-item" href="#">Оперативный остаток вагонов на АМКР</a></li>
+                                    <li><a class="dropdown-item" href="#">История «Отправленных составов на станции АМКР»</a></li>
+                                    <li><a class="dropdown-item" href="#">История «Прибытия составов на станции АМКР»</a></li>
+                                    <li><a class="dropdown-item" href="#">...</a></li>
                                 </ul>
                             </div>
                             <div class="btn-group me-2" role="group" id="btn-external-operations" aria-label="external operations group">
@@ -131,7 +125,7 @@
                                 <button type="button" class="btn btn-outline-secondary" title="Выгрузка вагонов" id="unloading">Выгр.</button>
                                 <button type="button" class="btn btn-outline-secondary" title="Погрузка вагонов" id="loading">Погр.</button>
                                 <button type="button" class="btn btn-outline-secondary" title="Очистка вагонов" id="cleaning">Очис.</button>
-                                <button type="button" class="btn btn-outline-secondary" title="Обработка вагонов" id="processing">Обр.</button>
+                                <!--<button type="button" class="btn btn-outline-secondary" title="Обработка вагонов" id="processing">Обр.</button>-->
                                 <button type="button" class="btn btn-outline-secondary" title="">Весы.</button>
                             </div>
                             <div class="btn-group me-2" role="group" id="btn-uz-operations" aria-label="uz operations group">
@@ -142,6 +136,19 @@
                                 <button type="button" class="btn btn-outline-secondary" id="auto-position" title="">Авто</button>
                                 <button type="button" class="btn btn-outline-secondary" id="manual-position" title="">Ручная</button>
                                 <button type="button" class="btn btn-outline-secondary" id="reverce-position" title="">Реверс</button>
+                            </div>
+                            <div class="btn-group me-2" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Сервисы
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><a class="dropdown-item" href="#">«Добавить примечание по группе вагонов»</a></li>
+                                    <li><a class="dropdown-item" href="#">«Отметить обработку вагонов»</a></li>
+                                    <li><a class="dropdown-item" href="#">«Отметить ремонт вагонов»</a></li>
+                                    <li><a class="dropdown-item" href="#">«Отметить запрет выгрузки по группе вагонов»</a></li>
+                                    <li><a class="dropdown-item" href="#">«Отметить растаможку вагонов»</a></li>
+                                    <li><a class="dropdown-item" href="#">...</a></li>
+                                </ul>
                             </div>
                             <div class="btn-group me-2" role="group" aria-label="Third group">
                                 <div class="input-group w-75">
