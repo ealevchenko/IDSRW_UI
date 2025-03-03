@@ -200,6 +200,9 @@
     var VOPCLC = App.view_op_cleaning_cars;
     var vopclc = new VOPCLC('main.container-fluid');
 
+    var VOPUNC = App.view_op_update_note_cars;
+    var vopunc = new VOPUNC('main.container-fluid');
+
     //var VOPPSC = App.view_op_processing_cars;
     //var voppsc = new VOPPSC('main.container-fluid');
 
@@ -487,7 +490,7 @@
 
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
-            var process = 18;
+            var process = 19;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
@@ -737,7 +740,15 @@
                     };
                 };
             });
-
+            // Кнопки основного меню (Маневры на пути)
+            $('#link-services').on('click', 'a', function (event) {
+                switch (event.currentTarget.id) {
+                    case 'update-note': {
+                        vopunc.view(current_id_way);
+                        break;
+                    };
+                };
+            });
             list_station = api_dir.getAllStation();
             list_way = api_dir.getAllWays();
             // Настроим выбор станций
@@ -1271,6 +1282,25 @@
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[main_wsd] [vopclc] process ' + process);
+                    out_init(process);
+                },
+                fn_close: function (upd) {
+                    // На обновления дерева путей, баланса ....
+                    refresh_tree_way(upd, function () {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            });
+            // сервис примечаний
+            vopunc.init({
+                alert: null,
+                api_dir: null,
+                api_wsd: null,
+                fn_db_update: null,
+                fn_init: function () {
+                    // На проверку окончания инициализации
+                    process--;
+                    //console.log('[main_wsd] [vopunc] process ' + process);
                     out_init(process);
                 },
                 fn_close: function (upd) {

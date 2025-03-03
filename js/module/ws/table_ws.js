@@ -270,6 +270,7 @@
             'tws_title_button_deselect_all': 'Убрать выбор',
             'tws_title_button_add_sostav': 'Добавить в состав',
             'tws_title_button_add_filing': 'Создать черновик',
+            'tws_title_button_add_group': 'Добавить вагоны',
             'tws_title_button_clear_filing': 'Открыть подачу',
             'tws_title_button_clear_draft': 'Убрать черновик',
             'tws_title_button_collect_sostav': 'Собрать',
@@ -2339,6 +2340,15 @@
                 },
             },
             {
+                button: 'add_group',
+                text: langView('tws_title_button_add_group', App.Langs),
+                className: 'btn btn-info',
+                attr: {
+                    title: '',
+                    id: 'add-group'
+                },
+            },
+            {
                 button: 'clear_filing',
                 text: langView('tws_title_button_clear_filing', App.Langs),
                 className: 'btn btn-info',
@@ -2908,6 +2918,30 @@
     //    //collums.push({ field: 'end_filing', title: null, class: null });
     //    return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     //};
+    table_ws.prototype.init_columns_group_cars_from_1 = function () {
+        var collums = [];
+        collums.push({ field: 'position', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        // Номер путевой
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_operation_name', title: null, class: null });
+        collums.push({ field: 'current_operation_start', title: null, class: null });
+        collums.push({ field: 'current_operation_end', title: null, class: null });
+        collums.push({ field: 'wir_note', title: null, class: null });
+        collums.push({ field: 'note_2', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     table_ws.prototype.init_columns_provide_cars_from = function () {
         var collums = [];
         collums.push({ field: 'position', title: null, class: null });
@@ -4188,6 +4222,61 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_unload_cars_from4();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Вагоны на пути групы
+            case 'group_cars_from_1': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.wirHighlightColor !== null) {
+                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    }
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(5).attr('style', 'background-color:' + data.operatorColor)
+                        //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    if (data.id_wir_from !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    }
+                    // Прибыл
+                    if (data.currentIdOperation === 1) {
+                        //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
+                        $('td', row).eq(0).addClass('red');
+                        $('td', row).eq(1).addClass('red');
+                    }
+                    // Предъявлен или сдан
+                    if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
+                        if (data.outgoingSostavStatus === 2) {
+                            $('td', row).eq(0).addClass('green');
+                            $('td', row).eq(1).addClass('green');
+                        }
+                        if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
+                            $('td', row).eq(0).addClass('yellow');
+                            $('td', row).eq(1).addClass('yellow');
+                        }
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_group_cars_from_1();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;

@@ -6,7 +6,6 @@
     <title>АРМ диспетчера</title>
     <link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />
     <!--<link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />-->
-
     <!-- Визуальное отражение компонентов -->
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.css" />
@@ -36,6 +35,8 @@
     <link href="../../../idsrw_ui/css/module/ws/view_op_sending_uz.css" rel="stylesheet" />
     <link href="../../../idsrw_ui/css/module/ws/view_op_unloading_cars.css" rel="stylesheet" />
     <link href="../../../idsrw_ui/css/module/ws/view_op_cleaning_cars.css" rel="stylesheet" />
+
+    <link href="../../../idsrw_ui/css/module/ws/view_op_update_note_cars.css" rel="stylesheet" />
     <!--<link href="../../../idsrw_ui/css/module/ws/view_op_processing_cars.css" rel="stylesheet" />-->
 
     <link href="../../../idsrw_ui/css/ws/wsd.css" rel="stylesheet" type="text/css" />
@@ -137,16 +138,16 @@
                                 <button type="button" class="btn btn-outline-secondary" id="manual-position" title="">Ручная</button>
                                 <button type="button" class="btn btn-outline-secondary" id="reverce-position" title="">Реверс</button>
                             </div>
-                            <div class="btn-group me-2" role="group">
+                            <div class="btn-group me-2" role="group" id="btn-services" >
                                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Сервисы
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <li><a class="dropdown-item" href="#">«Добавить примечание по группе вагонов»</a></li>
-                                    <li><a class="dropdown-item" href="#">«Отметить обработку вагонов»</a></li>
-                                    <li><a class="dropdown-item" href="#">«Отметить ремонт вагонов»</a></li>
-                                    <li><a class="dropdown-item" href="#">«Отметить запрет выгрузки по группе вагонов»</a></li>
-                                    <li><a class="dropdown-item" href="#">«Отметить растаможку вагонов»</a></li>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" id="link-services">
+                                    <li><a class="dropdown-item" id="update-note" href="#">Добавить примечание по группе вагонов</a></li>
+                                    <li><a class="dropdown-item" href="#">Отметить обработку вагонов</a></li>
+                                    <li><a class="dropdown-item" href="#">Отметить ремонт вагонов</a></li>
+                                    <li><a class="dropdown-item" href="#">Отметить запрет выгрузки по группе вагонов</a></li>
+                                    <li><a class="dropdown-item" href="#">Отметить растаможку вагонов</a></li>
                                     <li><a class="dropdown-item" href="#">...</a></li>
                                 </ul>
                             </div>
@@ -356,6 +357,7 @@
 
     <script src="../../../idsrw_ui/js/module/view_op_common.js"></script>
     <script src="../../../idsrw_ui/js/module/ws/view_op_common_filing.js"></script>
+    <script src="../../../idsrw_ui/js/module/ws/view_op_common_group.js"></script>
 
     <script src="../../../idsrw_ui/js/module/ws/view_op_arrival_cars.js"></script>
     <script src="../../../idsrw_ui/js/module/ws/view_op_outgoing_cars.js"></script>
@@ -367,6 +369,9 @@
     <script src="../../../idsrw_ui/js/module/ws/view_op_loading_cars.js"></script>
     <script src="../../../idsrw_ui/js/module/ws/view_op_unloading_cars.js"></script>
     <script src="../../../idsrw_ui/js/module/ws/view_op_cleaning_cars.js"></script>
+
+    <script src="../../../idsrw_ui/js/module/ws/view_op_update_note_cars.js"></script>
+
     <!--<script src="../../../idsrw_ui/js/module/ws/view_op_processing_cars.js"></script>-->
 
     <script src="../../../idsrw_ui/js/view/ws/main_wsd.js"></script>
