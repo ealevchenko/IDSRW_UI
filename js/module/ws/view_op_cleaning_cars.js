@@ -3,6 +3,7 @@
   + js/view/shared/common.js
   + js/module/view_op_common.js
   + js/module/ws/table_ws.js
+  + js/module/ws/view_op_common_filing.js  
 ==================================================*/
 (function (window) {
     'use strict';
