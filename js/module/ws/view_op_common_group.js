@@ -448,11 +448,17 @@
                                 $.each(this.nums, function (i, el) {
                                     this.wagons_group.push({ position: i + 1, num: el, exist: false });
                                 }.bind(this));
+                                //
                                 var cars = this.form_searsh_wagon.el.textarea_vagon_searsh.val();
-                                this.load_of_nums(cars, function () {
-                                    this.view_wagons();
-                                    LockScreenOff();
+                                //
+                                this.load_of_way(this.id_way_from, function (wagons) {
+                                    this.load_of_nums(cars, function () {
+                                        this.view_wagons();
+                                        LockScreenOff();
+                                    }.bind(this));
                                 }.bind(this));
+
+
                             }
                         }
                     }.bind(this),
@@ -816,7 +822,7 @@
         this.id_station_from = -1;
         var id_station = -1;
         this.id_way_from = -1;
-        
+
         if (id_way > 0) {
             var way = this.view_com.api_dir.getWays_Of_Id(id_way);
             if (way) {
@@ -903,7 +909,11 @@
     view_op_common_group.prototype.load_of_nums = function (nums, callback) {
         if (nums !== null && nums.length >= 0) {
             LockScreen(langView('vopcgr_mess_load_wagons', App.Langs));
-            this.view_com.api_wsd.getViewWagonsOfListNums(nums, function (wagons) {
+            var list = [];
+            $.each(nums.split(';'), function (i, el) {
+                list.push(el);
+            }.bind(this));
+            this.view_com.api_wsd.postViewWagonsOfListNums(list, function (wagons) {
                 // модифицировать данные взависимости от отчета
                 this.wagons_group = wagons;
                 // Событие обновили данные
