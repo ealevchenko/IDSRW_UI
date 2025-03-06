@@ -5,14 +5,12 @@
 @page page_a4_landscape {
     size: A4 landscape;
     margin: 0;
-
     /*padding: 0;*/
 }
 
 @page page_a4 {
     size: A4;
     margin: 0; /* избежание лишних отступов */
-
 }
 
 body {
@@ -25,19 +23,19 @@ body {
 
     body.a4 {
         page: page_a4;
-    width: 210mm;
-    height: 297mm;
+        width: 210mm;
+        /*height: 297mm;*/
     }
 
     body.a4-landscape {
-        page: page_a4_landscape;    
+        page: page_a4_landscape;
         width: 297mm;
-        height: 210mm;
+        /*height: 210mm;*/
     }
 
 html, body {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 h1 {
@@ -46,10 +44,17 @@ h1 {
 
 h2 {
     font-size: 18px;
+    padding: 0;
+    margin: 0;
 }
 
 h3 {
     font-size: 14px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 
 table {
@@ -105,7 +110,7 @@ table {
 
     .table-info td, .table-info th {
         border: 1px solid #000000;
-        font-size: 9px;
+        font-size: 12px;
         text-align: center;
         padding: 0 2px;
     }

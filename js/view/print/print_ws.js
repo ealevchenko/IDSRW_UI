@@ -35,6 +35,7 @@
             'prn_ws_table_title_curr_condition': 'Разм. тек.',
             'prn_ws_table_title_num_letter': '№ письма',
             'prn_ws_table_title_date_letter': 'Дата письма',
+            'prn_ws_table_title_code_station_letter': 'Код ст. наз.',
             'prn_ws_table_title_station_letter': 'Станция назначения',
             'prn_ws_table_title_text_letter': 'Текст',
             'prn_ws_table_title_curr_cargo': 'Груз ТЕКЩ',
@@ -406,6 +407,14 @@
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_status', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_arr_condition', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_curr_condition', App.Langs) + '</th>');
+
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_num_letter', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_date_letter', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_code_station_letter', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_station_letter', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_text_letter', App.Langs) + '</th>');
+
+
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_arrival_cargo', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_sertification', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_ws_table_title_arr_uz_station', App.Langs) + '</th>');
@@ -432,6 +441,11 @@
                 $tr.append('<td>' + wagons[iw]['currentLoadingStatus' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalConditionAbbr' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].instructionalLettersNum) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].instructionalLettersDatetime) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].instructionalLettersStationCode) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].instructionalLettersStationName) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].instructionalLettersNote) + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw]['arrivalSertificationData' + ucFirst(App.Lang)]) + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)] + '</td>');
@@ -471,7 +485,7 @@
                 if (wagons && wagons.length > 0) {
                     LockScreen(langView('prn_ws_mess_load_print', App.Langs));
                     $('head').prepend('<title>' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</title>');
-                    $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');
+/*                    $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');*/
                     if (format == 'A4') {
                         $('body').addClass('a4');
                     }
