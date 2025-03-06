@@ -226,7 +226,7 @@
             'tws_field_filing_move_cargo_doc_received': 'Док. получен (подача)',
             'tws_field_doc_received_filing': 'Док. под. получен',
             'tws_field_vesg_filing': 'Вес подачи',
-            'tws_field_note_2': 'Примечание 2',
+            'tws_field_wir_note2': 'Примечание 2',
             'tws_field_current_organization_service': 'Текущая Организация вып. работы.',
             'tws_field_filing_organization_service': 'Организация вып. работы (подача)',
 
@@ -1225,6 +1225,15 @@
                 },
                 className: 'dt-body-nowrap text-left',
                 title: langView('tws_field_wir_note', App.Langs), width: "150px", orderable: true, searchable: true
+            },
+            // Примечание 2
+            {
+                field: 'wir_note2',
+                data: function (row, type, val, meta) {
+                    return row.wirNote2;
+                },
+                className: 'dt-body-nowrap text-left',
+                title: langView('tws_field_wir_note2', App.Langs), width: "150px", orderable: true, searchable: true
             },
             // Груз по отправке предыдущий
             {
@@ -2249,16 +2258,6 @@
                 title: langView('tws_field_filing_move_cargo_doc_received', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // --- ViewWagonsFiling
-            // Примечание 2
-            {
-                field: 'note_2',
-                data: function (row, type, val, meta) {
-                    return null;
-                },
-                className: 'dt-body-nowrap text-left',
-                title: langView('tws_field_note_2', App.Langs), width: "150px", orderable: true, searchable: true
-            },
-            //
             {
                 field: 'filing_loading_status',
                 data: function (row, type, val, meta) {
@@ -2539,6 +2538,7 @@
         collums.push({ field: 'wagon_ban_uz', title: null, class: null });
         collums.push({ field: 'wagon_closed_route', title: null, class: null });
         collums.push({ field: 'wir_note', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
         collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
         collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
@@ -2812,7 +2812,7 @@
         //collums.push({ field: 'end_filing', title: null, class: null });
         //collums.push({ field: 'way_filing_start', title: null, class: null });
         //collums.push({ field: 'way_filing_end', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     table_ws.prototype.init_columns_unload_cars_from2 = function () {
@@ -2847,7 +2847,7 @@
         //collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         //collums.push({ field: 'current_vesg', title: null, class: null });
         //collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
@@ -2877,7 +2877,7 @@
         collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'current_common_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         //--- Убрать
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'current_operation_start', title: null, class: null });
@@ -2907,7 +2907,7 @@
     //    collums.push({ field: 'current_loading_status', title: null, class: null });
     //    collums.push({ field: 'current_common_cargo_name', title: null, class: null });
     //    collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-    //    collums.push({ field: 'note_2', title: null, class: null });
+    //    collums.push({ field: 'wir_note2', title: null, class: null });
     //    //--- Убрать
     //    collums.push({ field: 'current_operation_name', title: null, class: null });
     //    collums.push({ field: 'current_operation_start', title: null, class: null });
@@ -2939,7 +2939,7 @@
         collums.push({ field: 'current_operation_start', title: null, class: null });
         collums.push({ field: 'current_operation_end', title: null, class: null });
         collums.push({ field: 'wir_note', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     table_ws.prototype.init_columns_provide_cars_from = function () {
@@ -3243,7 +3243,7 @@
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         /*        collums.push({ field: 'current_vesg', title: null, class: null });*/
         collums.push({ field: 'current_operation_name', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         //collums.push({ field: 'current_operation_start', title: null, class: null });
         //collums.push({ field: 'current_operation_end', title: null, class: null });
         // ... Груз и цех текущий
@@ -3293,7 +3293,7 @@
         collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_vesg', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'filing_start', title: langView('tws_field_filing_way_start_load', App.Langs), class: null });
         collums.push({ field: 'filing_end', title: langView('tws_field_filing_way_end_load', App.Langs), class: null });
@@ -3339,8 +3339,33 @@
         //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        collums.push({ field: 'note_2', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'current_organization_service', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_ws.prototype.init_columns_dislocation_group_wagons_1 = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        if (this.tab_com.settings.link_num) {
+            collums.push({ field: 'num_link', title: null, class: null });
+        } else {
+            collums.push({ field: 'num', title: null, class: null });
+        }
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'current_loading_status', title: null, class: null });
+        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
+        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
+
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     //table_ws.prototype.init_columns_filing_wagons_4 = function () {
@@ -3360,7 +3385,7 @@
     //    //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
     //    collums.push({ field: 'current_loading_status', title: null, class: null });
     //    collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-    //    collums.push({ field: 'note_2', title: null, class: null });
+    //    collums.push({ field: 'wir_note2', title: null, class: null });
     //    collums.push({ field: 'current_organization_service', title: null, class: null });
     //    return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     //};
@@ -4887,6 +4912,45 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_filing_wagons_3();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Таблица дислокации группы вагонов
+            case 'dislocation_group_wagons_1': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                //this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [2, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.idFiling);
+                    if (data.close !== null) {
+                        $(row).addClass('ban red');  // Отметим вагон заблокирован
+                    }
+                    // Предъявлен или сдан
+                    if (data.statusFiling === 2) {
+                        $(row).addClass('green');
+                    }
+                    if (data.statusFiling === 1) {
+                        $(row).addClass('yellow');
+                    }
+                    if (data.statusFiling === 0) {
+                        $(row).addClass('red');
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_dislocation_group_wagons_1();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;

@@ -74,10 +74,14 @@
     ids_wsd.prototype.getViewWagonsOfIdWay = function (id, callback) {
         this.api_com.get('/WSD/view/wagon/way/' + id, callback);
     };
+    // Поиск вагона
     ids_wsd.prototype.getViewDislocationAMKRWagonOfNum = function (num, callback) {
         this.api_com.get('/WSD/view/dislocation/amkr/wagon/num/' + num, callback);
     };
-
+    // Поиск групы вагонов 
+    ids_wsd.prototype.getViewWagonsOfListNums = function (nums, callback) {
+        this.api_com.get('/WSD/view/wagon/nums/' + nums, callback);
+    };
     // Баланс
     ids_wsd.prototype.getViewTotalBalance = function (callback) {
         this.api_com.get('/WSD/view/total_balance', callback);
@@ -198,6 +202,10 @@
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
     };
 
+    //АРМ, Операция править примечание по группе вагонов
+    ids_wsd.prototype.postUpdateNote2WagonsGroup = function (operation, callback) {
+        this.api_com.post('/WSD/update/group_wagon/note2/', operation, callback, callback);
+    };
 
     App.ids_wsd = ids_wsd;
 
