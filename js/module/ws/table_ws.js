@@ -3243,7 +3243,7 @@
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         /*        collums.push({ field: 'current_vesg', title: null, class: null });*/
         collums.push({ field: 'current_operation_name', title: null, class: null });
-        collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'wir_note2', title: null, class: null });
         //collums.push({ field: 'current_operation_start', title: null, class: null });
         //collums.push({ field: 'current_operation_end', title: null, class: null });
         // ... Груз и цех текущий
@@ -3293,7 +3293,7 @@
         collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         collums.push({ field: 'current_vesg', title: null, class: null });
-        collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'current_operation_name', title: null, class: null });
         collums.push({ field: 'filing_start', title: langView('tws_field_filing_way_start_load', App.Langs), class: null });
         collums.push({ field: 'filing_end', title: langView('tws_field_filing_way_end_load', App.Langs), class: null });
@@ -3339,7 +3339,7 @@
         //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'current_organization_service', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
