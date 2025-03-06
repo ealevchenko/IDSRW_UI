@@ -359,8 +359,8 @@
                 $tr.append('<td>' + curr_cargo + '</td>');
                 $tr.append('<td>' + ext_station + '</td>');
                 $tr.append('<td>' + (wagons[iw].docOutgoingCar ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].idFiling) + '</td>');
-                $tr.append('<td>' + '' + '</td>');
+                $tr.append('<td>' + (wagons[iw].endPreviousFiling===null ? OutText(wagons[iw].idPreviousFiling) : '') + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
                 $tbody.append($tr);
             }
             $table.append($tbody);
@@ -450,7 +450,7 @@
                 $tr.append('<td>' + OutText(wagons[iw]['arrivalSertificationData' + ucFirst(App.Lang)]) + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + wagons[iw]['arrivalDivisionAmkrAbbr' + ucFirst(App.Lang)] + '</td>');
-                $tr.append('<td>' + '' + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
                 $tbody.append($tr);
             }
             $table.append($tbody);
