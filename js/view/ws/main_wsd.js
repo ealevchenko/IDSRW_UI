@@ -10,6 +10,7 @@
         {
             'mwsd_title_operation_auto': '«Автоматическая расстановка вагонов»',
             'mwsd_title_operation_reverce': '«Реверс вагонов»',
+            'mwsd_title_operation_manual_position': '«Ручная расстановка»',
             'mwsd_title_button_Ok': 'Ok',
             'mwsd_title_button_Cancel': 'Отмена',
 
@@ -24,11 +25,13 @@
 
             'mwsd_title_form_apply': 'ВЫПОЛНИТЬ',
             'mwsd_title_form_searsh': 'РЕЗУЛЬТАТ ПОИСКА',
+            'mwsd_title_form_apply_manual_position': 'ВЫПОЛНИТЬ РУЧНУЮ РАССТАНОВКУ',
 
             'mwsd_title_mess_find_wagon': 'Поиск вагона на предприятии...',
 
             'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
             'mwsd_title_form_apply_operation_auto': 'Выполняю автоматическую расстановку вагонов',
+            'mwsd_title_form_apply_operation_manual_position': 'Выполняю ручную расстановку вагонов',
             'mwsd_title_form_apply_searsh_wagon': 'Выполняю поиск вагона...',
 
             'mwsd_mess_cancel_operation_auto': 'Операция «Автоматическая расстановка вагонов» – отменена',
@@ -36,6 +39,7 @@
             'mwsd_confirm_mess_apply_operation_reverce': 'Выполнить операцию «Реверс вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
             'mwsd_title_form_apply_operation_reverce': 'Выполняю реверс вагонов',
             'mwsd_mess_cancel_operation_reverce': 'Операция «Реверс вагонов» – отменена',
+            'mwsd_mess_cancel_operation_manual_position': 'Операция «Ручная расстановка» – отменена',
 
             'mwsd_mess_error_api': 'Ошибка выполнения запроса!',
 
@@ -488,6 +492,22 @@
             bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
         });
 
+        var mcf_mp = new MCF(); // Создадим экземпляр окно ручной расстановки
+        mcf_mp.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'lg',
+            bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
+            bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+            fn_click_ok: function (e) {
+                e.preventDefault();
+                this.result = true;
+                this.$modal_obj.modal('hide');
+            }
+        });
+
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
             var process = 19;
@@ -735,6 +755,55 @@
                         } else {
                             main_alert.clear_message();
                             main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
+                        }
+                        break;
+                    };
+                    case 'manual-position': {
+                        main_alert.clear_message();
+                        if (current_id_way) {
+                            if (wagons && wagons.length > 0) {
+
+                                wagons = wagons.sort(function (a, b) {
+                                    return Number(a.position) - Number(b.position)
+                                });
+                                var $form = $('<form class="row g-3 needs-validation" novalidate></form>')
+                                var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
+                                var $thead = $('<thead></thead>');
+                                var $tr = $('<tr></tr>');
+                                $tr.append('<th scope="col">Новый №</th>');
+                                $tr.append('<th scope="col">№</th>');
+                                $tr.append('<th scope="col">№ вагона</th>');
+                                $table.append($thead.append($tr));
+                                var $tbody = $('<tbody class="table-group-divider"></tbody>');
+                                for (var iw = 0; iw < wagons.length; iw++) {
+                                    var $tr = $('<tr></tr>');
+                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId +'" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
+                                    $tr.append('<td>' + wagons[iw].position + '</td>');
+                                    $tr.append('<td>' + wagons[iw].num + '</td>');
+                                    $tbody.append($tr);
+                                }
+                                $table.append($tbody);
+                                $form.append($table);
+
+                                mcf_mp.open(
+                                    langView('mwsd_title_form_apply_manual_position', App.Langs),
+                                    $table,
+                                    //langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
+                                    function () {
+                                        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+
+                                    }.bind(this),
+                                    function () {
+                                        //main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual_position', App.Langs));
+                                    }.bind(this));
+                            } else {
+                                //main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
+                            }
+                        } else {
+                            //main_alert.clear_message();
+                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
                         }
                         break;
                     };
