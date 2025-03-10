@@ -43,8 +43,8 @@
             'prn_ws_table_title_sertification': 'Сертиф. данные',
             'prn_ws_table_title_arr_uz_station': 'Стан. отправ.',
             'prn_ws_table_title_devision_on': 'Цех получ.',
-            'prn_ws_table_title_curr_uz_station': 'Станция УЗ назначения ТЕКУЩ',
-            'prn_ws_table_title_availability_doc': 'Наличие документа для сдачи на УЗ',
+            'prn_ws_table_title_curr_uz_station': 'Станция УЗ ТЕКУЩ',
+            'prn_ws_table_title_availability_doc': 'Док на УЗ',
             'prn_ws_table_title_id_filing': 'Id подачи',
             'prn_ws_table_title_note2': 'Примечание 2',
 
@@ -357,7 +357,7 @@
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersStationName) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersNote) + '</td>');
                 $tr.append('<td>' + curr_cargo + '</td>');
-                $tr.append('<td>' + ext_station + '</td>');
+                $tr.append('<td>' + OutText(ext_station) + '</td>');
                 $tr.append('<td>' + (wagons[iw].docOutgoingCar ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
                 $tr.append('<td>' + (wagons[iw].endPreviousFiling===null ? OutText(wagons[iw].idPreviousFiling) : '') + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
