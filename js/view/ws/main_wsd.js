@@ -29,23 +29,29 @@
 
             'mwsd_title_mess_find_wagon': 'Поиск вагона на предприятии...',
 
-            'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
+            'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?',
+            'mwsd_confirm_mess_apply_operation_manual': 'Выполнить операцию «Ручной расстановки вагонов» в количестве: {0} (ваг.)?',
+
             'mwsd_title_form_apply_operation_auto': 'Выполняю автоматическую расстановку вагонов',
             'mwsd_title_form_apply_operation_manual_position': 'Выполняю ручную расстановку вагонов',
             'mwsd_title_form_apply_searsh_wagon': 'Выполняю поиск вагона...',
 
             'mwsd_mess_cancel_operation_auto': 'Операция «Автоматическая расстановка вагонов» – отменена',
+            'mwsd_mess_cancel_operation_manual': 'Операция «Ручной расстановки вагонов» – отменена',
 
             'mwsd_confirm_mess_apply_operation_reverce': 'Выполнить операцию «Реверс вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
             'mwsd_title_form_apply_operation_reverce': 'Выполняю реверс вагонов',
             'mwsd_mess_cancel_operation_reverce': 'Операция «Реверс вагонов» – отменена',
-            'mwsd_mess_cancel_operation_manual_position': 'Операция «Ручная расстановка» – отменена',
 
             'mwsd_mess_error_api': 'Ошибка выполнения запроса!',
 
             'mwsd_mess_ok_operation_auto': 'Операция «Автоматическая расстановка вагонов» выполнена, перенумерованно {0} (ваг.)',
             'mwsd_mess_error_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» произошла ошибка, код ошибки: {0}',
             'mwsd_mess_0_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_ok_operation_manual': 'Операция «Ручная расстановка вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_manual': 'При выполнении операции «Ручной расстановки вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_manual': 'При выполнении операции «Ручной расстановки вагонов» по вагонам нет изменений!',
 
             'mwsd_mess_ok_operation_reverce': 'Операция «Реверс вагонов» выполнена, перенумерованно {0} (ваг.)',
             'mwsd_mess_error_operation_reverce': 'При выполнении операции «Реверс вагонов» произошла ошибка, код ошибки: {0}',
@@ -498,13 +504,125 @@
             keyboard: false,
             hidden: true,
             centered: true,
-            fsize: 'lg',
+            fsize: 'sm',
+            modal_class: 'modal-dialog-scrollable',
             bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
             bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
             fn_click_ok: function (e) {
                 e.preventDefault();
-                this.result = true;
-                this.$modal_obj.modal('hide');
+                var inp = $('form#manual-position').find('input');
+                var psts = [];
+                var valid = true;
+                $.each(inp, function (i, el) {
+                    var value = $(el).val();
+                    var num = $(el).attr('data-num');
+                    var id = $(el).attr('id');
+                    $(el).removeClass('is-invalid');
+                    if (!value || value == "0") {
+                        $(el).addClass('is-invalid');
+                        valid = false;
+                    } else {
+                        var pos = psts.find(function (o) { return o.position == value }.bind(this));
+                        if (!pos) {
+                            psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
+                        } else {
+                            $(el).addClass('is-invalid');
+                            valid = false;
+                        }
+                    }
+                }.bind(this));
+                if (valid) {
+                    psts = psts.sort(function (a, b) {
+                        return Number(a.position) - Number(b.position)
+                    });
+                    $.each(psts, function (i, el) {
+                        if (el.position !== (i + 1)) {
+                            $(el.el).addClass('is-invalid');
+                            valid = false;
+                        }
+                    }.bind(this))
+                    if (valid) {
+                        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                        var operation = {
+                            id_way: current_id_way,
+                            positions: psts
+                        };
+                        api_wsd.postManualPosition(operation, function (result) {
+                            // Проверим на ошибку выполнения запроса api
+                            if (result === undefined || result === null) {
+                                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                console.log('[main_wsd] [postManualPosition] :' + mess);
+                                main_alert.clear_message();
+                                main_alert.out_error_message(mess);
+                                LockScreenOff();
+                            } else {
+                                if (result > 0) {
+                                    refresh_tree_way(1, function () {
+                                        main_alert.clear_message();
+                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
+                                        this.result = true;
+                                        this.$modal_obj.modal('hide');
+                                        LockScreenOff();
+                                    }.bind(this));
+
+                                } else {
+                                    if (result < 0) {
+                                        main_alert.clear_message();
+                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
+                                    } else {
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
+                                    }
+                                    LockScreenOff();
+                                }
+                            }
+                        }.bind(this));
+                        //mcf.open(
+                        //    langView('mwsd_title_form_apply', App.Langs),
+                        //    langView('mwsd_confirm_mess_apply_operation_manual', App.Langs).format(wagons.length),
+                        //    function () {
+                        //        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                        //        var operation = {
+                        //            id_way: current_id_way,
+                        //            positions: psts
+                        //        };
+                        //        api_wsd.postManualPosition(operation, function (result) {
+                        //            // Проверим на ошибку выполнения запроса api
+                        //            if (result === undefined || result === null) {
+                        //                var mess = langView('mwsd_mess_error_api', App.Langs);
+                        //                console.log('[main_wsd] [postManualPosition] :' + mess);
+                        //                main_alert.clear_message();
+                        //                main_alert.out_error_message(mess);
+                        //                LockScreenOff();
+                        //            } else {
+                        //                if (result > 0) {
+                        //                    refresh_tree_way(1, function () {
+                        //                        main_alert.clear_message();
+                        //                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
+                        //                        this.result = true;
+                        //                        this.$modal_obj.modal('hide');
+                        //                        LockScreenOff();
+                        //                    }.bind(this));
+
+                        //                } else {
+                        //                    if (result < 0) {
+                        //                        main_alert.clear_message();
+                        //                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
+                        //                    } else {
+                        //                        main_alert.clear_message();
+                        //                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
+                        //                    }
+                        //                    LockScreenOff();
+                        //                }
+                        //            }
+                        //        }.bind(this));
+                        //    }.bind(this),
+                        //    function () {
+                        //        main_alert.clear_message();
+                        //        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
+                        //    }.bind(this));
+                    }
+                }
             }
         });
 
@@ -766,36 +884,51 @@
                                 wagons = wagons.sort(function (a, b) {
                                     return Number(a.position) - Number(b.position)
                                 });
-                                var $form = $('<form class="row g-3 needs-validation" novalidate></form>')
+                                var $form = $('<form id="manual-position" class="row g-3 needs-validation" novalidate></form>')
                                 var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
                                 var $thead = $('<thead></thead>');
                                 var $tr = $('<tr></tr>');
-                                $tr.append('<th scope="col">Новый №</th>');
-                                $tr.append('<th scope="col">№</th>');
+                                $tr.append('<th scope="col">№ предл.</th>');
+                                $tr.append('<th scope="col">№ тек.</th>');
                                 $tr.append('<th scope="col">№ вагона</th>');
                                 $table.append($thead.append($tr));
                                 var $tbody = $('<tbody class="table-group-divider"></tbody>');
                                 for (var iw = 0; iw < wagons.length; iw++) {
                                     var $tr = $('<tr></tr>');
-                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId +'" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
+                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId + '" data-num="' + wagons[iw].num + '" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
                                     $tr.append('<td>' + wagons[iw].position + '</td>');
                                     $tr.append('<td>' + wagons[iw].num + '</td>');
                                     $tbody.append($tr);
                                 }
                                 $table.append($tbody);
                                 $form.append($table);
-
+                                //
+                                //$form.on("submit", function (event) {
+                                //    var valid = false;
+                                //    var inp = $('form#manual-position').find('input');
+                                //    $(inp[0]).addClass('ban');
+                                //    if (!valid) {
+                                //        event.stopPropagation();
+                                //    }
+                                //});
                                 mcf_mp.open(
                                     langView('mwsd_title_form_apply_manual_position', App.Langs),
-                                    $table,
+                                    $form,
                                     //langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
                                     function () {
-                                        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                                        //$form.submit();
 
+                                        //var inp = $('form#manual-position').find('input');
+                                        //$(inp[0]).addClass('ban');
+                                        //if (!valid) {
+                                        //    event.stopPropagation();
+                                        //}
+
+                                        //LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
                                     }.bind(this),
                                     function () {
                                         //main_alert.clear_message();
-                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual_position', App.Langs));
+                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
                                     }.bind(this));
                             } else {
                                 //main_alert.clear_message();
