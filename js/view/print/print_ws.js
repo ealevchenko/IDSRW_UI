@@ -356,9 +356,9 @@
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersDatetime) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersStationName) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].instructionalLettersNote) + '</td>');
-                $tr.append('<td>' + curr_cargo + '</td>');
+                $tr.append('<td>' + OutText(curr_cargo) + '</td>');
                 $tr.append('<td>' + OutText(ext_station) + '</td>');
-                $tr.append('<td>' + (wagons[iw].docOutgoingCar ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
+                $tr.append('<td>' + (wagons[iw].existLoadDocument ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
                 $tr.append('<td>' + (wagons[iw].endPreviousFiling===null ? OutText(wagons[iw].idPreviousFiling) : '') + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
                 $tbody.append($tr);
