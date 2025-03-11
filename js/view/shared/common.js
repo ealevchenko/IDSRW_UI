@@ -2739,6 +2739,7 @@ var get_belongs_element = function (rows, name_field, id) {
             hidden: true,
             centered: true,
             fsize: null,
+            modal_class: null,
             header_class: null,
             header_text: null,
             body_class: null,
@@ -2747,6 +2748,7 @@ var get_belongs_element = function (rows, name_field, id) {
             bt_ok_text: 'Ok',
             fn_init: null,              // Обработаем событие форма инициализировалась
             fn_close: null,             // Обработаем событие форма закрывается
+            fn_click_ok: null,          // Обработаем событие нажатия на кнопку
         }, options);
         this.result = false;
         //---------------------------------------------------------
@@ -2781,6 +2783,7 @@ var get_belongs_element = function (rows, name_field, id) {
         });
         add_class(modal_dialog.$html, this.settings.centered ? 'modal-dialog-centered' : null);
         add_class(modal_dialog.$html, this.settings.fsize !== null ? 'modal-' + this.settings.fsize : null);
+        add_class(modal_dialog.$html, this.settings.modal_class !== null ? this.settings.modal_class : null);
         var modal_content = new this.fe.div({
             class: 'modal-content',
         });
@@ -2821,9 +2824,15 @@ var get_belongs_element = function (rows, name_field, id) {
             color: 'primary',
             text: this.settings.bt_ok_text,
             fn_click: function (e) {
-                e.preventDefault();
-                this.result = true;
-                this.$modal_obj.modal('hide');
+                if (typeof this.settings.fn_click_ok === 'function') {
+                    this.settings.fn_click_ok.call(this,e);
+                } else {
+                    e.preventDefault();
+                    this.result = true;
+                    this.$modal_obj.modal('hide');
+                }
+
+
             }.bind(this)
         });
 
