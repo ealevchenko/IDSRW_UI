@@ -717,7 +717,7 @@
                     element_readonly: false,
                     element_min: 0,
                     element_max: 10000.0,
-                    element_step: 0.1,
+                    element_step: 0.01,
                     element_options: {
                         default: '',
                         fn_change: function (e) {
@@ -1190,7 +1190,7 @@
                     element_readonly: false,
                     element_min: 0,
                     element_max: 200.0,
-                    element_step: 0.1,
+                    element_step: 0.01,
                     element_options: {
                         default: '',
                         fn_change: function (e) {
