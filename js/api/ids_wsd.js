@@ -157,6 +157,10 @@
     ids_wsd.prototype.postAutoPosition = function (operation, callback) {
         this.api_com.post('/WSD/operation/way/auto_position/', operation, callback, callback);
     };
+    //АРМ, Операция ручная-расстановка вагонов с позиции
+    ids_wsd.prototype.postManualPosition = function (operation, callback) {
+        this.api_com.post('/WSD/operation/way/manual_position/', operation, callback, callback);
+    };
     //АРМ, Операция создать подачу (выгрузка)
     ids_wsd.prototype.postAddFilingUnloading = function (operation, callback) {
         this.api_com.post('/WSD/add/filing/operation/unloading/', operation, callback, callback);
