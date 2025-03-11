@@ -1704,7 +1704,8 @@
             {
                 field: 'vesg_filing',
                 data: function (row, type, val, meta) {
-                    return row.vesgFiling;
+                    return row.vesgFiling !== null ? (row.vesgFiling > 0 ? Number(row.vesgFiling / 1000).toFixed(2) : Number(row.vesgFiling).toFixed(2)) : null;
+                    
                 },
                 className: 'dt-body-right mw-50',
                 title: langView('tws_field_vesg_filing', App.Langs), width: "50px", orderable: true, searchable: true
@@ -2011,7 +2012,7 @@
                 field: 'current_vesg',
                 data: function (row, type, val, meta) {
                     if (row.moveCargoCreate !== null && row.moveCargoClose === null) {
-                        return row.currentVesg;
+                        return row.currentVesg !== null ? (row.currentVesg > 0 ? Number(row.currentVesg / 1000).toFixed(2) : Number(row.currentVesg).toFixed(2)) : null;
                     } else {
                         return null;
                     }
@@ -2024,7 +2025,7 @@
                 field: 'filing_vesg',
                 data: function (row, type, val, meta) {
                     if (row.filingMoveCargoCreate !== null && row.filingMoveCargoClose === null) {
-                        return row.filingVesg;
+                        return row.filingVesg !== null ? (row.filingVesg > 0 ? Number(row.filingVesg / 1000).toFixed(2) : Number(row.filingVesg).toFixed(2)) : null;
                     } else {
                         return null;
                     }
@@ -2036,7 +2037,7 @@
             {
                 field: 'last_vesg',
                 data: function (row, type, val, meta) {
-                    return row.currentVesg;
+                    return row.currentVesg !== null ? (row.currentVesg > 0 ? Number(row.currentVesg / 1000).toFixed(2) : Number(row.currentVesg).toFixed(2)) : null;
                 },
                 className: 'dt-body-right mw-50',
                 title: langView('tws_field_current_vesg', App.Langs), width: "50px", orderable: true, searchable: true

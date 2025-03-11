@@ -87,11 +87,11 @@
 
             'voplc_title_label_vesg': 'Вес:',
             'voplc_title_placeholder_vesg': 'Вес',
-            'voplc_text_label_vesg': 'Введите вес груза (кг.) ...',
+            'voplc_text_label_vesg': 'Введите вес груза (т.) ...',
 
             'voplc_title_label_vesg_total': 'Вес подачи:',
             'voplc_title_placeholder_vesg_total': 'Вес подачи',
-            'voplc_text_label_vesg_total': 'Введите общий вес (кг.) ...',
+            'voplc_text_label_vesg_total': 'Введите общий вес (т.) ...',
 
             'voplc_title_label_status_load': 'Статус:',
             'voplc_text_label_status_load': 'Выберите статус (груж./порож.)...',
@@ -715,8 +715,8 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: null,
-                    element_max: null,
+                    element_min: 0,
+                    element_max: 10000.0,
                     element_step: 0.1,
                     element_options: {
                         default: '',
@@ -1601,7 +1601,7 @@
                                                             id_devision_on: !uz_select ? result.new.datalist_id_devision_on : null,          // Подразделение АМКР прибытия
                                                             num_nakl: !uz_select ? result.new.input_text_num_nakl : null,                    // Накладная на вагон
                                                             id_internal_cargo: !uz_select ? result.new.datalist_id_internal_cargo : null,    // Внутрений груз
-                                                            vesg: result.new.input_text_vesg !== null ? Number(result.new.input_text_vesg) * 1000 : null,                                                                            // Вес груза
+                                                            vesg: result.new.input_text_vesg !== null ? Number((Number(result.new.input_text_vesg) * 1000).toFixed(0)) : null,                                                                            // Вес груза
                                                             id_status_load: get_result_select(result.new.select_id_status_load)
                                                         }
                                                     )
@@ -1611,7 +1611,7 @@
                                                 var operation = {
                                                     id_filing: this.id_filing,
                                                     num_filing: result.new.input_text_num_nakl_total,
-                                                    vesg: result.new.input_text_vesg_total !== null ? Number(result.new.input_text_vesg_total) * 1000 : null,
+                                                    vesg: result.new.input_text_vesg_total !== null ? Number((Number(result.new.input_text_vesg_total) * 1000).toFixed(0)) : null,
                                                     doc_received: result.new.input_datetime_time_document_total !== null ? result.new.input_datetime_time_document_total._i : null,
                                                     mode: mode,
                                                     wagons: list_wagons
@@ -1639,7 +1639,7 @@
                                                             id_devision_on: !uz_select ? result.new.datalist_id_devision_on : null,          // Подразделение АМКР прибытия
                                                             num_nakl: !uz_select ? result.new.input_text_num_nakl : null,                    // Накладная на вагон
                                                             id_internal_cargo: !uz_select ? result.new.datalist_id_internal_cargo : null,    // Внутрений груз
-                                                            vesg: result.new.input_text_vesg !== null ? Number(result.new.input_text_vesg) * 1000 : null,                                                                             // Вес груза
+                                                            vesg: result.new.input_text_vesg !== null ? Number((Number(result.new.input_text_vesg) * 1000).toFixed(0)) : null,                                                                             // Вес груза
                                                             id_status_load: get_result_select(result.new.select_id_status_load)
                                                         }
                                                     )
@@ -1648,7 +1648,7 @@
                                                 var operation = {
                                                     id_filing: this.id_filing,
                                                     num_filing: result.new.input_text_num_nakl_total,
-                                                    vesg: result.new.input_text_vesg_total !== null ? Number(result.new.input_text_vesg_total) * 1000 : null,
+                                                    vesg: result.new.input_text_vesg_total !== null ? Number((Number(result.new.input_text_vesg_total) * 1000).toFixed(0)) : null,
                                                     doc_received: result.new.input_datetime_time_document_total !== null ? result.new.input_datetime_time_document_total._i : null,
                                                     mode: mode,
                                                     wagons: list_wagons
