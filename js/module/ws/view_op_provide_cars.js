@@ -1543,7 +1543,7 @@
         }.bind(this));
         if (wagons_add !== null && wagons_add.length > 0) {
             var position = wagons !== null && wagons.length > 0 ? wagons.length + 1 : 1;
-            $.each(wagons_add, function (i, el) {
+            $.each(wagons_add.sort(function (a, b) { return a.position - b.position; }), function (i, el) {
                 el['position_new'] = position;
                 position++;
             }.bind(this));
