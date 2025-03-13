@@ -33,13 +33,13 @@
             'vopcf_title_type_filing_1': 'выгрузки',
             'vopcf_title_type_filing_2': 'погрузки',
             'vopcf_title_type_filing_3': 'очистки',
-/*            'vopcf_title_type_filing_4': 'обработки',*/
+            /*            'vopcf_title_type_filing_4': 'обработки',*/
 
             'vopcf_title_operation_type_filing_0': '',
             'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
-/*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
+            /*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
 
             'vopcf_title_label_period': 'Выборка за:',
             'vopcf_text_label_period': 'Выборка за указанный период',
@@ -1152,7 +1152,7 @@
                                         !(this.type_filing === 2 && data.currentLoadBusy) &&
                                         !(this.type_filing === 1 && data.currentUnloadBusy) &&
                                         !(this.type_filing === 3 && (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) &&
-/*                                        !(this.type_filing === 4 && data.currentProcessingBusy) &&*/
+                                        /*                                        !(this.type_filing === 4 && data.currentProcessingBusy) &&*/
                                         //!(data.idFiling !== null && data.wayFilingEnd === null) &&
                                         !(data.idFiling !== null && data.startFiling !== null && data.endFiling === null) &&
                                         data.id_wir_unload === null;
@@ -1202,7 +1202,12 @@
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
                             }
-                            if (this.type_filing === 3 && (rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) {
+                            if (this.type_filing === 3 &&
+                                (rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty &&
+                                    rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty &&
+                                    rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean)
+
+                            ) {
                                 e.preventDefault();
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_not_empty', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
                             }
