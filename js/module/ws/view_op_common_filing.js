@@ -1921,8 +1921,8 @@
                 LockScreenOff();
                 this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_run_wagon_filing', App.Langs).format(result ? result.result : -1));
                 // Выведем ошибки по вагонно.
-                if (result && result.listResult) {
-                    $.each(result.listResult, function (i, el) {
+                if (result && result.lResult) {
+                    $.each(result.lResult, function (i, el) {
                         if (el.result <= 0) this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
                     }.bind(this));
                 }
