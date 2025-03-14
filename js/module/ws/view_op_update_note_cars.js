@@ -279,6 +279,29 @@
                 this.settings.fn_init(this.result_init);
             }
         }
+        //
+        var view_setup_group = function (command) {
+            // Проверка на команды вызова функций
+            if (command) {
+                //if (typeof command.time_stop === "boolean") {
+                //    view_set_date_stop.call(this, command.time_stop); return;
+                //}
+            }
+
+            this.main_alert.clear_message();
+            // Получим информацию
+            var rows = this["twdgw_" + this.type_group].tab_com.get_select_row(); // Получим выбранные вагоны в подаче
+            if (rows !== null && rows.length > 0) {
+                var note = rows[0].wirNote2;
+                $.each(rows, function (i, el) {
+                    if (el.wirNote2 !== note) {
+                        note = '';
+                    }
+                }.bind(this));
+                this.form_group_wagons_setup.el.textarea_note2.val(note);
+            }
+            //form_group_wagons_setup.el.textarea_note2
+        }
         // Валидация правки подачи и операций над вагонами
         var validation = function (result) {
             // 0- add; >0 id ; null -not edit
@@ -324,6 +347,9 @@
                 fn_init: function () {
                     out_init_cgroup.call(this);
                 }.bind(this),
+                fn_view_setup_group: function (command) {
+                    view_setup_group.call(this, command);
+                },
                 fn_validation: function (result, mode) {
                     return validation.call(this, result, mode);
                 },

@@ -108,6 +108,7 @@
             fn_init_form_from_setup: null,          // Инициализация окна вагонов на пути from
             fn_init: null,                          // Окончание инициализации
             fn_view_open: null,                     // Открытие панели (дополнительная обработка перед открытием выбранной панели)
+            fn_view_setup_group: null,              // Отображение элементов окна правки группы вагонов(в зависимости от операции)
             fn_validation: null,                    // Валидация правки подачи и операций над вагонами (в зависимости от операции)
             fn_apply_update_wagons: null,           // Выполнить операцию править группу вагонов 
             fn_apply_update: null,                  // Выполнить update таблиц после выполнения операций над вагонами или подачи
@@ -517,7 +518,7 @@
                         }
                     }.bind(this),
                     fn_select_rows: function (rows) {
-
+                        this.view_setup_group();
                     }.bind(this),
                     fn_select_link: function (link) {
 
@@ -998,6 +999,13 @@
                 }.bind(this));
         }
     }
+
+    // Показать настройки подачи
+    view_op_common_group.prototype.view_setup_group = function (command) {
+        if (typeof this.settings.fn_view_setup_group === 'function') {
+            this.settings.fn_view_setup_group.call(this, command)
+        }
+    };
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
     view_op_common_group.prototype.validation = function (result, mode) {
