@@ -84,6 +84,7 @@
             return (i < objs.length ? '-' : '');
         }
     }
+
     var OutGroupText = function (i, count, text) {
         if (text) {
             return (i < count ? text : '')
