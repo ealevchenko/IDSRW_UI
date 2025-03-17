@@ -1250,6 +1250,113 @@ var get_belongs_element = function (rows, name_field, id) {
         }
         this.$html = col.$html;
     }
+    //<div class="col-auto">
+    //  <label for="inputPassword6" class="col-form-label">Password</label>
+    //</div>
+    //<div class="col-auto">
+    //  <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+    //</div>
+    form_element.prototype.bs_form_inline_input_group = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            name: null,
+            label: null,
+            element_html: null,
+            validation: false,
+            feedback_invalid: null,
+            feedback_valid: null,
+            feedback_class: null,
+            //col_prefix: null,
+            //col_size: null,
+            col_class: null,
+            group_fsize: null,
+            obj_form: null,
+            // В начало
+            group_prepend_class: null,
+            group_prepend_id: null,
+            group_prepend_html: null,
+            group_prepend_objs: null,
+            // В конец
+            group_append_class: null,
+            group_append_id: null,
+            group_append_html: null,
+            group_append_objs: null,
+            form_text: null,
+            form_text_class: null,
+        }, options);
+        var col_label = new this.fe.bs_col({
+            pref: null,
+            size: 'auto',
+            class: this.settings.col_class,
+        });
+        var col_input = new this.fe.bs_col({
+            pref: null,
+            size: 'auto',
+            class: this.settings.col_class,
+        });
+        var label = new this.fe.label({
+            class: 'col-form-label',
+            for: this.settings.id,
+            label: this.settings.label
+        });
+        var input_group = new this.fe.bs_input_group({
+            class: this.settings.validation ? 'has-validation' : null,
+        });
+        add_class(input_group.$html, this.settings.group_fsize !== null ? 'input-group-' + this.settings.group_fsize : null);
+        // group_prepend
+        if (this.settings.group_prepend_html !== null) {
+            var span_prepend = new this.fe.span({
+                id: this.settings.group_prepend_id,
+                class: 'input-group-text ' + (this.settings.group_prepend_class !== null ? this.settings.group_prepend_class : ''),
+                text: this.settings.group_prepend_html,
+            });
+            input_group.$html.prepend(span_prepend.$html);
+        }
+        if (this.settings.obj_form !== null && this.settings.group_prepend_objs !== null && this.settings.group_prepend_objs.length > 0) {
+            this.fe.add_obj(input_group.$html, this.settings.group_prepend_objs, this.settings.obj_form, function (content) {
+
+            }.bind(this));
+        };
+        // element_html
+        input_group.$html.append(this.settings.element_html);
+        // group_append
+        if (this.settings.group_append_html !== null) {
+            var span_append = new this.fe.span({
+                id: this.settings.group_append_id,
+                class: 'input-group-text ' + (this.settings.group_append_class !== null ? this.settings.group_append_class : ''),
+                text: this.settings.group_append_html,
+            });
+            input_group.$html.append(span_append.$html);
+        };
+        if (this.settings.obj_form !== null && this.settings.group_append_objs !== null && this.settings.group_append_objs.length > 0) {
+            this.fe.add_obj(input_group.$html, this.settings.group_append_objs, this.settings.obj_form, function (content) {
+
+            }.bind(this));
+        }
+
+        if (this.settings.validation) {
+            var feedback = new this.fe.div({
+                class: 'invalid-feedback' + (this.settings.feedback_class !== null ? this.settings.feedback_class : ''),
+            });
+            add_class(feedback.$html, this.settings.feedback_class);
+            feedback.$html.append(this.settings.feedback_invalid);
+            input_group.$html.append(feedback.$html);
+        }
+        col_label.$html.append(label.$html);
+        col_input.$html.append(input_group.$html);
+        if (this.settings.form_text !== null) {
+            var ftext = new this.fe.div({
+                id: this.settings.id + '-help',
+                class: 'form-text',
+            });
+            add_class(ftext.$html, this.settings.form_text_class);
+            ftext.$html.append(this.settings.form_text);
+            col_input.$html.append(ftext.$html);
+        }
+        this.$html = [col_label.$html, col_input.$html];
+    }
+
     //<div class="col-md-4">
     //    <label for="validationCustomUsername" class="form-label">Username</label>
     //    <div class="input-group has-validation">
@@ -1280,6 +1387,7 @@ var get_belongs_element = function (rows, name_field, id) {
             element_max: null,
             element_step: null,
             element_fn_change: null,
+            form_inline: false,
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -1316,33 +1424,60 @@ var get_belongs_element = function (rows, name_field, id) {
             max: this.settings.element_max,
             step: this.settings.element_step,
         });
-        var form_input = new this.fe.bs_form_input_group({
-            id: this.settings.id,
-            name: this.settings.name,
-            label: this.settings.label,
-            element_html: element.$html,
-            validation: this.settings.validation,
-            feedback_invalid: this.settings.feedback_invalid,
-            feedback_valid: this.settings.feedback_valid,
-            feedback_class: this.settings.feedback_class,
-            col_prefix: this.settings.col_prefix,
-            col_size: this.settings.col_size,
-            col_class: this.settings.col_class,
-            group_fsize: this.settings.element_fsize,
-            obj_form: this.settings.obj_form,
-            /*            group_prepend: this.settings.group_prepend,*/
-            group_prepend_class: this.settings.group_prepend_class,
-            group_prepend_id: this.settings.group_prepend_id,
-            group_prepend_html: this.settings.group_prepend_html,
-            group_prepend_objs: this.settings.group_prepend_objs,
-            /*            group_append: this.settings.group_append,*/
-            group_append_class: this.settings.group_append_class,
-            group_append_id: this.settings.group_append_id,
-            group_append_html: this.settings.group_append_html,
-            group_append_objs: this.settings.group_append_objs,
-            form_text: this.settings.form_text,
-            form_text_class: this.settings.form_text_class,
-        });
+        var form_input = null;
+        if (this.settings.form_inline) {
+            form_input = new this.fe.bs_form_inline_input_group({
+                id: this.settings.id,
+                name: this.settings.name,
+                label: this.settings.label,
+                element_html: element.$html,
+                validation: this.settings.validation,
+                feedback_invalid: this.settings.feedback_invalid,
+                feedback_valid: this.settings.feedback_valid,
+                feedback_class: this.settings.feedback_class,
+                col_class: this.settings.col_class,
+                group_fsize: this.settings.element_fsize,
+                obj_form: this.settings.obj_form,
+                group_prepend_class: this.settings.group_prepend_class,
+                group_prepend_id: this.settings.group_prepend_id,
+                group_prepend_html: this.settings.group_prepend_html,
+                group_prepend_objs: this.settings.group_prepend_objs,
+                group_append_class: this.settings.group_append_class,
+                group_append_id: this.settings.group_append_id,
+                group_append_html: this.settings.group_append_html,
+                group_append_objs: this.settings.group_append_objs,
+                form_text: this.settings.form_text,
+                form_text_class: this.settings.form_text_class,
+            });
+        } else {
+            form_input = new this.fe.bs_form_input_group({
+                id: this.settings.id,
+                name: this.settings.name,
+                label: this.settings.label,
+                element_html: element.$html,
+                validation: this.settings.validation,
+                feedback_invalid: this.settings.feedback_invalid,
+                feedback_valid: this.settings.feedback_valid,
+                feedback_class: this.settings.feedback_class,
+                col_prefix: this.settings.col_prefix,
+                col_size: this.settings.col_size,
+                col_class: this.settings.col_class,
+                group_fsize: this.settings.element_fsize,
+                obj_form: this.settings.obj_form,
+                /*            group_prepend: this.settings.group_prepend,*/
+                group_prepend_class: this.settings.group_prepend_class,
+                group_prepend_id: this.settings.group_prepend_id,
+                group_prepend_html: this.settings.group_prepend_html,
+                group_prepend_objs: this.settings.group_prepend_objs,
+                /*            group_append: this.settings.group_append,*/
+                group_append_class: this.settings.group_append_class,
+                group_append_id: this.settings.group_append_id,
+                group_append_html: this.settings.group_append_html,
+                group_append_objs: this.settings.group_append_objs,
+                form_text: this.settings.form_text,
+                form_text_class: this.settings.form_text_class,
+            });
+        }
         this.$html = form_input.$html;
         this.$element = element.$html;
     }
@@ -1370,7 +1505,7 @@ var get_belongs_element = function (rows, name_field, id) {
             element_required: null,
             element_readonly: false,
             element_size: null,
-            /*            element_options: null,*/
+            form_inline: false,
             validation: false,
             feedback_invalid: null,
             feedback_valid: null,
@@ -1404,31 +1539,60 @@ var get_belongs_element = function (rows, name_field, id) {
             size: this.settings.element_size,
             options: [],
         });
-        var form_input = new this.fe.bs_form_input_group({
-            id: this.settings.id,
-            name: this.settings.name,
-            label: this.settings.label,
-            element_html: element.$html,
-            validation: this.settings.validation,
-            feedback_invalid: this.settings.feedback_invalid,
-            feedback_valid: this.settings.feedback_valid,
-            feedback_class: this.settings.feedback_class,
-            col_prefix: this.settings.col_prefix,
-            col_size: this.settings.col_size,
-            col_class: this.settings.col_class,
-            group_fsize: this.settings.element_fsize,
-            obj_form: this.settings.obj_form,
-            group_prepend_class: this.settings.group_prepend_class,
-            group_prepend_id: this.settings.group_prepend_id,
-            group_prepend_html: this.settings.group_prepend_html,
-            group_prepend_objs: this.settings.group_prepend_objs,
-            group_append_class: this.settings.group_append_class,
-            group_append_id: this.settings.group_append_id,
-            group_append_html: this.settings.group_append_html,
-            group_append_objs: this.settings.group_append_objs,
-            form_text: this.settings.form_text,
-            form_text_class: this.settings.form_text_class,
-        });
+        var form_input = null;
+        if (this.settings.form_inline) {
+            form_input = new this.fe.bs_form_inline_input_group({
+                id: this.settings.id,
+                name: this.settings.name,
+                label: this.settings.label,
+                element_html: element.$html,
+                validation: this.settings.validation,
+                feedback_invalid: this.settings.feedback_invalid,
+                feedback_valid: this.settings.feedback_valid,
+                feedback_class: this.settings.feedback_class,
+                //col_prefix: this.settings.col_prefix,
+                //col_size: this.settings.col_size,
+                col_class: this.settings.col_class,
+                group_fsize: this.settings.element_fsize,
+                obj_form: this.settings.obj_form,
+                group_prepend_class: this.settings.group_prepend_class,
+                group_prepend_id: this.settings.group_prepend_id,
+                group_prepend_html: this.settings.group_prepend_html,
+                group_prepend_objs: this.settings.group_prepend_objs,
+                group_append_class: this.settings.group_append_class,
+                group_append_id: this.settings.group_append_id,
+                group_append_html: this.settings.group_append_html,
+                group_append_objs: this.settings.group_append_objs,
+                form_text: this.settings.form_text,
+                form_text_class: this.settings.form_text_class,
+            });
+        } else {
+            form_input = new this.fe.bs_form_input_group({
+                id: this.settings.id,
+                name: this.settings.name,
+                label: this.settings.label,
+                element_html: element.$html,
+                validation: this.settings.validation,
+                feedback_invalid: this.settings.feedback_invalid,
+                feedback_valid: this.settings.feedback_valid,
+                feedback_class: this.settings.feedback_class,
+                col_prefix: this.settings.col_prefix,
+                col_size: this.settings.col_size,
+                col_class: this.settings.col_class,
+                group_fsize: this.settings.element_fsize,
+                obj_form: this.settings.obj_form,
+                group_prepend_class: this.settings.group_prepend_class,
+                group_prepend_id: this.settings.group_prepend_id,
+                group_prepend_html: this.settings.group_prepend_html,
+                group_prepend_objs: this.settings.group_prepend_objs,
+                group_append_class: this.settings.group_append_class,
+                group_append_id: this.settings.group_append_id,
+                group_append_html: this.settings.group_append_html,
+                group_append_objs: this.settings.group_append_objs,
+                form_text: this.settings.form_text,
+                form_text_class: this.settings.form_text_class,
+            });
+        }
         this.$html = form_input.$html;
         this.$element = element.$html;
     }
@@ -2825,7 +2989,7 @@ var get_belongs_element = function (rows, name_field, id) {
             text: this.settings.bt_ok_text,
             fn_click: function (e) {
                 if (typeof this.settings.fn_click_ok === 'function') {
-                    this.settings.fn_click_ok.call(this,e);
+                    this.settings.fn_click_ok.call(this, e);
                 } else {
                     e.preventDefault();
                     this.result = true;
@@ -2934,6 +3098,7 @@ var get_belongs_element = function (rows, name_field, id) {
         // Настройки формы правки строк таблицы
         this.settings = $.extend({
             alert: null,
+            context: null,
             objs: [],
             id: null,
             add_type_element: true, // Добавлять в название $elementa тип.
@@ -2951,7 +3116,9 @@ var get_belongs_element = function (rows, name_field, id) {
         });
 
         this.$form = form.$html;
-
+        if (this.settings.context !== null) {
+            this.settings.context.append(this.$form);
+        }
         // Алерт 
         //if (!this.settings.alert) {
         //    var $alert = new this.fc.el_alert();
