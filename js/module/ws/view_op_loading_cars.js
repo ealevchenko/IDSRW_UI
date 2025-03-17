@@ -1675,7 +1675,7 @@
                                                             id_devision_on: !uz_select ? result.new.datalist_id_devision_on : null,                             // Подразделение АМКР прибытия
                                                             num_nakl: !uz_select ? result.new.input_text_num_nakl : null,                                       // Накладная на вагон
                                                             id_internal_cargo: !uz_select ? result.new.datalist_id_internal_cargo : null,                       // Внутрений груз
-                                                            vesg: result.new.input_text_vesg !== null ? Number(result.new.input_text_vesg) * 1000 : null,                                                                    // Вес груза
+                                                            vesg: result.new.input_text_vesg !== null ? Number((Number(result.new.input_text_vesg) * 1000).toFixed(0)) : null,   // Вес груза
                                                             id_status_load: el.filingIdLoadingStatus
                                                         }
                                                     )
@@ -1684,7 +1684,7 @@
                                                 var operation = {
                                                     id_filing: this.id_filing,
                                                     num_filing: result.new.input_text_num_nakl_total,
-                                                    vesg: result.new.input_text_vesg_total !== null ? Number(result.new.input_text_vesg_total) * 1000 : null,
+                                                    vesg: result.new.input_text_vesg_total !== null ? Number((Number(result.new.input_text_vesg_total) * 1000).toFixed(0)) : null,
                                                     doc_received: result.new.input_datetime_time_document_total !== null ? result.new.input_datetime_time_document_total._i : null,
                                                     mode: mode,
                                                     wagons: list_wagons
