@@ -2318,7 +2318,7 @@ var get_belongs_element = function (rows, name_field, id) {
             fn_check: null,
         }, options);
         this.init = function () {
-            this.update(this.settings.data, this.settings.default_value);
+            this.update(this.settings.data, this.settings.default);
             if (typeof this.settings.fn_change === 'function') {
                 this.$element.on("change", function (event) {
                     if (typeof this.settings.fn_change) {
