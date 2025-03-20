@@ -1705,7 +1705,7 @@
                 field: 'vesg_filing',
                 data: function (row, type, val, meta) {
                     return row.vesgFiling !== null ? (row.vesgFiling > 0 ? Number(row.vesgFiling / 1000).toFixed(2) : Number(row.vesgFiling).toFixed(2)) : null;
-                    
+
                 },
                 className: 'dt-body-right mw-50',
                 title: langView('tws_field_vesg_filing', App.Langs), width: "50px", orderable: true, searchable: true
@@ -4170,7 +4170,8 @@
                         data.currentWagonBusy ||
                         data.outgoingSostavStatus !== null ||
                         (data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty &&
-                            data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty)) {
+                            data.currentIdLoadingStatus !== App.wsd_setup.loading_status.dirty &&
+                            data.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean)) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл
