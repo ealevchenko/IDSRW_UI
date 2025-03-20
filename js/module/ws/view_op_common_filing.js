@@ -474,7 +474,12 @@
                                     event.preventDefault();
                                     // Очистить сообщения и форму
                                     this.clear_all();
-                                    this.view(this.id_way_unload);
+                                    /*                                  this.view(this.id_way_unload);*/
+                                    var id_station = this.id_station_unload;
+                                    this.id_station_unload = -1;
+                                    this.update(id_station, this.id_way_unload, function () {
+                                        LockScreenOff();
+                                    }.bind(this));
                                 }.bind(this),
                             }
                         };
@@ -1333,38 +1338,38 @@
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
-        // Определим время выборки
-        var date = this.form_filing_setup.el.input_datetime_time_period_start.val();
-        switch (this.type) {
-            case 1: {
-                // жд.сутки
-                this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
-                this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
-                this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                break;
-            }
-            case 2: {
-                //календарные сутки
-                this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
-                this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-                this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                break;
-            }
-            case 3: {
-                // месяц
-                this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
-                this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-                this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                break;
-            }
-            default: {
-                // по умолчанию
-                this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
-                this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
-                this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                break;
-            }
-        };
+        //// Определим время выборки
+        //var date = this.form_filing_setup.el.input_datetime_time_period_start.val();
+        //switch (this.type) {
+        //    case 1: {
+        //        // жд.сутки
+        //        this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
+        //        this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
+        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+        //        break;
+        //    }
+        //    case 2: {
+        //        //календарные сутки
+        //        this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
+        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+        //        break;
+        //    }
+        //    case 3: {
+        //        // месяц
+        //        this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
+        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+        //        break;
+        //    }
+        //    default: {
+        //        // по умолчанию
+        //        this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
+        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
+        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+        //        break;
+        //    }
+        //};
         // Сбросим вагоны переноса
         this.id_station_unload = -1;
         var id_station = -1;
@@ -1578,7 +1583,38 @@
     view_op_common_filing.prototype.load_of_filing_wagon = function (id_station, callback) {
         if (id_station !== null && id_station >= 0) {
             LockScreen(langView('vopcf_mess_load_filing_wagon', App.Langs));
-
+            // Определим время выборки
+            var date = this.form_filing_setup.el.input_datetime_time_period_start.val();
+            switch (this.type) {
+                case 1: {
+                    // жд.сутки
+                    this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
+                    this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
+                    this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                    break;
+                }
+                case 2: {
+                    //календарные сутки
+                    this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
+                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+                    this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                    break;
+                }
+                case 3: {
+                    // месяц
+                    this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
+                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+                    this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                    break;
+                }
+                default: {
+                    // по умолчанию
+                    this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
+                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
+                    this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                    break;
+                }
+            };
             var start = moment(this.start).format("YYYY-MM-DDTHH:mm");
             var stop = moment(this.stop).format("YYYY-MM-DDTHH:mm");
             this.view_com.api_wsd.getViewWagonsFilingOfPeriodIdStation(start, stop, id_station, function (wagons) {
@@ -1598,6 +1634,7 @@
                         st.countFilingWagons++;
                         st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
                         st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
                     }
                 }.bind(this));
                 this.wagons_filing = wagons;
