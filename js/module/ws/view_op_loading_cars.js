@@ -2809,6 +2809,7 @@
             // Получим последнюю дату операции
             var operation_end = get_max_element(rows, 'currentOperationEnd');
             var start_date = get_max_element(rows, 'filingStart');
+            var end_date = get_max_element(rows, 'filingEnd');
 
             var uz_select = $(this.$radio_loading[0]).prop('checked');
 
@@ -2924,11 +2925,13 @@
                                 this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_period_time', App.Langs).format(App.wsd_setup.load_period_min), false);
                                 valid = false;
                             } else {
-                                // проверим на тек дату
+                                // проверим на тек дату или последнюю введенную
                                 var curr = moment();
+                                if (end_date) {
+                                    curr = moment(end_date);
+                                }
                                 var minutes = dtstop.diff(curr, 'minutes');
                                 if (minutes < App.wsd_setup.load_stop_dt_min) {
-
                                     this.form_filing_wagons_setup.set_element_validation_error('time_stop', langView('voplc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.load_stop_dt_min * -1), false);
                                     valid = false;
                                 }
