@@ -369,7 +369,7 @@
             $body.append('<br />');
             var $table_gr = $('<table class=""></table>');
             var $tbody_gr = $('<tbody></tbody>');
-            var count = Math.max(rods.length, operations.length, conditions.length, liters_count);
+            var count = Math.max(rods.length, operations.length, conditions.length);
             for (var ig = 0; ig < count; ig++) {
                 var $tr_gr = $('<tr></tr>');
                 $tr_gr.append('<td>&nbsp;</td>');
@@ -387,8 +387,8 @@
                 $tr_gr.append('<td>' + OutGroupField(ig, conditions) + '</th>');
                 $tr_gr.append('<td class="total">' + OutGroupField(ig, conditions, 'count') + '</td>');
                 $tr_gr.append('<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>');
-                $tr_gr.append('<td class="total">' + OutGroupText(ig, liters_count, 'Писем :') + '</td>');
-                $tr_gr.append('<td class="total">' + OutGroupText(ig, liters_count, liters_count) + '</td>');
+                $tr_gr.append('<td class="total">' + (liters_count > 0 && ig == 0 ? 'Писем :' : '') + '</td>');
+                $tr_gr.append('<td class="total">' + (liters_count > 0 && ig == 0 ? liters_count : '') + '</td>');
                 $table_gr.append($tbody_gr.append($tr_gr));
             }
             $body.append($table_gr);
