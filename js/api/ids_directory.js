@@ -59,6 +59,8 @@
                 { name: 'divisions', list: null, fn_get: this.getDivisions.bind(this) },
                 { name: 'wagon_loading_status', list: null, fn_get: this.getWagonLoadingStatus.bind(this) },
                 { name: 'organization_service', list: null, fn_get: this.getOrganizationService.bind(this) },
+                { name: 'payer_arrival', list: null, fn_get: this.getPayerArrival.bind(this) },
+                { name: 'payer_sender', list: null, fn_get: this.getPayerSender.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -69,7 +71,22 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
-    //======= [Directory_getOrganizationService] (Справочник статусов загрузки вагонов) ===============
+    //======= [Directory_PayerArrival] (Справочник платильщиков по прибытию) ===============
+    ids_directory.prototype.getPayerArrival = function (callback) {
+        this.api_com.get('/DirectoryPayerArrival', callback);
+    };
+    ids_directory.prototype.getPayerArrivalCode = function (code, callback) {
+        this.api_com.get('/DirectoryPayerArrival/' + code, callback);
+    };
+    //======= [Directory_PayerSender] (Справочник платильщиков по отправке) ===============
+    ids_directory.prototype.getPayerSender = function (callback) {
+        this.api_com.get('/DirectoryPayerSender', callback);
+    };
+    ids_directory.prototype.getPayerSenderCode = function (code, callback) {
+        this.api_com.get('/DirectoryPayerSender/' + code, callback);
+    };
+
+    //======= [Directory_OrganizationService] (Справочник статусов загрузки вагонов) ===============
     ids_directory.prototype.getOrganizationService = function (callback) {
         this.api_com.get('/DirectoryOrganizationService', callback);
     };
@@ -949,7 +966,24 @@
     ids_directory.prototype.getListValueTextOrganizationService = function () {
         return this.getListOrganizationService('id', 'organizationService', ucFirst(App.Lang), function (i) { return i.delete === null }.bind(this));
     };
-
+    //*======= (Справочник payer_arrival) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllPayerArrival = function () {
+        var obj = this.api_com.getAllObj('payer_arrival');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getPayerArrival_Of_Code = function (code) {
+        return this.api_com.getObj_Of_field('payer_arrival', 'code', code);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListPayerArrival = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('payer_arrival', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextPayerArrival = function () {
+        return this.getListPayerArrival('code', 'payerName', ucFirst(App.Lang));
+    };
 
     App.ids_directory = ids_directory;
 
