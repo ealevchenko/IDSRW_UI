@@ -30,6 +30,17 @@
             'vs_cccsa_title_placeholder_time_period_start': 'Время начала',
             'vs_cccsa_title_button_new_period': 'Применить',
 
+            'vs_cccsa_title_label_num_epd': 'Найти накладную:',
+            'vs_cccsa_title_placeholder_num_epd': 'Найти накладную',
+            'vs_cccsa_text_label_num_epd': 'Выберите накладную ...',
+
+            'vs_cccsa_title_label_payer': 'Платильщик:',
+            'vs_cccsa_title_placeholder_payer': 'Платильщик',
+            'vs_cccsa_text_label_payer': 'Выберите платильщика ...',
+
+            'vs_cccsa_title_button_num_epd': 'Найти накладную ...',
+            'vs_cccsa_title_button_payer': 'Обновить платильщика ...',
+
             'vs_cccsa_title_period_1': 'ЖД сутки',
             'vs_cccsa_title_period_2': 'Календарные сутки',
             'vs_cccsa_title_period_3': 'От начала месяца',
@@ -90,6 +101,8 @@
         this.start = moment().set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
         this.stop = moment().set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
 
+        this.list_epd = [];
+        this.type = 1;
 
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
@@ -223,7 +236,7 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 1;
+                var process = 2;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
@@ -238,6 +251,9 @@
                     }
                 }.bind(this);
                 // инициализациия 
+                this.payer_arrival = this.api_dir.getAllPayerArrival();
+
+                this.list_payer_arrival = this.api_dir.getListValueTextPayerArrival();
                 // сформируем периоды { value: , text: , disabled: false }
                 this.list_period = [];
                 this.list_period.push({ value: 1, text: langView('vs_cccsa_title_period_1', App.Langs), disabled: false });
@@ -376,10 +392,189 @@
                         out_init(process);
                     }.bind(this),
                 });
+
+                this.form_register_accepted_wagons_setup = new FD();
+                // Создать макет панели
+                var objs_raw_setup = [];
+
+                var bt_searsh_epd = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: null,
+                        title: langView('vs_cccsa_title_button_num_epd', App.Langs),
+                        icon_fa_left: 'fa-solid fa-magnifying-glass',//<i class="fa-solid fa-magnifying-glass"></i>
+                        icon_fa_right: null,
+                        fn_click: null,
+                    }
+                };
+                var form_input_datalist_num_epd = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'common_raw_setup',
+                        id: 'num_epd',
+                        name: 'num_epd',
+                        label: langView('vs_cccsa_title_label_num_epd', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_cccsa_title_placeholder_num_epd', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_epd,
+                            out_value: false,
+                            out_group: true,
+                            default: null,
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        group_append_class: null,
+                        group_append_id: null,
+                        group_append_html: null,
+                        group_append_objs: [bt_searsh_epd],
+                        form_text: langView('vs_cccsa_text_label_num_epd', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                var bt_searsh_apply = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: null,
+                        title: langView('vs_cccsa_title_button_payer', App.Langs),
+                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: null,
+                    }
+                };
+                var form_input_datalist_payer = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'common_raw_setup',
+                        id: 'payer',
+                        name: 'payer',
+                        label: langView('vs_cccsa_title_label_payer', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_cccsa_title_placeholder_payer', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_payer_arrival,
+                            out_value: true,
+                            out_group: false,
+                            default: null,
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        group_append_class: null,
+                        group_append_id: null,
+                        group_append_html: null,
+                        group_append_objs: [bt_searsh_apply],
+                        form_text: langView('vs_cccsa_text_label_payer', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                var col_alert = {
+                    obj: 'bs_col',
+                    options: {
+                        id: 'col-alert-info',
+                        pref: 'md',
+                        size: 12,
+                        class: 'text-left',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var alert_info = {
+                    obj: 'bs_alert',
+                    options: {
+                        id: 'alert-info',
+                        class: null,
+                        style: null,
+                        color: 'primary',
+                        bt_close: true,
+                        fn_click_close: null,
+                    },
+                    childs: []
+                };
+
+                col_alert.childs.push(alert_info);
+                objs_raw_setup.push(col_alert);
+                objs_raw_setup.push(form_input_datalist_num_epd);
+                objs_raw_setup.push(form_input_datalist_payer);
+                this.form_register_accepted_wagons_setup.init({
+                    alert: this.main_alert,
+                    //context: this.div_form_period.$html,
+                    objs: objs_raw_setup,
+                    id: null,
+                    form_class: 'row g-3',
+                    validation: true,
+                    fn_validation: function (result) {
+                        // Валидация успешна
+                        if (result && result.valid) {
+
+                        }
+                    }.bind(this),
+                    fn_html_init: function (res) { }.bind(this),
+                    fn_element_init: null,
+                    fn_init: function (init) {
+                        this.register_accepted_wagons_setup.$html.append(this.form_register_accepted_wagons_setup.$form);
+                        //this.form_select_period.el.select_id_period.val(this.type); // выставим отчет по умолчанию
+                        // На проверку окончания инициализации
+                        process--;
+                        //console.log('[view_op_common_filing] [form_filing_setup]process: ' + process);
+                        out_init(process);
+                    }.bind(this),
+                });
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = ['station', 'park_ways', 'ways', 'divisions'];
+        this.default_db_names = ['payer_arrival'];
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
