@@ -1,5 +1,5 @@
 ﻿/* ===============================================
--= Модуль общая библиотека "ГРУПЫ ВАГОНОВ" =-
+-= Модуль сервис расчет стоимости перевозки по прибытию =-
   + js/view/shared/common.js
 ==================================================*/
 (function (window) {
@@ -45,6 +45,13 @@
             'vs_cccsa_title_period_2': 'Календарные сутки',
             'vs_cccsa_title_period_3': 'От начала месяца',
 
+            'vs_cccsa_load_main_docs': 'Загружаю документы за период...',
+            'vs_cccsa_load_docs': 'Загружаю информацию по накладной {0}...',
+
+            'vs_cccsa_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_cccsa_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} наклодных',
+
+            'vs_cccsa_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
 
         },
         'en':  //default language: English
@@ -63,6 +70,8 @@
 
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
+    var IDS_ARRIVAL = App.ids_arrival;
+    ;
     var TWS = App.table_ws;
 
     //-----------------------------------------------------------------------------------------
@@ -89,6 +98,7 @@
             alert: null,
             api_dir: null,                          // сылки на библиотеки api dir
             api_wsd: null,                          // сылки на библиотеки api wsd
+            ids_arrival: null,                      // сылки на библиотеки api arrival
             fn_init: null,                          // Окончание инициализации
             fn_db_update: null,                     // Выполнить обновление баз данных если были изменения
             fn_close: null,                         // ? пока неработает
@@ -97,6 +107,7 @@
         // Создадим ссылку на модуль работы с базой данных
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
+        this.ids_arrival = this.settings.ids_arrival ? this.settings.ids_arrival : new IDS_ARRIVAL({ url_api: App.Url_Api });
 
         this.start = moment().set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
         this.stop = moment().set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
@@ -271,7 +282,7 @@
                         class: 'col-auto',
                         fsize: 'sm',
                         color: 'success',
-                        text: null,
+                        text: 'Выбрать',
                         title: langView('vs_cccsa_title_button_new_period', App.Langs),
                         icon_fa_left: 'fa-solid fa-arrows-rotate',//<i class="fa-solid fa-arrows-rotate"></i>
                         icon_fa_right: null,
@@ -378,7 +389,56 @@
                     fn_validation: function (result) {
                         // Валидация успешна
                         if (result && result.valid) {
+                            LockScreen(langView('vs_cccsa_load_main_docs', App.Langs));
+                            // Определим время выборки
+                            var date = this.form_select_period.el.input_datetime_time_period_start.val();
+                            switch (this.type) {
+                                case 1: {
+                                    // жд.сутки
+                                    this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
+                                    this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
+                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                                    break;
+                                }
+                                case 2: {
+                                    //календарные сутки
+                                    this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
+                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                                    break;
+                                }
+                                case 3: {
+                                    // месяц
+                                    this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
+                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
+                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                                    break;
+                                }
+                                default: {
+                                    // по умолчанию
+                                    this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
+                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
+                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
+                                    break;
+                                }
+                            };
+                            var start = moment(this.start).format("YYYY-MM-DDTHH:mm");
+                            var stop = moment(this.stop).format("YYYY-MM-DDTHH:mm");
+                            this.ids_arrival.getListMainDocArrivalUzDocument(start, stop, function (list) {
+                                this.list_epd = [];
+                                if (list !== null && list.length > 0) {
 
+                                    $.each(list, function (i, el) {
+                                        if (el.nomMainDoc > 0) {
+                                            this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
+                                        }
+                                    }.bind(this));
+                                    this.form_register_accepted_wagons_setup.el.datalist_num_epd.update(this.list_epd, null);
+                                }
+                                this.register_accepted_wagons_alert_info.clear_message();
+                                this.register_accepted_wagons_alert_info.out_info_message(langView('vs_cccsa_mess_info_add_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_epd.length));
+                                LockScreenOff();
+                            }.bind(this));
                         }
                     }.bind(this),
                     fn_html_init: function (res) { }.bind(this),
@@ -409,7 +469,21 @@
                         title: langView('vs_cccsa_title_button_num_epd', App.Langs),
                         icon_fa_left: 'fa-solid fa-magnifying-glass',//<i class="fa-solid fa-magnifying-glass"></i>
                         icon_fa_right: null,
-                        fn_click: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.register_accepted_wagons_alert.clear_message();
+                            var id = this.form_register_accepted_wagons_setup.el.datalist_num_epd.val();
+                            if (id) {
+                                LockScreen(langView('vs_cccsa_load_docs', App.Langs).format(this.form_register_accepted_wagons_setup.el.datalist_num_epd.text()));
+                                this.ids_arrival.getArrivalUzDocument(id, function (list) {
+
+                                    LockScreenOff();
+                                }.bind(this));
+                            } else {
+                                this.register_accepted_wagons_alert.out_warning_message(langView('vs_cccsa_mess_war_not_select_docs', App.Langs));
+                            }
+
+                        }.bind(this),
                     }
                 };
                 var form_input_datalist_num_epd = {
@@ -557,14 +631,15 @@
                     fn_validation: function (result) {
                         // Валидация успешна
                         if (result && result.valid) {
-
                         }
                     }.bind(this),
                     fn_html_init: function (res) { }.bind(this),
                     fn_element_init: null,
                     fn_init: function (init) {
                         this.register_accepted_wagons_setup.$html.append(this.form_register_accepted_wagons_setup.$form);
-                        //this.form_select_period.el.select_id_period.val(this.type); // выставим отчет по умолчанию
+                        var alsert_info = $('div#alert-info');
+                        this.register_accepted_wagons_alert_info = new ALERT(alsert_info);
+                        this.register_accepted_wagons_alert_info.out_info_message(langView('vs_cccsa_mess_info_init', App.Langs));
                         // На проверку окончания инициализации
                         process--;
                         //console.log('[view_op_common_filing] [form_filing_setup]process: ' + process);
