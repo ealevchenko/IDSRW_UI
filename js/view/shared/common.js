@@ -2428,6 +2428,15 @@ var get_belongs_element = function (rows, name_field, id) {
             val_inp: 'value',
             check: null,
         }, options);
+
+        //this.escapeHtml = function (unsafe) {
+        //    return unsafe
+        //        .replace(/&/g, "&amp;")
+        //        .replace(/</g, "&lt;")
+        //        .replace(/>/g, "&gt;")
+        //        .replace(/"/g, "&quot;")
+        //        .replace(/'/g, "&#039;");
+        //};
         this.init = function () {
             this.id = element[0].id;
             this.alist = get_alist(this.settings.data);
@@ -2435,6 +2444,7 @@ var get_belongs_element = function (rows, name_field, id) {
             var el = content.find('#' + this.id);
             this.$element = el.flexdatalist({
                 minLength: this.settings.minLength,
+                selectionRequired: true,
                 searchContain: this.settings.searchContain,
                 valueProperty: 'value',
                 textProperty: this.settings.out_value ? '{value}, {label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']) : '{label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']),
