@@ -444,7 +444,7 @@
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная
-    table_common.prototype.init_button_Ex_Prn = function (btns) {
+    table_common.prototype.init_button_Ex_Prn_Pag = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
         buttons.push({ name: 'print', action: null });
@@ -453,6 +453,7 @@
                 buttons.push(el_button);
             }.bind(this));
         };
+        buttons.push({ name: 'page_length', action: null });
         return this.init_buttons(buttons, this.list_buttons);
     };
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
