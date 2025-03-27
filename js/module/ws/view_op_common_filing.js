@@ -1392,6 +1392,7 @@
             LockScreenOff();
         }.bind(this));
     }
+    //
     view_op_common_filing.prototype.isAddWagon = function (callback_ok, callback_not) {
         var wagons_add = this.wagons.filter(function (i) {
             return i.id_wir_unload !== null;
