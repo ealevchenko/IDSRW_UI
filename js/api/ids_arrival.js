@@ -59,6 +59,11 @@
     ids_arrival.prototype.getListMainDocArrivalUzDocument = function (start, stop, callback) {
         this.api_com.get('/ArrivalUzDocument/list/main_doc/start/' + start + '/stop/' + stop, callback);
     };
+    // Получить документы по прибытию храящиеся в БД
+    ids_arrival.prototype.getArrivalUzVagonOfIdDocument = function (id, callback) {
+        this.api_com.get('/ArrivalUzVagon/document/' + id, callback);
+    };
+
 
     App.ids_arrival = ids_arrival;
 
