@@ -23,12 +23,12 @@
             'vs_cccsa_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_arrival',
             'vs_cccsa_mess_load_operation': 'Загружаю форму операции',
 
-            'vs_cccsa_title_label_period': 'Выборка за:',
-            'vs_cccsa_text_label_period': 'Выборка за указанный период',
-            'vs_cccsa_title_time_period_start': 'С даты',
-            'vs_cccsa_text_time_period_start': 'Выборка с указаной даты',
-            'vs_cccsa_title_placeholder_time_period_start': 'Время начала',
-            'vs_cccsa_title_button_new_period': 'Применить',
+            //'vs_cccsa_title_label_period': 'Выборка за:',
+            //'vs_cccsa_text_label_period': 'Выборка за указанный период',
+            //'vs_cccsa_title_time_period_start': 'С даты',
+            //'vs_cccsa_text_time_period_start': 'Выборка с указаной даты',
+            //'vs_cccsa_title_placeholder_time_period_start': 'Время начала',
+            //'vs_cccsa_title_button_new_period': 'Применить',
 
             'vs_cccsa_title_label_num_epd': 'Найти накладную:',
             'vs_cccsa_title_placeholder_num_epd': 'Найти накладную',
@@ -41,9 +41,9 @@
             'vs_cccsa_title_button_num_epd': 'Найти накладную ...',
             'vs_cccsa_title_button_payer': 'Обновить платильщика ...',
 
-            'vs_cccsa_title_period_1': 'ЖД сутки',
-            'vs_cccsa_title_period_2': 'Календарные сутки',
-            'vs_cccsa_title_period_3': 'От начала месяца',
+            //'vs_cccsa_title_period_1': 'ЖД сутки',
+            //'vs_cccsa_title_period_2': 'Календарные сутки',
+            //'vs_cccsa_title_period_3': 'От начала месяца',
 
             'vs_cccsa_load_main_docs': 'Загружаю документы за период...',
             'vs_cccsa_load_docs': 'Загружаю информацию по накладной {0}...',
@@ -68,11 +68,13 @@
     var ALERT = App.alert_form;
     var FD = App.form_dialog;
 
+    var VFSP = App.view_form_select_period; // форма выбора периода
+
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
     var IDS_ARRIVAL = App.ids_arrival;
     ;
-    var TWS = App.table_ws;
+    var TSRV = App.table_services;
 
     //-----------------------------------------------------------------------------------------
     // Конструктор
@@ -109,11 +111,10 @@
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
         this.ids_arrival = this.settings.ids_arrival ? this.settings.ids_arrival : new IDS_ARRIVAL({ url_api: App.Url_Api });
 
-        this.start = moment().set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
-        this.stop = moment().set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
-
         this.list_epd = [];
-        this.type = 1;
+        this.id_doc = null;
+        //this.ArrivalUzDocument = null;
+        this.ArrivalUzVagon = null;
 
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
@@ -247,15 +248,15 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 2;
+                var process = 4;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
                         // На проверку окончания инициализации
                         //----------------------------------
+                        LockScreenOff();
                         if (typeof this.settings.fn_init === 'function') {
                             console.log('Close view_calc_cost_cargo_arrival');
-
                             this.settings.fn_init(this.result_init);
                         }
                         //----------------------------------
@@ -265,191 +266,62 @@
                 this.payer_arrival = this.api_dir.getAllPayerArrival();
 
                 this.list_payer_arrival = this.api_dir.getListValueTextPayerArrival();
-                // сформируем периоды { value: , text: , disabled: false }
-                this.list_period = [];
-                this.list_period.push({ value: 1, text: langView('vs_cccsa_title_period_1', App.Langs), disabled: false });
-                this.list_period.push({ value: 2, text: langView('vs_cccsa_title_period_2', App.Langs), disabled: false });
-                this.list_period.push({ value: 3, text: langView('vs_cccsa_title_period_3', App.Langs), disabled: false });
-                // Создадим форму (this.cost_calculation_setup)- по умолчанию
-                this.form_select_period = new FD();
-                // Создать макет панели
-                var objs_period = [];
-                var bt_new_period = {
-                    obj: 'bs_button',
-                    options: {
-                        id: 'new-period',
-                        name: 'new-period',
-                        class: 'col-auto',
-                        fsize: 'sm',
-                        color: 'success',
-                        text: 'Выбрать',
-                        title: langView('vs_cccsa_title_button_new_period', App.Langs),
-                        icon_fa_left: 'fa-solid fa-arrows-rotate',//<i class="fa-solid fa-arrows-rotate"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            //event.preventDefault();
-                            this.form_select_period.submit(event);
-                        }.bind(this),
-                    }
-                };
-                var form_select_period = {
-                    obj: 'bs_form_select',
-                    options: {
-                        validation_group: 'select_period',
-                        id: 'id_period',
-                        name: 'id_period',
-                        label: langView('vs_cccsa_title_label_period', App.Langs),
-                        element_fsize: 'sm',
-                        element_class: null,
-                        element_value: null,
-                        element_multiple: false,
-                        element_title: null,
-                        element_required: true,
-                        element_readonly: false,
-                        element_size: null,
-                        element_options: {
-                            data: this.list_period,
-                            default: this.type,
-                            fn_change: function (e) {
-                                e.preventDefault();
-                                // Обработать выбор
-                                var id = Number($(e.currentTarget).val());
-                                if (id !== this.type) {
-                                    this.type = id;
 
-                                }
-                            }.bind(this),
-                            fn_check: function (text) {
-
-                            }.bind(this),
-                        },
-                        form_inline: true,
-                        validation: true,
-                        feedback_invalid: null,
-                        feedback_valid: null,
-                        feedback_class: null,
-                        //col_prefix: null,
-                        //col_size: 'auto',
-                        col_class: null,
-                        //form_text: langView('vs_cccsa_text_label_period', App.Langs),
-                        //form_text_class: null,
-                    },
-                    childs: []
-                };
-                var form_input_datetime_time_period_start = {
-                    obj: 'bs_form_input_datetime',
-                    options: {
-                        validation_group: 'select_period',
-                        id: 'time_period_start',
-                        name: 'time_period_start',
-                        label: langView('vs_cccsa_title_time_period_start', App.Langs),
-                        element_type: 'date',
-                        element_fsize: 'sm',
-                        element_class: null,
-                        element_value: null,
-                        element_title: null,
-                        element_placeholder: langView('vs_cccsa_title_placeholder_time_period_start', App.Langs),
-                        element_required: true,
-                        element_maxlength: null,
-                        element_pattern: null,
-                        element_readonly: false,
-                        element_min: null,
-                        element_max: null,
-                        element_step: null,
-                        element_options: {
-                            default: moment(),
-                            format: 'date',
-                            out_format: 'moment',
-                            fn_change: function (e, dt) {
-                            }.bind(this),
-                        },
-                        form_inline: true,
-                        validation: true,
-                        feedback_invalid: null,
-                        feedback_valid: null,
-                        feedback_class: null,
-                        //col_prefix: null,
-                        //col_size: 'auto',
-                        col_class: null,
-                        //form_text: langView('vs_cccsa_text_time_period_start', App.Langs),
-                        //form_text_class: null,
-                    },
-                    childs: []
-                };
-                objs_period.push(form_select_period);
-                objs_period.push(form_input_datetime_time_period_start);
-                objs_period.push(bt_new_period);
+                this.form_select_period = new VFSP(this.div_form_period.$html);
                 this.form_select_period.init({
-                    alert: this.main_alert,
-                    //context: this.div_form_period.$html,
-                    objs: objs_period,
-                    id: null,
-                    form_class: 'row gy-2 gx-3 align-items-center',
-                    validation: true,
-                    fn_validation: function (result) {
-                        // Валидация успешна
-                        if (result && result.valid) {
-                            LockScreen(langView('vs_cccsa_load_main_docs', App.Langs));
-                            // Определим время выборки
-                            var date = this.form_select_period.el.input_datetime_time_period_start.val();
-                            switch (this.type) {
-                                case 1: {
-                                    // жд.сутки
-                                    this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
-                                    this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
-                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                                    break;
-                                }
-                                case 2: {
-                                    //календарные сутки
-                                    this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
-                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                                    break;
-                                }
-                                case 3: {
-                                    // месяц
-                                    this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
-                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                                    break;
-                                }
-                                default: {
-                                    // по умолчанию
-                                    this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
-                                    this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
-                                    //this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-                                    break;
-                                }
-                            };
-                            var start = moment(this.start).format("YYYY-MM-DDTHH:mm");
-                            var stop = moment(this.stop).format("YYYY-MM-DDTHH:mm");
-                            this.ids_arrival.getListMainDocArrivalUzDocument(start, stop, function (list) {
-                                this.list_epd = [];
-                                if (list !== null && list.length > 0) {
-
-                                    $.each(list, function (i, el) {
-                                        if (el.nomMainDoc > 0) {
-                                            this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
-                                        }
-                                    }.bind(this));
-                                    this.form_register_accepted_wagons_setup.el.datalist_num_epd.update(this.list_epd, null);
-                                }
-                                this.register_accepted_wagons_alert_info.clear_message();
-                                this.register_accepted_wagons_alert_info.out_info_message(langView('vs_cccsa_mess_info_add_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_epd.length));
-                                LockScreenOff();
-                            }.bind(this));
-                        }
-                    }.bind(this),
-                    fn_html_init: function (res) { }.bind(this),
-                    fn_element_init: null,
+                    alert: null,
                     fn_init: function (init) {
-                        this.div_form_period.$html.append(this.form_select_period.$form);
-                        //this.form_select_period.el.select_id_period.val(this.type); // выставим отчет по умолчанию
                         // На проверку окончания инициализации
                         process--;
-                        //console.log('[view_op_common_filing] [form_filing_setup]process: ' + process);
                         out_init(process);
+                    }.bind(this),                                              // Окончание инициализации
+                    apply_text: langView('vs_cccsa_load_main_docs', App.Langs), //
+                    fn_apply_select: function (type, start, stop) {
+                        if (type && start && stop) {
+                            //
+                            this.update(start, stop, this.id_doc, function () {
+
+                            }.bind(this));
+                        }
+
+                    }.bind(this),                                      // Применить выборку
+                })
+
+                //Создадим таблицы( this.tab_cost_calculation)
+                var row_cost_calculation = new this.fe_ui.bs_row({ id: 'services-table-cost-calculation', class: 'pt-2' });
+                this.cost_calculation_table.$html.append(row_cost_calculation.$html);
+
+                this.tab_cost_calculation = new TSRV('div#services-table-cost-calculation');
+                this.tab_cost_calculation.init({
+                    alert: this.from_way_alert,
+                    class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                    detali_table: false,
+                    type_report: 'cost_calculation',
+                    setup_buttons: [
+                    ],
+                    link_num: false,
+                    ids_wsd: null,
+                    fn_init: function () {
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    },
+                    fn_action_view_detali: function (rows) {
+
+                    },
+                    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+
+                    }.bind(this),
+                    fn_select_rows: function (rows, type) {
+
+                    }.bind(this),
+                    fn_select_link: function (link) {
+
+                    }.bind(this),
+                    fn_button_action: function (name, e, dt, node, config) {
+
+                    }.bind(this),
+                    fn_enable_button: function (tb) {
                     }.bind(this),
                 });
 
@@ -474,9 +346,7 @@
                             this.register_accepted_wagons_alert.clear_message();
                             var id = this.form_register_accepted_wagons_setup.el.datalist_num_epd.val();
                             if (id) {
-                                LockScreen(langView('vs_cccsa_load_docs', App.Langs).format(this.form_register_accepted_wagons_setup.el.datalist_num_epd.text()));
-                                this.ids_arrival.getArrivalUzDocument(id, function (list) {
-
+                                this.update_document(id, function (vagon) {
                                     LockScreenOff();
                                 }.bind(this));
                             } else {
@@ -646,6 +516,45 @@
                         out_init(process);
                     }.bind(this),
                 });
+
+                //Создадим таблицы( this.tab_register_accepted_wagons)
+                var row_register_accepted_wagons = new this.fe_ui.bs_row({ id: 'table-register-accepted-wagons', class: 'pt-2' });
+                this.register_accepted_wagons_table.$html.append(row_register_accepted_wagons.$html);
+
+                this.tab_register_accepted_wagons = new TSRV('div#table-register-accepted-wagons');
+                this.tab_register_accepted_wagons.init({
+                    alert: this.from_way_alert,
+                    class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                    detali_table: false,
+                    type_report: 'register_accepted_wagons',
+                    setup_buttons: [
+                    ],
+                    link_num: false,
+                    ids_wsd: null,
+                    fn_init: function () {
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    },
+                    fn_action_view_detali: function (rows) {
+
+                    },
+                    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+
+                    }.bind(this),
+                    fn_select_rows: function (rows, type) {
+
+                    }.bind(this),
+                    fn_select_link: function (link) {
+
+                    }.bind(this),
+                    fn_button_action: function (name, e, dt, node, config) {
+
+                    }.bind(this),
+                    fn_enable_button: function (tb) {
+                    }.bind(this),
+                });
+
             }
         }.bind(this);
         // Библиотеки по умолчанию
@@ -659,50 +568,201 @@
         }.bind(this)); //------- {end this.load_db}
     };
     //
-    view_calc_cost_cargo_arrival.prototype.view = function (id_way) {
-        // Если указана станция выполним коррекцию по станции
-        /*        this.view_com.open();*/
-        LockScreen(langView('vs_cccsa_mess_load_operation', App.Langs));
-        // Очистить сообщения и форму
-        this.from_way_alert.clear_message();
-        this.group_wagons_alert.clear_message();
-        this.form_group_wagons_setup.clear_all();
-        this.form_from_setup.clear_all();
-        this.form_searsh_wagon.el.textarea_vagon_searsh.val('');
-        this.wagons = [];
-        this.wagons_group = [];
-        // Сбросим вагоны переноса
-        this.id_station_from = -1;
-        var id_station = -1;
-        this.id_way_from = -1;
+    //view_calc_cost_cargo_arrival.prototype.view = function (id_way) {
+    //    // Если указана станция выполним коррекцию по станции
+    //    /*        this.view_com.open();*/
+    //    LockScreen(langView('vs_cccsa_mess_load_operation', App.Langs));
+    //    // Очистить сообщения и форму
+    //    this.from_way_alert.clear_message();
+    //    this.group_wagons_alert.clear_message();
+    //    this.form_group_wagons_setup.clear_all();
+    //    this.form_from_setup.clear_all();
+    //    this.form_searsh_wagon.el.textarea_vagon_searsh.val('');
+    //    this.wagons = [];
+    //    this.wagons_group = [];
+    //    // Сбросим вагоны переноса
+    //    this.id_station_from = -1;
+    //    var id_station = -1;
+    //    this.id_way_from = -1;
 
-        //if (id_way > 0) {
-        //    var way = this.view_com.api_dir.getWays_Of_Id(id_way);
-        //    if (way) {
-        //        id_station = way.idStation;
-        //        // Отобразим выбор на панеле
-        //        this.form_from_setup.el.select_id_station_from.val(id_station);
-        //    }
-        //};
-        // Дополнительная обработка в панели выбранной операции
-        if (typeof this.settings.fn_view_open === 'function') {
-            this.settings.fn_view_open.call(this, function () {
-            }.bind(this));
-        };
-        this.update(id_station, id_way, function (wagons) {
-            LockScreenOff();
-        }.bind(this));
-    }
+    //    //if (id_way > 0) {
+    //    //    var way = this.view_com.api_dir.getWays_Of_Id(id_way);
+    //    //    if (way) {
+    //    //        id_station = way.idStation;
+    //    //        // Отобразим выбор на панеле
+    //    //        this.form_from_setup.el.select_id_station_from.val(id_station);
+    //    //    }
+    //    //};
+    //    // Дополнительная обработка в панели выбранной операции
+    //    if (typeof this.settings.fn_view_open === 'function') {
+    //        this.settings.fn_view_open.call(this, function () {
+    //        }.bind(this));
+    //    };
+    //    this.update(id_station, id_way, function (wagons) {
+    //        LockScreenOff();
+    //    }.bind(this));
+    //}
     // Обновить все
-    view_calc_cost_cargo_arrival.prototype.update = function (id_station, id_way_from, callback) {
-        // Обновим состояние станции
-        //this.update_station(id_station, id_way_from, function (wagons) {
-        //    this.view_wagons();
-        if (typeof callback === 'function') {
-            callback(wagons);
-        }
-        /*        }.bind(this));*/
+    view_calc_cost_cargo_arrival.prototype.update = function (start, stop, id_doc, callback) {
+        // Обновим
+        var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
+        var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
+        this.ids_arrival.getListMainDocArrivalUzDocument(sel_start, sel_stop, function (list) {
+            this.list_epd = [];
+            if (list !== null && list.length > 0) {
+
+                $.each(list, function (i, el) {
+                    if (el.nomMainDoc > 0) {
+                        this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
+                    }
+                }.bind(this));
+                var exist_id = this.list_epd.find(function (o) {
+                    return o.value === id_doc;
+                }.bind(this));
+                if (!exist_id) {
+                    this.id_doc = null;
+                } else {
+                    this.id_doc = id_doc;
+                }
+                this.form_register_accepted_wagons_setup.el.datalist_num_epd.update(this.list_epd, this.id_doc);
+                if (this.id_doc) {
+                    this.update_document(this.id_doc, function (document) {
+                        LockScreenOff();
+                    }.bind(this));
+                }
+            }
+            this.register_accepted_wagons_alert_info.clear_message();
+            this.register_accepted_wagons_alert_info.out_info_message(langView('vs_cccsa_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_epd.length));
+            LockScreenOff();
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }.bind(this));
     };
+    // Загрузить вагоны на выбраном пути прибытия в масив this.wagons (подготовить поля для вагонов приема)
+    view_calc_cost_cargo_arrival.prototype.load_of_id_doc = function (id_doc, callback) {
+        if (id_doc !== null && id_doc >= 0) {
+            this.id_doc = id_doc;
+            LockScreen(langView('vs_cccsa_load_docs', App.Langs).format(this.form_register_accepted_wagons_setup.el.datalist_num_epd.text()));
+
+            var pr_1 = 2;
+            var out_pr1 = function (pr_1) {
+                if (pr_1 === 0) {
+                    // Событие обновили данные
+                    LockScreenOff();
+                    if (typeof callback === 'function') {
+                        callback(this.ArrivalUzDocument, this.ArrivalUzVagon);
+                    }
+                }
+            }.bind(this);
+            //
+            this.ids_arrival.getArrivalUzDocument(id_doc, function (ArrivalUzDocument) {
+                this.ArrivalUzDocument = ArrivalUzDocument;
+                pr_1--;
+                out_pr1(pr_1);
+            }.bind(this));
+            //
+            this.ids_arrival.getArrivalUzVagonOfIdDocument(id_doc, function (ArrivalUzVagon) {
+                this.ArrivalUzVagon = ArrivalUzVagon;
+                pr_1--;
+                out_pr1(pr_1);
+            }.bind(this));
+        } else {
+            this.id_doc = null;
+            this.ArrivalUzDocument = null;
+            this.ArrivalUzVagon = null;
+            // Событие обновили данные
+            if (typeof callback === 'function') {
+                callback(this.ArrivalUzDocument, this.ArrivalUzVagon);
+            }
+        }
+    };
+
+    view_calc_cost_cargo_arrival.prototype.update_document = function (id_doc, callback) {
+        if (id_doc) {
+            this.load_of_id_doc(id_doc, function (document, vagons) {
+                if (document !== null && document) {
+                    var vagons = document.arrivalUzVagons;
+                    var vagons_data = [];
+                    var document_data = [];
+                    var summ_vesg = 0;
+                    var summ_arrivalUzVagonPays = 0;
+                    $.each(vagons, function (i, el) {
+                        // Тариф ПРИБ
+                        var arrivalUzVagonPays = 0;
+                        if (el.arrivalUzVagonPays && el.arrivalUzVagonPays.length > 0) {
+                            $.each(el.arrivalUzVagonPays, function (i, el) {
+                                arrivalUzVagonPays += (el.summa ? Number(el.summa) : 0);
+                            }.bind(this));
+                        }
+                        summ_arrivalUzVagonPays += arrivalUzVagonPays;
+                        summ_vesg += el.vesg ? Number(el.vesg) : 0;
+                        //
+                        vagons_data.push({
+                            id: el.id,
+                            nomMainDoc: document.nomMainDoc,
+                            num: el.num,
+                            dateOtpr: document.dateOtpr,
+                            dateAdoption: el.idArrivalNavigation.dateAdoption,
+                            nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
+                            nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
+                            arrivalCargoName: el.idCargoNavigation['cargoName' + ucFirst(App.Lang)],
+                            arrivalOperatorAbbr: el.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)],
+                            toDivisionAbbr: el.idDivisionOnAmkrNavigation['divisionAbbr' + ucFirst(App.Lang)],
+                            payerSenderCode: document.codePayerSenderNavigation ? document.codePayerSenderNavigation.code : null,
+                            payerSenderName: document.codePayerSenderNavigation ? document.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)] : null,
+                            payerArrivalCode: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation.code : null,
+                            payerArrivalName: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                            payerLocalCode: document.codePayerLocalNavigation ? document.codePayerLocalNavigation.code : null,
+                            payerLocalName: document.codePayerLocalNavigation ? document.codePayerLocalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                            vesg: el.vesg,
+                            arrivalUzVagonPays: arrivalUzVagonPays,
+                        });
+                    }.bind(this));
+                    //
+                    document_data.push({
+                        id: document.id,
+                        nomMainDoc: document.nomMainDoc,
+                        countVagon: vagons.length,
+                        nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
+                        nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
+                        arrivalCargoName: vagons_data[0].arrivalCargoName,
+                        vesg: summ_vesg,
+                        tariffContract: document.tariffContract,
+                        payerLocalCode: document.codePayerLocalNavigation ? document.codePayerLocalNavigation.code : null,
+                        payerLocalName: document.codePayerLocalNavigation ? document.codePayerLocalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        arrivalOperatorAbbr: vagons_data[0].arrivalOperatorAbbr,
+                        toDivisionAbbr: vagons_data[0].toDivisionAbbr,
+                        payerSenderCode: document.codePayerSenderNavigation ? document.codePayerSenderNavigation.code : null,
+                        payerSenderName: document.codePayerSenderNavigation ? document.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        payerArrivalCode: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation.code : null,
+                        payerArrivalName: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        dateOtpr: document.dateOtpr,
+                        arrivalUzVagonPays: summ_arrivalUzVagonPays,
+                        deffTariff: document.tariffContract !== null && summ_arrivalUzVagonPays !== null ? document.tariffContract - summ_arrivalUzVagonPays : 0,
+                        calcPayer: document.calcPayer,
+                        calcPayerUser: document.calcPayerUser
+                    });
+                    this.tab_cost_calculation.view(document_data);
+                    this.tab_register_accepted_wagons.view(vagons_data);
+                } else {
+                    this.tab_cost_calculation.view([]);
+                    this.tab_register_accepted_wagons.view([]);
+                }
+                //if (vagons !== null && vagons.length > 0) {
+                //    this.tab_register_accepted_wagons.view(vagons);
+                //} else {
+                //    this.tab_register_accepted_wagons.view([]);
+                //}
+                LockScreenOff();
+                // Событие обновили данные
+                if (typeof callback === 'function') {
+                    callback(document);
+                }
+            }.bind(this));
+        }
+    };
+
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
     view_calc_cost_cargo_arrival.prototype.validation = function (result, mode) {
