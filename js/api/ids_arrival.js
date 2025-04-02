@@ -64,6 +64,14 @@
         this.api_com.get('/ArrivalUzVagon/document/' + id, callback);
     };
 
+    //АРМ, обновить ArrivalUzDocumentPay
+    ids_arrival.prototype.postUpdateArrivalUzDocumentPay = function (value, callback) {
+        this.api_com.post('/ArrivalUzDocument/update/pay/', value, callback);
+    };
+    //АРМ, обновить ArrivalUzDocument -> PayerLocal
+    ids_arrival.prototype.postArrivalUzDocumentPayerLocal = function (value, callback) {
+        this.api_com.post('/ArrivalUzDocument/update/payer_local/', value, callback);
+    };
 
     App.ids_arrival = ids_arrival;
 
