@@ -36,7 +36,8 @@
             'tsrv_field_payerLocalCode': 'Плательщик',
             'tsrv_field_payerLocalName': 'Плательщик',
             'tsrv_field_vesg': 'Вес ЭПД, тн.',
-            'tsrv_field_arrivalUzVagonPays': 'Тариф ПРИБ',
+            'tsrv_field_arrivalUzVagonPays': 'Тариф ПРИБ (ваг.)',
+            'tsrv_field_arrivalUZDocumentPay': 'Тариф ПРИБ (док)',
             'tsrv_field_countVagon': 'Кол. ваг.',
             'tsrv_field_tariffContract': 'Ж.д. тариф по договору, грн.',
             'tsrv_field_deffTariff': 'Разница, грн.',
@@ -473,6 +474,14 @@
                 title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
+                field: 'arrivalUZDocumentPay',
+                data: function (row, type, val, meta) {
+                    return row.arrivalUZDocumentPay;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
                 field: 'countVagon',
                 data: function (row, type, val, meta) {
                     return row.countVagon;
@@ -556,6 +565,7 @@
         collums.push({ field: 'payerArrivalCode', title: null, class: null });
         collums.push({ field: 'dateOtpr', title: null, class: null });
         collums.push({ field: 'arrivalUzVagonPays', title: null, class: null });
+        collums.push({ field: 'arrivalUZDocumentPay', title: null, class: null });
         collums.push({ field: 'deffTariff', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
@@ -600,8 +610,12 @@
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.wimId); // id строки дислокации вагона
-                    //$(row).attr('data-num', data.num); // data-num номер вагона
+                    $(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.nomMainDoc); // data-num номер вагона
+                    if (data.calcPayer !== null)
+                    {
+                        $(row).addClass('green');  // Отметим вагон заблокирован
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_cost_calculation();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
@@ -628,7 +642,11 @@
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.fromIdWim); // id строки дислокации вагона в момент отправки
+                    $(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.payerLocalCode !== null) {
+                        $(row).addClass('green');  // Отметим вагон заблокирован
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_register_accepted_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Pag(this.tab_com.settings.setup_buttons);
