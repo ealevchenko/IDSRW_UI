@@ -976,6 +976,10 @@
     ids_directory.prototype.getPayerArrival_Of_Code = function (code) {
         return this.api_com.getObj_Of_field('payer_arrival', 'code', code);
     };
+    // Получить записи по имени
+    ids_directory.prototype.getPayerArrival_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('payer_arrival', name, text);
+    };
     // Получить списки (Value, Text, Desabled) по указоным полям
     ids_directory.prototype.getListPayerArrival = function (fvalue, ftext, lang, filter) {
         return this.api_com.getListObj('payer_arrival', fvalue, ftext, lang, filter);
@@ -984,7 +988,27 @@
     ids_directory.prototype.getListValueTextPayerArrival = function () {
         return this.getListPayerArrival('code', 'payerName', ucFirst(App.Lang));
     };
-
+    // Получить существующий 
+    ids_directory.prototype.getExistPayerArrival = function (code, name) {
+        var obj_db = null;
+        var result = {};
+        if (code !== null && code !== '') {
+            var obj = this.getPayerArrival_Of_Code(code);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getPayerArrival_Of_Name('payerName' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.code = obj_db.code;
+            result.name = obj_db['payerName' + ucFirst(App.Lang)];
+            return result;
+        } else return null; // Объект не найден
+    };
     App.ids_directory = ids_directory;
 
     window.App = App;
