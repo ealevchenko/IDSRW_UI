@@ -402,7 +402,7 @@
                     element_readonly: false,
                     element_options: {
                         data: this.list_devision,
-                        out_value: false,
+                        out_value: true,
                         out_group: true,
                         default: null,
                         minLength: 1,
