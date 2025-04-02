@@ -2444,7 +2444,7 @@ var get_belongs_element = function (rows, name_field, id) {
             var el = content.find('#' + this.id);
             this.$element = el.flexdatalist({
                 minLength: this.settings.minLength,
-                selectionRequired: true,
+                //selectionRequired: true,
                 searchContain: this.settings.searchContain,
                 valueProperty: 'value',
                 textProperty: this.settings.out_value ? '{value}, {label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']) : '{label}'.concat(this.settings.out_group ? [' [{group}]'] : ['']),
