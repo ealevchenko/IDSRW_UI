@@ -468,7 +468,7 @@
             {
                 field: 'arrivalUzVagonPays',
                 data: function (row, type, val, meta) {
-                    return row.arrivalUzVagonPays;
+                    return row.arrivalUzVagonPays !== null ? Number(row.arrivalUzVagonPays).toFixed(2) : null;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
@@ -476,7 +476,7 @@
             {
                 field: 'arrivalUZDocumentPay',
                 data: function (row, type, val, meta) {
-                    return row.arrivalUZDocumentPay;
+                    return row.arrivalUZDocumentPay !== null ? Number(row.arrivalUZDocumentPay).toFixed(2) : null;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
@@ -564,7 +564,7 @@
         collums.push({ field: 'payerSenderCode', title: null, class: null });
         collums.push({ field: 'payerArrivalCode', title: null, class: null });
         collums.push({ field: 'dateOtpr', title: null, class: null });
-        collums.push({ field: 'arrivalUzVagonPays', title: null, class: null });
+/*        collums.push({ field: 'arrivalUzVagonPays', title: null, class: null });*/
         collums.push({ field: 'arrivalUZDocumentPay', title: null, class: null });
         collums.push({ field: 'deffTariff', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
@@ -578,6 +578,7 @@
         collums.push({ field: 'nomMainDoc', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
         collums.push({ field: 'dateOtpr', title: null, class: null });
+        collums.push({ field: 'dateAdoption', title: null, class: null });
         collums.push({ field: 'nameStnFrom', title: null, class: null });
         collums.push({ field: 'nameStnTo', title: null, class: null });
         collums.push({ field: 'arrivalCargoName', title: null, class: null });
@@ -612,13 +613,12 @@
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.nomMainDoc); // data-num номер вагона
-                    if (data.calcPayer !== null)
-                    {
+                    if (data.calcPayer !== null) {
                         $(row).addClass('green');  // Отметим вагон заблокирован
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_cost_calculation();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
@@ -649,7 +649,7 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_register_accepted_wagons();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };

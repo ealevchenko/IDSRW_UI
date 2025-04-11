@@ -17,7 +17,7 @@
     {
         'default':  //default language: ru
         {
-            'vs_cccsa_card_header_group_wagons': 'Расчет стоимости перевозки груза по прибытию',
+            'vs_cccsa_card_header_group_wagons': 'РЕЕСТР ПРИНЯТЫХ ВАГОНОВ',
             'vs_cccsa_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
             'vs_cccsa_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
             'vs_cccsa_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_arrival',
@@ -161,8 +161,8 @@
 
         this.list_epd = [];
         this.id_doc = null;
-        //this.ArrivalUzDocument = null;
-        this.ArrivalUzVagon = null;
+        this.ArrivalUzDocument = null;
+        //this.ArrivalUzVagon = null;
         this.start = null;
         this.stop = null;
         // Главный Alert
@@ -301,9 +301,9 @@
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
-
-                        this.cost_calculation_setup.$html.append(this.form_document_pay.$form);
                         this.cost_calculation_setup.$html.append(this.form_cost_calculation_setup.$form);
+                        this.cost_calculation_setup.$html.append(this.form_document_pay.$form);
+
                         // На проверку окончания инициализации
                         //----------------------------------
                         LockScreenOff();
@@ -341,112 +341,6 @@
                     }.bind(this),                                      // Применить выборку
                 })
 
-                // Тариф по прибытию
-                this.form_document_pay = new FD();
-                var objs_dp_setup = [];
-                var bt_apply_doc_pay = {
-                    obj: 'bs_button',
-                    options: {
-                        id: null,
-                        name: null,
-                        class: null,
-                        fsize: 'sm',
-                        color: 'success',
-                        text: null,
-                        title: langView('vs_cccsa_title_button_doc_pay', App.Langs),
-                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            event.preventDefault();
-                            this.form_document_pay.$form.submit();
-                        }.bind(this),
-                    }
-                };
-                var form_input_doc_pay = {
-                    obj: 'bs_form_input',
-                    options: {
-                        validation_group: 'common_dp_setup',
-                        id: 'doc_pay',
-                        name: 'doc_pay',
-                        label: langView('vs_cccsa_title_label_doc_pay', App.Langs),
-                        element_type: 'number',
-                        element_fsize: 'sm',
-                        element_class: null,
-                        element_value: null,
-                        element_title: null,
-                        element_placeholder: langView('vs_cccsa_title_placeholder_doc_pay', App.Langs),
-                        element_required: true,
-                        element_maxlength: null,
-                        element_pattern: null,
-                        element_readonly: false,
-                        element_min: 0,
-                        element_max: 100000000.0,
-                        element_step: 0.01,
-                        element_options: {
-                            default: '',
-                            fn_change: function (e) {
-                                var value = $(e.currentTarget).val();
-                                this.validation_doc_pay(value, 'doc_pay', false, true)
-                            }.bind(this),
-                        },
-                        validation: true,
-                        feedback_invalid: null,
-                        feedback_valid: null,
-                        feedback_class: null,
-                        col_prefix: 'md',
-                        col_size: 12,
-                        col_class: 'mt-0',
-                        group_append_class: null,
-                        group_append_id: null,
-                        group_append_html: null,
-                        group_append_objs: [bt_apply_doc_pay],
-                        form_text: langView('vs_cccsa_text_label_doc_pay', App.Langs),
-                        form_text_class: null,
-                    },
-                    childs: []
-                };
-                objs_dp_setup.push(form_input_doc_pay);
-                this.form_document_pay.init({
-                    alert: this.main_alert,
-                    //context: this.div_form_period.$html,
-                    objs: objs_dp_setup,
-                    id: null,
-                    form_class: 'row g-3',
-                    validation: true,
-                    fn_validation: function (result) {
-                        // Валидация успешна
-                        if (result && result.valid) {
-                            var valid = this.validation_document_pay(result);
-                            if (valid) {
-                                this.mcf_lg.open(
-                                    langView('vs_cccsa_title_form_apply', App.Langs),
-                                    langView('vs_cccsa_mess_run_update_document_pay', App.Langs).format(this.arrivalUZDocumentPay, result.new.input_text_doc_pay),
-                                    function () {
-                                        // Принять
-                                        var operation = {
-                                            id_document: this.ArrivalUzDocument.id,
-                                            summa: result.new.input_text_doc_pay,
-                                            kod: "001",
-                                        };
-                                        this.apply_update_doc_pay(operation, function () {
-
-                                        }.bind(this));
-                                    }.bind(this),
-                                    function () {
-                                        this.main_alert.out_warning_message(langView('vs_cccsa_cancel_update_document_pay', App.Langs));
-                                    }.bind(this));
-                            }
-                        }
-                    }.bind(this),
-                    fn_html_init: function (res) { }.bind(this),
-                    fn_element_init: null,
-                    fn_init: function (init) {
-                        //this.cost_calculation_setup.$html.append(this.form_document_pay.$form);
-                        // На проверку окончания инициализации
-                        process--;
-                        out_init(process);
-                    }.bind(this),
-                });
                 // Платильщики
                 this.form_cost_calculation_setup = new FD();
                 var objs_cc_setup = [];
@@ -612,7 +506,7 @@
                     //context: this.div_form_period.$html,
                     objs: objs_cc_setup,
                     id: null,
-                    form_class: 'row g-3 mt-2 border-top border-primary',
+                    form_class: 'row g-3',
                     validation: true,
                     fn_validation: function (result) {
                         // Валидация успешна
@@ -650,6 +544,114 @@
                         out_init(process);
                     }.bind(this),
                 });
+
+                // Тариф по прибытию
+                this.form_document_pay = new FD();
+                var objs_dp_setup = [];
+                var bt_apply_doc_pay = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: null,
+                        title: langView('vs_cccsa_title_button_doc_pay', App.Langs),
+                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.form_document_pay.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var form_input_doc_pay = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'common_dp_setup',
+                        id: 'doc_pay',
+                        name: 'doc_pay',
+                        label: langView('vs_cccsa_title_label_doc_pay', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_cccsa_title_placeholder_doc_pay', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                this.validation_doc_pay(value, 'doc_pay', false, true)
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        group_append_class: null,
+                        group_append_id: null,
+                        group_append_html: null,
+                        group_append_objs: [bt_apply_doc_pay],
+                        form_text: langView('vs_cccsa_text_label_doc_pay', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                objs_dp_setup.push(form_input_doc_pay);
+                this.form_document_pay.init({
+                    alert: this.main_alert,
+                    //context: this.div_form_period.$html,
+                    objs: objs_dp_setup,
+                    id: null,
+                    form_class: 'row g-3 mt-2 border-top border-primary',
+                    validation: true,
+                    fn_validation: function (result) {
+                        // Валидация успешна
+                        if (result && result.valid) {
+                            var valid = this.validation_document_pay(result);
+                            if (valid) {
+                                this.mcf_lg.open(
+                                    langView('vs_cccsa_title_form_apply', App.Langs),
+                                    langView('vs_cccsa_mess_run_update_document_pay', App.Langs).format(this.arrivalUZDocumentPay, result.new.input_text_doc_pay),
+                                    function () {
+                                        // Принять
+                                        var operation = {
+                                            id_document: this.ArrivalUzDocument.id,
+                                            summa: result.new.input_text_doc_pay,
+                                            kod: "001",
+                                        };
+                                        this.apply_update_doc_pay(operation, function () {
+
+                                        }.bind(this));
+                                    }.bind(this),
+                                    function () {
+                                        this.main_alert.out_warning_message(langView('vs_cccsa_cancel_update_document_pay', App.Langs));
+                                    }.bind(this));
+                            }
+                        }
+                    }.bind(this),
+                    fn_html_init: function (res) { }.bind(this),
+                    fn_element_init: null,
+                    fn_init: function (init) {
+                        //this.cost_calculation_setup.$html.append(this.form_document_pay.$form);
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    }.bind(this),
+                });
+
                 //Создадим таблицы( this.tab_cost_calculation)
                 var row_cost_calculation = new this.fe_ui.bs_row({ id: 'services-table-cost-calculation', class: 'pt-2' });
                 this.cost_calculation_table.$html.append(row_cost_calculation.$html);
@@ -688,6 +690,8 @@
                     }.bind(this),
                 });
 
+
+
                 this.form_register_accepted_wagons_setup = new FD();
                 // Создать макет панели
                 var objs_raw_setup = [];
@@ -714,6 +718,7 @@
                                 }.bind(this));
                             } else {
                                 this.register_accepted_wagons_alert.out_warning_message(langView('vs_cccsa_mess_war_not_select_docs', App.Langs));
+                                this.form_register_accepted_wagons_setup.set_element_validation_error('num_epd', langView('vs_cccsa_mess_error_not_document', App.Langs), true);
                                 this.clear_data();
                                 LockScreenOff();
                             }
@@ -948,43 +953,6 @@
         }.bind(this));
     };
     // Загрузить вагоны на выбраном пути прибытия в масив this.wagons (подготовить поля для вагонов приема)
-    //view_calc_cost_cargo_arrival.prototype.load_of_id_doc = function (id_doc, callback) {
-    //    if (id_doc !== null && id_doc >= 0) {
-    //        this.id_doc = id_doc;
-    //        LockScreen(langView('vs_cccsa_load_docs', App.Langs).format(this.form_register_accepted_wagons_setup.el.datalist_num_epd.text()));
-
-    //        var pr_1 = 2;
-    //        var out_pr1 = function (pr_1) {
-    //            if (pr_1 === 0) {
-    //                // Событие обновили данные
-    //                LockScreenOff();
-    //                if (typeof callback === 'function') {
-    //                    callback(this.ArrivalUzDocument, this.ArrivalUzVagon);
-    //                }
-    //            }
-    //        }.bind(this);
-    //        //
-    //        this.ids_arrival.getArrivalUzDocument(id_doc, function (ArrivalUzDocument) {
-    //            this.ArrivalUzDocument = ArrivalUzDocument;
-    //            pr_1--;
-    //            out_pr1(pr_1);
-    //        }.bind(this));
-    //        //
-    //        this.ids_arrival.getArrivalUzVagonOfIdDocument(id_doc, function (ArrivalUzVagon) {
-    //            this.ArrivalUzVagon = ArrivalUzVagon;
-    //            pr_1--;
-    //            out_pr1(pr_1);
-    //        }.bind(this));
-    //    } else {
-    //        this.id_doc = null;
-    //        this.ArrivalUzDocument = null;
-    //        this.ArrivalUzVagon = null;
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.ArrivalUzDocument, this.ArrivalUzVagon);
-    //        }
-    //    }
-    //};
     view_calc_cost_cargo_arrival.prototype.load_of_id_doc = function (id_doc, callback) {
         if (id_doc !== null && id_doc >= 0) {
             this.id_doc = id_doc;
@@ -1111,6 +1079,8 @@
     view_calc_cost_cargo_arrival.prototype.clear_data = function () {
         this.tab_cost_calculation.view([]);
         this.tab_register_accepted_wagons.view([]);
+        this.id_doc = null;
+        this.ArrivalUzDocument = null;
         this.arrivalUZDocumentPay = null;
         this.codePayerLocal = null;
         this.tariffContract = null;
@@ -1220,7 +1190,8 @@
         valid = valid & this.validation_payer(result.new.datalist_payer, 'payer', false, false);
         valid = valid & this.validation_tariff_contract(result.new.input_text_tariff_contract, 'tariff_contract', false, false);
         if (this.ArrivalUzDocument == null) {
-            this.form_cost_calculation_setup.validation_common_cc_setup.out_error_message(langView('vs_cccsa_mess_error_not_document', App.Langs));
+            //this.form_cost_calculation_setup.validation_common_cc_setup.out_error_message(langView('vs_cccsa_mess_error_not_document', App.Langs));
+            this.form_register_accepted_wagons_setup.set_element_validation_error('num_epd', langView('vs_cccsa_mess_error_not_document', App.Langs), false);
             valid = false;
         }
         if (result.new && result.new.input_text_tariff_contract >= 0 && result.new.datalist_payer !== null) {
@@ -1264,6 +1235,7 @@
             var tariff_contract = this.form_cost_calculation_setup.el.input_text_tariff_contract.val();
             if (result >= 0) {
                 // Ок
+                /*this.id_doc = null;*/
                 mess_ok = langView('vs_cccsa_mess_ok_update_cost_calculation', App.Langs).format(num_doc, payer_local, tariff_contract);
             } else {
                 mess_error = langView('vs_cccsa_mess_error_update_cost_calculation', App.Langs).format(payer_local, tariff_contract, num_doc, result);
@@ -1283,6 +1255,8 @@
         this.update(this.start, this.stop, this.id_doc, function () {
             if (mess_ok) {
                 this.main_alert.out_info_message(mess_ok);
+                this.id_doc = null;
+                this.form_register_accepted_wagons_setup.el.datalist_num_epd.val(null);
             }
             if (mess_err) {
                 this.main_alert.out_error_message(mess_err);
@@ -1292,20 +1266,6 @@
                 callback();
             }
         }.bind(this));
-
-        //var id = this.form_register_accepted_wagons_setup.el.datalist_num_epd.val();
-        //this.update_document(id, function (vagon) {
-        //    if (mess_ok) {
-        //        this.main_alert.out_info_message(mess_ok);
-        //    }
-        //    if (mess_err) {
-        //        this.main_alert.out_error_message(mess_err);
-        //    }
-        //    LockScreenOff();
-        //    if (typeof callback === 'function') {
-        //        callback();
-        //    }
-        //}.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
