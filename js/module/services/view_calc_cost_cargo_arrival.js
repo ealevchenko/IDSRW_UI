@@ -1055,7 +1055,7 @@
                     this.tab_register_accepted_wagons.view(vagons_data);
                     //
                     this.arrivalUZDocumentPay = arrivalUZDocumentPay;
-                    this.codePayerLocal = document.codePayerLocalNavigation ? document.codePayerLocalNavigation.code : null;
+                    this.codePayerLocal = (document.codePayerLocalNavigation && this.codePayerLocal == null) ? document.codePayerLocalNavigation.code : this.codePayerLocal;
                     this.tariffContract = document.tariffContract;
 
                     this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
