@@ -110,7 +110,7 @@
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
     var IDS_ARRIVAL = App.ids_arrival;
-    ;
+
     var TSRV = App.table_services;
 
     //-----------------------------------------------------------------------------------------
@@ -629,7 +629,7 @@
                                         // Принять
                                         var operation = {
                                             id_document: this.ArrivalUzDocument.id,
-                                            summa: result.new.input_text_doc_pay,
+                                            summa: Number(result.new.input_text_doc_pay * 100).toFixed(0),
                                             kod: "001",
                                         };
                                         this.apply_update_doc_pay(operation, function () {
@@ -1047,14 +1047,14 @@
                         dateOtpr: document.dateOtpr,
                         arrivalUzVagonPays: summ_arrivalUzVagonPays,
                         arrivalUZDocumentPay: arrivalUZDocumentPay,
-                        deffTariff: document.tariffContract !== null && arrivalUZDocumentPay !== null ? document.tariffContract - arrivalUZDocumentPay : 0,
+                        deffTariff: document.tariffContract !== null && arrivalUZDocumentPay !== null ? document.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
                         calcPayer: document.calcPayer,
                         calcPayerUser: document.calcPayerUser
                     });
                     this.tab_cost_calculation.view(document_data);
                     this.tab_register_accepted_wagons.view(vagons_data);
                     //
-                    this.arrivalUZDocumentPay = arrivalUZDocumentPay;
+                    this.arrivalUZDocumentPay = arrivalUZDocumentPay !== null ? Number(arrivalUZDocumentPay / 100) : null;
                     this.codePayerLocal = (document.codePayerLocalNavigation && this.codePayerLocal == null) ? document.codePayerLocalNavigation.code : this.codePayerLocal;
                     this.tariffContract = document.tariffContract;
 

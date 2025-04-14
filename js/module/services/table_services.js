@@ -468,7 +468,7 @@
             {
                 field: 'arrivalUzVagonPays',
                 data: function (row, type, val, meta) {
-                    return row.arrivalUzVagonPays !== null ? Number(row.arrivalUzVagonPays).toFixed(2) : null;
+                    return row.arrivalUzVagonPays !== null ? Number(row.arrivalUzVagonPays/100).toFixed(2) : null;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
@@ -476,7 +476,7 @@
             {
                 field: 'arrivalUZDocumentPay',
                 data: function (row, type, val, meta) {
-                    return row.arrivalUZDocumentPay !== null ? Number(row.arrivalUZDocumentPay).toFixed(2) : null;
+                    return row.arrivalUZDocumentPay !== null ? Number(row.arrivalUZDocumentPay/100).toFixed(2) : null;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
