@@ -75,89 +75,7 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
 
-    // Состояние загрузки
-    var loading_status = {
-        empty: 0,              //Порожний
-        loaded_arr: 1,         //Груженый ПРИБ
-        loaded_ip: 2,          //Груженый В/З
-        dirty: 3,              //Грязный
-        frozen: 4,             //Мерзлый
-        tech_malfunction: 5,   //Тех.неисправность
-        loaded_uz: 6,          //Груженый УЗ
-        re_edging: 7,          //Перекантовка
-        empty_clean: 8,        //Порожний чист
-    }
     // Операции
-    var operations = {
-        unloading_uz: 13,
-        unloading_if: 14,
-        loading_uz: 15,
-        loading_if: 16,
-        cleaning: 17,
-        /*        processing: 18,*/
-    }
-
-    App.wsd_setup = {
-        control_way_devision: false, // TODO: загружать, контроль выхода пути на цех
-        arrival_start_dt_min: -180,
-        arrival_start_dt_max: 180,
-        outgoing_start_dt_min: -180,
-        outgoing_start_dt_max: 180,
-        return_start_dt_min: -180,
-        return_start_dt_max: 180,
-        dislocation_start_dt_min: -180,
-        dislocation_start_dt_max: 180,
-
-        dissolution_start_dt_min: -180,
-        dissolution_start_dt_max: 180,
-        dissolution_period_min: 5,
-        //dissolution_period_max: 1440,
-        dissolution_stop_dt_min: -180,
-        dissolution_stop_dt_max: 180,
-
-        provide_start_dt_min: -180,
-        provide_start_dt_max: 180,
-        provide_dt_apply_min: -2880,
-        provide_dt_apply_max: 180,
-
-        sending_uz_start_dt_min: -180,
-        sending_uz_start_dt_max: 180,
-
-        load_start_dt_min: -1440,
-        load_start_dt_max: 180,
-        load_document_dt_min: -180,
-        load_document_dt_max: 180,
-        load_period_min: 5,
-        //load_period_max: 1440,
-        load_stop_dt_min: -180,
-        load_stop_dt_max: 180,
-
-        unload_start_dt_min: -1440,
-        unload_start_dt_max: 180,
-        unload_period_min: 5,
-        //unload_period_max: 1440,
-        unload_stop_dt_min: -180,
-        unload_stop_dt_max: 180,
-
-        cleaning_start_dt_min: -1440,
-        cleaning_start_dt_max: 180,
-        cleaning_period_min: 5,
-        //cleaning_period_max: 1440,
-        cleaning_stop_dt_min: -180,
-        cleaning_stop_dt_max: 180,
-
-        //processing_start_dt_min: -1440,
-        //processing_start_dt_max: 180,
-        //processing_period_min: 5,
-        ////processing_period_max: 1440,
-        //processing_stop_dt_min: -180,
-        //processing_stop_dt_max: 180,
-
-        operations: operations,
-        loading_status: loading_status,
-        list_empty_group: [11, 16, 20],
-    }
-
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
     //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
@@ -177,6 +95,8 @@
     var VSCCCA = App.view_calc_cost_cargo_arrival;
     var vsccca = new VSCCCA('main.container-fluid');
 
+    var VSVIA = App.view_verification_invoices_arrival;
+    var vsvia = new VSVIA('main.container-fluid');
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -242,28 +162,47 @@
                 break;
             }
         }
-
-
         // Загрузим справочники
         load_db(['station', 'ways'], true, function (result) {
             var process = 1;
             // Выход из инициализации
             var out_init = function (process) {
                 if (process === 0) {
+                    switch (id) {
+                        case 'ccca': {
+                            vsccca.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
 
-                    vsccca.init({
-                        alert: null,
-                        api_dir: null,
-                        api_wsd: null,
-                        fn_db_update: null,
-                        fn_init: function () {
-
-                        },
-                        fn_close: function (upd) {
-
+                                }
+                            });
+                            break;
                         }
-                    });
-                    LockScreenOff();
+                        case 'via': {
+                            vsvia.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
+
+                                }
+                            });
+                            break;
+                        }
+                        default: {
+                            LockScreenOff();break;
+                        }
+                    }
                 }
             }.bind(this);
 
