@@ -1082,7 +1082,7 @@
         this.id_doc = null;
         this.ArrivalUzDocument = null;
         this.arrivalUZDocumentPay = null;
-        this.codePayerLocal = null;
+        this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
         this.tariffContract = null;
 
         this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
