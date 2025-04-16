@@ -923,7 +923,7 @@
             if (list !== null && list.length > 0) {
 
                 $.each(list, function (i, el) {
-                    if (el.nomMainDoc > 0) {
+                    if (el.nomMainDoc > 0 && !el.nomDoc) {
                         this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? "расчет :" + moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
                     }
                 }.bind(this));
