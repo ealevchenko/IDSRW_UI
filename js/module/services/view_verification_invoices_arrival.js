@@ -302,6 +302,7 @@
                 this.form_select_period = new VFSP(this.div_form_period.$html);
                 this.form_select_period.init({
                     alert: null,
+                    form_class: 'row g-3 border-bottom border-primary',//
                     fn_init: function (init) {
                         // На проверку окончания инициализации
                         process--;
@@ -328,7 +329,7 @@
                     options: {
                         id: 'col-alert-info',
                         pref: 'md',
-                        size: 12,
+                        size: 6,
                         class: 'text-left',
                         style: null,
                     },
@@ -413,7 +414,7 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 2,
+                        col_size: 6,
                         col_class: 'row',
                         group_append_class: null,
                         group_append_id: null,
@@ -1006,10 +1007,10 @@
         this.clear_all();
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
-        this.ids_arrival.getListMainDocArrivalUzDocument(sel_start, sel_stop, function (list) {
-            this.list_epd = [];
-            if (list !== null && list.length > 0) {
-
+        this.ids_arrival.getVerificationArrivalUzVagon(sel_start, sel_stop, function (vagons) {
+            this.list_vagons = [];
+            if (vagons !== null && vagons.length > 0) {
+                this.list_vagons = vagons;
                 //$.each(list, function (i, el) {
                 //    if (el.nomMainDoc > 0) {
                 //        this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? "расчет :" + moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
@@ -1033,7 +1034,7 @@
                 //}
             }
             this.searsh_alert_info.clear_message();
-            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_epd.length));
+            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_vagons.length));
             LockScreenOff();
             if (typeof callback === 'function') {
                 callback();

@@ -72,6 +72,11 @@
     ids_arrival.prototype.postArrivalUzDocumentPayerLocal = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/payer_local/', value, callback);
     };
+    // Получить список документов (id, №Накл. дата расчета) по прибытию храящиеся в БД за период
+    ids_arrival.prototype.getVerificationArrivalUzVagon = function (start, stop, callback) {
+        this.api_com.get('/ArrivalUzVagon/verification/start/' + start + '/stop/' + stop, callback);
+    };
+
 
     App.ids_arrival = ids_arrival;
 
