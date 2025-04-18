@@ -98,7 +98,7 @@
             'vs_via_load_docs': 'Загружаю информацию по накладной {0}...',
 
             'vs_via_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            'vs_via_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} наклодных',
+            'vs_via_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} принятых вагонов, загруженно {3} вагонов с рассчетом ж.д. тарифа.',
 
             'vs_via_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
 
@@ -171,12 +171,12 @@
             bt_ok_text: langView('vs_via_button_Ok', App.Langs),
         });
 
-        this.list_epd = [];
-        this.id_doc = null;
-        this.ArrivalUzDocument = null;
-        //this.ArrivalUzVagon = null;
+
         this.start = null;
         this.stop = null;
+
+        this.list_vagons = [];
+        this.select_vagons = [];
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
             id: null,
@@ -273,7 +273,7 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 3;
+                var process = 4;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
@@ -920,39 +920,39 @@
                 var row_verification_invoices_wagons = new this.fe_ui.bs_row({ id: 'table-verification-invoices-wagons', class: 'pt-2' });
                 this.verification_invoices_table.$html.append(row_verification_invoices_wagons.$html);
 
-                //this.tab_register_accepted_wagons = new TSRV('div#table-register-accepted-wagons');
-                //this.tab_register_accepted_wagons.init({
-                //    alert: this.from_way_alert,
-                //    class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
-                //    detali_table: false,
-                //    type_report: 'register_accepted_wagons',
-                //    setup_buttons: [
-                //    ],
-                //    link_num: false,
-                //    ids_wsd: null,
-                //    fn_init: function () {
-                //        // На проверку окончания инициализации
-                //        process--;
-                //        out_init(process);
-                //    },
-                //    fn_action_view_detali: function (rows) {
+                this.tab_verification_invoices_wagons = new TSRV('div#table-verification-invoices-wagons');
+                this.tab_verification_invoices_wagons.init({
+                    alert: this.from_way_alert,
+                    class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                    detali_table: false,
+                    type_report: 'verification_invoices_wagons',
+                    setup_buttons: [
+                    ],
+                    link_num: false,
+                    ids_wsd: null,
+                    fn_init: function () {
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    },
+                    fn_action_view_detali: function (rows) {
 
-                //    },
-                //    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                    },
+                    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
 
-                //    }.bind(this),
-                //    fn_select_rows: function (rows, type) {
+                    }.bind(this),
+                    fn_select_rows: function (rows, type) {
 
-                //    }.bind(this),
-                //    fn_select_link: function (link) {
+                    }.bind(this),
+                    fn_select_link: function (link) {
 
-                //    }.bind(this),
-                //    fn_button_action: function (name, e, dt, node, config) {
+                    }.bind(this),
+                    fn_button_action: function (name, e, dt, node, config) {
 
-                //    }.bind(this),
-                //    fn_enable_button: function (tb) {
-                //    }.bind(this),
-                //});
+                    }.bind(this),
+                    fn_enable_button: function (tb) {
+                    }.bind(this),
+                });
 
             }
         }.bind(this);
@@ -966,42 +966,7 @@
             out_load(pr_load);
         }.bind(this)); //------- {end this.load_db}
     };
-    //
-    //view_verification_invoices_arrival.prototype.view = function (id_way) {
-    //    // Если указана станция выполним коррекцию по станции
-    //    /*        this.view_com.open();*/
-    //    LockScreen(langView('vs_via_mess_load_operation', App.Langs));
-    //    // Очистить сообщения и форму
-    //    this.from_way_alert.clear_message();
-    //    this.group_wagons_alert.clear_message();
-    //    this.form_group_wagons_setup.clear_all();
-    //    this.form_from_setup.clear_all();
-    //    this.form_searsh_wagon.el.textarea_vagon_searsh.val('');
-    //    this.wagons = [];
-    //    this.wagons_group = [];
-    //    // Сбросим вагоны переноса
-    //    this.id_station_from = -1;
-    //    var id_station = -1;
-    //    this.id_way_from = -1;
-
-    //    //if (id_way > 0) {
-    //    //    var way = this.view_com.api_dir.getWays_Of_Id(id_way);
-    //    //    if (way) {
-    //    //        id_station = way.idStation;
-    //    //        // Отобразим выбор на панеле
-    //    //        this.form_from_setup.el.select_id_station_from.val(id_station);
-    //    //    }
-    //    //};
-    //    // Дополнительная обработка в панели выбранной операции
-    //    if (typeof this.settings.fn_view_open === 'function') {
-    //        this.settings.fn_view_open.call(this, function () {
-    //        }.bind(this));
-    //    };
-    //    this.update(id_station, id_way, function (wagons) {
-    //        LockScreenOff();
-    //    }.bind(this));
-    //}
-    // Обновить все
+    // 
     view_verification_invoices_arrival.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
@@ -1009,38 +974,40 @@
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
         this.ids_arrival.getVerificationArrivalUzVagon(sel_start, sel_stop, function (vagons) {
             this.list_vagons = [];
+            this.select_vagons = [];
             if (vagons !== null && vagons.length > 0) {
-                this.list_vagons = vagons;
-                //$.each(list, function (i, el) {
-                //    if (el.nomMainDoc > 0) {
-                //        this.list_epd.push({ value: el.id, text: el.nomMainDoc, group: (el.calcPayer !== null ? "расчет :" + moment(el.calcPayer).format("YYYY-MM-DDTHH:mm") : "без расчета") });
-                //    }
-                //}.bind(this));
-                //var exist_id = this.list_epd.find(function (o) {
-                //    return o.value === id_doc;
-                //}.bind(this));
-                //if (!exist_id) {
-                //    this.id_doc = null;
-                //} else {
-                //    this.id_doc = id_doc;
-                //}
-                //this.form_register_accepted_wagons_setup.el.datalist_num_epd.update(this.list_epd, this.id_doc);
-                //if (this.id_doc) {
-                //    this.update_document(this.id_doc, function (document) {
-                //        LockScreenOff();
-                //    }.bind(this));
-                //} else {
-                //    this.clear_data();
-                //}
+                this.list_vagons = vagons.filter(function (i) {
+                    return i.calcPayer !== null;
+                }.bind(this));
+                this.select_apply(function (select) {
+                    this.tab_verification_invoices_wagons.view(select);
+                }.bind(this))
             }
             this.searsh_alert_info.clear_message();
-            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_vagons.length));
+            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), vagons.length, this.list_vagons.length));
             LockScreenOff();
             if (typeof callback === 'function') {
                 callback();
             }
         }.bind(this));
     };
+    // Применить выбор
+    view_verification_invoices_arrival.prototype.select_apply = function (callback) {
+        if (this.list_vagons !== null && this.list_vagons.length > 0) {
+            this.select_vagons = this.list_vagons;
+            // Событие обновили данные
+            if (typeof callback === 'function') {
+                callback(this.select_vagons);
+            }
+        } else {
+            this.select_vagons = [];
+            // Событие обновили данные
+            if (typeof callback === 'function') {
+                callback(this.select_vagons);
+            }
+        }
+    };
+
     // Загрузить вагоны на выбраном пути прибытия в масив this.wagons (подготовить поля для вагонов приема)
     view_verification_invoices_arrival.prototype.load_of_id_doc = function (id_doc, callback) {
         if (id_doc !== null && id_doc >= 0) {
