@@ -98,7 +98,7 @@
             'vs_via_load_docs': 'Загружаю информацию по накладной {0}...',
 
             'vs_via_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            'vs_via_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} принятых вагонов, загруженно {3} вагонов с рассчетом ж.д. тарифа.',
+            'vs_via_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа.',
 
             'vs_via_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
 
@@ -924,7 +924,7 @@
                 this.tab_verification_invoices_wagons.init({
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
-                    detali_table: false,
+                    detali_table: true,
                     type_report: 'verification_invoices_wagons',
                     setup_buttons: [
                     ],
@@ -952,6 +952,45 @@
                     }.bind(this),
                     fn_enable_button: function (tb) {
                     }.bind(this),
+                    fn_view_detali: function (id_div, data) {
+                        this.tables_detali[data.id] = new TSRV('div#' + id_div);
+                        var tab = this.tables_detali[data.id];
+                        this.tables_detali[data.id].init({
+                            alert: this.from_way_alert,
+                            class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                            detali_table: false,
+                            type_report: 'verification_invoices_detali_wagons',
+                            setup_buttons: [
+                            ],
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                tab.view(data.vagons);
+                                LockScreenOff();
+
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+
+                            }.bind(this),
+                            fn_select_rows: function (rows, type) {
+
+                            }.bind(this),
+                            fn_select_link: function (link) {
+
+                            }.bind(this),
+                            fn_button_action: function (name, e, dt, node, config) {
+
+                            }.bind(this),
+                            fn_enable_button: function (tb) {
+
+                            }.bind(this),
+                        });
+
+                    },
                 });
 
             }
@@ -972,19 +1011,99 @@
         this.clear_all();
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
-        this.ids_arrival.getVerificationArrivalUzVagon(sel_start, sel_stop, function (vagons) {
-            this.list_vagons = [];
-            this.select_vagons = [];
-            if (vagons !== null && vagons.length > 0) {
-                this.list_vagons = vagons.filter(function (i) {
-                    return i.calcPayer !== null;
+        this.ids_arrival.getVerificationArrivalUzDocument(sel_start, sel_stop, function (document) {
+            this.list_document = [];
+            this.select_document = [];
+            this.documents = [];
+            if (document !== null && document.length > 0) {
+                // Пройдемся по документам
+                $.each(document, function (i, el_doc) {
+
+                    // Пройдемся по вагонам
+                    var vagons = [];
+                    var list_vagons = el_doc.arrivalUzVagons;
+                    var summ_arrivalUzVagonPays = 0;
+                    var summ_vesg = 0;
+                    $.each(list_vagons, function (i, el_vag) {
+                        // Тариф ПРИБ (Вагоны)
+                        var arrivalUzVagonPays = 0;
+                        if (el_vag.arrivalUzVagonPays && el_vag.arrivalUzVagonPays.length > 0) {
+                            $.each(el_vag.arrivalUzVagonPays, function (i, el_pay) {
+                                arrivalUzVagonPays += (el_pay.summa && el_pay.kod === '001' ? Number(el_pay.summa) : 0);
+                            }.bind(this));
+                        }
+                        summ_arrivalUzVagonPays += arrivalUzVagonPays;
+                        summ_vesg += el_vag.vesg ? Number(el_vag.vesg) : 0;
+                        //
+                        vagons.push({
+                            id: el_vag.id,
+                            nomMainDoc: el_doc.nomMainDoc,
+                            num: el_vag.num,
+                            dateOtpr: el_doc.dateOtpr,
+                            dateAdoption: el_vag.idArrivalNavigation.dateAdoption,
+                            nameStnFrom: el_doc.codeStnFromNavigation ? el_doc.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
+                            nameStnTo: el_doc.codeStnToNavigation ? el_doc.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
+                            arrivalCargoName: el_vag.idCargoNavigation['cargoName' + ucFirst(App.Lang)],
+                            arrivalOperatorAbbr: el_vag.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)],
+                            toDivisionAbbr: el_vag.idDivisionOnAmkrNavigation['divisionAbbr' + ucFirst(App.Lang)],
+                            vesg: el_vag.vesg,
+                            arrivalUzVagonPays: arrivalUzVagonPays,
+                        });
+
+                    }.bind(this));
+                    // документ
+                    //arrivalUZDocumentPay
+                    var arrivalUZDocumentPay = 0;
+                    if (el_doc.arrivalUzDocumentPays && el_doc.arrivalUzDocumentPays.length > 0) {
+                        $.each(el_doc.arrivalUzDocumentPays, function (i, el_dpay) {
+                            arrivalUZDocumentPay += (el_dpay.summa && el_dpay.kod === '001' ? Number(el_dpay.summa) : 0);
+                        }.bind(this));
+                    }
+                    //
+                    this.documents.push({
+                        id: el_doc.id,
+                        nomMainDoc: el_doc.nomMainDoc,
+                        countVagon: vagons.length,
+                        vagons: vagons,
+                        nameStnFrom: el_doc.codeStnFromNavigation ? el_doc.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
+                        nameStnTo: el_doc.codeStnToNavigation ? el_doc.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
+                        arrivalCargoName: vagons[0].arrivalCargoName,
+                        vesg: summ_vesg,
+                        tariffContract: el_doc.tariffContract,
+                        payerLocalCode: el_doc.codePayerLocalNavigation ? el_doc.codePayerLocalNavigation.code : null,
+                        payerLocalName: el_doc.codePayerLocalNavigation ? el_doc.codePayerLocalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        arrivalOperatorAbbr: vagons[0].arrivalOperatorAbbr,
+                        toDivisionAbbr: vagons[0].toDivisionAbbr,
+                        payerSenderCode: el_doc.codePayerSenderNavigation ? el_doc.codePayerSenderNavigation.code : null,
+                        payerSenderName: el_doc.codePayerSenderNavigation ? el_doc.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        payerArrivalCode: el_doc.codePayerArrivalNavigation ? el_doc.codePayerArrivalNavigation.code : null,
+                        payerArrivalName: el_doc.codePayerArrivalNavigation ? el_doc.codePayerArrivalNavigation['payerName' + ucFirst(App.Lang)] : null,
+                        dateOtpr: el_doc.dateOtpr,
+                        dateAdoption: vagons[0].dateAdoption,
+                        arrivalUzVagonPays: summ_arrivalUzVagonPays,
+                        arrivalUZDocumentPay: arrivalUZDocumentPay,
+                        deffTariff: el_doc.tariffContract !== null && arrivalUZDocumentPay !== null ? el_doc.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
+                        calcPayer: el_doc.calcPayer,
+                        calcPayerUser: el_doc.calcPayerUser,
+                        idActServices1: el_doc.idActServices1,
+                        idActServices2: el_doc.idActServices2,
+                        idActServices3: el_doc.idActServices3,
+                        numActServices1: el_doc.numActServices1,
+                        numActServices2: el_doc.numActServices2,
+                        numActServices3: el_doc.numActServices3,
+                        verification: el_doc.verification,
+                        verificationUser: el_doc.verificationUser,
+                    });
                 }.bind(this));
+                this.list_document = this.documents;
                 this.select_apply(function (select) {
                     this.tab_verification_invoices_wagons.view(select);
                 }.bind(this))
+            } else {
+                this.tab_verification_invoices_wagons.view([]);
             }
             this.searsh_alert_info.clear_message();
-            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), vagons.length, this.list_vagons.length));
+            this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.documents.length));
             LockScreenOff();
             if (typeof callback === 'function') {
                 callback();
@@ -993,17 +1112,17 @@
     };
     // Применить выбор
     view_verification_invoices_arrival.prototype.select_apply = function (callback) {
-        if (this.list_vagons !== null && this.list_vagons.length > 0) {
-            this.select_vagons = this.list_vagons;
+        if (this.list_document !== null && this.list_document.length > 0) {
+            this.select_document = this.list_document;
             // Событие обновили данные
             if (typeof callback === 'function') {
-                callback(this.select_vagons);
+                callback(this.select_document);
             }
         } else {
-            this.select_vagons = [];
+            this.select_document = [];
             // Событие обновили данные
             if (typeof callback === 'function') {
-                callback(this.select_vagons);
+                callback(this.select_document);
             }
         }
     };
