@@ -603,19 +603,20 @@
 
     table_services.prototype.init_columns_verification_invoices_wagons = function () {
         var collums = [];
+        if (this.tab_com.settings.detali_table) collums.push({ field: 'details_control', title: null, class: null });
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'nomMainDoc', title: null, class: null });
-        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'countVagon', title: null, class: null });
         collums.push({ field: 'tariffContract', title: null, class: null });
         collums.push({ field: 'arrivalUZDocumentPay', title: null, class: null });
         collums.push({ field: 'arrivalDeffTariff', title: null, class: null });
         collums.push({ field: 'vesg', title: null, class: null });
-        collums.push({ field: 'arrivalNameStnFrom', title: null, class: null });
-        collums.push({ field: 'arrivalNameStnTo', title: null, class: null });
+        collums.push({ field: 'nameStnFrom', title: null, class: null });
+        collums.push({ field: 'nameStnTo', title: null, class: null });
         collums.push({ field: 'arrivalCargoName', title: null, class: null });
         collums.push({ field: 'payerLocalName', title: null, class: null });
         collums.push({ field: 'arrivalOperatorAbbr', title: null, class: null });
-        collums.push({ field: 'arrivalDivisionAbbr', title: null, class: null });
+        collums.push({ field: 'toDivisionAbbr', title: null, class: null });
         collums.push({ field: 'payerSenderCode', title: null, class: null });
         collums.push({ field: 'payerArrivalCode', title: null, class: null });
         collums.push({ field: 'dateOtpr', title: null, class: null });
@@ -625,6 +626,21 @@
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_services.prototype.init_columns_verification_invoices_detali_wagons = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+/*        collums.push({ field: 'dateOtpr', title: null, class: null });*/
+        collums.push({ field: 'dateAdoption', title: null, class: null });
+        collums.push({ field: 'arrivalCargoName', title: null, class: null });
+        collums.push({ field: 'arrivalOperatorAbbr', title: null, class: null });
+        collums.push({ field: 'toDivisionAbbr', title: null, class: null });
+        collums.push({ field: 'vesg', title: null, class: null });
+        collums.push({ field: 'arrivalUzVagonPays', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -709,9 +725,9 @@
                 this.tab_com.createdRow = function (row, data, index) {
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
-                    if (data.calcPayer !== null) {
-                        $(row).addClass('yellow');  // Отметим вагон расчитан
-                    }
+                    //if (data.calcPayer !== null) {
+                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //}
                     if (data.verification !== null) {
                         $(row).addClass('green');  // Отметим вагон сверен
                     }
@@ -721,6 +737,41 @@
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
+            //
+            case 'verification_invoices_detali_wagons': {
+                //this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                //this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.calcPayer !== null) {
+                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //}
+                    //if (data.verification !== null) {
+                    //    $(row).addClass('green');  // Отметим вагон сверен
+                    //}
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_verification_invoices_detali_wagons();
+                //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'frtip';
+                break;
+            };
+
 
             default: {
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка

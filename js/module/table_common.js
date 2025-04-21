@@ -98,6 +98,15 @@
             className: 'dt-body-center',
             title: langView('t_com_field_numeration', App.Langs), width: "30px", orderable: true, searchable: false
         },
+        {
+            field: 'details_control',
+            class: 'dt-control',
+            orderable: false,
+            data: null,
+            defaultContent: '',
+            width: "30px",
+            searchable: false
+        },
 
     ];
     // Перечень кнопок
@@ -493,6 +502,8 @@
             fn_select_link: null,
             fn_button_action: null,
             fn_enable_button: null,
+            fn_view_detali : null,
+
         }, options);
         //
         // Настройки отчета по умолчанию
@@ -614,6 +625,8 @@
                 this.settings.fn_select_link(id);
             }
         }.bind(this));
+        // Определим показывать вагоны детально
+        if (this.settings.detali_table) this.init_detali();
         // На проверку окончания инициализации
         //----------------------------------
         if (typeof this.settings.fn_init === 'function') {
@@ -649,6 +662,7 @@
         //this.select_rows();
         this.enable_button();
     };
+    //
     table_common.prototype.view_of_tag = function (data, tag, id_tag) {
         this.data = data;
         this.id_tag = id_tag;
@@ -691,6 +705,75 @@
             this.id_tag = null;
         }
     };
+
+
+    table_common.prototype.view_detali = function (id_div, data) {
+        if (typeof this.settings.fn_view_detali === 'function') {
+            this.settings.fn_view_detali.call(this, id_div, data);
+        }
+        //var base = this;
+        //var TCOW = App.table_cars_outer_way;
+        //var sl = 'div#' + this.selector + '-d-' + data.id;
+        //this.tables_detali[data.id] = new TCOW(sl); // Создадим экземпляр вогонов на подходах
+        //[data.id].init({
+        //    alert: this.alert_from,
+        //    type_report: 'history-send-wagons',  // вагоны отправленного состава
+        //    ids_wsd: this.ids_wsd,
+        //    fn_change_data: function (wagons) {
+        //    }.bind(this),
+        //}, function () {
+        //    this.tables_detali[data.outer_way_num_sostav].load_ow_arr_wagons_of_sostav(data ? data.outer_way_num_sostav : null);
+        //}.bind(this));
+    };
+
+    table_common.prototype.detali_select_row = function (tr) {
+        var row = this.obj_t_report.row(tr);
+        // Проверим, строка определена
+        if (row && row.length > 0) {
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                this.destroy_detali(row.data());
+                tr.removeClass('shown');
+            }
+            else {
+                var id_div = this.selector + '-d-' + row.data().id;
+                //row.child('<div class="row">' +
+                //    '<div class="col-xl-12 "><div id="' + id_div + '"></div></div>' +
+                //    '</div>').show();
+                //row.child('<div class="card border-primary ml-1">' +
+                //    '<div class="card-header text-left"></div>' +
+                //    '<div class="card-body table-directory">' +
+                //    '<div class="row">' +
+                //    '<div class="col-xl-12 ">' +
+                //    //'<div class="">' + //container-fluid
+                //    '<div id="' + this.selector + '-d-' + row.data().id + '"></div>' +
+                //    //'</div>' +
+                //    '</div>' +
+                //    '</div>' +
+                //    '</div>' +
+                //    '</div>' +
+                //    '</div>').show();
+
+                row.child('<div class="card border-primary ms-3"><div class="card-body" id="' + id_div + '"></div></div>').show();
+
+                // Инициализируем
+                this.view_detali(id_div, row.data());
+                tr.addClass('shown');
+            }
+        }
+    };
+    // Инициализация таблицы детально
+    table_common.prototype.init_detali = function () {
+        this.$table_report.find('tbody')
+            .on('click', 'td.dt-control', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var tr = $(e.currentTarget).closest('tr');
+                this.detali_select_row(tr);
+            }.bind(this));
+    };
+
     //
     table_common.prototype.view_footer = function (data) {
 
