@@ -773,7 +773,6 @@
                 this.detali_select_row(tr);
             }.bind(this));
     };
-
     //
     table_common.prototype.view_footer = function (data) {
 
