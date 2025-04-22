@@ -46,6 +46,13 @@
             'tsrv_field_deffTariff': 'Разница, грн.',
             'tsrv_field_calcPayer': 'Дата расчета',
             'tsrv_field_calcPayerUser': 'Рассчитал',
+            'tsrv_field_numActServices1': 'Предъявлено',
+            'tsrv_field_numActServices2': 'Предъявлено',
+            'tsrv_field_numActServices3': 'Предъявлено',
+            'tsrv_field_verification': 'Дата сверки',
+            'tsrv_field_verificationUser': 'Сверил',
+
+
             'tsrv_title_no_epd': 'без ЭПД',
 
             //'tsrv_title_link_num': 'Показать историю по вагону...',
@@ -430,7 +437,7 @@
                 data: function (row, type, val, meta) {
                     return row.vesg ? Number(Number(row.vesg) / 1000).toFixed(2) : null;
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_vesg', App.Langs), width: "30px", orderable: true, searchable: true
             },
             //{
@@ -467,7 +474,7 @@
                 data: function (row, type, val, meta) {
                     return row.arrivalUzVagonPays !== null ? Number(row.arrivalUzVagonPays / 100).toFixed(2) : null;
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
@@ -475,7 +482,7 @@
                 data: function (row, type, val, meta) {
                     return row.arrivalUZDocumentPay !== null ? Number(row.arrivalUZDocumentPay / 100).toFixed(2) : null;
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
@@ -491,7 +498,7 @@
                 data: function (row, type, val, meta) {
                     return row.tariffContract ? Number(row.tariffContract).toFixed(2) : null;
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_tariffContract', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
@@ -499,7 +506,7 @@
                 data: function (row, type, val, meta) {
                     return row.deffTariff ? Number(row.deffTariff).toFixed(2) : null;
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_deffTariff', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
@@ -511,7 +518,7 @@
                         return null;
                     }
                 },
-                className: 'dt-body-center',
+                className: 'dt-body-end',
                 title: langView('tsrv_field_deffTariff', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
@@ -530,6 +537,47 @@
                 className: 'dt-body-center',
                 title: langView('tsrv_field_calcPayerUser', App.Langs), width: "50px", orderable: true, searchable: true
             },
+            {
+                field: 'numActServices1',
+                data: function (row, type, val, meta) {
+                    return row.numActServices1;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_numActServices1', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'numActServices2',
+                data: function (row, type, val, meta) {
+                    return row.numActServices1;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_numActServices2', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'numActServices3',
+                data: function (row, type, val, meta) {
+                    return row.numActServices1;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_numActServices3', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'verification',
+                data: function (row, type, val, meta) {
+                    return row.verification ? moment(row.verification).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_verification', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'verificationUser',
+                data: function (row, type, val, meta) {
+                    return row.verificationUser;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_verificationUser', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -608,8 +656,11 @@
         collums.push({ field: 'nomMainDoc', title: null, class: null });
         collums.push({ field: 'countVagon', title: null, class: null });
         collums.push({ field: 'tariffContract', title: null, class: null });
+        collums.push({ field: 'numActServices1', title: null, class: null });
         collums.push({ field: 'arrivalUZDocumentPay', title: null, class: null });
+        collums.push({ field: 'numActServices2', title: null, class: null });
         collums.push({ field: 'arrivalDeffTariff', title: null, class: null });
+        collums.push({ field: 'numActServices3', title: null, class: null });
         collums.push({ field: 'vesg', title: null, class: null });
         collums.push({ field: 'nameStnFrom', title: null, class: null });
         collums.push({ field: 'nameStnTo', title: null, class: null });
@@ -623,6 +674,9 @@
         collums.push({ field: 'dateAdoption', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
+        collums.push({ field: 'calcPayer', title: null, class: null });
+        collums.push({ field: 'verification', title: null, class: null });
+        collums.push({ field: 'verificationUser', title: null, class: null });
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
