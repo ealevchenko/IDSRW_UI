@@ -211,6 +211,7 @@ var get_belongs_element = function (rows, name_field, id) {
             'mess_error_input_num_cars2': 'Ошибка ввода, номер позиции :{0}, не системная нумерация (ошибка контрольной суммы) :{1}',
             'mess_error_input_num_cars_duble': 'Ошибка ввода, введеный номер :{0} - повторяется!',
 
+            'mess_error_docs': 'Ошибка ввода, номеров накладных!',
             'mess_error_not_docs': 'Введите номер документа или несколько документов, разделитель номеров ";"',
             'mess_error_input_num_docs': 'Ошибка ввода, номер позиции :{0}, введен неправильный номер :{1}',
             'mess_error_input_num_docs1': 'Ошибка ввода, номер позиции :{0}, номер не может быть меньше или равен 0 :{1}',
@@ -2578,6 +2579,19 @@ var get_belongs_element = function (rows, name_field, id) {
         this.update = function (default_value) {
             this.$element.val(default_value);
         };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$element.prop("disabled", false);
+        };
+        this.disable = function (clear) {
+            if (clear) this.val(null);
+            this.$element.prop("disabled", true);
+        };
         this.init();
     };
     // Инициализация поля дата и время "INPUT" (стандартные компоненты Edge)
@@ -3804,6 +3818,71 @@ var get_belongs_element = function (rows, name_field, id) {
         }
         return valid ? car_out : null;
 
+    };
+    // Проверить элемент "textarea" на введенные номера документов
+    validation_form.prototype.check_control_is_valid_docs = function (o, valid_not_null, out_message) {
+        var val = o.val();
+        var element = o.$element ? o.$element : o;
+        var mes_ok = 'ок';
+        var mes_error = langView('mess_error_docs', App.Langs);
+        var mes_warning = 'warning';
+        if (!val || val === null) {
+            if (!valid_not_null) {
+                mes_warning = langView('mess_error_not_docs', App.Langs);
+                this.set_control_error(element, mes_warning);
+                if (out_message) this.out_error_message(mes_warning);
+            }
+            return null;
+        }
+        var valid = true;
+        var car_valid = [];
+        var car_out = [];
+        var cars = val.split(';');
+        $.each(cars, function (i, el) {
+            if (!isNumeric($.trim(el))) {
+                mes_warning = langView('mess_error_input_num_docs', App.Langs).format((i + 1), el);
+                if (out_message) this.out_error_message(mes_warning);
+                valid = false;
+            } else {
+                if (Number($.trim(el)) <= 0) {
+                    mes_warning = langView('mess_error_input_num_docs1', App.Langs).format((i + 1), el);
+                    if (out_message) this.out_error_message(mes_warning);
+                    valid = false;
+                } else {
+                    car_valid.push(Number($.trim(el)));
+                    car_out.push(Number($.trim(el)));
+                }
+            }
+        }.bind(this));
+        // Провкерка на повторяющиеся номера
+        var arr_res = [];
+        car_valid.sort();
+        for (var i = 1; i < car_valid.length; i++) {
+            if (car_valid[i] === car_valid[i - 1]) {
+                var is_unique = true;
+                for (var k = 0; k < arr_res.length; k++) {
+                    if (arr_res[k] === car_valid[i]) {
+                        is_unique = false;
+                        break;
+                    }
+                }
+                if (is_unique) {
+                    arr_res.push(car_valid[i]);
+                }
+            }
+        }
+        // Вывод сообщений повторяющихся номеров
+        $.each(arr_res, function (i, el) {
+            mes_warning = langView('mess_error_input_num_docs_duble', App.Langs).format(el);
+            if (out_message) this.out_error_message(mes_warning);
+            valid = false;
+        }.bind(this));
+        if (valid) {
+            this.set_control_ok(element, mes_ok);
+        } else {
+            this.set_control_error(element, mes_error);
+        }
+        return valid ? car_out : null;
     };
     // Проверить элемент "input" на шаблон (пустое значение - нет допускается)
     validation_form.prototype.check_control_regexp_not_null = function (o, regexp, mes_error, mes_ok, out_message) {
