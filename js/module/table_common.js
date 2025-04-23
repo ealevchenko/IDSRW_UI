@@ -502,8 +502,9 @@
             fn_select_link: null,
             fn_button_action: null,
             fn_enable_button: null,
-            fn_view_detali : null,
-
+            fn_view_detali: null,
+            fn_init_complete: null,
+            fn_draw_callback: null,
         }, options);
         //
         // Настройки отчета по умолчанию
@@ -521,8 +522,9 @@
         this.order_column = [0, 'asc'];
         this.type_select_rows = 0; // не показывать
         this.table_select = false;
-        this.drawCallback = null;
+        this.drawCallback = function (settings) {}.bind(this);
         this.createdRow = function (row, data, index) { }.bind(this);
+        this.initComplete = function () { }.bind(this);
         this.footerCallback = null;
         this.autoWidth = false;
         this.table_columns = [];
@@ -582,6 +584,7 @@
             jQueryUI: false,
             drawCallback: this.drawCallback,
             "createdRow": this.createdRow,
+            "initComplete": this.initComplete,
             footerCallback: this.footerCallback,
             columns: this.table_columns,
             dom: this.dom,

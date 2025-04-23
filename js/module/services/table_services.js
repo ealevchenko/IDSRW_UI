@@ -786,6 +786,8 @@
                         $(row).addClass('green');  // Отметим вагон сверен
                     }
                 }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
                 this.tab_com.table_columns = this.init_columns_verification_invoices_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';

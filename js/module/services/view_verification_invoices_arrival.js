@@ -186,6 +186,9 @@
         this.code_station_from = -1;
         this.code_station_on = -1;
         this.id_operator = -1;
+
+        this.column_payer = null;
+
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
             id: null,
@@ -462,7 +465,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -471,6 +474,11 @@
                                     this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
+                                //var val = $(e.currentTarget).val();
+                                //if (val == -1) val = '';
+                                ////this.column_payer.search(val, { exact: true }).draw();
+                                //this.column_payer.search(val ? '^' + val + '$' : '', true, false).draw();
+
                             }.bind(this),
                             fn_check: function (text) {
 
@@ -505,7 +513,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -548,7 +556,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -591,7 +599,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -634,7 +642,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -677,7 +685,7 @@
                         element_size: null,
                         element_options: {
                             data: [],
-                            default: 0,
+                            default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
@@ -1035,6 +1043,88 @@
                         });
 
                     },
+
+                    fn_init_complete: function () {
+                        //$.fn.dataTable.ext.search.pop()
+                        //this.api()
+                        //    .columns()
+                        //    .every(function () {
+                        //        let column = this;
+
+                        //        // Create select element
+                        //        //let select = document.createElement('select');
+                        //        //select.add(new Option(''));
+                        //        //column.footer().replaceChildren(select);
+
+                        //        //// Apply listener for user change in value
+                        //        //select.addEventListener('change', function () {
+                        //        //    column
+                        //        //        .search(select.value, { exact: true })
+                        //        //        .draw();
+                        //        //});
+
+                        //        //// Add list of options
+                        //        //column
+                        //        //    .data()
+                        //        //    .unique()
+                        //        //    .sort()
+                        //        //    .each(function (d, j) {
+                        //        //        select.add(new Option(d));
+                        //        //    });
+                        //    });
+                    },
+
+                    fn_draw_callback: function (settings) {
+                        //var base = this;
+                        //var list_payer_local = [];
+                        //settings.api
+                        //    .columns()
+                        //    .every(function () {
+                        //        var column = this;
+                        //        //var num = column[0][0];
+
+                        //        var name = (column.header().firstChild && column.header().firstChild.firstChild ? column.header().firstChild.firstChild.data : null);
+                        //        //var select = [];
+                        //        if (name === "Плательщик") {
+                        //            base.column_payer = column;
+                        //            var val_code_payer = base.form_searsh_doc_setup.el.select_code_payer.val();
+                        //            //base.form_searsh_doc_setup.el.select_code_payer.$element.on("change", function (event) {
+                        //            //    //val_code_payerl = $(this).val();
+                        //            //    column //.search($(this).val(), { exact: true }).draw();
+                        //            //        .search($(this).val() ? '^' + $(this).val() + '$' : '', true, false).draw();
+                        //            //});
+                        //            column
+                        //                .data()
+                        //                .unique()
+                        //                .sort()
+                        //                .each(function (d, j) {
+                        //                    list_payer_local.push({ value: d, text: d, disabled: false })
+                        //                });
+                        //            base.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, val_code_payer);
+                        //        }
+                        //        // Create select element
+                        //        //let select = document.createElement('select');
+                        //        //select.add(new Option(''));
+                        //        //column.footer().replaceChildren(select);
+
+                        //        //// Apply listener for user change in value
+                        //        //select.addEventListener('change', function () {
+                        //        //    column
+                        //        //        .search(select.value, { exact: true })
+                        //        //        .draw();
+                        //        //});
+
+                        //        //// Add list of options
+                        //        //column
+                        //        //    .data()
+                        //        //    .unique()
+                        //        //    .sort()
+                        //        //    .each(function (d, j) {
+                        //        //        select.add(new Option(d));
+                        //        //    });
+                        //    });
+
+                    }.bind(this)
                 });
 
             }
@@ -1196,6 +1286,91 @@
     //    valid = (list_docs !== null);
     //    return valid;
     //}
+    // Обновить списки
+    view_verification_invoices_arrival.prototype.update_select_list = function (data) {
+        if (data && data.length > 0) {
+            // Обновим выпадающие списки
+            var list_payer_local = [];
+            var list_acts = [];        // numActServices1
+            var list_cargo = [];       // грузы по прибытию
+            var list_operators = [];   // операторы по прибытию
+            var list_stn_from = [];    // станции по отправлению
+            var list_stn_on = [];      // станции по прибытию
+            // получим выбранные значения
+            var code_payer = this.form_searsh_doc_setup.el.select_code_payer.val();
+            //this.act
+            var id_cargo = this.form_searsh_doc_setup.el.select_id_cargo.val();
+            var code_station_from = this.form_searsh_doc_setup.el.select_id_station_from.val();
+            var code_station_on = this.form_searsh_doc_setup.el.select_id_station_on.val();
+            var id_operator = this.form_searsh_doc_setup.el.select_id_operator.val();
+
+            $.each(data, function (i, el) {
+                // Платильщик
+                var lpl = list_payer_local.find(function (o) {
+                    return o.value === el.payerLocalCode;
+                }.bind(this));
+                if (!lpl) {
+                    list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
+                }
+                // Акты
+
+                // Грузы по прибытию
+                $.each(el.vagons, function (i, el_wag) {
+                    var lcrg = list_cargo.find(function (o) {
+                        return o.value === el_wag.arrivalCargoId;
+                    }.bind(this));
+                    if (!lcrg) {
+                        list_cargo.push({ value: el_wag.arrivalCargoId, text: el_wag.arrivalCargoName, disabled: false });
+                    }
+                    var lops = list_operators.find(function (o) {
+                        return o.value === el_wag.arrivalOperatorId;
+                    }.bind(this));
+                    if (!lops) {
+                        list_operators.push({ value: el_wag.arrivalOperatorId, text: el_wag.arrivalOperatorAbbr, disabled: false });
+                    }
+
+                }.bind(this));
+                // Станция отправления
+                var lstf = list_stn_from.find(function (o) {
+                    return o.value === el.codeStnFrom;
+                }.bind(this));
+                if (!lstf) {
+                    list_stn_from.push({ value: el.codeStnFrom, text: el.nameStnFrom, disabled: false });
+                }
+                // Станция прибытия
+                var lsto = list_stn_on.find(function (o) {
+                    return o.value === el.codeStnTo;
+                }.bind(this));
+                if (!lsto) {
+                    list_stn_on.push({ value: el.codeStnTo, text: el.nameStnTo, disabled: false });
+                }
+
+            }.bind(this));
+            // проверим наличие выбранных полей
+            var pc = list_payer_local.find(function (o) {
+                return o.value == code_payer;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, (pc ? pc.value : -1));
+            //this.act
+            var crg = list_cargo.find(function (o) {
+                return o.value == id_cargo;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.select_id_cargo.update(list_cargo, (crg ? crg.value : -1));
+            var sf = list_stn_from.find(function (o) {
+                return o.value == code_station_from;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.select_id_station_from.update(list_stn_from, (sf ? sf.value : -1));
+            var so = list_stn_on.find(function (o) {
+                return o.value == code_station_on;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.select_id_station_on.update(list_stn_on, (so ? so.value : -1));
+            var op = list_operators.find(function (o) {
+                return o.value == id_operator;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.select_id_operator.update(list_operators, (op ? op.value : -1));
+        }
+    }
+
     view_verification_invoices_arrival.prototype.select_docs = function (callback) {
         // Обнулим списки
         LockScreen(langView('vs_via_select_main_docs', App.Langs));
@@ -1214,60 +1389,61 @@
                 this.select_document = this.list_document;
             }
             // Обновим выпадающие списки
-            this.list_payer_local = [];
-            this.list_acts = [];        // numActServices1
-            this.list_cargo = [];       // грузы по прибытию
-            this.list_operators = [];   // операторы по прибытию
-            this.list_stn_from = [];    // станции по отправлению
-            this.list_stn_on = [];      // станции по прибытию
-            $.each(this.select_document, function (i, el) {
-                // Платильщик
-                var lpl = this.list_payer_local.find(function (o) {
-                    return o.value === el.payerLocalCode;
-                }.bind(this));
-                if (!lpl) {
-                    this.list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
-                }
-                // Акты
+            this.update_select_list(this.select_document);
+            //this.list_payer_local = [];
+            //this.list_acts = [];        // numActServices1
+            //this.list_cargo = [];       // грузы по прибытию
+            //this.list_operators = [];   // операторы по прибытию
+            //this.list_stn_from = [];    // станции по отправлению
+            //this.list_stn_on = [];      // станции по прибытию
+            //$.each(this.select_document, function (i, el) {
+            //    // Платильщик
+            //    var lpl = this.list_payer_local.find(function (o) {
+            //        return o.value === el.payerLocalCode;
+            //    }.bind(this));
+            //    if (!lpl) {
+            //        this.list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
+            //    }
+            //    // Акты
 
-                // Грузы по прибытию
-                $.each(el.vagons, function (i, el_wag) {
-                    var lcrg = this.list_cargo.find(function (o) {
-                        return o.value === el_wag.arrivalCargoId;
-                    }.bind(this));
-                    if (!lcrg) {
-                        this.list_cargo.push({ value: el_wag.arrivalCargoId, text: el_wag.arrivalCargoName, disabled: false });
-                    }
-                    var lops = this.list_operators.find(function (o) {
-                        return o.value === el_wag.arrivalOperatorId;
-                    }.bind(this));
-                    if (!lops) {
-                        this.list_operators.push({ value: el_wag.arrivalOperatorId, text: el_wag.arrivalOperatorAbbr, disabled: false });
-                    }
+            //    // Грузы по прибытию
+            //    $.each(el.vagons, function (i, el_wag) {
+            //        var lcrg = this.list_cargo.find(function (o) {
+            //            return o.value === el_wag.arrivalCargoId;
+            //        }.bind(this));
+            //        if (!lcrg) {
+            //            this.list_cargo.push({ value: el_wag.arrivalCargoId, text: el_wag.arrivalCargoName, disabled: false });
+            //        }
+            //        var lops = this.list_operators.find(function (o) {
+            //            return o.value === el_wag.arrivalOperatorId;
+            //        }.bind(this));
+            //        if (!lops) {
+            //            this.list_operators.push({ value: el_wag.arrivalOperatorId, text: el_wag.arrivalOperatorAbbr, disabled: false });
+            //        }
 
-                }.bind(this));
-                // Станция отправления
-                var lstf = this.list_stn_from.find(function (o) {
-                    return o.value === el.codeStnFrom;
-                }.bind(this));
-                if (!lstf) {
-                    this.list_stn_from.push({ value: el.codeStnFrom, text: el.nameStnFrom, disabled: false });
-                }
-                // Станция прибытия
-                var lsto = this.list_stn_on.find(function (o) {
-                    return o.value === el.codeStnTo;
-                }.bind(this));
-                if (!lsto) {
-                    this.list_stn_on.push({ value: el.codeStnTo, text: el.nameStnTo, disabled: false });
-                }
+            //    }.bind(this));
+            //    // Станция отправления
+            //    var lstf = this.list_stn_from.find(function (o) {
+            //        return o.value === el.codeStnFrom;
+            //    }.bind(this));
+            //    if (!lstf) {
+            //        this.list_stn_from.push({ value: el.codeStnFrom, text: el.nameStnFrom, disabled: false });
+            //    }
+            //    // Станция прибытия
+            //    var lsto = this.list_stn_on.find(function (o) {
+            //        return o.value === el.codeStnTo;
+            //    }.bind(this));
+            //    if (!lsto) {
+            //        this.list_stn_on.push({ value: el.codeStnTo, text: el.nameStnTo, disabled: false });
+            //    }
 
-            }.bind(this));
-            this.form_searsh_doc_setup.el.select_code_payer.update(this.list_payer_local, this.code_payer);
-            //this.act
-            this.form_searsh_doc_setup.el.select_id_cargo.update(this.list_cargo, this.id_cargo);
-            this.form_searsh_doc_setup.el.select_id_station_from.update(this.list_stn_from, this.code_station_from);
-            this.form_searsh_doc_setup.el.select_id_station_on.update(this.list_stn_on, this.code_station_on);
-            this.form_searsh_doc_setup.el.select_id_operator.update(this.list_operators, this.id_operator);
+            //}.bind(this));
+            //this.form_searsh_doc_setup.el.select_code_payer.update(this.list_payer_local, this.code_payer);
+            ////this.act
+            //this.form_searsh_doc_setup.el.select_id_cargo.update(this.list_cargo, this.id_cargo);
+            //this.form_searsh_doc_setup.el.select_id_station_from.update(this.list_stn_from, this.code_station_from);
+            //this.form_searsh_doc_setup.el.select_id_station_on.update(this.list_stn_on, this.code_station_on);
+            //this.form_searsh_doc_setup.el.select_id_operator.update(this.list_operators, this.id_operator);
 
             //this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_select_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_document.length, this.select_document.length));
             // Событие обновили данные
@@ -1300,7 +1476,10 @@
 
             }
             if (this.id_cargo != -1) {
-
+                this.select_document_detali = this.select_document_detali.filter(function (i) {
+                    var gr = i.vagons.find(function (o) { return o.arrivalCargoId === this.id_cargo }.bind(this));
+                    return gr !== undefined;
+                }.bind(this));
             }
             if (this.code_station_from != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
@@ -1313,8 +1492,12 @@
                 }.bind(this));
             }
             if (this.id_operator != -1) {
-
+                this.select_document_detali = this.select_document_detali.filter(function (i) {
+                    var op = i.vagons.find(function (o) { return o.arrivalOperatorId === this.id_operator }.bind(this));
+                    return op !== undefined;
+                }.bind(this));
             }
+            this.update_select_list(this.select_document_detali);
             this.searsh_alert_info.out_info_message(langView('vs_via_mess_info_select_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_document.length, this.select_document.length));
             // Событие обновили данные
             if (typeof callback === 'function') {
