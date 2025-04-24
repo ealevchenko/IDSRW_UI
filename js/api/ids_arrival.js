@@ -72,8 +72,13 @@
     ids_arrival.prototype.postArrivalUzDocumentPayerLocal = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/payer_local/', value, callback);
     };
+
     // Получить список документов для сверки по прибытию храящиеся в БД за период
-    ids_arrival.prototype.getVerificationArrivalUzDocument = function (start, stop, callback) {
+    ids_arrival.prototype.getVerificationArrivalUzDocumentOfId = function (id, callback) {
+        this.api_com.get('/ArrivalUzDocument/verification/id/' + id, callback);
+    };
+    // Получить список документов для сверки по прибытию храящиеся в БД за период
+    ids_arrival.prototype.getVerificationArrivalUzDocumentOfPeriod = function (start, stop, callback) {
         this.api_com.get('/ArrivalUzDocument/verification/start/' + start + '/stop/' + stop, callback);
     };
 

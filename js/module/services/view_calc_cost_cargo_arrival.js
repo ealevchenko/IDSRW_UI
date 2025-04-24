@@ -1203,7 +1203,6 @@
         }
         return valid;
     }
-
     // Обновить тариф прибытия
     view_calc_cost_cargo_arrival.prototype.apply_update_doc_pay = function (data, callback) {
         this.ids_arrival.postUpdateArrivalUzDocumentPay(data, function (result) {
