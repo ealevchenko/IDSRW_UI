@@ -355,7 +355,7 @@
             {
                 field: 'payerLocalName',
                 data: function (row, type, val, meta) {
-                    if (row['payerLocalName' + ucFirst(App.Lang)]!== undefined) {
+                    if (row['payerLocalName' + ucFirst(App.Lang)] !== undefined) {
                         return row['payerLocalName' + ucFirst(App.Lang)]
                     } else {
                         return row.payerLocalName;
@@ -548,7 +548,7 @@
             {
                 field: 'numActServices2',
                 data: function (row, type, val, meta) {
-                    return row.numActServices1;
+                    return row.numActServices2;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_numActServices2', App.Langs), width: "50px", orderable: true, searchable: true
@@ -556,7 +556,7 @@
             {
                 field: 'numActServices3',
                 data: function (row, type, val, meta) {
-                    return row.numActServices1;
+                    return row.numActServices3;
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_numActServices3', App.Langs), width: "50px", orderable: true, searchable: true
@@ -626,6 +626,11 @@
         collums.push({ field: 'deffTariff', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
+        collums.push({ field: 'numActServices1', title: null, class: null });
+        collums.push({ field: 'numActServices2', title: null, class: null });
+        collums.push({ field: 'numActServices3', title: null, class: null });
+        collums.push({ field: 'verification', title: null, class: null });
+        collums.push({ field: 'verificationUser', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -685,7 +690,7 @@
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
-/*        collums.push({ field: 'dateOtpr', title: null, class: null });*/
+        /*        collums.push({ field: 'dateOtpr', title: null, class: null });*/
         collums.push({ field: 'dateAdoption', title: null, class: null });
         collums.push({ field: 'arrivalCargoName', title: null, class: null });
         collums.push({ field: 'arrivalOperatorAbbr', title: null, class: null });
@@ -718,7 +723,11 @@
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.nomMainDoc); // data-num номер вагона
                     if (data.calcPayer !== null) {
-                        $(row).addClass('green');  // Отметим вагон заблокирован
+                        if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
+                            $(row).addClass('green');  // Отметим вагон заблокирован
+                        } else {
+                            $(row).addClass('red');  // Отметим вагон заблокирован
+                        }
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_cost_calculation();
@@ -779,11 +788,12 @@
                 this.tab_com.createdRow = function (row, data, index) {
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
-                    //if (data.calcPayer !== null) {
-                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
-                    //}
                     if (data.verification !== null) {
-                        $(row).addClass('green');  // Отметим вагон сверен
+                        if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
+                            $(row).addClass('yellow');  // Отметим вагон расчитан
+                        } else {
+                            $(row).addClass('green');  // Отметим вагон сверен
+                        }
                     }
                 }.bind(this);
                 this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;

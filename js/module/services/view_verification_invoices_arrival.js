@@ -68,6 +68,7 @@
             'vs_via_title_button_presented1': 'Править акт ...',
             'vs_via_title_button_presented2': 'Править акт ...',
             'vs_via_title_button_presented3': 'Править акт ...',
+            'vs_via_title_button_clear': 'очистить акт ...',
 
             'vs_via_title_button_Cancel': 'Отмена',
             'vs_via_button_Ok': 'Применить',
@@ -76,7 +77,10 @@
             'vs_via_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
             'vs_via_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
+            'vs_via_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
+
             'vs_via_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
+            'vs_via_mess_ok_clear_presented': 'По накладным [{0}] были сюрошены акты сверки.',
             'vs_via_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
             'vs_via_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
 
@@ -190,6 +194,7 @@
 
         this.select_document_detali = [];
         this.presented = null;
+        this.clear = false;
 
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
@@ -379,7 +384,8 @@
                             this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
                             this.select_docs(function (select) {
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this));
@@ -402,7 +408,8 @@
                             event.preventDefault();
                             this.select_docs(function (select) {
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this));
@@ -473,7 +480,8 @@
                                 // Обработать выбор
                                 this.code_payer = $(e.currentTarget).val();
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                                 //var val = $(e.currentTarget).val();
@@ -521,7 +529,8 @@
                                 // Обработать выбор
                                 this.act = $(e.currentTarget).val();
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -564,7 +573,8 @@
                                 // Обработать выбор
                                 this.id_cargo = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -607,7 +617,8 @@
                                 // Обработать выбор
                                 this.code_station_from = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -650,7 +661,8 @@
                                 // Обработать выбор
                                 this.code_station_on = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -693,7 +705,8 @@
                                 // Обработать выбор
                                 this.id_operator = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
+                                    this.view_select(select);
+                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -766,6 +779,27 @@
                         fn_click: function (event) {
                             event.preventDefault();
                             this.presented = 1;
+                            this.clear = false;
+                            this.form_verification_invoices_setup.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var bt_clear_presented1 = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: null,
+                        title: langView('vs_via_title_button_clear', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.presented = 1;
+                            this.clear = true;
                             this.form_verification_invoices_setup.$form.submit();
                         }.bind(this),
                     }
@@ -803,7 +837,7 @@
                         group_append_class: null,
                         group_append_id: null,
                         group_append_html: null,
-                        group_append_objs: [bt_apply_presented1],
+                        group_append_objs: [bt_apply_presented1, bt_clear_presented1],
                         form_text: langView('vs_via_text_label_presented1', App.Langs),
                         form_text_class: null,
                     },
@@ -824,6 +858,27 @@
                         fn_click: function (event) {
                             event.preventDefault();
                             this.presented = 2;
+                            this.clear = false;
+                            this.form_verification_invoices_setup.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var bt_clear_presented2 = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: null,
+                        title: langView('vs_via_title_button_clear', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.presented = 2;
+                            this.clear = true;
                             this.form_verification_invoices_setup.$form.submit();
                         }.bind(this),
                     }
@@ -861,7 +916,7 @@
                         group_append_class: null,
                         group_append_id: null,
                         group_append_html: null,
-                        group_append_objs: [bt_apply_presented2],
+                        group_append_objs: [bt_apply_presented2, bt_clear_presented2],
                         form_text: langView('vs_via_text_label_presented2', App.Langs),
                         form_text_class: null,
                     },
@@ -882,6 +937,27 @@
                         fn_click: function (event) {
                             event.preventDefault();
                             this.presented = 3;
+                            this.clear = false;
+                            this.form_verification_invoices_setup.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var bt_clear_presented3 = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: null,
+                        title: langView('vs_via_title_button_clear', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.presented = 3;
+                            this.clear = true;
                             this.form_verification_invoices_setup.$form.submit();
                         }.bind(this),
                     }
@@ -919,7 +995,7 @@
                         group_append_class: null,
                         group_append_id: null,
                         group_append_html: null,
-                        group_append_objs: [bt_apply_presented3],
+                        group_append_objs: [bt_apply_presented3, bt_clear_presented3],
                         form_text: langView('vs_via_text_label_presented3', App.Langs),
                         form_text_class: null,
                     },
@@ -954,16 +1030,19 @@
                                     num_docs += el.nomMainDoc + "; ";
                                 }.bind(this));
 
-
+                                var mess = langView('vs_via_mess_run_update_presented', App.Langs).format(this.presented, num_act, num_docs);
+                                if (this.clear) {
+                                    mess = langView('vs_via_mess_run_clear_presented', App.Langs).format(this.presented, num_docs);
+                                }
                                 this.mcf_lg.open(
                                     langView('vs_via_title_form_apply', App.Langs),
-                                    langView('vs_via_mess_run_update_presented', App.Langs).format(this.presented, num_act, num_docs),
+                                    mess,
                                     function () {
                                         // Принять
                                         var operation = {
                                             id_docs: id_docs,
                                             presented: this.presented,
-                                            num_act: num_act
+                                            num_act: !this.clear ? num_act : null
                                         };
                                         this.apply_update_presented(operation, num_docs, function () {
 
@@ -1062,85 +1141,9 @@
                     },
 
                     fn_init_complete: function () {
-                        //$.fn.dataTable.ext.search.pop()
-                        //this.api()
-                        //    .columns()
-                        //    .every(function () {
-                        //        let column = this;
-
-                        //        // Create select element
-                        //        //let select = document.createElement('select');
-                        //        //select.add(new Option(''));
-                        //        //column.footer().replaceChildren(select);
-
-                        //        //// Apply listener for user change in value
-                        //        //select.addEventListener('change', function () {
-                        //        //    column
-                        //        //        .search(select.value, { exact: true })
-                        //        //        .draw();
-                        //        //});
-
-                        //        //// Add list of options
-                        //        //column
-                        //        //    .data()
-                        //        //    .unique()
-                        //        //    .sort()
-                        //        //    .each(function (d, j) {
-                        //        //        select.add(new Option(d));
-                        //        //    });
-                        //    });
                     },
 
                     fn_draw_callback: function (settings) {
-                        //var base = this;
-                        //var list_payer_local = [];
-                        //settings.api
-                        //    .columns()
-                        //    .every(function () {
-                        //        var column = this;
-                        //        //var num = column[0][0];
-
-                        //        var name = (column.header().firstChild && column.header().firstChild.firstChild ? column.header().firstChild.firstChild.data : null);
-                        //        //var select = [];
-                        //        if (name === "Плательщик") {
-                        //            base.column_payer = column;
-                        //            var val_code_payer = base.form_searsh_doc_setup.el.select_code_payer.val();
-                        //            //base.form_searsh_doc_setup.el.select_code_payer.$element.on("change", function (event) {
-                        //            //    //val_code_payerl = $(this).val();
-                        //            //    column //.search($(this).val(), { exact: true }).draw();
-                        //            //        .search($(this).val() ? '^' + $(this).val() + '$' : '', true, false).draw();
-                        //            //});
-                        //            column
-                        //                .data()
-                        //                .unique()
-                        //                .sort()
-                        //                .each(function (d, j) {
-                        //                    list_payer_local.push({ value: d, text: d, disabled: false })
-                        //                });
-                        //            base.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, val_code_payer);
-                        //        }
-                        //        // Create select element
-                        //        //let select = document.createElement('select');
-                        //        //select.add(new Option(''));
-                        //        //column.footer().replaceChildren(select);
-
-                        //        //// Apply listener for user change in value
-                        //        //select.addEventListener('change', function () {
-                        //        //    column
-                        //        //        .search(select.value, { exact: true })
-                        //        //        .draw();
-                        //        //});
-
-                        //        //// Add list of options
-                        //        //column
-                        //        //    .data()
-                        //        //    .unique()
-                        //        //    .sort()
-                        //        //    .each(function (d, j) {
-                        //        //        select.add(new Option(d));
-                        //        //    });
-                        //    });
-
                     }.bind(this)
                 });
             }
@@ -1264,6 +1267,17 @@
     view_verification_invoices_arrival.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
+        this.form_verification_invoices_setup.el.input_text_presented1.val('');
+        this.form_verification_invoices_setup.el.input_text_presented2.val('');
+        this.form_verification_invoices_setup.el.input_text_presented3.val('');
+        this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
+        this.form_searsh_doc_setup.el.select_code_payer.val('');
+        this.form_searsh_doc_setup.el.select_act.val('');
+        this.form_searsh_doc_setup.el.select_id_cargo.val('');
+        this.form_searsh_doc_setup.el.select_id_station_from.val('');
+        this.form_searsh_doc_setup.el.select_id_station_on.val('');
+        this.form_searsh_doc_setup.el.select_id_operator.val('');
+
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
         LockScreen(langView('vs_via_update_main_docs', App.Langs));
@@ -1272,6 +1286,7 @@
             this.select_document = [];
             this.select_document_detali = [];
             this.presented = null;
+            this.clear = false;
             this.documents = [];
             if (document !== null && document.length > 0) {
                 this.enable_form_searsh_doc_setup();
@@ -1282,7 +1297,8 @@
                 this.list_document = this.documents;
                 this.select_docs(function (select) {
                     this.select_apply(function (select) {
-                        this.tab_verification_invoices_wagons.view(select);
+                        this.view_select(select);
+                        //this.tab_verification_invoices_wagons.view(select);
                     }.bind(this));
                 }.bind(this));
             } else {
@@ -1297,7 +1313,6 @@
             }
         }.bind(this));
     };
-
     //view_verification_invoices_arrival.prototype.validation_documents_searsh = function () {
     //    var valid = true;
     //    var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
@@ -1389,13 +1404,14 @@
             this.form_searsh_doc_setup.el.select_id_operator.update(list_operators, (op ? op.value : -1));
         }
     }
-
+    // 
     view_verification_invoices_arrival.prototype.select_docs = function (callback) {
         // Обнулим списки
         LockScreen(langView('vs_via_select_main_docs', App.Langs));
         this.clear_all();
         //this.list_payer_local = [];
         this.presented = null;
+        this.clear = false;
         if (this.list_document && this.list_document.length > 0) {
             // Проверим наличие списка документов
             var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
@@ -1429,6 +1445,7 @@
         this.clear_all();
         this.select_document_detali = [];
         this.presented = null;
+        this.clear = false;
         if (this.select_document && this.select_document.length > 0) {
             this.select_document_detali = this.select_document;
             if (this.code_payer != -1) {
@@ -1476,6 +1493,26 @@
             }
         }
     };
+    // Применить выбор
+    view_verification_invoices_arrival.prototype.view_select = function (select) {
+        this.tab_verification_invoices_wagons.view(select);
+        if (select && select.length > 0) {
+
+            var presented1 = select[0].numActServices1;
+            var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
+            presented1 = (pr1.length !== select.length ? null : presented1);
+            var presented2 = select[0].numActServices2;
+            var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
+            presented2 = (pr2.length !== select.length ? null : presented2);
+            var presented3 = select[0].numActServices3;
+            var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
+            presented3 = (pr3.length !== select.length ? null : presented3);
+            this.form_verification_invoices_setup.el.input_text_presented1.val(presented1);
+            this.form_verification_invoices_setup.el.input_text_presented2.val(presented2);
+            this.form_verification_invoices_setup.el.input_text_presented3.val(presented3);
+        }
+    };
+
     // Очистить данные
     view_verification_invoices_arrival.prototype.clear_data = function () {
         this.tab_cost_calculation.view([]);
@@ -1498,15 +1535,15 @@
             this.main_alert.out_error_message(langView('vs_via_mess_war_not_select_docs', App.Langs));
             valid = false;
         } else {
-            if (this.presented === 1 && !result.new.input_text_presented1) {
+            if (!this.clear && this.presented === 1 && !result.new.input_text_presented1) {
                 this.form_verification_invoices_setup.set_element_validation_error('presented1', langView('vs_via_mess_error_not_presented', App.Langs), false);
                 valid = false;
             }
-            if (this.presented === 2 && !result.new.input_text_presented2) {
+            if (!this.clear && this.presented === 2 && !result.new.input_text_presented2) {
                 this.form_verification_invoices_setup.set_element_validation_error('presented2', langView('vs_via_mess_error_not_presented', App.Langs), false);
                 valid = false;
             }
-            if (this.presented === 3 && !result.new.input_text_presented3) {
+            if (!this.clear && this.presented === 3 && !result.new.input_text_presented3) {
                 this.form_verification_invoices_setup.set_element_validation_error('presented3', langView('vs_via_mess_error_not_presented', App.Langs), false);
                 valid = false;
             }
@@ -1516,72 +1553,62 @@
     // Обновить 
     view_verification_invoices_arrival.prototype.apply_update_presented = function (data, num_docs, callback) {
         var result = 1;
-        //this.ids_arrival.postUpdateArrivalUzDocumentPay(data, function (result) {
-        var mess_ok = null;
-        var mess_error = null;
-        var n = 0;
-        //    var num_doc = this.ArrivalUzDocument.nomMainDoc;
-        //    var doc_pay = this.form_document_pay.el.input_text_doc_pay.val();
-        this.clear_all();
-        if (result >= 0) {
-            // Ок
-            mess_ok = langView('vs_via_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
-            if (data && data.id_docs && data.id_docs.length > 0) {
-                LockScreen(langView('vs_via_update_main_docs', App.Langs));
-                $.each(data.id_docs, function (i, el) {
-                    n += 1;
-                    this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
-                        n -= 1;
-                        var doc = this.get_document(document);
-                        var exist_doc = this.list_document.find(function (o) {
-                            return o.id === doc.id;
-                        }.bind(this));
-                        if (exist_doc && doc) {
-                            exist_doc = doc;
-                        }
-                        if (n === 0) {
-
-                            this.select_docs(function (select) {
-                                this.select_apply(function (select) {
-                                    this.tab_verification_invoices_wagons.view(select);
-                                    this.main_alert.out_info_message(mess_ok);
-                                    LockScreenOff();
-                                    if (typeof callback === 'function') {
-                                        callback(result);
-                                    }
-                                }.bind(this));
+        this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
+            var mess_ok = null;
+            var mess_error = null;
+            var n = 0;
+            this.clear_all();
+            if (result >= 0) {
+                // Ок
+                if (data.num_act !== null) {
+                    mess_ok = langView('vs_via_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
+                } else {
+                    mess_ok = langView('vs_via_mess_ok_clear_presented', App.Langs).format(num_docs);
+                }
+                if (data && data.id_docs && data.id_docs.length > 0) {
+                    LockScreen(langView('vs_via_update_main_docs', App.Langs));
+                    $.each(data.id_docs, function (i, el) {
+                        n += 1;
+                        this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
+                            n -= 1;
+                            var doc = this.get_document(document);
+                            var exist_doc = this.list_document.find(function (o) {
+                                return o.id === doc.id;
                             }.bind(this));
+                            if (exist_doc && doc) {
+                                var res = this.list_document.indexOf(exist_doc);
+                                this.list_document.splice(res, 1);
+                                this.list_document.push(doc);
+                            }
+                            if (n === 0) {
 
-
-                        }
+                                this.select_docs(function (select) {
+                                    this.select_apply(function (select) {
+                                        this.view_select(select);
+                                        //this.tab_verification_invoices_wagons.view(select);
+                                        // Очистить поля правки
+                                        //this.form_verification_invoices_setup.el['input_text_presented' + data.presented].val('');
+                                        this.main_alert.out_info_message(mess_ok);
+                                        LockScreenOff();
+                                        if (typeof callback === 'function') {
+                                            callback(result);
+                                        }
+                                    }.bind(this));
+                                }.bind(this));
+                            }
+                        }.bind(this));
                     }.bind(this));
-                }.bind(this));
+                }
+            } else {
+                mess_error = langView('vs_via_mess_error_update_presented', App.Langs).format(num_docs, result);
+                this.main_alert.out_error_message(mess_error);
+                LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
             }
-        } else {
-            mess_error = langView('vs_via_mess_error_update_presented', App.Langs).format(num_docs, result);
-            this.main_alert.out_error_message(mess_error);
-            LockScreenOff();
-            if (typeof callback === 'function') {
-                callback(result);
-            }
-        }
-        //}.bind(this));
+        }.bind(this));
     }
-    // Обновить информацию в таблицах или выввести ошибки после выполнения операций
-    //view_verification_invoices_arrival.prototype.apply_update = function (mess_ok, mess_err, callback) {
-    //    this.clear_all();
-    //    if (mess_ok) {
-    //        this.main_alert.out_info_message(mess_ok);
-    //        this.id_doc = null;
-    //        this.form_register_accepted_wagons_setup.el.datalist_num_epd.val(null);
-    //    }
-    //    if (mess_err) {
-    //        this.main_alert.out_error_message(mess_err);
-    //    }
-    //    if (typeof callback === 'function') {
-    //        callback();
-    //    }
-    //}
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
     view_verification_invoices_arrival.prototype.load_db = function (list, update, callback) {

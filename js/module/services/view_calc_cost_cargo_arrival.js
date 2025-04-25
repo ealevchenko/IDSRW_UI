@@ -1049,7 +1049,15 @@
                         arrivalUZDocumentPay: arrivalUZDocumentPay,
                         deffTariff: document.tariffContract !== null && arrivalUZDocumentPay !== null ? document.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
                         calcPayer: document.calcPayer,
-                        calcPayerUser: document.calcPayerUser
+                        calcPayerUser: document.calcPayerUser,
+                        idActServices1: document.idActServices1,
+                        idActServices2: document.idActServices2,
+                        idActServices3: document.idActServices3,
+                        numActServices1: document.numActServices1,
+                        numActServices2: document.numActServices2,
+                        numActServices3: document.numActServices3,
+                        verification: document.verification,
+                        verificationUser: document.verificationUser,
                     });
                     this.tab_cost_calculation.view(document_data);
                     this.tab_register_accepted_wagons.view(vagons_data);

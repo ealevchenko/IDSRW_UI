@@ -81,7 +81,10 @@
     ids_arrival.prototype.getVerificationArrivalUzDocumentOfPeriod = function (start, stop, callback) {
         this.api_com.get('/ArrivalUzDocument/verification/start/' + start + '/stop/' + stop, callback);
     };
-
+    //АРМ, обновить сверку документов
+    ids_arrival.prototype.postVerificationArrivalUzDocument = function (value, callback) {
+        this.api_com.post('/ArrivalUzDocument/update/verification/', value, callback);
+    };
 
     App.ids_arrival = ids_arrival;
 
