@@ -51,6 +51,7 @@
             'vs_via_text_label_payer': 'Выберите плательщика ...',
 
             'vs_via_title_label_act': 'Акт №:',
+            'vs_via_title_placeholder_act': '№ Акта',
             'vs_via_text_label_act': 'Выберите № акта ...',
 
             'vs_via_title_label_cargo': 'груз ПРИБ:',
@@ -186,7 +187,7 @@
         this.list_vagons = [];
         this.select_vagons = [];
         this.code_payer = -1;
-        this.act = -1;
+        this.act = '';
         this.id_cargo = -1;
         this.code_station_from = -1;
         this.code_station_on = -1;
@@ -506,36 +507,46 @@
                     },
                     childs: []
                 };
-                var form_select_acts = {
-                    obj: 'bs_form_select',
+                var form_input_datalist_acts = {
+                    obj: 'bs_form_input_datalist',
                     options: {
-                        validation_group: 'common_searsh',
-                        id: 'act',
-                        name: 'act',
+                        validation_group: 'common_cc_setup',
+                        id: 'acts',
+                        name: 'acts',
                         label: langView('vs_via_title_label_act', App.Langs),
                         element_fsize: 'sm',
-                        element_class: null,
+                        element_class: 'flexdatalist',
                         element_value: null,
-                        element_multiple: false,
                         element_title: null,
+                        element_placeholder: langView('vs_via_title_placeholder_act', App.Langs),
                         element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
                         element_readonly: false,
-                        element_size: null,
                         element_options: {
                             data: [],
-                            default: -1,
-                            fn_change: function (e) {
-                                e.preventDefault();
-                                // Обработать выбор
-                                this.act = $(e.currentTarget).val();
+                            out_value: false,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //if (set.value === "") {
+                                //    this.act = '';
+                                //    this.select_apply(function (select) {
+                                //        this.view_select(select);
+
+                                //        LockScreenOff();
+                                //    }.bind(this));
+                                //}
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+                                this.act = set.value;
                                 this.select_apply(function (select) {
                                     this.view_select(select);
-                                    //this.tab_verification_invoices_wagons.view(select);
+
                                     LockScreenOff();
                                 }.bind(this));
-                            }.bind(this),
-                            fn_check: function (text) {
-
                             }.bind(this),
                         },
                         validation: false,
@@ -543,13 +554,57 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 1,
+                        col_size: 2,
                         col_class: 'mt-0',
                         form_text: langView('vs_via_text_label_act', App.Langs),
                         form_text_class: null,
                     },
                     childs: []
                 };
+                //var form_select_acts = {
+                //    obj: 'bs_form_select',
+                //    options: {
+                //        validation_group: 'common_searsh',
+                //        id: 'act',
+                //        name: 'act',
+                //        label: langView('vs_via_title_label_act', App.Langs),
+                //        element_fsize: 'sm',
+                //        element_class: null,
+                //        element_value: null,
+                //        element_multiple: false,
+                //        element_title: null,
+                //        element_required: false,
+                //        element_readonly: false,
+                //        element_size: null,
+                //        element_options: {
+                //            data: [],
+                //            default: -1,
+                //            fn_change: function (e) {
+                //                e.preventDefault();
+                //                // Обработать выбор
+                //                this.act = $(e.currentTarget).val();
+                //                this.select_apply(function (select) {
+                //                    this.view_select(select);
+                //                    //this.tab_verification_invoices_wagons.view(select);
+                //                    LockScreenOff();
+                //                }.bind(this));
+                //            }.bind(this),
+                //            fn_check: function (text) {
+
+                //            }.bind(this),
+                //        },
+                //        validation: false,
+                //        feedback_invalid: null,
+                //        feedback_valid: null,
+                //        feedback_class: null,
+                //        col_prefix: 'md',
+                //        col_size: 1,
+                //        col_class: 'mt-0',
+                //        form_text: langView('vs_via_text_label_act', App.Langs),
+                //        form_text_class: null,
+                //    },
+                //    childs: []
+                //};
                 var form_select_cargo = {
                     obj: 'bs_form_select',
                     options: {
@@ -731,7 +786,7 @@
                 objs_sd_setup.push(col_alert);
                 objs_sd_setup.push(form_textarea_docs);
                 objs_sd_setup.push(form_select_payer);
-                objs_sd_setup.push(form_select_acts);
+                objs_sd_setup.push(form_input_datalist_acts);
                 objs_sd_setup.push(form_select_cargo);
                 objs_sd_setup.push(form_select_station_from);
                 objs_sd_setup.push(form_select_station_on);
@@ -1163,8 +1218,9 @@
         this.form_searsh_doc_setup.el.textarea_documents_searsh.disable();
         this.form_searsh_doc_setup.el.button_docs_clear.prop("disabled", true);
         this.form_searsh_doc_setup.el.button_docs_searsh.prop("disabled", true);
+
         this.form_searsh_doc_setup.el.select_code_payer.disable();
-        this.form_searsh_doc_setup.el.select_act.disable();
+        this.form_searsh_doc_setup.el.datalist_acts.disable();
         this.form_searsh_doc_setup.el.select_id_cargo.disable();
         this.form_searsh_doc_setup.el.select_id_station_from.disable();
         this.form_searsh_doc_setup.el.select_id_station_on.disable();
@@ -1176,7 +1232,7 @@
         this.form_searsh_doc_setup.el.button_docs_clear.prop("disabled", false);
         this.form_searsh_doc_setup.el.button_docs_searsh.prop("disabled", false);
         this.form_searsh_doc_setup.el.select_code_payer.enable();
-        this.form_searsh_doc_setup.el.select_act.enable();
+        this.form_searsh_doc_setup.el.datalist_acts.enable();
         this.form_searsh_doc_setup.el.select_id_cargo.enable();
         this.form_searsh_doc_setup.el.select_id_station_from.enable();
         this.form_searsh_doc_setup.el.select_id_station_on.enable();
@@ -1272,11 +1328,17 @@
         this.form_verification_invoices_setup.el.input_text_presented3.val('');
         this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
         this.form_searsh_doc_setup.el.select_code_payer.val('');
-        this.form_searsh_doc_setup.el.select_act.val('');
+        this.form_searsh_doc_setup.el.datalist_acts.val('');
         this.form_searsh_doc_setup.el.select_id_cargo.val('');
         this.form_searsh_doc_setup.el.select_id_station_from.val('');
         this.form_searsh_doc_setup.el.select_id_station_on.val('');
         this.form_searsh_doc_setup.el.select_id_operator.val('');
+        this.code_payer = -1;
+        this.act = -1;
+        this.id_cargo = -1;
+        this.code_station_from = -1;
+        this.code_station_on = -1;
+        this.id_operator = -1;
 
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
@@ -1332,7 +1394,7 @@
             var list_stn_on = [];      // станции по прибытию
             // получим выбранные значения
             var code_payer = this.form_searsh_doc_setup.el.select_code_payer.val();
-            //this.act
+            var act = this.form_searsh_doc_setup.el.datalist_acts.val();
             var id_cargo = this.form_searsh_doc_setup.el.select_id_cargo.val();
             var code_station_from = this.form_searsh_doc_setup.el.select_id_station_from.val();
             var code_station_on = this.form_searsh_doc_setup.el.select_id_station_on.val();
@@ -1347,6 +1409,30 @@
                     list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
                 }
                 // Акты
+                if (el.numActServices1) {
+                    var act1 = list_acts.find(function (o) {
+                        return o.value === el.numActServices1;
+                    }.bind(this));
+                    if (!act1) {
+                        list_acts.push({ value: el.numActServices1, text: el.numActServices1, disabled: false });
+                    }
+                }
+                if (el.numActServices2) {
+                    var act2 = list_acts.find(function (o) {
+                        return o.value === el.numActServices2;
+                    }.bind(this));
+                    if (!act2) {
+                        list_acts.push({ value: el.numActServices2, text: el.numActServices2, disabled: false });
+                    }
+                }
+                if (el.numActServices3) {
+                    var act3 = list_acts.find(function (o) {
+                        return o.value === el.numActServices3;
+                    }.bind(this));
+                    if (!act3) {
+                        list_acts.push({ value: el.numActServices3, text: el.numActServices3, disabled: false });
+                    }
+                }
 
                 // Грузы по прибытию
                 $.each(el.vagons, function (i, el_wag) {
@@ -1385,7 +1471,10 @@
                 return o.value == code_payer;
             }.bind(this));
             this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, (pc ? pc.value : -1));
-            //this.act
+            var ac = list_acts.find(function (o) {
+                return o.value !== null && o.value === act;
+            }.bind(this));
+            this.form_searsh_doc_setup.el.datalist_acts.update(list_acts, (ac ? ac.value : ''));
             var crg = list_cargo.find(function (o) {
                 return o.value == id_cargo;
             }.bind(this));
@@ -1415,7 +1504,7 @@
         if (this.list_document && this.list_document.length > 0) {
             // Проверим наличие списка документов
             var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-            this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, true);
+            this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, false, true);
             if (this.list_docs) {
                 this.select_document = this.list_document.filter(function (i) {
                     return this.list_docs.indexOf(i.nomMainDoc) >= 0;
@@ -1442,7 +1531,8 @@
     view_verification_invoices_arrival.prototype.select_apply = function (callback) {
         // Обнулим списки
         LockScreen(langView('vs_via_select_main_docs', App.Langs));
-        this.clear_all();
+        //this.clear_all();
+        this.searsh_alert_info.clear_message();
         this.select_document_detali = [];
         this.presented = null;
         this.clear = false;
@@ -1453,8 +1543,12 @@
                     return i.payerLocalCode === this.code_payer;
                 }.bind(this));
             }
-            if (this.act != -1) {
-
+            if (this.act != -1 && this.act !== null) {
+                this.select_document_detali = this.select_document_detali.filter(function (i) {
+                    return i.numActServices1 === this.act
+                        || i.numActServices2 === this.act
+                        || i.numActServices3 === this.act
+                }.bind(this));
             }
             if (this.id_cargo != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {

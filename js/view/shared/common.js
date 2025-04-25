@@ -3820,7 +3820,7 @@ var get_belongs_element = function (rows, name_field, id) {
 
     };
     // Проверить элемент "textarea" на введенные номера документов
-    validation_form.prototype.check_control_is_valid_docs = function (o, valid_not_null, out_message) {
+    validation_form.prototype.check_control_is_valid_docs = function (o, valid_not_null, valid_dublecate, out_message) {
         var val = o.val();
         var element = o.$element ? o.$element : o;
         var mes_ok = 'ок';
@@ -3872,11 +3872,13 @@ var get_belongs_element = function (rows, name_field, id) {
             }
         }
         // Вывод сообщений повторяющихся номеров
-        $.each(arr_res, function (i, el) {
-            mes_warning = langView('mess_error_input_num_docs_duble', App.Langs).format(el);
-            if (out_message) this.out_error_message(mes_warning);
-            valid = false;
-        }.bind(this));
+        if (valid_dublecate) {
+            $.each(arr_res, function (i, el) {
+                mes_warning = langView('mess_error_input_num_docs_duble', App.Langs).format(el);
+                if (out_message) this.out_error_message(mes_warning);
+                valid = false;
+            }.bind(this));
+        }
         if (valid) {
             this.set_control_ok(element, mes_ok);
         } else {
