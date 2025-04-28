@@ -1065,7 +1065,7 @@
                     this.arrivalUZDocumentPay = arrivalUZDocumentPay !== null ? Number(arrivalUZDocumentPay / 100) : null;
                     this.codePayerLocal = (document.codePayerLocalNavigation && this.codePayerLocal == null) ? document.codePayerLocalNavigation.code : this.codePayerLocal;
                     this.tariffContract = document.tariffContract;
-                    this.verification = document.verification !== null;
+                    this.verification = document.numActServices1 !== null || document.numActServices2 !== null || document.numActServices3 !== null;
 
 
                     this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
