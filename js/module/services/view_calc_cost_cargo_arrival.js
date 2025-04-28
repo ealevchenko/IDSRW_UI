@@ -359,7 +359,7 @@
                     obj: 'bs_button',
                     options: {
                         id: 'filing_apply',
-                        name: null,
+                        name: 'filing_apply',
                         class: null,
                         fsize: 'sm',
                         color: 'success',
@@ -551,8 +551,8 @@
                 var bt_apply_doc_pay = {
                     obj: 'bs_button',
                     options: {
-                        id: null,
-                        name: null,
+                        id: 'apply_doc_pay',
+                        name: 'apply_doc_pay',
                         class: null,
                         fsize: 'sm',
                         color: 'success',
@@ -1065,11 +1065,13 @@
                     this.arrivalUZDocumentPay = arrivalUZDocumentPay !== null ? Number(arrivalUZDocumentPay / 100) : null;
                     this.codePayerLocal = (document.codePayerLocalNavigation && this.codePayerLocal == null) ? document.codePayerLocalNavigation.code : this.codePayerLocal;
                     this.tariffContract = document.tariffContract;
+                    this.verification = document.verification !== null;
+
 
                     this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
                     this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
                     this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
-
+                    this.view_edit(this.verification);
                 } else {
                     this.clear_data();
                 }
@@ -1083,6 +1085,21 @@
             this.clear_data();
         }
     };
+    view_calc_cost_cargo_arrival.prototype.view_edit = function (disable) {
+        if (disable) {
+            this.form_document_pay.el.button_apply_doc_pay.prop("disabled", true);
+            this.form_document_pay.el.input_text_doc_pay.disable();
+            this.form_cost_calculation_setup.el.button_filing_apply.prop("disabled", true);
+            this.form_cost_calculation_setup.el.datalist_payer.disable();
+            this.form_cost_calculation_setup.el.input_text_tariff_contract.disable();
+        } else {
+            this.form_document_pay.el.button_apply_doc_pay.prop("disabled", false);
+            this.form_document_pay.el.input_text_doc_pay.enable();
+            this.form_cost_calculation_setup.el.button_filing_apply.prop("disabled", false);
+            this.form_cost_calculation_setup.el.datalist_payer.enable();
+            this.form_cost_calculation_setup.el.input_text_tariff_contract.enable();
+        }
+    };
     // Очистить данные
     view_calc_cost_cargo_arrival.prototype.clear_data = function () {
         this.tab_cost_calculation.view([]);
@@ -1092,10 +1109,12 @@
         this.arrivalUZDocumentPay = null;
         this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
         this.tariffContract = null;
+        this.verification = false;
 
         this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
         this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
         this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
+        this.view_edit(this.verification);
     }
 
     // Дополнительная валидация doc_pay

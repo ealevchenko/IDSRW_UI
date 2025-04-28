@@ -531,14 +531,29 @@
                             minLength: 1,
                             searchContain: true,
                             fn_change: function (event, set, options) {
-                                //if (set.value === "") {
-                                //    this.act = '';
-                                //    this.select_apply(function (select) {
-                                //        this.view_select(select);
+                                if (set.value === "") {
+                                    this.act = set.value;
+                                    this.select_apply(function (select) {
+                                        this.view_select(select);
 
-                                //        LockScreenOff();
-                                //    }.bind(this));
-                                //}
+                                        LockScreenOff();
+                                    }.bind(this));
+                                } else {
+                                    //var res = this.list_acts.find(function (o) {
+                                    //    return o.value === set.value;
+                                    //}.bind(this));
+                                    //if (res) {
+                                    //    this.act = set.value;
+
+                                    //} else {
+                                    //    this.act = "";
+                                    //}
+                                    //this.select_apply(function (select) {
+                                    //    this.view_select(select);
+
+                                    //    LockScreenOff();
+                                    //}.bind(this));
+                                }
                             }.bind(this),
                             fn_select: function (event, set, options) {
                                 this.act = set.value;
@@ -1339,6 +1354,7 @@
         this.code_station_from = -1;
         this.code_station_on = -1;
         this.id_operator = -1;
+        this.list_acts = [];
 
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
@@ -1475,6 +1491,7 @@
                 return o.value !== null && o.value === act;
             }.bind(this));
             this.form_searsh_doc_setup.el.datalist_acts.update(list_acts, (ac ? ac.value : ''));
+            this.list_acts = list_acts;
             var crg = list_cargo.find(function (o) {
                 return o.value == id_cargo;
             }.bind(this));
@@ -1543,7 +1560,7 @@
                     return i.payerLocalCode === this.code_payer;
                 }.bind(this));
             }
-            if (this.act != -1 && this.act !== null) {
+            if (this.act != -1 && this.act !== null && this.act !== "") {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
                     return i.numActServices1 === this.act
                         || i.numActServices2 === this.act

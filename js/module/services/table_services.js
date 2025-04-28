@@ -785,6 +785,64 @@
                 //};
                 this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(3)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
+
+                    var tariff_dog = api
+                        .column(4)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(2)
+                        .html(Number(tariff_dog).toFixed(2));
+
+                    var tariff_doc = api
+                        .column(6)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(4)
+                        .html(Number(tariff_doc).toFixed(2));
+
+                    var tariff_deff = api
+                        .column(8)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(6)
+                        .html(Number(tariff_deff).toFixed(2));
+
+                    var vesg = api
+                        .column(10)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(8)
+                        .html(Number(vesg).toFixed(2));
+
+                };
                 this.tab_com.createdRow = function (row, data, index) {
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
@@ -801,6 +859,18 @@
                 this.tab_com.table_columns = this.init_columns_verification_invoices_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
+                this.tab_com.html_footer = '<tfoot><tr>' +
+                    '<th colspan="3" class="text-end">ИТОГО:</th>' +
+                    '<th class="text-center"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th colspan="15""></th>' +
+                    '</tr></tfoot>';
                 break;
             };
             //
