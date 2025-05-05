@@ -97,6 +97,10 @@
 
     var VSVIA = App.view_verification_invoices_arrival;
     var vsvia = new VSVIA('main.container-fluid');
+
+    var VSCCCO = App.view_calc_cost_cargo_outgoing;
+    var vsccco = new VSCCCO('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -201,6 +205,21 @@
                         }
                         default: {
                             LockScreenOff();break;
+                        }
+                        case 'ccco': {
+                            vsccco.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
+
+                                }
+                            });
+                            break;
                         }
                     }
                 }
