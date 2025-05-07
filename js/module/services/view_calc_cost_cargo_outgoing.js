@@ -109,12 +109,12 @@
 
             'vs_ccco_load_main_docs': 'Загружаю документы за период...',
             ///*            'vs_ccco_load_docs': 'Загружаю информацию по накладной {0}...',*/
-            //'vs_ccco_update_main_docs': 'Обнавляю документы выбранные за период...',
-            //'vs_ccco_select_main_docs': 'Поиск документов согласно выбора...',
+            'vs_ccco_update_main_docs': 'Обнавляю документы выбранные за период...',
+            'vs_ccco_select_main_docs': 'Поиск документов согласно выбора...',
 
             'vs_ccco_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            //'vs_ccco_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа.',
-            //'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа, выбранно {3}',
+            'vs_ccco_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
+            'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбранно {3}',
 
             //'vs_ccco_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
             //'vs_ccco_mess_error_not_presented': 'Укажите № Акта сверки',
@@ -398,16 +398,10 @@
                                 e.preventDefault();
                                 // Обработать выбор
                                 this.code_payer = $(e.currentTarget).val();
-                                //this.select_apply(function (select) {
-                                //    this.view_select(select);
-                                //    //this.tab_verification_invoices_wagons.view(select);
-                                //    LockScreenOff();
-                                //}.bind(this));
-                                //var val = $(e.currentTarget).val();
-                                //if (val == -1) val = '';
-                                ////this.column_payer.search(val, { exact: true }).draw();
-                                //this.column_payer.search(val ? '^' + val + '$' : '', true, false).draw();
-
+                                this.select_apply(function (select) {
+                                    this.view_select(select);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                             fn_check: function (text) {
 
@@ -449,7 +443,6 @@
                                 this.id_cargo = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
                                     this.view_select(select);
-                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -490,10 +483,9 @@
                             fn_change: function (e) {
                                 e.preventDefault();
                                 // Обработать выбор
-                                this.code_station_from = Number($(e.currentTarget).val());
+                                this.code_stn_from = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
                                     this.view_select(select);
-                                    //this.tab_verification_invoices_wagons.view(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
@@ -923,16 +915,16 @@
                     }.bind(this),
                 });
 
-                //Создадим таблицы( this.tab_verification_invoices_wagons)
-                var row_verification_invoices_wagons = new this.fe_ui.bs_row({ id: 'table-verification-invoices-wagons', class: 'pt-2' });
-                this.register_sent_wagons_table.$html.append(row_verification_invoices_wagons.$html);
+                //Создадим таблицы( this.tab_register_send_wagons)
+                var row_register_send_wagons = new this.fe_ui.bs_row({ id: 'table-register-send-wagons', class: 'pt-2' });
+                this.register_sent_wagons_table.$html.append(row_register_send_wagons.$html);
 
-                this.tab_verification_invoices_wagons = new TSRV('div#table-verification-invoices-wagons');
-                this.tab_verification_invoices_wagons.init({
+                this.tab_register_send_wagons = new TSRV('div#table-register-send-wagons');
+                this.tab_register_send_wagons.init({
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: true,
-                    type_report: 'verification_invoices_wagons',
+                    type_report: 'register_send_wagons',
                     setup_buttons: [
                     ],
                     link_num: false,
@@ -966,7 +958,7 @@
                             alert: this.from_way_alert,
                             class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                             detali_table: false,
-                            type_report: 'verification_invoices_detali_wagons',
+                            type_report: 'register_send_detali_wagons',
                             setup_buttons: [
                             ],
                             link_num: false,
@@ -1026,7 +1018,7 @@
         this.form_searsh_doc_setup.el.select_code_payer.disable();
         this.form_searsh_doc_setup.el.datalist_acts.disable();
         this.form_searsh_doc_setup.el.select_id_cargo.disable();
-        this.form_searsh_doc_setup.el.select_id_station_from.disable();
+        this.form_searsh_doc_setup.el.select_code_stn_from.disable();
         this.form_searsh_doc_setup.el.select_id_station_on.disable();
         this.form_searsh_doc_setup.el.select_id_operator.disable();
     };
@@ -1038,7 +1030,7 @@
         this.form_searsh_doc_setup.el.select_code_payer.enable();
         this.form_searsh_doc_setup.el.datalist_acts.enable();
         this.form_searsh_doc_setup.el.select_id_cargo.enable();
-        this.form_searsh_doc_setup.el.select_id_station_from.enable();
+        this.form_searsh_doc_setup.el.select_code_stn_from.enable();
         this.form_searsh_doc_setup.el.select_id_station_on.enable();
         this.form_searsh_doc_setup.el.select_id_operator.enable();
     };
@@ -1046,79 +1038,67 @@
     view_calc_cost_cargo_outgoing.prototype.get_document = function (document) {
         // Пройдемся по вагонам
         var vagons = [];
-        var list_vagons = document.arrivalUzVagons;
-        var summ_arrivalUzVagonPays = 0;
-        var summ_vesg = 0;
+        var list_vagons = document.outgoingUzVagons;
         $.each(list_vagons, function (i, el_vag) {
-            // Тариф ПРИБ (Вагоны)
-            var arrivalUzVagonPays = 0;
-            if (el_vag.arrivalUzVagonPays && el_vag.arrivalUzVagonPays.length > 0) {
-                $.each(el_vag.arrivalUzVagonPays, function (i, el_pay) {
-                    arrivalUzVagonPays += (el_pay.summa && el_pay.kod === '001' ? Number(el_pay.summa) : 0);
-                }.bind(this));
-            }
-            summ_arrivalUzVagonPays += arrivalUzVagonPays;
-            summ_vesg += el_vag.vesg ? Number(el_vag.vesg) : 0;
-            //
             vagons.push({
                 id: el_vag.id,
-                nomMainDoc: document.nomMainDoc,
+                nomDoc: document.nomDoc,
                 num: el_vag.num,
-                dateOtpr: document.dateOtpr,
-                dateAdoption: el_vag.idArrivalNavigation.dateAdoption,
-                nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
-                nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
-                arrivalCargoId: el_vag.idCargoNavigation.id,
-                arrivalCargoName: el_vag.idCargoNavigation['cargoName' + ucFirst(App.Lang)],
-                arrivalOperatorId: el_vag.idWagonsRentArrivalNavigation.idOperator,
-                arrivalOperatorAbbr: el_vag.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)],
-                toDivisionAbbr: el_vag.idDivisionOnAmkrNavigation.id,
-                toDivisionAbbr: el_vag.idDivisionOnAmkrNavigation['divisionAbbr' + ucFirst(App.Lang)],
+                outgoingIdCargo: el_vag.outgoingIdCargo,
+                outgoingCargoName: el_vag['outgoingCargoName' + ucFirst(App.Lang)],
                 vesg: el_vag.vesg,
-                arrivalUzVagonPays: arrivalUzVagonPays,
+                arrivalIdOperator: el_vag.arrivalIdOperator,
+                arrivalOperatorAbbr: el_vag['arrivalOperatorAbbr' + ucFirst(App.Lang)],
+                outgoingIdOperator: el_vag.outgoingIdOperator,
+                outgoingOperatorAbbr: el_vag['outgoingOperatorAbbr' + ucFirst(App.Lang)],
+                rodUz: el_vag.rodUz,
+                rodAbbr: el_vag['rodAbbr' + ucFirst(App.Lang)],
+                outgoingUzVagonPays: el_vag.outgoingUzVagonPays,
+                outgoingUzVagonPaysAdd: el_vag.outgoingUzVagonPaysAdd,
+                dateReadinessUz: el_vag.dateReadinessUz,
+                dateReadinessAmkr: el_vag.dateReadinessAmkr,
+                dateOutgoing: el_vag.dateOutgoing,
+                dateOutgoingAct: el_vag.dateOutgoingAct,
+                dateDepartureAmkr: el_vag.dateDepartureAmkr,
+                kolConductor: el_vag.kolConductor,
             });
-
         }.bind(this));
         // документ
-        var arrivalUZDocumentPay = 0;
-        if (document.arrivalUzDocumentPays && document.arrivalUzDocumentPays.length > 0) {
-            $.each(document.arrivalUzDocumentPays, function (i, el_dpay) {
-                arrivalUZDocumentPay += (el_dpay.summa && el_dpay.kod === '001' ? Number(el_dpay.summa) : 0);
-            }.bind(this));
-        }
         return {
             id: document.id,
-            nomMainDoc: document.nomMainDoc,
+            nomDoc: document.nomDoc,
             countVagon: vagons.length,
             vagons: vagons,
-            codeStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation.code : null,
-            nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
-            codeStnTo: document.codeStnToNavigation ? document.codeStnToNavigation.code : null,
-            nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
-            arrivalCargoName: vagons[0].arrivalCargoName,
-            vesg: summ_vesg,
+            payerSenderCode: document.payerSenderCode,
+            payerSenderName: document['payerSenderName' + ucFirst(App.Lang)],
+            outgoingUZDocumentPay: document.outgoingUZDocumentPay,
+            outgoingUZDocumentPayAdd: document.outgoingUZDocumentPayAdd,
+            outgoingUZDocumentPayAll: document.outgoingUZDocumentPay + document.outgoingUZDocumentPayAdd,
+            kolConductor: vagons[0].kolConductor,
+            outgoingCodeStnFrom: document.outgoingCodeStnFrom,
+            outgoingNameStnFrom: document['outgoingNameStnFrom' + ucFirst(App.Lang)],
+            outgoingCodeStnTo: document.outgoingCodeStnTo,
+            outgoingNameStnTo: document['outgoingNameStnTo' + ucFirst(App.Lang)],
+            inlandrailwayCode: document.inlandrailwayCode,
+            inlandrailwayAbbr: document['inlandrailwayAbbr' + ucFirst(App.Lang)],
+            distanceWay: document.distanceWay,
+            outgoingIdCargo: vagons[0].outgoingIdCargo,
+            outgoingCargoName: vagons[0].outgoingCargoName,
+            vesg: document.vesg,
             tariffContract: document.tariffContract,
-            payerLocalCode: document.codePayerLocalNavigation ? document.codePayerLocalNavigation.code : null,
-            payerLocalName: document.codePayerLocalNavigation ? document.codePayerLocalNavigation['payerName' + ucFirst(App.Lang)] : null,
             arrivalOperatorAbbr: vagons[0].arrivalOperatorAbbr,
-            toDivisionAbbr: vagons[0].toDivisionAbbr,
-            payerSenderCode: document.codePayerSenderNavigation ? document.codePayerSenderNavigation.code : null,
-            payerSenderName: document.codePayerSenderNavigation ? document.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)] : null,
-            payerArrivalCode: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation.code : null,
-            payerArrivalName: document.codePayerArrivalNavigation ? document.codePayerArrivalNavigation['payerName' + ucFirst(App.Lang)] : null,
-            dateOtpr: document.dateOtpr,
-            dateAdoption: vagons[0].dateAdoption,
-            arrivalUzVagonPays: summ_arrivalUzVagonPays,
-            arrivalUZDocumentPay: arrivalUZDocumentPay,
-            deffTariff: document.tariffContract !== null && arrivalUZDocumentPay !== null ? document.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
+            outgoingOperatorAbbr: vagons[0].outgoingOperatorAbbr,
+            outgoingOperatorAbbr: vagons[0].rodAbbr,
+            dateReadinessUz: vagons[0].dateReadinessUz,
+            //outgoingUzVagonPays: vagons.where(v => v.outgoingUzVagonPays != null).Sum(p => p.outgoingUzVagonPays),
+            //outgoingUzVagonPaysAdd: vagons.where(v => v.outgoingUzVagonPaysAdd != null).Sum(p => p.outgoingUzVagonPaysAdd),
+            //outgoingUzVagonPaysAll: vagons.where(v => v.outgoingUzVagonPays != null).Sum(p => p.outgoingUzVagonPays) + vagons.where(v => v.outgoingUzVagonPaysAdd != null).Sum(p => p.outgoingUzVagonPaysAdd),
+            arrivalUZDocumentPay: document.arrivalUZDocumentPay,
+            deffTariff: document.tariffContract !== null && document.arrivalUZDocumentPay !== null ? document.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
             calcPayer: document.calcPayer,
             calcPayerUser: document.calcPayerUser,
-            idActServices1: document.idActServices1,
-            idActServices2: document.idActServices2,
-            idActServices3: document.idActServices3,
-            numActServices1: document.numActServices1,
-            numActServices2: document.numActServices2,
-            numActServices3: document.numActServices3,
+            numList: document.numList,
+            dateList: document.dateList,
             verification: document.verification,
             verificationUser: document.verificationUser,
         };
@@ -1126,7 +1106,7 @@
     // обновить документы за период
     view_calc_cost_cargo_outgoing.prototype.update = function (start, stop, callback) {
         // Обновим
-        //this.clear_all();
+        this.clear_all();
         //this.form_register_sent_wagons.el.input_text_presented1.val('');
         //this.form_register_sent_wagons.el.input_text_presented2.val('');
         //this.form_register_sent_wagons.el.input_text_presented3.val('');
@@ -1134,51 +1114,46 @@
         //this.form_searsh_doc_setup.el.select_code_payer.val('');
         //this.form_searsh_doc_setup.el.datalist_acts.val('');
         //this.form_searsh_doc_setup.el.select_id_cargo.val('');
-        //this.form_searsh_doc_setup.el.select_id_station_from.val('');
+        //this.form_searsh_doc_setup.el.select_code_stn_from.val('');
         //this.form_searsh_doc_setup.el.select_id_station_on.val('');
         //this.form_searsh_doc_setup.el.select_id_operator.val('');
-        //this.code_payer = -1;
-        //this.act = -1;
-        //this.id_cargo = -1;
-        //this.code_station_from = -1;
-        //this.code_station_on = -1;
-        //this.id_operator = -1;
-        //this.list_acts = [];
+        this.code_payer = -1;
+        this.id_cargo = -1;
+        this.code_stn_from = -1;
 
-        //var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
-        //var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
-        //LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
-        //this.ids_arrival.getVerificationArrivalUzDocumentOfPeriod(sel_start, sel_stop, function (document) {
-        //    this.list_document = [];
-        //    this.select_document = [];
-        //    this.select_document_detali = [];
-        //    this.presented = null;
-        //    this.clear = false;
-        //    this.documents = [];
-        //    if (document !== null && document.length > 0) {
-        //        this.enable_form_searsh_doc_setup();
-        //        // Пройдемся по документам
-        //        $.each(document, function (i, el_doc) {
-        //            this.documents.push(this.get_document(el_doc));
-        //        }.bind(this));
-        //        this.list_document = this.documents;
-        //        this.select_docs(function (select) {
-        //            this.select_apply(function (select) {
-        //                this.view_select(select);
-        //                //this.tab_verification_invoices_wagons.view(select);
-        //            }.bind(this));
-        //        }.bind(this));
-        //    } else {
-        //        this.tab_verification_invoices_wagons.view([]);
-        //        this.disable_form_searsh_doc_setup();
-        //    }
-        //    this.searsh_alert_info.clear_message();
-        //    this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.documents.length));
-        //    LockScreenOff();
+        var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
+        var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
+        LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
+        this.ids_arrival.getRegisterOutgoingUzDocument(sel_start, sel_stop, function (document) {
+            this.list_document = [];
+            //this.select_document = [];
+            //this.select_document_detali = [];
+            this.documents = [];
+            if (document !== null && document.length > 0) {
+                //this.enable_form_searsh_doc_setup();
+                // Пройдемся по документам
+                $.each(document, function (i, el_doc) {
+                    this.documents.push(this.get_document(el_doc));
+                }.bind(this));
+                this.list_document = this.documents;
+                this.select_document = this.list_document;
+                if (this.list_document!==null && this.list_document.length>0) {
+                    this.update_select_list(this.select_document);
+                }
+                this.select_apply(function (select) {
+                    this.view_select(select);
+                }.bind(this));
+            } else {
+                this.tab_register_send_wagons.view([]);
+                //this.disable_form_searsh_doc_setup();
+            }
+            this.searsh_alert_info.clear_message();
+            this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.documents.length));
+            LockScreenOff();
             if (typeof callback === 'function') {
                 callback();
             }
-        //}.bind(this));
+        }.bind(this));
     };
     //view_calc_cost_cargo_outgoing.prototype.validation_documents_searsh = function () {
     //    var valid = true;
@@ -1192,147 +1167,89 @@
         if (data && data.length > 0) {
             // Обновим выпадающие списки
             var list_payer_local = [];
-            var list_acts = [];        // numActServices1
             var list_cargo = [];       // грузы по прибытию
-            var list_operators = [];   // операторы по прибытию
             var list_stn_from = [];    // станции по отправлению
-            var list_stn_on = [];      // станции по прибытию
             // получим выбранные значения
             var code_payer = this.form_searsh_doc_setup.el.select_code_payer.val();
-            var act = this.form_searsh_doc_setup.el.datalist_acts.val();
             var id_cargo = this.form_searsh_doc_setup.el.select_id_cargo.val();
-            var code_station_from = this.form_searsh_doc_setup.el.select_id_station_from.val();
-            var code_station_on = this.form_searsh_doc_setup.el.select_id_station_on.val();
-            var id_operator = this.form_searsh_doc_setup.el.select_id_operator.val();
+            var code_stn_from = this.form_searsh_doc_setup.el.select_code_stn_from.val();
 
             $.each(data, function (i, el) {
                 // Платильщик
                 var lpl = list_payer_local.find(function (o) {
-                    return o.value === el.payerLocalCode;
+                    return o.value === el.payerSenderCode;
                 }.bind(this));
                 if (!lpl) {
-                    list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
+                    list_payer_local.push({ value: el.payerSenderCode, text: el.payerSenderName, disabled: false });
                 }
-                // Акты
-                if (el.numActServices1) {
-                    var act1 = list_acts.find(function (o) {
-                        return o.value === el.numActServices1;
-                    }.bind(this));
-                    if (!act1) {
-                        list_acts.push({ value: el.numActServices1, text: el.numActServices1, disabled: false });
-                    }
-                }
-                if (el.numActServices2) {
-                    var act2 = list_acts.find(function (o) {
-                        return o.value === el.numActServices2;
-                    }.bind(this));
-                    if (!act2) {
-                        list_acts.push({ value: el.numActServices2, text: el.numActServices2, disabled: false });
-                    }
-                }
-                if (el.numActServices3) {
-                    var act3 = list_acts.find(function (o) {
-                        return o.value === el.numActServices3;
-                    }.bind(this));
-                    if (!act3) {
-                        list_acts.push({ value: el.numActServices3, text: el.numActServices3, disabled: false });
-                    }
-                }
-
                 // Грузы по прибытию
                 $.each(el.vagons, function (i, el_wag) {
                     var lcrg = list_cargo.find(function (o) {
-                        return o.value === el_wag.arrivalCargoId;
+                        return o.value === el_wag.outgoingIdCargo;
                     }.bind(this));
                     if (!lcrg) {
-                        list_cargo.push({ value: el_wag.arrivalCargoId, text: el_wag.arrivalCargoName, disabled: false });
+                        list_cargo.push({ value: el_wag.outgoingIdCargo, text: el_wag.outgoingCargoName, disabled: false });
                     }
-                    var lops = list_operators.find(function (o) {
-                        return o.value === el_wag.arrivalOperatorId;
-                    }.bind(this));
-                    if (!lops) {
-                        list_operators.push({ value: el_wag.arrivalOperatorId, text: el_wag.arrivalOperatorAbbr, disabled: false });
-                    }
-
                 }.bind(this));
                 // Станция отправления
                 var lstf = list_stn_from.find(function (o) {
-                    return o.value === el.codeStnFrom;
+                    return o.value === el.outgoingCodeStnFrom;
                 }.bind(this));
                 if (!lstf) {
-                    list_stn_from.push({ value: el.codeStnFrom, text: el.nameStnFrom, disabled: false });
+                    list_stn_from.push({ value: el.outgoingCodeStnFrom, text: el.outgoingNameStnFrom, disabled: false });
                 }
-                // Станция прибытия
-                var lsto = list_stn_on.find(function (o) {
-                    return o.value === el.codeStnTo;
-                }.bind(this));
-                if (!lsto) {
-                    list_stn_on.push({ value: el.codeStnTo, text: el.nameStnTo, disabled: false });
-                }
-
             }.bind(this));
             // проверим наличие выбранных полей
             var pc = list_payer_local.find(function (o) {
                 return o.value == code_payer;
             }.bind(this));
             this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, (pc ? pc.value : -1));
-            var ac = list_acts.find(function (o) {
-                return o.value !== null && o.value === act;
-            }.bind(this));
-            this.form_searsh_doc_setup.el.datalist_acts.update(list_acts, (ac ? ac.value : ''));
-            this.list_acts = list_acts;
+
             var crg = list_cargo.find(function (o) {
                 return o.value == id_cargo;
             }.bind(this));
             this.form_searsh_doc_setup.el.select_id_cargo.update(list_cargo, (crg ? crg.value : -1));
+
             var sf = list_stn_from.find(function (o) {
-                return o.value == code_station_from;
+                return o.value == code_stn_from;
             }.bind(this));
-            this.form_searsh_doc_setup.el.select_id_station_from.update(list_stn_from, (sf ? sf.value : -1));
-            var so = list_stn_on.find(function (o) {
-                return o.value == code_station_on;
-            }.bind(this));
-            this.form_searsh_doc_setup.el.select_id_station_on.update(list_stn_on, (so ? so.value : -1));
-            var op = list_operators.find(function (o) {
-                return o.value == id_operator;
-            }.bind(this));
-            this.form_searsh_doc_setup.el.select_id_operator.update(list_operators, (op ? op.value : -1));
+            this.form_searsh_doc_setup.el.select_code_stn_from.update(list_stn_from, (sf ? sf.value : -1));
         }
     }
     // 
-    view_calc_cost_cargo_outgoing.prototype.select_docs = function (callback) {
-        // Обнулим списки
-        LockScreen(langView('vs_ccco_select_main_docs', App.Langs));
-        this.clear_all();
-        //this.list_payer_local = [];
-        this.presented = null;
-        this.clear = false;
-        if (this.list_document && this.list_document.length > 0) {
-            // Проверим наличие списка документов
-            var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-            this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, false, true);
-            if (this.list_docs) {
-                this.select_document = this.list_document.filter(function (i) {
-                    return this.list_docs.indexOf(i.nomMainDoc) >= 0;
-                }.bind(this));
-            } else {
-                this.select_document = this.list_document;
-            }
-            // Обновим выпадающие списки
-            this.update_select_list(this.select_document);
-            // Событие обновили данные
-            if (typeof callback === 'function') {
-                callback(this.select_document);
-            }
-        } else {
-            this.select_document = [];
-            this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_init', App.Langs));
-            // Событие обновили данные
-            if (typeof callback === 'function') {
-                callback(this.select_document);
-            }
-        }
-    };
+    //view_calc_cost_cargo_outgoing.prototype.select_docs = function (callback) {
+    //    // Обнулим списки
+    //    LockScreen(langView('vs_ccco_select_main_docs', App.Langs));
+    //    this.clear_all();
+    //    //this.list_payer_local = [];
+    //    this.presented = null;
+    //    this.clear = false;
+    //    if (this.list_document && this.list_document.length > 0) {
+    //        // Проверим наличие списка документов
+    //        var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
+    //        this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, false, true);
+    //        if (this.list_docs) {
+    //            this.select_document = this.list_document.filter(function (i) {
+    //                return this.list_docs.indexOf(i.nomMainDoc) >= 0;
+    //            }.bind(this));
+    //        } else {
+    //            this.select_document = this.list_document;
+    //        }
+    //        // Обновим выпадающие списки
+    //        this.update_select_list(this.select_document);
+    //        // Событие обновили данные
+    //        if (typeof callback === 'function') {
+    //            callback(this.select_document);
+    //        }
+    //    } else {
+    //        this.select_document = [];
+    //        this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_init', App.Langs));
+    //        // Событие обновили данные
+    //        if (typeof callback === 'function') {
+    //            callback(this.select_document);
+    //        }
+    //    }
+    //};
     // Применить выбор
     view_calc_cost_cargo_outgoing.prototype.select_apply = function (callback) {
         // Обнулим списки
@@ -1340,42 +1257,22 @@
         //this.clear_all();
         this.searsh_alert_info.clear_message();
         this.select_document_detali = [];
-        this.presented = null;
-        this.clear = false;
         if (this.select_document && this.select_document.length > 0) {
             this.select_document_detali = this.select_document;
             if (this.code_payer != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.payerLocalCode === this.code_payer;
-                }.bind(this));
-            }
-            if (this.act != -1 && this.act !== null && this.act !== "") {
-                this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.numActServices1 === this.act
-                        || i.numActServices2 === this.act
-                        || i.numActServices3 === this.act
+                    return i.payerSenderCode === this.code_payer;
                 }.bind(this));
             }
             if (this.id_cargo != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    var gr = i.vagons.find(function (o) { return o.arrivalCargoId === this.id_cargo }.bind(this));
+                    var gr = i.vagons.find(function (o) { return o.outgoingIdCargo === this.id_cargo }.bind(this));
                     return gr !== undefined;
                 }.bind(this));
             }
-            if (this.code_station_from != -1) {
+            if (this.code_stn_from != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.codeStnFrom === this.code_station_from;
-                }.bind(this));
-            }
-            if (this.code_station_on != -1) {
-                this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.codeStnTo === this.code_station_on;
-                }.bind(this));
-            }
-            if (this.id_operator != -1) {
-                this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    var op = i.vagons.find(function (o) { return o.arrivalOperatorId === this.id_operator }.bind(this));
-                    return op !== undefined;
+                    return i.outgoingCodeStnFrom === this.code_stn_from;
                 }.bind(this));
             }
             this.update_select_list(this.select_document_detali);
@@ -1395,21 +1292,21 @@
     };
     // Применить выбор
     view_calc_cost_cargo_outgoing.prototype.view_select = function (select) {
-        this.tab_verification_invoices_wagons.view(select);
+        this.tab_register_send_wagons.view(select);
         if (select && select.length > 0) {
 
-            var presented1 = select[0].numActServices1;
-            var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
-            presented1 = (pr1.length !== select.length ? null : presented1);
-            var presented2 = select[0].numActServices2;
-            var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
-            presented2 = (pr2.length !== select.length ? null : presented2);
-            var presented3 = select[0].numActServices3;
-            var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
-            presented3 = (pr3.length !== select.length ? null : presented3);
-            this.form_register_sent_wagons.el.input_text_presented1.val(presented1);
-            this.form_register_sent_wagons.el.input_text_presented2.val(presented2);
-            this.form_register_sent_wagons.el.input_text_presented3.val(presented3);
+            //var presented1 = select[0].numActServices1;
+            //var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
+            //presented1 = (pr1.length !== select.length ? null : presented1);
+            //var presented2 = select[0].numActServices2;
+            //var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
+            //presented2 = (pr2.length !== select.length ? null : presented2);
+            //var presented3 = select[0].numActServices3;
+            //var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
+            //presented3 = (pr3.length !== select.length ? null : presented3);
+            //this.form_register_sent_wagons.el.input_text_presented1.val(presented1);
+            //this.form_register_sent_wagons.el.input_text_presented2.val(presented2);
+            //this.form_register_sent_wagons.el.input_text_presented3.val(presented3);
         }
     };
 
@@ -1482,19 +1379,19 @@
                             }
                             if (n === 0) {
 
-                                this.select_docs(function (select) {
-                                    this.select_apply(function (select) {
-                                        this.view_select(select);
-                                        //this.tab_verification_invoices_wagons.view(select);
-                                        // Очистить поля правки
-                                        //this.form_register_sent_wagons.el['input_text_presented' + data.presented].val('');
-                                        this.main_alert.out_info_message(mess_ok);
-                                        LockScreenOff();
-                                        if (typeof callback === 'function') {
-                                            callback(result);
-                                        }
-                                    }.bind(this));
-                                }.bind(this));
+                                //this.select_docs(function (select) {
+                                //    this.select_apply(function (select) {
+                                //        this.view_select(select);
+                                //        //this.tab_register_send_wagons.view(select);
+                                //        // Очистить поля правки
+                                //        //this.form_register_sent_wagons.el['input_text_presented' + data.presented].val('');
+                                //        this.main_alert.out_info_message(mess_ok);
+                                //        LockScreenOff();
+                                //        if (typeof callback === 'function') {
+                                //            callback(result);
+                                //        }
+                                //    }.bind(this));
+                                //}.bind(this));
                             }
                         }.bind(this));
                     }.bind(this));

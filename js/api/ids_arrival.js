@@ -85,6 +85,11 @@
     ids_arrival.prototype.postVerificationArrivalUzDocument = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/verification/', value, callback);
     };
+    // Получить список документов для сверки по отправке храящиеся в БД за период
+    ids_arrival.prototype.getRegisterOutgoingUzDocument = function (start, stop, callback) {
+        this.api_com.get('/OutgoingUzDocument/register/start/' + start + '/stop/' + stop, callback);
+    };
+
 
     App.ids_arrival = ids_arrival;
 

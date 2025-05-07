@@ -22,18 +22,28 @@
             'tsrv_field_num': '№ вагона',
             'tsrv_field_position': '№ поз.',
             'tsrv_field_nomMainDoc': '№ осн. накл.',
+            'tsrv_field_nomDoc': '№ накл.',
             'tsrv_field_dateOtpr': 'Дата отправления на АМКР',
             'tsrv_field_DateAdoption': 'Дата приема',
             'tsrv_field_stationFromName': 'Cт. отпр.',
             'tsrv_field_arrivalNameStnFrom': 'Cт. отпр.',
+            'tsrv_field_outgoingCodeStnFrom': '(ЭПД) Код ст. отправления',
+            'tsrv_field_outgoingNameStnFrom': '(ЭПД) Станция отправления',
             'tsrv_field_stationToName': 'Cт. приб.',
             'tsrv_field_arrivalNameStnTo': 'Cт. приб.',
+            'tsrv_field_outgoingCodeStnTo': '(ЭПД) Код ст. назначения',
+            'tsrv_field_outgoingNameStnTo': '(ЭПД) Станция назначения',
+            'tsrv_field_inlandrailwayAbbr': 'Дорога ОТПР',
             'tsrv_field_arrivalCargoName': 'Груз ПРИБ',
+            'tsrv_field_outgoingCargoName': 'Груз ОТПР',
             'tsrv_field_arrivalOperatorAbbr': 'Оператор по АМКР ПРИБ',
+            'tsrv_field_outgoingOperatorAbbr': 'Оператор по АМКР ОТПР',
             'tsrv_field_toDivisionName': 'Цех получатель',
             'tsrv_field_arrivalDivisionAbbr': 'Цех получатель',
             'tsrv_field_payerSenderCode': 'Код плат. ПРИБ.(по отправке).',
             'tsrv_field_payerSenderName': 'Плат. ПРИБ.(по отправке).',
+            'tsrv_field_outgoing_payerSenderCode': '(ЭПД) Код плат ОТПР.',
+            'tsrv_field_outgoing_payerSenderName': '(ЭПД) Плательщик ОТПР',
             'tsrv_field_payerArrivalCode': 'Код плательщика ПРИБ.',
             'tsrv_field_payerArrivalName': 'Плательщик ПРИБ',
             'tsrv_field_payerLocalCode': 'Плательщик',
@@ -41,9 +51,18 @@
             'tsrv_field_vesg': 'Вес ЭПД, тн.',
             'tsrv_field_arrivalUzVagonPays': 'Тариф ПРИБ (ваг.)',
             'tsrv_field_arrivalUZDocumentPay': 'Тариф ПРИБ (док)',
+            'tsrv_field_outgoingUZDocumentPay': 'Тариф УЗ (ЭПД)',
+            'tsrv_field_outgoingUZDocumentPayAdd': 'Доп.сборы ЭПД',
+            'tsrv_field_outgoingUZDocumentPayAll': 'Итого по ЭПД',
+            'tsrv_field_outgoingUzVagonPays': 'Тариф УЗ (ЭПД)',
+            'tsrv_field_outgoingUzVagonPaysAdd': 'Доп.сборы ЭПД',
+            'tsrv_field_outgoingUzVagonPaysAll': 'Итого по ЭПД',
+
             'tsrv_field_countVagon': 'Кол. ваг.',
             'tsrv_field_tariffContract': 'Ж.д. тариф по договору, грн.',
             'tsrv_field_deffTariff': 'Разница, грн.',
+            'tsrv_field_outgoingDeffTariff': 'Разница (по ЭПД и Тариф по договору, грн)',
+            'tsrv_field_kolConductor': 'Кол-во проводников',
             'tsrv_field_calcPayer': 'Дата расчета',
             'tsrv_field_calcPayerUser': 'Рассчитал',
             'tsrv_field_numActServices1': 'Предъявлено',
@@ -51,7 +70,9 @@
             'tsrv_field_numActServices3': 'Предъявлено',
             'tsrv_field_verification': 'Дата сверки',
             'tsrv_field_verificationUser': 'Сверил',
-
+            'tsrv_field_distanceWay': '(ЭПД) Тар.расс. ОТПР',
+            'tsrv_field_dateReadinessUz': 'Дата и время сдачи',
+            'tsrv_field_rodAbbr': 'Род',
 
             'tsrv_title_no_epd': 'без ЭПД',
 
@@ -132,6 +153,14 @@
                 className: 'dt-body-center',
                 title: langView('tsrv_field_nomMainDoc', App.Langs), width: "30px", orderable: true, searchable: true
             },
+            {
+                field: 'nomDoc',
+                data: function (row, type, val, meta) {
+                    return row.nomDoc;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_nomDoc', App.Langs), width: "30px", orderable: true, searchable: true
+            },
             //{
             //    field: 'dateOtpr',
             //    data: function (row, type, val, meta) {
@@ -191,6 +220,46 @@
                 title: langView('tsrv_field_arrivalNameStnFrom', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'outgoingCodeStnFrom',
+                data: function (row, type, val, meta) {
+                    return row.outgoingCodeStnFrom;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_outgoingCodeStnFrom', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingNameStnFrom',
+                data: function (row, type, val, meta) {
+                    return row.outgoingNameStnFrom;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_outgoingNameStnFrom', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingCodeStnTo',
+                data: function (row, type, val, meta) {
+                    return row.outgoingCodeStnTo;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_outgoingCodeStnTo', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingNameStnTo',
+                data: function (row, type, val, meta) {
+                    return row.outgoingNameStnTo;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_outgoingNameStnTo', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'inlandrailwayAbbr',
+                data: function (row, type, val, meta) {
+                    return row.inlandrailwayAbbr;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_inlandrailwayAbbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'nameStnTo',
                 data: function (row, type, val, meta) {
                     return row.nameStnTo;
@@ -243,6 +312,14 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_arrivalCargoName', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'outgoingCargoName',
+                data: function (row, type, val, meta) {
+                    return row.outgoingCargoName;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingCargoName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             //{
             //    field: 'idWagonsRentArrivalNavigation.idOperatorNavigation.abbr',
             //    data: function (row, type, val, meta) {
@@ -269,6 +346,14 @@
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_arrivalOperatorAbbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingOperatorAbbr',
+                data: function (row, type, val, meta) {
+                    return row.outgoingOperatorAbbr;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingOperatorAbbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'toDivisionAbbr',
@@ -440,6 +525,14 @@
                 className: 'dt-body-end',
                 title: langView('tsrv_field_vesg', App.Langs), width: "30px", orderable: true, searchable: true
             },
+            {
+                field: 'distanceWay',
+                data: function (row, type, val, meta) {
+                    return row.distanceWay;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_distanceWay', App.Langs), width: "30px", orderable: true, searchable: true
+            },
             //{
             //    field: 'arrivalUzVagons.vesg',
             //    data: function (row, type, val, meta) {
@@ -469,6 +562,55 @@
             //    className: 'dt-body-center',
             //    title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
             //},
+            {
+                field: 'outgoingUzVagonPays',
+                data: function (row, type, val, meta) {
+                    return row.outgoingUzVagonPays !== null ? Number(row.outgoingUzVagonPays / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUzVagonPaysAdd',
+                data: function (row, type, val, meta) {
+                    return row.outgoingUzVagonPaysAdd !== null ? Number(row.outgoingUzVagonPaysAdd / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUzVagonPaysAdd', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUzVagonPaysAll',
+                data: function (row, type, val, meta) {
+                    return (row.outgoingUzVagonPaysAdd !== null && row.outgoingUzVagonPays !== null) ? Number((row.outgoingUzVagonPays + row.outgoingUzVagonPaysAdd) / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUzVagonPaysAll', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+
+            {
+                field: 'outgoingUZDocumentPay',
+                data: function (row, type, val, meta) {
+                    return row.outgoingUZDocumentPay !== null ? Number(row.outgoingUZDocumentPay / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUZDocumentPayAdd',
+                data: function (row, type, val, meta) {
+                    return row.outgoingUZDocumentPayAdd !== null ? Number(row.outgoingUZDocumentPayAdd / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUZDocumentPayAdd', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUZDocumentPayAll',
+                data: function (row, type, val, meta) {
+                    return (row.outgoingUZDocumentPayAdd !== null && row.outgoingUZDocumentPay !== null) ? Number((row.outgoingUZDocumentPay + row.outgoingUZDocumentPayAdd) / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingUZDocumentPayAll', App.Langs), width: "30px", orderable: true, searchable: true
+            },
             {
                 field: 'arrivalUzVagonPays',
                 data: function (row, type, val, meta) {
@@ -520,6 +662,26 @@
                 },
                 className: 'dt-body-end',
                 title: langView('tsrv_field_deffTariff', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingDeffTariff',
+                data: function (row, type, val, meta) {
+                    if (row.tariffContract !== null && row.outgoingUZDocumentPay !== null && row.outgoingUZDocumentPayAdd !== null) {
+                        return Number((Number(row.tariffContract * 100).toFixed(0) - Number(row.outgoingUZDocumentPay + row.outgoingUZDocumentPayAdd)) / 100).toFixed(2);
+                    } else {
+                        return null;
+                    }
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_outgoingDeffTariff', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'kolConductor',
+                data: function (row, type, val, meta) {
+                    return row.kolConductor
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_kolConductor', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
                 field: 'calcPayer',
@@ -576,6 +738,22 @@
                 },
                 className: 'dt-body-center',
                 title: langView('tsrv_field_verificationUser', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'dateReadinessUz',
+                data: function (row, type, val, meta) {
+                    return row.dateReadinessUz ? moment(row.dateReadinessUz).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateReadinessUz', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'rodAbbr',
+                data: function (row, type, val, meta) {
+                    return row.rodAbbr
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_rodAbbr', App.Langs), width: "30px", orderable: true, searchable: true
             },
 
         ];
@@ -700,6 +878,50 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
+    table_services.prototype.init_columns_register_send_wagons = function () {
+        var collums = [];
+        if (this.tab_com.settings.detali_table) collums.push({ field: 'details_control', title: null, class: null });
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'nomDoc', title: null, class: null });
+        collums.push({ field: 'countVagon', title: null, class: null });
+        collums.push({ field: 'outgoingCargoName', title: null, class: null });
+        collums.push({ field: 'vesg', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPay', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPayAdd', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPayAll', title: null, class: null });
+        collums.push({ field: 'tariffContract', title: null, class: null });
+        collums.push({ field: 'outgoingDeffTariff', title: null, class: null });
+        //collums.push({ field: 'kolConductor', title: null, class: null });
+        collums.push({ field: 'outgoingCodeStnFrom', title: null, class: null });
+        collums.push({ field: 'outgoingNameStnFrom', title: null, class: null });
+        collums.push({ field: 'outgoingCodeStnTo', title: null, class: null });
+        collums.push({ field: 'outgoingNameStnTo', title: null, class: null });
+        collums.push({ field: 'inlandrailwayAbbr', title: null, class: null });
+        collums.push({ field: 'payerSenderCode', title: langView('tsrv_field_outgoing_payerSenderCode', App.Langs), class: null });
+        collums.push({ field: 'payerSenderName', title: langView('tsrv_field_outgoing_payerSenderName', App.Langs), class: null });
+        collums.push({ field: 'distanceWay', title: null, class: null });
+        collums.push({ field: 'dateReadinessUz', title: null, class: null });
+        collums.push({ field: 'calcPayer', title: null, class: null });
+        collums.push({ field: 'calcPayerUser', title: null, class: null });
+
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_services.prototype.init_columns_register_send_detali_wagons = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'dateReadinessUz', title: null, class: null });
+        collums.push({ field: 'outgoingCargoName', title: null, class: null });
+        collums.push({ field: 'vesg', title: null, class: null });
+        collums.push({ field: 'rodAbbr', title: null, class: null });
+        collums.push({ field: 'kolConductor', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonPays', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonPaysAdd', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonPaysAll', title: null, class: null });
+        collums.push({ field: 'outgoingOperatorAbbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -907,7 +1129,147 @@
                 this.tab_com.dom = 'frtip';
                 break;
             };
+            //
+            case 'register_send_wagons': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 3;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [1, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                this.tab_com.table_select = true;
+                this.tab_com.autoWidth = true;
+                //this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                //    var api = this.api();
+                //    var count = api
+                //        .column(3)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(1)
+                //        .html(count);
 
+                //    var tariff_dog = api
+                //        .column(4)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(2)
+                //        .html(Number(tariff_dog).toFixed(2));
+
+                //    var tariff_doc = api
+                //        .column(6)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(4)
+                //        .html(Number(tariff_doc).toFixed(2));
+
+                //    var tariff_deff = api
+                //        .column(8)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(6)
+                //        .html(Number(tariff_deff).toFixed(2));
+
+                //    var vesg = api
+                //        .column(10)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(8)
+                //        .html(Number(vesg).toFixed(2));
+
+                //};
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.verification !== null) {
+                    //    if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
+                    //        $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //    } else {
+                    //        $(row).addClass('green');  // Отметим вагон сверен
+                    //    }
+                    //}
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_register_send_wagons();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                //this.tab_com.html_footer = '<tfoot><tr>' +
+                //    '<th colspan="3" class="text-end">ИТОГО:</th>' +
+                //    '<th class="text-center"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th colspan="15""></th>' +
+                //    '</tr></tfoot>';
+                break;
+            };
+
+            case 'register_send_detali_wagons': {
+                //this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                //this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.calcPayer !== null) {
+                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //}
+                    //if (data.verification !== null) {
+                    //    $(row).addClass('green');  // Отметим вагон сверен
+                    //}
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_register_send_detali_wagons();
+                //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'frtip';
+                break;
+            };
 
             default: {
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
