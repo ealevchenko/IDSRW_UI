@@ -1207,7 +1207,7 @@
 
                 //};
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
                     //if (data.verification !== null) {
                     //    if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {

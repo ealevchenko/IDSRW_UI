@@ -23,13 +23,20 @@
             'vs_ccco_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_outgoing',
             'vs_ccco_mess_load_operation': 'Загружаю форму операции',
 
-            'vs_ccco_title_button_num_epd': 'Найти накладную...',
+            //'vs_ccco_title_button_num_epd': 'Найти накладную...',
             'vs_ccco_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
             'vs_ccco_mess_error_not_document': 'Не выбран документ для правки!',
-            'vs_ccco_title_label_num_epd': 'Найти накладную:',
-            'vs_ccco_title_placeholder_num_epd': 'Найти накладную',
-            'vs_ccco_text_label_num_epd': 'Введите номмер накладной ...',
+            //'vs_ccco_title_label_num_epd': 'Найти накладную:',
+            //'vs_ccco_title_placeholder_num_epd': 'Найти накладную',
+            //'vs_ccco_text_label_num_epd': 'Введите номмер накладной ...',
 
+            'vs_ccco_title_label_doc_pay': 'Тариф ЭПД (kod=001):',
+            'vs_ccco_title_placeholder_doc_pay': 'Тариф ЭПД',
+            'vs_ccco_text_label_doc_pay': 'Скорректируйте тариф ЭПД ...',
+
+            'vs_ccco_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
+            'vs_ccco_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
+            'vs_ccco_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
 
             //'vs_ccco_title_button_doc_clear': 'Очистить',
             //'vs_ccco_title_button_doc_searsh': 'Поиск',
@@ -82,15 +89,28 @@
             'vs_ccco_title_button_Cancel': 'Отмена',
             'vs_ccco_button_Ok': 'Применить',
 
+            'vs_ccco_title_button_doc_pay': 'Обновить тариф отправки (kod=001)...',
+            'vs_ccco_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
 
             'vs_ccco_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_ccco_mess_run_update_doc_pay': 'Править тариф ЭПД (kod=001) по документу [{0}], будет внесен новый тариф :{1} вместо тарифа :{2}.',
+            'vs_ccco_cancel_update_doc_pay': 'Отмена правки тарифа ЭПД.',
+            'vs_ccco_mess_ok_update_doc_pay': 'По документу  [{0}] обнавлен тариф ЭПД (kod=001)',
+            'vs_ccco_mess_error_update_doc_pay': 'При обновлении тарифа ЭПД по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
+            'vs_ccco_mess_run_update_tariff_contract': 'Править ж.д. тариф по договору по документу [{0}], будет внесен новый ж.д. тариф :{1}',
+            'vs_ccco_cancel_update_tariff_contract': 'Отмена правки ж.д. тарифа.',
+            'vs_ccco_mess_ok_update_tariff_contract': 'По документу  [{0}] обнавлен ж.д. тариф по договору',
+            'vs_ccco_mess_error_update__tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
 
             //'vs_ccco_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
             //'vs_ccco_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
 
             //'vs_ccco_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
             //'vs_ccco_mess_ok_clear_presented': 'По накладным [{0}] были сюрошены акты сверки.',
-            //'vs_ccco_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
+
             //'vs_ccco_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
 
             ////'vs_ccco_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
@@ -116,7 +136,13 @@
             'vs_ccco_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
             'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбранно {3}',
 
-            //'vs_ccco_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
+            'vs_ccco_mess_error_not_doc_pay': 'Не указан новый тариф ЭПД!',
+            'vs_ccco_mess_error_exist_doc_pay': 'Указаный тариф ЭПД не отличается от существующего!',
+
+            'vs_ccco_mess_error_not_tariff_contract': 'Не указан тариф по договору!',
+            'vs_ccco_mess_error_exist_tariff_contract': 'Указаный тариф по договору не отличается от существующего!',
+
+            'vs_ccco_mess_war_not_select_docs': 'Не выбрана накладная для правки!',
             //'vs_ccco_mess_error_not_presented': 'Укажите № Акта сверки',
 
         },
@@ -188,20 +214,21 @@
             bt_ok_text: langView('vs_ccco_button_Ok', App.Langs),
         });
 
-
         this.start = null;
         this.stop = null;
 
-        //this.list_vagons = [];
-        //this.select_vagons = [];
+        this.id = null;
+        this.type = null;
+        this.current_doc_pay = null;
+        this.current_tariff_contract = null;
+        this.nomDoc = null;
+
+
         this.code_payer = -1;
-        //this.act = '';
         this.id_cargo = -1;
         this.code_stn_from = -1;
-        //this.code_station_on = -1;
-        //this.id_operator = -1;
 
-        //this.select_document_detali = [];
+        this.select_document_detali = [];
         //this.presented = null;
         //this.clear = false;
 
@@ -538,64 +565,50 @@
                 // форма сверки
                 this.form_register_sent_wagons = new FD();
                 var objs_rsw = [];
-                var bt_searsh_epd = {
+                var bt_apply_doc_pay = {
                     obj: 'bs_button',
                     options: {
-                        id: null,
-                        name: null,
+                        id: 'apply_doc_pay',
+                        name: 'apply_doc_pay',
                         class: null,
                         fsize: 'sm',
                         color: 'success',
                         text: null,
-                        title: langView('vs_ccco_title_button_num_epd', App.Langs),
-                        icon_fa_left: 'fa-solid fa-magnifying-glass',//<i class="fa-solid fa-magnifying-glass"></i>
+                        title: langView('vs_ccco_title_button_doc_pay', App.Langs),
+                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
                         icon_fa_right: null,
                         fn_click: function (event) {
                             event.preventDefault();
-                            this.clear_all()
-                            var id = this.form_register_sent_wagons.el.datalist_num_epd.val();
-                            if (id) {
-                                this.update_document(id, function (vagon) {
-                                    LockScreenOff();
-                                }.bind(this));
-                            } else {
-                                this.register_sent_wagons_alert.out_warning_message(langView('vs_ccco_mess_war_not_select_docs', App.Langs));
-                                this.form_register_sent_wagons.set_element_validation_error('num_epd', langView('vs_ccco_mess_error_not_document', App.Langs), true);
-                                this.clear_data();
-                                LockScreenOff();
-                            }
-
+                            this.type = 0;
+                            this.form_register_sent_wagons.$form.submit();
                         }.bind(this),
                     }
                 };
-                var form_input_datalist_num_epd = {
-                    obj: 'bs_form_input_datalist',
+                var form_input_doc_pay = {
+                    obj: 'bs_form_input',
                     options: {
-                        validation_group: 'common_raw_setup',
-                        id: 'num_epd',
-                        name: 'num_epd',
-                        label: langView('vs_ccco_title_label_num_epd', App.Langs),
+                        validation_group: 'common_rsw',
+                        id: 'doc_pay',
+                        name: 'doc_pay',
+                        label: langView('vs_ccco_title_label_doc_pay', App.Langs),
+                        element_type: 'number',
                         element_fsize: 'sm',
-                        element_class: 'flexdatalist',
+                        element_class: null,
                         element_value: null,
                         element_title: null,
-                        element_placeholder: langView('vs_ccco_title_placeholder_num_epd', App.Langs),
-                        element_required: true,
+                        element_placeholder: langView('vs_ccco_title_placeholder_doc_pay', App.Langs),
+                        element_required: false,
                         element_maxlength: null,
                         element_pattern: null,
                         element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
                         element_options: {
-                            data: this.list_epd,
-                            out_value: false,
-                            out_group: true,
-                            default: null,
-                            minLength: 1,
-                            searchContain: true,
-                            fn_change: function (event, set, options) {
-
-                            }.bind(this),
-                            fn_select: function (event, set, options) {
-
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                //this.validation_doc_pay(value, 'doc_pay', false, true)
                             }.bind(this),
                         },
                         validation: true,
@@ -608,253 +621,76 @@
                         group_append_class: null,
                         group_append_id: null,
                         group_append_html: null,
-                        group_append_objs: [bt_searsh_epd],
-                        form_text: langView('vs_ccco_text_label_num_epd', App.Langs),
+                        group_append_objs: [bt_apply_doc_pay],
+                        form_text: langView('vs_ccco_text_label_doc_pay', App.Langs),
                         form_text_class: null,
                     },
                     childs: []
                 };
-                objs_rsw.push(form_input_datalist_num_epd);
-                //var bt_apply_presented1 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'success',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_presented1', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 1;
-                //            this.clear = false;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var bt_clear_presented1 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'danger',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_clear', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 1;
-                //            this.clear = true;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var form_input_presented1 = {
-                //    obj: 'bs_form_input',
-                //    options: {
-                //        validation_group: 'common_vi',
-                //        id: 'presented1',
-                //        name: 'presented1',
-                //        label: langView('vs_ccco_title_label_presented1', App.Langs),
-                //        element_type: 'text',
-                //        element_fsize: 'sm',
-                //        element_class: null,
-                //        element_value: null,
-                //        element_title: null,
-                //        element_placeholder: langView('vs_ccco_title_placeholder_presented1', App.Langs),
-                //        element_required: false,
-                //        element_maxlength: null,
-                //        element_pattern: null,
-                //        element_readonly: false,
-                //        element_options: {
-                //            default: '',
-                //            fn_change: function (e) {
-                //                var value = $(e.currentTarget).val();
-                //            }.bind(this),
-                //        },
-                //        validation: true,
-                //        feedback_invalid: null,
-                //        feedback_valid: null,
-                //        feedback_class: null,
-                //        col_prefix: 'md',
-                //        col_size: 12,
-                //        col_class: 'mt-0',
-                //        group_append_class: null,
-                //        group_append_id: null,
-                //        group_append_html: null,
-                //        group_append_objs: [bt_apply_presented1, bt_clear_presented1],
-                //        form_text: langView('vs_ccco_text_label_presented1', App.Langs),
-                //        form_text_class: null,
-                //    },
-                //    childs: []
-                //};
-                //var bt_apply_presented2 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'success',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_presented2', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 2;
-                //            this.clear = false;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var bt_clear_presented2 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'danger',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_clear', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 2;
-                //            this.clear = true;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var form_input_presented2 = {
-                //    obj: 'bs_form_input',
-                //    options: {
-                //        validation_group: 'common_vi',
-                //        id: 'presented2',
-                //        name: 'presented2',
-                //        label: langView('vs_ccco_title_label_presented2', App.Langs),
-                //        element_type: 'text',
-                //        element_fsize: 'sm',
-                //        element_class: null,
-                //        element_value: null,
-                //        element_title: null,
-                //        element_placeholder: langView('vs_ccco_title_placeholder_presented2', App.Langs),
-                //        element_required: false,
-                //        element_maxlength: null,
-                //        element_pattern: null,
-                //        element_readonly: false,
-                //        element_options: {
-                //            default: '',
-                //            fn_change: function (e) {
-                //                var value = $(e.currentTarget).val();
-                //            }.bind(this),
-                //        },
-                //        validation: true,
-                //        feedback_invalid: null,
-                //        feedback_valid: null,
-                //        feedback_class: null,
-                //        col_prefix: 'md',
-                //        col_size: 12,
-                //        col_class: 'mt-0',
-                //        group_append_class: null,
-                //        group_append_id: null,
-                //        group_append_html: null,
-                //        group_append_objs: [bt_apply_presented2, bt_clear_presented2],
-                //        form_text: langView('vs_ccco_text_label_presented2', App.Langs),
-                //        form_text_class: null,
-                //    },
-                //    childs: []
-                //};
-                //var bt_apply_presented3 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'success',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_presented3', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 3;
-                //            this.clear = false;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var bt_clear_presented3 = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'danger',
-                //        text: null,
-                //        title: langView('vs_ccco_title_button_clear', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            this.presented = 3;
-                //            this.clear = true;
-                //            this.form_register_sent_wagons.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
-                //var form_input_presented3 = {
-                //    obj: 'bs_form_input',
-                //    options: {
-                //        validation_group: 'common_vi',
-                //        id: 'presented3',
-                //        name: 'presented3',
-                //        label: langView('vs_ccco_title_label_presented3', App.Langs),
-                //        element_type: 'text',
-                //        element_fsize: 'sm',
-                //        element_class: null,
-                //        element_value: null,
-                //        element_title: null,
-                //        element_placeholder: langView('vs_ccco_title_placeholder_presented3', App.Langs),
-                //        element_required: false,
-                //        element_maxlength: null,
-                //        element_pattern: null,
-                //        element_readonly: false,
-                //        element_options: {
-                //            default: '',
-                //            fn_change: function (e) {
-                //                var value = $(e.currentTarget).val();
-                //            }.bind(this),
-                //        },
-                //        validation: true,
-                //        feedback_invalid: null,
-                //        feedback_valid: null,
-                //        feedback_class: null,
-                //        col_prefix: 'md',
-                //        col_size: 12,
-                //        col_class: 'mt-0',
-                //        group_append_class: null,
-                //        group_append_id: null,
-                //        group_append_html: null,
-                //        group_append_objs: [bt_apply_presented3, bt_clear_presented3],
-                //        form_text: langView('vs_ccco_text_label_presented3', App.Langs),
-                //        form_text_class: null,
-                //    },
-                //    childs: []
-                //};
-                //objs_vi_setup.push(form_input_presented1);
-                //objs_vi_setup.push(form_input_presented2);
-                //objs_vi_setup.push(form_input_presented3);
+                var bt_apply_tariff_contract = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'apply_tariff_contract',
+                        name: 'apply_tariff_contract',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: null,
+                        title: langView('vs_ccco_title_button_tariff_contract', App.Langs),
+                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.type = 1;
+                            this.form_register_sent_wagons.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var form_input_tariff_contract = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'common_rsw',
+                        id: 'tariff_contract',
+                        name: 'tariff_contract',
+                        label: langView('vs_ccco_title_label_tariff_contract', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ccco_title_placeholder_tariff_contract', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        group_append_class: null,
+                        group_append_id: null,
+                        group_append_html: null,
+                        group_append_objs: [bt_apply_tariff_contract],
+                        form_text: langView('vs_ccco_text_label_tariff_contract', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                objs_rsw.push(form_input_doc_pay);
+                objs_rsw.push(form_input_tariff_contract);
                 this.form_register_sent_wagons.init({
                     alert: this.main_alert,
                     //context: this.div_form_period.$html,
@@ -865,25 +701,16 @@
                     fn_validation: function (result) {
                         // Валидация успешна
                         if (result && result.valid) {
-                            var valid = this.validation_verification_invoice(result);
+                            var valid = this.validation_register_sent_wagons(result);
                             if (valid) {
-                                var id_docs = []
-                                var num_docs = "";
-                                var num_act = null;
-                                switch (this.presented) {
-                                    case 1: { num_act = result.new.input_text_presented1; break; }
-                                    case 2: { num_act = result.new.input_text_presented2; break; }
-                                    case 3: { num_act = result.new.input_text_presented3; break; }
+                                var pay = null;
+                                if (this.type === 0) {
+                                    var mess = langView('vs_ccco_mess_run_update_doc_pay', App.Langs).format(this.nomDoc, result.new.input_text_doc_pay, this.current_doc_pay);
+                                    pay = result.new.input_text_doc_pay;
                                 }
-
-                                $.each(this.select_document_detali, function (i, el) {
-                                    id_docs.push(el.id);
-                                    num_docs += el.nomMainDoc + "; ";
-                                }.bind(this));
-
-                                var mess = langView('vs_ccco_mess_run_update_presented', App.Langs).format(this.presented, num_act, num_docs);
-                                if (this.clear) {
-                                    mess = langView('vs_ccco_mess_run_clear_presented', App.Langs).format(this.presented, num_docs);
+                                if (this.type === 1) {
+                                    var mess = langView('vs_ccco_mess_run_update_tariff_contract', App.Langs).format(this.nomDoc, result.new.input_text_tariff_contract);
+                                    pay = result.new.input_text_tariff_contract;
                                 }
                                 this.mcf_lg.open(
                                     langView('vs_ccco_title_form_apply', App.Langs),
@@ -891,17 +718,19 @@
                                     function () {
                                         // Принять
                                         var operation = {
-                                            id_docs: id_docs,
-                                            presented: this.presented,
-                                            num_act: !this.clear ? num_act : null
+                                            id_docs: this.id,
+                                            type: this.type,
+                                            value: pay
                                         };
-                                        this.apply_update_presented(operation, num_docs, function () {
+                                        this.apply_update(operation, function () {
 
                                         }.bind(this));
                                     }.bind(this),
                                     function () {
-                                        this.main_alert.out_warning_message(langView('vs_ccco_cancel_update_presented', App.Langs));
-                                    }.bind(this));
+                                        if (this.type === 0) this.main_alert.out_warning_message(langView('vs_ccco_cancel_update_doc_pay', App.Langs));
+                                        if (this.type === 1) this.main_alert.out_warning_message(langView('vs_ccco_cancel_update_tariff_contract', App.Langs));
+                                    }.bind(this)
+                                );
                             }
                         }
                     }.bind(this),
@@ -941,7 +770,20 @@
 
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
-
+                        this.form_register_sent_wagons.clear_all();
+                        this.id = null;
+                        this.type = null;
+                        this.current_doc_pay = null;
+                        this.current_tariff_contract = null;
+                        this.nomDoc = null;
+                        if (type === "select") {
+                            this.id = rows[0].id;
+                            this.current_doc_pay = rows[0].outgoingUZDocumentPay !== null ? Number(rows[0].outgoingUZDocumentPay / 100).toFixed(2) : null;
+                            this.current_tariff_contract = rows[0].tariffContract !== null ? Number(rows[0].tariffContract / 100).toFixed(2) : null;
+                            this.nomDoc = rows[0].nomDoc;
+                        }
+                        this.form_register_sent_wagons.el.input_text_doc_pay.val(this.current_doc_pay);
+                        this.form_register_sent_wagons.el.input_text_tariff_contract.val(this.current_tariff_contract);
                     }.bind(this),
                     fn_select_link: function (link) {
 
@@ -1011,28 +853,15 @@
     };
     // скрыть элементы выбора
     view_calc_cost_cargo_outgoing.prototype.disable_form_searsh_doc_setup = function () {
-        this.form_searsh_doc_setup.el.textarea_documents_searsh.disable();
-        this.form_searsh_doc_setup.el.button_docs_clear.prop("disabled", true);
-        this.form_searsh_doc_setup.el.button_docs_searsh.prop("disabled", true);
-
         this.form_searsh_doc_setup.el.select_code_payer.disable();
-        this.form_searsh_doc_setup.el.datalist_acts.disable();
         this.form_searsh_doc_setup.el.select_id_cargo.disable();
         this.form_searsh_doc_setup.el.select_code_stn_from.disable();
-        this.form_searsh_doc_setup.el.select_id_station_on.disable();
-        this.form_searsh_doc_setup.el.select_id_operator.disable();
     };
     // активировать элементы выбора
     view_calc_cost_cargo_outgoing.prototype.enable_form_searsh_doc_setup = function () {
-        this.form_searsh_doc_setup.el.textarea_documents_searsh.enable();
-        this.form_searsh_doc_setup.el.button_docs_clear.prop("disabled", false);
-        this.form_searsh_doc_setup.el.button_docs_searsh.prop("disabled", false);
         this.form_searsh_doc_setup.el.select_code_payer.enable();
-        this.form_searsh_doc_setup.el.datalist_acts.enable();
         this.form_searsh_doc_setup.el.select_id_cargo.enable();
         this.form_searsh_doc_setup.el.select_code_stn_from.enable();
-        this.form_searsh_doc_setup.el.select_id_station_on.enable();
-        this.form_searsh_doc_setup.el.select_id_operator.enable();
     };
     // получить документ
     view_calc_cost_cargo_outgoing.prototype.get_document = function (document) {
@@ -1107,16 +936,7 @@
     view_calc_cost_cargo_outgoing.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
-        //this.form_register_sent_wagons.el.input_text_presented1.val('');
-        //this.form_register_sent_wagons.el.input_text_presented2.val('');
-        //this.form_register_sent_wagons.el.input_text_presented3.val('');
-        //this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
-        //this.form_searsh_doc_setup.el.select_code_payer.val('');
-        //this.form_searsh_doc_setup.el.datalist_acts.val('');
-        //this.form_searsh_doc_setup.el.select_id_cargo.val('');
-        //this.form_searsh_doc_setup.el.select_code_stn_from.val('');
-        //this.form_searsh_doc_setup.el.select_id_station_on.val('');
-        //this.form_searsh_doc_setup.el.select_id_operator.val('');
+
         this.code_payer = -1;
         this.id_cargo = -1;
         this.code_stn_from = -1;
@@ -1126,18 +946,18 @@
         LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
         this.ids_arrival.getRegisterOutgoingUzDocument(sel_start, sel_stop, function (document) {
             this.list_document = [];
-            //this.select_document = [];
-            //this.select_document_detali = [];
+            this.select_document = [];
+            this.select_document_detali = [];
             this.documents = [];
             if (document !== null && document.length > 0) {
-                //this.enable_form_searsh_doc_setup();
+                this.enable_form_searsh_doc_setup();
                 // Пройдемся по документам
                 $.each(document, function (i, el_doc) {
                     this.documents.push(this.get_document(el_doc));
                 }.bind(this));
                 this.list_document = this.documents;
                 this.select_document = this.list_document;
-                if (this.list_document!==null && this.list_document.length>0) {
+                if (this.list_document !== null && this.list_document.length > 0) {
                     this.update_select_list(this.select_document);
                 }
                 this.select_apply(function (select) {
@@ -1145,7 +965,7 @@
                 }.bind(this));
             } else {
                 this.tab_register_send_wagons.view([]);
-                //this.disable_form_searsh_doc_setup();
+                this.disable_form_searsh_doc_setup();
             }
             this.searsh_alert_info.clear_message();
             this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_add_main_docs', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.documents.length));
@@ -1155,13 +975,6 @@
             }
         }.bind(this));
     };
-    //view_calc_cost_cargo_outgoing.prototype.validation_documents_searsh = function () {
-    //    var valid = true;
-    //    var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-    //    this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_nums(el_vs, this.form_searsh_doc_setup.el.textarea_documents_searsh.val(), false, true);
-    //    valid = (list_docs !== null);
-    //    return valid;
-    //}
     // Обновить списки
     view_calc_cost_cargo_outgoing.prototype.update_select_list = function (data) {
         if (data && data.length > 0) {
@@ -1216,40 +1029,6 @@
             this.form_searsh_doc_setup.el.select_code_stn_from.update(list_stn_from, (sf ? sf.value : -1));
         }
     }
-    // 
-    //view_calc_cost_cargo_outgoing.prototype.select_docs = function (callback) {
-    //    // Обнулим списки
-    //    LockScreen(langView('vs_ccco_select_main_docs', App.Langs));
-    //    this.clear_all();
-    //    //this.list_payer_local = [];
-    //    this.presented = null;
-    //    this.clear = false;
-    //    if (this.list_document && this.list_document.length > 0) {
-    //        // Проверим наличие списка документов
-    //        var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-    //        this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, false, true);
-    //        if (this.list_docs) {
-    //            this.select_document = this.list_document.filter(function (i) {
-    //                return this.list_docs.indexOf(i.nomMainDoc) >= 0;
-    //            }.bind(this));
-    //        } else {
-    //            this.select_document = this.list_document;
-    //        }
-    //        // Обновим выпадающие списки
-    //        this.update_select_list(this.select_document);
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.select_document);
-    //        }
-    //    } else {
-    //        this.select_document = [];
-    //        this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_init', App.Langs));
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.select_document);
-    //        }
-    //    }
-    //};
     // Применить выбор
     view_calc_cost_cargo_outgoing.prototype.select_apply = function (callback) {
         // Обнулим списки
@@ -1291,120 +1070,114 @@
         }
     };
     // Применить выбор
-    view_calc_cost_cargo_outgoing.prototype.view_select = function (select) {
-        this.tab_register_send_wagons.view(select);
+    view_calc_cost_cargo_outgoing.prototype.view_select = function (select, id) {
+
+        this.tab_register_send_wagons.view(select, id);
+        this.form_register_sent_wagons.el.input_text_doc_pay.val(this.current_doc_pay);
+        this.form_register_sent_wagons.el.input_text_tariff_contract.val(this.current_tariff_contract);
         if (select && select.length > 0) {
 
-            //var presented1 = select[0].numActServices1;
-            //var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
-            //presented1 = (pr1.length !== select.length ? null : presented1);
-            //var presented2 = select[0].numActServices2;
-            //var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
-            //presented2 = (pr2.length !== select.length ? null : presented2);
-            //var presented3 = select[0].numActServices3;
-            //var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
-            //presented3 = (pr3.length !== select.length ? null : presented3);
-            //this.form_register_sent_wagons.el.input_text_presented1.val(presented1);
-            //this.form_register_sent_wagons.el.input_text_presented2.val(presented2);
-            //this.form_register_sent_wagons.el.input_text_presented3.val(presented3);
         }
     };
-
     // Очистить данные
-    view_calc_cost_cargo_outgoing.prototype.clear_data = function () {
-        this.tab_cost_calculation.view([]);
-        this.tab_register_accepted_wagons.view([]);
-        this.id_doc = null;
-        this.ArrivalUzDocument = null;
-        this.arrivalUZDocumentPay = null;
-        this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
-        this.tariffContract = null;
+    //view_calc_cost_cargo_outgoing.prototype.clear_data = function () {
+    //this.tab_cost_calculation.view([]);
+    //this.tab_register_accepted_wagons.view([]);
+    //this.id_doc = null;
+    //this.ArrivalUzDocument = null;
+    //this.arrivalUZDocumentPay = null;
+    //this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
+    //this.tariffContract = null;
 
-        this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
-        this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
-        this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
-    }
+    //this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
+    //this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
+    //this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
+    //}
     //--------------------------------------------------------------------------------
-    // Дополнительная валидация правки актов
-    view_calc_cost_cargo_outgoing.prototype.validation_verification_invoice = function (result) {
+    // Дополнительная валидация
+    view_calc_cost_cargo_outgoing.prototype.validation_register_sent_wagons = function (result) {
         var valid = true;
         if (this.select_document_detali === null || this.select_document_detali.length === 0) {
             this.main_alert.out_error_message(langView('vs_ccco_mess_war_not_select_docs', App.Langs));
             valid = false;
         } else {
-            if (!this.clear && this.presented === 1 && !result.new.input_text_presented1) {
-                this.form_register_sent_wagons.set_element_validation_error('presented1', langView('vs_ccco_mess_error_not_presented', App.Langs), false);
-                valid = false;
+
+            if (this.type === 0) {
+                if (!result.new.input_text_doc_pay) {
+                    this.form_register_sent_wagons.set_element_validation_error('doc_pay', langView('vs_ccco_mess_error_not_doc_pay', App.Langs), false);
+                    valid = false;
+                } else {
+                    if (Number(result.new.input_text_doc_pay).toFixed(2) === this.current_doc_pay) {
+                        this.form_register_sent_wagons.set_element_validation_error('doc_pay', langView('vs_ccco_mess_error_exist_doc_pay', App.Langs), false);
+                        valid = false;
+                    }
+                }
             }
-            if (!this.clear && this.presented === 2 && !result.new.input_text_presented2) {
-                this.form_register_sent_wagons.set_element_validation_error('presented2', langView('vs_ccco_mess_error_not_presented', App.Langs), false);
-                valid = false;
-            }
-            if (!this.clear && this.presented === 3 && !result.new.input_text_presented3) {
-                this.form_register_sent_wagons.set_element_validation_error('presented3', langView('vs_ccco_mess_error_not_presented', App.Langs), false);
-                valid = false;
+            if (this.type === 1) {
+
+                if (!result.new.input_text_tariff_contract) {
+                    this.form_register_sent_wagons.set_element_validation_error('tariff_contract', langView('vs_ccco_mess_error_not_tariff_contract', App.Langs), false);
+                    valid = false;
+                } else {
+                    if (result.new.input_text_tariff_contract === this.current_tariff_contract) {
+                        this.form_register_sent_wagons.set_element_validation_error('tariff_contract', langView('vs_ccco_mess_error_exist_tariff_contract', App.Langs), false);
+                        valid = false;
+                    }
+                }
             }
         }
         return valid;
     }
     // Обновить 
-    view_calc_cost_cargo_outgoing.prototype.apply_update_presented = function (data, num_docs, callback) {
+    view_calc_cost_cargo_outgoing.prototype.apply_update = function (data, callback) {
         var result = 1;
-        this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
-            var mess_ok = null;
-            var mess_error = null;
-            var n = 0;
-            this.clear_all();
-            if (result >= 0) {
-                // Ок
-                if (data.num_act !== null) {
-                    mess_ok = langView('vs_ccco_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
-                } else {
-                    mess_ok = langView('vs_ccco_mess_ok_clear_presented', App.Langs).format(num_docs);
-                }
-                if (data && data.id_docs && data.id_docs.length > 0) {
-                    LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
-                    $.each(data.id_docs, function (i, el) {
-                        n += 1;
-                        this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
-                            n -= 1;
-                            var doc = this.get_document(document);
-                            var exist_doc = this.list_document.find(function (o) {
-                                return o.id === doc.id;
-                            }.bind(this));
-                            if (exist_doc && doc) {
-                                var res = this.list_document.indexOf(exist_doc);
-                                this.list_document.splice(res, 1);
-                                this.list_document.push(doc);
-                            }
-                            if (n === 0) {
-
-                                //this.select_docs(function (select) {
-                                //    this.select_apply(function (select) {
-                                //        this.view_select(select);
-                                //        //this.tab_register_send_wagons.view(select);
-                                //        // Очистить поля правки
-                                //        //this.form_register_sent_wagons.el['input_text_presented' + data.presented].val('');
-                                //        this.main_alert.out_info_message(mess_ok);
-                                //        LockScreenOff();
-                                //        if (typeof callback === 'function') {
-                                //            callback(result);
-                                //        }
-                                //    }.bind(this));
-                                //}.bind(this));
-                            }
-                        }.bind(this));
+        //this.ids_arrival.postRegisterPayOutgoingUzDocument(data, function (result) {
+        var mess_ok = null;
+        var mess_error = null;
+        this.clear_all();
+        if (result >= 0) {
+            // Ок
+            if (data.type === 0) {
+                mess_ok = langView('vs_ccco_mess_ok_update_doc_pay', App.Langs).format(this.nomDoc);
+            }
+            if (data.type === 1) {
+                mess_ok = langView('vs_ccco_mess_ok_update_tariff_contract', App.Langs).format(this.nomDoc);
+            }
+            LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
+            this.ids_arrival.getRegisterOutgoingUzDocumentOfId(data.id_docs, function (document) {
+                var doc = this.get_document(document);
+                var exist_doc = this.list_document.find(function (o) {
+                    return o.id === doc.id;
+                }.bind(this));
+                if (exist_doc && doc) {
+                    var res = this.list_document.indexOf(exist_doc);
+                    this.list_document.splice(res, 1);
+                    this.list_document.push(doc);
+                    this.select_apply(function (select) {
+                        this.view_select(select, doc.id);
+                        this.main_alert.out_info_message(mess_ok);
+                        LockScreenOff();
+                        if (typeof callback === 'function') {
+                            callback(result);
+                        }
                     }.bind(this));
                 }
-            } else {
-                mess_error = langView('vs_ccco_mess_error_update_presented', App.Langs).format(num_docs, result);
-                this.main_alert.out_error_message(mess_error);
-                LockScreenOff();
-                if (typeof callback === 'function') {
-                    callback(result);
-                }
+            }.bind(this));
+        } else {
+
+            if (data.type === 0) {
+                mess_error = langView('vs_ccco_mess_error_update_doc_pay', App.Langs).format(this.nomDoc, result);
             }
-        }.bind(this));
+            if (data.type === 1) {
+                mess_error = langView('vs_ccco_mess_error_update_tariff_contract', App.Langs).format(this.nomDoc, result);
+            }
+            this.main_alert.out_error_message(mess_error);
+            LockScreenOff();
+            if (typeof callback === 'function') {
+                callback(result);
+            }
+        }
+        //}.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
@@ -1422,9 +1195,11 @@
         this.searsh_alert_info.clear_message();
         this.form_searsh_doc_setup.clear_all();
         this.form_register_sent_wagons.clear_all();
-        //this.form_document_pay.el.input_text_doc_pay.$element.removeClass('check-field is-valid is-invalid');
-        //this.form_cost_calculation_setup.el.datalist_payer.$element_fl.removeClass('check-field is-valid is-invalid');
-        //this.form_cost_calculation_setup.el.input_text_tariff_contract.$element.removeClass('check-field is-valid is-invalid');
+        this.type = null;
+        this.form_register_sent_wagons.el.input_text_doc_pay.val('');
+        this.form_register_sent_wagons.el.input_text_tariff_contract.val('');
+        this.form_register_sent_wagons.el.input_text_doc_pay.$element.removeClass('check-field is-valid is-invalid');
+        this.form_register_sent_wagons.el.input_text_tariff_contract.$element.removeClass('check-field is-valid is-invalid');
     }
     //------------------------------- УДАЛЕНИЕ ОБЪЕКТОВ ---------------------------------------------
     // Очистить объект
