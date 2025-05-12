@@ -93,7 +93,10 @@
     ids_arrival.prototype.getRegisterOutgoingUzDocumentOfId = function (id, callback) {
         this.api_com.get('/OutgoingUzDocument/register/id/' + id, callback);
     };
-
+    //АРМ, обновить тарифы по отправленным документам
+    ids_arrival.prototype.postUpdatePayOutgoingUzDocument = function (value, callback) {
+        this.api_com.post('/OutgoingUzDocument/update/pay/', value, callback);
+    };
 
     App.ids_arrival = ids_arrival;
 
