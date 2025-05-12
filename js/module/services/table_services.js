@@ -644,6 +644,14 @@
                 title: langView('tsrv_field_tariffContract', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
+                field: 'outgoingtariffContract',
+                data: function (row, type, val, meta) {
+                    return row.tariffContract ? Number(row.tariffContract / 100).toFixed(2) : null;
+                },
+                className: 'dt-body-end',
+                title: langView('tsrv_field_tariffContract', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
                 field: 'deffTariff',
                 data: function (row, type, val, meta) {
                     return row.deffTariff ? Number(row.deffTariff).toFixed(2) : null;
@@ -667,7 +675,7 @@
                 field: 'outgoingDeffTariff',
                 data: function (row, type, val, meta) {
                     if (row.tariffContract !== null && row.outgoingUZDocumentPay !== null && row.outgoingUZDocumentPayAdd !== null) {
-                        return Number((Number(row.tariffContract * 100).toFixed(0) - Number(row.outgoingUZDocumentPay + row.outgoingUZDocumentPayAdd)) / 100).toFixed(2);
+                        return (Number(row.tariffContract - (row.outgoingUZDocumentPay + row.outgoingUZDocumentPayAdd)) / 100).toFixed(2);
                     } else {
                         return null;
                     }
@@ -857,7 +865,6 @@
         collums.push({ field: 'dateAdoption', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
-        collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'verification', title: null, class: null });
         collums.push({ field: 'verificationUser', title: null, class: null });
 
@@ -889,9 +896,8 @@
         collums.push({ field: 'outgoingUZDocumentPay', title: null, class: null });
         collums.push({ field: 'outgoingUZDocumentPayAdd', title: null, class: null });
         collums.push({ field: 'outgoingUZDocumentPayAll', title: null, class: null });
-        collums.push({ field: 'tariffContract', title: null, class: null });
+        collums.push({ field: 'outgoingtariffContract', title: null, class: null });
         collums.push({ field: 'outgoingDeffTariff', title: null, class: null });
-        //collums.push({ field: 'kolConductor', title: null, class: null });
         collums.push({ field: 'outgoingCodeStnFrom', title: null, class: null });
         collums.push({ field: 'outgoingNameStnFrom', title: null, class: null });
         collums.push({ field: 'outgoingCodeStnTo', title: null, class: null });
@@ -1091,7 +1097,7 @@
                     '<th class="text-end"></th>' +
                     '<th class="text-end"></th>' +
                     '<th class="text-end"></th>' +
-                    '<th colspan="15""></th>' +
+                    '<th colspan="14""></th>' +
                     '</tr></tfoot>';
                 break;
             };
@@ -1148,92 +1154,113 @@
                 //};
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
-                //this.tab_com.footerCallback = function (tr, data, start, end, display) {
-                //    var api = this.api();
-                //    var count = api
-                //        .column(3)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(1)
-                //        .html(count);
+                this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                    var api = this.api();
+                    var count = api
+                        .column(3)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(1)
+                        .html(count);
 
-                //    var tariff_dog = api
-                //        .column(4)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(2)
-                //        .html(Number(tariff_dog).toFixed(2));
+                    var vesg = api
+                        .column(5)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(3)
+                        .html(Number(vesg).toFixed(2));
 
-                //    var tariff_doc = api
-                //        .column(6)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(4)
-                //        .html(Number(tariff_doc).toFixed(2));
+                    var tariff_uz= api
+                        .column(6)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(4)
+                        .html(Number(tariff_uz).toFixed(2));
 
-                //    var tariff_deff = api
-                //        .column(8)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(6)
-                //        .html(Number(tariff_deff).toFixed(2));
+                    var tariff_uz_dop= api
+                        .column(7)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(5)
+                        .html(Number(tariff_uz_dop).toFixed(2));
 
-                //    var vesg = api
-                //        .column(10)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(8)
-                //        .html(Number(vesg).toFixed(2));
+                    var tariff_uz_all= api
+                        .column(8)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(6)
+                        .html(Number(tariff_uz_all).toFixed(2));
 
-                //};
+                    var tariff_dog = api
+                        .column(9)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(7)
+                        .html(Number(tariff_dog).toFixed(2));
+
+                    var tariff_deff = api
+                        .column(10)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    $(tr)
+                        .find('th span')
+                        .eq(8)
+                        .html(Number(tariff_deff).toFixed(2));
+                };
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
-                    //if (data.verification !== null) {
-                    //    if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
-                    //        $(row).addClass('yellow');  // Отметим вагон расчитан
-                    //    } else {
-                    //        $(row).addClass('green');  // Отметим вагон сверен
-                    //    }
-                    //}
+                    if (data.calcPayer !== null) {
+                        if (data.tariffContract === null) {
+                            $(row).addClass('yellow');  // Отметим вагон расчитан
+                        } else {
+                            $(row).addClass('green');  // Отметим вагон сверен
+                        }
+                    }
                 }.bind(this);
                 this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
                 this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
                 this.tab_com.table_columns = this.init_columns_register_send_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
-                //this.tab_com.html_footer = '<tfoot><tr>' +
-                //    '<th colspan="3" class="text-end">ИТОГО:</th>' +
-                //    '<th class="text-center"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th colspan="15""></th>' +
-                //    '</tr></tfoot>';
+                this.tab_com.html_footer = '<tfoot><tr>' +
+                    '<th colspan="3" class="text-end">ИТОГО:</th>' +
+                    '<th class="text-center"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th colspan="12""></th>' +
+                    '</tr></tfoot>';
                 break;
             };
 
@@ -1290,6 +1317,11 @@
     // Показать данные
     table_services.prototype.view = function (data, id_select) {
         this.tab_com.view(data, id_select);
+        //this.tab_com.select_row(id_select);
+    };
+
+    table_services.prototype.select_row = function (id_select) {
+        this.tab_com.select_row(id_select);
     };
     // Показать данные
     table_services.prototype.view_of_tag = function (data, tag, id_tag) {

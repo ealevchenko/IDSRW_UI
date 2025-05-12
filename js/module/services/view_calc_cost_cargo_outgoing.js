@@ -91,6 +91,7 @@
 
             'vs_ccco_title_button_doc_pay': 'Обновить тариф отправки (kod=001)...',
             'vs_ccco_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
+            'vs_ccco_title_button_clear_tariff_contract': 'Очистить ж.д. тариф по договору...',
 
             'vs_ccco_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
@@ -104,6 +105,10 @@
             'vs_ccco_mess_ok_update_tariff_contract': 'По документу  [{0}] обнавлен ж.д. тариф по договору',
             'vs_ccco_mess_error_update__tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
 
+            'vs_ccco_mess_run_clear_tariff_contract': 'Очистить ж.д. тариф по договору по документу [{0}]',
+            'vs_ccco_cancel_clear_tariff_contract': 'Отмена очистки ж.д. тарифа.',
+            'vs_ccco_mess_ok_clear_tariff_contract': 'По документу  [{0}] удален ж.д. тариф по договору',
+            'vs_ccco_mess_error_clear_tariff_contract': 'При очистки ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
 
             //'vs_ccco_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
             //'vs_ccco_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
@@ -646,6 +651,25 @@
                         }.bind(this),
                     }
                 };
+                var bt_clear_tariff_contract = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'clear_tariff_contract',
+                        name: 'clear_tariff_contract',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: null,
+                        title: langView('vs_ccco_title_button_clear_tariff_contract', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-broom"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.type = 2;
+                            this.form_register_sent_wagons.$form.submit();
+                        }.bind(this),
+                    }
+                };
                 var form_input_tariff_contract = {
                     obj: 'bs_form_input',
                     options: {
@@ -683,7 +707,7 @@
                         group_append_class: null,
                         group_append_id: null,
                         group_append_html: null,
-                        group_append_objs: [bt_apply_tariff_contract],
+                        group_append_objs: [bt_clear_tariff_contract, bt_apply_tariff_contract],
                         form_text: langView('vs_ccco_text_label_tariff_contract', App.Langs),
                         form_text_class: null,
                     },
@@ -706,11 +730,15 @@
                                 var pay = null;
                                 if (this.type === 0) {
                                     var mess = langView('vs_ccco_mess_run_update_doc_pay', App.Langs).format(this.nomDoc, result.new.input_text_doc_pay, this.current_doc_pay);
-                                    pay = result.new.input_text_doc_pay;
+                                    pay = result.new.input_text_doc_pay ? Number(Number(result.new.input_text_doc_pay * 100).toFixed(0)) : null;
                                 }
                                 if (this.type === 1) {
                                     var mess = langView('vs_ccco_mess_run_update_tariff_contract', App.Langs).format(this.nomDoc, result.new.input_text_tariff_contract);
-                                    pay = result.new.input_text_tariff_contract;
+                                    pay = result.new.input_text_tariff_contract ? Number(Number(result.new.input_text_tariff_contract * 100).toFixed(0)) : null;
+                                }
+                                if (this.type === 2) {
+                                    var mess = langView('vs_ccco_mess_run_clear_tariff_contract', App.Langs).format(this.nomDoc);
+                                    pay = null;
                                 }
                                 this.mcf_lg.open(
                                     langView('vs_ccco_title_form_apply', App.Langs),
@@ -718,7 +746,7 @@
                                     function () {
                                         // Принять
                                         var operation = {
-                                            id_docs: this.id,
+                                            id_document: this.id,
                                             type: this.type,
                                             value: pay
                                         };
@@ -729,6 +757,7 @@
                                     function () {
                                         if (this.type === 0) this.main_alert.out_warning_message(langView('vs_ccco_cancel_update_doc_pay', App.Langs));
                                         if (this.type === 1) this.main_alert.out_warning_message(langView('vs_ccco_cancel_update_tariff_contract', App.Langs));
+                                        if (this.type === 2) this.main_alert.out_warning_message(langView('vs_ccco_cancel_clear_tariff_contract', App.Langs));
                                     }.bind(this)
                                 );
                             }
@@ -922,8 +951,8 @@
             //outgoingUzVagonPays: vagons.where(v => v.outgoingUzVagonPays != null).Sum(p => p.outgoingUzVagonPays),
             //outgoingUzVagonPaysAdd: vagons.where(v => v.outgoingUzVagonPaysAdd != null).Sum(p => p.outgoingUzVagonPaysAdd),
             //outgoingUzVagonPaysAll: vagons.where(v => v.outgoingUzVagonPays != null).Sum(p => p.outgoingUzVagonPays) + vagons.where(v => v.outgoingUzVagonPaysAdd != null).Sum(p => p.outgoingUzVagonPaysAdd),
-            arrivalUZDocumentPay: document.arrivalUZDocumentPay,
-            deffTariff: document.tariffContract !== null && document.arrivalUZDocumentPay !== null ? document.tariffContract - Number(arrivalUZDocumentPay / 100).toFixed(2) : 0,
+            outgoingUZDocumentPay: document.outgoingUZDocumentPay,
+            //deffTariff: document.tariffContract !== null && document.outgoingUZDocumentPay !== null ? Number((document.tariffContract - document.outgoingUZDocumentPay) / 100).toFixed(2) : 0,
             calcPayer: document.calcPayer,
             calcPayerUser: document.calcPayerUser,
             numList: document.numList,
@@ -1114,7 +1143,6 @@
                 }
             }
             if (this.type === 1) {
-
                 if (!result.new.input_text_tariff_contract) {
                     this.form_register_sent_wagons.set_element_validation_error('tariff_contract', langView('vs_ccco_mess_error_not_tariff_contract', App.Langs), false);
                     valid = false;
@@ -1125,59 +1153,75 @@
                     }
                 }
             }
+            //if (this.type === 2) {
+            //    if (!result.new.input_text_tariff_contract) {
+            //        this.form_register_sent_wagons.set_element_validation_error('tariff_contract', langView('vs_ccco_mess_error_not_tariff_contract', App.Langs), false);
+            //        valid = false;
+            //    } else {
+            //        if (result.new.input_text_tariff_contract === this.current_tariff_contract) {
+            //            this.form_register_sent_wagons.set_element_validation_error('tariff_contract', langView('vs_ccco_mess_error_exist_tariff_contract', App.Langs), false);
+            //            valid = false;
+            //        }
+            //    }
+            //}
         }
         return valid;
     }
     // Обновить 
     view_calc_cost_cargo_outgoing.prototype.apply_update = function (data, callback) {
-        var result = 1;
-        //this.ids_arrival.postRegisterPayOutgoingUzDocument(data, function (result) {
-        var mess_ok = null;
-        var mess_error = null;
-        this.clear_all();
-        if (result >= 0) {
-            // Ок
-            if (data.type === 0) {
-                mess_ok = langView('vs_ccco_mess_ok_update_doc_pay', App.Langs).format(this.nomDoc);
-            }
-            if (data.type === 1) {
-                mess_ok = langView('vs_ccco_mess_ok_update_tariff_contract', App.Langs).format(this.nomDoc);
-            }
-            LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
-            this.ids_arrival.getRegisterOutgoingUzDocumentOfId(data.id_docs, function (document) {
-                var doc = this.get_document(document);
-                var exist_doc = this.list_document.find(function (o) {
-                    return o.id === doc.id;
-                }.bind(this));
-                if (exist_doc && doc) {
-                    var res = this.list_document.indexOf(exist_doc);
-                    this.list_document.splice(res, 1);
-                    this.list_document.push(doc);
-                    this.select_apply(function (select) {
-                        this.view_select(select, doc.id);
-                        this.main_alert.out_info_message(mess_ok);
-                        LockScreenOff();
-                        if (typeof callback === 'function') {
-                            callback(result);
-                        }
-                    }.bind(this));
+        //var result = 1;
+        this.ids_arrival.postUpdatePayOutgoingUzDocument(data, function (result) {
+            var mess_ok = null;
+            var mess_error = null;
+            this.clear_all();
+            if (result >= 0) {
+                // Ок
+                if (data.type === 0) {
+                    mess_ok = langView('vs_ccco_mess_ok_update_doc_pay', App.Langs).format(this.nomDoc);
                 }
-            }.bind(this));
-        } else {
+                if (data.type === 1) {
+                    mess_ok = langView('vs_ccco_mess_ok_update_tariff_contract', App.Langs).format(this.nomDoc);
+                }
+                if (data.type === 2) {
+                    mess_ok = langView('vs_ccco_mess_ok_clear_tariff_contract', App.Langs).format(this.nomDoc);
+                }
+                LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
+                this.ids_arrival.getRegisterOutgoingUzDocumentOfId(data.id_document, function (document) {
+                    var doc = this.get_document(document);
+                    var exist_doc = this.list_document.find(function (o) {
+                        return o.id === doc.id;
+                    }.bind(this));
+                    if (exist_doc && doc) {
+                        var res = this.list_document.indexOf(exist_doc);
+                        this.list_document[res] = doc;
+                        this.select_apply(function (select) {
+                            this.view_select(select, doc.id);
+                            this.main_alert.out_info_message(mess_ok);
+                            LockScreenOff();
+                            if (typeof callback === 'function') {
+                                callback(result);
+                            }
+                        }.bind(this));
+                    }
+                }.bind(this));
+            } else {
 
-            if (data.type === 0) {
-                mess_error = langView('vs_ccco_mess_error_update_doc_pay', App.Langs).format(this.nomDoc, result);
+                if (data.type === 0) {
+                    mess_error = langView('vs_ccco_mess_error_update_doc_pay', App.Langs).format(this.nomDoc, result);
+                }
+                if (data.type === 1) {
+                    mess_error = langView('vs_ccco_mess_error_update_tariff_contract', App.Langs).format(this.nomDoc, result);
+                }
+                if (data.type === 1) {
+                    mess_error = langView('vs_ccco_mess_error_clear_tariff_contract', App.Langs).format(this.nomDoc, result);
+                }
+                this.main_alert.out_error_message(mess_error);
+                LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
             }
-            if (data.type === 1) {
-                mess_error = langView('vs_ccco_mess_error_update_tariff_contract', App.Langs).format(this.nomDoc, result);
-            }
-            this.main_alert.out_error_message(mess_error);
-            LockScreenOff();
-            if (typeof callback === 'function') {
-                callback(result);
-            }
-        }
-        //}.bind(this));
+        }.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
