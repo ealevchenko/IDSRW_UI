@@ -522,7 +522,7 @@
         this.order_column = [0, 'asc'];
         this.type_select_rows = 0; // не показывать
         this.table_select = false;
-        this.drawCallback = function (settings) {}.bind(this);
+        this.drawCallback = function (settings) { }.bind(this);
         this.createdRow = function (row, data, index) { }.bind(this);
         this.initComplete = function () { }.bind(this);
         this.footerCallback = null;
@@ -691,9 +691,9 @@
     // Выбрать строку
     table_common.prototype.select_row = function (id_select) {
         this.obj_t_report.rows().deselect();
-        if (id_select !== null) {
+        if (id_select !== null && id_select !== undefined) {
             this.id_select = id_select
-            this.obj_t_report.row('#' + this.id_select).select();
+            this.obj_t_report.rows('#' + this.id_select).select();
         } else {
             this.id_select = null;
         }
