@@ -230,7 +230,7 @@
 
 
         this.code_payer = -1;
-        this.id_cargo = -1;
+        this.id_cargo = [];
         this.code_stn_from = -1;
 
         this.select_document_detali = [];
@@ -452,7 +452,7 @@
                     childs: []
                 };
                 var form_select_cargo = {
-                    obj: 'bs_form_select',
+                    obj: 'bs_form_select_multiple',
                     options: {
                         validation_group: 'common_searsh',
                         id: 'id_cargo',
@@ -461,7 +461,7 @@
                         element_fsize: 'sm',
                         element_class: null,
                         element_value: null,
-                        element_multiple: false,
+                        element_multiple: true,
                         element_title: null,
                         element_required: false,
                         element_readonly: false,
@@ -469,16 +469,18 @@
                         element_options: {
                             data: [],
                             default: -1,
-                            fn_change: function (e) {
-                                e.preventDefault();
+                            fn_change: function (e, val) {
+                                //e.preventDefault();
                                 // Обработать выбор
-                                this.id_cargo = Number($(e.currentTarget).val());
+                                this.id_cargo = val;
+
+                                //this.id_cargo = Number($(e.currentTarget).val());
                                 this.select_apply(function (select) {
                                     this.view_select(select);
                                     LockScreenOff();
                                 }.bind(this));
                             }.bind(this),
-                            fn_check: function (text) {
+                            fn_check: function (e, val) {
 
                             }.bind(this),
                         },
@@ -494,6 +496,50 @@
                     },
                     childs: []
                 };
+                //var form_select_cargo = {
+                //    obj: 'bs_form_select',
+                //    options: {
+                //        validation_group: 'common_searsh',
+                //        id: 'id_cargo',
+                //        name: 'id_cargo',
+                //        label: langView('vs_ccco_title_label_cargo', App.Langs),
+                //        element_fsize: 'sm',
+                //        element_class: null,
+                //        element_value: null,
+                //        element_multiple: false,
+                //        element_title: null,
+                //        element_required: false,
+                //        element_readonly: false,
+                //        element_size: null,
+                //        element_options: {
+                //            data: [],
+                //            default: -1,
+                //            fn_change: function (e) {
+                //                e.preventDefault();
+                //                // Обработать выбор
+                //                this.id_cargo = Number($(e.currentTarget).val());
+                //                this.select_apply(function (select) {
+                //                    this.view_select(select);
+                //                    LockScreenOff();
+                //                }.bind(this));
+                //            }.bind(this),
+                //            fn_check: function (text) {
+
+                //            }.bind(this),
+                //        },
+                //        validation: false,
+                //        feedback_invalid: null,
+                //        feedback_valid: null,
+                //        feedback_class: null,
+                //        col_prefix: 'md',
+                //        col_size: 2,
+                //        col_class: 'mt-0',
+                //        form_text: langView('vs_ccco_text_label_cargo', App.Langs),
+                //        form_text_class: null,
+                //    },
+                //    childs: []
+                //};
+
                 var form_select_station_from = {
                     obj: 'bs_form_select',
                     options: {
@@ -966,9 +1012,9 @@
         // Обновим
         this.clear_all();
 
-        this.code_payer = -1;
-        this.id_cargo = -1;
-        this.code_stn_from = -1;
+        //this.code_payer = -1;
+        //this.id_cargo = [];
+        //this.code_stn_from = -1;
 
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
@@ -1047,10 +1093,18 @@
             }.bind(this));
             this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, (pc ? pc.value : -1));
 
-            var crg = list_cargo.find(function (o) {
-                return o.value == id_cargo;
-            }.bind(this));
-            this.form_searsh_doc_setup.el.select_id_cargo.update(list_cargo, (crg ? crg.value : -1));
+            var cargos = [];
+            $.each(id_cargo, function (i, el) {
+                var crg = list_cargo.find(function (o) {
+                    return o.value == el;
+                }.bind(this));
+                if (crg) {
+                    cargos.push(String(crg.value));
+                    //cargos.push(crg.value);
+                }
+            }.bind(this))
+            //this.form_searsh_doc_setup.el.select_id_cargo.update(list_cargo, cargos);
+            this.form_searsh_doc_setup.el.select_id_cargo.update(list_cargo, id_cargo);
 
             var sf = list_stn_from.find(function (o) {
                 return o.value == code_stn_from;
@@ -1072,9 +1126,11 @@
                     return i.payerSenderCode === this.code_payer;
                 }.bind(this));
             }
-            if (this.id_cargo != -1) {
+            if (this.id_cargo !== null && this.id_cargo.length > 0) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    var gr = i.vagons.find(function (o) { return o.outgoingIdCargo === this.id_cargo }.bind(this));
+                    var gr = i.vagons.find(function (o) {
+                        return this.id_cargo.indexOf(String(o.outgoingIdCargo)) >= 0
+                    }.bind(this));
                     return gr !== undefined;
                 }.bind(this));
             }
@@ -1083,8 +1139,8 @@
                     return i.outgoingCodeStnFrom === this.code_stn_from;
                 }.bind(this));
             }
-            this.update_select_list(this.select_document_detali);
-            this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_select_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_document.length, this.select_document.length));
+            //this.update_select_list(this.select_document_detali);
+            this.searsh_alert_info.out_info_message(langView('vs_ccco_mess_info_select_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_document.length, this.select_document_detali.length));
             // Событие обновили данные
             if (typeof callback === 'function') {
                 callback(this.select_document_detali);
