@@ -275,11 +275,13 @@ var get_belongs_element = function (rows, name_field, id) {
         {
             'title_label_date': 'ПЕРИОД :',
             'title_select': 'Выберите...',
+            'title_select_all': 'Выбрать все',
         },
         'en':  //default language: English
         {
             'title_label_date': 'PERIOD:',
             'title_select': 'Select ...',
+            'title_select_all': 'Select all',
         }
     };
     // Определлим список текста для этого модуля
@@ -1533,7 +1535,7 @@ var get_belongs_element = function (rows, name_field, id) {
             class: this.settings.element_class,
             fsize: this.settings.element_fsize,
             value: this.settings.element_value,
-            element_multiple: this.settings.element_multiple,
+            multiple: this.settings.element_multiple,
             title: this.settings.element_title,
             required: this.settings.element_required,
             readonly: this.settings.element_readonly,
@@ -2402,6 +2404,117 @@ var get_belongs_element = function (rows, name_field, id) {
         };
         this.init();
     };
+    // Инициализация поля дата "INPUT" типа SELECT multiple
+    form_element.prototype.init_select_multiple = function (element, options, content) {
+        //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
+        this.$element = element;
+        this.settings = $.extend({
+            data: [],
+            default_value: null,
+            fn_change: null,
+            fn_check: null,
+        }, options);
+        this.init = function () {
+            this.$el = element;
+            this.$element = this.$el.multiselect({
+                templates: {
+                    button: '<button type="button" class="multiselect dropdown-toggle form-control" style="text-align:left" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span></button>',
+                    popupContainer: '<div class="multiselect-container dropdown-menu"></div>',
+                    filter: '<div class="multiselect-filter d-flex align-items-center"><i class="fas fa-sm fa-search text-muted"></i><input type="search" class="multiselect-search form-control" /></div>',
+                    buttonGroup: '<div class="multiselect-buttons btn-group" style="display:flex;"></div>',
+                    buttonGroupReset: '<button type="button" class="multiselect-reset btn btn-secondary btn-block"></button>',
+                    option: '<button type="button" class="multiselect-option dropdown-item"></button>',
+                    divider: '<div class="dropdown-divider"></div>',
+                    optionGroup: '<button type="button" class="multiselect-group dropdown-item"></button>',
+                    resetButton: '<div class="multiselect-reset text-center p-2"><button type="button" class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
+                },
+                buttonContainer: '<div class="btn-group d-grid text-left" />',
+                buttonTextAlignment: 'left',
+                enableFiltering: false,
+                includeSelectAllOption: true,
+                nonSelectedText: langView('title_select', App.Langs),
+                selectAllText: langView('title_select_all', App.Langs),
+                onChange: function (element, checked) {
+                    if (typeof this.settings.fn_check === 'function') {
+                        this.settings.fn_check(null, element.val());
+                    };
+                }.bind(this),
+                onDropdownHide: function (event) {
+                    if (typeof this.settings.fn_change === 'function') {
+                        this.settings.fn_change(event, element.val());
+                    }
+                }.bind(this),
+                onDropdownShown: function (event) {
+
+                }.bind(this)
+            });
+            this.update(this.settings.data, this.settings.default_value);
+        };
+        this.val = function (value) {
+            if (value !== undefined) {
+                if (value === -1 || (value !== null && value.length == 0)) {
+                    this.$el.multiselect('deselectAll', false);
+                } else {
+                    this.$el.multiselect('select', value);
+                }
+            } else {
+                var res = this.$el.val();
+                return res;
+            };
+        };
+        this.getNumber = function () {
+            return this.$element.val() === null ? null : Number(this.$element.val());
+        };
+        this.getNumberNull = function () {
+            return this.$element.val() === null || Number(this.$element.val()) === -1 ? null : Number(this.$element.val());
+        };
+        this.text = function (text) {
+            if (text !== undefined) {
+                var disabled = this.$element.prop("disabled");
+
+                if (disabled) {
+                    this.$el.multiselect('disable');
+                    //this.$element.prop("disabled", false);
+                }
+                this.$element.val(text === null ? '' : text);
+                if (disabled) {
+                    this.$el.multiselect('enable');
+                    //this.$element.prop("disabled", true);
+                }
+            } else {
+                return this.$element.text();
+            };
+        };
+        this.update = function (data, default_value) {
+            this.$element.empty();
+            var options = [];
+            if (data) {
+                $.each(data, function (i, el) {
+                    // Преобразовать формат
+                    if (el) { options.push({ label: el.text, title: el.text, value: el.value, selected: el.disabled });}
+                }.bind(this));
+                this.$el.multiselect('dataprovider', options);
+            };
+            this.val(default_value);
+        };
+        this.show = function () {
+            this.$element.show();
+        };
+        this.hide = function () {
+            this.$element.hide();
+        };
+        this.enable = function () {
+            this.$el.multiselect('enable');
+        };
+        this.disable = function (clear) {
+            if (clear) this.$el.multiselect('deselectAll', false);
+            this.$el.multiselect('disable');
+        };
+        this.destroy = function () {
+            this.$el.multiselect('destroy');
+        };
+        this.init();
+    };
     // Инициализация поля дата "INPUT" типа DATALIST
     form_element.prototype.init_datalist = function (element, options, content) {
         var get_alist = function (data) {
@@ -2829,6 +2942,24 @@ var get_belongs_element = function (rows, name_field, id) {
                             validation_group: obj.options.validation_group,
                             type: 'select',
                             element: new this.fe.init_select(obj_html.$element, obj.options.element_options),
+                            $element: obj_html.$element,
+                            destroy: true
+                        });
+                    } else {
+                        throw new Error('Не удалось создать элемент ' + obj.obj);
+                    }
+
+                };
+                if (obj.obj === 'bs_form_select_multiple') {
+                    obj.options.obj_form = obj_form;
+                    var obj_html = new this.bs_form_select(obj.options);
+                    if (obj_html && obj_html.$element) {
+                        add_element(obj_html.$html, content, obj);
+                        obj_form.views.push({
+                            name: obj.options.id,
+                            validation_group: obj.options.validation_group,
+                            type: 'select',
+                            element: new this.fe.init_select_multiple(obj_html.$element, obj.options.element_options, content),
                             $element: obj_html.$element,
                             destroy: true
                         });
