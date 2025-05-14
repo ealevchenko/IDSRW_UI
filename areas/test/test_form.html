@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />
 
     <!-- Визуальное отражение компонентов -->
-    <link rel="stylesheet" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap-multiselect/css/bootstrap-multiselect.min.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/shared.css" />
 
     <!-- DataTables -->
@@ -52,7 +53,17 @@
 
     <main class="container-fluid">
         <div class="alert" id="main-alert" style="display: none;"></div>
-
+        <div>
+            <select id="example-getting-started" multiple="multiple">
+                <option value="1">Cheese</option>
+                <option value="2">Tomatoes</option>
+                <option value="3">Mozzarella</option>
+                <option value="4">Mushrooms</option>
+                <option value="5">Pepperoni</option>
+                <option value="6">Onions</option>
+            </select>
+        </div>
+        <button id="example-select-button" class="btn btn-outline-secondary ml-1">Select some options...</button>
     </main>
 
     <label for="exampleDataList" class="form-label">Datalist example</label>
@@ -70,6 +81,7 @@
     <script src="../../../idsrw_ui/lib/popper/umd/popper.min.js"></script>
     <script src="../../../idsrw_ui/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+    <script src="../../../idsrw_ui/lib/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
     <!-- Moment -->
     <script src="../../../idsrw_ui/lib/moment.js/moment.min.js"></script>
     <script src="../../../idsrw_ui/lib/moment.js/moment-with-locales.min.js"></script>
@@ -101,5 +113,22 @@
     <script src="../../../idsrw_ui/js/module/ws/view_op_arrival_cars.js"></script>
 
     <script src="../../../idsrw_ui/js/view/test/main_test_form.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#example-getting-started').multiselect({
+            //    templates: {
+            //        button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span></button>',
+            //        popupContainer: '<div class="multiselect-container dropdown-menu"></div>',
+            //        filter: '<div class="multiselect-filter d-flex align-items-center"><i class="fas fa-sm fa-search text-muted"></i><input type="search" class="multiselect-search form-control" /></div>',
+            //        buttonGroup: '<div class="multiselect-buttons btn-group" style="display:flex;"></div>',
+            //        buttonGroupReset: '<button type="button" class="multiselect-reset btn btn-secondary btn-block"></button>',
+            //        option: '<button type="button" class="multiselect-option dropdown-item"></button>',
+            //        divider: '<div class="dropdown-divider"></div>',
+            //        optionGroup: '<button type="button" class="multiselect-group dropdown-item"></button>',
+            //        resetButton: '<div class="multiselect-reset text-center p-2"><button type="button" class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
+            //    }
+            //});
+        });
+    </script>
 </body>
 </html>

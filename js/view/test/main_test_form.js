@@ -725,6 +725,42 @@
 
         //element_radio.$html.append(element_radio1.$html);
 
+        $('#example-getting-started').multiselect({
+            templates: {
+                button: '<button type="button" class="multiselect dropdown-toggle" data-bs-toggle="dropdown"><span class="multiselect-selected-text"></span></button>',
+                popupContainer: '<div class="multiselect-container dropdown-menu"></div>',
+                filter: '<div class="multiselect-filter d-flex align-items-center"><i class="fas fa-sm fa-search text-muted"></i><input type="search" class="multiselect-search form-control" /></div>',
+                buttonGroup: '<div class="multiselect-buttons btn-group" style="display:flex;"></div>',
+                buttonGroupReset: '<button type="button" class="multiselect-reset btn btn-secondary btn-block"></button>',
+                option: '<button type="button" class="multiselect-option dropdown-item"></button>',
+                divider: '<div class="dropdown-divider"></div>',
+                optionGroup: '<button type="button" class="multiselect-group dropdown-item"></button>',
+                resetButton: '<div class="multiselect-reset text-center p-2"><button type="button" class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
+            }
+        });
+
+        var options = [
+            { label: 'Option 1', title: 'Option 1', value: '1', selected: true },
+            { label: 'Option 2', title: 'Option 2', value: '2' },
+            { label: 'Option 3', title: 'Option 3', value: '3', selected: true },
+            { label: 'Option 4', title: 'Option 4', value: '4' },
+            { label: 'Option 5', title: 'Option 5', value: '5' },
+            { label: 'Option 6', title: 'Option 6', value: '6', disabled: true }
+        ];
+
+        var val = [];
+        //val.push("1");
+        //val.push("4");
+        val.push(3);
+        val.push(4);
+
+        $('#example-select-button').on('click', function () {
+            //$('#example-getting-started').multiselect('select', ['1', '2', '4']);
+            //$('#example-getting-started').multiselect('select', val);
+            $('#example-getting-started').multiselect('dataprovider', options);
+            //alert('Selected 1, 2 and 4.');
+        });
+
         var row_form = new fe_ui.bs_row({});
         main.append(row_form.$html);
 
