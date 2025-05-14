@@ -1,2 +1,10 @@
 ﻿body {
 }
+
+div#tab-tr-table-register-send-wagons_wrapper > div.dt-scroll > div.dt-scroll-body {
+    overflow: auto hidden !important
+}
+
+/*div.dt-scroll-body {
+    overflow: auto hidden !important
+}*/

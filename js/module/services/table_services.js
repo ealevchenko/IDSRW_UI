@@ -61,7 +61,7 @@
             'tsrv_field_countVagon': 'Кол. ваг.',
             'tsrv_field_tariffContract': 'Ж.д. тариф по договору, грн.',
             'tsrv_field_deffTariff': 'Разница, грн.',
-            'tsrv_field_outgoingDeffTariff': 'Разница (по ЭПД и Тариф по договору, грн)',
+            'tsrv_field_outgoingDeffTariff': 'Разница, грн.',
             'tsrv_field_kolConductor': 'Кол-во проводников',
             'tsrv_field_calcPayer': 'Дата расчета',
             'tsrv_field_calcPayerUser': 'Рассчитал',
@@ -410,8 +410,8 @@
                 data: function (row, type, val, meta) {
                     return row.payerSenderName;
                 },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tsrv_field_payerSenderName', App.Langs), width: "100px", orderable: true, searchable: true
+                className: 'dt-body-left shorten',
+                title: langView('tsrv_field_payerSenderName', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'payerSenderCode',
@@ -523,7 +523,7 @@
                     return row.vesg ? Number(Number(row.vesg) / 1000).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_vesg', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_vesg', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'distanceWay',
@@ -568,7 +568,7 @@
                     return row.outgoingUzVagonPays !== null ? Number(row.outgoingUzVagonPays / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUzVagonPays', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingUzVagonPaysAdd',
@@ -576,7 +576,7 @@
                     return row.outgoingUzVagonPaysAdd !== null ? Number(row.outgoingUzVagonPaysAdd / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUzVagonPaysAdd', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUzVagonPaysAdd', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingUzVagonPaysAll',
@@ -584,7 +584,7 @@
                     return (row.outgoingUzVagonPaysAdd !== null && row.outgoingUzVagonPays !== null) ? Number((row.outgoingUzVagonPays + row.outgoingUzVagonPaysAdd) / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUzVagonPaysAll', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUzVagonPaysAll', App.Langs), width: "50px", orderable: true, searchable: true
             },
 
             {
@@ -593,7 +593,7 @@
                     return row.outgoingUZDocumentPay !== null ? Number(row.outgoingUZDocumentPay / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUZDocumentPay', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingUZDocumentPayAdd',
@@ -601,7 +601,7 @@
                     return row.outgoingUZDocumentPayAdd !== null ? Number(row.outgoingUZDocumentPayAdd / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUZDocumentPayAdd', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUZDocumentPayAdd', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingUZDocumentPayAll',
@@ -609,7 +609,7 @@
                     return (row.outgoingUZDocumentPayAdd !== null && row.outgoingUZDocumentPay !== null) ? Number((row.outgoingUZDocumentPay + row.outgoingUZDocumentPayAdd) / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingUZDocumentPayAll', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingUZDocumentPayAll', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'arrivalUzVagonPays',
@@ -617,7 +617,7 @@
                     return row.arrivalUzVagonPays !== null ? Number(row.arrivalUzVagonPays / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'arrivalUZDocumentPay',
@@ -625,7 +625,7 @@
                     return row.arrivalUZDocumentPay !== null ? Number(row.arrivalUZDocumentPay / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_arrivalUZDocumentPay', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'countVagon',
@@ -633,7 +633,7 @@
                     return row.countVagon;
                 },
                 className: 'dt-body-center',
-                title: langView('tsrv_field_countVagon', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_countVagon', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'tariffContract',
@@ -641,7 +641,7 @@
                     return row.tariffContract ? Number(row.tariffContract).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_tariffContract', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_tariffContract', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingtariffContract',
@@ -649,7 +649,7 @@
                     return row.tariffContract ? Number(row.tariffContract / 100).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_tariffContract', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_tariffContract', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'deffTariff',
@@ -657,7 +657,7 @@
                     return row.deffTariff ? Number(row.deffTariff).toFixed(2) : null;
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_deffTariff', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_deffTariff', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'arrivalDeffTariff',
@@ -669,7 +669,7 @@
                     }
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_deffTariff', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_deffTariff', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'outgoingDeffTariff',
@@ -681,7 +681,7 @@
                     }
                 },
                 className: 'dt-body-end',
-                title: langView('tsrv_field_outgoingDeffTariff', App.Langs), width: "30px", orderable: true, searchable: true
+                title: langView('tsrv_field_outgoingDeffTariff', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
                 field: 'kolConductor',
@@ -1011,8 +1011,9 @@
                 //this.tab_com.table_select = {
                 //    style: 'multi'
                 //};
+                //scrollCollapse: true,
                 this.tab_com.table_select = false;
-                this.tab_com.autoWidth = true;
+                this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
                     var api = this.api();
                     var count = api
@@ -1259,7 +1260,18 @@
                     '<th class="text-end"></th>' +
                     '<th class="text-end"></th>' +
                     '<th class="text-end"></th>' +
-                    '<th colspan="12""></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    '<th class="text-end"></th>' +
+                    //'<th colspan="11""></th>' +
                     '</tr></tfoot>';
                 break;
             };
