@@ -23,12 +23,8 @@
             'vs_ccco_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_outgoing',
             'vs_ccco_mess_load_operation': 'Загружаю форму операции',
 
-            //'vs_ccco_title_button_num_epd': 'Найти накладную...',
             'vs_ccco_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
             'vs_ccco_mess_error_not_document': 'Не выбран документ для правки!',
-            //'vs_ccco_title_label_num_epd': 'Найти накладную:',
-            //'vs_ccco_title_placeholder_num_epd': 'Найти накладную',
-            //'vs_ccco_text_label_num_epd': 'Введите номмер накладной ...',
 
             'vs_ccco_title_label_doc_pay': 'Тариф ЭПД (kod=001):',
             'vs_ccco_title_placeholder_doc_pay': 'Тариф ЭПД',
@@ -38,53 +34,14 @@
             'vs_ccco_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
             'vs_ccco_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
 
-            //'vs_ccco_title_button_doc_clear': 'Очистить',
-            //'vs_ccco_title_button_doc_searsh': 'Поиск',
-
-            //'vs_ccco_title_placeholder_doc_searsh': 'Поиск накладных',
-            ////'vs_ccco_text_append_doc_searsh': 'Добавить список вагонов',
-            //'vs_ccco_text_doc_searsh': 'Введите накладные, разделитель ";"',
-
-            ////'vs_ccco_title_form_button_apply': 'Править документ',
-            ////'vs_ccco_title_form_apply_button_title': 'Править документ ...',
-
-            ////'vs_ccco_title_label_num_epd': 'Найти накладную:',
-            ////'vs_ccco_title_placeholder_num_epd': 'Найти накладную',
-            ////'vs_ccco_text_label_num_epd': 'Введите номмер накладной ...',
-
-            //'vs_ccco_title_label_presented1': 'Предъявлено:',
-            //'vs_ccco_title_placeholder_presented1': '№ Акта',
-            //'vs_ccco_text_label_presented1': 'Укажите № акта ...',
-            //'vs_ccco_title_label_presented2': 'Предъявлено:',
-            //'vs_ccco_title_placeholder_presented2': '№ Акта',
-            //'vs_ccco_text_label_presented2': 'Укажите № акта ...',
-            //'vs_ccco_title_label_presented3': 'Предъявлено:',
-            //'vs_ccco_title_placeholder_presented3': '№ Акта',
-            //'vs_ccco_text_label_presented3': 'Укажите № акта ...',
-
             'vs_ccco_title_label_payer': 'Плательщик ОТПР:',
             'vs_ccco_text_label_payer': 'Выберите плательщика ...',
-
-            //'vs_ccco_title_label_act': 'Акт №:',
-            //'vs_ccco_title_placeholder_act': '№ Акта',
-            //'vs_ccco_text_label_act': 'Выберите № акта ...',
 
             'vs_ccco_title_label_cargo': 'груз ОТПР:',
             'vs_ccco_text_label_cargo': 'Выберите груз ...',
 
             'vs_ccco_title_label_station_from': 'Станция отправления:',
             'vs_ccco_text_label_station_from': 'Выберите станцию ...',
-
-            //'vs_ccco_title_label_station_on': 'Станция прибытия:',
-            //'vs_ccco_text_label_station_on': 'Выберите станцию ...',
-
-            //'vs_ccco_title_label_operator': 'Оператор АМКР:',
-            //'vs_ccco_text_label_operator': 'Выберите оператора ...',
-
-            //'vs_ccco_title_button_presented1': 'Править акт ...',
-            //'vs_ccco_title_button_presented2': 'Править акт ...',
-            //'vs_ccco_title_button_presented3': 'Править акт ...',
-            //'vs_ccco_title_button_clear': 'очистить акт ...',
 
             'vs_ccco_title_button_Cancel': 'Отмена',
             'vs_ccco_button_Ok': 'Применить',
@@ -110,30 +67,7 @@
             'vs_ccco_mess_ok_clear_tariff_contract': 'По документу  [{0}] удален ж.д. тариф по договору',
             'vs_ccco_mess_error_clear_tariff_contract': 'При очистки ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
 
-            //'vs_ccco_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
-            //'vs_ccco_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
-
-            //'vs_ccco_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
-            //'vs_ccco_mess_ok_clear_presented': 'По накладным [{0}] были сюрошены акты сверки.',
-
-            //'vs_ccco_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
-
-            ////'vs_ccco_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
-            ////'vs_ccco_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
-            ////'vs_ccco_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
-            ////'vs_ccco_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
-
-            ////'vs_ccco_mess_error_not_document': 'Не выбран документ для правки!',
-            ////'vs_ccco_mess_error_document_pay_not_change': 'Тариф без изменений!',
-            ////'vs_ccco_mess_error_payer_not_change': 'Плательщик без изменений!',
-            ////'vs_ccco_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
-
-            ////'vs_ccco_title_period_1': 'ЖД сутки',
-            ////'vs_ccco_title_period_2': 'Календарные сутки',
-            ////'vs_ccco_title_period_3': 'От начала месяца',
-
             'vs_ccco_load_main_docs': 'Загружаю документы за период...',
-            ///*            'vs_ccco_load_docs': 'Загружаю информацию по накладной {0}...',*/
             'vs_ccco_update_main_docs': 'Обнавляю документы выбранные за период...',
             'vs_ccco_select_main_docs': 'Поиск документов согласно выбора...',
 
@@ -148,7 +82,6 @@
             'vs_ccco_mess_error_exist_tariff_contract': 'Указаный тариф по договору не отличается от существующего!',
 
             'vs_ccco_mess_war_not_select_docs': 'Не выбрана накладная для правки!',
-            //'vs_ccco_mess_error_not_presented': 'Укажите № Акта сверки',
 
         },
         'en':  //default language: English
@@ -1011,11 +944,9 @@
     view_calc_cost_cargo_outgoing.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
-
         //this.code_payer = -1;
         //this.id_cargo = [];
         //this.code_stn_from = -1;
-
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
         LockScreen(langView('vs_ccco_update_main_docs', App.Langs));
@@ -1164,20 +1095,6 @@
 
         }
     };
-    // Очистить данные
-    //view_calc_cost_cargo_outgoing.prototype.clear_data = function () {
-    //this.tab_cost_calculation.view([]);
-    //this.tab_register_accepted_wagons.view([]);
-    //this.id_doc = null;
-    //this.ArrivalUzDocument = null;
-    //this.arrivalUZDocumentPay = null;
-    //this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
-    //this.tariffContract = null;
-
-    //this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
-    //this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
-    //this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
-    //}
     //--------------------------------------------------------------------------------
     // Дополнительная валидация
     view_calc_cost_cargo_outgoing.prototype.validation_register_sent_wagons = function (result) {
@@ -1279,7 +1196,6 @@
             }
         }.bind(this));
     }
-    // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
     view_calc_cost_cargo_outgoing.prototype.load_db = function (list, update, callback) {
         if (list) {
