@@ -72,7 +72,8 @@
             'tsrv_field_verificationUser': 'Сверил',
             'tsrv_field_distanceWay': '(ЭПД) Тар.расс. ОТПР',
             'tsrv_field_dateReadinessUz': 'Дата и время готовности',
-            'tsrv_field_dateReadinessAmkr': 'Дата и время сдачи',
+            'tsrv_field_dateReadinessAmkr': 'Дата и время предъявления',
+            'tsrv_field_dateOutgoing': 'Дата и время сдачи',
             'tsrv_field_rodAbbr': 'Род',
 
             'tsrv_title_no_epd': 'без ЭПД',
@@ -757,6 +758,14 @@
                 title: langView('tsrv_field_dateReadinessUz', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'dateOutgoing',
+                data: function (row, type, val, meta) {
+                    return row.dateOutgoingAct ? moment(row.dateOutgoingAct).format(format_datetime) : (row.dateOutgoing ? moment(row.dateOutgoing).format(format_datetime) : null)
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateOutgoing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'dateReadinessAmkr',
                 data: function (row, type, val, meta) {
                     return row.dateReadinessAmkr ? moment(row.dateReadinessAmkr).format(format_datetime) : null
@@ -915,7 +924,7 @@
         collums.push({ field: 'payerSenderCode', title: langView('tsrv_field_outgoing_payerSenderCode', App.Langs), class: null });
         collums.push({ field: 'payerSenderName', title: langView('tsrv_field_outgoing_payerSenderName', App.Langs), class: null });
         collums.push({ field: 'distanceWay', title: null, class: null });
-        collums.push({ field: 'dateReadinessAmkr', title: null, class: null });
+        collums.push({ field: 'dateOutgoing', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
 
@@ -926,7 +935,7 @@
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
-        collums.push({ field: 'dateReadinessAmkr', title: null, class: null });
+        collums.push({ field: 'dateOutgoing', title: null, class: null });
         collums.push({ field: 'outgoingCargoName', title: null, class: null });
         collums.push({ field: 'vesg', title: null, class: null });
         collums.push({ field: 'rodAbbr', title: null, class: null });
@@ -1188,7 +1197,7 @@
                         .eq(3)
                         .html(Number(vesg).toFixed(2));
 
-                    var tariff_uz= api
+                    var tariff_uz = api
                         .column(6)
                         .data()
                         .reduce(function (a, b) {
@@ -1199,7 +1208,7 @@
                         .eq(4)
                         .html(Number(tariff_uz).toFixed(2));
 
-                    var tariff_uz_dop= api
+                    var tariff_uz_dop = api
                         .column(7)
                         .data()
                         .reduce(function (a, b) {
@@ -1210,7 +1219,7 @@
                         .eq(5)
                         .html(Number(tariff_uz_dop).toFixed(2));
 
-                    var tariff_uz_all= api
+                    var tariff_uz_all = api
                         .column(8)
                         .data()
                         .reduce(function (a, b) {
