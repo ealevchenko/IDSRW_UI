@@ -71,7 +71,8 @@
             'tsrv_field_verification': 'Дата сверки',
             'tsrv_field_verificationUser': 'Сверил',
             'tsrv_field_distanceWay': '(ЭПД) Тар.расс. ОТПР',
-            'tsrv_field_dateReadinessUz': 'Дата и время сдачи',
+            'tsrv_field_dateReadinessUz': 'Дата и время готовности',
+            'tsrv_field_dateReadinessAmkr': 'Дата и время сдачи',
             'tsrv_field_rodAbbr': 'Род',
 
             'tsrv_title_no_epd': 'без ЭПД',
@@ -756,6 +757,14 @@
                 title: langView('tsrv_field_dateReadinessUz', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'dateReadinessAmkr',
+                data: function (row, type, val, meta) {
+                    return row.dateReadinessAmkr ? moment(row.dateReadinessAmkr).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateReadinessAmkr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'rodAbbr',
                 data: function (row, type, val, meta) {
                     return row.rodAbbr
@@ -906,7 +915,7 @@
         collums.push({ field: 'payerSenderCode', title: langView('tsrv_field_outgoing_payerSenderCode', App.Langs), class: null });
         collums.push({ field: 'payerSenderName', title: langView('tsrv_field_outgoing_payerSenderName', App.Langs), class: null });
         collums.push({ field: 'distanceWay', title: null, class: null });
-        collums.push({ field: 'dateReadinessUz', title: null, class: null });
+        collums.push({ field: 'dateReadinessAmkr', title: null, class: null });
         collums.push({ field: 'calcPayer', title: null, class: null });
         collums.push({ field: 'calcPayerUser', title: null, class: null });
 
@@ -917,7 +926,7 @@
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
-        collums.push({ field: 'dateReadinessUz', title: null, class: null });
+        collums.push({ field: 'dateReadinessAmkr', title: null, class: null });
         collums.push({ field: 'outgoingCargoName', title: null, class: null });
         collums.push({ field: 'vesg', title: null, class: null });
         collums.push({ field: 'rodAbbr', title: null, class: null });
