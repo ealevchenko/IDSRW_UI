@@ -1,2 +1,6 @@
 ﻿body {
 }
+
+div#tab-tr-table-verification-invoices-wagons_wrapper > div.dt-scroll > div.dt-scroll-body {
+    overflow: auto hidden !important
+}

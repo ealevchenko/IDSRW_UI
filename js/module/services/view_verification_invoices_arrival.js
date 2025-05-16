@@ -27,15 +27,7 @@
             'vs_via_title_button_doc_searsh': 'Поиск',
 
             'vs_via_title_placeholder_doc_searsh': 'Поиск накладных',
-            //'vs_via_text_append_doc_searsh': 'Добавить список вагонов',
             'vs_via_text_doc_searsh': 'Введите накладные, разделитель ";"',
-
-            //'vs_via_title_form_button_apply': 'Править документ',
-            //'vs_via_title_form_apply_button_title': 'Править документ ...',
-
-            //'vs_via_title_label_num_epd': 'Найти накладную:',
-            //'vs_via_title_placeholder_num_epd': 'Найти накладную',
-            //'vs_via_text_label_num_epd': 'Введите номмер накладной ...',
 
             'vs_via_title_label_presented1': 'Предъявлено:',
             'vs_via_title_placeholder_presented1': '№ Акта',
@@ -74,7 +66,6 @@
             'vs_via_title_button_Cancel': 'Отмена',
             'vs_via_button_Ok': 'Применить',
 
-
             'vs_via_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
             'vs_via_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
@@ -85,22 +76,7 @@
             'vs_via_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
             'vs_via_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
 
-            //'vs_via_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
-            //'vs_via_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
-            //'vs_via_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
-            //'vs_via_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
-
-            //'vs_via_mess_error_not_document': 'Не выбран документ для правки!',
-            //'vs_via_mess_error_document_pay_not_change': 'Тариф без изменений!',
-            //'vs_via_mess_error_payer_not_change': 'Плательщик без изменений!',
-            //'vs_via_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
-
-            //'vs_via_title_period_1': 'ЖД сутки',
-            //'vs_via_title_period_2': 'Календарные сутки',
-            //'vs_via_title_period_3': 'От начала месяца',
-
             'vs_via_load_main_docs': 'Загружаю документы за период...',
-            /*            'vs_via_load_docs': 'Загружаю информацию по накладной {0}...',*/
             'vs_via_update_main_docs': 'Обнавляю документы выбранные за период...',
             'vs_via_select_main_docs': 'Поиск документов согласно выбора...',
 
@@ -315,9 +291,9 @@
                     }
                 }.bind(this);
                 // инициализациия 
-                this.payer_arrival = this.api_dir.getAllPayerArrival();
+                //this.payer_arrival = this.api_dir.getAllPayerArrival();
 
-                this.list_payer_arrival = this.api_dir.getListValueTextPayerArrival();
+                //this.list_payer_arrival = this.api_dir.getListValueTextPayerArrival();
 
                 this.form_select_period = new VFSP(this.div_form_period.$html);
                 this.form_select_period.init({
@@ -510,7 +486,7 @@
                 var form_input_datalist_acts = {
                     obj: 'bs_form_input_datalist',
                     options: {
-                        validation_group: 'common_cc_setup',
+                        validation_group: 'common_searsh',
                         id: 'acts',
                         name: 'acts',
                         label: langView('vs_via_title_label_act', App.Langs),
@@ -1143,7 +1119,7 @@
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: true,
-                    type_report: 'verification_invoices_wagons',
+                    type_report: 'verification_invoices_wagons_arrival',
                     setup_buttons: [
                     ],
                     link_num: false,
@@ -1177,7 +1153,7 @@
                             alert: this.from_way_alert,
                             class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                             detali_table: false,
-                            type_report: 'verification_invoices_detali_wagons',
+                            type_report: 'verification_invoices_detali_wagons_arrival',
                             setup_buttons: [
                             ],
                             link_num: false,
@@ -1219,7 +1195,7 @@
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = ['payer_arrival'];
+        this.default_db_names = [];// ['payer_arrival'];
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
@@ -1391,13 +1367,6 @@
             }
         }.bind(this));
     };
-    //view_verification_invoices_arrival.prototype.validation_documents_searsh = function () {
-    //    var valid = true;
-    //    var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-    //    this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_nums(el_vs, this.form_searsh_doc_setup.el.textarea_documents_searsh.val(), false, true);
-    //    valid = (list_docs !== null);
-    //    return valid;
-    //}
     // Обновить списки
     view_verification_invoices_arrival.prototype.update_select_list = function (data) {
         if (data && data.length > 0) {
@@ -1623,21 +1592,20 @@
             this.form_verification_invoices_setup.el.input_text_presented3.val(presented3);
         }
     };
-
     // Очистить данные
-    view_verification_invoices_arrival.prototype.clear_data = function () {
-        this.tab_cost_calculation.view([]);
-        this.tab_register_accepted_wagons.view([]);
-        this.id_doc = null;
-        this.ArrivalUzDocument = null;
-        this.arrivalUZDocumentPay = null;
-        this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
-        this.tariffContract = null;
+    //view_verification_invoices_arrival.prototype.clear_data = function () {
+    //    this.tab_cost_calculation.view([]);
+    //    this.tab_register_accepted_wagons.view([]);
+    //    this.id_doc = null;
+    //    this.ArrivalUzDocument = null;
+    //    this.arrivalUZDocumentPay = null;
+    //    this.codePayerLocal = this.codePayerLocal ? this.codePayerLocal : null;
+    //    this.tariffContract = null;
 
-        this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
-        this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
-        this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
-    }
+    //    this.form_document_pay.el.input_text_doc_pay.val(this.arrivalUZDocumentPay);
+    //    this.form_cost_calculation_setup.el.datalist_payer.val(this.codePayerLocal);
+    //    this.form_cost_calculation_setup.el.input_text_tariff_contract.val(this.tariffContract);
+    //}
     //--------------------------------------------------------------------------------
     // Дополнительная валидация правки актов
     view_verification_invoices_arrival.prototype.validation_verification_invoice = function (result) {
