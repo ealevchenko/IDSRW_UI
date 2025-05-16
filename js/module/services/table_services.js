@@ -75,6 +75,9 @@
             'tsrv_field_dateReadinessAmkr': 'Дата и время предъявления',
             'tsrv_field_dateOutgoing': 'Дата и время сдачи',
             'tsrv_field_rodAbbr': 'Род',
+            'tsrv_field_numList': 'Перечень',
+            'tsrv_field_dateList': 'От',
+            'tsrv_field_outgoingCargoEtsngCode': '(ЭПД) Код Груз ОТПР',
 
             'tsrv_title_no_epd': 'без ЭПД',
 
@@ -213,6 +216,7 @@
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_stationFromName', App.Langs), width: "100px", orderable: true, searchable: true
             },
+
             {
                 field: 'arrivalNameStnFrom',
                 data: function (row, type, val, meta) {
@@ -322,6 +326,15 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_outgoingCargoName', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'outgoingCargoEtsngCode',
+                data: function (row, type, val, meta) {
+                    return row.outgoingCargoEtsngCode;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingCargoEtsngCode', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+
             //{
             //    field: 'idWagonsRentArrivalNavigation.idOperatorNavigation.abbr',
             //    data: function (row, type, val, meta) {
@@ -734,6 +747,22 @@
                 title: langView('tsrv_field_numActServices3', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
+                field: 'numList',
+                data: function (row, type, val, meta) {
+                    return row.numList;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_numList', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'dateList',
+                data: function (row, type, val, meta) {
+                    return row.dateList ? moment(row.dateList).format(format_date) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateList', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'verification',
                 data: function (row, type, val, meta) {
                     return row.verification ? moment(row.verification).format(format_datetime) : null
@@ -858,7 +887,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_services.prototype.init_columns_verification_invoices_wagons = function () {
+    table_services.prototype.init_columns_verification_invoices_wagons_arrival = function () {
         var collums = [];
         if (this.tab_com.settings.detali_table) collums.push({ field: 'details_control', title: null, class: null });
         collums.push({ field: 'numeration', title: null, class: null });
@@ -889,7 +918,7 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
-    table_services.prototype.init_columns_verification_invoices_detali_wagons = function () {
+    table_services.prototype.init_columns_verification_invoices_detali_wagons_arrival = function () {
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
@@ -946,6 +975,56 @@
         collums.push({ field: 'outgoingOperatorAbbr', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_services.prototype.init_columns_verification_invoices_wagons_outgoing = function () {
+        var collums = [];
+        if (this.tab_com.settings.detali_table) collums.push({ field: 'details_control', title: null, class: null });
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'nomDoc', title: null, class: null });
+        collums.push({ field: 'countVagon', title: null, class: null });
+        collums.push({ field: 'outgoingCargoName', title: null, class: null });
+        collums.push({ field: 'vesg', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPay', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPayAdd', title: null, class: null });
+        collums.push({ field: 'outgoingUZDocumentPayAll', title: null, class: null });
+
+        collums.push({ field: 'numList', title: null, class: null });
+        collums.push({ field: 'dateList', title: null, class: null });
+        collums.push({ field: 'dateOtpr', title: null, class: null });
+        collums.push({ field: 'dateOutgoing', title: null, class: null });
+        collums.push({ field: 'outgoingCargoEtsngCode', title: null, class: null });
+
+        collums.push({ field: 'outgoingCodeStnFrom', title: null, class: null });
+        collums.push({ field: 'outgoingNameStnFrom', title: null, class: null });
+        collums.push({ field: 'outgoingCodeStnTo', title: null, class: null });
+        collums.push({ field: 'outgoingNameStnTo', title: null, class: null });
+        collums.push({ field: 'outgoingOperatorAbbr', title: null, class: null });
+        collums.push({ field: 'payerSenderCode', title: null, class: null });
+        collums.push({ field: 'payerSenderName', title: null, class: null });
+        collums.push({ field: 'calcPayer', title: null, class: null });
+        collums.push({ field: 'calcPayerUser', title: null, class: null });
+        collums.push({ field: 'verification', title: null, class: null });
+        collums.push({ field: 'verificationUser', title: null, class: null });
+
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_services.prototype.init_columns_verification_invoices_detali_wagons_outgoing = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'dateOutgoing', title: null, class: null });
+        collums.push({ field: 'outgoingCargoName', title: null, class: null });
+        collums.push({ field: 'outgoingCargoEtsngCode', title: null, class: null });
+        collums.push({ field: 'vesg', title: null, class: null });
+        collums.push({ field: 'outgoingOperatorAbbr', title: null, class: null });
+
+        collums.push({ field: 'outgoingUzVagonPays', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonPaysAdd', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonPaysAll', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -1013,7 +1092,7 @@
                 break;
             };
             //
-            case 'verification_invoices_wagons': {
+            case 'verification_invoices_wagons_arrival': {
                 this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
                 this.tab_com.pageLength = 10;
                 this.tab_com.deferRender = true;
@@ -1103,7 +1182,7 @@
                 }.bind(this);
                 this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
                 this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
-                this.tab_com.table_columns = this.init_columns_verification_invoices_wagons();
+                this.tab_com.table_columns = this.init_columns_verification_invoices_wagons_arrival();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 this.tab_com.html_footer = '<tfoot><tr>' +
@@ -1121,7 +1200,7 @@
                 break;
             };
             //
-            case 'verification_invoices_detali_wagons': {
+            case 'verification_invoices_detali_wagons_arrival': {
                 //this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
                 //this.tab_com.pageLength = 10;
                 this.tab_com.deferRender = false;
@@ -1149,7 +1228,7 @@
                     //    $(row).addClass('green');  // Отметим вагон сверен
                     //}
                 }.bind(this);
-                this.tab_com.table_columns = this.init_columns_verification_invoices_detali_wagons();
+                this.tab_com.table_columns = this.init_columns_verification_invoices_detali_wagons_arrival();
                 //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'frtip';
                 break;
@@ -1323,6 +1402,148 @@
                     //}
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_register_send_detali_wagons();
+                //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'frtip';
+                break;
+            };
+            //
+            case 'verification_invoices_wagons_outgoing': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 3;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [1, 'asc'];
+                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                //scrollCollapse: true,
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = false;
+                //this.tab_com.footerCallback = function (tr, data, start, end, display) {
+                //    var api = this.api();
+                //    var count = api
+                //        .column(3)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(1)
+                //        .html(count);
+
+                //    var tariff_dog = api
+                //        .column(4)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(2)
+                //        .html(Number(tariff_dog).toFixed(2));
+
+                //    var tariff_doc = api
+                //        .column(6)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(4)
+                //        .html(Number(tariff_doc).toFixed(2));
+
+                //    var tariff_deff = api
+                //        .column(8)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(6)
+                //        .html(Number(tariff_deff).toFixed(2));
+
+                //    var vesg = api
+                //        .column(10)
+                //        .data()
+                //        .reduce(function (a, b) {
+                //            return intVal(a) + intVal(b);
+                //        }, 0);
+                //    $(tr)
+                //        .find('th span')
+                //        .eq(8)
+                //        .html(Number(vesg).toFixed(2));
+
+                //};
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    if (data.verification !== null) {
+                        if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
+                            $(row).addClass('yellow');  // Отметим вагон расчитан
+                        } else {
+                            $(row).addClass('green');  // Отметим вагон сверен
+                        }
+                    }
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_verification_invoices_wagons_outgoing();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                //this.tab_com.html_footer = '<tfoot><tr>' +
+                //    '<th colspan="3" class="text-end">ИТОГО:</th>' +
+                //    '<th class="text-center"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th class="text-end"></th>' +
+                //    '<th colspan="14""></th>' +
+                //    '</tr></tfoot>';
+                break;
+            };
+            //
+            case 'verification_invoices_detali_wagons_outgoing': {
+                //this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                //this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = false;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.calcPayer !== null) {
+                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //}
+                    //if (data.verification !== null) {
+                    //    $(row).addClass('green');  // Отметим вагон сверен
+                    //}
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_verification_invoices_detali_wagons_outgoing();
                 //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'frtip';
                 break;
