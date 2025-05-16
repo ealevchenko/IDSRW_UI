@@ -167,8 +167,6 @@
         this.code_stn_from = -1;
 
         this.select_document_detali = [];
-        //this.presented = null;
-        //this.clear = false;
 
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
