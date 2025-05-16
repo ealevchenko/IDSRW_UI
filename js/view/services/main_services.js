@@ -101,6 +101,9 @@
     var VSCCCO = App.view_calc_cost_cargo_outgoing;
     var vsccco = new VSCCCO('main.container-fluid');
 
+    var VSVIO = App.view_verification_invoices_outgoing;
+    var vsvio = new VSVIO('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -203,9 +206,6 @@
                             });
                             break;
                         }
-                        default: {
-                            LockScreenOff();break;
-                        }
                         case 'ccco': {
                             vsccco.init({
                                 alert: null,
@@ -220,6 +220,24 @@
                                 }
                             });
                             break;
+                        }
+                        case 'vio': {
+                            vsvio.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
+
+                                }
+                            });
+                            break;
+                        }
+                        default: {
+                            LockScreenOff();break;
                         }
                     }
                 }
