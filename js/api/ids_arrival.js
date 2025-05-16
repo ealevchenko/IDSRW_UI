@@ -97,7 +97,14 @@
     ids_arrival.prototype.postUpdatePayOutgoingUzDocument = function (value, callback) {
         this.api_com.post('/OutgoingUzDocument/update/pay/', value, callback);
     };
-
+    // Получить список документов для сверки по отправки храящиеся в БД за период
+    ids_arrival.prototype.getVerificationOutgoingUzDocumentOfId = function (id, callback) {
+        this.api_com.get('/OutgoingUzDocument/verification/id/' + id, callback);
+    };
+    // Получить список документов для сверки по отправке храящиеся в БД за период
+    ids_arrival.prototype.getVerificationOutgoingUzDocumentOfPeriod = function (start, stop, callback) {
+        this.api_com.get('/OutgoingUzDocument/verification/start/' + start + '/stop/' + stop, callback);
+    };
     App.ids_arrival = ids_arrival;
 
     window.App = App;
