@@ -1632,61 +1632,62 @@
     // Обновить 
     view_verification_invoices_arrival.prototype.apply_update_presented = function (data, num_docs, callback) {
         //var result = 1;
-        //this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
-        //    var mess_ok = null;
-        //    var mess_error = null;
-        //    var n = 0;
-        //    this.clear_all();
-        //    if (result >= 0) {
-        //        // Ок
-        //        if (data.num_act !== null) {
-        //            mess_ok = langView('vs_via_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
-        //        } else {
-        //            mess_ok = langView('vs_via_mess_ok_clear_presented', App.Langs).format(num_docs);
-        //        }
-        //        if (data && data.id_docs && data.id_docs.length > 0) {
-        //            LockScreen(langView('vs_via_update_main_docs', App.Langs));
-        //            $.each(data.id_docs, function (i, el) {
-        //                n += 1;
-        //                this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
-        //                    n -= 1;
-        //                    var doc = this.get_document(document);
-        //                    var exist_doc = this.list_document.find(function (o) {
-        //                        return o.id === doc.id;
-        //                    }.bind(this));
-        //                    if (exist_doc && doc) {
-        //                        var res = this.list_document.indexOf(exist_doc);
-        //                        this.list_document.splice(res, 1);
-        //                        this.list_document.push(doc);
-        //                    }
-        //                    if (n === 0) {
+        this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
+            var mess_ok = null;
+            var mess_error = null;
+            var n = 0;
+            this.clear_all();
+            if (result >= 0) {
+                // Ок
+                if (data.num_act !== null) {
+                    mess_ok = langView('vs_via_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
+                } else {
+                    mess_ok = langView('vs_via_mess_ok_clear_presented', App.Langs).format(num_docs);
+                }
+                if (data && data.id_docs && data.id_docs.length > 0) {
+                    LockScreen(langView('vs_via_update_main_docs', App.Langs));
+                    $.each(data.id_docs, function (i, el) {
+                        n += 1;
+                        this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
+                            n -= 1;
+                            var doc = this.get_document(document);
+                            var exist_doc = this.list_document.find(function (o) {
+                                return o.id === doc.id;
+                            }.bind(this));
+                            if (exist_doc && doc) {
+                                var res = this.list_document.indexOf(exist_doc);
+                                this.list_document[res] = doc;
+                                //this.list_document.splice(res, 1);
+                                //this.list_document.push(doc);
+                            }
+                            if (n === 0) {
 
-        //                        this.select_docs(function (select) {
-        //                            this.select_apply(function (select) {
-        //                                this.view_select(select);
-        //                                //this.tab_verification_invoices_wagons.view(select);
-        //                                // Очистить поля правки
-        //                                //this.form_verification_invoices_setup.el['input_text_presented' + data.presented].val('');
-        //                                this.main_alert.out_info_message(mess_ok);
-        //                                LockScreenOff();
-        //                                if (typeof callback === 'function') {
-        //                                    callback(result);
-        //                                }
-        //                            }.bind(this));
-        //                        }.bind(this));
-        //                    }
-        //                }.bind(this));
-        //            }.bind(this));
-        //        }
-        //    } else {
-        //        mess_error = langView('vs_via_mess_error_update_presented', App.Langs).format(num_docs, result);
-        //        this.main_alert.out_error_message(mess_error);
-        //        LockScreenOff();
-        //        if (typeof callback === 'function') {
-        //            callback(result);
-        //        }
-        //    }
-        //}.bind(this));
+                                this.select_docs(function (select) {
+                                    this.select_apply(function (select) {
+                                        this.view_select(select);
+                                        //this.tab_verification_invoices_wagons.view(select);
+                                        // Очистить поля правки
+                                        //this.form_verification_invoices_setup.el['input_text_presented' + data.presented].val('');
+                                        this.main_alert.out_info_message(mess_ok);
+                                        LockScreenOff();
+                                        if (typeof callback === 'function') {
+                                            callback(result);
+                                        }
+                                    }.bind(this));
+                                }.bind(this));
+                            }
+                        }.bind(this));
+                    }.bind(this));
+                }
+            } else {
+                mess_error = langView('vs_via_mess_error_update_presented', App.Langs).format(num_docs, result);
+                this.main_alert.out_error_message(mess_error);
+                LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }
+        }.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
