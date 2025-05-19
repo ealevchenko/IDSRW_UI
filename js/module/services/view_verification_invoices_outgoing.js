@@ -37,15 +37,15 @@
             //'vs_vio_title_placeholder_num_epd': 'Найти накладную',
             //'vs_vio_text_label_num_epd': 'Введите номмер накладной ...',
 
-            'vs_vio_title_label_presented1': 'Предъявлено:',
-            'vs_vio_title_placeholder_presented1': '№ Акта',
-            'vs_vio_text_label_presented1': 'Укажите № акта ...',
-            'vs_vio_title_label_presented2': 'Предъявлено:',
-            'vs_vio_title_placeholder_presented2': '№ Акта',
-            'vs_vio_text_label_presented2': 'Укажите № акта ...',
-            'vs_vio_title_label_presented3': 'Предъявлено:',
-            'vs_vio_title_placeholder_presented3': '№ Акта',
-            'vs_vio_text_label_presented3': 'Укажите № акта ...',
+            //'vs_vio_title_label_presented1': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented1': '№ Акта',
+            //'vs_vio_text_label_presented1': 'Укажите № акта ...',
+            //'vs_vio_title_label_presented2': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented2': '№ Акта',
+            //'vs_vio_text_label_presented2': 'Укажите № акта ...',
+            //'vs_vio_title_label_presented3': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented3': '№ Акта',
+            //'vs_vio_text_label_presented3': 'Укажите № акта ...',
 
             'vs_vio_title_label_payer': 'Плательщик ОТПР:',
             'vs_vio_text_label_payer': 'Выберите плательщика ...',
@@ -66,22 +66,33 @@
             'vs_vio_title_label_operator': 'Оператор АМКР:',
             'vs_vio_text_label_operator': 'Выберите оператора ...',
 
-            'vs_vio_title_button_presented1': 'Править акт ...',
-            'vs_vio_title_button_presented2': 'Править акт ...',
-            'vs_vio_title_button_presented3': 'Править акт ...',
-            'vs_vio_title_button_clear': 'очистить акт ...',
+            'vs_vio_title_date_list': 'от:',
+            'vs_vio_title_placeholder_date_list': 'Дата перечня',
 
+            'vs_vio_title_label_num_list': 'Перечень:',
+            'vs_vio_title_placeholder_num_list': 'Перечень',
+
+            //'vs_vio_title_button_presented1': 'Править акт ...',
+            //'vs_vio_title_button_presented2': 'Править акт ...',
+            //'vs_vio_title_button_presented3': 'Править акт ...',
+            //'vs_vio_title_button_clear': 'очистить акт ...',
+
+            'vs_vio_verification_invoices_title_button_apply': 'Применить сверку',
+            'vs_vio_verification_invoices_title_button_title_apply': 'Применить сверку документа № перечня и дату ...',
+            'vs_vio_verification_invoices_title_button_clear': 'Очистить сверку',
+            'vs_vio_verification_invoices_title_button_title_clear': 'Очистить сверку документа № перечня и дату ...',
             'vs_vio_title_button_Cancel': 'Отмена',
             'vs_vio_button_Ok': 'Применить',
 
 
+
             'vs_vio_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
-            'vs_vio_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
-            'vs_vio_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
+            'vs_vio_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет отмечен перечень {0} от {1}, по всем накладным [{2}].',
+            'vs_vio_mess_run_clear_presented': 'Выполнить очистку № и даты перечня, по всем накладным [{0}].',
 
-            'vs_vio_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
-            'vs_vio_mess_ok_clear_presented': 'По накладным [{0}] были сюрошены акты сверки.',
+            'vs_vio_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Перечень {1} от {2}.',
+            'vs_vio_mess_ok_clear_presented': 'По накладным [{0}] были сброшены перечни сверки.',
             'vs_vio_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
             'vs_vio_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
 
@@ -90,6 +101,9 @@
             //'vs_vio_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
             //'vs_vio_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
 
+            'vs_vio_mess_error_not_date_list': 'Не указана дата перечня.',
+            'vs_vio_mess_error_not_num_list': 'Не указан № перечня.',
+            'vs_vio_mess_error_num_list': 'Указан не верный формат № перечня.',
             //'vs_vio_mess_error_not_document': 'Не выбран документ для правки!',
             //'vs_vio_mess_error_document_pay_not_change': 'Тариф без изменений!',
             //'vs_vio_mess_error_payer_not_change': 'Плательщик без изменений!',
@@ -109,7 +123,7 @@
             'vs_vio_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа, выбранно {3}',
 
             'vs_vio_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
-            'vs_vio_mess_error_not_presented': 'Укажите № Акта сверки',
+            //'vs_vio_mess_error_not_presented': 'Укажите № Акта сверки',
 
         },
         'en':  //default language: English
@@ -186,14 +200,14 @@
         this.list_vagons = [];
         this.select_vagons = [];
         this.code_payer = -1;
-        this.act = '';
+        this.lst = '';
         this.id_cargo = -1;
         this.code_station_from = -1;
         this.code_station_on = -1;
         this.id_operator = -1;
 
         this.select_document_detali = [];
-        this.presented = null;
+        /*        this.presented = null;*/
         this.clear = false;
 
         // Главный Alert
@@ -530,7 +544,7 @@
                             searchContain: true,
                             fn_change: function (event, set, options) {
                                 if (set.value === "") {
-                                    this.act = set.value;
+                                    this.lst = set.value;
                                     this.select_apply(function (select) {
                                         this.view_select(select);
 
@@ -541,10 +555,10 @@
                                     //    return o.value === set.value;
                                     //}.bind(this));
                                     //if (res) {
-                                    //    this.act = set.value;
+                                    //    this.lst = set.value;
 
                                     //} else {
-                                    //    this.act = "";
+                                    //    this.lst = "";
                                     //}
                                     //this.select_apply(function (select) {
                                     //    this.view_select(select);
@@ -554,7 +568,7 @@
                                 }
                             }.bind(this),
                             fn_select: function (event, set, options) {
-                                this.act = set.value;
+                                this.lst = set.value;
                                 this.select_apply(function (select) {
                                     this.view_select(select);
 
@@ -595,7 +609,7 @@
                 //            fn_change: function (e) {
                 //                e.preventDefault();
                 //                // Обработать выбор
-                //                this.act = $(e.currentTarget).val();
+                //                this.lst = $(e.currentTarget).val();
                 //                this.select_apply(function (select) {
                 //                    this.view_select(select);
                 //                    //this.tab_verification_invoices_wagons.view(select);
@@ -832,67 +846,80 @@
                 // форма сверки
                 this.form_verification_invoices_setup = new FD();
                 var objs_vi_setup = [];
-                var bt_apply_presented1 = {
-                    obj: 'bs_button',
+                var col_bt_apply = {
+                    obj: 'bs_col',
                     options: {
                         id: null,
-                        name: null,
+                        pref: 'md',
+                        size: 12,
+                        class: 'text-left',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var bt_apply = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'verification_apply',
+                        name: 'verification_apply',
                         class: null,
                         fsize: 'sm',
                         color: 'success',
-                        text: null,
-                        title: langView('vs_vio_title_button_presented1', App.Langs),
-                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
+                        text: langView('vs_vio_verification_invoices_title_button_apply', App.Langs),
+                        title: langView('vs_vio_verification_invoices_title_button_title_apply', App.Langs),
+                        icon_fa_left: 'fa-solid fa-pen-to-square',  //<i class="fa-solid fa-pen-to-square"></i>
                         icon_fa_right: null,
                         fn_click: function (event) {
                             event.preventDefault();
-                            this.presented = 1;
                             this.clear = false;
                             this.form_verification_invoices_setup.$form.submit();
                         }.bind(this),
                     }
                 };
-                var bt_clear_presented1 = {
+                var bt_clear = {
                     obj: 'bs_button',
                     options: {
-                        id: null,
-                        name: null,
+                        id: 'verification_clear',
+                        name: 'verification_clear',
                         class: null,
                         fsize: 'sm',
                         color: 'danger',
-                        text: null,
-                        title: langView('vs_vio_title_button_clear', App.Langs),
-                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
+                        text: langView('vs_vio_verification_invoices_title_button_clear', App.Langs),
+                        title: langView('vs_vio_verification_invoices_title_button_title_clear', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom',  //<i class="fa-solid fa-broom"></i>
                         icon_fa_right: null,
                         fn_click: function (event) {
                             event.preventDefault();
-                            this.presented = 1;
                             this.clear = true;
                             this.form_verification_invoices_setup.$form.submit();
                         }.bind(this),
                     }
                 };
-                var form_input_presented1 = {
+                var form_input_list = {
                     obj: 'bs_form_input',
                     options: {
-                        validation_group: 'common_vi',
-                        id: 'presented1',
-                        name: 'presented1',
-                        label: langView('vs_vio_title_label_presented1', App.Langs),
-                        element_type: 'text',
+                        validation_group: 'verification_invoice',
+                        id: 'num_list',
+                        name: 'num_list',
+                        label: langView('vs_vio_title_label_num_list', App.Langs),
+                        element_type: 'number',
                         element_fsize: 'sm',
                         element_class: null,
                         element_value: null,
                         element_title: null,
-                        element_placeholder: langView('vs_vio_title_placeholder_presented1', App.Langs),
+                        element_placeholder: langView('vs_vio_title_placeholder_num_list', App.Langs),
                         element_required: false,
                         element_maxlength: null,
                         element_pattern: null,
                         element_readonly: false,
+                        element_min: 1,
+                        element_max: 999999999,
+                        element_step: 1,
                         element_options: {
                             default: '',
                             fn_change: function (e) {
-                                var value = $(e.currentTarget).val();
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
                             }.bind(this),
                         },
                         validation: true,
@@ -900,78 +927,42 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 12,
+                        col_size: 6,
                         col_class: 'mt-0',
-                        group_append_class: null,
-                        group_append_id: null,
-                        group_append_html: null,
-                        group_append_objs: [bt_apply_presented1, bt_clear_presented1],
-                        form_text: langView('vs_vio_text_label_presented1', App.Langs),
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        form_text: langView('vs_cccsa_text_label_tariff_contract', App.Langs),
                         form_text_class: null,
                     },
                     childs: []
                 };
-                var bt_apply_presented2 = {
-                    obj: 'bs_button',
+                var form_input_datetime_list = {
+                    obj: 'bs_form_input_datetime',
                     options: {
-                        id: null,
-                        name: null,
-                        class: null,
-                        fsize: 'sm',
-                        color: 'success',
-                        text: null,
-                        title: langView('vs_vio_title_button_presented2', App.Langs),
-                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            event.preventDefault();
-                            this.presented = 2;
-                            this.clear = false;
-                            this.form_verification_invoices_setup.$form.submit();
-                        }.bind(this),
-                    }
-                };
-                var bt_clear_presented2 = {
-                    obj: 'bs_button',
-                    options: {
-                        id: null,
-                        name: null,
-                        class: null,
-                        fsize: 'sm',
-                        color: 'danger',
-                        text: null,
-                        title: langView('vs_vio_title_button_clear', App.Langs),
-                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            event.preventDefault();
-                            this.presented = 2;
-                            this.clear = true;
-                            this.form_verification_invoices_setup.$form.submit();
-                        }.bind(this),
-                    }
-                };
-                var form_input_presented2 = {
-                    obj: 'bs_form_input',
-                    options: {
-                        validation_group: 'common_vi',
-                        id: 'presented2',
-                        name: 'presented2',
-                        label: langView('vs_vio_title_label_presented2', App.Langs),
-                        element_type: 'text',
+                        validation_group: 'verification_invoice',
+                        id: 'date_list',
+                        name: 'date_list',
+                        label: langView('vs_vio_title_date_list', App.Langs),
+                        element_type: 'date',
                         element_fsize: 'sm',
                         element_class: null,
                         element_value: null,
                         element_title: null,
-                        element_placeholder: langView('vs_vio_title_placeholder_presented2', App.Langs),
+                        element_placeholder: langView('vs_vio_title_placeholder_date_list', App.Langs),
                         element_required: false,
                         element_maxlength: null,
                         element_pattern: null,
                         element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
                         element_options: {
-                            default: '',
-                            fn_change: function (e) {
-                                var value = $(e.currentTarget).val();
+                            default: moment(),
+                            format: 'date',
+                            out_format: 'moment',
+                            fn_change: function (e, dt) {
                             }.bind(this),
                         },
                         validation: true,
@@ -979,99 +970,18 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 12,
+                        col_size: 6,
                         col_class: 'mt-0',
-                        group_append_class: null,
-                        group_append_id: null,
-                        group_append_html: null,
-                        group_append_objs: [bt_apply_presented2, bt_clear_presented2],
-                        form_text: langView('vs_vio_text_label_presented2', App.Langs),
-                        form_text_class: null,
+                        //form_text: langView('vf_sp_text_time_period_start', App.Langs),
+                        //form_text_class: null,
                     },
                     childs: []
                 };
-                var bt_apply_presented3 = {
-                    obj: 'bs_button',
-                    options: {
-                        id: null,
-                        name: null,
-                        class: null,
-                        fsize: 'sm',
-                        color: 'success',
-                        text: null,
-                        title: langView('vs_vio_title_button_presented3', App.Langs),
-                        icon_fa_left: 'fa-solid fa-check',//<i class="fa-solid fa-check"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            event.preventDefault();
-                            this.presented = 3;
-                            this.clear = false;
-                            this.form_verification_invoices_setup.$form.submit();
-                        }.bind(this),
-                    }
-                };
-                var bt_clear_presented3 = {
-                    obj: 'bs_button',
-                    options: {
-                        id: null,
-                        name: null,
-                        class: null,
-                        fsize: 'sm',
-                        color: 'danger',
-                        text: null,
-                        title: langView('vs_vio_title_button_clear', App.Langs),
-                        icon_fa_left: 'fa-solid fa-broom',//<i class="fa-solid fa-check"></i>
-                        icon_fa_right: null,
-                        fn_click: function (event) {
-                            event.preventDefault();
-                            this.presented = 3;
-                            this.clear = true;
-                            this.form_verification_invoices_setup.$form.submit();
-                        }.bind(this),
-                    }
-                };
-                var form_input_presented3 = {
-                    obj: 'bs_form_input',
-                    options: {
-                        validation_group: 'common_vi',
-                        id: 'presented3',
-                        name: 'presented3',
-                        label: langView('vs_vio_title_label_presented3', App.Langs),
-                        element_type: 'text',
-                        element_fsize: 'sm',
-                        element_class: null,
-                        element_value: null,
-                        element_title: null,
-                        element_placeholder: langView('vs_vio_title_placeholder_presented3', App.Langs),
-                        element_required: false,
-                        element_maxlength: null,
-                        element_pattern: null,
-                        element_readonly: false,
-                        element_options: {
-                            default: '',
-                            fn_change: function (e) {
-                                var value = $(e.currentTarget).val();
-                            }.bind(this),
-                        },
-                        validation: true,
-                        feedback_invalid: null,
-                        feedback_valid: null,
-                        feedback_class: null,
-                        col_prefix: 'md',
-                        col_size: 12,
-                        col_class: 'mt-0',
-                        group_append_class: null,
-                        group_append_id: null,
-                        group_append_html: null,
-                        group_append_objs: [bt_apply_presented3, bt_clear_presented3],
-                        form_text: langView('vs_vio_text_label_presented3', App.Langs),
-                        form_text_class: null,
-                    },
-                    childs: []
-                };
-                objs_vi_setup.push(form_input_presented1);
-                objs_vi_setup.push(form_input_presented2);
-                objs_vi_setup.push(form_input_presented3);
+                col_bt_apply.childs.push(bt_apply);
+                col_bt_apply.childs.push(bt_clear);
+                objs_vi_setup.push(col_bt_apply);
+                objs_vi_setup.push(form_input_list);
+                objs_vi_setup.push(form_input_datetime_list);
                 this.form_verification_invoices_setup.init({
                     alert: this.main_alert,
                     //context: this.div_form_period.$html,
@@ -1086,21 +996,15 @@
                             if (valid) {
                                 var id_docs = []
                                 var num_docs = "";
-                                var num_act = null;
-                                switch (this.presented) {
-                                    case 1: { num_act = result.new.input_text_presented1; break; }
-                                    case 2: { num_act = result.new.input_text_presented2; break; }
-                                    case 3: { num_act = result.new.input_text_presented3; break; }
-                                }
 
                                 $.each(this.select_document_detali, function (i, el) {
                                     id_docs.push(el.id);
-                                    num_docs += el.nomMainDoc + "; ";
+                                    num_docs += el.nomDoc + "; ";
                                 }.bind(this));
 
-                                var mess = langView('vs_vio_mess_run_update_presented', App.Langs).format(this.presented, num_act, num_docs);
+                                var mess = langView('vs_vio_mess_run_update_presented', App.Langs).format(result.new.input_text_num_list, moment(result.new.input_datetime_date_list).format(format_date), num_docs);
                                 if (this.clear) {
-                                    mess = langView('vs_vio_mess_run_clear_presented', App.Langs).format(this.presented, num_docs);
+                                    mess = langView('vs_vio_mess_run_clear_presented', App.Langs).format(num_docs);
                                 }
                                 this.mcf_lg.open(
                                     langView('vs_vio_title_form_apply', App.Langs),
@@ -1109,8 +1013,8 @@
                                         // Принять
                                         var operation = {
                                             id_docs: id_docs,
-                                            presented: this.presented,
-                                            num_act: !this.clear ? num_act : null
+                                            num_list: !this.clear ? result.new.input_text_num_list : null,
+                                            date_list: !this.clear ? moment(result.new.input_datetime_date_list).format(format_date) : null
                                         };
                                         this.apply_update_presented(operation, num_docs, function () {
 
@@ -1280,9 +1184,9 @@
                 //dateOtpr: document.dateOtpr,
                 dateOutgoing: el_vag.idOutgoingNavigation.dateOutgoing,
                 dateOutgoingAct: el_vag.idOutgoingNavigation.dateOutgoingAct,
-                codeStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation.code: null,
+                codeStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation.code : null,
                 nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
-                codeStnTo: document.codeStnFromNavigation ? document.codeStnToNavigation.code: null,
+                codeStnTo: document.codeStnFromNavigation ? document.codeStnToNavigation.code : null,
                 nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
                 outgoingCargoId: el_vag.idCargoNavigation.id,
                 outgoingCargoName: el_vag.idCargoNavigation['cargoName' + ucFirst(App.Lang)],
@@ -1298,8 +1202,8 @@
         // документ
         var outgoingUZDocumentPay = 0;
         var outgoingUZDocumentPayAdd = 0;
-        if (document.outgoingUZDocumentPays && document.outgoingUZDocumentPays.length > 0) {
-            $.each(document.outgoingUZDocumentPays, function (i, el_dpay) {
+        if (document.outgoingUzDocumentPays && document.outgoingUzDocumentPays.length > 0) {
+            $.each(document.outgoingUzDocumentPays, function (i, el_dpay) {
                 outgoingUZDocumentPay += (el_dpay.summa && el_dpay.kod === '001' ? Number(el_dpay.summa) : 0);
                 outgoingUZDocumentPayAdd += (el_dpay.summa && el_dpay.kod !== '001' ? Number(el_dpay.summa) : 0);
             }.bind(this));
@@ -1342,10 +1246,10 @@
     view_verification_invoices_outgoing.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
-        this.form_verification_invoices_setup.el.input_text_presented1.val('');
-        this.form_verification_invoices_setup.el.input_text_presented2.val('');
-        this.form_verification_invoices_setup.el.input_text_presented3.val('');
-        this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
+        //this.form_verification_invoices_setup.el.input_text_presented1.val('');
+        //this.form_verification_invoices_setup.el.input_text_presented2.val('');
+        //this.form_verification_invoices_setup.el.input_text_presented3.val('');
+        //this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
         this.form_searsh_doc_setup.el.select_code_payer.val('');
         this.form_searsh_doc_setup.el.datalist_lists.val('');
         this.form_searsh_doc_setup.el.select_id_cargo.val('');
@@ -1353,7 +1257,7 @@
         this.form_searsh_doc_setup.el.select_id_station_on.val('');
         this.form_searsh_doc_setup.el.select_id_operator.val('');
         this.code_payer = -1;
-        this.act = -1;
+        this.lst = -1;
         this.id_cargo = -1;
         this.code_station_from = -1;
         this.code_station_on = -1;
@@ -1367,7 +1271,7 @@
             this.list_document = [];
             this.select_document = [];
             this.select_document_detali = [];
-            this.presented = null;
+            //this.presented = null;
             this.clear = false;
             this.documents = [];
             if (document !== null && document.length > 0) {
@@ -1395,26 +1299,19 @@
             }
         }.bind(this));
     };
-    //view_verification_invoices_outgoing.prototype.validation_documents_searsh = function () {
-    //    var valid = true;
-    //    var el_vs = this.form_searsh_doc_setup.el.textarea_documents_searsh;//.$element;
-    //    this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_nums(el_vs, this.form_searsh_doc_setup.el.textarea_documents_searsh.val(), false, true);
-    //    valid = (list_docs !== null);
-    //    return valid;
-    //}
     // Обновить списки
     view_verification_invoices_outgoing.prototype.update_select_list = function (data) {
         if (data && data.length > 0) {
             // Обновим выпадающие списки
-            var list_payer_local = [];
-            var list_acts = [];        // numActServices1
+            var list_payer_sender = [];
+            var list_lists = [];
             var list_cargo = [];       // грузы по прибытию
             var list_operators = [];   // операторы по прибытию
             var list_stn_from = [];    // станции по отправлению
             var list_stn_on = [];      // станции по прибытию
             // получим выбранные значения
             var code_payer = this.form_searsh_doc_setup.el.select_code_payer.val();
-            var act = this.form_searsh_doc_setup.el.datalist_lists.val();
+            var lists = this.form_searsh_doc_setup.el.datalist_lists.val();
             var id_cargo = this.form_searsh_doc_setup.el.select_id_cargo.val();
             var code_station_from = this.form_searsh_doc_setup.el.select_id_station_from.val();
             var code_station_on = this.form_searsh_doc_setup.el.select_id_station_on.val();
@@ -1422,80 +1319,63 @@
 
             $.each(data, function (i, el) {
                 // Платильщик
-                var lpl = list_payer_local.find(function (o) {
-                    return o.value === el.payerLocalCode;
+                var lpl = list_payer_sender.find(function (o) {
+                    return o.value === el.payerSenderCode;
                 }.bind(this));
                 if (!lpl) {
-                    list_payer_local.push({ value: el.payerLocalCode, text: el.payerLocalName, disabled: false });
+                    list_payer_sender.push({ value: el.payerSenderCode, text: el.payerSenderName, disabled: false });
                 }
-                // Акты
-                if (el.numActServices1) {
-                    var act1 = list_acts.find(function (o) {
-                        return o.value === el.numActServices1;
+                // Перечни
+                if (el.numList) {
+                    var lst = list_lists.find(function (o) {
+                        return o.value === el.numList;
                     }.bind(this));
-                    if (!act1) {
-                        list_acts.push({ value: el.numActServices1, text: el.numActServices1, disabled: false });
+                    if (!lst) {
+                        list_lists.push({ value: el.numList, text: el.numList, disabled: false });
                     }
                 }
-                if (el.numActServices2) {
-                    var act2 = list_acts.find(function (o) {
-                        return o.value === el.numActServices2;
-                    }.bind(this));
-                    if (!act2) {
-                        list_acts.push({ value: el.numActServices2, text: el.numActServices2, disabled: false });
-                    }
-                }
-                if (el.numActServices3) {
-                    var act3 = list_acts.find(function (o) {
-                        return o.value === el.numActServices3;
-                    }.bind(this));
-                    if (!act3) {
-                        list_acts.push({ value: el.numActServices3, text: el.numActServices3, disabled: false });
-                    }
-                }
-
                 // Грузы по прибытию
                 $.each(el.vagons, function (i, el_wag) {
                     var lcrg = list_cargo.find(function (o) {
-                        return o.value === el_wag.arrivalCargoId;
+                        return o.value === el_wag.outgoingCargoId;
                     }.bind(this));
                     if (!lcrg) {
-                        list_cargo.push({ value: el_wag.arrivalCargoId, text: el_wag.arrivalCargoName, disabled: false });
+                        list_cargo.push({ value: el_wag.outgoingCargoId, text: el_wag.outgoingCargoName, disabled: false });
                     }
                     var lops = list_operators.find(function (o) {
-                        return o.value === el_wag.arrivalOperatorId;
+                        return o.value === el_wag.outgoingOperatorId;
                     }.bind(this));
                     if (!lops) {
-                        list_operators.push({ value: el_wag.arrivalOperatorId, text: el_wag.arrivalOperatorAbbr, disabled: false });
+                        list_operators.push({ value: el_wag.outgoingOperatorId, text: el_wag.outgoingOperatorAbbr, disabled: false });
                     }
-
                 }.bind(this));
                 // Станция отправления
                 var lstf = list_stn_from.find(function (o) {
-                    return o.value === el.codeStnFrom;
+                    return o.value === el.outgoingCodeStnFrom;
                 }.bind(this));
                 if (!lstf) {
-                    list_stn_from.push({ value: el.codeStnFrom, text: el.nameStnFrom, disabled: false });
+                    list_stn_from.push({ value: el.outgoingCodeStnFrom, text: el.outgoingNameStnFrom, disabled: false });
                 }
                 // Станция прибытия
                 var lsto = list_stn_on.find(function (o) {
-                    return o.value === el.codeStnTo;
+                    return o.value === el.outgoingCodeStnTo;
                 }.bind(this));
                 if (!lsto) {
-                    list_stn_on.push({ value: el.codeStnTo, text: el.nameStnTo, disabled: false });
+                    list_stn_on.push({ value: el.outgoingCodeStnTo, text: el.outgoingNameStnTo, disabled: false });
                 }
 
             }.bind(this));
             // проверим наличие выбранных полей
-            var pc = list_payer_local.find(function (o) {
+            var pc = list_payer_sender.find(function (o) {
                 return o.value == code_payer;
             }.bind(this));
-            this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_local, (pc ? pc.value : -1));
-            var ac = list_acts.find(function (o) {
-                return o.value !== null && o.value === act;
+            this.form_searsh_doc_setup.el.select_code_payer.update(list_payer_sender, (pc ? pc.value : -1));
+
+            var lst = list_lists.find(function (o) {
+                return o.value !== null && o.value === lists;
             }.bind(this));
-            this.form_searsh_doc_setup.el.datalist_lists.update(list_acts, (ac ? ac.value : ''));
-            this.list_acts = list_acts;
+            this.form_searsh_doc_setup.el.datalist_lists.update(list_lists, (lst ? lst.value : ''));
+            //this.list_lists = list_lists;
             var crg = list_cargo.find(function (o) {
                 return o.value == id_cargo;
             }.bind(this));
@@ -1519,8 +1399,8 @@
         // Обнулим списки
         LockScreen(langView('vs_vio_select_main_docs', App.Langs));
         this.clear_all();
-        //this.list_payer_local = [];
-        this.presented = null;
+        //this.list_payer_sender = [];
+        //this.presented = null;
         this.clear = false;
         if (this.list_document && this.list_document.length > 0) {
             // Проверим наличие списка документов
@@ -1528,7 +1408,7 @@
             this.list_docs = this.form_searsh_doc_setup.validation_common_searsh.check_control_is_valid_docs(el_vs, true, false, true);
             if (this.list_docs) {
                 this.select_document = this.list_document.filter(function (i) {
-                    return this.list_docs.indexOf(i.nomMainDoc) >= 0;
+                    return this.list_docs.indexOf(i.nomDoc) >= 0;
                 }.bind(this));
             } else {
                 this.select_document = this.list_document;
@@ -1555,41 +1435,39 @@
         //this.clear_all();
         this.searsh_alert_info.clear_message();
         this.select_document_detali = [];
-        this.presented = null;
+        //this.presented = null;
         this.clear = false;
         if (this.select_document && this.select_document.length > 0) {
             this.select_document_detali = this.select_document;
             if (this.code_payer != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.payerLocalCode === this.code_payer;
+                    return i.payerSenderCode === this.code_payer;
                 }.bind(this));
             }
-            if (this.act != -1 && this.act !== null && this.act !== "") {
+            if (this.lst != -1 && this.lst !== null && this.lst !== "") {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.numActServices1 === this.act
-                        || i.numActServices2 === this.act
-                        || i.numActServices3 === this.act
+                    return i.numList === this.lst;
                 }.bind(this));
             }
             if (this.id_cargo != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    var gr = i.vagons.find(function (o) { return o.arrivalCargoId === this.id_cargo }.bind(this));
+                    var gr = i.vagons.find(function (o) { return o.outgoingCargoId === this.id_cargo }.bind(this));
                     return gr !== undefined;
                 }.bind(this));
             }
             if (this.code_station_from != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.codeStnFrom === this.code_station_from;
+                    return i.outgoingCodeStnFrom === this.code_station_from;
                 }.bind(this));
             }
             if (this.code_station_on != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    return i.codeStnTo === this.code_station_on;
+                    return i.outgoingCodeStnTo === this.code_station_on;
                 }.bind(this));
             }
             if (this.id_operator != -1) {
                 this.select_document_detali = this.select_document_detali.filter(function (i) {
-                    var op = i.vagons.find(function (o) { return o.arrivalOperatorId === this.id_operator }.bind(this));
+                    var op = i.vagons.find(function (o) { return o.outgoingOperatorId === this.id_operator }.bind(this));
                     return op !== undefined;
                 }.bind(this));
             }
@@ -1613,18 +1491,18 @@
         this.tab_verification_invoices_wagons.view(select);
         if (select && select.length > 0) {
 
-            var presented1 = select[0].numActServices1;
-            var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
-            presented1 = (pr1.length !== select.length ? null : presented1);
-            var presented2 = select[0].numActServices2;
-            var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
-            presented2 = (pr2.length !== select.length ? null : presented2);
-            var presented3 = select[0].numActServices3;
-            var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
-            presented3 = (pr3.length !== select.length ? null : presented3);
-            this.form_verification_invoices_setup.el.input_text_presented1.val(presented1);
-            this.form_verification_invoices_setup.el.input_text_presented2.val(presented2);
-            this.form_verification_invoices_setup.el.input_text_presented3.val(presented3);
+        //    var presented1 = select[0].numActServices1;
+        //    var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
+        //    presented1 = (pr1.length !== select.length ? null : presented1);
+        //    var presented2 = select[0].numActServices2;
+        //    var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
+        //    presented2 = (pr2.length !== select.length ? null : presented2);
+        //    var presented3 = select[0].numActServices3;
+        //    var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
+        //    presented3 = (pr3.length !== select.length ? null : presented3);
+        //    this.form_verification_invoices_setup.el.input_text_presented1.val(presented1);
+        //    this.form_verification_invoices_setup.el.input_text_presented2.val(presented2);
+        //    this.form_verification_invoices_setup.el.input_text_presented3.val(presented3);
         }
     };
     // Очистить данные
@@ -1649,78 +1527,79 @@
             this.main_alert.out_error_message(langView('vs_vio_mess_war_not_select_docs', App.Langs));
             valid = false;
         } else {
-            if (!this.clear && this.presented === 1 && !result.new.input_text_presented1) {
-                this.form_verification_invoices_setup.set_element_validation_error('presented1', langView('vs_vio_mess_error_not_presented', App.Langs), false);
-                valid = false;
-            }
-            if (!this.clear && this.presented === 2 && !result.new.input_text_presented2) {
-                this.form_verification_invoices_setup.set_element_validation_error('presented2', langView('vs_vio_mess_error_not_presented', App.Langs), false);
-                valid = false;
-            }
-            if (!this.clear && this.presented === 3 && !result.new.input_text_presented3) {
-                this.form_verification_invoices_setup.set_element_validation_error('presented3', langView('vs_vio_mess_error_not_presented', App.Langs), false);
-                valid = false;
+            if (!this.clear) {
+                if (result.new.input_datetime_date_list === null || !result.new.input_datetime_date_list._isValid) {
+                    this.form_verification_invoices_setup.set_element_validation_error('date_list', langView('vs_vio_mess_error_not_date_list', App.Langs), false);
+                    valid = false;
+                }
+                if (result.new.input_text_num_list === null) {
+                    this.form_verification_invoices_setup.set_element_validation_error('num_list', langView('vs_vio_mess_error_not_num_list', App.Langs), false);
+                    valid = false;
+                } else {
+                    if (result.new.input_text_num_list < 1) {
+                        this.form_verification_invoices_setup.set_element_validation_error('num_list', langView('vs_vio_mess_error_num_list', App.Langs), false);
+                        valid = false;
+                    }
+                }
             }
         }
         return valid;
     }
     // Обновить 
     view_verification_invoices_outgoing.prototype.apply_update_presented = function (data, num_docs, callback) {
-        //var result = 1;
+        var result = -1;
         //this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
-        //    var mess_ok = null;
-        //    var mess_error = null;
-        //    var n = 0;
-        //    this.clear_all();
-        //    if (result >= 0) {
-        //        // Ок
-        //        if (data.num_act !== null) {
-        //            mess_ok = langView('vs_vio_mess_ok_update_presented', App.Langs).format(num_docs, data.num_act);
-        //        } else {
-        //            mess_ok = langView('vs_vio_mess_ok_clear_presented', App.Langs).format(num_docs);
-        //        }
-        //        if (data && data.id_docs && data.id_docs.length > 0) {
-        //            LockScreen(langView('vs_vio_update_main_docs', App.Langs));
-        //            $.each(data.id_docs, function (i, el) {
-        //                n += 1;
-        //                this.ids_arrival.getVerificationArrivalUzDocumentOfId(el, function (document) {
-        //                    n -= 1;
-        //                    var doc = this.get_document(document);
-        //                    var exist_doc = this.list_document.find(function (o) {
-        //                        return o.id === doc.id;
-        //                    }.bind(this));
-        //                    if (exist_doc && doc) {
-        //                        var res = this.list_document.indexOf(exist_doc);
-        //                        this.list_document.splice(res, 1);
-        //                        this.list_document.push(doc);
-        //                    }
-        //                    if (n === 0) {
+            var mess_ok = null;
+            var mess_error = null;
+            var n = 0;
+            this.clear_all();
+            if (result >= 0) {
+                // Ок
+                if (data.num_act !== null) {
+                    mess_ok = langView('vs_vio_mess_ok_update_presented', App.Langs).format(num_docs, data.num_list, data.date_list);
+                } else {
+                    mess_ok = langView('vs_vio_mess_ok_clear_presented', App.Langs).format(num_docs);
+                }
+                if (data && data.id_docs && data.id_docs.length > 0) {
+                    LockScreen(langView('vs_vio_update_main_docs', App.Langs));
+                    $.each(data.id_docs, function (i, el) {
+                        n += 1;
+                        this.ids_arrival.getVerificationOutgoingUzDocumentOfId(el, function (document) {
+                            n -= 1;
+                            var doc = this.get_document(document);
+                            var exist_doc = this.list_document.find(function (o) {
+                                return o.id === doc.id;
+                            }.bind(this));
+                            if (exist_doc && doc) {
+                                var res = this.list_document.indexOf(exist_doc);
+                                this.list_document[res] = doc;
+                                //this.list_document.splice(res, 1);
+                                //this.list_document.push(doc);
+                            }
+                            if (n === 0) {
 
-        //                        this.select_docs(function (select) {
-        //                            this.select_apply(function (select) {
-        //                                this.view_select(select);
-        //                                //this.tab_verification_invoices_wagons.view(select);
-        //                                // Очистить поля правки
-        //                                //this.form_verification_invoices_setup.el['input_text_presented' + data.presented].val('');
-        //                                this.main_alert.out_info_message(mess_ok);
-        //                                LockScreenOff();
-        //                                if (typeof callback === 'function') {
-        //                                    callback(result);
-        //                                }
-        //                            }.bind(this));
-        //                        }.bind(this));
-        //                    }
-        //                }.bind(this));
-        //            }.bind(this));
-        //        }
-        //    } else {
-        //        mess_error = langView('vs_vio_mess_error_update_presented', App.Langs).format(num_docs, result);
-        //        this.main_alert.out_error_message(mess_error);
-        //        LockScreenOff();
-        //        if (typeof callback === 'function') {
-        //            callback(result);
-        //        }
-        //    }
+                                this.select_docs(function (select) {
+                                    this.select_apply(function (select) {
+                                        this.view_select(select);
+                                        this.main_alert.out_info_message(mess_ok);
+                                        LockScreenOff();
+                                        if (typeof callback === 'function') {
+                                            callback(result);
+                                        }
+                                    }.bind(this));
+                                }.bind(this));
+                            }
+                        }.bind(this));
+                    }.bind(this));
+                }
+            } else {
+                mess_error = langView('vs_vio_mess_error_update_presented', App.Langs).format(num_docs, result);
+                this.main_alert.out_error_message(mess_error);
+                LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(result);
+                }
+            }
         //}.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
