@@ -1330,7 +1330,7 @@
         this.code_station_from = -1;
         this.code_station_on = -1;
         this.id_operator = -1;
-        this.list_acts = [];
+        //this.list_acts = [];
 
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
@@ -1460,7 +1460,7 @@
                 return o.value !== null && o.value === act;
             }.bind(this));
             this.form_searsh_doc_setup.el.datalist_acts.update(list_acts, (ac ? ac.value : ''));
-            this.list_acts = list_acts;
+            //this.list_acts = list_acts;
             var crg = list_cargo.find(function (o) {
                 return o.value == id_cargo;
             }.bind(this));
