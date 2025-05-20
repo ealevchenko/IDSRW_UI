@@ -2587,7 +2587,7 @@ var get_belongs_element = function (rows, name_field, id) {
             this.alist = get_alist(this.settings.data);
             this.$element.flexdatalist("data", this.alist);
             var ex_val = this.$element.flexdatalist("value");
-            if (value !== ex_val) {
+            if (value != ex_val) {
                 //this.$element.flexdatalist("value", value);
                 this.val(value);
             }
