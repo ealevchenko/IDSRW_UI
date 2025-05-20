@@ -339,8 +339,10 @@
                 // группировка элементов
                 var re = rods.find(function (o) { return o.id == wagons[iw].wagonRod }.bind(this));
                 if (!re) { rods.push({ id: wagons[iw].wagonRod, text: wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)], count: 1 }) } else { re.count += 1; }
-                var oe = operations.find(function (o) { return o.id == wagons[iw].currentIdOperation && o.cargo == curr_cargo }.bind(this));
-                if (!oe) { operations.push({ id: wagons[iw].currentIdOperation, text: wagons[iw]['operatorAbbr' + ucFirst(App.Lang)], cargo: curr_cargo, count: 1 }) } else { oe.count += 1; }
+                var oe = operations.find(function (o) {
+                    return o.id == wagons[iw].idOperator && o.cargo == curr_cargo
+                }.bind(this));
+                if (!oe) { operations.push({ id: wagons[iw].idOperator, text: wagons[iw]['operatorAbbr' + ucFirst(App.Lang)], cargo: curr_cargo, count: 1 }) } else { oe.count += 1; }
                 var ce = conditions.find(function (o) { return o.text == wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] }.bind(this));
                 if (!ce) { conditions.push({ text: wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)], count: 1 }) } else { ce.count += 1; }
                 if (wagons[iw].instructionalLettersNum) { liters_count += 1; }
