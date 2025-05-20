@@ -1488,7 +1488,7 @@
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
                     if (data.verification !== null) {
-                        if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
+                        if (data.dateList === null) {
                             $(row).addClass('yellow');  // Отметим вагон расчитан
                         } else {
                             $(row).addClass('green');  // Отметим вагон сверен

@@ -1246,10 +1246,8 @@
     view_verification_invoices_outgoing.prototype.update = function (start, stop, callback) {
         // Обновим
         this.clear_all();
-        //this.form_verification_invoices_setup.el.input_text_presented1.val('');
-        //this.form_verification_invoices_setup.el.input_text_presented2.val('');
-        //this.form_verification_invoices_setup.el.input_text_presented3.val('');
-        //this.form_searsh_doc_setup.el.textarea_documents_searsh.val('');
+        this.form_verification_invoices_setup.el.input_text_num_list.val(null);
+        this.form_verification_invoices_setup.el.input_datetime_date_list.val(null);
         this.form_searsh_doc_setup.el.select_code_payer.val('');
         this.form_searsh_doc_setup.el.datalist_lists.val('');
         this.form_searsh_doc_setup.el.select_id_cargo.val('');
@@ -1489,21 +1487,16 @@
     // Применить выбор
     view_verification_invoices_outgoing.prototype.view_select = function (select) {
         this.tab_verification_invoices_wagons.view(select);
+        var num_list = null;
+        var date_list = null;
         if (select && select.length > 0) {
-
-        //    var presented1 = select[0].numActServices1;
-        //    var pr1 = select.filter(function (i) { return i.numActServices1 === presented1 }.bind(this));
-        //    presented1 = (pr1.length !== select.length ? null : presented1);
-        //    var presented2 = select[0].numActServices2;
-        //    var pr2 = select.filter(function (i) { return i.numActServices2 === presented2 }.bind(this));
-        //    presented2 = (pr2.length !== select.length ? null : presented2);
-        //    var presented3 = select[0].numActServices3;
-        //    var pr3 = select.filter(function (i) { return i.numActServices3 === presented3 }.bind(this));
-        //    presented3 = (pr3.length !== select.length ? null : presented3);
-        //    this.form_verification_invoices_setup.el.input_text_presented1.val(presented1);
-        //    this.form_verification_invoices_setup.el.input_text_presented2.val(presented2);
-        //    this.form_verification_invoices_setup.el.input_text_presented3.val(presented3);
+            num_list = select[0].numList;
+            date_list = select[0].dateList;
+            this.form_verification_invoices_setup.el.input_text_num_list.val(num_list);
+            this.form_verification_invoices_setup.el.input_datetime_date_list.val(date_list);
         }
+        this.form_verification_invoices_setup.el.input_text_num_list.val(num_list);
+        this.form_verification_invoices_setup.el.input_datetime_date_list.val(date_list);
     };
     // Очистить данные
     view_verification_invoices_outgoing.prototype.clear_data = function () {
@@ -1548,14 +1541,14 @@
     // Обновить 
     view_verification_invoices_outgoing.prototype.apply_update_presented = function (data, num_docs, callback) {
         var result = -1;
-        //this.ids_arrival.postVerificationArrivalUzDocument(data, function (result) {
+        this.ids_arrival.postVerificationOutgoingUzDocument(data, function (result) {
             var mess_ok = null;
             var mess_error = null;
             var n = 0;
             this.clear_all();
             if (result >= 0) {
                 // Ок
-                if (data.num_act !== null) {
+                if (data.num_list !== null) {
                     mess_ok = langView('vs_vio_mess_ok_update_presented', App.Langs).format(num_docs, data.num_list, data.date_list);
                 } else {
                     mess_ok = langView('vs_vio_mess_ok_clear_presented', App.Langs).format(num_docs);
@@ -1600,7 +1593,7 @@
                     callback(result);
                 }
             }
-        //}.bind(this));
+        }.bind(this));
     }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
