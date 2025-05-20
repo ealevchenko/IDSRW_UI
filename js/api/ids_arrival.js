@@ -64,47 +64,52 @@
         this.api_com.get('/ArrivalUzVagon/document/' + id, callback);
     };
 
-    //АРМ, обновить ArrivalUzDocumentPay
+    // Сервис. Обновить ArrivalUzDocumentPay
     ids_arrival.prototype.postUpdateArrivalUzDocumentPay = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/pay/', value, callback);
     };
-    //АРМ, обновить ArrivalUzDocument -> PayerLocal
+    // Сервис. Обновить ArrivalUzDocument -> PayerLocal
     ids_arrival.prototype.postArrivalUzDocumentPayerLocal = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/payer_local/', value, callback);
     };
 
-    // Получить список документов для сверки по прибытию храящиеся в БД за период
+    // Сервис. Получить список документов для сверки по прибытию храящиеся в БД за период
     ids_arrival.prototype.getVerificationArrivalUzDocumentOfId = function (id, callback) {
         this.api_com.get('/ArrivalUzDocument/verification/id/' + id, callback);
     };
-    // Получить список документов для сверки по прибытию храящиеся в БД за период
+    // Сервис. Получить список документов для сверки по прибытию храящиеся в БД за период
     ids_arrival.prototype.getVerificationArrivalUzDocumentOfPeriod = function (start, stop, callback) {
         this.api_com.get('/ArrivalUzDocument/verification/start/' + start + '/stop/' + stop, callback);
     };
-    //АРМ, обновить сверку документов
+    // Сервис. Обновить сверку документов
     ids_arrival.prototype.postVerificationArrivalUzDocument = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/verification/', value, callback);
     };
-    // Получить список документов по отправке за период
+    // Сервис. Получить список документов по отправке за период
     ids_arrival.prototype.getRegisterOutgoingUzDocument = function (start, stop, callback) {
         this.api_com.get('/OutgoingUzDocument/register/start/' + start + '/stop/' + stop, callback);
     };
-    // Получить документ по id
+    // Сервис. Получить документ по id
     ids_arrival.prototype.getRegisterOutgoingUzDocumentOfId = function (id, callback) {
         this.api_com.get('/OutgoingUzDocument/register/id/' + id, callback);
     };
-    //АРМ, обновить тарифы по отправленным документам
+    // Сервис. Обновить тарифы по отправленным документам
     ids_arrival.prototype.postUpdatePayOutgoingUzDocument = function (value, callback) {
         this.api_com.post('/OutgoingUzDocument/update/pay/', value, callback);
     };
-    // Получить список документов для сверки по отправки храящиеся в БД за период
+    // Сервис. Получить документ "СВЕРКИ НАКЛАДНЫХ ПО ОТПРАВКЕ" храящиеся в БД по id
     ids_arrival.prototype.getVerificationOutgoingUzDocumentOfId = function (id, callback) {
         this.api_com.get('/OutgoingUzDocument/verification/id/' + id, callback);
     };
-    // Получить список документов для сверки по отправке храящиеся в БД за период
+    // Сервис. Получить список документов "СВЕРКИ НАКЛАДНЫХ ПО ОТПРАВКЕ" храящиеся в БД за период
     ids_arrival.prototype.getVerificationOutgoingUzDocumentOfPeriod = function (start, stop, callback) {
         this.api_com.get('/OutgoingUzDocument/verification/start/' + start + '/stop/' + stop, callback);
     };
+    // Сервис. Обновить "СВЕРКА НАКЛАДНЫХ ПО ОТПРАВКЕ"
+    ids_arrival.prototype.postVerificationOutgoingUzDocument = function (value, callback) {
+        this.api_com.post('/OutgoingUzDocument/update/verification/', value, callback);
+    };
+
     App.ids_arrival = ids_arrival;
 
     window.App = App;
