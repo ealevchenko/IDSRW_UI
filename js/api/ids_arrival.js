@@ -63,7 +63,10 @@
     ids_arrival.prototype.getArrivalUzVagonOfIdDocument = function (id, callback) {
         this.api_com.get('/ArrivalUzVagon/document/' + id, callback);
     };
-
+    // Отчеты. Получить черновик документа на состав по прибытию
+    ids_arrival.prototype.getDocumentDraftArrivalSostavOfId = function (id, callback) {
+        this.api_com.get('/ArrivalSostav/document/draft/id/' + id, callback);
+    };
     // Сервис. Обновить ArrivalUzDocumentPay
     ids_arrival.prototype.postUpdateArrivalUzDocumentPay = function (value, callback) {
         this.api_com.post('/ArrivalUzDocument/update/pay/', value, callback);
