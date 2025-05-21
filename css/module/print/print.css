@@ -82,13 +82,13 @@ table {
 
 .table-title {
     /*max-width: 200mm;*/
-    /*width: 200mm;*/ /* Ширина таблицы */
+    width: 100%; /* Ширина таблицы */
     /*border: 1px solid #000000;*/
 }
 
     .table-title td, .table-title th {
         /*border: 1px solid #000000;*/
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .table-title th {
@@ -104,6 +104,7 @@ table {
 .table-info {
     /*max-width: 200mm;*/
     /*width: 200mm;*/ /* Ширина таблицы */
+    width: 100%; /* Ширина таблицы */
     border: 1px solid #000000;
     border-collapse: collapse; /* Отображать только одинарные линии */
 }
@@ -122,3 +123,4 @@ table {
         .table-info th.total {
             text-align: right;
         }
+
