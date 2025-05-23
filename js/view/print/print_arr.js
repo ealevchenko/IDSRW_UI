@@ -180,9 +180,9 @@
             $tr.append('<th scope="col" class="wp-15">' + langView('prn_arr_table_title_cargoName', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_certificationData', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_operator', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_limitingLoading', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_arr_table_title_limitingLoading', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_admCode', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_arr_table_title_numWagon', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_numWagon', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_numDoc', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-5">' + langView('prn_arr_table_title_vesg', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_devisionOn', App.Langs) + '</th>');
