@@ -29,6 +29,9 @@
     var PRN_ARR = App.print_arr;
     var prnarr = new PRN_ARR();
 
+    var PRN_OUT = App.print_out;
+    var prnout = new PRN_OUT();
+
     var PRN_WS = App.print_ws;
     var prnws = new PRN_WS();
 
@@ -43,11 +46,14 @@
         var out_init = function (process) {
             if (process === 0) {
                 LockScreenOff();
-                //if (report === 'report_fst') {
-                //    view_incoming_report.view(id);
-                //}
                 if (report === 'arr_natural_statement_draft') {
                     prnarr.view_natural_statement_draft(format, id);
+                }
+                if (report === 'out_register_doc_transfer') {
+                    prnout.view_register_doc_transfer(format, id);
+                }
+                if (report === 'out_register_doc_transfer_amkr') {
+                    prnout.view_register_doc_transfer(format, id);
                 }
                 if (report === 'ws_statement1') {
                     prnws.view_ws_statement(1, format, id);
@@ -58,18 +64,8 @@
             }
         }.bind(this);
 
-        //// Инициализация модуля "Отчет принятых составов"
-        //view_incoming_report.init({
-        //    api_dir: null,
-        //    api_wsd: null,
-        //    fn_init: function (init) {
-        //        // На проверку окончания инициализации
-        //        process--;
-        //        //console.log('[main_print] [view_incoming_report] process ' + process);
-        //        out_init(process);
-        //    }.bind(this),
-        //});
-        // Инициализация модуля ""
+
+        // Инициализация модуля "print_arr"
         prnarr.init({
             api_dir: null,
             api_wsd: null,
@@ -81,7 +77,19 @@
                 out_init(process);
             }.bind(this),
         });
-        // Инициализация модуля ""
+        // Инициализация модуля "print_out"
+        prnout.init({
+            api_dir: null,
+            api_wsd: null,
+            ids_outgoing: null,
+            fn_init: function (init) {
+                // На проверку окончания инициализации
+                process--;
+                //console.log('[main_print] [prnws] process ' + process);
+                out_init(process);
+            }.bind(this),
+        });
+        // Инициализация модуля "print_ws"
         prnws.init({
             api_dir: null,
             api_wsd: null,
