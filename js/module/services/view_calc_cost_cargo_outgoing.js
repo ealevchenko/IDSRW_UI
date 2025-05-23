@@ -60,12 +60,14 @@
             'vs_ccco_mess_run_update_tariff_contract': 'Править ж.д. тариф по договору по документу [{0}], будет внесен новый ж.д. тариф :{1}',
             'vs_ccco_cancel_update_tariff_contract': 'Отмена правки ж.д. тарифа.',
             'vs_ccco_mess_ok_update_tariff_contract': 'По документу  [{0}] обнавлен ж.д. тариф по договору',
-            'vs_ccco_mess_error_update__tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
+            'vs_ccco_mess_error_update_tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
 
             'vs_ccco_mess_run_clear_tariff_contract': 'Очистить ж.д. тариф по договору по документу [{0}]',
             'vs_ccco_cancel_clear_tariff_contract': 'Отмена очистки ж.д. тарифа.',
             'vs_ccco_mess_ok_clear_tariff_contract': 'По документу  [{0}] удален ж.д. тариф по договору',
             'vs_ccco_mess_error_clear_tariff_contract': 'При очистки ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
+            'vs_ccco_mess_error_select': 'Документ {0} для правки закрыт, по документу была произведена сверка, перечень №{1} от {2}',
 
             'vs_ccco_load_main_docs': 'Загружаю документы за период...',
             'vs_ccco_update_main_docs': 'Обнавляю документы выбранные за период...',
@@ -73,7 +75,7 @@
 
             'vs_ccco_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
             'vs_ccco_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
-            'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбранно {3}',
+            'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбрано {3}',
 
             'vs_ccco_mess_error_not_doc_pay': 'Не указан новый тариф ЭПД!',
             'vs_ccco_mess_error_exist_doc_pay': 'Указаный тариф ЭПД не отличается от существующего!',
@@ -773,7 +775,19 @@
 
                     },
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-
+                        this.main_alert.clear_message();
+                        if (rowData && rowData.length > 0) {
+                            if (rowData[0].dateList !== null) {
+                                e.preventDefault();
+                                //this.id = null;
+                                //this.type = null;
+                                //this.current_doc_pay = null;
+                                //this.current_tariff_contract = null;
+                                this.main_alert.out_warning_message(langView('vs_ccco_mess_error_select', App.Langs).format(rowData[0].nomDoc, rowData[0].numList, moment(rowData[0].dateList).format(format_datetime_ru)));
+                                //this.form_register_sent_wagons.el.input_text_doc_pay.val(null);
+                                //this.form_register_sent_wagons.el.input_text_tariff_contract.val(null);
+                            }
+                        }
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         this.form_register_sent_wagons.clear_all();
@@ -1097,7 +1111,8 @@
     // Дополнительная валидация
     view_calc_cost_cargo_outgoing.prototype.validation_register_sent_wagons = function (result) {
         var valid = true;
-        if (this.select_document_detali === null || this.select_document_detali.length === 0) {
+        //if (this.select_document_detali === null || this.select_document_detali.length === 0) {
+        if (this.id === null) {
             this.main_alert.out_error_message(langView('vs_ccco_mess_war_not_select_docs', App.Langs));
             valid = false;
         } else {

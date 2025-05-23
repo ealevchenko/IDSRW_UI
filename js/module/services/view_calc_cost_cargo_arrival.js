@@ -26,16 +26,9 @@
             'vs_cccsa_title_form_button_apply': 'Править документ',
             'vs_cccsa_title_form_apply_button_title': 'Править документ ...',
 
-            //'vs_cccsa_title_label_period': 'Выборка за:',
-            //'vs_cccsa_text_label_period': 'Выборка за указанный период',
-            //'vs_cccsa_title_time_period_start': 'С даты',
-            //'vs_cccsa_text_time_period_start': 'Выборка с указаной даты',
-            //'vs_cccsa_title_placeholder_time_period_start': 'Время начала',
-            //'vs_cccsa_title_button_new_period': 'Применить',
-
             'vs_cccsa_title_label_num_epd': 'Найти накладную:',
             'vs_cccsa_title_placeholder_num_epd': 'Найти накладную',
-            'vs_cccsa_text_label_num_epd': 'Введите номмер накладной ...',
+            'vs_cccsa_text_label_num_epd': 'Введите номер накладной ...',
 
             'vs_cccsa_title_label_doc_pay': 'Тариф ПРИБ:',
             'vs_cccsa_title_placeholder_doc_pay': 'Тариф ПРИБ',
@@ -60,7 +53,6 @@
             'vs_cccsa_title_button_Cancel': 'Отмена',
             'vs_cccsa_button_Ok': 'Применить',
 
-
             'vs_cccsa_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
             'vs_cccsa_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
@@ -78,18 +70,13 @@
             'vs_cccsa_mess_error_payer_not_change': 'Плательщик без изменений!',
             'vs_cccsa_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
 
-            //'vs_cccsa_title_period_1': 'ЖД сутки',
-            //'vs_cccsa_title_period_2': 'Календарные сутки',
-            //'vs_cccsa_title_period_3': 'От начала месяца',
-
             'vs_cccsa_load_main_docs': 'Загружаю документы за период...',
             'vs_cccsa_load_docs': 'Загружаю информацию по накладной {0}...',
 
             'vs_cccsa_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            'vs_cccsa_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} наклодных',
+            'vs_cccsa_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
 
             'vs_cccsa_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
-
         },
         'en':  //default language: English
         {
