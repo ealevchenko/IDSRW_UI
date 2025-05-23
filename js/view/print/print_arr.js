@@ -178,22 +178,22 @@
             $tr.append('<th scope="col">№</th>');
             $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_stationFromName', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-15">' + langView('prn_arr_table_title_cargoName', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_certificationData', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-5">' + langView('prn_arr_table_title_certificationData', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_operator', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_limitingLoading', App.Langs) + '</th>');
             $tr.append('<th scope="col">' + langView('prn_arr_table_title_admCode', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_numWagon', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_arr_table_title_numDoc', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_numDoc', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-5">' + langView('prn_arr_table_title_vesg', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_devisionOn', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_arrCondition', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-5">' + langView('prn_arr_table_title_devisionOn', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-5">' + langView('prn_arr_table_title_arrCondition', App.Langs) + '</th>');
             $tr.append('<th scope="col" class="wp-10">' + langView('prn_arr_table_title_note', App.Langs) + '</th>');
             $table.append($thead.append($tr));
             var $tbody = $('<tbody></tbody>');
             for (var iw = 0; iw < wagons.length; iw++) {
                 var $tr = $('<tr></tr>');
                 $tr.append('<td>' + '</td>');
-                $tr.append('<td width>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>');
+                $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
@@ -260,7 +260,9 @@
                     $('body').append('<br />');
                     this.vagons = this.sostav.arrivalCars.filter(function (i) {
                         return i.positionArrival === null;
-                    }.bind(this));
+                    }.bind(this)).sort(function (a, b) {
+                        return Number(a.position) - Number(b.position)
+                    });
                     //this.vagons = this.sostav.arrivalCars;
                     if (this.vagons !== null && this.vagons.length > 0) {
                         natural_statement($('body'), this.vagons);
