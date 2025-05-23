@@ -1053,7 +1053,7 @@
                     out_init(process);
                 },
                 fn_select_way: function (id_station, id_park, id_way, option) {
-                    // Обработка выбраного пути
+                    // Обработка выбранного пути
                     current_id_station = id_station;
                     current_id_park = id_park;
                     current_id_way = id_way;

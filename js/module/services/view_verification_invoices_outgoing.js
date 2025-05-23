@@ -35,7 +35,7 @@
 
             //'vs_vio_title_label_num_epd': 'Найти накладную:',
             //'vs_vio_title_placeholder_num_epd': 'Найти накладную',
-            //'vs_vio_text_label_num_epd': 'Введите номмер накладной ...',
+            //'vs_vio_text_label_num_epd': 'Введите номер накладной ...',
 
             //'vs_vio_title_label_presented1': 'Предъявлено:',
             //'vs_vio_title_placeholder_presented1': '№ Акта',
@@ -119,8 +119,8 @@
             'vs_vio_select_main_docs': 'Поиск документов согласно выбора...',
 
             'vs_vio_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            'vs_vio_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа.',
-            'vs_vio_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с рассчетом ж.д. тарифа, выбранно {3}',
+            'vs_vio_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа.',
+            'vs_vio_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа, выбрано {3}',
 
             'vs_vio_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
             //'vs_vio_mess_error_not_presented': 'Укажите № Акта сверки',

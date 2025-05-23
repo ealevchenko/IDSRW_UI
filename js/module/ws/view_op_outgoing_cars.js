@@ -1207,7 +1207,7 @@
             }.bind(this)
         );
     };
-    // Обновим пути по выбраному пути
+    // Обновим пути по выбранному пути
     view_op_outgoing_cars.prototype.update_from_way_on = function (id_way_on, callback) {
         this.confirm_update_way_on(id_way_on,
             function () { // Ok
