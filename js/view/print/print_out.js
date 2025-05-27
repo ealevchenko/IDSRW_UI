@@ -22,15 +22,27 @@
             'prn_out_mess_init_module': 'Инициализация модуля(print_out)...',
             'prn_out_mess_load_info': 'Загружаю информацию...',
             'prn_out_mess_load_print': 'Формирую документ для печати...',
-            'prn_out_title_view_ws_statement': 'Натурная ведомость',
-            'prn_out_title_view_ws_statement_draft': 'Черновик натурной ведомости поезда №',
 
-            'prn_out_table_title_compositionIndex': 'Индекс поезда',
-            'prn_out_table_title_dateArrival': 'Прибытие',
-            'prn_out_table_title_dateAdoption': 'Прием',
-            'prn_out_table_title_stationOnName': 'Прибыл на станцию',
-            'prn_out_table_title_wayOnName': 'Путь',
-            'prn_out_table_title_numeration': 'Нумерация',
+            'prn_out_title_register_doc_transfer': 'Реєстр передач документів',
+            'prn_out_title_list_outgoing': 'Список відправлень № {0} ',
+            'prn_out_title_date_outgoing': 'Дата відправлення {0} ',
+            'prn_out_title_station_from': 'ст. {0} ',
+            'prn_out_title_total_outgoing': 'Усього - {0} відправки',
+            'prn_out_table_title_position': '№з/п',
+            'prn_out_table_title_numWagon': 'Номер вагона',
+            'prn_out_table_title_numDoc': 'Номер відправки',
+
+
+
+            //'prn_out_title_view_ws_statement': 'Натурная ведомость',
+            //'prn_out_title_view_ws_statement_draft': 'Черновик натурной ведомости поезда №',
+
+            //'prn_out_table_title_compositionIndex': 'Индекс поезда',
+            //'prn_out_table_title_dateArrival': 'Прибытие',
+            //'prn_out_table_title_dateAdoption': 'Прием',
+            //'prn_out_table_title_stationOnName': 'Прибыл на станцию',
+            //'prn_out_table_title_wayOnName': 'Путь',
+            //'prn_out_table_title_numeration': 'Нумерация',
 
             'prn_out_table_title_stationFromName': 'Станция отправления',
             'prn_out_table_title_cargoName': 'Груз',
@@ -38,48 +50,21 @@
             'prn_out_table_title_operator': 'Оператор',
             'prn_out_table_title_limitingLoading': 'Огран',
             'prn_out_table_title_admCode': 'Код',
-            'prn_out_table_title_numWagon': '№ вагона',
-            'prn_out_table_title_numDoc': '№ ж.д. накладной',
             'prn_out_table_title_vesg': 'Вес. тн',
             'prn_out_table_title_devisionOn': 'Цех получ.',
             'prn_out_table_title_arrCondition': 'Разметка',
             'prn_out_table_title_note': 'Примечание',
 
-            'prn_ws_warning_wagon_is_adoption': 'В сотаве все вагоны уже приняты!',
+            'prn_ws_warning_wagon_is_outgoing': 'В сотаве нет отправленных вагонов!',
 
-            //'prn_out_title_view_ws_statement_title1': 'По станции {0} на {1}',
-            //'prn_out_title_view_ws_statement_title2': 'Путь {0}',
-
-            //'prn_out_table_title_rod': 'Род',
-            //'prn_out_table_title_adm': 'Адм.',
-
-            //'prn_out_table_title_adoption_date': 'Дата приема на АМКР',
-            //'prn_out_table_title_status': 'Статус',
-            //'prn_out_table_title_arr_condition': 'Разм.',
-            //'prn_out_table_title_curr_condition': 'Разм. тек.',
-            //'prn_out_table_title_num_letter': '№ письма',
-            //'prn_out_table_title_date_letter': 'Дата письма',
-            //'prn_out_table_title_code_station_letter': 'Код ст. наз.',
-            //'prn_out_table_title_station_letter': 'Станция назначения',
-            //'prn_out_table_title_text_letter': 'Текст',
-            //'prn_out_table_title_curr_cargo': 'Груз ТЕКЩ',
-            //'prn_out_table_title_arrival_cargo': 'Груз ПРИБ',
-
-            //'prn_out_table_title_arr_uz_station': 'Стан. отправ.',
-            //'prn_out_table_title_devision_on': 'Цех получ.',
-            //'prn_out_table_title_curr_uz_station': 'Станция УЗ ТЕКУЩ',
-            //'prn_out_table_title_availability_doc': 'Док на УЗ',
-            //'prn_out_table_title_id_filing': 'Id подачи',
-            //'prn_out_table_title_note2': 'Примечание 2',
-            //'prn_out_table_title_note2': 'Примечание 2',
             'prn_out_title_from_tail': 'с хвоста',
             'prn_out_title_from_head': 'с головы',
             'prn_out_title_not_specified': 'не указано',
             'prn_out_title_yes': 'Да',
 
-
-            //'prn_out_title_report_nvt': 'Натурная ведомость поезда № {0}',
-            //'prn_out_title_report_podp_priem': 'Подпись приемосдатчика ______________________',
+            'prn_out_title_button_Ok': 'Показать',
+            'prn_out_title_button_Cancel': 'Отмена',
+            'prn_out_title_form_apply': 'Укажите вагоны',
         },
         'en':  //default language: English
         {
@@ -88,8 +73,11 @@
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
 
+    var FE = App.form_element;
+    var MCF = App.modal_confirm_form;
+
     // js/module/view_op_common.js
-    var VIEW_COMMON = App.view_op_common;
+    // var VIEW_COMMON = App.view_op_common;
     // js/view/shared/common.js
 
     var API_DIRECTORY = App.ids_directory;
@@ -116,6 +104,14 @@
         }
     }
 
+    var getSpace = function (n) {
+        var res = "";
+        for (var i = 0; i < n; i++) {
+            res += "&nbsp;"
+        }
+        return res
+    }
+
     function print_out() {
 
     }
@@ -134,8 +130,22 @@
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
         this.ids_outgoing = this.settings.ids_outgoing ? this.settings.ids_outgoing : new IDS_OUTGOING({ url_api: App.Url_Api });
 
+        this.fe_ui = new FE();
+
+        this.sdw = new MCF(); // Создадим экземпляр окно сообщений
+        this.sdw.init({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: 'sm',
+            bt_close_text: langView('prn_out_title_button_Cancel', App.Langs),
+            bt_ok_text: langView('prn_out_title_button_Ok', App.Langs),
+        });
+
         this.sostav = null;
         this.vagons = [];
+        this.select_vagons = [];
 
         // Инициализация вначале 
         if (typeof this.settings.fn_init === 'function') {
@@ -147,127 +157,107 @@
         LockScreen(langView('prn_out_mess_load_info', App.Langs));
         var wagons = [];
 
-        var natural_statement_title = function ($body, sostav) {
-            var $table = $('<table class="table-title"></table>');
-            var $tbody = $('<tbody></tbody>');
-            var $tr = $('<tr></tr>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_compositionIndex', App.Langs) + " :" + '</th>');
-            $tr.append('<td scope="col">' + OutText(sostav.compositionIndex) + '</td>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_dateArrival', App.Langs) + " :" + '</th>');
-            $tr.append('<td scope="col">' + OutText((sostav.dateArrival ? moment(sostav.dateArrival).format(format_datetime_ru) : null)) + '</td>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_dateAdoption', App.Langs) + " :" + '</th>');
-            $tr.append('<td scope="col">' + OutText((sostav.dateAdoption ? moment(sostav.dateAdoption).format(format_datetime_ru) : null)) + '</td>');
-            var $tr1 = $('<tr></tr>');
-            $tr1.append('<th scope="col">' + langView('prn_out_table_title_stationOnName', App.Langs) + " :" + '</th>');
-            $tr1.append('<td scope="col">' + OutText(sostav['stationOnName' + ucFirst(App.Lang)]) + '</td>');
-            $tr1.append('<th scope="col">' + langView('prn_out_table_title_wayOnName', App.Langs) + " :" + '</th>');
-            $tr1.append('<td scope="col">' + OutText(sostav['wayOnName' + ucFirst(App.Lang)]) + '</td>');
-            $tr1.append('<th scope="col">' + langView('prn_out_table_title_numeration', App.Langs) + " :" + '</th>');
-            $tr1.append('<td scope="col">' + OutText((sostav.numeration === true ? langView('prn_out_title_from_tail', App.Langs) : sostav.numeration === false ? langView('prn_out_title_from_head', App.Langs) : langView('prn_out_title_not_specified', App.Langs))) + '</td>');
-            $table.append($tbody.append($tr).append($tr1));
-            $body.append($table);
-            $body.append('<br />');
-        }
-
-        var natural_statement = function ($body, wagons) {
-            var operators = [];
-
+        var register_doc_transfer = function ($body, wagons) {
+            /*            var operators = [];*/
+            var wagons = wagons.sort(function (a, b) {
+                return Number(a.positionOutgoing) - Number(b.positionOutgoing)
+            })
+            $body.empty();
             var $table = $('<table class="table-info"></table>');
             var $thead = $('<thead></thead>');
             var $tr = $('<tr></tr>');
-            $tr.append('<th scope="col">№</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_stationFromName', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-15">' + langView('prn_out_table_title_cargoName', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_certificationData', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_operator', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_limitingLoading', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_admCode', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_numWagon', App.Langs) + '</th>');
-            $tr.append('<th scope="col">' + langView('prn_out_table_title_numDoc', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-5">' + langView('prn_out_table_title_vesg', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_devisionOn', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_arrCondition', App.Langs) + '</th>');
-            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_note', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_position', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-20">' + langView('prn_out_table_title_numWagon', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-20">' + langView('prn_out_table_title_numDoc', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-10">' + langView('prn_out_table_title_position', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-20">' + langView('prn_out_table_title_numWagon', App.Langs) + '</th>');
+            $tr.append('<th scope="col" class="wp-20">' + langView('prn_out_table_title_numDoc', App.Langs) + '</th>');
+
             $table.append($thead.append($tr));
             var $tbody = $('<tbody></tbody>');
-            for (var iw = 0; iw < wagons.length; iw++) {
+            for (var iw = 0; iw < 30; iw++) {
                 var $tr = $('<tr></tr>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td width>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].wagonsRent.countrysCodeSng) + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].num) + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + '</td>');
-                $tbody.append($tr);
 
-                var opr = operators.find(function (i) {
-                    return i.id === wagons[iw].wagonsRent.idOperator;
-                }.bind(this));
-                if (!opr) {
-                    if (wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)] !== null) {
-                        operators.push({ id: wagons[iw].wagonsRent.idOperator, operator: wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)], count: 1, vesg: 0 });
-                    } else {
-                        operators.push({ id: 0, operator: 'Не определен', count: 1, vesg: vesg });
-                    }
+                if (iw < wagons.length) {
+                    $tr.append('<td>' + (iw + 1) + '</td>'); //OutText(wagons[iw].positionOutgoing) 
+                    $tr.append('<td>' + OutText(wagons[iw].num) + '</td>');
+                    $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
                 } else {
-                    opr.count += 1;
-                    opr.vesg = Number(opr.vesg) + 0;
+                    $tr.append('<td>&nbsp</td>');
+                    $tr.append('<td>&nbsp</td>');
+                    $tr.append('<td>&nbsp</td>');
                 }
-            }
-            var $tr = $('<tr></tr>');
-            $tr.append('<th colspan="6" class="total">Всего вагонов</th>');
-            $tr.append('<td class="total">' + wagons.length + '</td>');
-            $tr.append('<th colspan="6"></th>');
-            var $tr1 = $('<tr></tr>');
-            $tbody.append($tr).append($tr1);
-            if (operators && operators.length > 0) {
-                for (var io = 0; io < operators.length; io++) {
-                    var $tr = $('<tr></tr>');
-                    $tr.append('<th colspan="6" class="total">' + operators[io].operator + '</th>');
-                    $tr.append('<td class="total">' + operators[io].count + '</td>');
-                    $tr.append('<th colspan="6"></td>');
-                    $tbody.append($tr);
+                var pos = iw + 30;
+                if (pos < wagons.length) {
+                    $tr.append('<td>' + (iw + 31) + '</td>'); // OutText(wagons[iw + 30].positionOutgoing)
+                    $tr.append('<td>' + OutText(wagons[iw + 30].num) + '</td>');
+                    $tr.append('<td>' + OutText(wagons[iw + 30].numDoc) + '</td>');
+                } else {
+                    $tr.append('<td>&nbsp</td>');
+                    $tr.append('<td>&nbsp</td>');
+                    $tr.append('<td>&nbsp</td>');
                 }
+
+                $tbody.append($tr);
             }
             $table.append($tbody);
             $body.append($table);
             $body.append('<br />');
+            $body.append('<h3 style="text-align:center;">' + langView('prn_out_title_total_outgoing', App.Langs).format(wagons.length) + '</h3>');
         }
 
         var pr_load = 1;
 
         var out_load = function (pr_load) {
             if (pr_load === 0) {
+
                 if (this.sostav) {
                     LockScreen(langView('prn_out_mess_load_print', App.Langs));
-                    $('head').prepend('<title>' + langView('prn_out_title_view_ws_statement_draft', App.Langs) + '</title>');
+                    $('head').prepend('<title>' + langView('prn_out_title_register_doc_transfer', App.Langs) + '</title>');
                     if (format == 'A4') {
                         $('body').addClass('a4');
                     }
                     if (format == 'A4L') {
                         $('body').addClass('a4-landscape');
                     }
-                    $('body').append('<h2 style="text-align:center;">' + langView('prn_out_title_view_ws_statement_draft', App.Langs) + this.sostav.train + '</h2>');
+                    var $title = $('<h2 style="text-align:center;">' + langView('prn_out_title_register_doc_transfer', App.Langs) + '</h2>');
+                    // Заглавие с функцией выбора вагонов
+                    $title.on('click', function (e) {
+                        // выбрать новые вагоны
+                        this.view_select(null, function (select_vagons) {
+                            // Показать
+                            register_doc_transfer($('div#register'), select_vagons);
+                        }.bind(this));
+                    }.bind(this));
+                    $('body').append($title);
+                    $('body').append('<h3 style="text-align:center;">' + langView('prn_out_title_list_outgoing', App.Langs).format(this.sostav.numDoc) + '</h3>');
+                    $('body').append('<h3 style="text-align:center;">' + langView('prn_out_title_date_outgoing', App.Langs).format(this.sostav.dateDepartureAmkr !== null ? moment(this.sostav.dateDepartureAmkr).format(format_datetime_ru) : '') + '</h3>');
+                    $('body').append('<h3 style="text-align:center;">' + langView('prn_out_title_station_from', App.Langs).format(this.sostav.stationFromNameRu) + '</h3>');
                     $('body').append('<br />');
-                    natural_statement_title($('body'), this.sostav);
+                    $('body').append('<div id="register"></div>');
                     $('body').append('<br />');
-                    //this.vagons = this.sostav.arrivalCars.filter(function (i) {
-                    //    return i.positionArrival === null;
-                    //}.bind(this));
-                    //this.vagons = this.sostav.arrivalCars;
-                    if (this.vagons !== null && this.vagons.length > 0) {
-                        natural_statement($('body'), this.vagons);
-                    } else {
-                        $('body').append('<p style="text-align:center;">' + langView('prn_ws_warning_wagon_is_adoption', App.Langs) + '</p>');
-                    }
+                    $('body').append('<br />');
+                    $('body').append('<p>Передано:_______________________ пр.зд.ТОВ “СТАЛЬ УКРАЇНА” _________________________________</p>');
+                    $('body').append('<p class="smal">' + getSpace(50) + '(дата, год., хв.)' + getSpace(100) + '(посада працівника вантажовласника, підпис,  прізвище та ініціали) </p>');
+                    $('body').append('<br />');
+                    $('body').append('<p>Прийнято:____________________________________________________________________________________</p>');
+                    $('body').append('<p class="smal">' + getSpace(50) + '(дата, год., хв.)' + getSpace(100) + '(посада працівника станції, підпис,  прізвище та ініціали) </p>');
+                    $('body').append('<br />');
 
+                    //natural_statement_title($('div#register'), this.sostav);
+                    this.vagons = this.sostav.outgoingCars.filter(function (i) {
+                        return i.positionOutgoing !== null;
+                    }.bind(this));
+
+                    if (this.vagons !== null && this.vagons.length > 0) {
+                        //-- инициализировать и открыть выбор вагонов
+                        this.init_select(function (select_vagons) {
+                            // Показать
+                            register_doc_transfer($('div#register'), select_vagons);
+                        }.bind(this));
+                    } else {
+                        $('body').append('<p style="text-align:center;">' + langView('prn_ws_warning_wagon_is_outgoing', App.Langs) + '</p>');
+                    }
                 }
                 LockScreenOff();
             }
@@ -285,8 +275,82 @@
     print_out.prototype.view_register_doc_transfer_amkr = function (format, id) {
 
     }
+    // Инициализировать окно выбора вагонов 
+    print_out.prototype.init_select = function (callback) {
+        this.row_table = new this.fe_ui.bs_row({ id: 'table-select-wagons', class: 'pt-2' });
+        //this.verification_invoices_table.$html.append(row_table.$html);
+        var $table = $('<table id="select-docs-wagons" class="table table-sm table-success table-small table-striped table-bordered border-secondary"></table>');
+        var $thead = $('<thead></thead>');
+        var $tr = $('<tr></tr>');
+        var $th_chk = $('<th></th>');
+        var $th_doc = $('<th>Документ</th>');
+        var $th_num = $('<th>№ Вагона</th>');
+        $tr.append($th_chk).append($th_doc).append($th_num);
+        $thead.append($tr);
+        $table.append($thead);
+        this.row_table.$html.append($table);
 
-    // Выбрать все вагоны выбранного состава 
+        this.view_select(this.row_table.$html, function (select_vagons) {
+            if (typeof callback === 'function') {
+                callback(select_vagons);
+            }
+        }.bind(this));
+
+        var $tbody = $('<tbody></tbody>');
+        $.each(this.vagons, function (i, el) {
+            var $tr = $('<tr id="' + el.id + '"></tr>');
+            var $td_chk = $('<td></td>');
+            var $td_doc = $('<td>' + (el.numDoc !== null ? el.numDoc : '') + '</td>');
+            var $td_num = $('<td>' + el.num + '</td>');
+            $tr.append($td_chk).append($td_doc).append($td_doc).append($td_num);
+            $tbody.append($tr);
+        }.bind(this));
+        $table.append($tbody);
+
+        this.table_select = new DataTable('#select-docs-wagons', {
+            columnDefs: [
+                {
+                    orderable: false,
+                    render: DataTable.render.select(),
+                    targets: 0
+                }
+            ],
+            order: [1, 'asc'],
+            ordering: true,
+            info: false,
+            scrollY: '200px',
+            scrollCollapse: true,
+            paging: false,
+            select: {
+                style: 'multi',
+                selector: 'td:first-child',
+                headerCheckbox: 'select-page'
+            }
+        });
+    };
+    // Открыть окно выбора вагонов 
+    print_out.prototype.view_select = function (body, callback) {
+        this.select_vagons = [];
+        this.sdw.open(
+            langView('prn_out_title_form_apply', App.Langs),
+            body, //this.row_table.$html,
+            function () {
+                var rows = this.table_select.rows({ selected: true }).data().toArray();
+                if (rows && rows.length > 0) {
+                    $.each(rows, function (i, el_rw) {
+                        var sel = this.vagons.find(function (o) { return o.id == el_rw.DT_RowId }.bind(this));
+                        if (sel) { this.select_vagons.push(sel); }
+                    }.bind(this));
+                    if (typeof callback === 'function') {
+                        callback(this.select_vagons);
+                    }
+                }
+            }.bind(this),
+            function () {
+                //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
+            }.bind(this));
+    };
+    // 
     print_out.prototype.destroy = function () {
 
     };

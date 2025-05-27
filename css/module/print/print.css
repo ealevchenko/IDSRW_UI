@@ -57,6 +57,10 @@ p {
     padding: 0;
 }
 
+    p.smal {
+        font-size: 10px;
+    }
+
 table {
     page-break-after: auto;
 }
@@ -101,6 +105,7 @@ table {
         padding-left: 2px;
     }
 
+
 .table-info {
     /*max-width: 200mm;*/
     /*width: 200mm;*/ /* Ширина таблицы */
@@ -117,6 +122,9 @@ table {
         text-align: center;
         padding: 0 2px;
     }
+        .table-info td.large {
+            font-size: 14px;
+        }
 
         .table-info td.total {
             font-weight: 600;
@@ -129,24 +137,31 @@ table {
         .table-info th.w-100 {
             width: 100px;
         }
+
         .table-info th.w-200 {
             width: 200px;
         }
+
         .table-info th.w-300 {
             width: 300px;
         }
+
         .table-info th.wp-5 {
             width: 5%;
         }
+
         .table-info th.wp-10 {
             width: 10%;
         }
+
         .table-info th.wp-15 {
             width: 15%;
         }
+
         .table-info th.wp-20 {
             width: 20%;
         }
+
         .table-info th.wp-30 {
             width: 30%x;
         }
