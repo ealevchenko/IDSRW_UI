@@ -89,7 +89,7 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
 
     // js/module/view_op_common.js
-    var VIEW_COMMON = App.view_op_common;
+    //var VIEW_COMMON = App.view_op_common;
     // js/view/shared/common.js
 
     var API_DIRECTORY = App.ids_directory;
@@ -196,10 +196,10 @@
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
+                $tr.append('<td class="large">' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wagonsRent.countrysCodeSng) + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].num) + '</td>');
+                $tr.append('<td class="large">' + OutText(wagons[iw].num) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
