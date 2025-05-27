@@ -23,9 +23,6 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //
     App.User_Name = $('input#username').val();
 
-    //var VICR = App.view_incoming_report;
-    //var view_incoming_report = new VICR();
-
     var PRN_ARR = App.print_arr;
     var prnarr = new PRN_ARR();
 
@@ -47,6 +44,7 @@
             if (process === 0) {
                 LockScreenOff();
                 if (report === 'arr_natural_statement_draft') {
+
                     prnarr.view_natural_statement_draft(format, id);
                 }
                 if (report === 'out_register_doc_transfer') {
