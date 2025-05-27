@@ -62,7 +62,7 @@
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
 
     // js/module/view_op_common.js
-    var VIEW_COMMON = App.view_op_common;
+    //var VIEW_COMMON = App.view_op_common;
     // js/view/shared/common.js
 
     var API_DIRECTORY = App.ids_directory;
