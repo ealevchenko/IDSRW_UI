@@ -2491,7 +2491,7 @@ var get_belongs_element = function (rows, name_field, id) {
             if (data) {
                 $.each(data, function (i, el) {
                     // Преобразовать формат
-                    if (el) { options.push({ label: el.text, title: el.text, value: el.value, selected: el.disabled });}
+                    if (el) { options.push({ label: el.text, title: el.text, value: el.value, selected: el.disabled }); }
                 }.bind(this));
                 this.$el.multiselect('dataprovider', options);
             };
@@ -3172,19 +3172,25 @@ var get_belongs_element = function (rows, name_field, id) {
         this.$modal_obj = modal.$html.modal({
             keyboard: this.settings.keyboard,
             show: !this.settings.hidden
-        }).on('show.bs.modal', function (event) {
-            // do something...
-        }.bind(this)).on('hide.bs.modal', function (event) {
-            if (typeof this.settings.fn_close === 'function') {
-                this.settings.fn_close(this.result);
-            }
-        }.bind(this));
+        })
+            .on('show.bs.modal', function (event) {
+                // 
+            }.bind(this))
+            .on('shown.bs.modal', function (event) {
+                // Обновим таблицы
+                $($.fn.dataTable.tables(false)).DataTable().columns.adjust();//.responsive.recalc();
+            }.bind(this))
+            .on('hide.bs.modal', function (event) {
+                if (typeof this.settings.fn_close === 'function') {
+                    this.settings.fn_close(this.result);
+                }
+            }.bind(this));
     };
     // Показать данные 
     modal_confirm_form.prototype.open = function (title, message, fn_ok, fn_cancel) {
         this.result = false;
         this.$header.empty().append(title);
-        this.$body.empty().append(message);
+        if (message) { this.$body.empty().append(message);}
         this.settings.fn_close = function (res) {
             if (res) {
                 // Ok
