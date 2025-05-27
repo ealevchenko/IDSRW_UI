@@ -38,7 +38,7 @@
     var id = getUrlVar('id');
 
     $(document).ready(function ($) {
-        var process = 2;
+        var process = 3;
         // Выход из инициализации
         var out_init = function (process) {
             if (process === 0) {
@@ -61,8 +61,6 @@
                 }
             }
         }.bind(this);
-
-
         // Инициализация модуля "print_arr"
         prnarr.init({
             api_dir: null,
