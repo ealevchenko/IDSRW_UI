@@ -48,10 +48,10 @@
                     prnarr.view_natural_statement_draft(format, id);
                 }
                 if (report === 'out_register_doc_transfer') {
-                    prnout.view_register_doc_transfer(format, id);
+                    prnout.view_register_doc_transfer(format, id, 0);
                 }
                 if (report === 'out_register_doc_transfer_amkr') {
-                    prnout.view_register_doc_transfer(format, id);
+                    prnout.view_register_doc_transfer(format, id, 1);
                 }
                 if (report === 'ws_statement1') {
                     prnws.view_ws_statement(1, format, id);

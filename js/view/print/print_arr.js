@@ -257,7 +257,7 @@
                     $('body').append('<h2 style="text-align:center;">' + langView('prn_arr_title_view_ws_statement_draft', App.Langs) + this.sostav.train + '</h2>');
                     $('body').append('<br />');
                     natural_statement_title($('body'), this.sostav);
-                    $('body').append('<br />');
+/*                    $('body').append('<br />');*/
                     this.vagons = this.sostav.arrivalCars.filter(function (i) {
                         return i.positionArrival === null;
                     }.bind(this)).sort(function (a, b) {
