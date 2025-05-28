@@ -204,8 +204,8 @@
 
                 if (iw < wagons.length) {
                     $tr.append('<td>' + (iw + 1) + '</td>'); //OutText(wagons[iw].positionOutgoing) 
-                    $tr.append('<td>' + OutText(wagons[iw].num) + '</td>');
-                    $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
+                    $tr.append('<td class="large">' + OutText(wagons[iw].num) + '</td>');
+                    $tr.append('<td class="large">' + OutText(wagons[iw].numDoc) + '</td>');
                 } else {
                     $tr.append('<td>&nbsp</td>');
                     $tr.append('<td>&nbsp</td>');
@@ -214,8 +214,8 @@
                 var pos = iw + 30;
                 if (pos < wagons.length) {
                     $tr.append('<td>' + (iw + 31) + '</td>'); // OutText(wagons[iw + 30].positionOutgoing)
-                    $tr.append('<td>' + OutText(wagons[iw + 30].num) + '</td>');
-                    $tr.append('<td>' + OutText(wagons[iw + 30].numDoc) + '</td>');
+                    $tr.append('<td class="large">' + OutText(wagons[iw + 30].num) + '</td>');
+                    $tr.append('<td class="large">' + OutText(wagons[iw + 30].numDoc) + '</td>');
                 } else {
                     $tr.append('<td>&nbsp</td>');
                     $tr.append('<td>&nbsp</td>');
@@ -266,13 +266,13 @@
                 }
                 var $tr = $('<tr></tr>');
                 $tr.append('<td>' + (i + 1) + '</td>');
-                $tr.append('<td>' + OutText(el.num) + '</td>');
-                $tr.append('<td>' + OutText(el.numDoc) + '</td>');
+                $tr.append('<td class="large">' + OutText(el.num) + '</td>');
+                $tr.append('<td class="large">' + OutText(el.numDoc) + '</td>');
                 $tr.append('<td>' + OutText(el.cargoNameRu) + '</td>');
                 $tr.append('<td>' + OutText(el.codePayer != 8116733 ? el.payerNameRu : 'АМКР') + '</td>');
-                $tr.append('<td>' + OutPay(el.outgoingUzVagonPays001) + '</td>');
-                $tr.append('<td>' + OutPay(el.outgoingUzVagonPaysAdd) + '</td>');
-                $tr.append('<td>' + OutPay(el.outgoingUzVagonPaysAll) + '</td>');
+                $tr.append('<td class="large">' + OutPay(el.outgoingUzVagonPays001) + '</td>');
+                $tr.append('<td class="large">' + OutPay(el.outgoingUzVagonPaysAdd) + '</td>');
+                $tr.append('<td class="large">' + OutPay(el.outgoingUzVagonPaysAll) + '</td>');
                 $tbody.append($tr);
             }.bind(this));
             //$table.append($tbody)
