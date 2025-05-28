@@ -275,13 +275,15 @@
                 $tr.append('<td>' + OutPay(el.outgoingUzVagonPaysAll) + '</td>');
                 $tbody.append($tr);
             }.bind(this));
-            $table.append($tbody);
-            var $tfoot = $('<tfoot></tfoot>');
+            //$table.append($tbody)
+            //var $tfoot = $('<tfoot></tfoot>');
             var $tr = $('<tr></tr>');
             $tr.append('<th class="total" colspan="7">Всього сплачено платником ПАТ "АРСЕЛОРМІТТАЛ КРИВИЙ РІГ"</th>');
             $tr.append('<td class="total">' + OutPay(summ_pays) + '</td>');
-            $tfoot.append($tr);
-            $table.append($tfoot);
+            //$tfoot.append($tr);
+            $tbody.append($tr);
+            //$table.append($tfoot);
+            $table.append($tbody);
             $body.append($table);
             $body.append('<br />');
             $body.append('<h3 style="text-align:center;">' + langView('prn_out_title_total_outgoing', App.Langs).format(docs.length) + '</h3>');

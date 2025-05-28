@@ -196,10 +196,10 @@
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
-                $tr.append('<td class="large">' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
+                $tr.append('<td class="large bold">' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wagonsRent.countrysCodeSng) + '</td>');
-                $tr.append('<td class="large">' + OutText(wagons[iw].num) + '</td>');
+                $tr.append('<td class="large bold">' + OutText(wagons[iw].num) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');

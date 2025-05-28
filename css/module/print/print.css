@@ -77,10 +77,14 @@ table {
 
     table thead {
         display: table-header-group;
+/*        page-break-inside: avoid;
+        page-break-after: auto;*/
     }
 
     table tfoot {
         display: table-footer-group;
+/*        page-break-inside: avoid;
+        page-break-after: auto;*/
     }
 
 
@@ -114,16 +118,19 @@ table {
     border-collapse: collapse; /* Отображать только одинарные линии */
 }
 
-
-
     .table-info td, .table-info th {
         border: 1px solid #000000;
         font-size: 12px;
         text-align: center;
         padding: 0 2px;
     }
+
         .table-info td.large {
             font-size: 14px;
+        }
+
+        .table-info td.bold {
+            font-weight: 700;
         }
 
         .table-info td.total {
@@ -163,5 +170,5 @@ table {
         }
 
         .table-info th.wp-30 {
-            width: 30%x;
+            width: 30%;
         }
