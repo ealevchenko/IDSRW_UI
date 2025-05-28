@@ -196,9 +196,9 @@
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
                 $tr.append('<td>' + '</td>');
-                $tr.append('<td class="large bold">' + OutText(wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)]) + '</td>');
+                $tr.append('<td class="large bold">' + OutText(wagons[iw].wagonsRent !== null ? wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)] : '') + '</td>');
                 $tr.append('<td>' + '</td>');
-                $tr.append('<td>' + OutText(wagons[iw].wagonsRent.countrysCodeSng) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].wagonsRent !== null ? wagons[iw].wagonsRent.countrysCodeSng : '') + '</td>');
                 $tr.append('<td class="large bold">' + OutText(wagons[iw].num) + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].numDoc) + '</td>');
                 $tr.append('<td>' + '</td>');
@@ -208,13 +208,13 @@
                 $tbody.append($tr);
 
                 var opr = operators.find(function (i) {
-                    return i.id === wagons[iw].wagonsRent.idOperator;
+                    return i.id === (wagons[iw].wagonsRent !== null && wagons[iw].wagonsRent.idOperator !== null ? wagons[iw].wagonsRent.idOperator : 0);
                 }.bind(this));
                 if (!opr) {
-                    if (wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)] !== null) {
-                        operators.push({ id: wagons[iw].wagonsRent.idOperator, operator: wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)], count: 1, vesg: 0 });
+                    if (wagons[iw].wagonsRent !== null && wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)] !== null) {
+                        operators.push({ id: wagons[iw].wagonsRent.idOperator, operator: wagons[iw].wagonsRent['operatorAbbr' + ucFirst(App.Lang)], count: 1 });
                     } else {
-                        operators.push({ id: 0, operator: 'Не определен', count: 1, vesg: vesg });
+                        operators.push({ id: 0, operator: 'Не определен', count: 1});
                     }
                 } else {
                     opr.count += 1;
@@ -257,7 +257,7 @@
                     $('body').append('<h2 style="text-align:center;">' + langView('prn_arr_title_view_ws_statement_draft', App.Langs) + this.sostav.train + '</h2>');
                     $('body').append('<br />');
                     natural_statement_title($('body'), this.sostav);
-/*                    $('body').append('<br />');*/
+                    /*                    $('body').append('<br />');*/
                     this.vagons = this.sostav.arrivalCars.filter(function (i) {
                         return i.positionArrival === null;
                     }.bind(this)).sort(function (a, b) {
