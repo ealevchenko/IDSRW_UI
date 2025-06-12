@@ -517,6 +517,7 @@
         this.ordering = false;
         this.info = false;
         this.fixedHeader = false;            // вкл. фикс. заголовка
+        this.headerOffset = 0;
         this.leftColumns = 0;
         this.columnDefs = null;
         this.order_column = [0, 'asc'];
@@ -565,7 +566,10 @@
             "keys": true,
             columnDefs: this.columnDefs,
             colReorder: true,                       // вкл. перетаскивание полей
-            fixedHeader: this.fixedHeader,          // вкл. фикс. заголовка
+            fixedHeader: {
+                header: this.fixedHeader,
+                headerOffset: this.headerOffset,
+            },
             fixedColumns: {
                 leftColumns: this.leftColumns,
             },

@@ -3405,6 +3405,7 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.headerOffset= 88;
                 this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
