@@ -86,6 +86,10 @@
     ids_wsd.prototype.getViewTotalBalance = function (callback) {
         this.api_com.get('/WSD/view/total_balance', callback);
     };
+    // ОТЧЕТ "ОПЕРАТИВНЫЙ ОСТАТОК ВАГОНОВ НА АМКР"
+    ids_wsd.prototype.getViewRemainderWagons = function (callback) {
+        this.api_com.get('/WSD/view/vagons/remainder', callback);
+    };
     // Операторы по станции
     ids_wsd.prototype.getViewOperatorsOfStation = function (id, callback) {
         this.api_com.get('/WSD/view/operators/station/' + id, callback);
