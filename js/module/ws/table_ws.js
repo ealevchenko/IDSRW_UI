@@ -229,6 +229,31 @@
             'tws_field_wir_note2': 'Примечание 2',
             'tws_field_current_organization_service': 'Текущая Организация вып. работы.',
             'tws_field_filing_organization_service': 'Организация вып. работы (подача)',
+            'tws_field_station_amkr_abbr': 'Текущая станция (аббр.)',
+            'tws_field_station_amkr_name': 'Текущая станция',
+            'tws_field_view_type_way': 'Дислокация',
+            'tws_field_view_name_way': 'Название пути (перегона)',
+            'tws_field_loading_status': 'Статус',
+            'tws_field_operation_name': 'Текущая операция',
+            'tws_field_operation_start': 'Дата начала операции',
+            'tws_field_operation_end': 'Дата окончания операции',
+            'tws_field_view_cargo_name': 'Груз ТЕКУЩ',
+            'tws_field_view_division_from_abbr': 'Цех погрузки ТЕКУЩ',
+            'tws_field_view_division_on_abbr': 'Цех получатель ТЕКЩ',
+            'tws_field_view_external_station_on_name': 'Станция УЗ назначения ТЕКУЩ',
+            'tws_field_view_station_from_amkr_abbr': 'Станция отправления ТЕКУЩ',
+            'tws_field_view_station_on_amkr_abbr': 'Станция назначения ТЕКУЩ',
+            'tws_field_move_cargo_vesg': 'Вес ТЕКУЩ',
+            'tws_field_view_vesg': 'Вес ТЕКУЩ',
+            'tws_field_wim_unload_id_filing': '№ подачи выгрузки',
+            'tws_field_wim_unload_filing_start': 'Дата начала выгрузки',
+            'tws_field_wim_unload_filing_end': 'Дата окончания выгрузки',
+            'tws_field_wim_load_id_filing': '№ подачи погрузки',
+            'tws_field_wim_load_filing_start': 'Дата начала погрузки',
+            'tws_field_wim_load_filing_end': 'Дата окончания погрузки',
+            'tws_field_wim_clear_id_filing': '№ подачи очистки',
+            'tws_field_wim_clear_filing_start': 'Дата начала очистки',
+            'tws_field_wim_clear_filing_end': 'Дата окончания очистки',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -236,6 +261,9 @@
             'tws_field_id_1': 'ВСЕГО',
             'tws_field_id_2': 'ОСТАТОК ВНЕШНИХ',
             'tws_field_id_3': 'УЧЕТНЫЙ ОСТАТОК',
+
+            'tws_field_view_type_way_outer_way': 'ПЕРЕГОН',
+            'tws_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
 
 
             'tws_title_filing_operation_wagon_0': 'Вагон без операций.',
@@ -2309,7 +2337,227 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_organization_service', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            // --- ViewOperatingBalanceRwCar
+            // Текущая станция
+            {
+                field: 'station_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['stationAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_station_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'station_amkr_name',
+                data: function (row, type, val, meta) {
+                    return row['stationAmkrName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_station_amkr_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'view_type_way',
+                data: function (row, type, val, meta) {
+                    switch (row.viewTypeWay) {
 
+                        case "outer_way": return langView('tws_field_view_type_way_outer_way', App.Langs)
+                        case "way": return langView('tws_field_view_type_way_way', App.Langs)
+                        default: "?";
+                    }
+
+
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_type_way', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'view_name_way',
+                data: function (row, type, val, meta) {
+                    return row['viewNameWay' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-300',
+                title: langView('tws_field_view_name_way', App.Langs), width: "300px", orderable: true, searchable: true
+            },
+            {
+                field: 'loading_status',
+                data: function (row, type, val, meta) {
+                    return row['loadingStatus' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_loading_status', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Текущая операция
+            {
+                field: 'operation_name',
+                data: function (row, type, val, meta) {
+                    return row['operationName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_operation_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operation_start',
+                data: function (row, type, val, meta) {
+                    return row.operationStart ? moment(row.operationStart).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_operation_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operation_end',
+                data: function (row, type, val, meta) {
+                    return row.operationEnd ? moment(row.operationEnd).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_operation_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Груз текущий (ЕТСНГ или внутрений) 
+            {
+                field: 'view_cargo_name',
+                data: function (row, type, val, meta) {
+                    return row['viewCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Цех погрузки ТЕКУЩ
+            {
+                field: 'view_division_from_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewDivisionFromAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Цех выгрузки ТЕКУЩ
+            {
+                field: 'view_division_on_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewDivisionOnAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция УЗ назначения ТЕКУЩ
+            {
+                field: 'view_external_station_on_name',
+                data: function (row, type, val, meta) {
+                    return row['viewExternalStationOnName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция отправления ТЕКУЩ
+            {
+                field: 'view_station_from_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewStationFromAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Станция назначения ТЕКУЩ
+            {
+                field: 'view_station_on_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewStationOnAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_view_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // текущий вес
+            {
+                field: 'move_cargo_vesg',
+                data: function (row, type, val, meta) {
+                    return row.moveCargoVesg !== null ? (row.moveCargoVesg > 0 ? Number(row.moveCargoVesg / 1000).toFixed(2) : Number(row.moveCargoVesg).toFixed(2)) : null;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_move_cargo_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // текущий вес
+            {
+                field: 'view_vesg',
+                data: function (row, type, val, meta) {
+                    return row.viewVesg !== null ? (row.viewVesg > 0 ? Number(row.viewVesg / 1000).toFixed(2) : Number(row.viewVesg).toFixed(2)) : null;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_view_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Последняя выгрузка
+            {
+                field: 'wim_unload_id_filing',
+                data: function (row, type, val, meta) {
+                    return row.wimUnloadIdFiling;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_wim_unload_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_unload_filing_start',
+                data: function (row, type, val, meta) {
+                    return row.wimUnloadFilingStart ? moment(row.wimUnloadFilingStart).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_unload_filing_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_unload_filing_end',
+                data: function (row, type, val, meta) {
+                    return row.wimUnloadFilingEnd ? moment(row.wimUnloadFilingEnd).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_unload_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Последняя погрузка
+            {
+                field: 'wim_load_id_filing',
+                data: function (row, type, val, meta) {
+                    return row.wimLoadIdFiling;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_wim_load_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_load_filing_start',
+                data: function (row, type, val, meta) {
+                    return row.wimLoadFilingStart ? moment(row.wimLoadFilingStart).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_load_filing_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_load_filing_end',
+                data: function (row, type, val, meta) {
+                    return row.wimLoadFilingEnd ? moment(row.wimLoadFilingEnd).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_load_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Последняя погрузка
+            {
+                field: 'wim_clear_id_filing',
+                data: function (row, type, val, meta) {
+                    return row.wimClearIdFiling;
+                },
+                className: 'dt-body-right mw-50',
+                title: langView('tws_field_wim_clear_id_filing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_clear_filing_start',
+                data: function (row, type, val, meta) {
+                    return row.wimClearFilingStart ? moment(row.wimClearFilingStart).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_clear_filing_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'wim_clear_filing_end',
+                data: function (row, type, val, meta) {
+                    return row.wimClearFilingEnd ? moment(row.wimClearFilingEnd).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_wim_clear_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
+            },
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -2543,6 +2791,150 @@
         collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
         collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
         collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
+
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+    // Оперативный остаток
+    table_ws.prototype.init_columns_balance_cars = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'station_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'station_amkr_name', title: null, class: null });
+        collums.push({ field: 'view_type_way', title: null, class: null });
+        collums.push({ field: 'view_name_way', title: null, class: null });
+        collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'operator_paid', title: null, class: null });
+        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
+        collums.push({ field: 'wagon_type', title: null, class: null });
+        collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
+        collums.push({ field: 'current_condition_abbr', title: null, class: null });
+        //collums.push({ field: 'wagon_date_rem_uz', title: null, class: null });
+
+        collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
+        collums.push({ field: 'arrival_cargo_name', title: null, class: null });
+        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
+        collums.push({ field: 'arrival_commercial_condition', title: null, class: null });
+        collums.push({ field: 'arrival_station_from_code', title: null, class: null });
+        collums.push({ field: 'arrival_station_from_name', title: null, class: null });
+        collums.push({ field: 'arrival_station_amkr_name', title: null, class: null });
+
+        collums.push({ field: 'loading_status', title: null, class: null });
+        collums.push({ field: 'current_wagon_busy', title: null, class: null });
+        collums.push({ field: 'operation_name', title: null, class: null });
+        collums.push({ field: 'operation_start', title: null, class: null });
+        collums.push({ field: 'operation_end', title: null, class: null });
+
+        collums.push({ field: 'arrival_duration', title: null, class: null });
+        collums.push({ field: 'arrival_idle_time', title: null, class: null });
+        collums.push({ field: 'arrival_usage_fee', title: null, class: null });
+        collums.push({ field: 'current_station_indicator', title: null, class: 'pink' });
+        collums.push({ field: 'current_station_idle_time', title: null, class: 'pink' });
+        collums.push({ field: 'current_station_duration', title: null, class: 'pink' });
+        collums.push({ field: 'current_way_duration', title: null, class: 'pink' });
+        collums.push({ field: 'instructional_letters_num', title: null, class: 'violet' });
+        collums.push({ field: 'instructional_letters_datetime', title: null, class: 'violet' });
+        collums.push({ field: 'instructional_letters_station_code', title: null, class: 'violet' });
+        collums.push({ field: 'instructional_letters_station_name', title: null, class: 'violet' });
+        collums.push({ field: 'instructional_letters_note', title: null, class: 'violet' });
+
+        collums.push({ field: 'sap_incoming_supply_cargo_ban', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_num', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_date', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_time', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_cargo_code', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_cargo_name', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_warehouse_code', title: null, class: 'lyellow' });
+        collums.push({ field: 'sap_incoming_supply_warehouse_name', title: null, class: 'lyellow' });
+
+        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
+        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
+
+        collums.push({ field: 'exist_load_document', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_cargo_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_division_from_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_division_on_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_external_station_on_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_station_from_amkr_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_station_on_amkr_abbr', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_vesg', title: null, class: 'lgreen' });
+
+        collums.push({ field: 'wim_unload_id_filing', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_unload_filing_start', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_unload_filing_end', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_load_id_filing', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_load_filing_start', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_load_filing_end', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_clear_id_filing', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_clear_filing_start', title: null, class: 'lgreen' });
+        collums.push({ field: 'wim_clear_filing_end', title: null, class: 'lgreen' });
+
+        collums.push({ field: 'sap_outgoing_supply_num', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_date', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_cargo_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_cargo_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_destination_station_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_destination_station_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_border_checkpoint_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_border_checkpoint_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_shipper_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_shipper_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_payer_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_payer_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_warehouse_code', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_warehouse_name', title: null, class: 'lblue' });
+        collums.push({ field: 'sap_outgoing_supply_netto', title: null, class: 'lblue' });
+
+        collums.push({ field: 'arrival_date_adoption', title: null, class: null });
+        collums.push({ field: 'outgoing_date', title: null, class: null });
+        collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
+        collums.push({ field: 'wir_note', title: null, class: null });
+        collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'wagon_ban_uz', title: null, class: null });
+        collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
+        collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
+
+
+
+        //collums.push({ field: 'current_wagon_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_load_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'current_unload_busy', title: null, class: 'pink' });
+        //collums.push({ field: 'owner_wagon_abbr', title: null, class: null });
+        //collums.push({ field: 'wagon_gruzp_doc', title: null, class: null });
+        //collums.push({ field: 'wagon_gruzp_uz', title: null, class: null });
+        //collums.push({ field: 'arrival_shipper_code', title: null, class: null });
+        //collums.push({ field: 'arrival_shipper_name', title: null, class: null });
+
+
+
+
+
+        //collums.push({ field: 'wagon_brutto_doc', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_brutto_amkr', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_tara_doc', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_tara_arc_doc', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_tara_uz', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_vesg_doc', title: null, class: 'lgrey' });
+        //collums.push({ field: 'wagon_vesg_amkr', title: null, class: 'lgrey' });
+        //collums.push({ field: 'diff_vesg', title: null, class: 'lgrey' });
+
+
+        //collums.push({ field: 'arrival_composition_index', title: null, class: null });
+        //collums.push({ field: 'arrival_date_adoption', title: null, class: null });
+        //collums.push({ field: 'outgoing_date', title: null, class: null });
+        //collums.push({ field: 'outgoing_return_cause', title: null, class: null });
+
+        //collums.push({ field: 'wagon_ban_uz', title: null, class: null });
+        //collums.push({ field: 'wagon_closed_route', title: null, class: null });
+        //collums.push({ field: 'wir_note', title: null, class: null });
+        //collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
+        //collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
+        //collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
@@ -3405,7 +3797,7 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.headerOffset= 88;
+                this.tab_com.headerOffset = 88;
                 this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
@@ -3451,6 +3843,66 @@
                     }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_cars_way();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Оперативный остаток
+            case 'balance_cars': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.headerOffset = 88;
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = true;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.wimId); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.wirHighlightColor !== null) {
+                    //    $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    //}
+                    //// Цвет оператора
+                    //if (data.operatorColor && data.operatorColor !== '') {
+                    //    $('td', row).eq(2).attr('style', 'background-color:' + data.operatorColor)
+                    //    //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    //}
+                    //// Проверим если по оператору контролировать норму времени, тогда проверить
+                    //if (data.arrivalIdleTime < data.arrivalDuration) {
+                    //    // Превышена норма нахождения вагона на АМКР
+                    //    $('td', row).eq(37).addClass('idle-time-error');
+                    //    //$('td.arrival-duration', row).addClass('idle-time-error');
+                    //    if (data.operatorMonitoringIdleTime) {
+                    //        $('td', row).eq(1).addClass('idle-time-error');
+                    //    };
+                    //}
+                    //// Прибыл
+                    //if (data.currentIdOperation === 1) {
+                    //    //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
+                    //    $('td', row).eq(0).addClass('red');
+                    //    $('td', row).eq(1).addClass('red');
+                    //}
+                    //// Предъявлен или сдан
+                    //if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
+                    //    if (data.outgoingSostavStatus === 2) {
+                    //        $('td', row).eq(0).addClass('green');
+                    //        $('td', row).eq(1).addClass('green');
+                    //    }
+                    //    if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
+                    //        $('td', row).eq(0).addClass('yellow');
+                    //        $('td', row).eq(1).addClass('yellow');
+                    //    }
+                    //}
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_balance_cars();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
                 this.tab_com.dom = 'Bfrtip';
                 break;
@@ -4958,53 +5410,6 @@
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
-            // Вагоны в подаче обработки
-            //case 'filing_wagons_4': {
-            //    this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
-            //    this.tab_com.pageLength = 10;
-            //    this.tab_com.deferRender = true;
-            //    this.tab_com.paging = true;
-            //    this.tab_com.searching = true;
-            //    this.tab_com.ordering = true;
-            //    this.tab_com.info = true;
-            //    this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-            //    this.tab_com.leftColumns = 2;
-            //    this.tab_com.columnDefs = null;
-            //    this.tab_com.order_column = [0, 'asc'];
-            //    this.tab_com.type_select_rows = 2; // Выбирать одну
-            //    this.tab_com.table_select = {
-            //        style: 'multi'
-            //    };
-            //    this.tab_com.autoWidth = true;
-            //    this.tab_com.createdRow = function (row, data, index) {
-            //        $(row).attr('id', data.idWim); // id строки дислокации вагона в момент отправки
-            //        $(row).attr('data-num', data.num); // data-num номер вагона
-            //        if (data.wirHighlightColor !== null) {
-            //            $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
-            //        }
-            //        // Цвет оператора
-            //        if (data.operatorColor && data.operatorColor !== '') {
-            //            $('td', row).eq(5).attr('style', 'background-color:' + data.operatorColor)
-            //        }
-            //        if (!data.isMoving) {
-            //            if (data.filingStart !== null) {
-            //                if (data.filingEnd !== null) {
-            //                    $(row).addClass('green');
-            //                    $(row).attr('title', langView('tws_title_filing_operation_wagon_2', App.Langs));
-            //                } else {
-            //                    $(row).addClass('yellow');
-            //                    $(row).attr('title', langView('tws_title_filing_operation_wagon_1', App.Langs));
-            //                }
-            //            }
-            //        } else {
-            //            $(row).addClass('blue');
-            //        }
-            //    }.bind(this);
-            //    this.tab_com.table_columns = this.init_columns_filing_wagons_4();
-            //    this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
-            //    this.tab_com.dom = 'Bfrtip';
-            //    break;
-            //};
 
             default: {
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка

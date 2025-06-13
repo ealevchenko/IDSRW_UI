@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>АРМ диспетчера</title>
+    <link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />
+    <!--<link rel="stylesheet" href="../../../idsrw_ui/lib/font-awesome/css/all.min.css" />-->
+    <!-- Визуальное отражение компонентов -->
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap-multiselect/css/bootstrap-multiselect.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/shared.css" />
+    <!-- DataTables -->
+    <link href="../../../idsrw_ui/lib/datatables/datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../idsrw_ui/lib/datatables/DataTables-2.0.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables Buttons-3.0.0 -->
+    <link href="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables Select-2.0.0 -->
+    <link href="../../../idsrw_ui/lib/DataTables/Select-2.0.0/css/select.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../idsrw_ui/lib/DataTables/Select-2.0.0/css/select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <!--  -->
+    <link href="../../../idsrw_ui/css/module/table_common.css" rel="stylesheet" type="text/css">
+    <link href="../../../idsrw_ui/css/module/ws/table_ws.css" rel="stylesheet" type="text/css" />
+
+    <link href="../../../idsrw_ui/css/module/ws/view_rep_operating_balance_rw_cars.css" rel="stylesheet" />
+
+    <!--<link href="../../../idsrw_ui/css/ws/wsd.css" rel="stylesheet" type="text/css" />-->
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-amkr fixed-top bg-amkr">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img class="bi me-2" aria-label="AMKR" src="../../img/amkr_logo_1.gif" alt="" width="120" height="60"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../../../idsrw_ui/index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="https://krr-app-paweb01.europe.mittalco.com/idsrw/IDSRWT/Home/Incoming">Прибытие</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="https://krr-app-paweb01.europe.mittalco.com/idsrw/IDSRWT/Home/Outgoing">Отправка</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="https://krr-app-paweb01.europe.mittalco.com/idsrw/IDSReport/Home">Отчеты</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Сервисы
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../../../idsrw_ui/areas/services/services.html?id=ccca">Расчет стоимости перевозки груза по прибытию.</a></li>
+                            <li><a class="dropdown-item" href="../../../idsrw_ui/areas/services/services.html?id=ccco">Расчет стоимости перевозки груза по отправке.</a></li>
+                            <li><a class="dropdown-item" href="../../../idsrw_ui/areas/services/services.html?id=via">Сверка накладных по прибытию.</a></li>
+                            <li><a class="dropdown-item" href="../../../idsrw_ui/areas/services/services.html?id=vio">Сверка накладных по отправке.</a></li>
+                            <li><a class="dropdown-item" href="#">...</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Справочники
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <!--<li><a class="dropdown-item" href="#">Действие</a></li>
+                            <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div>
+                        <label class="text-warning" id="user_name"></label><br />
+                        <label class="text-warning" id="data_source"></label><br />
+                        <label class="text-warning" id="curent_date"></label>
+                    </div>
+                    <!--<div class="ml-1">
+                        <a href="#" id="client_count" class="badge badge-primary">0</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid">
+        <div class="alert" id="main-alert" style="display: none;"></div>
+    </main>
+
+
+
+    <div id="lockPanel" class="LockOn">Идет загрузка…</div>
+
+    <script src="../../../idsrw_ui/lib/jquery/jquery.min.js"></script>
+    <script src="../../../idsrw_ui/lib/jquery-cookie/jquery.cookie.min.js"></script>
+    <script src="../../../idsrw_ui/lib/popper/umd/popper.min.js"></script>
+    <script src="../../../idsrw_ui/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+    <script src="../../../idsrw_ui/lib/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
+    <!-- Moment -->
+    <script src="../../../idsrw_ui/lib/moment.js/moment.min.js"></script>
+    <script src="../../../idsrw_ui/lib/moment.js/moment-with-locales.min.js"></script>
+    <!-- DataTables -->
+    <script src="../../../idsrw_ui/lib/DataTables/datatables.min.js"></script>
+    <script src="../../../idsrw_ui/lib/DataTables/DataTables-2.0.0/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables Buttons-3.0.0 -->
+    <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/dataTables.buttons.min.js"></script>
+    <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.bootstrap5.min.js"></script>
+    <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.print.min.js"></script>
+    <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.html5.min.js"></script>
+    <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.colVis.min.js"></script>
+    <!-- DataTables Select-2.0.0 -->
+    <script src="../../../idsrw_ui/lib/DataTables/Select-2.0.0/js/dataTables.select.min.js"></script>
+    <script src="../../../idsrw_ui/lib/DataTables/Select-2.0.0/js/select.bootstrap5.min.js"></script>
+    <!-- Общие -->
+    <script src="../../../idsrw_ui/js/view/shared/common.js"></script>
+    <!-- Библиотеки API -->
+    <script src="../../../idsrw_ui/js/api/shared.js"></script>
+    <script src="../../../idsrw_ui/js/api/ids_directory.js"></script> <!-- API СПРАВОЧНИКМ -->
+    <script src="../../../idsrw_ui/js/api/ids_wsd.js"></script> <!-- API WSD -->
+    <script src="../../../idsrw_ui/js/api/ids_arrival.js"></script> <!-- API ARRIVAL -->
+    <!-- Модули -->
+    <script src="../../../idsrw_ui/js/module/table_common.js"></script>
+    <script src="../../../idsrw_ui/js/module/ws/table_ws.js"></script><!-- Таблицы отчета -->
+
+    <script src="../../../idsrw_ui/js/module/ws/view_rep_operating_balance_rw_cars.js"></script>
+
+    <script src="../../../idsrw_ui/js/view/ws/main_wsd_report.js"></script>
+</body>
+</html>
