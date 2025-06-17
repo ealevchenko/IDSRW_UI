@@ -37,6 +37,9 @@
     --dt-row-l-grey: 216, 216, 216;
     --dt-row-l-grey-text: 0, 0, 0;
     --dt-row-l-grey-link: 10, 88, 202;
+    --dt-row-turquoise: 214, 255, 255;
+    --dt-row-turquoise-text: 0, 0, 0;
+    --dt-row-turquoise-link: 10, 88, 202;
     /*    --dt-row-selected: 166, 255, 166;
     --dt-row-selected-text: 0, 0, 0;
     --dt-row-selected-link: 9, 10, 11;*/
@@ -536,6 +539,32 @@ table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td
 table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lgrey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey), 0.85);
 }
+/*Берюзовая ячейка*/
+table.table.dataTable > thead > tr > th.turquoise {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.turquoise {
+    color: rgb(var(--dt-row-turquoise-text));
+}
+
+table.table.dataTable > tbody > tr:not(.selected) > td.turquoise {
+    color: rgb(var(--dt-row-turquoise-text))
+}
+
+    table.table.dataTable > tbody > tr:not(.selected) > td.turquoise a {
+        color: rgb(var(--dt-row-turquoise-link))
+    }
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.turquoise {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise));
+}
+
+table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.turquoise {
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise), 0.85);
+}
+
+
 
 .required-field {
     border-color: red;

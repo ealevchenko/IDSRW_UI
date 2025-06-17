@@ -254,6 +254,9 @@
             'tws_field_wim_clear_id_filing': '№ подачи очистки',
             'tws_field_wim_clear_filing_start': 'Дата начала очистки',
             'tws_field_wim_clear_filing_end': 'Дата окончания очистки',
+            'tws_field_curent_datetime': 'Дата остатка',
+            'tws_field_arrival_vesg': 'Вес ПРИБ',
+            'tws_field_outgoing_return_cause': 'Причина возврата по отправлению',
 
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
@@ -740,7 +743,7 @@
             {
                 field: 'current_station_indicator',
                 data: function (row, type, val, meta) {
-                    if (row.current_station_idle_time !== null) {
+                    if (row.currentStationIdleTime !== null) {
                         // Показать индикатор простоя
                         var $pb = new fe_ui.bs_progressbar({
                             //id: 'way',
@@ -2558,6 +2561,33 @@
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_wim_clear_filing_end', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'curent_datetime',
+                data: function (row, type, val, meta) {
+                    return row.currentDatatime ? moment(row.currentDatatime).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_curent_datetime', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Вес прибытия
+            {
+                field: 'arrival_vesg',
+                data: function (row, type, val, meta) {
+                    return row.arrivalVesg !== null ? (row.arrivalVesg > 0 ? Number(row.arrivalVesg / 1000).toFixed(2) : Number(row.arrivalVesg).toFixed(2)) : null;
+                },
+                className: 'dt-body-right',
+                title: langView('tws_field_arrival_vesg', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Причина возврата
+            {
+                field: 'outgoing_return_cause',
+                data: function (row, type, val, meta) {
+                    return row['outgoingReturnCause' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_outgoing_return_cause', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -2799,13 +2829,14 @@
         var collums = [];
         collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'curent_datetime', title: null, class: null });
         collums.push({ field: 'station_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'station_amkr_name', title: null, class: null });
+/*        collums.push({ field: 'station_amkr_name', title: null, class: null });*/
         collums.push({ field: 'view_type_way', title: null, class: null });
         collums.push({ field: 'view_name_way', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
-        collums.push({ field: 'operator_paid', title: null, class: null });
+/*        collums.push({ field: 'operator_paid', title: null, class: null });*/
         collums.push({ field: 'limiting_abbr', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_type', title: null, class: null });
@@ -2817,8 +2848,11 @@
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_sertification_data', title: null, class: null });
         collums.push({ field: 'arrival_commercial_condition', title: null, class: null });
+        collums.push({ field: 'arrival_vesg', title: null, class: null });
         collums.push({ field: 'arrival_station_from_code', title: null, class: null });
         collums.push({ field: 'arrival_station_from_name', title: null, class: null });
+        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
+        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         collums.push({ field: 'arrival_station_amkr_name', title: null, class: null });
 
         collums.push({ field: 'loading_status', title: null, class: null });
@@ -2849,17 +2883,15 @@
         collums.push({ field: 'sap_incoming_supply_warehouse_code', title: null, class: 'lyellow' });
         collums.push({ field: 'sap_incoming_supply_warehouse_name', title: null, class: 'lyellow' });
 
-        collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
-        collums.push({ field: 'arrival_nom_doc', title: null, class: null });
-
         collums.push({ field: 'exist_load_document', title: null, class: 'lgreen' });
         collums.push({ field: 'view_cargo_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'view_vesg', title: null, class: 'lgreen' });
         collums.push({ field: 'view_division_from_abbr', title: null, class: 'lgreen' });
         collums.push({ field: 'view_division_on_abbr', title: null, class: 'lgreen' });
         collums.push({ field: 'view_external_station_on_name', title: null, class: 'lgreen' });
         collums.push({ field: 'view_station_from_amkr_abbr', title: null, class: 'lgreen' });
         collums.push({ field: 'view_station_on_amkr_abbr', title: null, class: 'lgreen' });
-        collums.push({ field: 'view_vesg', title: null, class: 'lgreen' });
+
 
         collums.push({ field: 'wim_unload_id_filing', title: null, class: 'lgreen' });
         collums.push({ field: 'wim_unload_filing_start', title: null, class: 'lgreen' });
@@ -2890,12 +2922,13 @@
         collums.push({ field: 'arrival_date_adoption', title: null, class: null });
         collums.push({ field: 'outgoing_date', title: null, class: null });
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
+        collums.push({ field: 'outgoing_return_cause', title: null, class: null });
         collums.push({ field: 'wir_note', title: null, class: null });
         collums.push({ field: 'wir_note2', title: null, class: null });
         //collums.push({ field: 'wagon_ban_uz', title: null, class: null });
-        collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'lgreen' });
-        collums.push({ field: 'old_date_outgoing', title: null, class: 'lgreen' });
-        collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'lgreen' });
+        collums.push({ field: 'old_outgoing_uz_vagon_cargo_name', title: null, class: 'turquoise' });
+        collums.push({ field: 'old_date_outgoing', title: null, class: 'turquoise' });
+        collums.push({ field: 'old_outgoing_uz_document_station_to_name', title: null, class: 'turquoise' });
 
 
 
@@ -3861,49 +3894,49 @@
                 this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-                this.tab_com.type_select_rows = 1; // Выбирать одну
-                this.tab_com.table_select = true;
+                this.tab_com.type_select_rows = 0; // Выбирать одну
+                this.tab_com.table_select = false;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.wimId); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
-                    //if (data.wirHighlightColor !== null) {
-                    //    $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
-                    //}
-                    //// Цвет оператора
-                    //if (data.operatorColor && data.operatorColor !== '') {
-                    //    $('td', row).eq(2).attr('style', 'background-color:' + data.operatorColor)
-                    //    //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
-                    //}
-                    //// Проверим если по оператору контролировать норму времени, тогда проверить
-                    //if (data.arrivalIdleTime < data.arrivalDuration) {
-                    //    // Превышена норма нахождения вагона на АМКР
-                    //    $('td', row).eq(37).addClass('idle-time-error');
-                    //    //$('td.arrival-duration', row).addClass('idle-time-error');
-                    //    if (data.operatorMonitoringIdleTime) {
-                    //        $('td', row).eq(1).addClass('idle-time-error');
-                    //    };
-                    //}
-                    //// Прибыл
-                    //if (data.currentIdOperation === 1) {
-                    //    //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
-                    //    $('td', row).eq(0).addClass('red');
-                    //    $('td', row).eq(1).addClass('red');
-                    //}
-                    //// Предъявлен или сдан
-                    //if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
-                    //    if (data.outgoingSostavStatus === 2) {
-                    //        $('td', row).eq(0).addClass('green');
-                    //        $('td', row).eq(1).addClass('green');
-                    //    }
-                    //    if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
-                    //        $('td', row).eq(0).addClass('yellow');
-                    //        $('td', row).eq(1).addClass('yellow');
-                    //    }
-                    //}
+                    if (data.wirHighlightColor !== null) {
+                        $(row).attr('style', 'background-color:' + data.wirHighlightColor + ' !important;');
+                    }
+                    // Цвет оператора
+                    if (data.operatorColor && data.operatorColor !== '') {
+                        $('td', row).eq(7).attr('style', 'background-color:' + data.operatorColor)
+                        //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
+                    }
+                    // Проверим если по оператору контролировать норму времени, тогда проверить
+                    if (data.arrivalIdleTime < data.arrivalDuration) {
+                        // Превышена норма нахождения вагона на АМКР
+                        $('td', row).eq(28).addClass('idle-time-error');
+                        //$('td.arrival-duration', row).addClass('idle-time-error');
+                        if (data.operatorMonitoringIdleTime) {
+                            $('td', row).eq(1).addClass('idle-time-error');
+                        };
+                    }
+                    // Прибыл
+                    if (data.currentIdOperation === 1) {
+                        //$('td.fixed-column', row).addClass('red'); // Отметим прибытие
+                        $('td', row).eq(0).addClass('red');
+                        $('td', row).eq(1).addClass('red');
+                    }
+                    // Предъявлен или сдан
+                    if (data.currentIdOperation === 9 || data.currentIdOperation === 8) {
+                        if (data.outgoingSostavStatus === 2) {
+                            $('td', row).eq(0).addClass('green');
+                            $('td', row).eq(1).addClass('green');
+                        }
+                        if (data.outgoingSostavStatus === 1 || data.outgoingSostavStatus === 0) {
+                            $('td', row).eq(0).addClass('yellow');
+                            $('td', row).eq(1).addClass('yellow');
+                        }
+                    }
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_balance_cars();
-                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //   this.init_button_req1892();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };

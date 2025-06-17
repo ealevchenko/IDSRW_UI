@@ -9,18 +9,22 @@
     <!-- Визуальное отражение компонентов -->
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/lib/bootstrap-multiselect/css/bootstrap-multiselect.min.css" />
     <link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/shared.css" />
+    <link href="../../" rel="stylesheet" />
     <!-- DataTables -->
     <link href="../../../idsrw_ui/lib/datatables/datatables.min.css" rel="stylesheet" type="text/css">
     <link href="../../../idsrw_ui/lib/datatables/DataTables-2.0.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../idsrw_ui/lib/DataTables/AutoFill-2.7.0/css/autoFill.bootstrap5.min.css" rel="stylesheet" />
     <!-- DataTables Buttons-3.0.0 -->
     <link href="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
     <link href="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables FixedColumns-5.0.0-->
+    <link href="../../../idsrw_ui/lib/DataTables/FixedColumns-5.0.0/css/fixedColumns.bootstrap5.min.css" rel="stylesheet" />
+    <!--DataTables FixedHeader-4.0.0-->
+    <link href="../../../idsrw_ui/lib/DataTables/FixedHeader-4.0.0/css/fixedHeader.bootstrap5.min.css" rel="stylesheet" />
     <!-- DataTables Select-2.0.0 -->
-    <link href="../../../idsrw_ui/lib/DataTables/Select-2.0.0/css/select.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../../idsrw_ui/lib/DataTables/Select-2.0.0/css/select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    <!--  -->
+    <link href="../../../idsrw_ui/lib/DataTables/Select-2.0.0/css/select.bootstrap5.min.css" rel="stylesheet" />
+    <!--<link href="../../../idsrw_ui/css/module/table_tree_way.css" rel="stylesheet" type="text/css" />-->
     <link href="../../../idsrw_ui/css/module/table_common.css" rel="stylesheet" type="text/css">
     <link href="../../../idsrw_ui/css/module/ws/table_ws.css" rel="stylesheet" type="text/css" />
 
@@ -99,20 +103,30 @@
     <script src="../../../idsrw_ui/lib/popper/umd/popper.min.js"></script>
     <script src="../../../idsrw_ui/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../../idsrw_ui/lib/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
-    <script src="../../../idsrw_ui/lib/bootstrap-multiselect/js/bootstrap-multiselect.min.js"></script>
     <!-- Moment -->
     <script src="../../../idsrw_ui/lib/moment.js/moment.min.js"></script>
     <script src="../../../idsrw_ui/lib/moment.js/moment-with-locales.min.js"></script>
+
+    <script src="../../../idsrw_ui/lib/jszip/jszip.min.js"></script>
+    <script src="../../../idsrw_ui/lib/pdfmake/pdfmake.min.js"></script>
     <!-- DataTables -->
     <script src="../../../idsrw_ui/lib/DataTables/datatables.min.js"></script>
     <script src="../../../idsrw_ui/lib/DataTables/DataTables-2.0.0/js/dataTables.bootstrap5.min.js"></script>
-
-    <!-- DataTables Buttons-3.0.0 -->
+    <!--AutoFill-2.7.0-->
+    <script src="../../../idsrw_ui/lib/DataTables/AutoFill-2.7.0/js/dataTables.autoFill.min.js"></script>
+    <script src="../../../idsrw_ui/lib/DataTables/AutoFill-2.7.0/js/autoFill.bootstrap5.min.js"></script>
+    <!--DataTables Buttons-3.0.0-->
     <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/dataTables.buttons.min.js"></script>
     <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.bootstrap5.min.js"></script>
     <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.print.min.js"></script>
     <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.html5.min.js"></script>
     <script src="../../../idsrw_ui/lib/datatables/Buttons-3.0.0/js/buttons.colVis.min.js"></script>
+    <!--DataTables FixedColumns-5.0.0-->
+    <script src="../../../idsrw_ui/lib/DataTables/FixedColumns-5.0.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="../../../idsrw_ui/lib/DataTables/FixedColumns-5.0.0/js/fixedColumns.bootstrap5.min.js"></script>
+    <!--DataTables FixedHeader-4.0.0-->
+    <script src="../../../idsrw_ui/lib/DataTables/FixedHeader-4.0.0/js/dataTables.fixedHeader.min.js"></script>
+    <script src="../../../idsrw_ui/lib/DataTables/FixedHeader-4.0.0/js/fixedHeader.bootstrap5.min.js"></script>
     <!-- DataTables Select-2.0.0 -->
     <script src="../../../idsrw_ui/lib/DataTables/Select-2.0.0/js/dataTables.select.min.js"></script>
     <script src="../../../idsrw_ui/lib/DataTables/Select-2.0.0/js/select.bootstrap5.min.js"></script>

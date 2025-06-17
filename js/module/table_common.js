@@ -119,10 +119,16 @@
                 {
                     text: langView('t_com_title_button_buffer', App.Langs),
                     extend: 'copyHtml5',
+                    //action: function (e, dt, node, config) {
+                    //    $.fn.dataTable.ext.buttons.copyHtml5.action.call(this, e, dt, node, config);
+                    //}
                 },
                 {
                     text: langView('t_com_title_button_excel', App.Langs),
                     extend: 'excelHtml5',
+                    //action: function (e, dt, node, config) {
+                    //    setTimeout($.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, node, config), 0);
+                    //},
                     sheetName: langView('t_com_title_excel_sheet_name', App.Langs),
                     messageTop: function () {
                         return '';
@@ -576,8 +582,8 @@
             select: this.table_select,
             "autoWidth": this.autoWidth,
             //"filter": true,
-            scroller: false,
-            scrollCollapse: false,
+            scroller: false,// false
+            scrollCollapse: false,//false
 
             //"scrollY": "200px",
             //sScrollX: "100%",
