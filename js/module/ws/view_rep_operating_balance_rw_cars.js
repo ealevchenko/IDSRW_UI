@@ -255,6 +255,7 @@
         this.default_db_names = [];
 
         this.wagons = [];
+        this.calc_usages = [];
 
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
@@ -278,13 +279,39 @@
     // Загрузить отчет
     view_rep_operating_balance_rw_cars.prototype.load = function (callback) {
         LockScreen(langView('vr_obrwc_load_docs', App.Langs).format(moment().format(format_datetime_ru)));
+        this.wagons = [];
+        this.calc_usages = [];
+        var pr_load = 2;
+        var out_load1 = function (pr_load) {
+            if (pr_load === 0) {
+                $.each(this.calc_usages, function (i, el) {
+                    if (el.error === 0) {
+                        var wag = this.wagons.find(function (o) {
+                            return o.num === el.num;
+                        }.bind(this));
+                        if (wag) {
+                            wag.arrivalUsageFee = el.calcFeeAmount;
+                        }
+                    }
+                }.bind(this));
+                //main_alert.clear_message();
+                LockScreenOff();
+                if (typeof callback === 'function') {
+                    callback(this.wagons);
+                }
+            }
+        };
+        // плата
+        this.api_wsd.getCalcUsageFeeCarsOfBalansce(function (calc_usages) {
+            this.calc_usages = calc_usages;
+            pr_load--;
+            out_load1.call(this, pr_load);
+        }.bind(this));
+        //  остаток
         this.api_wsd.getViewRemainderWagons(function (wagons) {
             this.wagons = wagons;
-            // Событие обновили данные
-            LockScreenOff();
-            if (typeof callback === 'function') {
-                callback(this.wagons);
-            }
+            pr_load--;
+            out_load1.call(this, pr_load);
         }.bind(this));
     };
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
