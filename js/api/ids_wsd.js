@@ -120,6 +120,10 @@
     ids_wsd.prototype.getCalcUsageFeeCarsOfWay = function (id, callback) {
         this.api_com.get('/WSD/view/calc_wagon/way/' + id, callback);
     };
+    // Расчет платы за пользование вагонов по оперативному остатку
+    ids_wsd.prototype.getCalcUsageFeeCarsOfBalansce = function (callback) {
+        this.api_com.get('/WSD/view/calc_wagon/balance', callback);
+    };
     //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Операции) =========================================================
     //АРМ, Операция принять вагоны на внутреную станцию АМКР 
     ids_wsd.prototype.postArrivalWagonsOfStationAMKR = function (operation, callback) {
