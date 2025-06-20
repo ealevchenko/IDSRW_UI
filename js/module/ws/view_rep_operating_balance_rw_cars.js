@@ -23,6 +23,45 @@
             'vr_obrwc_mess_init_module': 'Инициализация модуля view_rep_operating_balance_rw_cars',
             //'vr_obrwc_mess_load_operation': 'Загружаю форму операции',
 
+            'vr_obrwc_obrwc_title_button_apply': 'ОБНОВИТЬ',
+            'vr_obrwc_obrwc_title_button_title_apply': 'Обновить выборку...',
+            'vr_obrwc_obrwc_title_button_clear': 'СБРОСИТЬ',
+            'vr_obrwc_obrwc_title_button_title_clear': 'Сбросить настройки выборки...',
+
+            'vr_obrwc_title_label_external_wagon': 'Внешние стороние вагоны',
+            'vr_obrwc_title_label_external_wagon_amkr': 'Внешние вагоны АМКР',
+            'vr_obrwc_title_label_wagon_amkr_vz': 'Внутризаводские вагоны',
+            'vr_obrwc_title_label_wagon_klient': 'Контрагенты',
+            'vr_obrwc_title_label_wagon_outgoing': 'Сданные вагоны на УЗ',
+            'vr_obrwc_title_label_wagon_cisterna_amkr': 'Цистерны арендованные',
+
+            'vr_obrwc_title_label_over_day': 'Сверх суток:',
+            'vr_obrwc_title_button_apply_over_day': 'Применить выборку сверх суток...',
+            'vr_obrwc_title_label_not_moved': 'Не перемещается более, час:',
+            'vr_obrwc_title_button_apply_not_moved': 'Применить выборку не перемещается более...',
+
+            'vr_obrwc_title_label_operator': 'Оператор:',
+            'vr_obrwc_title_label_arrival_condition': 'Разметка по прибытию:',
+            'vr_obrwc_title_label_current_condition': 'Разметка текущая:',
+            'vr_obrwc_title_label_wagon_rod': 'Род вагона:',
+            'vr_obrwc_title_label_wagon_type': 'Тип вагона:',
+            'vr_obrwc_title_label_limiting_loading': 'Ограничение:',
+            'vr_obrwc_title_label_arrival_cargo_group': 'Группа по ПРИБ:',
+            'vr_obrwc_title_label_arrival_cargo': 'Груз по ПРИБ:',
+            'vr_obrwc_title_label_sertification_data': 'Сертификационные данные:',
+            'vr_obrwc_title_label_station_from_code': 'Станция отправления:',
+            'vr_obrwc_title_label_arrival_division_amkr': 'Цех получатель ПРИБ:',
+
+            'vr_obrwc_title_label_view_cargo_name': 'Груз ТЕКУЩ:',
+            'vr_obrwc_title_label_view_external_station_on': 'Станция УЗ назначения ТЕКУЩ:',
+            'vr_obrwc_title_label_view_division_from': 'Цех погрузки ТЕКУЩ:',
+            'vr_obrwc_title_label_view_division_on': 'Цех получатель ТЕКУЩ:',
+            'vr_obrwc_title_label_loading_status': 'Статус:',
+            'vr_obrwc_title_label_operation': 'Текущая операция:',
+            'vr_obrwc_title_label_station': 'Станция нахождения вагона:',
+            'vr_obrwc_title_label_view_type_way': 'Дислокация:',
+            'vr_obrwc_title_label_view_name_way': 'Ж.д. путь:',
+
             //'vr_obrwc_title_form_button_apply': 'Править документ',
             //'vr_obrwc_title_form_apply_button_title': 'Править документ ...',
 
@@ -200,7 +239,7 @@
             this.settings.fn_start_init.call(this);
         }
         // Определим количество загрузок
-        var pr_load = 2;
+        var pr_load = 3;
         // Выход из загрузок
         var out_load = function (process) {
             if (pr_load === 0) {
@@ -231,6 +270,1129 @@
             }
         }.bind(this);
 
+        // форма детального выбора оперативного остатка
+        this.form_obrwc_setup = new FD();
+        var objs_obrwc_setup = [];
+        var col_bt_apply = {
+            obj: 'bs_col',
+            options: {
+                id: null,
+                pref: 'md',
+                size: 12,
+                class: 'text-center mb-3',
+                style: null,
+            },
+            childs: []
+        };
+        var bt_apply = {
+            obj: 'bs_button',
+            options: {
+                id: 'obrwc_apply',
+                name: 'obrwc_apply',
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: langView('vr_obrwc_obrwc_title_button_apply', App.Langs),
+                title: langView('vr_obrwc_obrwc_title_button_title_apply', App.Langs),
+                icon_fa_left: 'fa-solid fa-pen-to-square',  //<i class="fa-solid fa-pen-to-square"></i>
+                icon_fa_right: null,
+                fn_click: function (event) {
+                    event.preventDefault();
+                    this.clear = false;
+                    this.form_obrwc_setup.$form.submit();
+                }.bind(this),
+            }
+        };
+        var bt_clear = {
+            obj: 'bs_button',
+            options: {
+                id: 'obrwc_clear',
+                name: 'obrwc_clear',
+                class: 'ms-2',
+                fsize: 'sm',
+                color: 'danger',
+                text: langView('vr_obrwc_obrwc_title_button_clear', App.Langs),
+                title: langView('vr_obrwc_obrwc_title_button_title_clear', App.Langs),
+                icon_fa_left: 'fa-solid fa-broom',  //<i class="fa-solid fa-broom"></i>
+                icon_fa_right: null,
+                fn_click: function (event) {
+                    event.preventDefault();
+                }.bind(this),
+            }
+        };
+        var form_check_external_wagon = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'external_wagon',
+                name: 'external_wagon',
+                label: langView('vr_obrwc_title_label_external_wagon', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var form_check_external_wagon_amkr = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'external_wagon_amkr',
+                name: 'external_wagon_amkr',
+                label: langView('vr_obrwc_title_label_external_wagon_amkr', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var form_check_wagon_amkr_vz = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_amkr_vz',
+                name: 'wagon_amkr_vz',
+                label: langView('vr_obrwc_title_label_wagon_amkr_vz', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var form_check_wagon_klient = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_klient',
+                name: 'wagon_klient',
+                label: langView('vr_obrwc_title_label_wagon_klient', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var form_check_wagon_outgoing = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_outgoing',
+                name: 'wagon_outgoing',
+                label: langView('vr_obrwc_title_label_wagon_outgoing', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var form_check_wagon_cisterna_amkr = {
+            obj: 'bs_form_check',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_cisterna_amkr',
+                name: 'wagon_cisterna_amkr',
+                label: langView('vr_obrwc_title_label_wagon_cisterna_amkr', App.Langs),
+                element_type: 'checkbox',
+                element_switch: true,
+                element_inline: false,
+                element_class: null,
+                element_value: null,
+                element_title: null,
+                element_checked: true,
+                element_required: false,
+                element_readonly: false,
+                element_options: {
+                    default: true,
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).prop('checked');
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: null,
+            },
+            childs: []
+        };
+        var bt_apply_over_day = {
+            obj: 'bs_button',
+            options: {
+                id: 'apply_over_day',
+                name: 'apply_over_day',
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: langView('vr_obrwc_title_button_apply_over_day', App.Langs),
+                icon_fa_left: 'fa-solid fa-retweet',//<i class="fa-solid fa-retweet"></i>
+                icon_fa_right: null,
+                fn_click: function (event) {
+                    event.preventDefault();
+/*                    this.form_document_pay.$form.submit();*/
+                }.bind(this),
+            }
+        };
+        var form_input_over_day= {
+            obj: 'bs_form_input',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'over_day',
+                name: 'over_day',
+                label: langView('vr_obrwc_title_label_over_day', App.Langs),
+                element_type: 'number',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: 0,
+                element_title: null,
+/*                element_placeholder: langView('vr_obrwc_title_placeholder_over_day', App.Langs),*/
+                element_required: true,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_min: 0,
+                element_max: 1000,
+                element_step: 1,
+                element_options: {
+                    default: '',
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: null,
+                group_append_objs: [bt_apply_over_day],
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var bt_apply_not_moved = {
+            obj: 'bs_button',
+            options: {
+                id: 'apply_not_moved',
+                name: 'apply_not_moved',
+                class: null,
+                fsize: 'sm',
+                color: 'success',
+                text: null,
+                title: langView('vr_obrwc_title_button_apply_not_moved', App.Langs),
+                icon_fa_left: 'fa-solid fa-retweet',//<i class="fa-solid fa-retweet"></i>
+                icon_fa_right: null,
+                fn_click: function (event) {
+                    event.preventDefault();
+/*                    this.form_document_pay.$form.submit();*/
+                }.bind(this),
+            }
+        };
+        var form_input_not_moved = {
+            obj: 'bs_form_input',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'not_moved',
+                name: 'not_moved',
+                label: langView('vr_obrwc_title_label_not_moved', App.Langs),
+                element_type: 'number',
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: 0,
+                element_title: null,
+                element_required: true,
+                element_maxlength: null,
+                element_pattern: null,
+                element_readonly: false,
+                element_min: 0,
+                element_max: 1000,
+                element_step: 1,
+                element_options: {
+                    default: '',
+                    fn_change: function (e) {
+                        var value = $(e.currentTarget).val();
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                group_append_class: null,
+                group_append_id: null,
+                group_append_html: null,
+                group_append_objs: [bt_apply_not_moved],
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_operator = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_operator',
+                name: 'id_operator',
+                label: langView('vr_obrwc_title_label_operator', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_limiting_loading = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_limiting_loading',
+                name: 'id_limiting_loading',
+                label: langView('vr_obrwc_title_label_limiting_loading', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_arrival_condition = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'arrival_condition',
+                name: 'arrival_condition',
+                label: langView('vr_obrwc_title_label_arrival_condition', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_current_condition = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'current_condition',
+                name: 'current_condition',
+                label: langView('vr_obrwc_title_label_current_condition', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_wagon_rod = {
+            obj: 'bs_form_wagon_rod',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_rod',
+                name: 'wagon_rod',
+                label: langView('vr_obrwc_title_label_wagon_rod', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_wagon_type = {
+            obj: 'bs_form_wagon_rod',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_type',
+                name: 'wagon_type',
+                label: langView('vr_obrwc_title_label_wagon_type', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_arrival_cargo = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_arrival_cargo',
+                name: 'id_arrival_cargo',
+                label: langView('vr_obrwc_title_label_arrival_cargo', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_arrival_cargo_group = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_arrival_cargo_group',
+                name: 'id_arrival_cargo_group',
+                label: langView('vr_obrwc_title_label_arrival_cargo_group', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_sertification_data = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_sertification_data',
+                name: 'id_sertification_data',
+                label: langView('vr_obrwc_title_label_sertification_data', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_station_from_code = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'station_from_code',
+                name: 'station_from_code',
+                label: langView('vr_obrwc_title_label_station_from_code', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_arrival_division_amkr = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'station_from_code',
+                name: 'station_from_code',
+                label: langView('vr_obrwc_title_label_arrival_division_amkr', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_cargo_name = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_cargo_name',
+                name: 'view_cargo_name',
+                label: langView('vr_obrwc_title_label_view_cargo_name', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_external_station_on = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_external_station_on',
+                name: 'view_external_station_on',
+                label: langView('vr_obrwc_title_label_view_external_station_on', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_division_from = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_division_from',
+                name: 'view_division_from',
+                label: langView('vr_obrwc_title_label_view_division_from', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_division_on = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_division_on',
+                name: 'view_division_on',
+                label: langView('vr_obrwc_title_label_view_division_on', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_loading_status = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'loading_status',
+                name: 'loading_status',
+                label: langView('vr_obrwc_title_label_loading_status', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_operation = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_operation',
+                name: 'id_operation',
+                label: langView('vr_obrwc_title_label_operation', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_station = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'id_station',
+                name: 'id_station',
+                label: langView('vr_obrwc_title_label_station', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_type_way = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_type_way',
+                name: 'view_type_way',
+                label: langView('vr_obrwc_title_label_view_type_way', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_view_name_way = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'view_name_way',
+                name: 'view_name_way',
+                label: langView('vr_obrwc_title_label_view_name_way', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        e.preventDefault();
+                    }.bind(this),
+                    fn_check: function (e, val) {
+
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+
+        col_bt_apply.childs.push(bt_apply);
+        col_bt_apply.childs.push(bt_clear);
+        objs_obrwc_setup.push(col_bt_apply);
+        objs_obrwc_setup.push(form_check_external_wagon);
+        objs_obrwc_setup.push(form_check_external_wagon_amkr);
+        objs_obrwc_setup.push(form_check_wagon_amkr_vz);
+        objs_obrwc_setup.push(form_check_wagon_klient);
+        objs_obrwc_setup.push(form_check_wagon_outgoing);
+        objs_obrwc_setup.push(form_check_wagon_cisterna_amkr);
+        objs_obrwc_setup.push(form_input_over_day);
+        objs_obrwc_setup.push(form_input_not_moved);
+        objs_obrwc_setup.push(form_select_operator);
+        objs_obrwc_setup.push(form_select_limiting_loading);
+        objs_obrwc_setup.push(form_select_arrival_condition);
+        objs_obrwc_setup.push(form_select_current_condition);
+        objs_obrwc_setup.push(form_select_wagon_rod);
+        objs_obrwc_setup.push(form_select_wagon_type);
+        objs_obrwc_setup.push(form_select_arrival_cargo);
+        objs_obrwc_setup.push(form_select_arrival_cargo_group);
+        objs_obrwc_setup.push(form_select_sertification_data);
+        objs_obrwc_setup.push(form_select_station_from_code);
+        objs_obrwc_setup.push(form_select_arrival_division_amkr);
+        objs_obrwc_setup.push(form_select_view_cargo_name);
+        objs_obrwc_setup.push(form_select_view_external_station_on);
+        objs_obrwc_setup.push(form_select_view_division_from);
+        objs_obrwc_setup.push(form_select_view_division_on);
+        objs_obrwc_setup.push(form_select_loading_status);
+        objs_obrwc_setup.push(form_select_operation);
+        objs_obrwc_setup.push(form_select_station);
+        objs_obrwc_setup.push(form_select_view_type_way);
+        objs_obrwc_setup.push(form_select_view_name_way);
+
+        this.form_obrwc_setup.init({
+            alert: this.main_alert,
+            //context: this...$html,
+            objs: objs_obrwc_setup,
+            id: null,
+            form_class: '',
+            validation: true,
+            fn_validation: function (result) {
+                // Валидация успешна
+                if (result && result.valid) {
+                    if (valid) {
+
+                    }
+                }
+            }.bind(this),
+            fn_html_init: function (res) { }.bind(this),
+            fn_element_init: null,
+            fn_init: function (init) {
+                row_on_setup.$html.append(this.form_obrwc_setup.$form);
+                // На проверку окончания инициализации
+                pr_load--;
+                //console.log('[view_rep_operating_balance_rw_cars] [form_obrwc_setup] process ' + process);
+                out_load(pr_load);
+            }.bind(this),
+        });
+
+        // Таблица Оперативный остаток
         this.vr_obrwc = new TWS('div#vr-obrwc-on-table');
         this.vr_obrwc.init({
             alert: this.on_alert,
@@ -279,6 +1441,11 @@
     // Загрузить отчет
     view_rep_operating_balance_rw_cars.prototype.load = function (callback) {
         LockScreen(langView('vr_obrwc_load_docs', App.Langs).format(moment().format(format_datetime_ru)));
+
+        //if (typeof callback === 'function') {
+        //    callback(this.wagons);
+        //}
+
         this.wagons = [];
         this.calc_usages = [];
         var pr_load = 2;
