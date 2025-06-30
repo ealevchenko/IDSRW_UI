@@ -532,11 +532,11 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
-/*                    this.form_document_pay.$form.submit();*/
+                    /*                    this.form_document_pay.$form.submit();*/
                 }.bind(this),
             }
         };
-        var form_input_over_day= {
+        var form_input_over_day = {
             obj: 'bs_form_input',
             options: {
                 validation_group: 'common_obrwc',
@@ -548,7 +548,7 @@
                 element_class: null,
                 element_value: 0,
                 element_title: null,
-/*                element_placeholder: langView('vr_obrwc_title_placeholder_over_day', App.Langs),*/
+                /*                element_placeholder: langView('vr_obrwc_title_placeholder_over_day', App.Langs),*/
                 element_required: true,
                 element_maxlength: null,
                 element_pattern: null,
@@ -590,7 +590,7 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
-/*                    this.form_document_pay.$form.submit();*/
+                    /*                    this.form_document_pay.$form.submit();*/
                 }.bind(this),
             }
         };
@@ -1445,12 +1445,25 @@
         //if (typeof callback === 'function') {
         //    callback(this.wagons);
         //}
-
+        var start = moment();
+        var stop_load = moment();
+        var diffTime = null;
         this.wagons = [];
         this.calc_usages = [];
         var pr_load = 2;
         var out_load1 = function (pr_load) {
             if (pr_load === 0) {
+                stop_load = moment();
+                diffTime = moment(stop_load).diff(start);
+                var duration = moment.duration(diffTime);
+                var years = duration.years();
+                var days = duration.days();
+                var months = duration.months();
+                var hrs = duration.hours();
+                var mins = duration.minutes();
+                var secs = duration.seconds();
+                //
+                $('label#run-time').text('load : ' + mins + ' мин. ' + secs + ' сек.')
                 $.each(this.calc_usages, function (i, el) {
                     if (el.error === 0) {
                         var wag = this.wagons.find(function (o) {
