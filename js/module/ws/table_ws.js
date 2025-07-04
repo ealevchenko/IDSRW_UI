@@ -3894,8 +3894,8 @@
                 this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
-                this.tab_com.type_select_rows = 0; // Выбирать одну
-                this.tab_com.table_select = false;
+                this.tab_com.type_select_rows = 1; // Выбирать одну
+                this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.wimId); // id строки дислокации вагона
