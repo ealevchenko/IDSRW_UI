@@ -110,12 +110,15 @@
             //'vr_obrwc_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
 
             //'vr_obrwc_load_main_docs': 'Загружаю документы за период...',
-            'vr_obrwc_load_docs': 'Загружаю оперативный остаток вагонов на АМКР на {0}...',
-
+            'vr_obrwc_load': 'Загружаю оперативный остаток вагонов на АМКР на {0}...',
+            'vr_obrwc_where': 'Обновляю оперативный остаток вагонов на АМКР...',
+            'vr_obrwc_clear': 'Сбрасываю выборку оперативного остатка вагонов на АМКР...',
             //'vr_obrwc_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
             //'vr_obrwc_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
 
             //'vr_obrwc_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
+            'vr_obrwc_field_view_type_way_outer_way': 'ПЕРЕГОН',
+            'vr_obrwc_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
         },
         'en':  //default language: English
         {
@@ -317,6 +320,9 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
+                    this.clear_select(function () {
+                        LockScreenOff();
+                    }.bind(this));
                 }.bind(this),
             }
         };
@@ -339,7 +345,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -372,7 +381,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -405,7 +417,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -438,7 +453,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -471,7 +489,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -504,7 +525,10 @@
                 element_options: {
                     default: true,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).prop('checked');
+                        //var value = $(e.currentTarget).prop('checked');
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                 },
                 validation: false,
@@ -653,7 +677,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_operator', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -689,7 +715,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_limiting_loading', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -725,7 +753,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('arrival_condition', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -761,7 +791,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('current_condition', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -797,7 +829,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_arrival_cargo', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -833,7 +867,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_arrival_cargo_group', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -940,7 +976,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_sertification_data', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -976,7 +1014,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('station_from_code', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1012,7 +1052,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('arrival_division_amkr', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1048,7 +1090,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_cargo_name', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1084,7 +1128,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_external_station_on', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1120,7 +1166,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_division_from', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1156,7 +1204,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_division_on', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1192,7 +1242,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('loading_status', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1228,7 +1280,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_operation', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1264,7 +1318,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('id_station', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1300,7 +1356,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_type_way', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1336,7 +1394,9 @@
                     default: -1,
                     fn_change: function (e, val) {
                         this.view_button_container('view_name_way', val.length > 0);
-                        //...
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
                     }.bind(this),
                     fn_check: function (e, val) {
 
@@ -1438,6 +1498,8 @@
         this.wagons = [];
         this.calc_usages = [];
 
+        this.select_data = []; // выборка 
+
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
@@ -1454,21 +1516,40 @@
             $('div#' + id + '-button-container button').removeClass('btn btn-outline-success');
         }
     };
-    // Обновить все
+    // загрузить и показать
     view_rep_operating_balance_rw_cars.prototype.view = function (callback) {
         this.clear_all();
         this.load(function (wagons) {
+            this.vr_obrwc.view(wagons);
             if (typeof callback === 'function') {
-                this.vr_obrwc.view(wagons)
+                LockScreenOff();
                 callback(wagons);
             }
         }.bind(this));
+    };
+    // выбрать и показать
+    view_rep_operating_balance_rw_cars.prototype.update_view = function (callback) {
+        this.clear_all();
+        LockScreen(langView('vr_obrwc_where', App.Langs));
+
+        setTimeout(function () {
+            this.where_select_list(this.wagons, function (wagons) {
+                this.update_select_list(wagons, function (wagons) {
+                    this.vr_obrwc.view(wagons);
+                    if (typeof callback === 'function') {
+                        callback(wagons);
+                    }
+                }.bind(this)); // обновим списки
+            }.bind(this)); // обновим списки
+        }.bind(this), 0);
+
+
+
 
     };
     // Загрузить отчет
     view_rep_operating_balance_rw_cars.prototype.load = function (callback) {
-        LockScreen(langView('vr_obrwc_load_docs', App.Langs).format(moment().format(format_datetime_ru)));
-
+        LockScreen(langView('vr_obrwc_load', App.Langs).format(moment().format(format_datetime_ru)));
         //if (typeof callback === 'function') {
         //    callback(this.wagons);
         //}
@@ -1503,11 +1584,18 @@
                     }
                 }.bind(this));
                 //main_alert.clear_message();
-                this.update_select_list(this.wagons); // обновим списки
-                LockScreenOff();
-                if (typeof callback === 'function') {
-                    callback(this.wagons);
-                }
+                this.where_select_list(this.wagons, function (wagons) {
+                    this.update_select_list(wagons, function (wagons) {
+                        if (typeof callback === 'function') {
+                            callback(wagons);
+                        }
+                    }.bind(this)); // обновим списки
+                }.bind(this)); // обновим списки
+                //this.where_select_list(this.wagons); // обновим списки
+                //this.update_select_list(this.select_data); // обновим списки
+                //if (typeof callback === 'function') {
+                //    callback(this.select_data); // вернем выборку
+                //}
             }
         };
         // плата
@@ -1527,15 +1615,29 @@
     view_rep_operating_balance_rw_cars.prototype.update_element_list = function (list, el, fvalue, ftext, disabled) {
         if (list && el && fvalue && ftext) {
             var obj = list.find(function (o) {
+                //return (el[fvalue] !== null && o.value === el[fvalue]) || el[fvalue] === null && o.value === null;
                 return o.value === el[fvalue];
             }.bind(this));
             if (!obj) {
-                list.push({ value: el[fvalue], text: el[ftext], disabled: disabled ? disabled : false });
+                list.push({ value: el[fvalue], text: el[fvalue] !== null ? el[ftext] : '[пустой]', disabled: disabled ? disabled : false });
+                //list.push({ value: el[fvalue], text: el[ftext], disabled: disabled ? disabled : false });
+            }
+        }
+    };
+    // Обновим элемиент списка
+    view_rep_operating_balance_rw_cars.prototype.where_element_list = function (element, fvalue) {
+        if (element !== null) {
+            var val = element.val();
+            if (val.length > 0) {
+                this.select_data = this.select_data.filter(function (i) {
+                    var res = i[fvalue] !== null ? String(i[fvalue]) : "[пустой]";
+                    return val.indexOf(res) >= 0;
+                }.bind(this));
             }
         }
     };
     // Обновить списки
-    view_rep_operating_balance_rw_cars.prototype.update_select_list = function (data) {
+    view_rep_operating_balance_rw_cars.prototype.update_select_list = function (data, callback) {
         var list_operators = [];
         var list_limiting_loading = [];
         var list_arrival_condition = [];
@@ -1555,6 +1657,25 @@
         var list_view_type_way = [];
         var list_view_name_way = [];
 
+        var id_operator = this.form_obrwc_setup.el.select_id_operator.val();
+        var id_limiting_loading = this.form_obrwc_setup.el.select_id_limiting_loading.val();
+        var arrival_condition = this.form_obrwc_setup.el.select_arrival_condition.val();
+        var current_condition = this.form_obrwc_setup.el.select_current_condition.val();
+        var id_arrival_cargo = this.form_obrwc_setup.el.select_id_arrival_cargo.val();
+        var id_arrival_cargo_group = this.form_obrwc_setup.el.select_id_arrival_cargo_group.val();
+        var id_sertification_data = this.form_obrwc_setup.el.select_id_sertification_data.val();
+        var station_from_code = this.form_obrwc_setup.el.select_station_from_code.val();
+        var arrival_division_amkr = this.form_obrwc_setup.el.select_arrival_division_amkr.val();
+        var view_cargo_name = this.form_obrwc_setup.el.select_view_cargo_name.val();
+        var view_external_station_on = this.form_obrwc_setup.el.select_view_external_station_on.val();
+        var view_division_from = this.form_obrwc_setup.el.select_view_division_from.val();
+        var view_division_on = this.form_obrwc_setup.el.select_view_division_on.val();
+        var loading_status = this.form_obrwc_setup.el.select_loading_status.val();
+        var id_operation = this.form_obrwc_setup.el.select_id_operation.val();
+        var id_station = this.form_obrwc_setup.el.select_id_station.val();
+        var view_type_way = this.form_obrwc_setup.el.select_view_type_way.val();
+        var view_name_way = this.form_obrwc_setup.el.select_view_name_way.val();
+
         if (data && data.length > 0) {
             $.each(data, function (i, el) {
                 this.update_element_list(list_operators, el, 'idOperator', 'operatorAbbr' + ucFirst(App.Lang));
@@ -1573,31 +1694,180 @@
                 this.update_element_list(list_loading_status, el, 'idLoadingStatus', 'loadingStatus' + ucFirst(App.Lang));
                 this.update_element_list(list_operation, el, 'idOperation', 'operationName' + ucFirst(App.Lang));
                 this.update_element_list(list_station, el, 'idStationAmkr', 'stationAmkrAbbr' + ucFirst(App.Lang));
-                this.update_element_list(list_view_type_way, el, 'viewTypeWay', 'viewTypeWay' + ucFirst(App.Lang));
-                this.update_element_list(list_view_name_way, el, 'viewNameWay' + ucFirst(App.Lang), 'viewNameWay' + ucFirst(App.Lang));
+                // Определим тип пути (с переводом)
+                var obj = list_view_type_way.find(function (o) {
+                    return o.value === el.viewTypeWay;
+                }.bind(this));
+                if (!obj) {
+                    list_view_type_way.push({ value: el.viewTypeWay, text: langView('vr_obrwc_field_view_type_way_' + el.viewTypeWay, App.Langs), disabled: false });
+                }
+
+                var obj1 = list_view_name_way.find(function (o) {
+                    return o.value === el['viewNameWay' + ucFirst(App.Lang)];
+                }.bind(this));
+                if (!obj1) {
+                    list_view_name_way.push({ value: el['viewNameWay' + ucFirst(App.Lang)], text: el['stationAmkrAbbr' + ucFirst(App.Lang)] + ' : ' + el['viewNameWay' + ucFirst(App.Lang)], group: el.idStationAmkr, disabled: false });
+                }
             }.bind(this));
         }
-        this.form_obrwc_setup.el.select_id_operator.update(list_operators, -1);
-        this.form_obrwc_setup.el.select_id_limiting_loading.update(list_limiting_loading, -1);
-        this.form_obrwc_setup.el.select_arrival_condition.update(list_arrival_condition, -1);
-        this.form_obrwc_setup.el.select_current_condition.update(list_current_condition, -1);
-        this.form_obrwc_setup.el.select_id_arrival_cargo.update(list_arrival_cargo, -1);
-        this.form_obrwc_setup.el.select_id_arrival_cargo_group.update(list_arrival_cargo_group, -1);
-        this.form_obrwc_setup.el.select_id_sertification_data.update(list_sertification_data, -1);
-        this.form_obrwc_setup.el.select_station_from_code.update(list_station_from_code, -1);
-        this.form_obrwc_setup.el.select_arrival_division_amkr.update(list_arrival_division_amkr, -1);
-        this.form_obrwc_setup.el.select_view_cargo_name.update(list_view_cargo_name, -1);
-        this.form_obrwc_setup.el.select_view_external_station_on.update(list_view_external_station_on, -1);
-        this.form_obrwc_setup.el.select_view_division_from.update(list_view_division_from, -1);
-        this.form_obrwc_setup.el.select_view_division_on.update(list_view_division_on, -1);
-        this.form_obrwc_setup.el.select_loading_status.update(list_loading_status, -1);
-        this.form_obrwc_setup.el.select_id_operation.update(list_operation, -1);
-        this.form_obrwc_setup.el.select_id_station.update(list_station, -1);
-        this.form_obrwc_setup.el.select_view_type_way.update(list_view_type_way, -1);
+        this.form_obrwc_setup.el.select_id_operator.update(list_operators, id_operator.length > 0 ? id_operator : -1);
+        this.form_obrwc_setup.el.select_id_limiting_loading.update(list_limiting_loading, id_limiting_loading.length > 0 ? id_limiting_loading : -1);
+        this.form_obrwc_setup.el.select_arrival_condition.update(list_arrival_condition, arrival_condition.length > 0 ? arrival_condition : -1);
+        this.form_obrwc_setup.el.select_current_condition.update(list_current_condition, current_condition.length > 0 ? current_condition : -1);
+        this.form_obrwc_setup.el.select_id_arrival_cargo.update(list_arrival_cargo, id_arrival_cargo.length > 0 ? id_arrival_cargo : -1);
+        this.form_obrwc_setup.el.select_id_arrival_cargo_group.update(list_arrival_cargo_group, id_arrival_cargo_group.length > 0 ? id_arrival_cargo_group : -1);
+        this.form_obrwc_setup.el.select_id_sertification_data.update(list_sertification_data, id_sertification_data.length > 0 ? id_sertification_data : -1);
+        this.form_obrwc_setup.el.select_station_from_code.update(list_station_from_code, station_from_code.length > 0 ? station_from_code : -1);
+        this.form_obrwc_setup.el.select_arrival_division_amkr.update(list_arrival_division_amkr, arrival_division_amkr.length > 0 ? arrival_division_amkr : -1);
+        this.form_obrwc_setup.el.select_view_cargo_name.update(list_view_cargo_name, view_cargo_name.length > 0 ? view_cargo_name : -1);
+        this.form_obrwc_setup.el.select_view_external_station_on.update(list_view_external_station_on, view_external_station_on.length > 0 ? view_external_station_on : -1);
+        this.form_obrwc_setup.el.select_view_division_from.update(list_view_division_from, view_division_from.length > 0 ? view_division_from : -1);
+        this.form_obrwc_setup.el.select_view_division_on.update(list_view_division_on, view_division_on.length > 0 ? view_division_on : -1);
+        this.form_obrwc_setup.el.select_loading_status.update(list_loading_status, loading_status.length > 0 ? loading_status : -1);
+        this.form_obrwc_setup.el.select_id_operation.update(list_operation, id_operation.length > 0 ? id_operation : -1);
+        this.form_obrwc_setup.el.select_id_station.update(list_station, id_station.length > 0 ? id_station : -1);
+        this.form_obrwc_setup.el.select_view_type_way.update(list_view_type_way, view_type_way.length > 0 ? view_type_way : -1);
         //var list = list_view_name_way.sort(function (a, b) {
         //    return b.text - a.text;
         //}.bind(this));
-        this.form_obrwc_setup.el.select_view_name_way.update(list_view_name_way, -1);
+        this.form_obrwc_setup.el.select_view_name_way.update(list_view_name_way.sort(function (a, b) {
+            return a.group - b.group;
+        }.bind(this)), view_name_way.length > 0 ? view_name_way : -1);
+        if (typeof callback === 'function') {
+            callback(data); // вернем выборку
+        }
+    };
+    // Сделаем выборку
+    view_rep_operating_balance_rw_cars.prototype.where_select_list = function (data, callback) {
+        if (data && data.length > 0) {
+            this.select_data = data;
+
+            var external_wagon = this.form_obrwc_setup.el.input_checkbox_external_wagon.val(); //.prop('checked');
+            if (!external_wagon) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.operatorGroup !== null;
+                }.bind(this));
+            }
+
+            var external_wagon_amkr = this.form_obrwc_setup.el.input_checkbox_external_wagon_amkr.val();
+            if (!external_wagon_amkr) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.operatorGroup !== 'amkr';
+                }.bind(this));
+            }
+            var wagon_amkr_vz = this.form_obrwc_setup.el.input_checkbox_wagon_amkr_vz.val();
+            if (!wagon_amkr_vz) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.operatorGroup !== 'amkr_vz';
+                }.bind(this));
+            }
+            var wagon_klient = this.form_obrwc_setup.el.input_checkbox_wagon_klient.val();
+            if (!wagon_klient) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.arrivalKlient !== true;
+                }.bind(this));
+            }
+
+            var wagon_outgoing = this.form_obrwc_setup.el.input_checkbox_wagon_outgoing.val();
+            if (!wagon_outgoing) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.outgoingDate === null;
+                }.bind(this));
+            }
+
+            var wagon_cisterna_amkr = this.form_obrwc_setup.el.input_checkbox_wagon_cisterna_amkr.val();
+            if (!wagon_cisterna_amkr) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.operatorGroup !== 'cisterns';
+                }.bind(this));
+            }
+
+            this.where_element_list(this.form_obrwc_setup.el.select_id_operator, 'idOperator');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_limiting_loading, 'idLimitingLoading');
+            this.where_element_list(this.form_obrwc_setup.el.select_arrival_condition, 'arrivalIdCondition');
+            this.where_element_list(this.form_obrwc_setup.el.select_current_condition, 'currentIdCondition');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_arrival_cargo, 'arrivalIdCargo');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_arrival_cargo_group, 'arrivalIdCargoGroup');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_sertification_data, 'arrivalIdSertificationData');
+            this.where_element_list(this.form_obrwc_setup.el.select_station_from_code, 'arrivalStationFromCode');
+            this.where_element_list(this.form_obrwc_setup.el.select_arrival_division_amkr, 'arrivalIdStationAmkr');
+            this.where_element_list(this.form_obrwc_setup.el.select_view_cargo_name, 'viewCargoName' + ucFirst(App.Lang));
+            this.where_element_list(this.form_obrwc_setup.el.select_view_external_station_on, 'viewExternalStationOnName' + ucFirst(App.Lang));
+            this.where_element_list(this.form_obrwc_setup.el.select_view_division_from, 'viewDivisionFromAbbr' + ucFirst(App.Lang));
+            this.where_element_list(this.form_obrwc_setup.el.select_view_division_on, 'viewDivisionOnAbbr' + ucFirst(App.Lang));
+            this.where_element_list(this.form_obrwc_setup.el.select_loading_status, 'idLoadingStatus');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_operation, 'idOperation');
+            this.where_element_list(this.form_obrwc_setup.el.select_id_station, 'idStationAmkr');
+            var val = this.form_obrwc_setup.el.select_view_type_way.val();
+            if (val.length > 0) {
+                this.select_data = this.select_data.filter(function (i) {
+                    var res = i.viewTypeWay;
+                    return val.indexOf(res) >= 0;
+                }.bind(this));
+            }
+            this.where_element_list(this.form_obrwc_setup.el.select_view_name_way, 'viewNameWay' + ucFirst(App.Lang));
+
+            if (typeof callback === 'function') {
+                callback(this.select_data); // вернем выборку
+            }
+        } else {
+            this.select_data = [];
+            if (typeof callback === 'function') {
+                callback(this.select_data); // вернем выборку
+            }
+        }
+    };
+    // Сбросим выборку
+    view_rep_operating_balance_rw_cars.prototype.clear_select = function (callback) {
+        LockScreen(langView('vr_obrwc_clear', App.Langs).format(moment().format(format_datetime_ru)));
+        this.form_obrwc_setup.el.select_id_operator.val(-1);
+        this.form_obrwc_setup.el.select_id_limiting_loading.val(-1);
+        this.form_obrwc_setup.el.select_arrival_condition.val(-1);
+        this.form_obrwc_setup.el.select_current_condition.val(-1);
+        this.form_obrwc_setup.el.select_id_arrival_cargo.val(-1);
+        this.form_obrwc_setup.el.select_id_arrival_cargo_group.val(-1);
+        this.form_obrwc_setup.el.select_id_sertification_data.val(-1);
+        this.form_obrwc_setup.el.select_station_from_code.val(-1);
+        this.form_obrwc_setup.el.select_arrival_division_amkr.val(-1);
+        this.form_obrwc_setup.el.select_view_cargo_name.val(-1);
+        this.form_obrwc_setup.el.select_view_external_station_on.val(-1);
+        this.form_obrwc_setup.el.select_view_division_from.val(-1);
+        this.form_obrwc_setup.el.select_view_division_on.val(-1);
+        this.form_obrwc_setup.el.select_loading_status.val(-1);
+        this.form_obrwc_setup.el.select_id_operation.val(-1);
+        this.form_obrwc_setup.el.select_id_station.val(-1);
+        this.form_obrwc_setup.el.select_view_type_way.val(-1);
+        this.form_obrwc_setup.el.select_view_name_way.val(-1);
+
+        $('div#id_operator-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_limiting_loading-button-container button').removeClass('btn btn-outline-success');
+        $('div#arrival_condition-button-container button').removeClass('btn btn-outline-success');
+        $('div#current_condition-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_arrival_cargo-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_arrival_cargo_group-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_sertification_data-button-container button').removeClass('btn btn-outline-success');
+        $('div#station_from_code-button-container button').removeClass('btn btn-outline-success');
+        $('div#arrival_division_amkr-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_cargo_name-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_external_station_on-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_division_from-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_division_on-button-container button').removeClass('btn btn-outline-success');
+        $('div#loading_status-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_operation-button-container button').removeClass('btn btn-outline-success');
+        $('div#id_station-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_type_way-button-container button').removeClass('btn btn-outline-success');
+        $('div#view_name_way-button-container button').removeClass('btn btn-outline-success');
+
+        // сбросим
+        setTimeout(function () {
+            this.select_data = this.wagons;
+            this.update_select_list(this.select_data, function (wagons) {
+                this.vr_obrwc.view(wagons);
+                if (typeof callback === 'function') {
+                    callback(wagons);
+                }
+            }.bind(this)); // обновим списки
+        }.bind(this), 0);
     };
 
 
