@@ -301,8 +301,9 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
-                    this.clear = false;
-                    this.form_obrwc_setup.$form.submit();
+                    this.update_view(function () {
+                        LockScreenOff();
+                    }.bind(this));
                 }.bind(this),
             }
         };
@@ -556,7 +557,9 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
-                    /*                    this.form_document_pay.$form.submit();*/
+                    this.update_view(function () {
+                        LockScreenOff();
+                    }.bind(this));
                 }.bind(this),
             }
         };
@@ -581,9 +584,9 @@
                 element_max: 1000,
                 element_step: 1,
                 element_options: {
-                    default: '',
+                    default: 0,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).val();
+                        //var value = $(e.currentTarget).val();
                     }.bind(this),
                 },
                 validation: false,
@@ -614,7 +617,9 @@
                 icon_fa_right: null,
                 fn_click: function (event) {
                     event.preventDefault();
-                    /*                    this.form_document_pay.$form.submit();*/
+                    this.update_view(function () {
+                        LockScreenOff();
+                    }.bind(this));
                 }.bind(this),
             }
         };
@@ -638,9 +643,9 @@
                 element_max: 1000,
                 element_step: 1,
                 element_options: {
-                    default: '',
+                    default: 0,
                     fn_change: function (e) {
-                        var value = $(e.currentTarget).val();
+                        //var value = $(e.currentTarget).val();
                     }.bind(this),
                 },
                 validation: false,
@@ -1584,6 +1589,7 @@
                     }
                 }.bind(this));
                 //main_alert.clear_message();
+                this.clear_select_element();
                 this.where_select_list(this.wagons, function (wagons) {
                     this.update_select_list(wagons, function (wagons) {
                         if (typeof callback === 'function') {
@@ -1591,11 +1597,6 @@
                         }
                     }.bind(this)); // обновим списки
                 }.bind(this)); // обновим списки
-                //this.where_select_list(this.wagons); // обновим списки
-                //this.update_select_list(this.select_data); // обновим списки
-                //if (typeof callback === 'function') {
-                //    callback(this.select_data); // вернем выборку
-                //}
             }
         };
         // плата
@@ -1709,33 +1710,67 @@
                     list_view_name_way.push({ value: el['viewNameWay' + ucFirst(App.Lang)], text: el['stationAmkrAbbr' + ucFirst(App.Lang)] + ' : ' + el['viewNameWay' + ucFirst(App.Lang)], group: el.idStationAmkr, disabled: false });
                 }
             }.bind(this));
+            // Списки по возрастанию
+            list_operators = list_operators.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_limiting_loading = list_limiting_loading.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_arrival_condition = list_arrival_condition.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_current_condition = list_current_condition.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_arrival_cargo = list_arrival_cargo.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_arrival_cargo_group = list_arrival_cargo_group.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_sertification_data = list_sertification_data.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_station_from_code = list_station_from_code.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_arrival_division_amkr = list_arrival_division_amkr.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_cargo_name = list_view_cargo_name.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_external_station_on = list_view_external_station_on.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_division_from = list_view_division_from.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_division_on = list_view_division_on.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_loading_status = list_loading_status.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_operation = list_operation.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_station = list_station.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_type_way = list_view_type_way.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_view_name_way = list_view_name_way.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
         }
         this.form_obrwc_setup.el.select_id_operator.update(list_operators, id_operator.length > 0 ? id_operator : -1);
+        if (list_operators.length === 0) $('div#id_operator-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_limiting_loading.update(list_limiting_loading, id_limiting_loading.length > 0 ? id_limiting_loading : -1);
+        if (list_limiting_loading.length === 0) $('div#id_limiting_loading-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_arrival_condition.update(list_arrival_condition, arrival_condition.length > 0 ? arrival_condition : -1);
+        if (list_arrival_condition.length === 0) $('div#arrival_condition-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_current_condition.update(list_current_condition, current_condition.length > 0 ? current_condition : -1);
+        if (list_current_condition.length === 0) $('div#current_condition-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_arrival_cargo.update(list_arrival_cargo, id_arrival_cargo.length > 0 ? id_arrival_cargo : -1);
+        if (list_arrival_cargo.length === 0) $('div#id_arrival_cargo-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_arrival_cargo_group.update(list_arrival_cargo_group, id_arrival_cargo_group.length > 0 ? id_arrival_cargo_group : -1);
+        if (list_arrival_cargo_group.length === 0) $('div#id_arrival_cargo_group-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_sertification_data.update(list_sertification_data, id_sertification_data.length > 0 ? id_sertification_data : -1);
+        if (list_sertification_data.length === 0) $('div#id_sertification_data-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_station_from_code.update(list_station_from_code, station_from_code.length > 0 ? station_from_code : -1);
+        if (list_station_from_code.length === 0) $('div#station_from_code-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_arrival_division_amkr.update(list_arrival_division_amkr, arrival_division_amkr.length > 0 ? arrival_division_amkr : -1);
+        if (list_arrival_division_amkr.length === 0) $('div#arrival_division_amkr-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_cargo_name.update(list_view_cargo_name, view_cargo_name.length > 0 ? view_cargo_name : -1);
+        if (list_view_cargo_name.length === 0) $('div#view_cargo_name-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_external_station_on.update(list_view_external_station_on, view_external_station_on.length > 0 ? view_external_station_on : -1);
+        if (list_view_external_station_on.length === 0) $('div#view_external_station_on-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_division_from.update(list_view_division_from, view_division_from.length > 0 ? view_division_from : -1);
+        if (list_view_division_from.length === 0) $('div#view_division_from-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_division_on.update(list_view_division_on, view_division_on.length > 0 ? view_division_on : -1);
+        if (list_view_division_on.length === 0) $('div#view_division_on-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_loading_status.update(list_loading_status, loading_status.length > 0 ? loading_status : -1);
+        if (list_loading_status.length === 0) $('div#loading_status-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_operation.update(list_operation, id_operation.length > 0 ? id_operation : -1);
+        if (list_operation.length === 0) $('div#id_operation-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_station.update(list_station, id_station.length > 0 ? id_station : -1);
+        if (list_station.length === 0) $('div#id_station-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_type_way.update(list_view_type_way, view_type_way.length > 0 ? view_type_way : -1);
-        //var list = list_view_name_way.sort(function (a, b) {
-        //    return b.text - a.text;
-        //}.bind(this));
+        if (list_view_type_way.length === 0) $('div#view_type_way-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_view_name_way.update(list_view_name_way.sort(function (a, b) {
             return a.group - b.group;
         }.bind(this)), view_name_way.length > 0 ? view_name_way : -1);
         if (typeof callback === 'function') {
             callback(data); // вернем выборку
         }
+        if (list_view_name_way.length === 0) $('div#view_name_way-button-container button').removeClass('btn btn-outline-success');
     };
     // Сделаем выборку
     view_rep_operating_balance_rw_cars.prototype.where_select_list = function (data, callback) {
@@ -1743,45 +1778,36 @@
             this.select_data = data;
 
             var external_wagon = this.form_obrwc_setup.el.input_checkbox_external_wagon.val(); //.prop('checked');
-            if (!external_wagon) {
-                this.select_data = this.select_data.filter(function (i) {
-                    return i.operatorGroup !== null;
-                }.bind(this));
-            }
-
             var external_wagon_amkr = this.form_obrwc_setup.el.input_checkbox_external_wagon_amkr.val();
-            if (!external_wagon_amkr) {
-                this.select_data = this.select_data.filter(function (i) {
-                    return i.operatorGroup !== 'amkr';
-                }.bind(this));
-            }
             var wagon_amkr_vz = this.form_obrwc_setup.el.input_checkbox_wagon_amkr_vz.val();
-            if (!wagon_amkr_vz) {
-                this.select_data = this.select_data.filter(function (i) {
-                    return i.operatorGroup !== 'amkr_vz';
-                }.bind(this));
-            }
             var wagon_klient = this.form_obrwc_setup.el.input_checkbox_wagon_klient.val();
-            if (!wagon_klient) {
-                this.select_data = this.select_data.filter(function (i) {
-                    return i.arrivalKlient !== true;
-                }.bind(this));
-            }
-
             var wagon_outgoing = this.form_obrwc_setup.el.input_checkbox_wagon_outgoing.val();
-            if (!wagon_outgoing) {
-                this.select_data = this.select_data.filter(function (i) {
-                    return i.outgoingDate === null;
-                }.bind(this));
-            }
-
             var wagon_cisterna_amkr = this.form_obrwc_setup.el.input_checkbox_wagon_cisterna_amkr.val();
-            if (!wagon_cisterna_amkr) {
+
+            if (!external_wagon || !external_wagon_amkr || !wagon_amkr_vz || !wagon_klient || !wagon_outgoing || !wagon_cisterna_amkr) {
                 this.select_data = this.select_data.filter(function (i) {
-                    return i.operatorGroup !== 'cisterns';
+
+                    return (external_wagon && i.operatorGroup === null && !i.arrivalKlient && i.outgoingDate === null)
+                        || (external_wagon && wagon_klient && i.operatorGroup === null && i.arrivalKlient && i.outgoingDate === null)
+                        || (external_wagon && wagon_outgoing && i.operatorGroup === null && !i.arrivalKlient && i.outgoingDate !== null)
+
+                        || (external_wagon_amkr && i.operatorGroup === 'amkr' && !i.arrivalKlient && i.outgoingDate === null)
+                        || (external_wagon_amkr && wagon_klient && i.operatorGroup === 'amkr' && i.arrivalKlient && i.outgoingDate === null)
+                        || (external_wagon_amkr && wagon_outgoing && i.operatorGroup === 'amkr' && !i.arrivalKlient && i.outgoingDate !== null)
+
+                        || (wagon_cisterna_amkr && i.operatorGroup === 'cisterns' && !i.arrivalKlient && i.outgoingDate === null)
+                        || (wagon_cisterna_amkr && wagon_klient && i.operatorGroup === 'cisterns' && i.arrivalKlient && i.outgoingDate === null)
+                        || (wagon_cisterna_amkr && wagon_outgoing && i.operatorGroup === 'cisterns' && !i.arrivalKlient && i.outgoingDate !== null)
+
+                        || (wagon_amkr_vz && i.operatorGroup === 'amkr_vz' && !i.arrivalKlient && i.outgoingDate === null)
+                        || (wagon_amkr_vz && wagon_klient && i.operatorGroup === 'amkr_vz' && i.arrivalKlient && i.outgoingDate === null)
+                        || (wagon_amkr_vz && wagon_outgoing && i.operatorGroup === 'amkr_vz' && !i.arrivalKlient && i.outgoingDate !== null)
+
+                        || (!external_wagon && !external_wagon_amkr && !wagon_amkr_vz && !wagon_cisterna_amkr && wagon_klient && i.arrivalKlient)
+                        || (!external_wagon && !external_wagon_amkr && !wagon_amkr_vz && !wagon_cisterna_amkr && wagon_outgoing && i.outgoingDate !== null)
+                        ;
                 }.bind(this));
             }
-
             this.where_element_list(this.form_obrwc_setup.el.select_id_operator, 'idOperator');
             this.where_element_list(this.form_obrwc_setup.el.select_id_limiting_loading, 'idLimitingLoading');
             this.where_element_list(this.form_obrwc_setup.el.select_arrival_condition, 'arrivalIdCondition');
@@ -1817,9 +1843,15 @@
             }
         }
     };
-    // Сбросим выборку
-    view_rep_operating_balance_rw_cars.prototype.clear_select = function (callback) {
-        LockScreen(langView('vr_obrwc_clear', App.Langs).format(moment().format(format_datetime_ru)));
+    // Сбросим элементы выбора
+    view_rep_operating_balance_rw_cars.prototype.clear_select_element = function () {
+        this.form_obrwc_setup.el.input_checkbox_external_wagon.val(true);
+        this.form_obrwc_setup.el.input_checkbox_external_wagon_amkr.val(true);
+        this.form_obrwc_setup.el.input_checkbox_wagon_amkr_vz.val(true);
+        this.form_obrwc_setup.el.input_checkbox_wagon_klient.val(true);
+        this.form_obrwc_setup.el.input_checkbox_wagon_outgoing.val(true);
+        this.form_obrwc_setup.el.input_checkbox_wagon_cisterna_amkr.val(true);
+
         this.form_obrwc_setup.el.select_id_operator.val(-1);
         this.form_obrwc_setup.el.select_id_limiting_loading.val(-1);
         this.form_obrwc_setup.el.select_arrival_condition.val(-1);
@@ -1838,6 +1870,8 @@
         this.form_obrwc_setup.el.select_id_station.val(-1);
         this.form_obrwc_setup.el.select_view_type_way.val(-1);
         this.form_obrwc_setup.el.select_view_name_way.val(-1);
+        this.form_obrwc_setup.el.input_text_over_day.val(0);
+        this.form_obrwc_setup.el.input_text_not_moved.val(0);
 
         $('div#id_operator-button-container button').removeClass('btn btn-outline-success');
         $('div#id_limiting_loading-button-container button').removeClass('btn btn-outline-success');
@@ -1857,7 +1891,11 @@
         $('div#id_station-button-container button').removeClass('btn btn-outline-success');
         $('div#view_type_way-button-container button').removeClass('btn btn-outline-success');
         $('div#view_name_way-button-container button').removeClass('btn btn-outline-success');
+    };
 
+    view_rep_operating_balance_rw_cars.prototype.clear_select = function (callback) {
+        LockScreen(langView('vr_obrwc_clear', App.Langs).format(moment().format(format_datetime_ru)));
+        this.clear_select_element();
         // сбросим
         setTimeout(function () {
             this.select_data = this.wagons;
