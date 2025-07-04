@@ -2408,6 +2408,7 @@ var get_belongs_element = function (rows, name_field, id) {
     form_element.prototype.init_select_multiple = function (element, options, content) {
         //TODO: создать и настроить SELECT сделать надпись выберите через placeholder, чтобы работала required
         this.$element = element;
+        this.buf = null;
         this.settings = $.extend({
             data: [],
             default_value: null,
@@ -2428,12 +2429,51 @@ var get_belongs_element = function (rows, name_field, id) {
                     optionGroup: '<button type="button" class="multiselect-group dropdown-item"></button>',
                     resetButton: '<div class="multiselect-reset text-center p-2"><button type="button" class="btn btn-sm btn-block btn-outline-secondary"></button></div>'
                 },
-                buttonContainer: '<div class="btn-group d-grid text-left" />',
+                buttonContainer: '<div class="btn-group d-grid text-left" id="' + element[0].id + '-button-container" />',
                 buttonTextAlignment: 'left',
                 enableFiltering: false,
                 includeSelectAllOption: true,
                 nonSelectedText: langView('title_select', App.Langs),
                 selectAllText: langView('title_select_all', App.Langs),
+                //                buttonText: function (options, select) {
+                //                    if (this.disabledText.length > 0
+                //                        && (this.disableIfEmpty || select.prop('disabled'))
+                //                        && options.length == 0) {
+
+                //                        return this.disabledText;
+                //                    }
+                //                    else if (options.length === 0) {
+                //                        return this.nonSelectedText;
+                //                    }
+                //                    var $select = $(select);
+                ///*                    var $optgroups = $('optgroup', $select);*/
+
+                //                    var delimiter = this.delimiterText;
+                //                    var text = '';
+
+                //                    // Go through groups.
+                //                    //$optgroups.each(function () {
+                //                    //    var $selectedOptions = $('option:selected', this);
+                //                    //    var $options = $('option', this);
+
+                //                    //    if ($selectedOptions.length == $options.length) {
+                //                    //        text += $(this).attr('label') + delimiter;
+                //                    //    }
+                //                    //    else {
+                //                    //        $selectedOptions.each(function () {
+                //                    //            text += $(this).text() + delimiter;
+                //                    //        });
+                //                    //    }
+                //                    //});
+
+                //                    var $remainingOptions = $('option:selected', $select).not('optgroup option');
+                //                    $remainingOptions.each(function () {
+                //                        text += $(this).text() + delimiter;
+                //                    });
+
+                //                    return text.substr(0, text.length - 2);
+
+                //                },
                 onChange: function (element, checked) {
                     if (typeof this.settings.fn_check === 'function') {
                         this.settings.fn_check(null, element.val());
@@ -2441,11 +2481,13 @@ var get_belongs_element = function (rows, name_field, id) {
                 }.bind(this),
                 onDropdownHide: function (event) {
                     if (typeof this.settings.fn_change === 'function') {
-                        this.settings.fn_change(event, element.val());
+                        if (JSON.stringify(this.buf) !== JSON.stringify(element.val())) {
+                            this.settings.fn_change(event, element.val());
+                        }
                     }
                 }.bind(this),
                 onDropdownShown: function (event) {
-
+                    this.buf = element.val();
                 }.bind(this)
             });
             this.update(this.settings.data, this.settings.default_value);
@@ -2513,6 +2555,9 @@ var get_belongs_element = function (rows, name_field, id) {
         this.destroy = function () {
             this.$el.multiselect('destroy');
         };
+        //this.buttonContainer = function (class) {
+
+        //};
         this.init();
     };
     // Инициализация поля дата "INPUT" типа DATALIST
@@ -3190,7 +3235,7 @@ var get_belongs_element = function (rows, name_field, id) {
     modal_confirm_form.prototype.open = function (title, message, fn_ok, fn_cancel) {
         this.result = false;
         this.$header.empty().append(title);
-        if (message) { this.$body.empty().append(message);}
+        if (message) { this.$body.empty().append(message); }
         this.settings.fn_close = function (res) {
             if (res) {
                 // Ok
