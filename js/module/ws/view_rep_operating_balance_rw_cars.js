@@ -1702,7 +1702,7 @@
                 if (!obj) {
                     list_view_type_way.push({ value: el.viewTypeWay, text: langView('vr_obrwc_field_view_type_way_' + el.viewTypeWay, App.Langs), disabled: false });
                 }
-
+                // Определим путь
                 var obj1 = list_view_name_way.find(function (o) {
                     return o.value === el['viewNameWay' + ucFirst(App.Lang)];
                 }.bind(this));
@@ -1808,6 +1808,20 @@
                         ;
                 }.bind(this));
             }
+
+            var over_day = this.form_obrwc_setup.el.input_text_over_day.val();
+            var not_moved = this.form_obrwc_setup.el.input_text_not_moved.val();
+            if (over_day !== null && over_day > 0) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.arrivalDuration > (24 * over_day) * 60;
+                }.bind(this));
+            }
+            if (not_moved !== null && not_moved > 0) {
+                this.select_data = this.select_data.filter(function (i) {
+                    return i.currentWayDuration > (1 * not_moved) * 60;
+                }.bind(this));
+            }
+
             this.where_element_list(this.form_obrwc_setup.el.select_id_operator, 'idOperator');
             this.where_element_list(this.form_obrwc_setup.el.select_id_limiting_loading, 'idLimitingLoading');
             this.where_element_list(this.form_obrwc_setup.el.select_arrival_condition, 'arrivalIdCondition');
@@ -1852,6 +1866,9 @@
         this.form_obrwc_setup.el.input_checkbox_wagon_outgoing.val(true);
         this.form_obrwc_setup.el.input_checkbox_wagon_cisterna_amkr.val(true);
 
+        this.form_obrwc_setup.el.input_text_over_day.val(0);
+        this.form_obrwc_setup.el.input_text_not_moved.val(0);
+
         this.form_obrwc_setup.el.select_id_operator.val(-1);
         this.form_obrwc_setup.el.select_id_limiting_loading.val(-1);
         this.form_obrwc_setup.el.select_arrival_condition.val(-1);
@@ -1870,8 +1887,7 @@
         this.form_obrwc_setup.el.select_id_station.val(-1);
         this.form_obrwc_setup.el.select_view_type_way.val(-1);
         this.form_obrwc_setup.el.select_view_name_way.val(-1);
-        this.form_obrwc_setup.el.input_text_over_day.val(0);
-        this.form_obrwc_setup.el.input_text_not_moved.val(0);
+
 
         $('div#id_operator-button-container button').removeClass('btn btn-outline-success');
         $('div#id_limiting_loading-button-container button').removeClass('btn btn-outline-success');
