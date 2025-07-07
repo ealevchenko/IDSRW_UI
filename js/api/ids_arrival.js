@@ -76,9 +76,13 @@
         this.api_com.post('/ArrivalUzDocument/update/payer_local/', value, callback);
     };
 
-    // Сервис. Получить список документов для сверки по прибытию храящиеся в БД за период
+    // Сервис. Получить список документов для сверки по прибытию храящиеся в БД по id
     ids_arrival.prototype.getVerificationArrivalUzDocumentOfId = function (id, callback) {
         this.api_com.get('/ArrivalUzDocument/verification/id/' + id, callback);
+    };
+    // Сервис. Получить список документов для сверки по прибытию храящиеся в БД по номеру основной накладной
+    ids_arrival.prototype.getVerificationArrivalUzDocumentOfNum = function (num, callback) {
+        this.api_com.get('/ArrivalUzDocument/verification/num/' + num, callback);
     };
     // Сервис. Получить список документов для сверки по прибытию храящиеся в БД за период
     ids_arrival.prototype.getVerificationArrivalUzDocumentOfPeriod = function (start, stop, callback) {
