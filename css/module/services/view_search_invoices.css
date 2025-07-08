@@ -1,0 +1,10 @@
+﻿body {
+}
+div#tab-tr-table-search-invoices-arrival_wrapper > div.dt-scroll > div.dt-scroll-body {
+    overflow: auto hidden !important
+}
+div#tab-tr-table-search-invoices-outgoing_wrapper > div.dt-scroll > div.dt-scroll-body {
+    overflow: auto hidden !important
+}
+/*tab-tr-table-search-invoices-outgoing_info
+tab-tr-table-search-invoices-outgoing_wrapper*/
