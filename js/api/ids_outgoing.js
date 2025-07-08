@@ -56,7 +56,34 @@
     ids_outgoing.prototype.getRegisterDocumentTransferOutgoingSostavOfId = function (id, callback) {
         this.api_com.get('/OutgoingSostav/register/document/transfer/id/' + id, callback);
     };
-
+    // Сервис. Получить список документов по отправке за период
+    ids_outgoing.prototype.getRegisterOutgoingUzDocument = function (start, stop, callback) {
+        this.api_com.get('/OutgoingUzDocument/register/start/' + start + '/stop/' + stop, callback);
+    };
+    // Сервис. Получить документ по id
+    ids_outgoing.prototype.getRegisterOutgoingUzDocumentOfId = function (id, callback) {
+        this.api_com.get('/OutgoingUzDocument/register/id/' + id, callback);
+    };
+    // Сервис. Обновить тарифы по отправленным документам
+    ids_outgoing.prototype.postUpdatePayOutgoingUzDocument = function (value, callback) {
+        this.api_com.post('/OutgoingUzDocument/update/pay/', value, callback);
+    };
+    // Сервис. Получить документ "СВЕРКИ НАКЛАДНЫХ ПО ОТПРАВКЕ" храящиеся в БД по id
+    ids_outgoing.prototype.getVerificationOutgoingUzDocumentOfId = function (id, callback) {
+        this.api_com.get('/OutgoingUzDocument/verification/id/' + id, callback);
+    };
+    // Сервис. Получить документ "СВЕРКИ НАКЛАДНЫХ ПО ОТПРАВКЕ" храящиеся в БД по номеру документа
+    ids_outgoing.prototype.getVerificationOutgoingUzDocumentOfINum = function (num, callback) {
+        this.api_com.get('/OutgoingUzDocument/verification/num/' + num, callback);
+    };
+    // Сервис. Получить список документов "СВЕРКИ НАКЛАДНЫХ ПО ОТПРАВКЕ" храящиеся в БД за период
+    ids_outgoing.prototype.getVerificationOutgoingUzDocumentOfPeriod = function (start, stop, callback) {
+        this.api_com.get('/OutgoingUzDocument/verification/start/' + start + '/stop/' + stop, callback);
+    };
+    // Сервис. Обновить "СВЕРКА НАКЛАДНЫХ ПО ОТПРАВКЕ"
+    ids_outgoing.prototype.postVerificationOutgoingUzDocument = function (value, callback) {
+        this.api_com.post('/OutgoingUzDocument/update/verification/', value, callback);
+    };
     App.ids_outgoing = ids_outgoing;
 
     window.App = App;

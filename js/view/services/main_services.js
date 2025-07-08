@@ -214,6 +214,8 @@
                                 alert: null,
                                 api_dir: null,
                                 api_wsd: null,
+                                ids_arrival: null, 
+                                ids_outgoing: null,
                                 fn_db_update: null,
                                 fn_init: function () {
                                     LockScreenOff();
@@ -229,6 +231,8 @@
                                 alert: null,
                                 api_dir: null,
                                 api_wsd: null,
+                                ids_arrival: null,
+                                ids_outgoing: null,
                                 fn_db_update: null,
                                 fn_init: function () {
                                     LockScreenOff();
@@ -244,6 +248,8 @@
                                 alert: null,
                                 api_dir: null,
                                 api_wsd: null,
+                                ids_arrival: null,
+                                ids_outgoing: null,
                                 fn_db_update: null,
                                 fn_init: function () {
                                     LockScreenOff();

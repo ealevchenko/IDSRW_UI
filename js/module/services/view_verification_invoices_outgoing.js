@@ -145,6 +145,7 @@
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
     var IDS_ARRIVAL = App.ids_arrival;
+    var IDS_OUTGOING = App.ids_outgoing;
 
     var TSRV = App.table_services;
 
@@ -173,6 +174,7 @@
             api_dir: null,                          // сылки на библиотеки api dir
             api_wsd: null,                          // сылки на библиотеки api wsd
             ids_arrival: null,                      // сылки на библиотеки api arrival
+            ids_outgoing: null,                     // сылки на библиотеки api outgoing
             fn_init: null,                          // Окончание инициализации
             fn_db_update: null,                     // Выполнить обновление баз данных если были изменения
             fn_close: null,                         // ? пока неработает
@@ -182,6 +184,7 @@
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
         this.ids_arrival = this.settings.ids_arrival ? this.settings.ids_arrival : new IDS_ARRIVAL({ url_api: App.Url_Api });
+        this.ids_outgoing = this.settings.ids_outgoing ? this.settings.ids_outgoing : new IDS_OUTGOING({ url_api: App.Url_Api });
 
         this.mcf_lg = new MCF(); // Создадим экземпляр окно сообщений
         this.mcf_lg.init({
@@ -1265,7 +1268,7 @@
         var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
         var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
         LockScreen(langView('vs_vio_update_main_docs', App.Langs));
-        this.ids_arrival.getVerificationOutgoingUzDocumentOfPeriod(sel_start, sel_stop, function (document) {
+        this.ids_outgoing.getVerificationOutgoingUzDocumentOfPeriod(sel_start, sel_stop, function (document) {
             this.list_document = [];
             this.select_document = [];
             this.select_document_detali = [];
@@ -1541,7 +1544,7 @@
     // Обновить 
     view_verification_invoices_outgoing.prototype.apply_update_presented = function (data, num_docs, callback) {
         var result = -1;
-        this.ids_arrival.postVerificationOutgoingUzDocument(data, function (result) {
+        this.ids_outgoing.postVerificationOutgoingUzDocument(data, function (result) {
             var mess_ok = null;
             var mess_error = null;
             var n = 0;
@@ -1557,7 +1560,7 @@
                     LockScreen(langView('vs_vio_update_main_docs', App.Langs));
                     $.each(data.id_docs, function (i, el) {
                         n += 1;
-                        this.ids_arrival.getVerificationOutgoingUzDocumentOfId(el, function (document) {
+                        this.ids_outgoing.getVerificationOutgoingUzDocumentOfId(el, function (document) {
                             n -= 1;
                             var doc = this.get_document(document);
                             var exist_doc = this.list_document.find(function (o) {
