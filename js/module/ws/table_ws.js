@@ -2716,13 +2716,13 @@
         //collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         //collums.push({ field: 'current_load_busy', title: null, class: 'pink' });
         //collums.push({ field: 'current_unload_busy', title: null, class: 'pink' });
-        collums.push({ field: 'owner_wagon_abbr', title: null, class: null });
+/*        collums.push({ field: 'owner_wagon_abbr', title: null, class: null });*/
         collums.push({ field: 'operator_paid', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_type', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        collums.push({ field: 'wagon_date_rem_uz', title: null, class: null });
+/*        collums.push({ field: 'wagon_date_rem_uz', title: null, class: null });*/
         collums.push({ field: 'wagon_gruzp_doc', title: null, class: null });
         collums.push({ field: 'wagon_gruzp_uz', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
@@ -2814,7 +2814,7 @@
         collums.push({ field: 'outgoing_date', title: null, class: null });
         collums.push({ field: 'outgoing_return_cause', title: null, class: null });
         collums.push({ field: 'outgoing_sostav_status_name', title: null, class: null });
-        collums.push({ field: 'wagon_ban_uz', title: null, class: null });
+        //collums.push({ field: 'wagon_ban_uz', title: null, class: null });
         collums.push({ field: 'wagon_closed_route', title: null, class: null });
         collums.push({ field: 'wir_note', title: null, class: null });
         collums.push({ field: 'wir_note2', title: null, class: null });

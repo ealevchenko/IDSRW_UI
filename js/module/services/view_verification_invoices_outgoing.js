@@ -936,8 +936,8 @@
                         //group_append_id: null,
                         //group_append_html: null,
                         //group_append_objs: [bt_apply_tariff_contract],
-                        form_text: langView('vs_cccsa_text_label_tariff_contract', App.Langs),
-                        form_text_class: null,
+                        //form_text: langView('vs_cccsa_text_label_tariff_contract', App.Langs),
+                        //form_text_class: null,
                     },
                     childs: []
                 };

@@ -50,7 +50,7 @@
             'vr_obrwc_title_label_arrival_cargo': 'Груз по ПРИБ:',
             'vr_obrwc_title_label_sertification_data': 'Сертификационные данные:',
             'vr_obrwc_title_label_station_from_code': 'Станция отправления:',
-            'vr_obrwc_title_label_arrival_division_amkr': 'Цех получатель ПРИБ:',
+            'vr_obrwc_title_label_arrival_division_amkr': 'Станция назначения ТЕКУЩ:',
 
             'vr_obrwc_title_label_view_cargo_name': 'Груз ТЕКУЩ:',
             'vr_obrwc_title_label_view_external_station_on': 'Станция УЗ назначения ТЕКУЩ:',
@@ -890,77 +890,82 @@
             },
             childs: []
         };
-        //var form_select_wagon_rod = {
-        //    obj: 'bs_form_wagon_rod',
-        //    options: {
-        //        validation_group: 'common_obrwc',
-        //        id: 'wagon_rod',
-        //        name: 'wagon_rod',
-        //        label: langView('vr_obrwc_title_label_wagon_rod', App.Langs),
-        //        element_fsize: 'sm',
-        //        element_class: null,
-        //        element_value: null,
-        //        element_multiple: true,
-        //        element_title: null,
-        //        element_required: false,
-        //        element_readonly: false,
-        //        element_size: null,
-        //        element_options: {
-        //            data: [],
-        //            default: -1,
-        //            fn_change: function (e, val) {
-        //                e.preventDefault();
-        //            }.bind(this),
-        //            fn_check: function (e, val) {
+        var form_select_wagon_rod = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_rod',
+                name: 'wagon_rod',
+                label: langView('vr_obrwc_title_label_wagon_rod', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        this.view_button_container('wagon_rod', val.length > 0);
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
+                    }.bind(this),
+                    fn_check: function (e, val) {
 
-        //            }.bind(this),
-        //        },
-        //        validation: false,
-        //        feedback_invalid: null,
-        //        feedback_valid: null,
-        //        feedback_class: null,
-        //        col_prefix: 'md',
-        //        col_size: 12,
-        //        col_class: 'mt-0',
-        //    },
-        //    childs: []
-        //};
-        //var form_select_wagon_type = {
-        //    obj: 'bs_form_wagon_rod',
-        //    options: {
-        //        validation_group: 'common_obrwc',
-        //        id: 'wagon_type',
-        //        name: 'wagon_type',
-        //        label: langView('vr_obrwc_title_label_wagon_type', App.Langs),
-        //        element_fsize: 'sm',
-        //        element_class: null,
-        //        element_value: null,
-        //        element_multiple: true,
-        //        element_title: null,
-        //        element_required: false,
-        //        element_readonly: false,
-        //        element_size: null,
-        //        element_options: {
-        //            data: [],
-        //            default: -1,
-        //            fn_change: function (e, val) {
-        //                e.preventDefault();
-        //            }.bind(this),
-        //            fn_check: function (e, val) {
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
+        var form_select_wagon_type = {
+            obj: 'bs_form_select_multiple',
+            options: {
+                validation_group: 'common_obrwc',
+                id: 'wagon_type',
+                name: 'wagon_type',
+                label: langView('vr_obrwc_title_label_wagon_type', App.Langs),
+                element_fsize: 'sm',
+                element_class: null,
+                element_value: null,
+                element_multiple: true,
+                element_title: null,
+                element_required: false,
+                element_readonly: false,
+                element_size: null,
+                element_options: {
+                    data: [],
+                    default: -1,
+                    fn_change: function (e, val) {
+                        this.view_button_container('wagon_type', val.length > 0);
+                        this.update_view(function () {
+                            LockScreenOff();
+                        }.bind(this));
+                    }.bind(this),
+                    fn_check: function (e, val) {
 
-        //            }.bind(this),
-        //        },
-        //        validation: false,
-        //        feedback_invalid: null,
-        //        feedback_valid: null,
-        //        feedback_class: null,
-        //        col_prefix: 'md',
-        //        col_size: 12,
-        //        col_class: 'mt-0',
-        //    },
-        //    childs: []
-        //};
-
+                    }.bind(this),
+                },
+                validation: false,
+                feedback_invalid: null,
+                feedback_valid: null,
+                feedback_class: null,
+                col_prefix: 'md',
+                col_size: 12,
+                col_class: 'mt-0',
+            },
+            childs: []
+        };
         var form_select_sertification_data = {
             obj: 'bs_form_select_multiple',
             options: {
@@ -1433,8 +1438,8 @@
         objs_obrwc_setup.push(form_select_limiting_loading);
         objs_obrwc_setup.push(form_select_arrival_condition);
         objs_obrwc_setup.push(form_select_current_condition);
-        //objs_obrwc_setup.push(form_select_wagon_rod);
-        //objs_obrwc_setup.push(form_select_wagon_type);
+        objs_obrwc_setup.push(form_select_wagon_rod);
+        objs_obrwc_setup.push(form_select_wagon_type);
         objs_obrwc_setup.push(form_select_arrival_cargo);
         objs_obrwc_setup.push(form_select_arrival_cargo_group);
         objs_obrwc_setup.push(form_select_sertification_data);
@@ -1645,6 +1650,8 @@
         var list_current_condition = [];
         var list_arrival_cargo = [];
         var list_arrival_cargo_group = [];
+        var list_wagon_rod = [];
+        var list_wagon_type = [];
         var list_sertification_data = [];
         var list_station_from_code = [];
         var list_arrival_division_amkr = [];
@@ -1664,6 +1671,8 @@
         var current_condition = this.form_obrwc_setup.el.select_current_condition.val();
         var id_arrival_cargo = this.form_obrwc_setup.el.select_id_arrival_cargo.val();
         var id_arrival_cargo_group = this.form_obrwc_setup.el.select_id_arrival_cargo_group.val();
+        var wagon_rod = this.form_obrwc_setup.el.select_wagon_rod.val();
+        var wagon_type = this.form_obrwc_setup.el.select_wagon_type.val();
         var id_sertification_data = this.form_obrwc_setup.el.select_id_sertification_data.val();
         var station_from_code = this.form_obrwc_setup.el.select_station_from_code.val();
         var arrival_division_amkr = this.form_obrwc_setup.el.select_arrival_division_amkr.val();
@@ -1685,6 +1694,8 @@
                 this.update_element_list(list_current_condition, el, 'currentIdCondition', 'currentConditionAbbr' + ucFirst(App.Lang));
                 this.update_element_list(list_arrival_cargo, el, 'arrivalIdCargo', 'arrivalCargoName' + ucFirst(App.Lang));
                 this.update_element_list(list_arrival_cargo_group, el, 'arrivalIdCargoGroup', 'arrivalCargoGroupName' + ucFirst(App.Lang));
+                this.update_element_list(list_wagon_rod, el, 'wagonRod', 'wagonRodAbbr' + ucFirst(App.Lang));
+                this.update_element_list(list_wagon_type, el, 'wagonType' + ucFirst(App.Lang), 'wagonType' + ucFirst(App.Lang));
                 this.update_element_list(list_sertification_data, el, 'arrivalIdSertificationData', 'arrivalSertificationData' + ucFirst(App.Lang));
                 this.update_element_list(list_station_from_code, el, 'arrivalStationFromCode', 'arrivalStationFromName' + ucFirst(App.Lang));
                 this.update_element_list(list_arrival_division_amkr, el, 'arrivalIdStationAmkr', 'arrivalStationAmkrAbbr' + ucFirst(App.Lang));
@@ -1717,6 +1728,8 @@
             list_current_condition = list_current_condition.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
             list_arrival_cargo = list_arrival_cargo.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
             list_arrival_cargo_group = list_arrival_cargo_group.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_wagon_rod = list_wagon_rod.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
+            list_wagon_type = list_wagon_type.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
             list_sertification_data = list_sertification_data.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
             list_station_from_code = list_station_from_code.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
             list_arrival_division_amkr = list_arrival_division_amkr.sort(function (a, b) { return a.text.localeCompare(b.text); }.bind(this));
@@ -1742,6 +1755,12 @@
         if (list_arrival_cargo.length === 0) $('div#id_arrival_cargo-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_id_arrival_cargo_group.update(list_arrival_cargo_group, id_arrival_cargo_group.length > 0 ? id_arrival_cargo_group : -1);
         if (list_arrival_cargo_group.length === 0) $('div#id_arrival_cargo_group-button-container button').removeClass('btn btn-outline-success');
+
+        this.form_obrwc_setup.el.select_wagon_rod.update(list_wagon_rod, wagon_rod.length > 0 ? wagon_rod : -1);
+        if (list_wagon_rod.length === 0) $('div#wagon_rod-button-container button').removeClass('btn btn-outline-success');
+        this.form_obrwc_setup.el.select_wagon_type.update(list_wagon_type, wagon_type.length > 0 ? wagon_type : -1);
+        if (list_wagon_type.length === 0) $('div#wagon_type-button-container button').removeClass('btn btn-outline-success');
+
         this.form_obrwc_setup.el.select_id_sertification_data.update(list_sertification_data, id_sertification_data.length > 0 ? id_sertification_data : -1);
         if (list_sertification_data.length === 0) $('div#id_sertification_data-button-container button').removeClass('btn btn-outline-success');
         this.form_obrwc_setup.el.select_station_from_code.update(list_station_from_code, station_from_code.length > 0 ? station_from_code : -1);
@@ -1829,6 +1848,8 @@
             this.where_element_list(this.form_obrwc_setup.el.select_id_arrival_cargo, 'arrivalIdCargo');
             this.where_element_list(this.form_obrwc_setup.el.select_id_arrival_cargo_group, 'arrivalIdCargoGroup');
             this.where_element_list(this.form_obrwc_setup.el.select_id_sertification_data, 'arrivalIdSertificationData');
+            this.where_element_list(this.form_obrwc_setup.el.select_wagon_rod, 'wagonRod');
+            this.where_element_list(this.form_obrwc_setup.el.select_wagon_type, 'wagonType' + ucFirst(App.Lang));
             this.where_element_list(this.form_obrwc_setup.el.select_station_from_code, 'arrivalStationFromCode');
             this.where_element_list(this.form_obrwc_setup.el.select_arrival_division_amkr, 'arrivalIdStationAmkr');
             this.where_element_list(this.form_obrwc_setup.el.select_view_cargo_name, 'viewCargoName' + ucFirst(App.Lang));
@@ -1875,6 +1896,8 @@
         this.form_obrwc_setup.el.select_current_condition.val(-1);
         this.form_obrwc_setup.el.select_id_arrival_cargo.val(-1);
         this.form_obrwc_setup.el.select_id_arrival_cargo_group.val(-1);
+        this.form_obrwc_setup.el.select_wagon_rod.val(-1);
+        this.form_obrwc_setup.el.select_wagon_type.val(-1);
         this.form_obrwc_setup.el.select_id_sertification_data.val(-1);
         this.form_obrwc_setup.el.select_station_from_code.val(-1);
         this.form_obrwc_setup.el.select_arrival_division_amkr.val(-1);
@@ -1895,6 +1918,8 @@
         $('div#current_condition-button-container button').removeClass('btn btn-outline-success');
         $('div#id_arrival_cargo-button-container button').removeClass('btn btn-outline-success');
         $('div#id_arrival_cargo_group-button-container button').removeClass('btn btn-outline-success');
+        $('div#wagon_rod-button-container button').removeClass('btn btn-outline-success');
+        $('div#wagon_type-button-container button').removeClass('btn btn-outline-success');
         $('div#id_sertification_data-button-container button').removeClass('btn btn-outline-success');
         $('div#station_from_code-button-container button').removeClass('btn btn-outline-success');
         $('div#arrival_division_amkr-button-container button').removeClass('btn btn-outline-success');
