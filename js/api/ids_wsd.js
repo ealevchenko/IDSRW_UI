@@ -223,6 +223,12 @@
         this.api_com.post('/WSD/update/group_wagon/note2/', operation, callback, callback);
     };
 
+    //================= СЕРВИСЫ =========================================================
+    //АРМ, Получить инструментальные письма за период
+    ids_wsd.prototype.getViewInstructionalLettersOfPeriod = function (start, stop, callback) {
+        this.api_com.get('/WSD/view/instructional_letters/list/period/start/' + start + '/stop/' + stop , callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;

@@ -107,6 +107,9 @@
     var VSSHINV = App.view_search_invoices;
     var vsshinv = new VSSHINV('main.container-fluid');
 
+    var VSILET = App.view_instructional_letters;
+    var vsilet = new VSILET('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -260,7 +263,23 @@
                             });
                             break;
                         }
+                        case 'ilet': {
+                            vsilet.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                ids_arrival: null,
+                                ids_outgoing: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
 
+                                }
+                            });
+                            break;
+                        }
                         default: {
                             LockScreenOff();break;
                         }

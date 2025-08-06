@@ -4005,7 +4005,7 @@ var get_belongs_element = function (rows, name_field, id) {
         return valid ? car_out : null;
 
     };
-    // Проверить элемент "textarea" на введенные номера документов
+    // Проверить элемент "textarea" на введенные номера документов тип number
     validation_form.prototype.check_control_is_valid_docs = function (o, valid_not_null, valid_dublecate, out_message) {
         var val = o.val();
         var element = o.$element ? o.$element : o;
@@ -4072,6 +4072,62 @@ var get_belongs_element = function (rows, name_field, id) {
         }
         return valid ? car_out : null;
     };
+    // Проверить элемент "textarea" на введенные номера документов типа string
+    validation_form.prototype.check_control_is_valid_docs_string = function (o, valid_not_null, valid_dublecate, out_message) {
+        var val = o.val();
+        var element = o.$element ? o.$element : o;
+        var mes_ok = 'ок';
+        var mes_error = langView('mess_error_docs', App.Langs);
+        var mes_warning = 'warning';
+        if (!val || val === null) {
+            if (!valid_not_null) {
+                mes_warning = langView('mess_error_not_docs', App.Langs);
+                this.set_control_error(element, mes_warning);
+                if (out_message) this.out_error_message(mes_warning);
+            }
+            return null;
+        }
+        var valid = true;
+        var car_valid = [];
+        var car_out = [];
+        var cars = val.split(';');
+        $.each(cars, function (i, el) {
+            car_valid.push($.trim(el));
+            car_out.push($.trim(el));
+        }.bind(this));
+        // Провкерка на повторяющиеся номера
+        var arr_res = [];
+        car_valid.sort();
+        for (var i = 1; i < car_valid.length; i++) {
+            if (car_valid[i] === car_valid[i - 1]) {
+                var is_unique = true;
+                for (var k = 0; k < arr_res.length; k++) {
+                    if (arr_res[k] === car_valid[i]) {
+                        is_unique = false;
+                        break;
+                    }
+                }
+                if (is_unique) {
+                    arr_res.push(car_valid[i]);
+                }
+            }
+        }
+        // Вывод сообщений повторяющихся номеров
+        if (valid_dublecate) {
+            $.each(arr_res, function (i, el) {
+                mes_warning = langView('mess_error_input_num_docs_duble', App.Langs).format(el);
+                if (out_message) this.out_error_message(mes_warning);
+                valid = false;
+            }.bind(this));
+        }
+        if (valid) {
+            this.set_control_ok(element, mes_ok);
+        } else {
+            this.set_control_error(element, mes_error);
+        }
+        return valid ? car_out : null;
+    };
+
     // Проверить элемент "input" на шаблон (пустое значение - нет допускается)
     validation_form.prototype.check_control_regexp_not_null = function (o, regexp, mes_error, mes_ok, out_message) {
         var val = o.val();
