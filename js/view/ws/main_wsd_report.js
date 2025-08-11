@@ -38,6 +38,9 @@
     var OBARWC = App.view_rep_operating_balance_rw_cars;
     var obarwc = new OBARWC('main.container-fluid');
 
+    var LILW = App.view_rep_instructional_letters_wagon; 
+    var lilw = new LILW('main.container-fluid');
+
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var fe_ui = new FE();
@@ -99,6 +102,7 @@
                 });
                 break;
             }
+
         }
         // Загрузим справочники
         load_db([], true, function (result) {
@@ -115,6 +119,20 @@
                                 fn_db_update: null,
                                 fn_init: function () {
                                     obarwc.view(function (wagons) {
+                                        LockScreenOff();
+                                    }.bind(this));
+                                }
+                            });
+                            break;
+                        }
+                        case 'lilw': {
+                            lilw.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    lilw.view(function (wagons) {
                                         LockScreenOff();
                                     }.bind(this));
                                 }

@@ -75,9 +75,21 @@
             'tws_field_current_way_duration': 'Факт путь, ч',
             'tws_field_instructional_letters_num': '№ письма',
             'tws_field_instructional_letters_datetime': 'Дата письма',
+            'tws_field_instructional_letters_owner': 'Собственник (по письму)',
             'tws_field_instructional_letters_station_code': 'Код ст. наз.',
             'tws_field_instructional_letters_station_name': 'Станция назначения',
             'tws_field_instructional_letters_note': 'Текст',
+            'tws_field_instructional_letters_wagon_num': '№ вагон',
+            'tws_field_instructional_letters_wagon_status': 'Статус',
+            'tws_field_instructional_letters_wagon_date_adoption': 'Дата приема',
+            'tws_field_instructional_letters_wagon_date_outgoing': 'Дата сдачи',
+            'tws_field_instructional_letters_wagon_operator_abbr': 'Оператор',
+            'tws_field_instructional_letters_wagon_note': 'Примечание',
+            'tws_field_instructional_letters_wagon_create': 'Строка создана',
+            'tws_field_instructional_letters_wagon_create_user': 'Строку создал',
+            'tws_field_instructional_letters_wagon_change': 'Строку привили',
+            'tws_field_instructional_letters_wagon_change_user': 'Строку правил',
+
             'tws_field_sap_incoming_supply_cargo_ban': 'Вх. пост. Запрет',
             'tws_field_sap_incoming_supply_num': 'Вх. пост. №',
             'tws_field_sap_incoming_supply_date': 'Вх. пост. дата созд.',
@@ -258,6 +270,15 @@
             'tws_field_arrival_vesg': 'Вес ПРИБ',
             'tws_field_outgoing_return_cause': 'Причина возврата по отправлению',
 
+            //'tws_field_instructional_letters_num': '№ Письма',
+            //'tws_field_instructional_letters_datetime': 'от',
+            //'tws_field_instructional_letters_owner': 'Собственник (по письму)',
+            //'tws_field_instructional_letters_station_code': 'Код',
+            //'tws_field_instructional_letters_station_name': 'Станция назначения',
+            //'tws_field_instructional_letters_note': 'Примечание',
+/*            'tws_field_instructional_letters_count': 'Кол-во вагонов',*/
+
+
             'tws_field_id': 'Остаток',
             'tws_field_all': 'Все вагоны',
             'tws_field_amkr': 'Вагоны АМКР',
@@ -284,6 +305,14 @@
             'tws_title_status_2': 'Сдан',
             'tws_title_status_3': 'Отправлен',
             'tws_title_status_4': 'Возврат',
+
+            'tws_title_instructional_letters_wagon_status_0': 'Создано',
+            'tws_title_instructional_letters_wagon_status_1': 'В работе',
+            'tws_title_instructional_letters_wagon_status_2': 'Выполнено',
+            'tws_title_instructional_letters_wagon_status_3': 'Замена',
+            'tws_title_instructional_letters_wagon_status_4': 'Отменено',
+            'tws_title_instructional_letters_wagon_status_5': 'Удалить',
+
 
             'tws_title_status_filing_null': 'Неопределенно',
             'tws_title_status_filing_0': 'Черновик',
@@ -804,10 +833,19 @@
             {
                 field: 'instructional_letters_datetime',
                 data: function (row, type, val, meta) {
-                    return row.instructionalLettersDatetime ? moment(row.instructionalLettersDatetime).format(format_datetime) : null;
+                    return row.instructionalLettersDatetime ? moment(row.instructionalLettersDatetime).format(format_date) : null;
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_instructional_letters_datetime', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Станция назначения
+            {
+                field: 'instructional_letters_owner',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersOwner;
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_instructional_letters_owner', App.Langs), width: "50px", orderable: true, searchable: true
             },
             // Станция назначения
             {
@@ -826,6 +864,14 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_instructional_letters_station_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'instructional_letters_station_name_ru',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersStationNameRu;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_instructional_letters_station_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // Текст
             {
                 field: 'instructional_letters_note',
@@ -835,6 +881,102 @@
                 className: 'dt-body-nowrap text-left',
                 title: langView('tws_field_instructional_letters_note', App.Langs), width: "150px", orderable: true, searchable: true
             },
+            {
+                field: 'instructional_letters_wagon_num',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsNum;
+                },
+                className: 'dt-body-center num-wagon',
+                title: langView('tws_field_num', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // статус
+            {
+                field: 'instructional_letters_wagon_status',
+                data: function (row, type, val, meta) {
+                    switch (row.instructionalLettersWagonsStatus) {
+                        default: return '?';
+                        case 0: return langView('tws_title_instructional_letters_wagon_status_0', App.Langs);
+                        case 1: return langView('tws_title_instructional_letters_wagon_status_1', App.Langs);
+                        case 2: return langView('tws_title_instructional_letters_wagon_status_2', App.Langs);
+                        case 3: return langView('tws_title_instructional_letters_wagon_status_3', App.Langs);
+                        case 4: return langView('tws_title_instructional_letters_wagon_status_4', App.Langs);
+                        case 5: return langView('tws_title_instructional_letters_wagon_status_5', App.Langs);
+                    }
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_status', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Дата приема
+            {
+                field: 'instructional_letters_wagon_date_adoption',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsDateAdoption ? moment(row.instructionalLettersWagonsDateAdoption).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_date_adoption', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Дата отправки
+            {
+                field: 'instructional_letters_wagon_date_outgoing',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsDateOutgoing ? moment(row.instructionalLettersWagonsDateOutgoing).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_date_outgoing', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Оператор вагона по письму
+            {
+                field: 'instructional_letters_wagon_operator_abbr',
+                data: function (row, type, val, meta) {
+                    return row['instructionalLettersWagonsOperatorsAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_instructional_letters_wagon_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Примечание на вагон по письму
+            {
+                field: 'instructional_letters_wagon_note',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsNote;
+                },
+                className: 'dt-body-nowrap text-left',
+                title: langView('tws_field_instructional_letters_wagon_note', App.Langs), width: "150px", orderable: true, searchable: true
+            },
+            // дата создания
+            {
+                field: 'instructional_letters_wagon_create',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsCreate ? moment(row.instructionalLettersWagonsCreate).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_create', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'instructional_letters_wagon_create_user',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsCreateUser;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_create_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // дата правки
+            {
+                field: 'instructional_letters_wagon_change',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsChange ? moment(row.instructionalLettersWagonsChange).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_change', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'instructional_letters_wagon_change_user',
+                data: function (row, type, val, meta) {
+                    return row.instructionalLettersWagonsChangeUser;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tws_field_instructional_letters_wagon_change_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            //-------------------
             //
             {
                 field: 'sap_incoming_supply_cargo_ban',
@@ -2587,7 +2729,6 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_outgoing_return_cause', App.Langs), width: "100px", orderable: true, searchable: true
             },
-
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -3792,6 +3933,28 @@
         collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
         collums.push({ field: 'wir_note2', title: null, class: null });
 
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_ws.prototype.init_columns_instructional_letters_wagon = function () {
+        var collums = [];
+        collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'instructional_letters_num', title: null, class: null });
+        collums.push({ field: 'instructional_letters_datetime', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
+        collums.push({ field: 'instructional_letters_owner', title: null, class: null });
+        collums.push({ field: 'instructional_letters_station_code', title: null, class: null });
+        collums.push({ field: 'instructional_letters_station_name_ru', title: null, class: null });
+        collums.push({ field: 'instructional_letters_note', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_create', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_create_user', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_change', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_change_user', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     //table_ws.prototype.init_columns_filing_wagons_4 = function () {
@@ -5440,6 +5603,39 @@
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_dislocation_group_wagons_1();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_EyE_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+            // Оперативный остаток
+            case 'instructional_letters_wagon': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.headerOffset = 88;
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+/*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = false;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.wimId); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+                    switch (data.instructionalLettersWagonsStatus) {
+                        case 1: { $(row).addClass('yellow'); break; }
+                        case 2: { $(row).addClass('lgreen'); break; }
+                        case 3: { $(row).addClass('red'); break; }
+                        case 4: { $(row).addClass('red'); break; }
+                        case 5: { $(row).addClass('red'); break; }
+                    }
+                }.bind(this);
+                this.tab_com.table_columns = this.init_columns_instructional_letters_wagon();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Ref_Pag(this.tab_com.settings.setup_buttons); //
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
