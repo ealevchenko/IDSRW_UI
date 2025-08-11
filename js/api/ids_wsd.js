@@ -228,7 +228,9 @@
     ids_wsd.prototype.getViewInstructionalLettersOfPeriod = function (start, stop, callback) {
         this.api_com.get('/WSD/view/instructional_letters/list/period/start/' + start + '/stop/' + stop , callback);
     };
-
+    ids_wsd.prototype.getViewInstructionalLettersWagonsInProgress = function (callback) {
+        this.api_com.get('/WSD/view/instructional_letters_wagons/list/in_progress' , callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
