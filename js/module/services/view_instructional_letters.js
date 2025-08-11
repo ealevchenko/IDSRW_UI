@@ -38,6 +38,7 @@
             'vs_ilet_title_label_done': 'Письма выполненные',
             'vs_ilet_title_label_replacement': 'Письма заменённые',
             'vs_ilet_title_label_canceled': 'Письма отменённые',
+            'vs_ilet_title_label_deleted': 'Письма удалить',
 
             //'vs_ilet_title_label_presented1': 'Предъявлено:',
             //'vs_ilet_title_placeholder_presented1': '№ Акта',
@@ -358,10 +359,10 @@
                         element_options: {
                             default: true,
                             fn_change: function (e) {
-                                //var value = $(e.currentTarget).prop('checked');
-                                //this.update_view(function () {
-                                //    LockScreenOff();
-                                //}.bind(this));
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                         },
                         validation: false,
@@ -394,10 +395,10 @@
                         element_options: {
                             default: true,
                             fn_change: function (e) {
-                                //var value = $(e.currentTarget).prop('checked');
-                                //this.update_view(function () {
-                                //    LockScreenOff();
-                                //}.bind(this));
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                         },
                         validation: false,
@@ -430,10 +431,10 @@
                         element_options: {
                             default: false,
                             fn_change: function (e) {
-                                //var value = $(e.currentTarget).prop('checked');
-                                //this.update_view(function () {
-                                //    LockScreenOff();
-                                //}.bind(this));
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                         },
                         validation: false,
@@ -466,10 +467,10 @@
                         element_options: {
                             default: false,
                             fn_change: function (e) {
-                                //var value = $(e.currentTarget).prop('checked');
-                                //this.update_view(function () {
-                                //    LockScreenOff();
-                                //}.bind(this));
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                         },
                         validation: false,
@@ -502,10 +503,10 @@
                         element_options: {
                             default: false,
                             fn_change: function (e) {
-                                //var value = $(e.currentTarget).prop('checked');
-                                //this.update_view(function () {
-                                //    LockScreenOff();
-                                //}.bind(this));
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
                             }.bind(this),
                         },
                         validation: false,
@@ -519,6 +520,43 @@
                     },
                     childs: []
                 };
+                var form_check_deleted = {
+                    obj: 'bs_form_check',
+                    options: {
+                        validation_group: 'common_lett',
+                        id: 'deleted',
+                        name: 'deleted',
+                        label: langView('vs_ilet_title_label_deleted', App.Langs),
+                        element_type: 'checkbox',
+                        element_switch: true,
+                        element_inline: false,
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_checked: false,
+                        element_required: false,
+                        element_readonly: false,
+                        element_options: {
+                            default: false,
+                            fn_change: function (e) {
+                                this.select_apply(this.list_letters, function (select_letters) {
+                                    this.view_select(select_letters);
+                                    LockScreenOff();
+                                }.bind(this));
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: null,
+                    },
+                    childs: []
+                };
+
                 var bt_append_lett_num_clear = {
                     obj: 'bs_button',
                     options: {
@@ -694,6 +732,7 @@
                 objs_lett_setup.push(form_check_done);
                 objs_lett_setup.push(form_check_replacement);
                 objs_lett_setup.push(form_check_canceled);
+                objs_lett_setup.push(form_check_deleted);
                 objs_lett_setup.push(form_textarea_lett_num);
                 objs_lett_setup.push(form_textarea_lett_wagon);
 
@@ -902,6 +941,21 @@
             var done = this.form_letters_setup.el.input_checkbox_done.val();
             var replacement = this.form_letters_setup.el.input_checkbox_replacement.val();
             var canceled = this.form_letters_setup.el.input_checkbox_canceled.val();
+            var deleted = this.form_letters_setup.el.input_checkbox_deleted.val();
+
+            //if (create_new) {
+                this.select_letters = this.select_letters.filter(function (i) {
+                    var gr = i.instructionalLettersWagons.find(function (o) {
+                        return (create_new && o.status === 0) ||
+                            (in_progress && o.status === 1) ||
+                            (done && o.status === 2) ||
+                            (replacement && o.status === 3) ||
+                            (canceled && o.status === 4) ||
+                            (deleted && o.status === 5) || o.status === null;
+                    }.bind(this));
+                    return gr !== undefined;
+                }.bind(this));
+            //}
 
             // Выборка из списка документов
             var el_tln = this.form_letters_setup.el.textarea_lett_num;//.$element;
@@ -932,56 +986,6 @@
         if (typeof callback === 'function') {
             callback(this.select_letters);
         }
-        //if (this.select_document && this.select_document.length > 0) {
-        //    this.select_document_detali = this.select_document;
-        //    if (this.code_payer != -1) {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            return i.payerLocalCode === this.code_payer;
-        //        }.bind(this));
-        //    }
-        //    if (this.act != -1 && this.act !== null && this.act !== "") {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            return i.numActServices1 === this.act
-        //                || i.numActServices2 === this.act
-        //                || i.numActServices3 === this.act
-        //        }.bind(this));
-        //    }
-        //    if (this.id_cargo != -1) {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            var gr = i.vagons.find(function (o) { return o.arrivalCargoId === this.id_cargo }.bind(this));
-        //            return gr !== undefined;
-        //        }.bind(this));
-        //    }
-        //    if (this.code_station_from != -1) {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            return i.codeStnFrom === this.code_station_from;
-        //        }.bind(this));
-        //    }
-        //    if (this.code_station_on != -1) {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            return i.codeStnTo === this.code_station_on;
-        //        }.bind(this));
-        //    }
-        //    if (this.id_operator != -1) {
-        //        this.select_document_detali = this.select_document_detali.filter(function (i) {
-        //            var op = i.vagons.find(function (o) { return o.arrivalOperatorId === this.id_operator }.bind(this));
-        //            return op !== undefined;
-        //        }.bind(this));
-        //    }
-        //    this.update_select_list(this.select_document_detali);
-        //    this.info_alert.out_info_message(langView('vs_ilet_mess_info_select_main_docs', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), this.list_document.length, this.select_document.length));
-        //    // Событие обновили данные
-        //    if (typeof callback === 'function') {
-        //        callback(this.select_document_detali);
-        //    }
-        //} else {
-        //    this.select_document = [];
-        //    this.info_alert.out_info_message(langView('vs_ilet_mess_info_init', App.Langs));
-        //    // Событие обновили данные
-        //    if (typeof callback === 'function') {
-        //        callback(this.select_document_detali);
-        //    }
-        //}
     };
     // Применить выбор
     view_instructional_letters.prototype.view_select = function (select) {

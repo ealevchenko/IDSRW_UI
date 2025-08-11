@@ -104,6 +104,7 @@
             'tsrv_title_status_2': 'Выполнено',
             'tsrv_title_status_3': 'Замена',
             'tsrv_title_status_4': 'Отменено',
+            'tsrv_title_status_5': 'Удалить',
 
             'tsrv_field_close': 'Строка закрыта',
             'tsrv_field_create': 'Строка создана',
@@ -924,6 +925,7 @@
                         case 2: return langView('tsrv_title_status_2', App.Langs);
                         case 3: return langView('tsrv_title_status_3', App.Langs);
                         case 4: return langView('tsrv_title_status_4', App.Langs);
+                        case 5: return langView('tsrv_title_status_5', App.Langs);
                     }
                 },
                 className: 'dt-body-nowrap',
@@ -1287,13 +1289,13 @@
         collums.push({ field: 'close', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
-        collums.push({ field: 'instructional_letters_wagon_date_adoption_act', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_wagon_date_adoption_act', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
-        collums.push({ field: 'instructional_letters_wagon_date_outgoing_act', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_wagon_date_outgoing_act', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
-        collums.push({ field: 'wir_note', title: null, class: null });
-        collums.push({ field: 'wir_note2', title: null, class: null });
+        //collums.push({ field: 'wir_note', title: null, class: null });
+        //collums.push({ field: 'wir_note2', title: null, class: null });
         collums.push({ field: 'create', title: null, class: null });
         collums.push({ field: 'create_user', title: null, class: null });
         collums.push({ field: 'change', title: null, class: null });
@@ -1843,8 +1845,8 @@
                 this.tab_com.searching = false;
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
-                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 3;
+                //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                //this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [2, 'desc'];
                 //this.tab_com.type_select_rows = 2; // Выбирать одну
@@ -1913,15 +1915,22 @@
 
                 //};
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
-                    //if (data.verification !== null) {
-                    //    if (data.numActServices1 === null && data.numActServices2 === null && data.numActServices3 === null) {
-                    //        $(row).addClass('yellow');  // Отметим вагон расчитан
-                    //    } else {
-                    //        $(row).addClass('green');  // Отметим вагон сверен
-                    //    }
-                    //}
+                    if (data.instructionalLettersWagons !== null && data.instructionalLettersWagons.length > 0) {
+                        var in_progress = data.instructionalLettersWagons.filter(function (i) { return i.status < 2 }.bind(this));
+                        var cancel = data.instructionalLettersWagons.filter(function (i) { return i.status > 2 }.bind(this));
+                        var done = data.instructionalLettersWagons.filter(function (i) { return i.status === 2 }.bind(this));
+                        if (in_progress !== undefined && in_progress.length > 0) {
+                            $(row).addClass('yellow');  // Вагоны в работе
+                        } else if (done !== undefined && done.length > 0 && done.length === data.instructionalLettersWagons.length) {
+                            $(row).addClass('green');  // Вагоны выполнены
+                        } else if (cancel !== undefined && cancel.length > 0 && cancel.length === data.instructionalLettersWagons.length) {
+                            $(row).addClass('red');  // Вагоны отменены
+                        } else {
+                            $(row).addClass('green');  // Вагоны выполнены
+                        }
+                    }
                 }.bind(this);
                 this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
                 this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
@@ -1956,14 +1965,22 @@
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
                 //this.tab_com.type_select_rows = 2; // Выбирать одну
-                //this.tab_com.table_select = {
-                //    style: 'multi'
-                //};
-                this.tab_com.table_select = false;
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                /*                this.tab_com.table_select = false;*/
                 this.tab_com.autoWidth = true;
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
+                    switch (data.status) {
+                        case 0: { $(row).addClass('grey'); break; }
+                        case 1: { $(row).addClass('yellow'); break; }
+                        case 2: { $(row).addClass('lgreen'); break; }
+                        case 3: { $(row).addClass('red'); break; }
+                        case 4: { $(row).addClass('red'); break; }
+                        case 5: { $(row).addClass('blue'); break; }
+                    }
                     //if (data.calcPayer !== null) {
                     //    $(row).addClass('yellow');  // Отметим вагон расчитан
                     //}
