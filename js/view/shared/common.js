@@ -809,6 +809,23 @@ var get_belongs_element = function (rows, name_field, id) {
         }
     };
     //--------------BOOTSTRAP-----------------------------------
+
+    // <hr class="my-4">
+    form_element.prototype.bs_hr = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            class: null,
+            style: null,
+        }, options);
+        this.$html = $('<hr></hr>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <hr class=""></hr>');
+        } else {
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+        }
+    };
+
     form_element.prototype.bs_form = function (options) {
         this.fe = new form_element();
         this.settings = $.extend({
@@ -2211,6 +2228,55 @@ var get_belongs_element = function (rows, name_field, id) {
         this.$html = offcanvas.$html;
     };
 
+    form_element.prototype.bs_accordion = function (options) {
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            flush: false,
+            items: [],
+            fn_close: null,
+        }, options);
+        this.fe = new form_element();
+
+        var accordion = new this.fe.div({ class: 'accordion' });
+        add_id(accordion.$html, this.settings.id);
+        if (this.settings.flush) {
+            add_class(accordion.$html, 'accordion-flush');
+        }
+        // add items
+        $.each(this.settings.items, function (i, el) {
+
+        }.bind(this));
+
+
+        this.$html = accordion.$html;
+
+        //var offcanvas = new this.fe.div({ class: 'offcanvas' });
+        //add_class(offcanvas.$html, this.settings.position);
+        //add_class(offcanvas.$html, this.settings.class);
+        //add_tag(offcanvas.$html, 'data-bs-backdrop', this.settings.backdrop);
+        //add_tag(offcanvas.$html, 'tabindex', '-1');
+
+        //add_tag(offcanvas.$html, 'aria-labelledby', null);
+        //var header = new this.fe.div({ class: 'offcanvas-header' });
+        //this.header_title = new this.fe.hx({
+        //    size: 5,
+        //    id: null,
+        //    class: 'offcanvas-title',
+        //    text: null
+        //});
+        //var button = new this.fe.bs_button({
+        //    class: 'btn-close',
+        //    fn_click: this.settings.fn_close,
+        //});
+        //add_tag(button.$html, 'data-bs-dismiss', 'offcanvas');
+        //add_tag(button.$html, 'aria-label', 'Закрыть');
+        //header.$html.append(this.header_title.$html).append(button.$html);
+        //this.body = new this.fe.div({ class: 'offcanvas-body' });
+        //offcanvas.$html.append(header.$html).append(this.body.$html);
+        //this.$html = offcanvas.$html;
+    };
+
     //form_element.prototype.bs_droplistgroup = function (options) {
     //    this.settings = $.extend({
     //        color: 'secondary',
@@ -2916,6 +2982,11 @@ var get_belongs_element = function (rows, name_field, id) {
         // Пройдемся по элементам
         $.each(objs, function (i, obj) {
             if (obj && obj.obj) {
+                if (obj.obj === 'bs_hr') {
+                    obj.options.obj_form = obj_form;
+                    var obj_html = new this.bs_hr(obj.options);
+                    add_element(obj_html.$html, content, obj);
+                };
                 if (obj.obj === 'bs_row') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_row(obj.options);
@@ -3084,6 +3155,24 @@ var get_belongs_element = function (rows, name_field, id) {
                         throw new Error('Не удалось создать элемент ' + obj.obj);
                     }
                 };
+                //if (obj.obj === 'bs_form_table') {
+                //    obj.options.obj_form = obj_form;
+                //    var obj_html = new this.bs_form_table(obj.options);
+                //    if (obj_html && obj_html.$element) {
+                //        add_element(obj_html.$html, content, obj);
+                //        var element = new this.fe.init_checkbox(obj_html.$element, obj.options.element_options, content);
+                //        obj_form.views.push({
+                //            name: obj.options.id,
+                //            validation_group: obj.options.validation_group,
+                //            type: 'input_checkbox',
+                //            element: element,
+                //            $element: obj_html.$element,
+                //            destroy: false
+                //        });
+                //    } else {
+                //        throw new Error('Не удалось создать элемент ' + obj.obj);
+                //    }
+                //};
             }
         }.bind(this));
         if (typeof callback === 'function') {
