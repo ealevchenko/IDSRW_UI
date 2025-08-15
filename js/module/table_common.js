@@ -185,6 +185,7 @@
     function table_common(options) {
         this.settings_module = $.extend({
             selector: null,
+            content: null,
             fn_init_type_report: function () {
                 this.fixedHeader = false;            // вкл. фикс. заголовка
                 this.leftColumns = 0;
@@ -199,7 +200,12 @@
         if (!this.settings_module.selector) {
             throw new Error('Не указан селектор');
         }
-        this.$td_report = $(this.settings_module.selector);
+        if (this.settings_module.content) {
+            this.$td_report = this.settings_module.content.find(this.settings_module.selector);
+        } else {
+            this.$td_report = $(this.settings_module.selector);
+        }
+
         if (this.$td_report.length === 0) {
             throw new Error('Не удалось найти элемент с селектором: ' + this.settings_module.selector);
         }
