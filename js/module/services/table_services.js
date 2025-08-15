@@ -119,6 +119,9 @@
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
             'tsrv_title_button_deselect_all': 'Убрать выбор',
             'tsrv_title_button_add_sostav': 'Добавить в состав',
+            'tsrv_title_button_add': 'Добавить',
+            'tsrv_title_button_edit': 'Править',
+            'tsrv_title_button_delete': 'Удалить',
         },
         'en':  //default language: English
         {
@@ -147,9 +150,10 @@
 
     //-----------------------------------------------------------------------------------------
     // Конструктор
-    function table_services(selector) {
+    function table_services(selector, content) {
         this.tab_com = new TAB_COMMON({
             selector: selector,
+            content: content,
             fn_init_type_report: this.init_type_report.bind(this),
         });
         // Перечень полей
@@ -1066,6 +1070,21 @@
                 text: langView('tsrv_title_button_add_sostav', App.Langs),
                 className: 'btn btn-info'
             },
+            {
+                button: 'add',
+                text: langView('tsrv_title_button_add', App.Langs),
+                className: 'btn btn-info'
+            },
+            {
+                button: 'edit',
+                text: langView('tsrv_title_button_edit', App.Langs),
+                className: 'btn btn-info'
+            },
+            {
+                button: 'delete',
+                text: langView('tsrv_title_button_delete', App.Langs),
+                className: 'btn btn-info'
+            },
         ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
     }
@@ -1849,71 +1868,13 @@
                 //this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [2, 'desc'];
-                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.type_select_rows = 1; // Выбирать одну
                 //this.tab_com.table_select = {
                 //    style: 'multi'
                 //};
                 //scrollCollapse: true,
-                this.tab_com.table_select = false;
+                this.tab_com.table_select = true;
                 this.tab_com.autoWidth = false;
-                //this.tab_com.footerCallback = function (tr, data, start, end, display) {
-                //    var api = this.api();
-                //    var count = api
-                //        .column(3)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(1)
-                //        .html(count);
-
-                //    var tariff_dog = api
-                //        .column(4)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(2)
-                //        .html(Number(tariff_dog).toFixed(2));
-
-                //    var tariff_doc = api
-                //        .column(6)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(4)
-                //        .html(Number(tariff_doc).toFixed(2));
-
-                //    var tariff_deff = api
-                //        .column(8)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(6)
-                //        .html(Number(tariff_deff).toFixed(2));
-
-                //    var vesg = api
-                //        .column(10)
-                //        .data()
-                //        .reduce(function (a, b) {
-                //            return intVal(a) + intVal(b);
-                //        }, 0);
-                //    $(tr)
-                //        .find('th span')
-                //        .eq(8)
-                //        .html(Number(vesg).toFixed(2));
-
-                //};
                 this.tab_com.createdRow = function (row, data, index) {
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
@@ -1937,18 +1898,6 @@
                 this.tab_com.table_columns = this.init_columns_list_letters();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
-                //this.tab_com.html_footer = '<tfoot><tr>' +
-                //    '<th colspan="3" class="text-end">ИТОГО:</th>' +
-                //    '<th class="text-center"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th class="text-end"></th>' +
-                //    '<th colspan="14""></th>' +
-                //    '</tr></tfoot>';
                 break;
             };
 
@@ -1981,12 +1930,6 @@
                         case 4: { $(row).addClass('red'); break; }
                         case 5: { $(row).addClass('blue'); break; }
                     }
-                    //if (data.calcPayer !== null) {
-                    //    $(row).addClass('yellow');  // Отметим вагон расчитан
-                    //}
-                    //if (data.verification !== null) {
-                    //    $(row).addClass('green');  // Отметим вагон сверен
-                    //}
                 }.bind(this);
                 this.tab_com.table_columns = this.init_columns_list_letters_detali();
                 //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);

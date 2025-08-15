@@ -40,6 +40,37 @@
             'vs_ilet_title_label_canceled': 'Письма отменённые',
             'vs_ilet_title_label_deleted': 'Письма удалить',
 
+            'vs_ilet_title_letter_num': '№ письма',
+            'vs_ilet_title_placeholder_letter_num': '№ письма',
+            //'vs_ilet_text_letter_num': 'Введите № письма...',
+
+            'vs_ilet_title_letter_date': 'Дата письма',
+            'vs_ilet_title_placeholder_letter_date': 'Дата письма',
+            //'vs_ilet_text_letter_date': 'Выберите дату письма',
+
+            //'vs_ilet_title_letter_code': 'Код',
+            //'vs_ilet_title_placeholder_letter_code': 'Код',
+            //'vs_ilet_text_letter_code': 'Код',
+
+            'vs_ilet_title_label_letter_destination_station': 'Ст. назначения',
+            'vs_ilet_title_placeholder_letter_destination_station': 'Ст. назначения',
+            //'vs_ilet_text_letter_destination_station': 'Выберите станцию назначения',
+
+            'vs_ilet_title_letter_owner': 'Собственник (по письму)',
+            'vs_ilet_title_placeholder_letter_owner': 'Собственник',
+            //'vs_ilet_text_letter_owner': 'Введите собственника по письму...',
+
+            'vs_ilet_title_letter_note': 'Примечание',
+            'vs_ilet_title_placeholder_letter_note': 'Примечание',
+            'vs_ilet_text_letter_note': 'Введите примечание...',
+
+            //'vs_ilet_title_placeholder_lett_wagons_searsh': 'Перечень вагонов в письме',
+            'vs_ilet_title_placeholder_lett_wagons_searsh': 'Введите № вагона, разделитель ";"',
+            //'vs_ilet_text_lett_wagons_searsh': 'Введите № вагона, разделитель ";"',
+
+
+            'vs_ilet_title_form_add': 'Добавить новое письмо',
+            'vs_ilet_title_form_edit': 'Править письмо',
             //'vs_ilet_title_label_presented1': 'Предъявлено:',
             //'vs_ilet_title_placeholder_presented1': '№ Акта',
             //'vs_ilet_text_label_presented1': 'Укажите № акта ...',
@@ -156,33 +187,21 @@
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
         this.ids_arrival = this.settings.ids_arrival ? this.settings.ids_arrival : new IDS_ARRIVAL({ url_api: App.Url_Api });
 
-        this.mcf_lg = new MCF(); // Создадим экземпляр окно сообщений
-        this.mcf_lg.init({
-            static: true,
-            keyboard: false,
-            hidden: true,
-            centered: true,
-            fsize: 'lg',
-            bt_close_text: langView('vs_ilet_title_button_Cancel', App.Langs),
-            bt_ok_text: langView('vs_ilet_button_Ok', App.Langs),
-        });
-
+        //this.mcf_lg = new MCF(); // Создадим экземпляр окно сообщений
+        //this.mcf_lg.init({
+        //    static: true,
+        //    keyboard: false,
+        //    hidden: true,
+        //    centered: true,
+        //    body_text: this.form_letters_edit.$form,
+        //    fsize: 'lg',
+        //    bt_close_text: langView('vs_ilet_title_button_Cancel', App.Langs),
+        //    bt_ok_text: langView('vs_ilet_button_Ok', App.Langs),
+        //});
 
         this.start = null;
         this.stop = null;
-
-        //this.list_vagons = [];
-        //this.select_vagons = [];
-        //this.code_payer = -1;
-        //this.act = '';
-        //this.id_cargo = -1;
-        //this.code_station_from = -1;
-        //this.code_station_on = -1;
-        //this.id_operator = -1;
-
-        //this.select_document_detali = [];
-        //this.presented = null;
-        //this.clear = false;
+        this.list_external_station = [];
 
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
@@ -290,7 +309,7 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 3;
+                var process = 4;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
@@ -307,10 +326,10 @@
                         }.bind(this));
                     }
                 }.bind(this);
-                // инициализациия 
+                // инициализациия
                 //this.payer_arrival = this.api_dir.getAllPayerArrival();
 
-                //this.list_payer_arrival = this.api_dir.getListValueTextPayerArrival();
+                this.list_external_station = this.api_dir.getListValueTextExternalStation();
 
                 this.form_select_period = new VFSP(this.div_form_period.$html);
                 this.form_select_period.init({
@@ -761,6 +780,440 @@
                     }.bind(this),
                 });
 
+                // форма правки выборки
+                this.form_letters_edit = new FD();
+                var objs_lett_edit = [];
+
+                var row_form = {
+                    obj: 'bs_row',
+                    options: {
+                        id: null,
+                        class: null,
+                        style: null,
+                    },
+                    childs: []
+                };
+                var row_form_wagon = {
+                    obj: 'bs_row',
+                    options: {
+                        id: null,
+                        class: null,
+                        style: null,
+                    },
+                    childs: []
+                };
+                var form_input_letter_num = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'letter_num',
+                        name: 'letter_num',
+                        label: langView('vs_ilet_title_letter_num', App.Langs),
+                        element_type: 'text',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_letter_num', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        //element_pattern: '[0-9]{4}[-]{1}[0-9]{3}[-]{1}[0-9]{4}',
+                        element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 2,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_ilet_text_letter_num', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_letter_date = {
+                    obj: 'bs_form_input_datetime',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'letter_date',
+                        name: 'letter_date',
+                        label: langView('vs_ilet_title_letter_date', App.Langs),
+                        element_type: 'date',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_letter_date', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
+                        element_options: {
+                            default: moment(),
+                            format: 'date',
+                            out_format: 'moment',
+                            fn_change: function (e, dt) {
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 3,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_ilet_text_letter_date', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_datalist_letter_destination_station = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'letter_destination_station',
+                        name: 'letter_destination_station',
+                        label: langView('vs_ilet_title_label_letter_destination_station', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_letter_destination_station', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_external_station,
+                            out_value: true,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                if (set.value === "") {
+                                    //this.lst = set.value;
+                                    //this.select_apply(function (select) {
+                                    //    this.view_select(select);
+
+                                    //    LockScreenOff();
+                                    //}.bind(this));
+                                } else {
+                                    //var res = this.list_acts.find(function (o) {
+                                    //    return o.value === set.value;
+                                    //}.bind(this));
+                                    //if (res) {
+                                    //    this.lst = set.value;
+
+                                    //} else {
+                                    //    this.lst = "";
+                                    //}
+                                    //this.select_apply(function (select) {
+                                    //    this.view_select(select);
+
+                                    //    LockScreenOff();
+                                    //}.bind(this));
+                                }
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+                                this.lst = set.value;
+                                //this.select_apply(function (select) {
+                                //    this.view_select(select);
+
+                                //    LockScreenOff();
+                                //}.bind(this));
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_ilet_text_letter_destination_station', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_letter_owner = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'letter_owner',
+                        name: 'letter_owner',
+                        label: langView('vs_ilet_title_letter_owner', App.Langs),
+                        element_type: 'text',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_letter_owner', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 3,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_ilet_text_letter_owner', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_textarea_letter_note = {
+                    obj: 'bs_form_textarea',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'letter_note',
+                        name: 'letter_note',
+                        label: langView('vs_ilet_title_letter_note', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_letter_note', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_readonly: false,
+                        element_cols: null,
+                        element_rows: 2,
+                        element_wrap: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var text = $(e.currentTarget).val();
+                                /*main_alert.clear_message(); main_alert.out_info_message('element_textarea : ' + text);*/
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        group_append_class: null,
+                        group_append_id: null,
+                        /*                        group_append_html: langView('vopcgr_text_append_vagon_searsh', App.Langs),*/
+                        group_append_objs: null,
+                        //form_text: langView('vs_ilet_text_letter_note', App.Langs),
+                        //form_text_class: null
+                    },
+                    childs: []
+                };
+                var form_hr_letter_wagons = {
+                    obj: 'bs_hr',
+                    options: {
+                        class: 'my-2 mx-2',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var col_table_letter_wagons = {
+                    obj: 'bs_col',
+                    options: {
+                        id: 'vs-ilet-letter-wagons',
+                        pref: 'md',
+                        size: 12,
+                        class: null,
+                        style: null,
+                    },
+                    childs: []
+                };
+                var bt_append_lett_wagons_clear = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'lett_wagons_clear',
+                        name: 'lett_wagons_clear',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: null,
+                        title: langView('vs_ilet_title_button_lett_wagon_clear', App.Langs),
+                        icon_fa_left: 'fa-solid fa-broom', //<i class="fa-solid fa-broom"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            //this.form_letters_setup.el.textarea_lett_wagon.val('');
+                            //this.select_apply(this.list_letters, function (select_letters) {
+                            //    this.view_select(select_letters);
+                            //    LockScreenOff();
+                            //}.bind(this));
+                        }.bind(this),
+                    }
+                };
+                var bt_append_lett_wagons_searsh = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'lett_wagons_searsh',
+                        name: 'lett_wagons_searsh',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: null,
+                        title: langView('vs_ilet_title_button_lett_wagon_searsh', App.Langs),
+                        icon_fa_left: 'fas fa-search',
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            //this.select_apply(this.list_letters, function (select_letters) {
+                            //    this.view_select(select_letters);
+                            //    LockScreenOff();
+                            //}.bind(this));
+                        }.bind(this),
+                    }
+                };
+                var form_textarea_lett_wagons = {
+                    obj: 'bs_form_textarea',
+                    options: {
+                        validation_group: 'letters_edit',
+                        id: 'lett_wagons',
+                        name: 'lett_wagons',
+                        //label: langView('voprc_title_vagon_searsh', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ilet_title_placeholder_lett_wagons_searsh', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_readonly: false,
+                        element_cols: null,
+                        element_rows: 2,
+                        element_wrap: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var text = $(e.currentTarget).val();
+                                /*main_alert.clear_message(); main_alert.out_info_message('element_textarea : ' + text);*/
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0 mb-2',
+                        group_append_class: null,
+                        group_append_id: null,
+                        /*                        group_append_html: langView('vopcgr_text_append_vagon_searsh', App.Langs),*/
+                        group_append_objs: [bt_append_lett_wagons_clear, bt_append_lett_wagons_searsh],
+                        //form_text: langView('vs_ilet_text_lett_wagons_searsh', App.Langs),
+                        //form_text_class: null
+                    },
+                    childs: []
+                };
+
+                row_form.childs.push(form_input_letter_num);
+                row_form.childs.push(form_input_letter_date);
+                row_form.childs.push(form_input_datalist_letter_destination_station);
+                row_form.childs.push(form_input_letter_owner);
+                row_form.childs.push(form_textarea_letter_note);
+                objs_lett_edit.push(row_form);
+                objs_lett_edit.push(form_hr_letter_wagons);
+                row_form_wagon.childs.push(form_textarea_lett_wagons);
+                row_form_wagon.childs.push(col_table_letter_wagons);
+                objs_lett_edit.push(row_form_wagon);
+
+                this.form_letters_edit.init({
+                    alert: this.main_alert,
+                    //context: this...$html,
+                    objs: objs_lett_edit,
+                    id: null,
+                    form_class: null,
+                    validation: true,
+                    fn_validation: function (result) {
+                        // Валидация успешна
+                        if (result && result.valid) {
+                            if (valid) {
+
+                            }
+                        }
+                    }.bind(this),
+                    fn_html_init: function (res) { }.bind(this),
+                    fn_element_init: null,
+                    fn_init: function (init) {
+                        //row_on_setup.$html.append(this.form_letters_setup.$form);
+                        // Инициалиировать таблицы
+                        this.form_letters_edit.tab_wagons = new TSRV('div#vs-ilet-letter-wagons', this.form_letters_edit.$form);
+                        this.form_letters_edit.tab_wagons.init({
+                            alert: this.from_way_alert,
+                            class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
+                            detali_table: false,
+                            type_report: 'list_letters_detali',
+                            setup_buttons: [
+                            ],
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                /*                                tab.view(data.instructionalLettersWagons);*/
+                                LockScreenOff();
+
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+
+                            }.bind(this),
+                            fn_select_rows: function (rows, type) {
+
+                            }.bind(this),
+                            fn_select_link: function (link) {
+
+                            }.bind(this),
+                            fn_button_action: function (name, e, dt, node, config) {
+
+                            }.bind(this),
+                            fn_enable_button: function (tb) {
+
+                            }.bind(this),
+                        });
+                        // Инициалиировать окно правки
+                        this.mcf_lg = new MCF(); // Создадим экземпляр окно правки
+                        this.mcf_lg.init({
+                            static: true,
+                            keyboard: false,
+                            hidden: true,
+                            centered: true,
+                            body_text: this.form_letters_edit.$form,
+                            fsize: 'xl',
+                            bt_close_text: langView('vs_ilet_title_button_Cancel', App.Langs),
+                            bt_ok_text: langView('vs_ilet_button_Ok', App.Langs),
+                        });
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    }.bind(this),
+                });
+
                 //Создадим таблицы( this.tab_list_of_letters)
                 var row_list_of_letters = new this.fe_ui.bs_row({ id: 'table-list-of-letters', class: 'pt-2' });
                 this.list_of_letters_table.$html.append(row_list_of_letters.$html);
@@ -772,6 +1225,27 @@
                     detali_table: true,
                     type_report: 'list_letters',
                     setup_buttons: [
+                        {
+                            name: 'add',
+                            action: function (e, dt, node, config) {
+                                this.tab_list_of_letters.tab_com.button_action(config.button, e, dt, node, config);
+                            }.bind(this),
+                            enabled: false
+                        },
+                        {
+                            name: 'edit',
+                            action: function (e, dt, node, config) {
+                                this.tab_list_of_letters.tab_com.button_action(config.button, e, dt, node, config);
+                            }.bind(this),
+                            enabled: false
+                        },
+                        {
+                            name: 'delete',
+                            action: function (e, dt, node, config) {
+                                this.tab_list_of_letters.tab_com.button_action(config.button, e, dt, node, config);
+                            }.bind(this),
+                            enabled: false
+                        },
                     ],
                     link_num: false,
                     ids_wsd: null,
@@ -793,7 +1267,56 @@
 
                     }.bind(this),
                     fn_button_action: function (name, e, dt, node, config) {
-
+                        if (name === 'add') {
+                            //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
+                            var rows = this.tab_list_of_letters.tab_com.get_select_row();
+                            this.mcf_lg.open(
+                                langView('vs_ilet_title_form_add', App.Langs),
+                                null,
+                                //this.form_letters_edit.$form,
+                                function () {
+                                    if (typeof callback === 'function') {
+                                        callback(this.select_vagons);
+                                    }
+                                }.bind(this),
+                                function () {
+                                    //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
+                                }.bind(this));
+                            // this.form_letters_edit
+                            //LockScreenOff();
+                        }
+                        if (name === 'edit') {
+                            //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
+                            var rows = this.tab_list_of_letters.tab_com.get_select_row();
+                            if (rows.length > 0) {
+                                this.mcf_lg.open(
+                                    langView('vs_ilet_title_form_edit', App.Langs),
+                                    null,
+                                    //this.form_letters_edit.$form,
+                                    function () {
+                                        if (typeof callback === 'function') {
+                                            callback(this.select_vagons);
+                                        }
+                                    }.bind(this),
+                                    function () {
+                                        //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
+                                    }.bind(this));
+                                this.form_letters_edit.el.input_text_letter_num.val(rows[0].num);
+                                this.form_letters_edit.el.input_datetime_letter_date.val(rows[0].dt);
+                                this.form_letters_edit.el.datalist_letter_destination_station.val(rows[0].destinationStation);
+                                this.form_letters_edit.el.input_text_letter_owner.val(rows[0].owner);
+                                //this.form_letters_edit.el.textarea_lett_wagons.val(rows[0].num);
+                                this.form_letters_edit.el.textarea_letter_note.val(rows[0].note);
+                                //this.form_letters_edit.el.button_lett_wagons_clear;
+                                this.form_letters_edit.tab_wagons.view(rows[0].instructionalLettersWagons);
+                                LockScreenOff();
+                            }
+                        }
+                        if (name === 'delete') {
+                            //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
+                            var rows = this.tab_list_of_letters.tab_com.get_select_row();
+                            //LockScreenOff();
+                        }
                     }.bind(this),
                     fn_enable_button: function (tb) {
                     }.bind(this),
@@ -846,7 +1369,7 @@
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = [];// ['payer_arrival'];
+        this.default_db_names = ['external_station'];// [];
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
@@ -944,17 +1467,17 @@
             var deleted = this.form_letters_setup.el.input_checkbox_deleted.val();
 
             //if (create_new) {
-                this.select_letters = this.select_letters.filter(function (i) {
-                    var gr = i.instructionalLettersWagons.find(function (o) {
-                        return (create_new && o.status === 0) ||
-                            (in_progress && o.status === 1) ||
-                            (done && o.status === 2) ||
-                            (replacement && o.status === 3) ||
-                            (canceled && o.status === 4) ||
-                            (deleted && o.status === 5) || o.status === null;
-                    }.bind(this));
-                    return gr !== undefined;
+            this.select_letters = this.select_letters.filter(function (i) {
+                var gr = i.instructionalLettersWagons.find(function (o) {
+                    return (create_new && o.status === 0) ||
+                        (in_progress && o.status === 1) ||
+                        (done && o.status === 2) ||
+                        (replacement && o.status === 3) ||
+                        (canceled && o.status === 4) ||
+                        (deleted && o.status === 5) || o.status === null;
                 }.bind(this));
+                return gr !== undefined;
+            }.bind(this));
             //}
 
             // Выборка из списка документов
