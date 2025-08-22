@@ -95,7 +95,9 @@
             'tsrv_field_instructional_letters_wagon_date_outgoing': 'Дата сдачи',
             'tsrv_field_instructional_letters_wagon_date_outgoing_act': 'Дата сдачи (акт)',
             'tsrv_field_instructional_letters_wagon_operator_abbr': 'Оператор',
+            'tsrv_field_instructional_letters_wagon_rent_operator_abbr': 'Оператор (аренды)',
             'tsrv_field_instructional_letters_wagon_note': 'Примечание на вагон письма',
+            'tsrv_field_instructional_letters_wagon_note_offer': 'Примечание к статусу вагона',
             'tsrv_field_wir_note': 'Примечание',
             'tsrv_field_wir_note2': 'Примечание2',
 
@@ -985,12 +987,28 @@
                 title: langView('tsrv_field_instructional_letters_wagon_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'instructional_letters_wagon_rent_operator_abbr',
+                data: function (row, type, val, meta) {
+                    return row['rentOperatorAbbr' + ucFirst(App.Lang)]
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_instructional_letters_wagon_rent_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'instructional_letters_wagon_note',
                 data: function (row, type, val, meta) {
                     return row.note;
                 },
                 className: 'dt-body-nowrap text-left',
                 title: langView('tsrv_field_instructional_letters_wagon_note', App.Langs), width: "150px", orderable: true, searchable: true
+            },
+            {
+                field: 'instructional_letters_wagon_note_offer',
+                data: function (row, type, val, meta) {
+                    return row.note_offer;
+                },
+                className: 'dt-body-nowrap text-left',
+                title: langView('tsrv_field_instructional_letters_wagon_note_offer', App.Langs), width: "150px", orderable: true, searchable: true
             },
             {
                 field: 'wir_note',
@@ -1312,6 +1330,7 @@
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
         //collums.push({ field: 'instructional_letters_wagon_date_outgoing_act', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_rent_operator_abbr', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
         //collums.push({ field: 'wir_note', title: null, class: null });
         //collums.push({ field: 'wir_note2', title: null, class: null });
@@ -1322,6 +1341,32 @@
 
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
+
+    table_services.prototype.init_columns_letter_wagons = function () {
+        var collums = [];
+        collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_note_offer', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_rent_operator_abbr', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
+
+        //collums.push({ field: 'instructional_letters_num', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_datetime', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_count', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_owner', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_station_code', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_station_name', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_note', title: null, class: null });
+        //collums.push({ field: 'create', title: null, class: null });
+        //collums.push({ field: 'create_user', title: null, class: null });
+        //collums.push({ field: 'change', title: null, class: null });
+        //collums.push({ field: 'change_user', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -1934,6 +1979,45 @@
                 this.tab_com.table_columns = this.init_columns_list_letters_detali();
                 //this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'frtip';
+                break;
+            };
+
+            case 'letter_wagons': {
+                //this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                //this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = false;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 2;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [0, 'asc'];
+                /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
+                //scrollCollapse: true,
+                //this.tab_com.table_select = true;
+                this.tab_com.autoWidth = false;
+                this.tab_com.createdRow = function (row, data, index) {
+                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('data-num', data.num); // data-num номер вагона
+
+                    if (data.error || data.not_close_letter_wagon_id) {
+                        $(row).addClass('red');  // Вагоны отменены
+                    } else if (data.status === 1) {
+                        $(row).addClass('yellow');  // Вагоны в работе
+                    } else if (data.status === 2) {
+                        $(row).addClass('green');  // Вагоны выполнены
+                    }
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_letter_wagons();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
                 break;
             };
 
