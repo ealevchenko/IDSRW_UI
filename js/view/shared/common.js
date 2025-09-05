@@ -1,4 +1,5 @@
 ﻿var format_date = "YYYY-MM-DD";
+var format_date_ru = "DD.MM.YYYY";
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
 var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
@@ -2719,14 +2720,15 @@ var get_belongs_element = function (rows, name_field, id) {
                     this.$element.flexdatalist("disabled", !disabled);
                     //this.$element.prop("disabled", !disabled);
                 }
-                this.$element.flexdatalist("value", { value: text_out });
-                this.$element.flexdatalist("disabled", disabled);
-                //if (disabled) {
-                //    this.$element.prop("disabled", disabled);
+                //var value = this.$element.flexdatalist("value");
+                //if (value != text_out) {
+                    this.$element.flexdatalist("value", { value: text_out });
+                    this.$element.flexdatalist("disabled", disabled);
                 //}
             } else {
                 // чтение
                 var value = this.$element.flexdatalist("value");
+                //var vl1 = this.$element_fl.flexdatalist("value");
                 if (value !== "" && value !== null) {
                     var select = this.alist.find(function (o) {
                         return o.value == $.trim(value);
@@ -3204,6 +3206,8 @@ var get_belongs_element = function (rows, name_field, id) {
             bt_close_text: 'Close',
             bt_ok_text: 'Ok',
             fn_init: null,              // Обработаем событие форма инициализировалась
+            fn_show_modal: null,        // окно открывается
+            fn_shown_modal: null,       // окно открылось
             fn_close: null,             // Обработаем событие форма закрывается
             fn_click_ok: null,          // Обработаем событие нажатия на кнопку
         }, options);
@@ -3308,11 +3312,16 @@ var get_belongs_element = function (rows, name_field, id) {
             show: !this.settings.hidden
         })
             .on('show.bs.modal', function (event) {
-                // 
+                if (typeof this.settings.fn_show_modal === 'function') {
+                    this.settings.fn_show_modal();
+                }
             }.bind(this))
             .on('shown.bs.modal', function (event) {
                 // Обновим таблицы
                 $($.fn.dataTable.tables(false)).DataTable().columns.adjust();//.responsive.recalc();
+                if (typeof this.settings.fn_shown_modal === 'function') {
+                    this.settings.fn_shown_modal();
+                }
             }.bind(this))
             .on('hide.bs.modal', function (event) {
                 if (typeof this.settings.fn_close === 'function') {
@@ -3385,15 +3394,213 @@ var get_belongs_element = function (rows, name_field, id) {
     App.modal_confirm_form = modal_confirm_form;
 
     //================================================================================
+    // Класс модальной формы диалога
+    function modal_confirm_form_dialog() {
+        this.fe = new form_element();
+    }
+    // Инициализация модальной формы
+    modal_confirm_form_dialog.prototype.init = function (options) {
+        // Настройки формы правки строк таблицы
+        this.settings = $.extend({
+            static: true,
+            keyboard: false,
+            hidden: true,
+            centered: true,
+            fsize: null,
+            modal_class: null,
+            header_class: null,
+            header_text: null,
+            body_class: null,
+            form_dialog: null,
+            bt_close_text: 'Close',
+            bt_ok_text: 'Ok',
+            fn_init: null,              // Обработаем событие форма инициализировалась
+            fn_show_modal: null,        // окно открывается
+            fn_shown_modal: null,       // окно открылось
+            fn_close: null,             // Обработаем событие форма закрывается
+            fn_click_ok: null,          // Обработаем событие нажатия на кнопку
+            fn_update: null,            // Обработаем событие обновления БД
+        }, options);
+        this.result = false;
+        this.data = {};
+        //---------------------------------------------------------
+        // Создадим модальную форму для редактирования и добавим ее в секции body
+        //<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        //    <div class="modal-dialog">
+        //        <div class="modal-content">
+        //            <div class="modal-header">
+        //                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        //                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        //            </div>
+        //            <div class="modal-body">
+        //                ...
+        //            </div>
+        //            <div class="modal-footer">
+        //                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        //                <button type="button" class="btn btn-primary">Understood</button>
+        //            </div>
+        //        </div>
+        //    </div>
+        //</div>
+        var modal = new this.fe.div({
+            id: 'modal-form',
+            class: 'modal fade',
+        });
+        add_tag(modal.$html, 'data-bs-backdrop', this.settings.static ? 'static' : null);
+        add_tag(modal.$html, 'data-bs-keyboard', this.settings.keyboard);
+        add_tag(modal.$html, 'tabindex', '-1');
+        add_tag(modal.$html, 'aria-hidden', this.settings.hidden);
+        var modal_dialog = new this.fe.div({
+            class: 'modal-dialog',
+        });
+        add_class(modal_dialog.$html, this.settings.centered ? 'modal-dialog-centered' : null);
+        add_class(modal_dialog.$html, this.settings.fsize !== null ? 'modal-' + this.settings.fsize : null);
+        add_class(modal_dialog.$html, this.settings.modal_class !== null ? this.settings.modal_class : null);
+        var modal_content = new this.fe.div({
+            class: 'modal-content',
+        });
+        var modal_header = new this.fe.div({
+            class: 'modal-header',
+        });
+        var h5 = new this.fe.hx({
+            size: 5,
+            id: null,
+            class: 'modal-title',
+            text: this.settings.header_text
+        });
+        add_class(h5.$html, this.settings.header_class);
+
+        var bt_hclose = new this.fe.bs_button({
+            class: 'btn-close',
+            /*            fn_click: this.settings.fn_close,*/
+        });
+        add_tag(bt_hclose.$html, 'data-bs-dismiss', 'modal');
+        add_tag(bt_hclose.$html, 'aria-label', 'Close');
+
+        var modal_body = new this.fe.div({
+            class: 'modal-body',
+        });
+        add_class(modal_body.$html, this.settings.body_class);
+        if (this.settings.form_dialog && this.settings.form_dialog.$form) {
+            modal_body.$html.append(this.settings.form_dialog.$form);
+        }
+        var modal_footer = new this.fe.div({
+            class: 'modal-footer',
+        });
+        var bt_close = new this.fe.bs_button({
+            /*            class: 'btn-close',*/
+            color: 'secondary',
+            text: this.settings.bt_close_text
+        });
+        add_tag(bt_close.$html, 'data-bs-dismiss', 'modal');
+        var bt_ok = new this.fe.bs_button({
+            /*            class: 'btn-close',*/
+            color: 'primary',
+            text: this.settings.bt_ok_text,
+            fn_click: function (e) {
+                if (typeof this.settings.fn_click_ok === 'function') {
+                    this.settings.fn_click_ok.call(this, e);
+                } else {
+                    e.preventDefault();
+                    if (this.settings.form_dialog && this.settings.form_dialog.$form && typeof this.settings.form_dialog.$form.submit === 'function') {
+                        this.settings.form_dialog.clear_all();
+                        this.settings.form_dialog.$form.submit();
+                        this.result = this.settings.form_dialog.valid;
+                        this.data = this.settings.form_dialog.data;
+                    }
+                    if (this.result) {
+                        this.$modal_obj.modal('hide');
+                        if (typeof this.settings.fn_update === 'function') {
+                            this.settings.fn_update.call(this, this.data);
+                        }
+                    }
+
+                }
+            }.bind(this)
+        });
+
+        this.$header = h5.$html;
+        modal_header.$html.append(h5.$html).append(bt_hclose.$html);
+        this.$body = modal_body.$html;
+        modal_footer.$html.append(bt_close.$html).append(bt_ok.$html);
+        modal_content.$html.append(modal_header.$html).append(modal_body.$html).append(modal_footer.$html);
+        modal_dialog.$html.append(modal_content.$html);
+        modal.$html.append(modal_dialog.$html);
+        $('body').append(modal.$html);
+        //---------------------------------------------------------
+        // Инициализация модальной формы
+        this.$modal_obj = modal.$html.modal({
+            keyboard: this.settings.keyboard,
+            show: !this.settings.hidden
+        })
+            .on('show.bs.modal', function (event) {
+                if (typeof this.settings.fn_show_modal === 'function') {
+                    this.settings.fn_show_modal(this.data);
+                }
+            }.bind(this))
+            .on('shown.bs.modal', function (event) {
+                // Обновим таблицы
+                $($.fn.dataTable.tables(false)).DataTable().columns.adjust();//.responsive.recalc();
+                if (typeof this.settings.fn_shown_modal === 'function') {
+                    this.settings.fn_shown_modal(this.data);
+                }
+            }.bind(this))
+            .on('hide.bs.modal', function (event) {
+                if (typeof this.settings.fn_close === 'function') {
+                    this.settings.fn_close(this.result);
+                }
+            }.bind(this));
+    };
+    // Показать данные 
+    modal_confirm_form_dialog.prototype.open = function (title, data, fn_ok, fn_cancel) {
+        this.result = false;
+        this.data = data;
+        this.$header.empty().append(title);
+        this.settings.fn_close = function (res) {
+            if (res) {
+                // Ok
+                if (typeof fn_ok === 'function') {
+                    fn_ok();
+                }
+            } else {
+                // Отмена выполнения
+                if (typeof fn_cancel === 'function') {
+                    fn_cancel();
+                }
+            }
+        };
+        this.$modal_obj.modal('show');
+    };
+    // Закрыть форму 
+    modal_confirm_form_dialog.prototype.close = function () {
+        this.$modal_obj.modal('hide');
+    };
+    // 
+    modal_confirm_form_dialog.prototype.destroy = function () {
+        if (this.$modal_obj) {
+            this.$modal_obj.modal('dispose');
+        }
+        // Удалить старый элемент
+        var $mcf = $('div#modal-form');
+        if ($mcf.length > 0) {
+            $mcf.remove();
+        }
+    };
+
+    App.modal_confirm_form_dialog = modal_confirm_form_dialog;
+
+    //================================================================================
     // Класс окна формы "Диалог"
     function form_dialog() {
         this.fe = new form_element();
         this.el = {};       // Все элементы формы
         this.data_val = {}; // Значение элементов после создания формы
+        this.data = {};     // Значение элементов после валидации
     }
 
     form_dialog.prototype.init = function (options) {
         this.init = true;
+        this.alert = null;
         // Настройки формы правки строк таблицы
         this.settings = $.extend({
             alert: null,
@@ -3419,14 +3626,16 @@ var get_belongs_element = function (rows, name_field, id) {
             this.settings.context.append(this.$form);
         }
         // Алерт 
-        //if (!this.settings.alert) {
-        //    var $alert = new this.fc.el_alert();
-        //    if ($alert && $alert.$alert && $alert.$alert.length > 0) {
-        //        var $alert = $alert.$alert;
-        //        this.$form.append($alert);
-        //        this.alert = new alert_form($alert);
-        //    }
-        //};
+        if (!this.settings.alert) {
+            var $alert = new this.fe.bs_alert();
+            if ($alert && $alert.$html && $alert.$html.length > 0) {
+                var $alert = $alert.$html;
+                this.$form.append($alert);
+                this.alert = new alert_form($alert);
+            }
+        } else {
+            this.alert = this.settings.alert;
+        };
         // Привяжем событие submit
         this.$form.on('submit', function (event) {
             this.submit(event);
@@ -3475,10 +3684,10 @@ var get_belongs_element = function (rows, name_field, id) {
                 validation.elements = [];
                 // Настроим Alert
                 if (validation_name === 'common') {
-                    validation.alert = this.settings.alert;
+                    validation.alert = this.alert; //this.settings.alert
                 } else {
                     var alert = this.obj_form.alerts.find(function (o) { return o.validation_group === validation_name && o.type === 'alert'; });
-                    validation.alert = alert && alert.element ? alert.element : this.settings.alert;
+                    validation.alert = alert && alert.element ? alert.element : this.alert; // this.settings.alert
                 }
                 // Получим перечень элементов
                 $.each(this.obj_form.views.filter(function (i) { return i.validation_group === validation_name; }),
@@ -3526,7 +3735,7 @@ var get_belongs_element = function (rows, name_field, id) {
     form_dialog.prototype.submit = function (event) {
         this.clear_validation();
         this.valid = true;
-        var result = {};
+        this.data = {};
         if (this.settings.validation) {
             event.preventDefault();
             $.each(this.obj_form.validations, function (i, el_val) {
@@ -3588,13 +3797,14 @@ var get_belongs_element = function (rows, name_field, id) {
         // Заполним result полями
         $.each(this.obj_form.views, function (i, obj) {
             if (this.settings.add_type_element) {
-                result[obj.type + '_' + obj.name] = obj.element.val();
+                this.data[obj.type + '_' + obj.name] = obj.element.val();
             } else {
-                result[obj.name] = obj.element.val();
+                this.data[obj.name] = obj.element.val();
             }
         }.bind(this));
+
         if (typeof this.settings.fn_validation === 'function') {
-            this.settings.fn_validation({ valid: Boolean(this.valid), old: this.data_val, new: result });
+            this.settings.fn_validation({ valid: Boolean(this.valid), old: this.data_val, new: this.data });
         }
     };
     // Работа с элементами
@@ -3697,12 +3907,12 @@ var get_belongs_element = function (rows, name_field, id) {
 
     // Выполнить очистку сообщений на форме
     form_dialog.prototype.clear_all = function (not_clear_message) {
-        if (!not_clear_message && this.settings.alert !== null) this.settings.alert.clear_message();
+        //if (!not_clear_message && this.settings.alert !== null) this.settings.alert.clear_message();
+        if (!not_clear_message && this.alert !== null) this.alert.clear_message();
         this.clear_validation();
     };
 
     App.form_dialog = form_dialog;
-
 
     //================================================================================
     // Класс валидации элементов формы
