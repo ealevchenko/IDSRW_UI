@@ -859,6 +859,27 @@
             //    className: 'dt-body-nowrap',
             //    title: langView('tsrv_field_instructional_letters_num', App.Langs), width: "50px", orderable: true, searchable: true
             //},
+            {
+                field: 'instructional_letters_status_icon',
+                data: function (row, type, val, meta) {
+                    if (row.instructionalLettersWagons !== null && row.instructionalLettersWagons.length > 0) {
+                        var in_progress = row.instructionalLettersWagons.filter(function (i) { return i.status < 2 && i.close === null }.bind(this));
+                        var cancel = row.instructionalLettersWagons.filter(function (i) { return i.status > 2 || (i.status < 2 && i.close !== null) }.bind(this));
+                        var done = row.instructionalLettersWagons.filter(function (i) { return i.status === 2 }.bind(this));
+                        if (in_progress !== undefined && in_progress.length > 0) {
+                            return '<i class="fa-solid fa-envelope-open"></i>';
+                        } else if (done !== undefined && done.length > 0 && done.length === row.instructionalLettersWagons.length) {
+                            return '<i class="fa-solid fa-envelope-circle-check"></i>'
+                        } else if (cancel !== undefined && cancel.length > 0 && cancel.length === row.instructionalLettersWagons.length) {
+                            return '<i class="fa-solid fa-ban"></i>'  // Вагоны отменены
+                        } else {
+                            return '<i class="fa-solid fa-question"></i>'
+                        }
+                    }
+                },
+                className: 'dt-body-center',
+                title: '', width: "18px", orderable: false, searchable: false
+            },
             // № письма
             {
                 field: 'instructional_letters_num',
@@ -920,14 +941,35 @@
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_instructional_letters_count', App.Langs), width: "50px", orderable: true, searchable: true
             },
+            {
+                field: 'instructional_letters_wagon_status_icon',
+                data: function (row, type, val, meta) {
+                    if (row.id === null) {
+                        return '<i class="fa-solid fa-plus"></i>'; // добавлен
+                    } else {
+                        switch (row.status) {
+                            default: return (row.close === null ? '<i class="fa-solid fa-question"></i>' : '<i class="fa-solid fa-ban"></i>');
+                            case 0: return (row.close === null ? '<i class="fa-solid fa-magnifying-glass"></i>' : '<i class="fa-solid fa-ban"></i>'); // ждем
+                            case 1: return (row.close === null ? '<i class="fa-solid fa-paperclip"></i>' : '<i class="fa-solid fa-ban"></i>'); // 
+                            case 2: return '<i class="fa-solid fa-check"></i>';
+                            case 3: return '<i class="fa-solid fa-ban"></i>';
+                            case 4: return '<i class="fa-solid fa-ban"></i>';
+                            case 5: return '<i class="fa-solid fa-ban"></i>';
+                        }
+                    }
+                },
+                className: 'dt-body-center',
+                //title: langView('tsrv_field_instructional_letters_wagon_status_edit', App.Langs), width: "18px", orderable: true, searchable: true
+                title: '', width: "18px", orderable: false, searchable: false
+            },
             // статус
             {
                 field: 'instructional_letters_wagon_status',
                 data: function (row, type, val, meta) {
                     switch (row.status) {
-                        default: return '?';
-                        case 0: return langView('tsrv_title_status_0', App.Langs);
-                        case 1: return langView('tsrv_title_status_1', App.Langs);
+                        default: return row.close === null ? '?' : langView('tsrv_title_status_3', App.Langs);
+                        case 0: return row.close === null ? langView('tsrv_title_status_0', App.Langs) : langView('tsrv_title_status_3', App.Langs);
+                        case 1: return row.close === null ? langView('tsrv_title_status_1', App.Langs) : langView('tsrv_title_status_3', App.Langs);
                         case 2: return langView('tsrv_title_status_2', App.Langs);
                         case 3: return langView('tsrv_title_status_3', App.Langs);
                         case 4: return langView('tsrv_title_status_4', App.Langs);
@@ -1305,6 +1347,7 @@
     table_services.prototype.init_columns_list_letters = function () {
         var collums = [];
         if (this.tab_com.settings.detali_table) collums.push({ field: 'details_control', title: null, class: null });
+        collums.push({ field: 'instructional_letters_status_icon', title: null, class: null });
         collums.push({ field: 'instructional_letters_num', title: null, class: null });
         collums.push({ field: 'instructional_letters_datetime', title: null, class: null });
         collums.push({ field: 'instructional_letters_count', title: null, class: null });
@@ -1322,6 +1365,7 @@
 
     table_services.prototype.init_columns_list_letters_detali = function () {
         var collums = [];
+        collums.push({ field: 'instructional_letters_wagon_status_icon', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
         collums.push({ field: 'close', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
@@ -1344,6 +1388,7 @@
 
     table_services.prototype.init_columns_letter_wagons = function () {
         var collums = [];
+        collums.push({ field: 'instructional_letters_wagon_status_icon', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note_offer', title: null, class: null });
@@ -1912,7 +1957,7 @@
                 //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 //this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [2, 'desc'];
+                this.tab_com.order_column = [3, 'desc'];
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 //this.tab_com.table_select = {
                 //    style: 'multi'
@@ -1924,9 +1969,10 @@
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
                     if (data.instructionalLettersWagons !== null && data.instructionalLettersWagons.length > 0) {
-                        var in_progress = data.instructionalLettersWagons.filter(function (i) { return i.status < 2 }.bind(this));
-                        var cancel = data.instructionalLettersWagons.filter(function (i) { return i.status > 2 }.bind(this));
+                        var in_progress = data.instructionalLettersWagons.filter(function (i) { return i.status < 2 && i.close === null }.bind(this));
+                        var cancel = data.instructionalLettersWagons.filter(function (i) { return i.status > 2 || (i.status < 2 && i.close !== null) }.bind(this));
                         var done = data.instructionalLettersWagons.filter(function (i) { return i.status === 2 }.bind(this));
+                        //var close = data.instructionalLettersWagons.filter(function (i) { return i.close !== null }.bind(this));
                         if (in_progress !== undefined && in_progress.length > 0) {
                             $(row).addClass('yellow');  // Вагоны в работе
                         } else if (done !== undefined && done.length > 0 && done.length === data.instructionalLettersWagons.length) {
@@ -1955,9 +2001,9 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = false;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 2;
+                this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.order_column = [1, 'asc'];
                 //this.tab_com.type_select_rows = 2; // Выбирать одну
                 this.tab_com.table_select = {
                     style: 'multi'
@@ -1968,8 +2014,8 @@
                     $(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
                     switch (data.status) {
-                        case 0: { $(row).addClass('grey'); break; }
-                        case 1: { $(row).addClass('yellow'); break; }
+                        case 0: { (data.close === null ? $(row).addClass('grey') : $(row).addClass('red')); break; }
+                        case 1: { (data.close === null ? $(row).addClass('yellow') : $(row).addClass('red')); break; }
                         case 2: { $(row).addClass('lgreen'); break; }
                         case 3: { $(row).addClass('red'); break; }
                         case 4: { $(row).addClass('red'); break; }
@@ -1991,9 +2037,9 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 2;
+                this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [0, 'asc'];
+                this.tab_com.order_column = [1, 'asc'];
                 /*                this.tab_com.type_select_rows = 1; // Выбирать одну*/
                 this.tab_com.table_select = {
                     style: 'multi'

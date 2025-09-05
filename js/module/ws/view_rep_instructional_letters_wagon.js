@@ -724,8 +724,6 @@
             }.bind(this)); // обновим списки
         }.bind(this), 0);
     };
-
-
     // Функция обновить данные из базы list-список таблиц, update-обновить принудительно, callback-возврат список обновленных таблиц
     view_rep_instructional_letters_wagon.prototype.load_db = function (list, update, callback) {
         if (list) {
