@@ -1254,6 +1254,7 @@
                                 this.form_letters_edit.validation_letters_edit.clear_all();
                                 if (data) {
                                     this.form_letters_edit.el.input_text_letter_num.val(data.num);
+                                    this.form_letters_edit.el.input_datetime_letter_date.disable();
                                     this.form_letters_edit.el.input_datetime_letter_date.val(data.dt);
                                     this.form_letters_edit.el.datalist_letter_destination_station.val(data.destinationStation);
                                     this.form_letters_edit.el.input_text_letter_owner.val(data.owner);
@@ -1423,10 +1424,8 @@
                         });
 
                     },
-
                     fn_init_complete: function () {
                     },
-
                     fn_draw_callback: function (settings) {
                     }.bind(this)
                 });

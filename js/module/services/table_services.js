@@ -863,18 +863,34 @@
                 field: 'instructional_letters_status_icon',
                 data: function (row, type, val, meta) {
                     if (row.instructionalLettersWagons !== null && row.instructionalLettersWagons.length > 0) {
-                        var in_progress = row.instructionalLettersWagons.filter(function (i) { return i.status < 2 && i.close === null }.bind(this));
+                        var in_progress = row.instructionalLettersWagons.filter(function (i) { return i.status < 2 }.bind(this));
                         var cancel = row.instructionalLettersWagons.filter(function (i) { return i.status > 2 || (i.status < 2 && i.close !== null) }.bind(this));
                         var done = row.instructionalLettersWagons.filter(function (i) { return i.status === 2 }.bind(this));
-                        if (in_progress !== undefined && in_progress.length > 0) {
-                            return '<i class="fa-solid fa-envelope-open"></i>';
-                        } else if (done !== undefined && done.length > 0 && done.length === row.instructionalLettersWagons.length) {
-                            return '<i class="fa-solid fa-envelope-circle-check"></i>'
-                        } else if (cancel !== undefined && cancel.length > 0 && cancel.length === row.instructionalLettersWagons.length) {
-                            return '<i class="fa-solid fa-ban"></i>'  // Вагоны отменены
+                        var close = row.instructionalLettersWagons.filter(function (i) { return i.close !== null }.bind(this));
+
+                        if (close !== undefined && close.length > 0 && close.length === row.instructionalLettersWagons.length) {
+                            // все закрыто
+                            if (done !== undefined && done.length > 0) {
+                                return '<i class="fa-solid fa-envelope-circle-check"></i>'
+                            } else if (cancel !== undefined && cancel.length > 0 && cancel.length === row.instructionalLettersWagons.length) {
+                                return '<i class="fa-solid fa-ban"></i>'  // Вагоны отменены
+                            }
                         } else {
-                            return '<i class="fa-solid fa-question"></i>'
+                            if (in_progress !== undefined && in_progress.length > 0) {
+                                return '<i class="fa-solid fa-envelope-open"></i>';
+                            } else {
+                                return '<i class="fa-solid fa-question"></i>'
+                            }
                         }
+                        //if (in_progress !== undefined && in_progress.length > 0) {
+                        //    return '<i class="fa-solid fa-envelope-open"></i>';
+                        //} else if (done !== undefined && done.length > 0 && done.length === row.instructionalLettersWagons.length) {
+                        //    return '<i class="fa-solid fa-envelope-circle-check"></i>'
+                        //} else if (cancel !== undefined && cancel.length > 0 && cancel.length === row.instructionalLettersWagons.length) {
+                        //    return '<i class="fa-solid fa-ban"></i>'  // Вагоны отменены
+                        //} else {
+                        //    return '<i class="fa-solid fa-question"></i>'
+                        //}
                     }
                 },
                 className: 'dt-body-center',
