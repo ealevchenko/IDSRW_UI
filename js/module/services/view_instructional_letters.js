@@ -1181,6 +1181,13 @@
                                     }.bind(this),
                                     enabled: false
                                 },
+                                {
+                                    name: 'cancel',
+                                    action: function (e, dt, node, config) {
+                                        this.form_letters_edit.tab_wagons.tab_com.button_action(config.button, e, dt, node, config);
+                                    }.bind(this),
+                                    enabled: false
+                                },
                             ],
                             link_num: false,
                             ids_wsd: null,
@@ -1195,7 +1202,12 @@
                             },
                             fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                                 this.form_letters_edit.validation_letters_edit.clear_all();
-                                if (rowData && rowData.length > 0) {
+
+                                var no_close = this.form_letters_edit.tab_wagons.tab_com.obj_t_report.rows().data().toArray().find(function (o) {
+                                    return o.close === null;
+                                }.bind(this));
+
+                                if (rowData && rowData.length > 0 && !no_close) {
                                     if (rowData[0].id !== null && rowData[0].close !== null) {
                                         e.preventDefault();
                                         this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_ilet_mess_form_letters_edit_not_edit_wagon', App.Langs).format(rowData[0].num, moment(rowData[0].close).format(format_datetime_ru)));
@@ -1209,12 +1221,6 @@
 
                             }.bind(this),
                             fn_button_action: function (name, e, dt, node, config) {
-                                //if (name === 'edit') {
-                                //    var rows = this.form_letters_edit.tab_wagons.tab_com.get_select_row();
-                                //    if (rows.length > 0) {
-                                //        //this.view_form_letters_edit(rows[0]);
-                                //    }
-                                //}
                                 if (name === 'delete') {
                                     //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
                                     var rows = this.form_letters_edit.tab_wagons.tab_com.get_select_row();
@@ -1234,9 +1240,31 @@
                                     }
                                     //
                                 }
+                                if (name === 'cancel') {
+                                    //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
+                                    var rows = this.form_letters_edit.tab_wagons.tab_com.get_select_row();
+                                    if (rows.length > 0 && this.wagons_letter && this.wagons_letter.length > 0) {
+                                        //$.each(rows, function (i, el) {
+
+                                        //    var check_wagon = function (row) {
+                                        //        return row.num === el.num;
+                                        //    }
+                                        //    var index = this.wagons_letter.findIndex(check_wagon);
+                                        //    if (index >= 0) {
+                                        //        this.wagons_letter.splice(index, 1);
+                                        //    }
+                                        //}.bind(this));
+                                        //this.form_letters_edit.tab_wagons.view(this.wagons_letter);
+                                        //LockScreenOff();
+                                    }
+                                    //
+                                }
+
                             }.bind(this),
                             fn_enable_button: function (tb) {
-
+                                var index = tb.obj_t_report.rows({ selected: true })
+                                var bts = tb.obj_t_report.buttons([2, 3]);
+                                bts.enable(index && index.length > 0 && index[0].length > 0); // отображение кнопки 
                             }.bind(this),
                         });
                         // Инициалиировать окно правки письма и вагонов в письме
@@ -1270,6 +1298,7 @@
                                     //LockScreenOff();
                                 } else {
                                     this.form_letters_edit.el.input_text_letter_num.val('');
+                                    this.form_letters_edit.el.input_datetime_letter_date.enable();
                                     this.form_letters_edit.el.input_datetime_letter_date.val(moment());
                                     this.form_letters_edit.el.datalist_letter_destination_station.val(null);
                                     this.form_letters_edit.el.input_text_letter_owner.val('');
@@ -1641,9 +1670,43 @@
         var not_close_letter_dt = null;
         var note_offer = "";
 
+        // Пройдемся по вагонам для правки
+        if (row_edit && row_edit.length > 0) {
+            $.each(row_edit, function (i, el) {
+                wagons_letter.push({
+                    id: el.id,
+                    num: el.num,
+                    rentOperatorAbbrRu: el.rentOperatorAbbrRu,
+                    rentOperatorAbbrEn: el.rentOperatorAbbrEn,
+                    status: el.status,
+                    close: el.close,
+                    note: el.note,
+                    error: 0,
+                    id_wir: el.idWir,
+                    dateAdoption: el.dateAdoption,
+                    dateOutgoing: el.dateOutgoing,
+                    arrivalOperatorAbbrRu: el.arrivalOperatorAbbrRu,
+                    arrivalOperatorAbbrEn: el.arrivalOperatorAbbrEn,
+                    not_close_letter_wagon_id: not_close_letter_wagon_id,
+                    not_close_letter_wagon_status: not_close_letter_wagon_status,
+                    not_close_letter_id: not_close_letter_id,
+                    not_close_letter_num: not_close_letter_num,
+                    not_close_letter_dt: not_close_letter_dt,
+                    note_offer: el.note,
+                });
+            }.bind(this));
+        }
+
         if (data_add && data_add.length > 0) {
             $.each(data_add, function (i, el) {
                 //
+                not_close_letter_wagon_id = null;
+                not_close_letter_wagon_status = null;
+                not_close_letter_id = null;
+                not_close_letter_num = null;
+                not_close_letter_dt = null;
+                note_offer = "";
+
                 if (el.not_close) {
                     not_close_letter_wagon_id = el.not_close.id;
                     not_close_letter_wagon_status = el.not_close.status;
@@ -1697,32 +1760,8 @@
                 })
             }.bind(this));
         }
-        // Пройдемся по вагонам для правки
-        if (row_edit && row_edit.length > 0) {
-            $.each(row_edit, function (i, el) {
-                wagons_letter.push({
-                    id: el.id,
-                    num: el.num,
-                    rentOperatorAbbrRu: el.rentOperatorAbbrRu,
-                    rentOperatorAbbrEn: el.rentOperatorAbbrEn,
-                    status: el.status,
-                    close: el.close,
-                    note: el.note,
-                    error: el.error,
-                    id_wir: el.idWir,
-                    dateAdoption: el.dateAdoption,
-                    dateOutgoing: el.dateOutgoing,
-                    arrivalOperatorAbbrRu: el.arrivalOperatorAbbrRu,
-                    arrivalOperatorAbbrEn: el.arrivalOperatorAbbrEn,
-                    not_close_letter_wagon_id: not_close_letter_wagon_id,
-                    not_close_letter_wagon_status: not_close_letter_wagon_status,
-                    not_close_letter_id: not_close_letter_id,
-                    not_close_letter_num: not_close_letter_num,
-                    not_close_letter_dt: not_close_letter_dt,
-                    note_offer: el.note,
-                });
-            }.bind(this));
-        }
+
+
         if (typeof callback === 'function') {
             callback(wagons_letter);
         }

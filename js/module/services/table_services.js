@@ -124,6 +124,7 @@
             'tsrv_title_button_add': 'Добавить',
             'tsrv_title_button_edit': 'Править',
             'tsrv_title_button_delete': 'Удалить',
+            'tsrv_title_button_cancel': 'Отмена',
         },
         'en':  //default language: English
         {
@@ -1149,7 +1150,7 @@
             {
                 button: 'add',
                 text: langView('tsrv_title_button_add', App.Langs),
-                className: 'btn btn-info'
+                className: 'btn btn-success'
             },
             {
                 button: 'edit',
@@ -1159,7 +1160,12 @@
             {
                 button: 'delete',
                 text: langView('tsrv_title_button_delete', App.Langs),
-                className: 'btn btn-info'
+                className: 'btn btn-danger'
+            },
+            {
+                button: 'cancel',
+                text: langView('tsrv_title_button_cancel', App.Langs),
+                className: 'btn btn-warning'
             },
         ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
