@@ -4,8 +4,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     //import data from '../../data/setup.json' assert { type: 'JSON' };
     //console.log(data);
 

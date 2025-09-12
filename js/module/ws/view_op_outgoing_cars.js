@@ -10,8 +10,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
 

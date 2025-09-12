@@ -4,8 +4,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {

@@ -7,8 +7,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined || $.cookie('lang') === null || $.cookie('lang') === '' ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined || $.cookie('lang') === null || $.cookie('lang') === '' ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
