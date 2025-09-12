@@ -157,7 +157,8 @@ var get_belongs_element = function (rows, name_field, id) {
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = ($.cookie('lang') === undefined || $.cookie('lang') === null || $.cookie('lang') === '' ? 'ru' : $.cookie('lang'));
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
     App.Url_Api = url_api_main;
     //App.Url_Api = url_api_test;
 
