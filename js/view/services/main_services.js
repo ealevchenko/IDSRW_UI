@@ -67,6 +67,8 @@
         'en':  //default language: English
         {
             //'title_select': 'Выберите...',
+            'mwsd_title_button_Ok': 'Ok',
+            'mwsd_title_button_Cancel': 'Отмена',
         }
     };
 
