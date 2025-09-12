@@ -3,10 +3,10 @@ var format_date_ru = "DD.MM.YYYY";
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
 var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
-var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
-var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
-//var url_api_test = "https://localhost:7280";
-//var url_api_main = "https://localhost:7280";
+//var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+//var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://localhost:7280";
+var url_api_main = "https://localhost:7280";
 
 /* ----------------------------------------------------------
         Вывод текста согласно региональных настроек
