@@ -105,6 +105,90 @@
         },
         'en':  //default language: English
         {
+            'vortc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ"',
+            'vortc_card_header_on': 'ВЕРНУТЬ НА СТАНЦИЮ',
+            'vortc_card_header_from': 'ОТПРАВЛЕННЫЕ СОСТАВЫ',
+            'vortc_fieldset_on_table_title': 'Сформированный состав',
+
+            'vortc_title_label_station_on': 'Станция отправления:',
+            'vortc_text_label_station_on': 'Выберите станцию отправления состава...',
+            //'vortc_title_placeholder_station_on': 'Станция прибытия:',
+
+            'vortc_title_label_type_return': 'Отмена операции',
+            'vortc_title_text_type_return': 'Выберите тип операции отмена или возврат',
+            'vortc_title_label_way_on': 'Путь возврата:',
+            'vortc_title_text_way_on': 'Выберите путь возврата вагонов состава...',
+
+            //'vortc_title_placeholder_way_on': 'Выберите путь',
+
+
+            //'vortc_title_label_outer_way': 'Внешний путь:',
+            //'vortc_title_placeholder_outer_way': 'Внешний путь',
+            'vortc_title_label_locomotive1': 'Локомотив №1:',
+            'vortc_title_label_locomotive2': 'Локомотив №2:',
+            'vortc_title_placeholder_locomotive': ' № локомотива',
+            'vortc_title_time_aplly': 'Время выполнения',
+            'vortc_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vortc_title_placeholder_time_aplly': 'Время выполнения',
+
+            'vortc_title_form_apply': 'Выполнить',
+            'vortc_title_form_apply_title': 'Выполнить операцию "ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ"',
+
+            'vortc_title_button_export': 'Экспорт',
+            'vortc_title_button_buffer': 'Буфер',
+            'vortc_title_button_excel': 'Excel',
+            'vortc_title_button_cancel': 'Отменить',
+            'vortc_title_button_return': 'Вернуть',
+            'vortc_title_button_head': 'Голова',
+            'vortc_title_button_tail': 'Хвост',
+
+            //'vortc_title_add_ok': 'ВЫПОЛНИТЬ',
+
+            //'vortc_mess_warning_not_num_sostav': 'Нет названия состава!',
+            'vortc_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
+            'vortc_mess_warning_wagon_ban_operation_return': 'Вагон № {0} для операций заблокирован (вагон уже выбран для возврата: [{1}])',
+            'vortc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+
+
+            'vortc_mess_error_required_locomotive': 'Выберите Локомотив №1',
+            'vortc_mess_error_required_datetime': 'Укажите время',
+            'vortc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vortc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vortc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vortc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vortc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vortc_mess_error_not_wagons': 'Не выбраны вагоны для операции возврата или отмены (в окне «ОТПРАВЛЕННЫЕ СОСТАВЫ», выберите станцию, отправленный состав и сформируйте возврат или отмену).',
+            'vortc_mess_error_not_wagons_cancel': 'Не выбраны вагоны для отмены переноса.',
+            'vortc_mess_error_operation_run': 'При выполнении операции «ВОЗВРАТ ИЛИ ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ» произошла ошибка, код ошибки: {0}',
+            'vortc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vortc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+
+            'vortc_mess_cancel_operation_cancel': 'Операция "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА" – отменена',
+            'vortc_mess_cancel_operation_return': 'Операция "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА" – отменена',
+            'vortc_mess_run_operation_cancel': 'Выполняю операцию "ОТМЕНА ОПЕРАЦИИ ОТПРАВКИ ВАГОНОВ СОСТАВА"',
+            'vortc_mess_run_operation_return': 'Выполняю операцию "ВОЗРАТ ОТПРАВЛЕННЫХ ВАГОНОВ ИЗ СОСТАВА"',
+
+            //'vortc_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
+            'vortc_mess_not_select_way_on': 'Выберите путь для возврата вагонов!',
+            'vortc_mess_ok_operation': 'Вагоны возвращены, в количестве {0} (ваг.)',
+
+            'vortc_mess_load_operation': 'Загружаю операции...',
+            'vortc_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vortc_mess_load_sostav_outer_ways': 'Загружаю отправленные составы...',
+            //'vortc_mess_update_operation': 'Обновляю операции...',
+            'vortc_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            //'vortc_mess_destroy_operation': 'Закрываю форму...',
+            'vortc_mess_create_sostav': 'Формирую возврат, переношу вагоны...',
+            'vortc_mess_clear_sostav': 'Формирую возврат, убираю выбранные вагоны...',
+            'vortc_mess_reverse_head_sostav': 'Формирую возврат, реверс голова-хвост',
+            'vortc_mess_reverse_sostav': 'Формирую возврат, реверс вагонов...',
+
+            'vortc_confirm_title': 'Внимание!',
+            'vortc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию отправления {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vortc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь приема {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vortc_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} для возврата? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vortc_confirm_mess_apply_return_wagons': 'Выполнить операцию "ВОЗРАТ ВАГОНОВ ОТПРАВЛЕННОГО СОСТАВА" в количестве: {0} (ваг.), станция отправки: {1}? Будет выполнен возврат вагонов с перегона на указанный путь станции отправления. В отчетах будет зафиксировано возврат с перегона!',
+            'vortc_confirm_mess_apply_cancel_wagons': 'Выполнить операцию "ОТМЕНА ОТПРАВКИ ВАГОНОВ СОСТАВА" в количестве: {0} (ваг.), станция отправки: {1}? В отчетах будет отраженно что операция была выполнена ошибочно, вагоны будут возвращены на путь отправки!',
         }
     };
     // Определлим список текста для этого модуля

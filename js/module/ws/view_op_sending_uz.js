@@ -130,6 +130,115 @@
         },
         'en':  //default language: English
         {
+            'vopsuz_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ «ОТПРАВИТЬ СОСТАВ НА УЗ»',
+            'vopsuz_card_header_on': 'ОТПРАВИТЬ СОСТАВ',
+
+            'vopsuz_title_label_way': 'Путь отправления:',
+            'vopsuz_text_label_way': 'Выберите путь для отправления...',
+
+            'vopsuz_title_label_station': 'Станция отправки:',
+            'vopsuz_text_label_station': 'Выберите станцию отправки...',
+
+            'vopsuz_title_time_aplly': 'Время выполнения',
+            'vopsuz_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vopsuz_title_placeholder_time_aplly': 'Время выполнения',
+
+            'vopsuz_title_composition_index': 'Индекс поезда',
+            'vopsuz_title_placeholder_composition_index': 'XXXX-XXX-XXXX',
+            'vopsuz_text_composition_index': 'Укажите индекс поезда в формате [XXXX-XXX-XXXX]...',
+
+            'vopsuz_title_time_provide': 'Предъявлен',
+            'vopsuz_text_time_provide': 'Время предъявления состава',
+            'vopsuz_title_placeholder_time_provide': 'Предъявлен',
+
+            'vopsuz_title_time_handed': 'Сдан на УЗ',
+            'vopsuz_text_time_handed': 'Время сдачи состава на УЗ',
+            'vopsuz_title_placeholder_time_handed': 'Сдан на УЗ',
+
+            //'vopsuz_title_vagon_searsh': 'Список вагонов',
+            //'vopsuz_title_placeholder_vagon_searsh': 'Добавить список вагонов',
+            //'vopsuz_text_vagon_searsh': 'Введите номер вагона или несколько вагонов, разделитель номеров ";"',
+            //'vopsuz_text_append_vagon_searsh': 'Найти',
+            //'vopsuz_title_label_system_number': 'Контроль системной нумерации',
+            //'vopsuz_title_text_system_number': 'Выберите, проводить проверку системной нумерации введеных вагонов или нет',
+
+            'vopsuz_title_form_apply': 'ВЫПОЛНИТЬ',
+            'vopsuz_title_form_apply_title': 'Выполнить операцию «ОТПРАВИТЬ СОСТАВ НА УЗ»',
+
+            //'vopsuz_title_form_remove': 'СБРОСИТЬ',
+            //'vopsuz_confirm_mess_remove': 'Сбросить вагоны? Все вагоны будут убраны с таблицы',
+
+            //'vopsuz_title_form_move': 'ПЕРЕНЕСТИ',
+            //'vopsuz_confirm_mess_move': 'Перенести вагоны? Все вагоны в количестве {0} будут перенесены с путей АМКР на станцию {1}, путь {2}',
+
+            'vopsuz_title_button_export': 'Экспорт',
+            'vopsuz_title_button_buffer': 'Буфер',
+            'vopsuz_title_button_excel': 'Excel',
+            'vopsuz_title_button_cancel': 'Отменить',
+            'vopsuz_title_button_return': 'Вернуть',
+            'vopsuz_title_button_head': 'Голова',
+            'vopsuz_title_button_tail': 'Хвост',
+
+            //'vopsuz_title_button_edit_time_aplly': 'Править дату предъявляемого состава (Только при статусе в работе)!',
+            //'vopsuz_title_button_vagon_searsh': 'Найти указаные вагоны на путях АМКР!',
+
+            //'vopsuz_title_add_ok': 'ВЫПОЛНИТЬ',
+            'vopsuz_table_caption_provide_sostav': 'Предъявленные составы',
+            //'vopsuz_table_caption_collect_wagons': 'Вагоны для предъявления',
+
+            //'vopsuz_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            //'vopsuz_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
+
+            //'vopsuz_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
+            //'vopsuz_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
+
+            'vopsuz_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
+            'vopsuz_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            //'vopsuz_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
+            //'vopsuz_mess_error_sostav_provide_time_aplly': 'Состав уже предъявлен с датой {0}, при добавлении вагонов нельзя изменить дату предъявления!',
+            //'vopsuz_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
+            //'vopsuz_mess_error_max_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мак. отклонение (мин) = {0}',
+            //'vopsuz_mess_error_not_wagons': 'Не выбраны вагоны для предъявления (в окне «ПРЕДЪЯВИТЬ СОСТАВ» , выберите станцию и путь, в окне «ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ» выберите вагоны).',
+            'vopsuz_mess_error_not_select_sostav': 'Не выбран состав для отправки (в окне «ОТПРАВИТЬ СОСТАВ» , выберите предъявленый состав).',
+            'vopsuz_mess_error_status_select_sostav': 'Статус предявленного состава несоответсвует - "Предъявлен на УЗ".',
+
+            'vopsuz_mess_error_operation_run': 'При выполнении операции «ОТПРАВИТЬ СОСТАВ НА УЗ» произошла ошибка, код ошибки: {0}',
+            //'vopsuz_mess_error_edit_dt_apply_provide': 'При выполнении операции правки даты и времени предъявления состава на УЗ, произошла ошибка, код ошибки: {0}',
+
+            'vopsuz_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vopsuz_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+
+            'vopsuz_mess_cancel_operation': 'Операция «ОТПРАВИТЬ СОСТАВ НА УЗ» – отменена',
+            //'vopsuz_mess_cancel_operation_edit_dt_apply': 'Операция правки даты и времени предъявления состава УЗ – отменена',
+            //'vopsuz_mess_cancel_operation_move': 'Операция сбора вагонов для предявления – отменена',
+            'vopsuz_mess_run_operation_send': 'Выполняю операцию «ОТПРАВИТЬ СОСТАВ НА УЗ»',
+            //'vopsuz_mess_run_edit_dt_apply_provide': 'Выполняю операцию правки даты и времени предъявления состава УЗ',
+            //'vopsuz_mess_run_operation_move': 'Выполняю операцию сбора вагонов на пути прредъявления',
+            //'vopsuz_mess_not_select_wagon_from': 'Выберите вагоны для предъявления!',
+            //'vopsuz_mess_not_select_wagon_on': 'Выберите вагоны для отмены предъявления!',
+            //'vopsuz_mess_not_select_way_on': 'Выберите путь для предъявления вагонов!',
+            //'vopsuz_mess_not_status_provide_sostav': 'Статус предъявленного состава не позволяет выполнить данную операцию',
+            //'vopsuz_mess_not_select_provide_sostav': 'Выберите предявленый состав!',
+            'vopsuz_mess_ok_operation': 'Операция «ОТПРАВИТЬ СОСТАВ НА УЗ» выполнена, предъявлено {0} (ваг.)',
+            //'vopsuz_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
+
+            'vopsuz_mess_load_operation': 'Загружаю операции...',
+            //'vopsuz_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopsuz_mess_load_provide_sostav': 'Загружаю предъявленные и сданные вагоны на пути...',
+            //'vopsuz_mess_load_provide_sostav': 'Загружаю вагоны предъявленные в составе...',
+
+            'vopsuz_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            //'vopsuz_mess_create_sostav': 'Формирую состав для предъявления, переношу вагоны...',
+            //'vopsuz_mess_clear_sostav': 'Формирую состав для предъявления, убираю выбранные вагоны...',
+
+            //'vopsuz_confirm_title': 'Внимание!',
+
+            'vopsuz_confirm_mess_apply_send_sostav': 'Выполнить операцию «ОТПРАВИТЬ СОСТАВ НА УЗ» в количестве: {0} (ваг.), станция отправления: {1}, путь отправления: {2}?',
+            //'vopsuz_confirm_mess_apply_add_provide_sostav': 'Добавить вагоны к предъявленному составу {0} в количестве: {1} (ваг.), станция предъявления: {2}, путь предъявления: {3}?',
+            //'vopsuz_confirm_mess_edit_dt_apply_provide_sostav': 'Выполнить правку даты и времени предъявления состава на УЗ, старое время предъявления: {0}, новое время предъявления: {1}?',
+
+            //'vopsuz_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны выбранные для предъявления в количестве {1} будут сброшены! ',
+            //'vopsuz_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь предъявления {0}? Все предъявленые вагоны в количестве {1} будут сброшены! ',
         }
     };
     // Определлим список текста для этого модуля

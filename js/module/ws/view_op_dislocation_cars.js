@@ -99,6 +99,84 @@
         },
         'en':  //default language: English
         {
+            'vodlc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ"',
+            'vodlc_card_header_on': 'ДИСЛОКАЦИЯ НА СТАНЦИИ',
+            'vodlc_card_header_from': 'ВАГОНЫ НА ПУТИ',
+            //'vodlc_fieldset_on_table_title': 'Сформированный состав',
+            //'vodlc_title_label_station_on': 'Станция прибытия:',
+
+            'vodlc_title_label_way_on': 'Путь дислокации:',
+            'vodlc_text_label_way_on': 'Выберите путь дислокации...',
+
+
+            'vodlc_title_label_station': 'Станция дислокации:',
+            'vodlc_text_label_station': 'Выберите станцию дислокации...',
+            'vodlc_title_label_way_from': 'Путь отправления:',
+            'vodlc_text_label_way_from': 'Выберите путь начала дислокации...',
+
+
+
+            'vodlc_title_label_locomotive1': 'Локомотив №1:',
+            'vodlc_title_label_locomotive2': 'Локомотив №2:',
+            'vodlc_title_placeholder_locomotive': ' № локомотива',
+            'vodlc_title_time_aplly': 'Время выполнения',
+            'vodlc_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vodlc_title_placeholder_time_aplly': 'Время выполнения',
+
+            'vodlc_title_form_apply': 'Выполнить',
+            'vodlc_title_form_apply_title': 'Выполнить операцию "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ"',
+
+            'vodlc_title_button_export': 'Экспорт',
+            'vodlc_title_button_buffer': 'Буфер',
+            'vodlc_title_button_excel': 'Excel',
+            'vodlc_title_button_cancel': 'Отменить',
+            'vodlc_title_button_return': 'Вернуть',
+            'vodlc_title_button_head': 'Голова',
+            'vodlc_title_button_tail': 'Хвост',
+
+            'vodlc_title_add_ok': 'ВЫПОЛНИТЬ',
+
+            //'vodlc_mess_warning_not_num_sostav': 'Нет названия состава!',
+            'vodlc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
+            'vodlc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'voprc_mess_warning_wagon_ban_disl_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для дислокации)',
+            'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+            'vodlc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vodlc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vodlc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vodlc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vodlc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vodlc_mess_error_not_wagons': 'Не выбраны вагоны для дислокации (в окне «ВАГОНЫ НА ПУТИ», выберите станцию, путь и вагоны для дислокации).',
+            'vodlc_mess_error_operation_run': 'При выполнении операции «ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
+            'vodlc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vodlc_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+
+            'vodlc_mess_cancel_operation': 'Операция "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ" – отменена',
+            'vodlc_mess_run_operation_dislocation': 'Выполняю операцию "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ"',
+            'vodlc_mess_not_select_wagon_from': 'Выберите вагоны для формирования дислокации!',
+            'vodlc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
+            'vodlc_mess_not_select_way_on': 'Выберите путь дислокации вагонов!',
+            'vodlc_mess_ok_operation': 'Дислокация выполнена, перенесено {0} (ваг.)',
+
+            'vodlc_mess_load_operation': 'Загружаю операции...',
+            'vodlc_mess_load_wagons': 'Загружаю вагоны на пути...',
+            //'vodlc_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
+            //'vodlc_mess_update_operation': 'Обновляю операции...',
+            'vodlc_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            //'vodlc_mess_destroy_operation': 'Закрываю форму...',
+            'vodlc_mess_create_sostav': 'Формирую маршрут дислокации, переношу вагоны...',
+            'vodlc_mess_clear_sostav': 'Формирую маршрут дислокации, убираю выбранные вагоны...',
+            'vodlc_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
+            'vodlc_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
+
+            'vodlc_confirm_title': 'Внимание!',
+            //'vodlc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
+            //'vodlc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
+            'vodlc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ДИСЛОКАЦИЯ ВАГОНОВ НА СТАНЦИИ" {0} в количестве: {1} (ваг.), переместить вагоны с пути {2} на путь {3}?',
+
+            'vodlc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все дислацированные вагоны в количестве {1} будут сброшены! ',
+            'vodlc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь дислокации {0}? Все дислацированные вагоны в количестве {1} будут сброшены! ',
         }
     };
     // Определлим список текста для этого модуля

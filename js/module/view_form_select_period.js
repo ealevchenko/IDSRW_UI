@@ -34,7 +34,20 @@
         },
         'en':  //default language: English
         {
+            'vf_sp_mess_init_module': 'Инициализация модуля view_form_select_period',
 
+            'vf_sp_title_label_period': 'Выборка за:',
+            'vf_sp_text_label_period': 'Выборка за указанный период',
+            'vf_sp_title_time_period_start': 'С даты',
+            'vf_sp_text_time_period_start': 'Выборка с указаной даты',
+            'vf_sp_title_placeholder_time_period_start': 'Время начала',
+            'vf_sp_title_button_new_period': 'Применить',
+
+            'vf_sp_title_period_1': 'ЖД сутки',
+            'vf_sp_title_period_2': 'Календарные сутки',
+            'vf_sp_title_period_3': 'От начала месяца',
+
+            'vf_sp_apply_text': 'Загружаю информацию за период...',
         }
     };
     // Определлим список текста для этого модуля

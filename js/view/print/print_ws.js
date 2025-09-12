@@ -56,6 +56,43 @@
         },
         'en':  //default language: English
         {
+            'prn_ws_mess_init_module': 'Инициализация модуля(print_ws)...',
+            'prn_ws_mess_load_info': 'Загружаю информацию...',
+            'prn_ws_mess_load_print': 'Формирую документ для печати...',
+            'prn_ws_title_view_ws_statement': 'Натурная ведомость',
+            'prn_ws_title_view_ws_statement_title1': 'По станции {0} на {1}',
+            'prn_ws_title_view_ws_statement_title2': 'Путь {0}',
+
+
+            'prn_ws_table_title_num_wagon': '№ вагона',
+            'prn_ws_table_title_rod': 'Род',
+            'prn_ws_table_title_adm': 'Адм.',
+            'prn_ws_table_title_operator': 'Оператор',
+            'prn_ws_table_title_adoption_date': 'Дата приема на АМКР',
+            'prn_ws_table_title_status': 'Статус',
+            'prn_ws_table_title_arr_condition': 'Разм.',
+            'prn_ws_table_title_curr_condition': 'Разм. тек.',
+            'prn_ws_table_title_num_letter': '№ письма',
+            'prn_ws_table_title_date_letter': 'Дата письма',
+            'prn_ws_table_title_code_station_letter': 'Код ст. наз.',
+            'prn_ws_table_title_station_letter': 'Станция назначения',
+            'prn_ws_table_title_text_letter': 'Текст',
+            'prn_ws_table_title_curr_cargo': 'Груз ТЕКЩ',
+            'prn_ws_table_title_arrival_cargo': 'Груз ПРИБ',
+            'prn_ws_table_title_sertification': 'Сертиф. данные',
+            'prn_ws_table_title_arr_uz_station': 'Стан. отправ.',
+            'prn_ws_table_title_devision_on': 'Цех получ.',
+            'prn_ws_table_title_curr_uz_station': 'Станция УЗ ТЕКУЩ',
+            'prn_ws_table_title_availability_doc': 'Док на УЗ',
+            'prn_ws_table_title_id_filing': 'Id подачи',
+            'prn_ws_table_title_note2': 'Примечание 2',
+
+            'prn_ws_title_yes': 'Да',
+
+
+            //'prn_ws_title_report_nvt': 'Натурная ведомость поезда № {0}',
+            //'prn_ws_title_report_podp_priem': 'Подпись приемосдатчика ______________________',
+
         }
     };
     // Определлим список текста для этого модуля

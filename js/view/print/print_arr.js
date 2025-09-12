@@ -83,6 +83,67 @@
         },
         'en':  //default language: English
         {
+            'prn_arr_mess_init_module': 'Инициализация модуля(print_arr)...',
+            'prn_arr_mess_load_info': 'Загружаю информацию...',
+            'prn_arr_mess_load_print': 'Формирую документ для печати...',
+            'prn_arr_title_view_ws_statement': 'Натурная ведомость',
+            'prn_arr_title_view_ws_statement_draft': 'Черновик натурной ведомости поезда №',
+
+            'prn_arr_table_title_compositionIndex': 'Индекс поезда',
+            'prn_arr_table_title_dateArrival': 'Прибытие',
+            'prn_arr_table_title_dateAdoption': 'Прием',
+            'prn_arr_table_title_stationOnName': 'Прибыл на станцию',
+            'prn_arr_table_title_wayOnName': 'Путь',
+            'prn_arr_table_title_numeration': 'Нумерация',
+
+            'prn_arr_table_title_stationFromName': 'Станция отправления',
+            'prn_arr_table_title_cargoName': 'Груз',
+            'prn_arr_table_title_certificationData': 'Сертиф. данные',
+            'prn_arr_table_title_operator': 'Оператор',
+            'prn_arr_table_title_limitingLoading': 'Огран',
+            'prn_arr_table_title_admCode': 'Код',
+            'prn_arr_table_title_numWagon': '№ вагона',
+            'prn_arr_table_title_numDoc': '№ ж.д. накладной',
+            'prn_arr_table_title_vesg': 'Вес. тн',
+            'prn_arr_table_title_devisionOn': 'Цех получ.',
+            'prn_arr_table_title_arrCondition': 'Разметка',
+            'prn_arr_table_title_note': 'Примечание',
+
+            'prn_ws_warning_wagon_is_adoption': 'В сотаве все вагоны уже приняты!',
+
+            //'prn_arr_title_view_ws_statement_title1': 'По станции {0} на {1}',
+            //'prn_arr_title_view_ws_statement_title2': 'Путь {0}',
+
+            //'prn_arr_table_title_rod': 'Род',
+            //'prn_arr_table_title_adm': 'Адм.',
+
+            //'prn_arr_table_title_adoption_date': 'Дата приема на АМКР',
+            //'prn_arr_table_title_status': 'Статус',
+            //'prn_arr_table_title_arr_condition': 'Разм.',
+            //'prn_arr_table_title_curr_condition': 'Разм. тек.',
+            //'prn_arr_table_title_num_letter': '№ письма',
+            //'prn_arr_table_title_date_letter': 'Дата письма',
+            //'prn_arr_table_title_code_station_letter': 'Код ст. наз.',
+            //'prn_arr_table_title_station_letter': 'Станция назначения',
+            //'prn_arr_table_title_text_letter': 'Текст',
+            //'prn_arr_table_title_curr_cargo': 'Груз ТЕКЩ',
+            //'prn_arr_table_title_arrival_cargo': 'Груз ПРИБ',
+
+            //'prn_arr_table_title_arr_uz_station': 'Стан. отправ.',
+            //'prn_arr_table_title_devision_on': 'Цех получ.',
+            //'prn_arr_table_title_curr_uz_station': 'Станция УЗ ТЕКУЩ',
+            //'prn_arr_table_title_availability_doc': 'Док на УЗ',
+            //'prn_arr_table_title_id_filing': 'Id подачи',
+            //'prn_arr_table_title_note2': 'Примечание 2',
+            //'prn_arr_table_title_note2': 'Примечание 2',
+            'prn_arr_title_from_tail': 'с хвоста',
+            'prn_arr_title_from_head': 'с головы',
+            'prn_arr_title_not_specified': 'не указано',
+            'prn_arr_title_yes': 'Да',
+
+
+            //'prn_arr_title_report_nvt': 'Натурная ведомость поезда № {0}',
+            //'prn_arr_title_report_podp_priem': 'Подпись приемосдатчика ______________________',
         }
     };
     // Определлим список текста для этого модуля

@@ -122,7 +122,108 @@
         },
         'en':  //default language: English
         {
+            'vr_obrwc_card_header_group_wagons': 'ОТЧЕТ "ОПЕРАТИВНЫЙ ОСТАТОК ВАГОНОВ НА АМКР"',
+            //'vr_obrwc_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
+            //'vr_obrwc_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
+            'vr_obrwc_mess_init_module': 'Инициализация модуля view_rep_operating_balance_rw_cars',
+            //'vr_obrwc_mess_load_operation': 'Загружаю форму операции',
 
+            'vr_obrwc_obrwc_title_button_apply': 'ОБНОВИТЬ',
+            'vr_obrwc_obrwc_title_button_title_apply': 'Обновить выборку...',
+            'vr_obrwc_obrwc_title_button_clear': 'СБРОСИТЬ',
+            'vr_obrwc_obrwc_title_button_title_clear': 'Сбросить настройки выборки...',
+
+            'vr_obrwc_title_label_external_wagon': 'Внешние стороние вагоны',
+            'vr_obrwc_title_label_external_wagon_amkr': 'Внешние вагоны АМКР',
+            'vr_obrwc_title_label_wagon_amkr_vz': 'Внутризаводские вагоны',
+            'vr_obrwc_title_label_wagon_klient': 'Контрагенты',
+            'vr_obrwc_title_label_wagon_outgoing': 'Сданные вагоны на УЗ',
+            'vr_obrwc_title_label_wagon_cisterna_amkr': 'Цистерны арендованные',
+
+            'vr_obrwc_title_label_over_day': 'Сверх суток:',
+            'vr_obrwc_title_button_apply_over_day': 'Применить выборку сверх суток...',
+            'vr_obrwc_title_label_not_moved': 'Не перемещается более, час:',
+            'vr_obrwc_title_button_apply_not_moved': 'Применить выборку не перемещается более...',
+
+            'vr_obrwc_title_label_operator': 'Оператор:',
+            'vr_obrwc_title_label_arrival_condition': 'Разметка по прибытию:',
+            'vr_obrwc_title_label_current_condition': 'Разметка текущая:',
+            'vr_obrwc_title_label_wagon_rod': 'Род вагона:',
+            'vr_obrwc_title_label_wagon_type': 'Тип вагона:',
+            'vr_obrwc_title_label_limiting_loading': 'Ограничение:',
+            'vr_obrwc_title_label_arrival_cargo_group': 'Группа по ПРИБ:',
+            'vr_obrwc_title_label_arrival_cargo': 'Груз по ПРИБ:',
+            'vr_obrwc_title_label_sertification_data': 'Сертификационные данные:',
+            'vr_obrwc_title_label_station_from_code': 'Станция отправления:',
+            'vr_obrwc_title_label_arrival_division_amkr': 'Станция назначения ТЕКУЩ:',
+
+            'vr_obrwc_title_label_view_cargo_name': 'Груз ТЕКУЩ:',
+            'vr_obrwc_title_label_view_external_station_on': 'Станция УЗ назначения ТЕКУЩ:',
+            'vr_obrwc_title_label_view_division_from': 'Цех погрузки ТЕКУЩ:',
+            'vr_obrwc_title_label_view_division_on': 'Цех получатель ТЕКУЩ:',
+            'vr_obrwc_title_label_loading_status': 'Статус:',
+            'vr_obrwc_title_label_operation': 'Текущая операция:',
+            'vr_obrwc_title_label_station': 'Станция нахождения вагона:',
+            'vr_obrwc_title_label_view_type_way': 'Дислокация:',
+            'vr_obrwc_title_label_view_name_way': 'Ж.д. путь:',
+
+            //'vr_obrwc_title_form_button_apply': 'Править документ',
+            //'vr_obrwc_title_form_apply_button_title': 'Править документ ...',
+
+            //'vr_obrwc_title_label_num_epd': 'Найти накладную:',
+            //'vr_obrwc_title_placeholder_num_epd': 'Найти накладную',
+            //'vr_obrwc_text_label_num_epd': 'Введите номер накладной ...',
+
+            //'vr_obrwc_title_label_doc_pay': 'Тариф ПРИБ:',
+            //'vr_obrwc_title_placeholder_doc_pay': 'Тариф ПРИБ',
+            //'vr_obrwc_text_label_doc_pay': 'Скорректируйте тариф ПРИБЫТИЯ ...',
+
+            //'vr_obrwc_title_label_payer': 'Плательщик:',
+            //'vr_obrwc_title_placeholder_payer': 'Плательщик',
+            //'vr_obrwc_text_label_payer': 'Выберите плательщика ...',
+
+            //'vr_obrwc_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
+            //'vr_obrwc_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
+            //'vr_obrwc_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
+
+            //'vr_obrwc_title_button_num_epd': 'Найти накладную...',
+            //'vr_obrwc_title_button_doc_pay': 'Обновить тариф прибытия...',
+            //'vr_obrwc_title_button_payer': 'Обновить плательщика...',
+            //'vr_obrwc_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
+
+            //'vr_obrwc_mess_valid_not_payer': 'Указанного плателщика нет в справочнике ИДС',
+            //'vr_obrwc_mess_valid_payer': 'Укажите плательщика',
+
+            'vr_obrwc_title_button_Cancel': 'Отмена',
+            'vr_obrwc_button_Ok': 'Применить',
+
+            //'vr_obrwc_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            //'vr_obrwc_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
+            //'vr_obrwc_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
+            //'vr_obrwc_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
+            //'vr_obrwc_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
+
+            //'vr_obrwc_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
+            //'vr_obrwc_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
+            //'vr_obrwc_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
+            //'vr_obrwc_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
+
+            //'vr_obrwc_mess_error_not_document': 'Не выбран документ для правки!',
+            //'vr_obrwc_mess_error_document_pay_not_change': 'Тариф без изменений!',
+            //'vr_obrwc_mess_error_payer_not_change': 'Плательщик без изменений!',
+            //'vr_obrwc_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
+
+            //'vr_obrwc_load_main_docs': 'Загружаю документы за период...',
+            'vr_obrwc_load': 'Загружаю оперативный остаток вагонов на АМКР на {0}...',
+            'vr_obrwc_where': 'Обновляю оперативный остаток вагонов на АМКР...',
+            'vr_obrwc_clear': 'Сбрасываю выборку оперативного остатка вагонов на АМКР...',
+            //'vr_obrwc_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            //'vr_obrwc_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
+
+            //'vr_obrwc_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
+            'vr_obrwc_field_view_type_way_outer_way': 'ПЕРЕГОН',
+            'vr_obrwc_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
         }
     };
     // Определлим список текста для этого модуля

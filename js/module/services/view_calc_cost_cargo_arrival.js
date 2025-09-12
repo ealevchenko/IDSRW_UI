@@ -80,7 +80,66 @@
         },
         'en':  //default language: English
         {
+            'vs_cccsa_card_header_group_wagons': 'РЕЕСТР ПРИНЯТЫХ ВАГОНОВ',
+            'vs_cccsa_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
+            'vs_cccsa_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
+            'vs_cccsa_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_arrival',
+            'vs_cccsa_mess_load_operation': 'Загружаю форму операции',
 
+            'vs_cccsa_title_form_button_apply': 'Править документ',
+            'vs_cccsa_title_form_apply_button_title': 'Править документ ...',
+
+            'vs_cccsa_title_label_num_epd': 'Найти накладную:',
+            'vs_cccsa_title_placeholder_num_epd': 'Найти накладную',
+            'vs_cccsa_text_label_num_epd': 'Введите номер накладной ...',
+
+            'vs_cccsa_title_label_doc_pay': 'Тариф ПРИБ:',
+            'vs_cccsa_title_placeholder_doc_pay': 'Тариф ПРИБ',
+            'vs_cccsa_text_label_doc_pay': 'Скорректируйте тариф ПРИБЫТИЯ ...',
+
+            'vs_cccsa_title_label_payer': 'Плательщик:',
+            'vs_cccsa_title_placeholder_payer': 'Плательщик',
+            'vs_cccsa_text_label_payer': 'Выберите плательщика ...',
+
+            'vs_cccsa_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
+            'vs_cccsa_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
+            'vs_cccsa_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
+
+            'vs_cccsa_title_button_num_epd': 'Найти накладную...',
+            'vs_cccsa_title_button_doc_pay': 'Обновить тариф прибытия...',
+            'vs_cccsa_title_button_payer': 'Обновить плательщика...',
+            'vs_cccsa_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
+
+            'vs_cccsa_mess_valid_not_payer': 'Указанного плателщика нет в справочнике ИДС',
+            'vs_cccsa_mess_valid_payer': 'Укажите плательщика',
+
+            'vs_cccsa_title_button_Cancel': 'Отмена',
+            'vs_cccsa_button_Ok': 'Применить',
+
+            'vs_cccsa_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_cccsa_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
+            'vs_cccsa_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
+            'vs_cccsa_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
+            'vs_cccsa_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
+
+            'vs_cccsa_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
+            'vs_cccsa_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
+            'vs_cccsa_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
+            'vs_cccsa_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
+
+            'vs_cccsa_mess_error_not_document': 'Не выбран документ для правки!',
+            'vs_cccsa_mess_error_document_pay_not_change': 'Тариф без изменений!',
+            'vs_cccsa_mess_error_payer_not_change': 'Плательщик без изменений!',
+            'vs_cccsa_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
+
+            'vs_cccsa_load_main_docs': 'Загружаю документы за период...',
+            'vs_cccsa_load_docs': 'Загружаю информацию по накладной {0}...',
+
+            'vs_cccsa_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_cccsa_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
+
+            'vs_cccsa_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
         }
     };
     // Определлим список текста для этого модуля

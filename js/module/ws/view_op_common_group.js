@@ -66,7 +66,51 @@
         },
         'en':  //default language: English
         {
+            'vopcgr_card_header_group_wagons': 'ВЫБРАННЫЕ ВАГОНЫ',
+            'vopcgr_card_header_from_way': 'ВАГОНЫ НА ПУТИ',
+            'vopcgr_mess_init_module': 'Инициализация модуля view_op_common_group',
+            'vopcgr_mess_load_operation': 'Загружаю форму операции',
 
+            'vopcgr_title_label_station_from': 'Станция',
+            'vopcgr_text_label_station_from': 'Выберите станцию',
+            'vopcgr_title_label_way_from': 'Путь',
+            'vopcgr_text_label_way_from': 'Выберите путь',
+
+            'vopcgr_title_button_vagon_clear': 'Очистить',
+            'vopcgr_title_button_vagon_searsh': 'Поиск',
+
+            'vopcgr_title_label_system_number': 'Системная нумерация',
+            'vopcgr_title_placeholder_vagon_searsh': 'Список вагонов',
+            'vopcgr_text_append_vagon_searsh': 'Добавить список вагонов',
+            'vopcgr_text_vagon_searsh': 'Введите номер вагона или несколько вагонов, разделитель номеров ";"',
+
+            'vopcgr_mess_load_wagons': 'Загружю вагоны на пути...',
+
+            'vopcgr_mess_warning_wagon_ban_group_way': 'Вагон {0} уже выбран.',
+            'vopcgr_mess_warning_wagon_ban_wagon_out': 'Вагон {0} не находится на АМКР.',
+
+            'vopcgr_mess_not_select_wagons_from': 'Вагоны не выбраны!',
+            'vopcgr_mess_all_select_wagons_exist': 'Все выбранные вагоны уже перенесены',
+
+            'vopcgr_mess_add_group': 'Переношу вагоны...',
+            'vopcgr_mess_clear_group': 'Убираю выбранные вагоны...',
+
+            'vopcgr_title_form_apply': 'ВЫПОЛНИТЬ?',
+            'vopcgr_confirm_mess_apply_add_wagon_group': 'Добавить вагоны? Выбрано {0} ваг., будет добавленно {1} ваг., исключено из переноса повторяющихся вагонов {2}',
+            'vopcgr_confirm_mess_apply_clear_wagon_group': 'Очистить все вагоны в количестве {0} шт. выбранных для правки?',
+
+            'vopcgr_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавить вагоны.',
+            'vopcgr_mess_cancel_operation_mode_clear_wagon': 'Отмена операции очистить вагоны.',
+
+            'vopcgr_mess_ok_operation_update_wagon_group': 'Выполнена операция {0} по группе вагонов {1} шт.',
+
+            'vopcgr_mess_run_operation_update_wagon_group': 'Выполняю операцию {0} по группе вагонов.',
+
+            'vopcgr_mess_error_operation_run_wagon_group': 'При выполнении операции с группой вагонов, произошла ошибка, код ошибки: {0}',
+            'vopcgr_mess_error_operation_wagon_run': 'Вагон № {0}, код ошибки: {1}',
+
+            'vopcgr_title_operation_type_group_0': '',
+            'vopcgr_title_operation_type_group_1': '"ПРАВИТЬ ПРИМЕЧАНИЕ"',
         }
     };
     // Определлим список текста для этого модуля

@@ -14,7 +14,9 @@
         },
         'en':  //default language: English
         {
-            //'title_select': 'Выберите...',
+            'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
+            'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
+            'mwsd_mess_load_balance': 'Загружаю остаток...',
         }
     };
 

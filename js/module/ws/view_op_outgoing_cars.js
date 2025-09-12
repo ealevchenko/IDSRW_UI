@@ -104,6 +104,87 @@
         },
         'en':  //default language: English
         {
+            'vopoc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ОТПРАВИТЬ СОСТАВ НА СТАНЦИИ АМКР"',
+            'vopoc_card_header_on': 'ОТПРАВИТЬ НА СТАНЦИЮ',
+            'vopoc_card_header_from': 'ОТПРАВИТЬ СО СТАНЦИИ',
+            'vopoc_fieldset_on_table_title': 'Сформированный состав',
+            'vopoc_title_label_station_on': 'Станция прибытия:',
+            'vopoc_text_label_station_on': 'Выберите станцию прибытия состава...',
+
+            'vopoc_title_label_station_from': 'Станция отправления:',
+            'vopoc_text_label_station_from': 'Выберите станцию отправления состава...',
+            'vopoc_title_label_way_from': 'Путь отправления:',
+            'vopoc_text_label_way_from': 'Выберите путь отправления состава...',
+
+
+            //'vopoc_title_placeholder_station_on': 'Станция прибытия:',
+
+            'vopoc_title_label_outer_way': 'Внешний путь:',
+            'vopoc_text_label_outer_way': 'Выберите путь примыкания',
+
+            'vopoc_title_label_locomotive1': 'Локомотив №1:',
+            'vopoc_title_label_locomotive2': 'Локомотив №2:',
+            'vopoc_title_placeholder_locomotive': ' № локомотива',
+            'vopoc_title_time_aplly': 'Время выполнения',
+            'vopoc_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vopoc_title_placeholder_time_aplly': 'Время выполнения',
+
+            'vopoc_title_fieldset_sostav_on': 'Прибывающие составы на выбранную станцию',
+            'vopoc_title_fieldset_wagons_on': 'Сформированный состав',
+
+            'vopoc_title_form_apply': 'Выполнить',
+            'vopoc_title_form_apply_title': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
+
+            'vopoc_title_button_export': 'Экспорт',
+            'vopoc_title_button_buffer': 'Буфер',
+            'vopoc_title_button_excel': 'Excel',
+            'vopoc_title_button_cancel': 'Отменить',
+            'vopoc_title_button_return': 'Вернуть',
+            'vopoc_title_button_head': 'Голова',
+            'vopoc_title_button_tail': 'Хвост',
+
+            'vopoc_title_add_ok': 'ВЫПОЛНИТЬ',
+
+            'vopoc_mess_warning_not_num_sostav': 'Нет названия состава!',
+            'vopoc_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
+            'vopoc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vopoc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+            //'vopoc_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+
+
+
+            'vopoc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vopoc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vopoc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopoc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopoc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopoc_mess_error_not_wagons': 'Не выбраны вагоны для отправки (в окне «ОТПРАВИТЬ СО СТАНЦИИ», выберите станцию, путь и вагоны для отправки).',
+            'vopoc_mess_error_operation_run': 'При выполнении операции «ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР» произошла ошибка, код ошибки: {0}',
+            'vopoc_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+
+
+            'vopoc_mess_cancel_operation': 'Операция "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" – отменена',
+            'vopoc_mess_run_operation_outgoing': 'Выполняю операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
+            'vopoc_mess_not_select_way_on': 'Выберите путь c которого будет сформирован состав!',
+            'vopoc_mess_ok_operation': 'Состав отправлен, в количестве {0} (ваг.)',
+
+            'vopoc_mess_load_operation': 'Загружаю операции...',
+            'vopoc_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopoc_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
+            'vopoc_mess_update_operation': 'Обновляю операции...',
+            'vopoc_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            'vopoc_mess_destroy_operation': 'Закрываю форму...',
+            'vopoc_mess_create_sostav': 'Формирую состав, переношу вагоны...',
+            'vopoc_mess_clear_sostav': 'Формирую состав, убираю выбранные вагоны...',
+            'vopoc_mess_reverse_head_sostav': 'Формирую состав, реверс голова-хвост',
+            'vopoc_mess_reverse_sostav': 'Формирую состав, реверс вагонов...',
+
+            'vopoc_confirm_title': 'Внимание!',
+            'vopoc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
+            'vopoc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
+            'vopoc_confirm_mess_apply_outgoing_wagons': 'Выполнить операцию "ОТПРАВИТЬ СОСТАВ НА СТАНЦИЮ АМКР" {0} в количестве: {1} (ваг.), на станцию: {2}?',
+
         }
     };
     // Определлим список текста для этого модуля

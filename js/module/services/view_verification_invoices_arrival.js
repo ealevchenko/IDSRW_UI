@@ -90,7 +90,75 @@
         },
         'en':  //default language: English
         {
+            'vs_via_card_header_card_services': 'СВЕРКА НАКЛАДНЫХ ПО ПРИБЫТИЮ',
+            'vs_via_card_header_verification_invoices': 'СВЕРКА НАКЛАДНЫХ',
 
+            'vs_via_mess_init_module': 'Инициализация модуля view_verification_invoices_arrival',
+            'vs_via_mess_load_operation': 'Загружаю форму операции',
+
+            'vs_via_title_button_doc_clear': 'Очистить',
+            'vs_via_title_button_doc_searsh': 'Поиск',
+
+            'vs_via_title_placeholder_doc_searsh': 'Поиск накладных',
+            'vs_via_text_doc_searsh': 'Введите накладные, разделитель ";"',
+
+            'vs_via_title_label_presented1': 'Предъявлено:',
+            'vs_via_title_placeholder_presented1': '№ Акта',
+            'vs_via_text_label_presented1': 'Укажите № акта ...',
+            'vs_via_title_label_presented2': 'Предъявлено:',
+            'vs_via_title_placeholder_presented2': '№ Акта',
+            'vs_via_text_label_presented2': 'Укажите № акта ...',
+            'vs_via_title_label_presented3': 'Предъявлено:',
+            'vs_via_title_placeholder_presented3': '№ Акта',
+            'vs_via_text_label_presented3': 'Укажите № акта ...',
+
+            'vs_via_title_label_payer': 'Плательщик:',
+            'vs_via_text_label_payer': 'Выберите плательщика ...',
+
+            'vs_via_title_label_act': 'Акт №:',
+            'vs_via_title_placeholder_act': '№ Акта',
+            'vs_via_text_label_act': 'Выберите № акта ...',
+
+            'vs_via_title_label_cargo': 'груз ПРИБ:',
+            'vs_via_text_label_cargo': 'Выберите груз ...',
+
+            'vs_via_title_label_station_from': 'Станция отправления:',
+            'vs_via_text_label_station_from': 'Выберите станцию ...',
+
+            'vs_via_title_label_station_on': 'Станция прибытия:',
+            'vs_via_text_label_station_on': 'Выберите станцию ...',
+
+            'vs_via_title_label_operator': 'Оператор АМКР:',
+            'vs_via_text_label_operator': 'Выберите оператора ...',
+
+            'vs_via_title_button_presented1': 'Править акт ...',
+            'vs_via_title_button_presented2': 'Править акт ...',
+            'vs_via_title_button_presented3': 'Править акт ...',
+            'vs_via_title_button_clear': 'очистить акт ...',
+
+            'vs_via_title_button_Cancel': 'Отмена',
+            'vs_via_button_Ok': 'Применить',
+
+            'vs_via_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_via_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
+            'vs_via_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
+
+            'vs_via_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
+            'vs_via_mess_ok_clear_presented': 'По накладным [{0}] были сброшены акты сверки.',
+            'vs_via_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
+            'vs_via_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
+
+            'vs_via_load_main_docs': 'Загружаю документы за период...',
+            'vs_via_update_main_docs': 'Обновляю документы выбранные за период...',
+            'vs_via_select_main_docs': 'Поиск документов согласно выбора...',
+
+            'vs_via_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_via_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа.',
+            'vs_via_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа, выбрано {3}',
+
+            'vs_via_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
+            'vs_via_mess_error_not_presented': 'Укажите № Акта сверки',
         }
     };
     // Определлим список текста для этого модуля

@@ -128,7 +128,113 @@
         },
         'en':  //default language: English
         {
+            'vs_vio_card_header_card_services': 'СВЕРКА НАКЛАДНЫХ ПО ОТПРАВКЕ',
+            'vs_vio_card_header_verification_invoices': 'СВЕРКА НАКЛАДНЫХ',
 
+            'vs_vio_mess_init_module': 'Инициализация модуля view_verification_invoices_outgoing',
+            'vs_vio_mess_load_operation': 'Загружаю форму операции',
+
+            'vs_vio_title_button_doc_clear': 'Очистить',
+            'vs_vio_title_button_doc_searsh': 'Поиск',
+
+            'vs_vio_title_placeholder_doc_searsh': 'Поиск накладных',
+            //'vs_vio_text_append_doc_searsh': 'Добавить список вагонов',
+            'vs_vio_text_doc_searsh': 'Введите накладные, разделитель ";"',
+
+            //'vs_vio_title_form_button_apply': 'Править документ',
+            //'vs_vio_title_form_apply_button_title': 'Править документ ...',
+
+            //'vs_vio_title_label_num_epd': 'Найти накладную:',
+            //'vs_vio_title_placeholder_num_epd': 'Найти накладную',
+            //'vs_vio_text_label_num_epd': 'Введите номер накладной ...',
+
+            //'vs_vio_title_label_presented1': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented1': '№ Акта',
+            //'vs_vio_text_label_presented1': 'Укажите № акта ...',
+            //'vs_vio_title_label_presented2': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented2': '№ Акта',
+            //'vs_vio_text_label_presented2': 'Укажите № акта ...',
+            //'vs_vio_title_label_presented3': 'Предъявлено:',
+            //'vs_vio_title_placeholder_presented3': '№ Акта',
+            //'vs_vio_text_label_presented3': 'Укажите № акта ...',
+
+            'vs_vio_title_label_payer': 'Плательщик ОТПР:',
+            'vs_vio_text_label_payer': 'Выберите плательщика ...',
+
+            'vs_vio_title_label_list': 'Перечень:',
+            'vs_vio_title_placeholder_list': 'Перечень',
+            'vs_vio_text_label_list': 'Выберите перечень ...',
+
+            'vs_vio_title_label_cargo': 'груз ОТПР:',
+            'vs_vio_text_label_cargo': 'Выберите груз ...',
+
+            'vs_vio_title_label_station_from': 'Станция отправления:',
+            'vs_vio_text_label_station_from': 'Выберите станцию ...',
+
+            'vs_vio_title_label_station_on': 'Станция назначения:',
+            'vs_vio_text_label_station_on': 'Выберите станцию ...',
+
+            'vs_vio_title_label_operator': 'Оператор АМКР:',
+            'vs_vio_text_label_operator': 'Выберите оператора ...',
+
+            'vs_vio_title_date_list': 'от:',
+            'vs_vio_title_placeholder_date_list': 'Дата перечня',
+
+            'vs_vio_title_label_num_list': 'Перечень:',
+            'vs_vio_title_placeholder_num_list': 'Перечень',
+
+            //'vs_vio_title_button_presented1': 'Править акт ...',
+            //'vs_vio_title_button_presented2': 'Править акт ...',
+            //'vs_vio_title_button_presented3': 'Править акт ...',
+            //'vs_vio_title_button_clear': 'очистить акт ...',
+
+            'vs_vio_verification_invoices_title_button_apply': 'Применить сверку',
+            'vs_vio_verification_invoices_title_button_title_apply': 'Применить сверку документа № перечня и дату ...',
+            'vs_vio_verification_invoices_title_button_clear': 'Очистить сверку',
+            'vs_vio_verification_invoices_title_button_title_clear': 'Очистить сверку документа № перечня и дату ...',
+            'vs_vio_title_button_Cancel': 'Отмена',
+            'vs_vio_button_Ok': 'Применить',
+
+
+
+            'vs_vio_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_vio_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет отмечен перечень {0} от {1}, по всем накладным [{2}].',
+            'vs_vio_mess_run_clear_presented': 'Выполнить очистку № и даты перечня, по всем накладным [{0}].',
+
+            'vs_vio_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Перечень {1} от {2}.',
+            'vs_vio_mess_ok_clear_presented': 'По накладным [{0}] были сброшены перечни сверки.',
+            'vs_vio_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
+            'vs_vio_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
+
+            //'vs_vio_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
+            //'vs_vio_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
+            //'vs_vio_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
+            //'vs_vio_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
+
+            'vs_vio_mess_error_not_date_list': 'Не указана дата перечня.',
+            'vs_vio_mess_error_not_num_list': 'Не указан № перечня.',
+            'vs_vio_mess_error_num_list': 'Указан не верный формат № перечня.',
+            //'vs_vio_mess_error_not_document': 'Не выбран документ для правки!',
+            //'vs_vio_mess_error_document_pay_not_change': 'Тариф без изменений!',
+            //'vs_vio_mess_error_payer_not_change': 'Плательщик без изменений!',
+            //'vs_vio_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
+
+            //'vs_vio_title_period_1': 'ЖД сутки',
+            //'vs_vio_title_period_2': 'Календарные сутки',
+            //'vs_vio_title_period_3': 'От начала месяца',
+
+            'vs_vio_load_main_docs': 'Загружаю документы за период...',
+            /*            'vs_vio_load_docs': 'Загружаю информацию по накладной {0}...',*/
+            'vs_vio_update_main_docs': 'Обновляю документы выбранные за период...',
+            'vs_vio_select_main_docs': 'Поиск документов согласно выбора...',
+
+            'vs_vio_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_vio_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа.',
+            'vs_vio_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов с расчетом ж.д. тарифа, выбрано {3}',
+
+            'vs_vio_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
+            //'vs_vio_mess_error_not_presented': 'Укажите № Акта сверки',
         }
     };
     // Определлим список текста для этого модуля

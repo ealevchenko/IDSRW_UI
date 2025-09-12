@@ -146,7 +146,131 @@
         },
         'en':  //default language: English
         {
+            'vs_ilet_card_header_card_services': 'ИНСТРУКТИВНЫЕ ПИСЬМА',
+            'vs_ilet_card_header_list_of_letters': 'ПЕРЕЧЕНЬ ПИСЕМ',
 
+            'vs_ilet_mess_init_module': 'Инициализация модуля view_instructional_letters',
+            'vs_ilet_mess_shearch_wagon': 'Обработка вагонов в системе',
+
+            'vs_ilet_title_button_lett_num_clear': 'Очистить',
+            'vs_ilet_title_button_lett_num_searsh': 'Поиск по № письма',
+            'vs_ilet_title_button_lett_wagon_clear': 'Очистить',
+            'vs_ilet_title_button_lett_wagon_searsh': 'Поиск по № вагона в письме',
+
+            'vs_ilet_title_placeholder_lett_num_searsh': 'Поиск по № письма',
+            'vs_ilet_text_lett_num_searsh': 'Введите № письма, разделитель ";"',
+            'vs_ilet_title_placeholder_lett_wagon_searsh': 'Поиск по № вагона в письме',
+            'vs_ilet_text_lett_wagon_searsh': 'Введите № вагона, разделитель ";"',
+
+            'vs_ilet_title_label_create_new': 'Созданные письма',
+            'vs_ilet_title_label_in_progress': 'Письма в работе',
+            'vs_ilet_title_label_done': 'Письма выполненные',
+            'vs_ilet_title_label_replacement': 'Письма заменённые',
+            'vs_ilet_title_label_canceled': 'Письма отменённые',
+            'vs_ilet_title_label_deleted': 'Письма удалить',
+
+            'vs_ilet_title_letter_num': '№ письма',
+            'vs_ilet_title_placeholder_letter_num': '№ письма',
+            //'vs_ilet_text_letter_num': 'Введите № письма...',
+
+            'vs_ilet_title_letter_date': 'Дата письма',
+            'vs_ilet_title_placeholder_letter_date': 'Дата письма',
+            //'vs_ilet_text_letter_date': 'Выберите дату письма',
+
+            //'vs_ilet_title_letter_code': 'Код',
+            //'vs_ilet_title_placeholder_letter_code': 'Код',
+            //'vs_ilet_text_letter_code': 'Код',
+
+            'vs_ilet_title_label_letter_destination_station': 'Ст. назначения',
+            'vs_ilet_title_placeholder_letter_destination_station': 'Ст. назначения',
+            //'vs_ilet_text_letter_destination_station': 'Выберите станцию назначения',
+
+            'vs_ilet_title_letter_owner': 'Собственник (по письму)',
+            'vs_ilet_title_placeholder_letter_owner': 'Собственник',
+            //'vs_ilet_text_letter_owner': 'Введите собственника по письму...',
+
+            'vs_ilet_title_letter_note': 'Примечание',
+            'vs_ilet_title_placeholder_letter_note': 'Примечание',
+            'vs_ilet_text_letter_note': 'Введите примечание...',
+
+            //'vs_ilet_title_placeholder_lett_wagons_searsh': 'Перечень вагонов в письме',
+            'vs_ilet_title_placeholder_lett_wagons_searsh': 'Введите № вагона, разделитель ";"',
+            //'vs_ilet_text_lett_wagons_searsh': 'Введите № вагона, разделитель ";"',
+
+
+            'vs_ilet_title_form_add': 'Добавить новое письмо',
+            'vs_ilet_title_form_edit': 'Править письмо',
+            //'vs_ilet_title_label_presented1': 'Предъявлено:',
+            //'vs_ilet_title_placeholder_presented1': '№ Акта',
+            //'vs_ilet_text_label_presented1': 'Укажите № акта ...',
+            //'vs_ilet_title_label_presented2': 'Предъявлено:',
+            //'vs_ilet_title_placeholder_presented2': '№ Акта',
+            //'vs_ilet_text_label_presented2': 'Укажите № акта ...',
+            //'vs_ilet_title_label_presented3': 'Предъявлено:',
+            //'vs_ilet_title_placeholder_presented3': '№ Акта',
+            //'vs_ilet_text_label_presented3': 'Укажите № акта ...',
+
+            //'vs_ilet_title_label_payer': 'Плательщик:',
+            //'vs_ilet_text_label_payer': 'Выберите плательщика ...',
+
+            //'vs_ilet_title_label_act': 'Акт №:',
+            //'vs_ilet_title_placeholder_act': '№ Акта',
+            //'vs_ilet_text_label_act': 'Выберите № акта ...',
+
+            //'vs_ilet_title_label_cargo': 'груз ПРИБ:',
+            //'vs_ilet_text_label_cargo': 'Выберите груз ...',
+
+            //'vs_ilet_title_label_station_from': 'Станция отправления:',
+            //'vs_ilet_text_label_station_from': 'Выберите станцию ...',
+
+            //'vs_ilet_title_label_station_on': 'Станция прибытия:',
+            //'vs_ilet_text_label_station_on': 'Выберите станцию ...',
+
+            //'vs_ilet_title_label_operator': 'Оператор АМКР:',
+            //'vs_ilet_text_label_operator': 'Выберите оператора ...',
+
+            //'vs_ilet_title_button_presented1': 'Править акт ...',
+            //'vs_ilet_title_button_presented2': 'Править акт ...',
+            //'vs_ilet_title_button_presented3': 'Править акт ...',
+            //'vs_ilet_title_button_clear': 'очистить акт ...',
+
+            'vs_ilet_title_button_Cancel': 'Отмена',
+            'vs_ilet_button_Ok': 'Применить',
+
+            //'vs_ilet_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            //'vs_ilet_mess_run_update_presented': 'Выполнить "СВЕРКУ НАКЛАДНЫХ", будет внесен в поле {0}, акт сверки № {1} по всем накладным [{2}].',
+            //'vs_ilet_mess_run_clear_presented': 'Выполнить очистку акта сверки в поле {0}, по всем накладным [{1}].',
+
+            //'vs_ilet_mess_ok_update_presented': 'По накладным [{0}] выполнена "СВЕРКА НАКЛАДНЫХ", Акт сверки [{1}].',
+            //'vs_ilet_mess_ok_clear_presented': 'По накладным [{0}] были сброшены акты сверки.',
+            //'vs_ilet_mess_error_update_presented': 'При выполнении "СВЕРКИ НАКЛАДНЫХ" [{0}], - произошла ошибка. Код ошибки {1}',
+            //'vs_ilet_cancel_update_presented': 'Отмена "СВЕРКИ НАКЛАДНЫХ"',
+
+            'vs_ilet_load_litters': 'Загружаю письма за период...',
+            'vs_ilet_update_letters': 'Обновляю письма за период...',
+            'vs_ilet_select_letters': 'Поиск писем согласно выбора...',
+
+            'vs_ilet_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_ilet_mess_info_searsh_letters': 'За период c {0} по {1}, найдено {2} инструктивных писем.',
+            'vs_ilet_mess_info_select_letters': 'За период c {0} по {1}, найдено {2} инструктивных писем, выбрано {3}',
+            'vs_ilet_mess_note_offer_not_close': '!Данный вагон не закрыт в письме {0} от {1} и будет закрыт со статусом [Отмена]',
+            'vs_ilet_mess_note_offer_status_0': 'Ожидаем прибытие вагона',
+            'vs_ilet_mess_note_offer_status_1': 'Вагон прибыл',
+            'vs_ilet_mess_note_offer_status_2': 'Вагон сдан',
+            'vs_ilet_mess_note_offer_status_default': 'Статус вагона не определен',
+
+            'vs_ilet_mess_form_letters_edit_not_wagons': 'В письме отсутствуют вагоны!',
+            'vs_ilet_mess_form_letters_edit_error_wagons': 'В письме по вагонам есть ошибки определения статуса!',
+            'vs_ilet_mess_form_letters_edit_error_wagon': 'Вагон № {0}, статус {1}, ошибка {2}',
+            'vs_ilet_mess_form_letters_edit_letter_destination_station': 'Укажите станцию назначения',
+            'vs_ilet_mess_form_letters_edit_not_db_letter_destination_station': 'Станции назначения нет БД ИДС...',
+            'vs_ilet_mess_form_letters_edit_not_status_wagons': 'Статус вагонов в системе не определен!',
+            'vs_ilet_mess_form_letters_edit_not_edit_wagon': 'Вагон {0} в письме закрыт {1} - правка запрещена!',
+            'vs_ilet_mess_war_form_letters_edit_exist_wagon': 'Вагон {0} уже добавлен в письмо!',
+
+            //'vs_ilet_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
+            //'vs_ilet_mess_error_not_presented': 'Укажите № Акта сверки',
         }
     };
     // Определлим список текста для этого модуля
