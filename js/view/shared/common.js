@@ -3,10 +3,10 @@ var format_date_ru = "DD.MM.YYYY";
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
 var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
-//var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
-//var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
-var url_api_test = "https://localhost:7280";
-var url_api_main = "https://localhost:7280";
+var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
+//var url_api_test = "https://localhost:7280";
+//var url_api_main = "https://localhost:7280";
 
 /* ----------------------------------------------------------
         Вывод текста согласно региональных настроек
@@ -157,9 +157,13 @@ var get_belongs_element = function (rows, name_field, id) {
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-    //App.Url_Api = url_api_main;
+    //App.Lang = ($.cookie('lang') === undefined || $.cookie('lang') === null || $.cookie('lang') === '' ? 'ru' : $.cookie('lang'));
+    //var rr = $.cookie('lang');
+    //console.log("lang: ", $.cookie('lang'));
+    App.Lang = 'ru';
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
     App.Url_Api = url_api_test;
+    //App.Url_Api = url_api_test;
 
     // Определим AdminInfo - информацию об api которое подключено к UI
     App.AdminInfo = {};
@@ -237,35 +241,43 @@ var get_belongs_element = function (rows, name_field, id) {
         },
         'en':  //default language: English
         {
-            'mess_delay': 'We are processing your request ...',
-            'mess_load_table': 'Forming table ...',
-            'mess_load': 'Downloading reference books...',
-            'mess_save': 'Writing and updating data ...',
-            'mess_load_data': 'Receiving the requested data...',
-            'mess_operation': 'Performing an operation...',
-            'mess_update_uz': 'I am updating the data on the UZ ...',
-            'mess_checking_data': 'Checking data...',
+            'mess_delay': 'Мы обрабатываем ваш запрос...',
+            'mess_load_table': 'Формируем таблицу...',
+            'mess_load': 'Загрузка справочников...',
+            'mess_save': 'Запись и обновление данных...',
+            'mess_load_data': 'Получение запрашиваемых данных...',
+            'mess_operation': 'Выполняю операцию...',
+            'mess_update_uz': 'Обновляю данные на УЗ...',
+            'mess_checking_data': 'Проверяю данные...',
 
-            'mess_error_not_cars': 'Enter the number of a car or several cars, number separator ";"',
-            'mess_error_input_num_cars': 'Input error, item number :{0}, wrong number entered :{1}',
-            'mess_error_input_num_cars1': 'Input error, position number :{0}, number cannot be less than or equal to 0 :{1}',
-            'mess_error_input_num_cars2': 'Input error, position number :{0}, non-system numbering (checksum error) :{1}',
-            'mess_error_input_num_cars_duble': 'Input error, number entered :{0} - repeated!',
+            'mess_error_not_cars': 'Введите номер вагона или несколько вагонов, разделитель номеров ";"',
+            'mess_error_cars': 'Ошибка ввода, номеров вагонов!',
+            'mess_error_input_num_cars': 'Ошибка ввода, номер позиции :{0}, введен неправильный номер :{1}',
+            'mess_error_input_num_cars1': 'Ошибка ввода, номер позиции :{0}, номер не может быть меньше или равен 0 :{1}',
+            'mess_error_input_num_cars2': 'Ошибка ввода, номер позиции :{0}, не системная нумерация (ошибка контрольной суммы) :{1}',
+            'mess_error_input_num_cars_duble': 'Ошибка ввода, введеный номер :{0} - повторяется!',
 
-            'epd_status_unknown': 'Unknown status',
-            'epd_status_draft': 'Darling',
-            'epd_status_sending': 'Document is being sent to the commodity cashier',
-            'epd_status_registered': 'Document of transfers to the commodity cashier',
-            'epd_status_reclaiming': 'Document reclaimed by cashier',
-            'epd_status_accepted': 'Vantage accepted before moving',
-            'epd_status_delivered': 'Epd_status_delivered',
-            'epd_status_recieved': 'Vantage received by owner',
-            'epd_status_uncredited': 'Document uncredited by commodity cashier',
-            'epd_status_recieved_draft': 'Vantage received and edited',
-            'epd_status_recieved_sending': 'Vantage received by the receiver and the goods cashier',
-            'epd_status_recieved_reclaiming': 'Vantage received by the owner and reclaimed by the cashier',
-            'epd_status_canceled': 'Document of zіpsovaniya commodity cashier',
-            'epd_status_locked': 'Lock Document',
+            'mess_error_docs': 'Ошибка ввода, номеров накладных!',
+            'mess_error_not_docs': 'Введите номер документа или несколько документов, разделитель номеров ";"',
+            'mess_error_input_num_docs': 'Ошибка ввода, номер позиции :{0}, введен неправильный номер :{1}',
+            'mess_error_input_num_docs1': 'Ошибка ввода, номер позиции :{0}, номер не может быть меньше или равен 0 :{1}',
+            'mess_error_input_num_docs_duble': 'Ошибка ввода, введеный номер :{0} - повторяется!',
+
+
+            'epd_status_unknown': 'Статус невідомий',
+            'epd_status_draft': 'Чернетка',
+            'epd_status_sending': 'Документ передається товарному касиру',
+            'epd_status_registered': 'Документ переданий товарному касиру',
+            'epd_status_reclaiming': 'Документ відкликається від товарного касира',
+            'epd_status_accepted': 'Вантаж прийнято до перевезення',
+            'epd_status_delivered': 'Вантаж прибув',
+            'epd_status_recieved': 'Вантаж отримано одержувачем',
+            'epd_status_uncredited': 'Документ розкредитовано товарним касиром',
+            'epd_status_recieved_draft': 'Вантаж отримано одержувачем і редагується',
+            'epd_status_recieved_sending': 'Вантаж отримано одержувачем і переданий товарному касиру',
+            'epd_status_recieved_reclaiming': 'Вантаж отримано одержувачем і відкликається від товарного касира',
+            'epd_status_canceled': 'Документ зіпсований товарним касиром',
+            'epd_status_locked': 'Документ заблокований',
         }
 
     };

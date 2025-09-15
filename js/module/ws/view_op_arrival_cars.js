@@ -10,8 +10,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
 
@@ -96,6 +96,78 @@
         },
         'en':  //default language: English
         {
+            'vopac_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
+            'vopac_card_header_on': 'ПРИНЯТЬ НА СТАНЦИЮ',
+            'vopac_card_header_from': 'СОСТАВЫ НА ПОДХОДАХ',
+            'vopac_fieldset_on_table_title': 'Сформированный состав',
+
+            'vopac_title_label_station_on': 'Станция прибытия:',
+            'vopac_text_label_station_on': 'Выберите станцию прибытия состава...',
+            'vopac_title_placeholder_station_on': 'Станция прибытия:',
+
+            'vopac_title_label_way_on': 'Путь прибытия:',
+            'vopac_title_text_way_on': 'Выберите путь прибытия состава...',
+
+            'vopac_title_placeholder_way_on': 'Выберите путь',
+
+
+            'vopac_title_label_outer_way': 'Внешний путь:',
+            'vopac_title_placeholder_outer_way': 'Внешний путь',
+            'vopac_title_label_locomotive1': 'Локомотив №1:',
+            'vopac_title_label_locomotive2': 'Локомотив №2:',
+            'vopac_title_placeholder_locomotive': ' № локомотива',
+            'vopac_title_time_aplly': 'Время выполнения',
+            'vopac_text_time_aplly': 'Время выполнения операции ограниченно +(-)1день',
+            'vopac_title_placeholder_time_aplly': 'Время выполнения',
+
+            'vopac_title_form_apply': 'Выполнить',
+            'vopac_title_form_apply_title': 'Выполнить операцию "ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ АМКР"',
+
+            'vopac_title_button_export': 'Экспорт',
+            'vopac_title_button_buffer': 'Буфер',
+            'vopac_title_button_excel': 'Excel',
+            'vopac_title_button_cancel': 'Отменить',
+            'vopac_title_button_return': 'Вернуть',
+            'vopac_title_button_head': 'Голова',
+            'vopac_title_button_tail': 'Хвост',
+
+            'vopac_title_add_ok': 'ВЫПОЛНИТЬ',
+
+            'vopac_mess_warning_not_num_sostav': 'Нет названия состава!',
+            'vopac_mess_warning_wagon_ban_operation': 'Вагон № {0} для операций заблокирован (вагон уже принят на станцию: [{1}])',
+            'vopac_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+
+
+
+            'vopac_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
+            'vopac_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
+            'vopac_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopac_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopac_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopac_mess_error_not_wagons': 'Не выбраны вагоны для приема (в окне «СОСТАВЫ НА ПОДХОДАХ», выберите станцию, прибывающий состав и сформируйте прибытие).',
+            'vopac_mess_error_operation_run': 'При выполнении операции «ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ» произошла ошибка, код ошибки: {0}',
+            'vopac_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+
+
+            'vopac_mess_cancel_operation': 'Операция "ПРИНЯТЬ НА СТАНЦИЮ АМКР" – отменена',
+            'vopac_mess_run_operation_arrival': 'Выполняю операцию приема вагонов прибывающего состава на станцию АМКР',
+            'vopac_mess_not_select_way_on': 'Выберите путь для приема вагонов!',
+            'vopac_mess_ok_operation': 'Состав принят, в количестве {0} (ваг.)',
+
+            'vopac_mess_load_operation': 'Загружаю операции...',
+            'vopac_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopac_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
+            'vopac_mess_update_operation': 'Обновляю операции...',
+            'vopac_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            'vopac_mess_destroy_operation': 'Закрываю форму...',
+            'vopac_mess_create_sostav': 'Формирую состав, переношу вагоны...',
+            'vopac_mess_clear_sostav': 'Формирую состав, убираю выбранные вагоны...',
+            'vopac_mess_reverse_head_sostav': 'Формирую состав, реверс голова-хвост',
+            'vopac_mess_reverse_sostav': 'Формирую состав, реверс вагонов...',
+
+            'vopac_confirm_title': 'Внимание!',
+            'vopac_confirm_mess_new_sostav': 'Вы уверены что хотите выбрать новый состав {0} прибытия? Все выбранные и перенесённые вагоны в количестве {1} будут сброшены! ',
+            'vopac_confirm_mess_apply_arrival_wagons': 'Выполнить операцию "ПРИНЯТЬ СОСТАВ НА СТАНЦИЮ АМКР" в количестве: {0} (ваг.), станция отправки: {1}?',
         }
     };
     // Определлим список текста для этого модуля

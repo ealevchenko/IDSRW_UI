@@ -3,6 +3,8 @@
     "use strict"; // Start of use strict
     var App = window.App || {};
     var $ = window.jQuery;
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -13,12 +15,13 @@
         },
         'en':  //default language: English
         {
-            //'title_select': 'Выберите...',
+            'mwsd_title_button_Ok': 'Ok',
+            'mwsd_title_button_Cancel': 'Отмена',
         }
     };
 
     // Определим глобальные переменные
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
 

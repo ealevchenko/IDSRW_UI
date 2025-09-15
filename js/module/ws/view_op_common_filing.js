@@ -10,8 +10,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -125,7 +125,110 @@
         },
         'en':  //default language: English
         {
+            'vopcf_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
+            'vopcf_card_header_filing_wagons': 'ВАГОНЫ В ПОДАЧЕ',
+            'vopcf_card_header_from_way': 'ВАГОНЫ НА ПУТИ',
+            'vopcf_mess_init_module': 'Инициализация модуля view_op_common_filing',
+
+            'vopcf_title_period_1': 'ЖД сутки',
+            'vopcf_title_period_2': 'Календарные сутки',
+            'vopcf_title_period_3': 'От начала месяца',
+
+            'vopcf_title_button_new_period': 'Обновить данные, применить новый период выборки.',
+
+            'vopcf_title_type_filing_0': '',
+            'vopcf_title_type_filing_1': 'выгрузки',
+            'vopcf_title_type_filing_2': 'погрузки',
+            'vopcf_title_type_filing_3': 'очистки',
+            /*            'vopcf_title_type_filing_4': 'обработки',*/
+
+            'vopcf_title_operation_type_filing_0': '',
+            'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
+            'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
+            'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
+            /*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
+
+            'vopcf_title_label_period': 'Выборка за:',
+            'vopcf_text_label_period': 'Выборка за указанный период',
+            'vopcf_title_time_period_start': 'С даты',
+            'vopcf_text_time_period_start': 'Выборка с указаной даты',
+            'vopcf_title_placeholder_time_period_start': 'Время начала',
+            'vopcf_title_label_station': 'Станция {0}:',
+            'vopcf_text_label_station': 'Выберите станцию {0}...',
+
+            'vopcf_title_label_way_from': 'Путь {0}:',
+            'vopcf_text_label_way_from': 'Выберите путь {0}...',
+
+            'vopcf_confirm_title': 'Внимание!',
+            'vopcf_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
+            'vopcf_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь для подачи {0}? Все выбранные для подачи в количестве {1} будут сброшены! ',
+
+            'vopcf_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopcf_mess_load_filing_wagon': 'Загружаю вагоны подач...',
+
+            'vopcf_mess_eror_add_new_filing': 'Выбранно № {0} вагонов, не могу сформировать новую подачу (ошибка определения станции {1}, парка {2}, пути {3})',
+            'vopcf_mess_eror_new_filing_not_wagon': 'В новой подаче отсутствуют вагоны',
+
+            'vopcf_title_status_null': 'Неопределен?',
+            'vopcf_title_status_0': 'Без операции',
+            'vopcf_title_status_1': 'Операция начата',
+            'vopcf_title_status_2': 'Операция завершена',
+            'vopcf_title_status_3': 'Вагон покинул путь',
+
+            'vopcf_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
+            'vopcf_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
+            'vopcf_mess_add_filing': 'Переношу вагоны в существующую подачу.',
+            'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
+            'vopcf_mess_clear_draft': 'Удаляю черновик подачи.',
+
+            'vopcf_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для {0}',
+            'vopcf_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vopcf_mess_ok_operation_add_filing': 'Подача создана, определено {0} (ваг.)',
+            'vopcf_mess_error_operation_run_add_filing': 'При создании подачи для {0} произошла ошибка, код ошибки: {1}',
+            'vopcf_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
+
+            'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
+            'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
+            'vopcf_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
+            'vopcf_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
+
+            'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
+            'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
+            'vopcf_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
+
+            'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
+            'vopcf_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
+            'vopcf_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
+            'vopcf_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
+
+            'vopcf_title_form_apply': 'Править подачу',
+            'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
+            'vopcf_mess_warning_wagon_ban_error_operation': 'Вагон № {0} для выбора заблокирован (операция вагона отличается от операций выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_loading_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статуса выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статусов выбранных ранее вагонов!)',
+            'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
+
+            'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
+            'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
+            'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
+            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_current_not_empty': 'Вагон № {0} для операций очистка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_ban_processing': 'Вагон № {0} для операций обработки заблокирован (предъявлен,незакрытая подача, незаконченая операция, операция не очистка)',
+            'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
+            'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
+            'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
+
+            'vopcf_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
+            'vopcf_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
+            'vopcf_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
+
+            'vopcf_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
+            'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
+            'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
+
+            'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
         }
     };
     // Определлим список текста для этого модуля

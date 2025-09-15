@@ -10,8 +10,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -61,7 +61,47 @@
         },
         'en':  //default language: English
         {
+            'vr_ilw_card_header_group_wagons': 'ОТЧЕТ "ИНСТРУКТИВНЫЕ ПИСЬМА В РАБОТЕ"',
+            //'vr_ilw_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
+            //'vr_ilw_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
+            'vr_ilw_mess_init_module': 'Инициализация модуля view_rep_instructional_letters_wagon',
+            //'vr_ilw_mess_load_operation': 'Загружаю форму операции',
 
+            'vr_ilw_obrwc_title_button_apply': 'ОБНОВИТЬ',
+            'vr_ilw_obrwc_title_button_title_apply': 'Обновить выборку...',
+            'vr_ilw_obrwc_title_button_clear': 'СБРОСИТЬ',
+            'vr_ilw_obrwc_title_button_title_clear': 'Сбросить настройки выборки...',
+
+            'vr_ilw_title_button_Cancel': 'Отмена',
+            'vr_ilw_button_Ok': 'Применить',
+
+            //'vr_ilw_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            //'vr_ilw_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
+            //'vr_ilw_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
+            //'vr_ilw_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
+            //'vr_ilw_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
+
+            //'vr_ilw_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
+            //'vr_ilw_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
+            //'vr_ilw_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
+            //'vr_ilw_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
+
+            //'vr_ilw_mess_error_not_document': 'Не выбран документ для правки!',
+            //'vr_ilw_mess_error_document_pay_not_change': 'Тариф без изменений!',
+            //'vr_ilw_mess_error_payer_not_change': 'Плательщик без изменений!',
+            //'vr_ilw_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
+
+            ////'vr_ilw_load_main_docs': 'Загружаю документы за период...',
+            'vr_ilw_load': 'Загружаю инструктивные письма в работе на {0}...',
+            //'vr_ilw_where': 'Обновляю оперативный остаток вагонов на АМКР...',
+            //'vr_ilw_clear': 'Сбрасываю выборку оперативного остатка вагонов на АМКР...',
+            ////'vr_ilw_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            ////'vr_ilw_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
+
+            ////'vr_ilw_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
+            //'vr_ilw_field_view_type_way_outer_way': 'ПЕРЕГОН',
+            //'vr_ilw_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
         }
     };
     // Определлим список текста для этого модуля

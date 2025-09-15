@@ -12,8 +12,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -72,6 +72,56 @@
         },
         'en':  //default language: English
         {
+            'prn_out_mess_init_module': 'Инициализация модуля(print_out)...',
+            'prn_out_mess_load_info': 'Загружаю информацию...',
+            'prn_out_mess_load_print': 'Формирую документ для печати...',
+
+            'prn_out_title_register_doc_transfer': 'Реєстр передач документів',
+            'prn_out_title_type_payers': 'Платник АМКР',
+            'prn_out_title_list_outgoing': 'Список відправлень № {0} ',
+            'prn_out_title_date_outgoing': 'Дата відправлення {0} ',
+            'prn_out_title_station_from': 'ст. {0} ',
+            'prn_out_title_total_outgoing': 'Усього - {0} відправки',
+            'prn_out_table_title_position': '№з/п',
+            'prn_out_table_title_numWagon': 'Номер вагона',
+            'prn_out_table_title_numDoc': 'Номер відправки',
+            'prn_out_table_title_cargoName': 'Вантаж',
+            'prn_out_table_title_payers': 'Платник',
+            'prn_out_table_title_pays': 'Тариф',
+            'prn_out_table_title_pays_dop': 'Дод. збори',
+            'prn_out_table_title_pays_all': 'Всього сплачено відправником',
+
+            //'prn_out_title_view_ws_statement': 'Натурная ведомость',
+            //'prn_out_title_view_ws_statement_draft': 'Черновик натурной ведомости поезда №',
+
+            //'prn_out_table_title_compositionIndex': 'Индекс поезда',
+            //'prn_out_table_title_dateArrival': 'Прибытие',
+            //'prn_out_table_title_dateAdoption': 'Прием',
+            //'prn_out_table_title_stationOnName': 'Прибыл на станцию',
+            //'prn_out_table_title_wayOnName': 'Путь',
+            //'prn_out_table_title_numeration': 'Нумерация',
+
+            //'prn_out_table_title_stationFromName': 'Станция отправления',
+            //'prn_out_table_title_cargoName': 'Груз',
+            //'prn_out_table_title_certificationData': 'Сертиф. данные',
+            //'prn_out_table_title_operator': 'Оператор',
+            //'prn_out_table_title_limitingLoading': 'Огран',
+            //'prn_out_table_title_admCode': 'Код',
+            //'prn_out_table_title_vesg': 'Вес. тн',
+            //'prn_out_table_title_devisionOn': 'Цех получ.',
+            //'prn_out_table_title_arrCondition': 'Разметка',
+            //'prn_out_table_title_note': 'Примечание',
+
+            'prn_ws_warning_wagon_is_outgoing': 'В сотаве нет отправленных вагонов!',
+
+            'prn_out_title_from_tail': 'с хвоста',
+            'prn_out_title_from_head': 'с головы',
+            'prn_out_title_not_specified': 'не указано',
+            'prn_out_title_yes': 'Да',
+
+            'prn_out_title_button_Ok': 'Показать',
+            'prn_out_title_button_Cancel': 'Отмена',
+            'prn_out_title_form_apply': 'Укажите вагоны',
         }
     };
     // Определлим список текста для этого модуля

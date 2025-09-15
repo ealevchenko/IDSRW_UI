@@ -10,8 +10,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -88,6 +88,73 @@
         },
         'en':  //default language: English
         {
+            'vs_ccco_card_header_card_services': 'РЕЕСТР ОТПРАВЛЕННЫХ ВАГОНОВ',
+            'vs_ccco_card_header_register_sent_wagons': 'РАСЧЕТ ОТПРАВЛЕННЫХ ВАГОНОВ',
+
+            'vs_ccco_mess_init_module': 'Инициализация модуля view_calc_cost_cargo_outgoing',
+            'vs_ccco_mess_load_operation': 'Загружаю форму операции',
+
+            'vs_ccco_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
+            'vs_ccco_mess_error_not_document': 'Не выбран документ для правки!',
+
+            'vs_ccco_title_label_doc_pay': 'Тариф ЭПД (kod=001):',
+            'vs_ccco_title_placeholder_doc_pay': 'Тариф ЭПД',
+            'vs_ccco_text_label_doc_pay': 'Скорректируйте тариф ЭПД ...',
+
+            'vs_ccco_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
+            'vs_ccco_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
+            'vs_ccco_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
+
+            'vs_ccco_title_label_payer': 'Плательщик ОТПР:',
+            'vs_ccco_text_label_payer': 'Выберите плательщика ...',
+
+            'vs_ccco_title_label_cargo': 'груз ОТПР:',
+            'vs_ccco_text_label_cargo': 'Выберите груз ...',
+
+            'vs_ccco_title_label_station_from': 'Станция отправления:',
+            'vs_ccco_text_label_station_from': 'Выберите станцию ...',
+
+            'vs_ccco_title_button_Cancel': 'Отмена',
+            'vs_ccco_button_Ok': 'Применить',
+
+            'vs_ccco_title_button_doc_pay': 'Обновить тариф отправки (kod=001)...',
+            'vs_ccco_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
+            'vs_ccco_title_button_clear_tariff_contract': 'Очистить ж.д. тариф по договору...',
+
+            'vs_ccco_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_ccco_mess_run_update_doc_pay': 'Править тариф ЭПД (kod=001) по документу [{0}], будет внесен новый тариф :{1} вместо тарифа :{2}.',
+            'vs_ccco_cancel_update_doc_pay': 'Отмена правки тарифа ЭПД.',
+            'vs_ccco_mess_ok_update_doc_pay': 'По документу  [{0}] обнавлен тариф ЭПД (kod=001)',
+            'vs_ccco_mess_error_update_doc_pay': 'При обновлении тарифа ЭПД по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
+            'vs_ccco_mess_run_update_tariff_contract': 'Править ж.д. тариф по договору по документу [{0}], будет внесен новый ж.д. тариф :{1}',
+            'vs_ccco_cancel_update_tariff_contract': 'Отмена правки ж.д. тарифа.',
+            'vs_ccco_mess_ok_update_tariff_contract': 'По документу  [{0}] обнавлен ж.д. тариф по договору',
+            'vs_ccco_mess_error_update_tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
+            'vs_ccco_mess_run_clear_tariff_contract': 'Очистить ж.д. тариф по договору по документу [{0}]',
+            'vs_ccco_cancel_clear_tariff_contract': 'Отмена очистки ж.д. тарифа.',
+            'vs_ccco_mess_ok_clear_tariff_contract': 'По документу  [{0}] удален ж.д. тариф по договору',
+            'vs_ccco_mess_error_clear_tariff_contract': 'При очистки ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
+
+            'vs_ccco_mess_error_select': 'Документ {0} для правки закрыт, по документу была произведена сверка, перечень №{1} от {2}',
+
+            'vs_ccco_load_main_docs': 'Загружаю документы за период...',
+            'vs_ccco_update_main_docs': 'Обновляю документы выбранные за период...',
+            'vs_ccco_select_main_docs': 'Поиск документов согласно выбора...',
+
+            'vs_ccco_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
+            'vs_ccco_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
+            'vs_ccco_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбрано {3}',
+
+            'vs_ccco_mess_error_not_doc_pay': 'Не указан новый тариф ЭПД!',
+            'vs_ccco_mess_error_exist_doc_pay': 'Указаный тариф ЭПД не отличается от существующего!',
+
+            'vs_ccco_mess_error_not_tariff_contract': 'Не указан тариф по договору!',
+            'vs_ccco_mess_error_exist_tariff_contract': 'Указаный тариф по договору не отличается от существующего!',
+
+            'vs_ccco_mess_war_not_select_docs': 'Не выбрана накладная для правки!',
 
         }
     };

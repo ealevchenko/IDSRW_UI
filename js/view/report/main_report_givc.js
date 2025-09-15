@@ -24,7 +24,8 @@
     };
 
     // Определим глобальные переменные
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     App.User_Name = $('input#username').val();
 

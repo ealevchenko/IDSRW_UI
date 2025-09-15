@@ -7,8 +7,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined || $.cookie('lang') === null || $.cookie('lang') === '' ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -80,6 +80,24 @@
                 "sortAscending": ": activate to sort column ascending",
                 "sortDescending": ": activate to sort column descending"
             },
+
+            't_com_field_numeration': '№п.п',
+
+            't_com_mess_init_module': 'Инициализация модуля (table_common) ...',
+            't_com_mess_view_report': 'Показать отчет ...',
+
+
+            't_com_title_all': 'Все',
+            't_com_title_yes': 'Да',
+
+            't_com_title_button_export': 'Экспорт',
+            't_com_title_button_buffer': 'Буфер',
+            't_com_title_button_excel': 'Excel',
+            't_com_title_excel_sheet_name': 'Отчет',
+            't_com_title_button_field': 'Поля',
+            't_com_title_button_field_select': 'Выбрать',
+            't_com_title_button_field_view_all': 'Показать все',
+            't_com_title_button_field_clear': 'Сбросить',
         }
     };
     // Определлим список текста для этого модуля

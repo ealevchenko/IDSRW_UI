@@ -7,8 +7,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -20,7 +20,9 @@
         },
         'en':  //default language: English
         {
-
+            'vopc_mess_init_module': 'Выполняю инициализацию модуля view_op_common',
+            'vopc_title_button_Ok': 'Ok',
+            'vopc_title_button_Cancel': 'Отмена',
         }
     };
     // Определлим список текста для этого модуля

@@ -10,8 +10,8 @@
     var App = window.App || {};
     var $ = window.jQuery;
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     //var min_dt_apply = -1 * (60 * 3); // TODO: Минимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     //var max_dt_apply = 60 * 3; // TODO: Максимальная разница в минутах даты и времени выполнения операции от текущей даты (перенести в общие настройки)
     //var min_period = 5; // TODO: Минимальный период операции 
@@ -85,6 +85,66 @@
         },
         'en':  //default language: English
         {
+            'vopss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopss_card_header_on': 'ПУТИ РОСПУСКА',
+            'vopss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
+            'vopss_title_label_station': 'Станция роспуска:',
+            'vopss_text_label_station': 'Выберите станцию роспуска ...',
+            'vopss_title_label_way_from': 'Путь роспуска:',
+            'vopss_title_text_way_from': 'Выберите путь роспуска вагонов ...',
+
+            'vopss_title_label_locomotive1': 'Локомотив №1:',
+            'vopss_title_placeholder_locomotive': ' № локомотива',
+            'vopss_title_time_start': 'Начало выполнения',
+            'vopss_title_time_stop': 'Конец выполнения',
+            'vopss_title_placeholder_time_start': 'Начало выполнения',
+            'vopss_title_placeholder_time_stop': 'Конец выполнения',
+            'vopss_title_form_apply': 'Выполнить',
+            'vopss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+
+            'vopss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
+            'vopss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+
+
+            'vopss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+
+            //'vopss_mess_error_required_locomotive': 'Выберите Локомотив',
+            //'vopss_mess_error_required_datetime_start': 'Укажите время начала',
+            //'vopss_mess_error_required_datetime_stop': 'Укажите время конца',
+            'vopss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
+            'vopss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
+
+            'vopss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
+            'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
+            'vopss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vopss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+
+            'vopss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
+            'vopss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+
+            'vopoc_mess_not_select_way_on': 'Выберите путь для роспуска',
+            'vopoc_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
+            'vopoc_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
+            'vopss_mess_ok_operation': 'Вагоны перенесены на пути роспуска, в количестве {0} (ваг.)',
+
+            'vopss_mess_load_operation': 'Загружаю операции...',
+            'vopss_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopss_mess_load_ways': 'Загружаю пути дислокации...',
+
+            'vopss_mess_init_panel': 'Выполняю инициализацию модуля ...',
+
+            'vopss_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
+
+            'vopss_confirm_title': 'Внимание!',
+            'vopss_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopss_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopss_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
+
         }
     };
     // Определлим список текста для этого модуля

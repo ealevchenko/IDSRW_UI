@@ -3,6 +3,9 @@
     "use strict"; // Start of use strict
     var App = window.App || {};
     var $ = window.jQuery;
+
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -66,12 +69,62 @@
         },
         'en':  //default language: English
         {
-            //'title_select': 'Выберите...',
+            'mwsd_title_operation_auto': '«Автоматическая расстановка вагонов»',
+            'mwsd_title_operation_reverce': '«Реверс вагонов»',
+            'mwsd_title_operation_manual_position': '«Ручная расстановка»',
+            'mwsd_title_button_Ok': 'Ok',
+            'mwsd_title_button_Cancel': 'Отмена',
+
+            'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
+            'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
+            'mwsd_mess_load_balance': 'Загружаю остаток...',
+
+            'mwsd_mess_war_not_way_provide': 'Операция предъявления недоступна, путь не имеет выхода на УЗ!',
+            'mwsd_mess_war_not_way_devision': 'Операция выгрузки-погрузки недоступна, путь не имеет выхода в цех!',
+            'mwsd_mess_war_not_select_way': 'Операция {0} недоступна, невыбран путь!',
+            'mwsd_mess_war_not_wagons_way': 'Операция {0} недоступна, на пути нет вагонов!',
+
+            'mwsd_title_form_apply': 'ВЫПОЛНИТЬ',
+            'mwsd_title_form_searsh': 'РЕЗУЛЬТАТ ПОИСКА',
+            'mwsd_title_form_apply_manual_position': 'ВЫПОЛНИТЬ РУЧНУЮ РАССТАНОВКУ',
+
+            'mwsd_title_mess_find_wagon': 'Поиск вагона на предприятии...',
+
+            'mwsd_confirm_mess_apply_operation_auto': 'Выполнить операцию «Автоматическая расстановка вагонов» в количестве: {0} (ваг.)?',
+            'mwsd_confirm_mess_apply_operation_manual': 'Выполнить операцию «Ручной расстановки вагонов» в количестве: {0} (ваг.)?',
+
+            'mwsd_title_form_apply_operation_auto': 'Выполняю автоматическую расстановку вагонов',
+            'mwsd_title_form_apply_operation_manual_position': 'Выполняю ручную расстановку вагонов',
+            'mwsd_title_form_apply_searsh_wagon': 'Выполняю поиск вагона...',
+
+            'mwsd_mess_cancel_operation_auto': 'Операция «Автоматическая расстановка вагонов» – отменена',
+            'mwsd_mess_cancel_operation_manual': 'Операция «Ручной расстановки вагонов» – отменена',
+
+            'mwsd_confirm_mess_apply_operation_reverce': 'Выполнить операцию «Реверс вагонов» в количестве: {0} (ваг.)?', //  в количестве: {0} (ваг.), станция: {1}, путь: {2}
+            'mwsd_title_form_apply_operation_reverce': 'Выполняю реверс вагонов',
+            'mwsd_mess_cancel_operation_reverce': 'Операция «Реверс вагонов» – отменена',
+
+            'mwsd_mess_error_api': 'Ошибка выполнения запроса!',
+
+            'mwsd_mess_ok_operation_auto': 'Операция «Автоматическая расстановка вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_auto': 'При выполнении операции «Автоматическая расстановка вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_ok_operation_manual': 'Операция «Ручная расстановка вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_manual': 'При выполнении операции «Ручной расстановки вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_manual': 'При выполнении операции «Ручной расстановки вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_ok_operation_reverce': 'Операция «Реверс вагонов» выполнена, перенумерованно {0} (ваг.)',
+            'mwsd_mess_error_operation_reverce': 'При выполнении операции «Реверс вагонов» произошла ошибка, код ошибки: {0}',
+            'mwsd_mess_0_operation_reverce': 'При выполнении операции «Реверс вагонов» по вагонам нет изменений!',
+
+            'mwsd_mess_error_searsh_wagon': 'Ошибка поиска вагона в системе ИДС, введен неправильный номер {0}',
+            'mwsd_mess_error_searsh_way': 'Ошибка определения пути в системе ИДС, id_way = {0}',
+            'mwsd_mess_error_not_searsh_wagon': 'Ошибка, вагон № {0} – не найден!',
         }
     };
 
     // Определим глобальные переменные
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
 

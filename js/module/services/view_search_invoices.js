@@ -10,8 +10,8 @@
 
 
     // Определим язык
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     // Массив текстовых сообщений 
     $.Text_View =
     {
@@ -81,7 +81,67 @@
         },
         'en':  //default language: English
         {
+            'vs_shinv_card_header_search_invoices': 'ПОИСК НАКЛАДНЫХ',
+            'vs_shinv_card_header_search_invoices_arrival': 'ПО ПРИБЫТИЮ',
+            'vs_shinv_card_header_search_invoices_outgoing': 'ПО ОТПРАВКЕ',
+            'vs_shinv_mess_init_module': 'Инициализация модуля view_search_invoices',
+            //    'vs_shinv_mess_load_operation': 'Загружаю форму операции',
 
+            //    'vs_shinv_title_form_button_apply': 'Править документ',
+            //    'vs_shinv_title_form_apply_button_title': 'Править документ ...',
+
+            'vs_shinv_title_label_num_epd': 'Найти накладную:',
+            'vs_shinv_title_placeholder_num_epd': 'Найти накладную',
+            'vs_shinv_text_label_num_epd': 'Введите номер накладной ...',
+
+            //    'vs_shinv_title_label_doc_pay': 'Тариф ПРИБ:',
+            //    'vs_shinv_title_placeholder_doc_pay': 'Тариф ПРИБ',
+            //    'vs_shinv_text_label_doc_pay': 'Скорректируйте тариф ПРИБЫТИЯ ...',
+
+            //    'vs_shinv_title_label_payer': 'Плательщик:',
+            //    'vs_shinv_title_placeholder_payer': 'Плательщик',
+            //    'vs_shinv_text_label_payer': 'Выберите плательщика ...',
+
+            //    'vs_shinv_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
+            //    'vs_shinv_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
+            //    'vs_shinv_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
+
+            'vs_shinv_title_button_num_epd': 'Найти накладную...',
+            //    'vs_shinv_title_button_doc_pay': 'Обновить тариф прибытия...',
+            //    'vs_shinv_title_button_payer': 'Обновить плательщика...',
+            //    'vs_shinv_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
+
+            //    'vs_shinv_mess_valid_not_payer': 'Указанного плателщика нет в справочнике ИДС',
+            //    'vs_shinv_mess_valid_payer': 'Укажите плательщика',
+
+            'vs_shinv_title_button_Cancel': 'Отмена',
+            'vs_shinv_button_Ok': 'Применить',
+
+            //    'vs_shinv_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            //    'vs_shinv_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
+            //    'vs_shinv_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
+            //    'vs_shinv_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
+            //    'vs_shinv_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
+
+            //    'vs_shinv_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
+            //    'vs_shinv_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
+            //    'vs_shinv_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
+            //    'vs_shinv_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
+
+            'vs_shinv_mess_error_not_document': 'Не введен № накладной!',
+            //    'vs_shinv_mess_error_document_pay_not_change': 'Тариф без изменений!',
+            //    'vs_shinv_mess_error_payer_not_change': 'Плательщик без изменений!',
+            //    'vs_shinv_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',а
+
+            'vs_shinv_load_main_docs': 'Загружаю документы за период...',
+            'vs_shinv_searsh_main_docs': 'Поиск документов по номеру накладной {0}...',
+            //    'vs_shinv_load_docs': 'Загружаю информацию по накладной {0}...',
+
+            'vs_shinv_mess_info_init': 'Введите номер накладной, и нажмите поиск.',
+            'vs_shinv_mess_info_add_main_docs': 'По номеру накладной {0} найдено {1} накладных',
+
+            'vs_shinv_mess_war_not_select_docs': 'Не введен номер накладной для поиска накладной!',
         }
     };
     // Определлим список текста для этого модуля

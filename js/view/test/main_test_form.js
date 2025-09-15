@@ -14,12 +14,15 @@
         },
         'en':  //default language: English
         {
-            //'title_select': 'Выберите...',
+            'mwsd_mess_load_wagons': 'Загружаю перечень вагонов на выбранном пути...',
+            'mwsd_mess_load_operators': 'Загружаю перечень операторов на станции...',
+            'mwsd_mess_load_balance': 'Загружаю остаток...',
         }
     };
 
     // Определим глобальные переменные
-    App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Lang = 'ru';
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
     //App.User_Name = $('input#username').val();
 
