@@ -235,7 +235,10 @@
     ids_wsd.prototype.postStatusInstructionalLettersWagons = function (option, callback) {
         this.api_com.post('/WSD/view/instructional_letters_wagons/', option, callback, callback);
     };
-
+    //АРМ, запросить и получить статус вагонов в новом письме
+    ids_wsd.prototype.postUpdateInstructionalLetters = function (option, callback) {
+        this.api_com.post('/WSD/operation/instructional_letters/update/', option, callback, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;

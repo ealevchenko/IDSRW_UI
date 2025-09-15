@@ -140,8 +140,13 @@
             'vs_ilet_mess_form_letters_edit_not_edit_wagon': 'Вагон {0} в письме закрыт {1} - правка запрещена!',
             'vs_ilet_mess_war_form_letters_edit_exist_wagon': 'Вагон {0} уже добавлен в письмо!',
 
+            'vs_ilet_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vs_ilet_mess_error_operation_run': 'При выполнении операции «ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ» произошла ошибка, код ошибки: {0}',
+            'vs_ilet_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             //'vs_ilet_mess_war_not_select_docs': 'Не выбраны накладные для сверки!',
             //'vs_ilet_mess_error_not_presented': 'Укажите № Акта сверки',
+            /*            'vs_ilet_mess_run_operation_cancel': 'Выполняю операцию "ОТМЕНА ОПЕРАЦИИ ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ"',*/
+            'vs_ilet_mess_run_operation_return': 'Выполняю операцию "ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ"',
 
         },
         'en':  //default language: English
@@ -1291,13 +1296,18 @@
                             detali_table: false,
                             type_report: 'letter_wagons',
                             setup_buttons: [
-                                //{
-                                //    name: 'edit',
-                                //    action: function (e, dt, node, config) {
-                                //        this.form_letters_edit.tab_wagons.tab_com.button_action(config.button, e, dt, node, config);
-                                //    }.bind(this),
-                                //    enabled: false
-                                //},
+                                {
+                                    name: 'select_all',
+                                    action: function (e, dt, node, config) {
+                                        this.form_letters_edit.tab_wagons.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                            return data.id === null || (data.id !== null && data.close === null);
+                                        }).select();
+                                    }.bind(this),
+                                    // Выбрать только не принятые вагоны
+
+                                    enabled: false
+                                },
+                                { name: 'select_none', action: null },
                                 {
                                     name: 'delete',
                                     action: function (e, dt, node, config) {
@@ -1387,7 +1397,7 @@
                             }.bind(this),
                             fn_enable_button: function (tb) {
                                 var index = tb.obj_t_report.rows({ selected: true })
-                                var bts = tb.obj_t_report.buttons([2, 3]);
+                                var bts = tb.obj_t_report.buttons([4, 5]);
                                 bts.enable(index && index.length > 0 && index[0].length > 0); // отображение кнопки 
                             }.bind(this),
                         });
@@ -1445,8 +1455,27 @@
                                 this.form_letters_edit.clear_all();
                                 this.form_letters_edit.$form.submit();
                                 if (this.form_letters_edit.valid) {
-                                    this.mcfd_lg.$modal_obj.modal('hide');
-                                    //this.form_letters_edit.data;
+                                    // Валидация успешна
+                                    var result = this.form_letters_edit.data;
+                                    var data = this.form_letters_edit.tab_wagons.tab_com.data;
+                                    if (result !== null && data !== null && data.length > 0) {
+                                        var wagons = [];
+                                        $.each(data, function (i, el) {
+                                            wagons.push({ id: (el.id === null ? 0 : el.id), num: el.num })
+                                        }.bind(this));
+                                        var operation = {
+                                            id: 0,
+                                            num: result.input_text_letter_num,
+                                            dt: result.input_datetime_letter_date._i,
+                                            owner: result.input_text_letter_owner,
+                                            destination_station: result.datalist_letter_destination_station,
+                                            note: result.textarea_letter_note,
+                                            wagons: wagons,
+                                            //user: App.User_Name,
+                                        };
+                                        this.apply(operation);
+                                    }
+                                    //this.mcfd_lg.$modal_obj.modal('hide');
                                 }
                             }.bind(this),
                         });
@@ -1934,6 +1963,74 @@
             }
         }
     }
+    // выполнить операцию
+    view_instructional_letters.prototype.apply = function (data) {
+        LockScreen(langView('vs_ilet_mess_run_operation_return', App.Langs));
+        this.api_wsd.postUpdateInstructionalLetters(data, function (result) {
+            // Проверим на ошибку выполнения запроса api
+            if (result && result.status) {
+                var mess = langView('vs_ilet_mess_error_api', App.Langs).format(result.status, result.title);
+                //console.log('[view_op_return_cars] [postReturnWagonsOfStationAMKR] :' + mess);
+                this.form_letters_edit.validation_letters_edit.out_error_message(mess);
+
+                if (result.errors) {
+                    for (var err in result.errors) {
+                        this.form_letters_edit.validation_letters_edit.out_error_message(err + ":" + result.errors[err]);
+                        //console.log('[view_op_return_cars] [postReturnWagonsOfStationAMKR] :' + err + ":" + result.errors[err]);
+                    }
+                }
+                LockScreenOff();
+            } else {
+                // ошибки выполнения нет проверим ответ запроса
+                if (result && result.result > 0) {
+                    //this.form_letters_edit.validation_letters_edit.clear_all();
+                    //// Сбросим установки (время и локомотивы)
+                    //this.form_on_setup.el.datalist_locomotive1.val('');
+                    //this.form_on_setup.el.datalist_locomotive2.val('');
+                    //this.form_on_setup.el.input_datetime_time_aplly.val(moment());
+                    //// Сбросим вагоны
+                    //this.num_sostav = null;
+                    //this.wagons_sostav = [];
+                    //this.wagons_add = [];
+                    //// Обновить таблицы. Запустим паралельно
+                    //var pr_us = 2;
+                    //var out_prus = function (pr_us) {
+                    //    if (pr_us === 0) {
+                    //        this.view_wagons();
+                    //        this.form_letters_edit.validation_letters_edit.out_info_message(langView('vortc_mess_ok_operation', App.Langs).format(result.moved));
+                    //        if (typeof this.settings.fn_db_update === 'function') {
+                    //            //TODO: можно добавить возвращать перечень для обновления
+                    //            typeof this.settings.fn_db_update();
+                    //        }
+                    //        LockScreenOff();
+                    //    }
+                    //}.bind(this);
+                    //// загрузим составы отправленные состанции (первый поток)
+                    //this.load_of_outer_ways(this.id_station,
+                    //    function () {
+                    //        pr_us--;
+                    //        out_prus(pr_us);
+                    //    }.bind(this)
+                    //);
+                    //// загрузим вагоны на пути (второй поток)
+                    //this.load_of_way(this.id_way,
+                    //    function () {
+                    //        pr_us--;
+                    //        out_prus(pr_us);
+                    //    }.bind(this)
+                    //);
+                } else {
+                    LockScreenOff();
+                    this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_ilet_mess_error_operation_run', App.Langs).format(result.result));
+                    // Выведем ошибки по вагонно.
+                    $.each(result.listResult, function (i, el) {
+                        if (el.result <= 0) this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_ilet_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                    }.bind(this));
+                }
+            }
+
+        }.bind(this));
+    };
     // Очистить данные
     //view_instructional_letters.prototype.clear_data = function () {
     //    this.tab_cost_calculation.view([]);

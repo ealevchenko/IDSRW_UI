@@ -1273,6 +1273,8 @@
                 text: langView('tsrv_title_button_cancel', App.Langs),
                 className: 'btn btn-warning'
             },
+
+
         ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
     }
