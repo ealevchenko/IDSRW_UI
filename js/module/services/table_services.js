@@ -125,6 +125,7 @@
             'tsrv_title_button_edit': 'Править',
             'tsrv_title_button_delete': 'Удалить',
             'tsrv_title_button_cancel': 'Отмена',
+            'tsrv_title_button_clear': 'Очистить',
         },
         'en':  //default language: English
         {
@@ -989,15 +990,6 @@
                                 return '<i class="fa-solid fa-question"></i>'
                             }
                         }
-                        //if (in_progress !== undefined && in_progress.length > 0) {
-                        //    return '<i class="fa-solid fa-envelope-open"></i>';
-                        //} else if (done !== undefined && done.length > 0 && done.length === row.instructionalLettersWagons.length) {
-                        //    return '<i class="fa-solid fa-envelope-circle-check"></i>'
-                        //} else if (cancel !== undefined && cancel.length > 0 && cancel.length === row.instructionalLettersWagons.length) {
-                        //    return '<i class="fa-solid fa-ban"></i>'  // Вагоны отменены
-                        //} else {
-                        //    return '<i class="fa-solid fa-question"></i>'
-                        //}
                     }
                 },
                 className: 'dt-body-center',
@@ -1065,10 +1057,29 @@
                 title: langView('tsrv_field_instructional_letters_count', App.Langs), width: "50px", orderable: true, searchable: true
             },
             {
-                field: 'instructional_letters_wagon_status_icon',
+                field: 'instructional_letters_wagon_status_edit_icon',
                 data: function (row, type, val, meta) {
                     if (row.id === null) {
                         return '<i class="fa-solid fa-plus"></i>'; // добавлен
+                    } else {
+                        switch (row.status_edit) {
+                            default: return '';
+                            case 1: return '<i class="fa-solid fa-plus"></i>'; // добавить
+                            case 2: return '<i class="fa-regular fa-trash-can"></i>'; // удалить
+                            case 3: return '<i class="fa-solid fa-ban"></i>';// отмена
+                        }
+                    }
+                },
+                className: 'dt-body-center',
+                //title: langView('tsrv_field_instructional_letters_wagon_status_edit', App.Langs), width: "18px", orderable: true, searchable: true
+                title: '', width: "18px", orderable: false, searchable: false
+            },
+            {
+                field: 'instructional_letters_wagon_status_icon',
+                data: function (row, type, val, meta) {
+                    if (row.id === null) {
+                        //return '<i class="fa-solid fa-plus"></i>'; // добавлен
+                        return '';
                     } else {
                         switch (row.status) {
                             default: return (row.close === null ? '<i class="fa-solid fa-question"></i>' : '<i class="fa-solid fa-ban"></i>');
@@ -1273,7 +1284,11 @@
                 text: langView('tsrv_title_button_cancel', App.Langs),
                 className: 'btn btn-warning'
             },
-
+            {
+                button: 'clear',
+                text: langView('tsrv_title_button_clear', App.Langs),
+                className: 'btn btn-secondary'
+            },
 
         ];
         this.tab_com.list_buttons = this.tab_com.list_buttons.concat(list_buttons);
@@ -1518,8 +1533,9 @@
 
     table_services.prototype.init_columns_letter_wagons = function () {
         var collums = [];
-        collums.push({ field: 'instructional_letters_wagon_status_icon', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_status_edit_icon', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_num', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagon_status_icon', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note_offer', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_rent_operator_abbr', title: null, class: null });
@@ -1527,18 +1543,6 @@
         collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
-
-        //collums.push({ field: 'instructional_letters_num', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_datetime', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_count', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_owner', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_station_code', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_station_name', title: null, class: null });
-        //collums.push({ field: 'instructional_letters_note', title: null, class: null });
-        //collums.push({ field: 'create', title: null, class: null });
-        //collums.push({ field: 'create_user', title: null, class: null });
-        //collums.push({ field: 'change', title: null, class: null });
-        //collums.push({ field: 'change_user', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -2181,7 +2185,7 @@
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
 
-                    if (data.error || data.not_close_letter_wagon_id) {
+                    if (data.error || data.not_close_letter_wagon_id || data.status >2) {
                         $(row).addClass('red');  // Вагоны отменены
                     } else if (data.status === 1) {
                         $(row).addClass('yellow');  // Вагоны в работе
