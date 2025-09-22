@@ -239,6 +239,11 @@
     ids_wsd.prototype.postUpdateInstructionalLetters = function (option, callback) {
         this.api_com.post('/WSD/operation/instructional_letters/update/', option, callback, callback);
     };
+    //АРМ, удалить письмо
+    ids_wsd.prototype.deleteInstructionalLetters = function (id, callback) {
+        this.api_com.delete('/WSD/operation/instructional_letters/delete/', id, callback, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;
