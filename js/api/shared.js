@@ -164,6 +164,32 @@ var AJAXComplete = function () {
         });
     };
 
+    api_common.prototype.delete = function (api_url, id, callback, callback_error) {
+        $.ajax({
+            type: 'DELETE',
+            url: this.settings.url_api + api_url + id,
+            async: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            contentType: "application/json;charset=utf-8",
+            beforeSend: function () {
+                AJAXBeforeSend();
+            },
+            success: function (data) {
+                if (typeof callback === 'function') {
+                    callback(data);
+                }
+            },
+            error: function (x, y, z) {
+                OnAJAXError("api_common" + api_url, x, y, z, callback_error);
+            },
+            complete: function () {
+                AJAXComplete();
+            },
+        });
+    };
+
     //****************************************************************************************
     //-------------------------------- функции для работы с объектами ------------------------
     // Показать весь список
