@@ -345,6 +345,9 @@
                 if (el.action) {
                     button.action = el.action;
                 }
+                if (el.titleAttr) {
+                    button.titleAttr = el.titleAttr;
+                }
                 buttons.push(button);
             });
         }
