@@ -1747,8 +1747,8 @@
         this.list_wagons = this.form_letters_edit.validation_letters_edit.check_control_is_valid_nums(el_tlw, true, false, true);
         // Проверим на существующие вагоны
         var valid = true;
-        if (this.list_wagons && this.list_wagons.length > 0 && this.wagons_letter_add && this.wagons_letter_add.length > 0) {
-            $.each(this.wagons_letter_add, function (i, el) {
+        if (this.list_wagons && this.list_wagons.length > 0 && this.wagons_letter && this.wagons_letter.length > 0) {
+            $.each(this.wagons_letter, function (i, el) {
                 var index = this.list_wagons.indexOf(el.num);
                 if (index >= 0) {
                     // ошибка вагон уже существует
