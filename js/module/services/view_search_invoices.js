@@ -997,7 +997,9 @@
             if (document !== null && document.length > 0) {
                 // Пройдемся по документам
                 $.each(document, function (i, el_doc) {
-                    this.document_arrival.push(this.get_document_arrival(el_doc));
+                    if (!el_doc.nomDoc) {
+                        this.document_arrival.push(this.get_document_arrival(el_doc));
+                    }
                 }.bind(this));
                 this.list_document_arrival = this.document_arrival;
             }

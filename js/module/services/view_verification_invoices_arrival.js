@@ -1138,11 +1138,15 @@
                                     case 2: { num_act = result.new.input_text_presented2; break; }
                                     case 3: { num_act = result.new.input_text_presented3; break; }
                                 }
-
-                                $.each(this.select_document_detali, function (i, el) {
+                                var rows = this.tab_verification_invoices_wagons.tab_com.get_select_row();
+                                $.each(rows, function (i, el) {
                                     id_docs.push(el.id);
                                     num_docs += el.nomMainDoc + "; ";
                                 }.bind(this));
+                                //$.each(this.select_document_detali, function (i, el) {
+                                //    id_docs.push(el.id);
+                                //    num_docs += el.nomMainDoc + "; ";
+                                //}.bind(this));
 
                                 var mess = langView('vs_via_mess_run_update_presented', App.Langs).format(this.presented, num_act, num_docs);
                                 if (this.clear) {
@@ -1678,7 +1682,8 @@
     // Дополнительная валидация правки актов
     view_verification_invoices_arrival.prototype.validation_verification_invoice = function (result) {
         var valid = true;
-        if (this.select_document_detali === null || this.select_document_detali.length === 0) {
+        var rows = this.tab_verification_invoices_wagons.tab_com.get_select_row();
+        if (this.select_document_detali === null || this.select_document_detali.length === 0 || rows.length === 0) {
             this.main_alert.out_error_message(langView('vs_via_mess_war_not_select_docs', App.Langs));
             valid = false;
         } else {

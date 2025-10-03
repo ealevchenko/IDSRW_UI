@@ -1625,12 +1625,12 @@
                 this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [1, 'asc'];
-                //this.tab_com.type_select_rows = 2; // Выбирать одну
-                //this.tab_com.table_select = {
-                //    style: 'multi'
-                //};
+                this.tab_com.type_select_rows = 2; // Выбирать одну
+                this.tab_com.table_select = {
+                    style: 'multi'
+                };
                 //scrollCollapse: true,
-                this.tab_com.table_select = false;
+/*                this.tab_com.table_select = false;*/
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
                     var api = this.api();

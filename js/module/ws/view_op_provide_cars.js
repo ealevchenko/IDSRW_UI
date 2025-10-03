@@ -958,9 +958,17 @@
                     }
                     if (name === 'add_sostav') {
                         this.from_alert.clear_message();
+                        var select_sostav = this.provide_sostav.find(function (o) {
+                            return o.id === this.id_sostav_provide
+                        }.bind(this)); this.id_sostav_provide
+
+
                         if (this.id_way >= 0) {
                             if ((this.provide_sostav === null) || (this.provide_sostav.length === 0) ||
-                                (this.provide_sostav !== null && this.provide_sostav.length > 0 && (this.provide_sostav[0].status === 0 || this.provide_sostav[0].status === 1))) {
+                                (this.provide_sostav !== null && this.provide_sostav.length > 0 &&
+                                    //(this.provide_sostav[0].status === 0 || this.provide_sostav[0].status === 1)
+                                    (select_sostav && select_sostav.status === 0 || select_sostav.status === 1)
+                                )) {
                                 if ((this.provide_sostav !== null && this.provide_sostav.length > 0 && this.id_sostav_provide !== null) ||
                                     (this.provide_sostav === null) || (this.provide_sostav.length === 0)) {
                                     var rows = this.twfrom_opprc.tab_com.get_select_row();
