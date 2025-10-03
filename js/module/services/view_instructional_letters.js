@@ -38,7 +38,7 @@
             'vs_ilet_title_label_done': 'Письма выполненные',
             'vs_ilet_title_label_replacement': 'Письма заменённые',
             'vs_ilet_title_label_canceled': 'Письма отменённые',
-            'vs_ilet_title_label_deleted': 'Письма удалить',
+            'vs_ilet_title_label_deleted': 'Письма требующие внимания',
 
             'vs_ilet_title_letter_num': '№ письма',
             'vs_ilet_title_placeholder_letter_num': '№ письма',
@@ -131,7 +131,7 @@
             'vs_ilet_title_label_done': 'Письма выполненные',
             'vs_ilet_title_label_replacement': 'Письма заменённые',
             'vs_ilet_title_label_canceled': 'Письма отменённые',
-            'vs_ilet_title_label_deleted': 'Письма удалить',
+            'vs_ilet_title_label_deleted': 'Письма требующие внимания',
 
             'vs_ilet_title_letter_num': '№ письма',
             'vs_ilet_title_placeholder_letter_num': '№ письма',
@@ -1651,13 +1651,19 @@
 
             //if (create_new) {
             this.select_letters = this.select_letters.filter(function (i) {
+                var close = i.instructionalLettersWagons.filter(function (o) { return o.close !== null }.bind(this));
+                var duration = moment.duration(moment().diff(moment(i.dt)));
+                var days = duration.asDays();
+                if (done && close && close.length === i.instructionalLettersWagons.length) {
+                    return true;
+                }
                 var gr = i.instructionalLettersWagons.find(function (o) {
                     return (create_new && o.status === 0 && o.close === null) ||
                         (in_progress && o.status === 1 && o.close === null) ||
-                        (done && o.status === 2) ||
                         (replacement && o.status === 3 || (o.status < 2 && o.close !== null)) ||
                         (canceled && o.status === 4) ||
-                        (deleted && o.status === 5) || o.status === null;
+                        (deleted && o.status === 0 && days >= 30) ||
+                        o.status === null;
                 }.bind(this));
                 return gr !== undefined;
             }.bind(this));
@@ -1959,6 +1965,8 @@
     // Применить правку
     view_instructional_letters.prototype.apply = function (data) {
         LockScreen(langView('vs_ilet_mess_run_operation_edit_letter', App.Langs));
+        var mes_res = data.id === 0 ? langView('vs_ilet_mess_operation_add_letter_ok', App.Langs) : langView('vs_ilet_mess_operation_edit_letter_ok', App.Langs);
+
         this.api_wsd.postUpdateInstructionalLetters(data, function (result) {
             // Проверим на ошибку выполнения запроса api
             if (result && result.status) {
@@ -1980,7 +1988,7 @@
                     this.mcfd_lg.$modal_obj.modal('hide');
                     this.update(this.start, this.stop, function () {
                         LockScreenOff();
-                        this.main_alert.out_info_message(langView('vs_ilet_mess_operation_add_letter_ok', App.Langs));
+                        this.main_alert.out_info_message(mes_res);
                     }.bind(this));
                 } else {
                     LockScreenOff();

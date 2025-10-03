@@ -1066,7 +1066,8 @@
                             default: return '';
                             case 1: return '<i class="fa-solid fa-plus"></i>'; // добавить
                             case 2: return '<i class="fa-regular fa-trash-can"></i>'; // удалить
-                            case 3: return '<i class="fa-solid fa-ban"></i>';// отмена
+                            case 3: return '<i class="fa-solid fa-reply"></i>';// отмена
+                            case 4: return '<i class="fa-solid fa-ban"></i>';// отмена
                         }
                     }
                 },
@@ -1086,7 +1087,7 @@
                             case 0: return (row.close === null ? '<i class="fa-solid fa-magnifying-glass"></i>' : '<i class="fa-solid fa-ban"></i>'); // ждем
                             case 1: return (row.close === null ? '<i class="fa-solid fa-paperclip"></i>' : '<i class="fa-solid fa-ban"></i>'); // 
                             case 2: return '<i class="fa-solid fa-check"></i>';
-                            case 3: return '<i class="fa-solid fa-ban"></i>';
+                            case 3: return '<i class="fa-solid fa-reply"></i>';
                             case 4: return '<i class="fa-solid fa-ban"></i>';
                             case 5: return '<i class="fa-solid fa-ban"></i>';
                         }
@@ -1518,7 +1519,7 @@
         //collums.push({ field: 'instructional_letters_wagon_date_adoption_act', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
         //collums.push({ field: 'instructional_letters_wagon_date_outgoing_act', title: null, class: null });
-        collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_rent_operator_abbr', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
         //collums.push({ field: 'wir_note', title: null, class: null });
@@ -1630,7 +1631,7 @@
                     style: 'multi'
                 };
                 //scrollCollapse: true,
-/*                this.tab_com.table_select = false;*/
+                /*                this.tab_com.table_select = false;*/
                 this.tab_com.autoWidth = false;
                 this.tab_com.footerCallback = function (tr, data, start, end, display) {
                     var api = this.api();
@@ -2151,7 +2152,7 @@
                         case 0: { (data.close === null ? $(row).addClass('grey') : $(row).addClass('red')); break; }
                         case 1: { (data.close === null ? $(row).addClass('yellow') : $(row).addClass('red')); break; }
                         case 2: { $(row).addClass('lgreen'); break; }
-                        case 3: { $(row).addClass('red'); break; }
+                        case 3: { $(row).addClass('blue'); break; }
                         case 4: { $(row).addClass('red'); break; }
                         case 5: { $(row).addClass('blue'); break; }
                     }
@@ -2185,8 +2186,12 @@
                     //$(row).attr('id', data.id); // id строки дислокации вагона
                     $(row).attr('data-num', data.num); // data-num номер вагона
 
-                    if (data.error || data.not_close_letter_wagon_id || data.status >2) {
-                        $(row).addClass('red');  // Вагоны отменены
+                    if (data.error || data.not_close_letter_wagon_id || data.status > 2) {
+                        if (data.status === 3) {
+                            $(row).addClass('blue');  // Вагоны отменены
+                        } else {
+                            $(row).addClass('red');  // Вагоны отменены
+                        }
                     } else if (data.status === 1) {
                         $(row).addClass('yellow');  // Вагоны в работе
                     } else if (data.status === 2) {

@@ -84,6 +84,7 @@
             'tws_field_instructional_letters_wagon_date_adoption': 'Дата приема',
             'tws_field_instructional_letters_wagon_date_outgoing': 'Дата сдачи',
             'tws_field_instructional_letters_wagon_operator_abbr': 'Оператор',
+            'tws_field_instructional_letters_wagons_rent_operator_abbr': 'Оператор (аренда)',
             'tws_field_instructional_letters_wagon_note': 'Примечание',
             'tws_field_instructional_letters_wagon_create': 'Строка создана',
             'tws_field_instructional_letters_wagon_create_user': 'Строку создал',
@@ -411,6 +412,7 @@
             'tws_field_instructional_letters_wagon_date_adoption': 'Дата приема',
             'tws_field_instructional_letters_wagon_date_outgoing': 'Дата сдачи',
             'tws_field_instructional_letters_wagon_operator_abbr': 'Оператор',
+            'tws_field_instructional_letters_wagons_rent_operator_abbr': 'Оператор (аренда)',
             'tws_field_instructional_letters_wagon_note': 'Примечание',
             'tws_field_instructional_letters_wagon_create': 'Строка создана',
             'tws_field_instructional_letters_wagon_create_user': 'Строку создал',
@@ -1256,6 +1258,15 @@
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_instructional_letters_wagon_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Оператор вагона по письму (аренда)
+            {
+                field: 'instructional_letters_wagons_rent_operator_abbr',
+                data: function (row, type, val, meta) {
+                    return row['instructionalLettersWagonsRentOperatorAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_instructional_letters_wagons_rent_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Примечание на вагон по письму
             {
@@ -4269,7 +4280,8 @@
         collums.push({ field: 'instructional_letters_wagon_status', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
-        collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        //collums.push({ field: 'instructional_letters_wagon_operator_abbr', title: null, class: null });
+        collums.push({ field: 'instructional_letters_wagons_rent_operator_abbr', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
         collums.push({ field: 'instructional_letters_owner', title: null, class: null });
         collums.push({ field: 'instructional_letters_station_code', title: null, class: null });
@@ -5953,7 +5965,7 @@
                     switch (data.instructionalLettersWagonsStatus) {
                         case 1: { $(row).addClass('yellow'); break; }
                         case 2: { $(row).addClass('lgreen'); break; }
-                        case 3: { $(row).addClass('red'); break; }
+                        case 3: { $(row).addClass('blue'); break; }
                         case 4: { $(row).addClass('red'); break; }
                         case 5: { $(row).addClass('red'); break; }
                     }
