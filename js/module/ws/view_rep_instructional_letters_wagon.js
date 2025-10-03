@@ -307,8 +307,8 @@
             }
         };
 
-        col_bt_apply.childs.push(bt_apply);
-        col_bt_apply.childs.push(bt_clear);
+        //col_bt_apply.childs.push(bt_apply);
+        //col_bt_apply.childs.push(bt_clear);
         objs_lilw_setup.push(col_bt_apply);
 
         this.form_lilw_setup.init({
