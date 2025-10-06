@@ -722,7 +722,7 @@
                 type_report: 'arrival_cars_way',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.tacw_opr.tab_com.obj_t_report.rows(function (idx, data, node) {
@@ -1068,7 +1068,7 @@
                 type_report: 'wagons_outer_way',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.twf_opr.tab_com.obj_t_report.rows(function (idx, data, node) {

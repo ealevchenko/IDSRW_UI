@@ -530,7 +530,7 @@
                     type_report: 'dislocation_group_wagons_' + this.type_group,
                     setup_buttons: [
                         {
-                            name: 'select_all',
+                            name: 'select_all_wagon',
                             action: function () {
                                 // Выбрать только не принятые вагоны
                                 this["twdgw_" + this.type_group].tab_com.obj_t_report.rows(function (idx, data, node) {
@@ -715,7 +715,7 @@
                     type_report: 'group_cars_from_' + this.type_group,
                     setup_buttons: [
                         {
-                            name: 'select_all',
+                            name: 'select_all_wagon',
                             action: function () {
                                 // Выбрать только не принятые вагоны
                                 this["twwf_" + this.type_group].tab_com.obj_t_report.rows(function (idx, data, node) {

@@ -1238,7 +1238,7 @@
                             type_report: 'letter_wagons',
                             setup_buttons: [
                                 {
-                                    name: 'select_all',
+                                    name: 'select_all_wagon',
                                     action: function (e, dt, node, config) {
                                         this.form_letters_edit.tab_wagons.tab_com.obj_t_report.rows(function (idx, data, node) {
                                             return data.id === null || (data.id !== null && data.close === null);

@@ -803,7 +803,7 @@
                 type_report: 'provide_cars_on',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.tpwos_opprc.tab_com.obj_t_report.rows(function (idx, data, node) {
@@ -891,7 +891,7 @@
                 type_report: 'provide_cars_from',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.from_alert.clear_message();

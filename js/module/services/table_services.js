@@ -118,6 +118,7 @@
 
             //'tsrv_title_link_num': 'Показать историю по вагону...',
 
+            'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
             'tsrv_title_button_deselect_all': 'Убрать выбор',
             'tsrv_title_button_add_sostav': 'Добавить в состав',
@@ -228,6 +229,7 @@
 
             //'tsrv_title_link_num': 'Показать историю по вагону...',
 
+            'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
             'tsrv_title_button_deselect_all': 'Убрать выбор',
             'tsrv_title_button_add_sostav': 'Добавить в состав',
@@ -1251,6 +1253,11 @@
         var list_buttons = [
             {
                 button: 'select_all',
+                text: langView('tsrv_title_button_select_all', App.Langs),
+                className: 'btn btn-success'
+            },
+            {
+                button: 'select_all_wagon',
                 text: langView('tsrv_title_button_select_all_wagon', App.Langs),
                 className: 'btn btn-success'
             },

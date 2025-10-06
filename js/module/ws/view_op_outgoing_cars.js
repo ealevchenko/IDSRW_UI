@@ -849,7 +849,7 @@
                 type_report: 'wagons_new_sostav_outer_way',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             this.twnsow_opoc.tab_com.obj_t_report.rows().select();
                         }.bind(this)
@@ -1051,7 +1051,7 @@
                 type_report: 'outgoing_cars_way',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             this.from_alert.clear_message();
                             this.form_from_setup.clear_all();

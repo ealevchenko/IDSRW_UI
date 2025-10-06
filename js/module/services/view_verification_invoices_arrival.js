@@ -1193,6 +1193,17 @@
                     detali_table: true,
                     type_report: 'verification_invoices_wagons_arrival',
                     setup_buttons: [
+                        {
+                            name: 'select_all',
+                            action: function (e, dt, node, config) {
+                                this.tab_verification_invoices_wagons.tab_com.obj_t_report.rows(function (idx, data, node) {
+                                    return true;
+                                }).select();
+                            }.bind(this),
+                            // Выбрать только не принятые вагоны
+                            enabled: false
+                        },
+                        { name: 'select_none', action: null },
                     ],
                     link_num: false,
                     ids_wsd: null,

@@ -631,7 +631,7 @@
                 type_report: 'arrival_cars_way',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.twon_opodl.tab_com.obj_t_report.rows(function (idx, data, node) {
@@ -874,7 +874,7 @@
                 type_report: 'dislocation_cars_from',
                 setup_buttons: [
                     {
-                        name: 'select_all',
+                        name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
                             this.from_alert.clear_message();

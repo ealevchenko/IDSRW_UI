@@ -912,7 +912,7 @@
                     type_report: 'filing_wagons_' + this.type_filing,
                     setup_buttons: [
                         {
-                            name: 'select_all',
+                            name: 'select_all_wagon',
                             action: function () {
                                 var sel_rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                                 var id_operation = sel_rows !== null && sel_rows.length > 0 ? sel_rows[0].currentIdOperation : null;
@@ -1252,7 +1252,7 @@
                     type_report: 'unload_cars_from_' + this.type_filing,
                     setup_buttons: [
                         {
-                            name: 'select_all',
+                            name: 'select_all_wagon',
                             action: function () {
                                 // Выбрать только не принятые вагоны
                                 this["twwf_" + this.type_filing].tab_com.obj_t_report.rows(function (idx, data, node) {
