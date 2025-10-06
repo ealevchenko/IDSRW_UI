@@ -162,7 +162,7 @@ var get_belongs_element = function (rows, name_field, id) {
     //console.log("lang: ", $.cookie('lang'));
     App.Lang = 'ru';
     //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-    App.Url_Api = url_api_test;
+    App.Url_Api = url_api_main;
     //App.Url_Api = url_api_test;
 
     // Определим AdminInfo - информацию об api которое подключено к UI
