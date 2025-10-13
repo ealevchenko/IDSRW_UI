@@ -944,34 +944,6 @@
             }
         }.bind(this));
     }
-    // Загрузить вагоны на выбраном пути начала дислокации в масив this.wagons (подготовить поля для вагонов приема)
-    //view_op_sending_uz.prototype.load_of_way = function (id_way, callback) {
-    //    if (id_way !== null && id_way >= 0) {
-    //        this.id_way = id_way;
-    //        LockScreen(langView('vopsuz_mess_load_wagons', App.Langs));
-    //        this.view_com.api_wsd.getViewWagonsOfIdWay(id_way, function (wagons) {
-    //            // модифицировать данные взависимости от отчета
-    //            if (wagons) {
-    //                $.each(wagons, function (i, el) {
-    //                    el['position_new'] = null;
-    //                    el['id_wir_from'] = null;
-    //                });
-    //            }
-    //            this.wagons = wagons;
-    //            // Событие обновили данные
-    //            if (typeof callback === 'function') {
-    //                callback(this.wagons);
-    //            }
-    //        }.bind(this));
-    //    } else {
-    //        this.id_way = -1;
-    //        this.wagons = [];
-    //        // Событие обновили данные
-    //        if (typeof callback === 'function') {
-    //            callback(this.wagons);
-    //        }
-    //    }
-    //};
     // Загрузить составы которые имеют статус предъявления
     view_op_sending_uz.prototype.load_of_provide_sostav = function (id_way, callback) {
         if (id_way !== null && id_way >= 0) {
