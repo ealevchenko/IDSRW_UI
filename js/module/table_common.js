@@ -400,6 +400,25 @@
         return this.init_buttons(buttons, this.list_buttons);
     };
     // инициализация кнопок стандартная 
+    table_common.prototype.init_button_Ex_Fld_Ref_Pag = function (btns) {
+        var buttons = [];
+        buttons.push({ name: 'export', action: null });
+        buttons.push({ name: 'field', action: null });
+        buttons.push({
+            name: 'refresh',
+            action: function (e, dt, node, config) {
+                this.button_action(config.button, e, dt, node, config);
+            }.bind(this)
+        });
+        if (btns && btns.length > 0) {
+            $.each(btns, function (i, el_button) {
+                buttons.push(el_button);
+            }.bind(this));
+        };
+        buttons.push({ name: 'page_length', action: null });
+        return this.init_buttons(buttons, this.list_buttons);
+    };
+    // инициализация кнопок стандартная 
     table_common.prototype.init_button_Ex_Prn_Fld_Pag = function (btns) {
         var buttons = [];
         buttons.push({ name: 'export', action: null });
