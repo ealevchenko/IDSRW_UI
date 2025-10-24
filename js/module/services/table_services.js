@@ -101,12 +101,26 @@
             'tsrv_field_wir_note': 'Примечание',
             'tsrv_field_wir_note2': 'Примечание2',
 
-            'tsrv_title_status_0': 'Создано',
-            'tsrv_title_status_1': 'В работе',
-            'tsrv_title_status_2': 'Выполнено',
-            'tsrv_title_status_3': 'Замена',
-            'tsrv_title_status_4': 'Отменено',
-            'tsrv_title_status_5': 'Удалить',
+            'tsrv_field_operators_wagons_abbr': 'Оператор аббр.',
+            'tsrv_field_operators_wagons_operators': 'Оператор полное название',
+
+            'tsrv_field_operators_and_genus_operators': 'Оператор',
+            'tsrv_field_operators_and_genus_operators_abbr': 'Оператор(аббр)',
+            'tsrv_field_operators_and_genus_genus': 'Род',
+            'tsrv_field_operators_and_genus_genus_abbr': 'Род(аббр)',
+
+            'tsrv_field_usage_fee_period_start': 'Начало',
+            'tsrv_field_usage_fee_period_stop': 'Окончание',
+            'tsrv_field_usage_fee_period_operators': 'Оператор',
+            'tsrv_field_usage_fee_period_operators_abbr': 'Оператор (аббр)',
+            'tsrv_field_usage_fee_period_hour_after_30': 'Полный час после 30 мин.',
+            'tsrv_field_usage_fee_period_rate': 'Ставка',
+            'tsrv_field_usage_fee_period_rate_derailment': 'Ставка, сход',
+            'tsrv_field_usage_fee_period_grace_time_1': 'Льготное время 1',
+            'tsrv_field_usage_fee_period_grace_time_2': 'Льготное время 2',
+            'tsrv_field_usage_fee_period_coefficient_route': 'Коэф.маршрут',
+            'tsrv_field_usage_fee_period_coefficient_not_route': 'Коэф.не маршрут',
+            'tsrv_field_usage_fee_period_genus_abbr': 'Род',
 
             'tsrv_field_close': 'Строка закрыта',
             'tsrv_field_create': 'Строка создана',
@@ -114,13 +128,22 @@
             'tsrv_field_change': 'Строку правили',
             'tsrv_field_change_user': 'Правил',
 
+            'tsrv_title_status_0': 'Создано',
+            'tsrv_title_status_1': 'В работе',
+            'tsrv_title_status_2': 'Выполнено',
+            'tsrv_title_status_3': 'Замена',
+            'tsrv_title_status_4': 'Отменено',
+            'tsrv_title_status_5': 'Удалить',
+
             'tsrv_title_no_epd': 'без ЭПД',
+            'tsrv_title_yes': 'Да',
 
             //'tsrv_title_link_num': 'Показать историю по вагону...',
 
             'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
             'tsrv_title_button_deselect_all': 'Убрать выбор',
+            'tsrv_title_button_show_selection': 'Выбранные',
             'tsrv_title_button_add_sostav': 'Добавить в состав',
             'tsrv_title_button_add': 'Добавить',
             'tsrv_title_button_edit': 'Править',
@@ -212,18 +235,26 @@
             'tsrv_field_wir_note': 'Примечание',
             'tsrv_field_wir_note2': 'Примечание2',
 
-            'tsrv_title_status_0': 'Создано',
-            'tsrv_title_status_1': 'В работе',
-            'tsrv_title_status_2': 'Выполнено',
-            'tsrv_title_status_3': 'Замена',
-            'tsrv_title_status_4': 'Отменено',
-            'tsrv_title_status_5': 'Удалить',
+            'tsrv_field_operators_wagons_abbr': 'Оператор аббр.',
+            'tsrv_field_operators_wagons_operators': 'Оператор полное название',
+
+            'tsrv_field_operators_and_genus_operators': 'Оператор',
+            'tsrv_field_operators_and_genus_operators_abbr': 'Оператор(аббр)',
+            'tsrv_field_operators_and_genus_genus': 'Род',
+            'tsrv_field_operators_and_genus_genus_abbr': 'Род(аббр)',
 
             'tsrv_field_close': 'Строка закрыта',
             'tsrv_field_create': 'Строка создана',
             'tsrv_field_create_user': 'Создал',
             'tsrv_field_change': 'Строку правили',
             'tsrv_field_change_user': 'Правил',
+
+            'tsrv_title_status_0': 'Создано',
+            'tsrv_title_status_1': 'В работе',
+            'tsrv_title_status_2': 'Выполнено',
+            'tsrv_title_status_3': 'Замена',
+            'tsrv_title_status_4': 'Отменено',
+            'tsrv_title_status_5': 'Удалить',
 
             'tsrv_title_no_epd': 'без ЭПД',
 
@@ -232,11 +263,13 @@
             'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
             'tsrv_title_button_deselect_all': 'Убрать выбор',
+            'tsrv_title_button_show_selection': 'Выбранные',
             'tsrv_title_button_add_sostav': 'Добавить в состав',
             'tsrv_title_button_add': 'Добавить',
             'tsrv_title_button_edit': 'Править',
             'tsrv_title_button_delete': 'Удалить',
             'tsrv_title_button_cancel': 'Отмена',
+            'tsrv_title_button_clear': 'Очистить',
         }
     };
     // Определлим список текста для этого модуля
@@ -270,6 +303,16 @@
         });
         // Перечень полей
         var list_collums = [
+            {
+                field: 'checkbox_selection',
+                targets: 0,
+                className: 'select-checkbox',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+                width: "30px",
+                searchable: false
+            },
             {
                 field: 'position',
                 data: function (row, type, val, meta) {
@@ -1247,6 +1290,170 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_change_user', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            // Список операторов (Directory_OperatorsWagons)
+            {
+                field: 'operators_wagons_abbr',
+                data: function (row, type, val, meta) {
+                    return row['abbr' + ucFirst(App.Lang)]
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_operators_wagons_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operators_wagons_operators',
+                data: function (row, type, val, meta) {
+                    return row['operators' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-200',
+                title: langView('tsrv_field_operators_wagons_operators', App.Langs), width: "200px", orderable: true, searchable: true
+            },
+            // Список операторов (get_operators_and_genus)
+            {
+                field: 'operators_and_genus_operators',
+                data: function (row, type, val, meta) {
+                    return row['operators' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_operators_and_genus_operators', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operators_and_genus_operators_abbr',
+                data: function (row, type, val, meta) {
+                    return row['operatorsAbbr' + ucFirst(App.Lang)]
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_operators_and_genus_operators_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operators_and_genus_genus',
+                data: function (row, type, val, meta) {
+                    return row['genus' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_operators_and_genus_genus', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'operators_and_genus_genus_abbr',
+                data: function (row, type, val, meta) {
+                    return row['genusAbbr' + ucFirst(App.Lang)]
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_operators_and_genus_genus_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Список операторов (list_usage_fee_period)
+            // Статус Вода состава
+            {
+                field: 'usage_fee_period_status_period',
+                data: function (row, type, val, meta) {
+                    if (row.usageFeePeriodStop != null) {
+                        if (moment().isBefore(row.usageFeePeriodStop)) {
+                            return '<i class="fa-solid fa-calendar-check" style="color:#008000"></i>';
+                        } else {
+                            return '<i class="fa-solid fa-calendar-xmark" style="color:#ff6868"></i>';
+                        }
+                    } else {
+                        return '<i class="fa-solid fa-calendar-plus" style="color:#1b1bff"></i>';
+                    }
+                },
+                className: 'dt-body-center',
+                title: '', width: "18px", orderable: false, searchable: false
+            },
+            {
+                field: 'usage_fee_period_start',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodStart ? moment(row.usageFeePeriodStart).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usage_fee_period_start', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_stop',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodStop ? moment(row.usageFeePeriodStop).format(format_datetime) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usage_fee_period_stop', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_operators',
+                data: function (row, type, val, meta) {
+                    return row['usageFeePeriodOperator' + ucFirst(App.Lang)]
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_usage_fee_period_operators', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_operators_abbr',
+                data: function (row, type, val, meta) {
+                    return row['usageFeePeriodOperatorAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_operators_abbr', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_hour_after_30',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodHourAfter30 ? langView('tsrv_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_hour_after_30', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_rate',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodRate !== null ? Number(row.usageFeePeriodRate).toFixed(2) + ' ' + row['usageFeePeriodDerailmentCurrency' + ucFirst(App.Lang)] : null;
+                },
+                className: 'dt-body-right',
+                title: langView('tsrv_field_usage_fee_period_rate', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_rate_derailment',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodRateDerailment !== null ? Number(row.usageFeePeriodRateDerailment).toFixed(2) + ' ' + row['usageFeePeriodDerailmentCurrency' + ucFirst(App.Lang)] : null;
+                },
+                className: 'dt-body-right',
+                title: langView('tsrv_field_usage_fee_period_rate_derailment', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_grace_time_1',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodGraceTime1;
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_grace_time_1', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_grace_time_2',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodGraceTime2;
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_grace_time_2', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_coefficient_route',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodCoefficientRoute;
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_coefficient_route', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_coefficient_not_route',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodCoefficientNotRoute;
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_coefficient_not_route', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_genus_abbr',
+                data: function (row, type, val, meta) {
+                    return row['usageFeePeriodGenus' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-center shorten mw-50',
+                title: langView('tsrv_field_usage_fee_period_genus_abbr', App.Langs), width: "50px", orderable: true, searchable: true
+            },
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -1265,6 +1472,12 @@
                 button: 'select_none',
                 extend: 'selectNone',
                 text: langView('tsrv_title_button_deselect_all', App.Langs),
+                className: 'btn btn-success'
+            },
+            {
+                button: 'show_selection',
+                extend: 'showSelected',
+                text: langView('tsrv_title_button_show_selection', App.Langs),
                 className: 'btn btn-success'
             },
             {
@@ -1551,6 +1764,42 @@
         collums.push({ field: 'instructional_letters_wagon_date_adoption', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_date_outgoing', title: null, class: null });
         collums.push({ field: 'instructional_letters_wagon_note', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_services.prototype.init_columns_list_of_operators = function () {
+        var collums = [];
+        collums.push({ field: 'checkbox_selection', title: null, class: null });
+        collums.push({ field: 'operators_wagons_abbr', title: null, class: null });
+        collums.push({ field: 'operators_wagons_operators', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_services.prototype.init_columns_list_of_rod = function () {
+        var collums = [];
+        collums.push({ field: 'checkbox_selection', title: null, class: null });
+        collums.push({ field: 'operators_and_genus_operators', title: null, class: null });
+        collums.push({ field: 'operators_and_genus_operators_abbr', title: null, class: null });
+        collums.push({ field: 'operators_and_genus_genus', title: null, class: null });
+        collums.push({ field: 'operators_and_genus_genus_abbr', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
+
+    table_services.prototype.init_columns_list_usage_fee_period = function () {
+        var collums = [];
+        collums.push({ field: 'usage_fee_period_status_period', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_start', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_stop', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_operators', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_operators_abbr', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_hour_after_30', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_rate', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_rate_derailment', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_grace_time_1', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_grace_time_2', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_coefficient_route', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_coefficient_not_route', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_genus_abbr', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -2209,6 +2458,134 @@
                 this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
                 this.tab_com.table_columns = this.init_columns_letter_wagons();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+
+            case 'list_of_operators': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [1, 'asc'];
+                this.tab_com.table_select = {
+                    style: 'multi ',
+                    selector: 'td:first-child'
+                };
+                //scrollCollapse: true,
+                //this.tab_com.table_select = true;
+                this.tab_com.autoWidth = false;
+                this.tab_com.createdRow = function (row, data, index) {
+                    ////$(row).attr('id', data.id); // id строки дислокации вагона
+                    //$(row).attr('data-num', data.num); // data-num номер вагона
+
+                    //if (data.error || data.not_close_letter_wagon_id || data.status > 2) {
+                    //    if (data.status === 3) {
+                    //        $(row).addClass('blue');  // Вагоны отменены
+                    //    } else {
+                    //        $(row).addClass('red');  // Вагоны отменены
+                    //    }
+                    //} else if (data.status === 1) {
+                    //    $(row).addClass('yellow');  // Вагоны в работе
+                    //} else if (data.status === 2) {
+                    //    $(row).addClass('green');  // Вагоны выполнены
+                    //}
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_list_of_operators();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Fld_Ref_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+
+            case 'list_of_rod': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [1, 'asc'];
+                this.tab_com.table_select = {
+                    style: 'multi ',
+                    selector: 'td:first-child'
+                };
+                //scrollCollapse: true,
+                //this.tab_com.table_select = true;
+                this.tab_com.autoWidth = false;
+                this.tab_com.createdRow = function (row, data, index) {
+                    ////$(row).attr('id', data.id); // id строки дислокации вагона
+                    //$(row).attr('data-num', data.num); // data-num номер вагона
+
+                    //if (data.error || data.not_close_letter_wagon_id || data.status > 2) {
+                    //    if (data.status === 3) {
+                    //        $(row).addClass('blue');  // Вагоны отменены
+                    //    } else {
+                    //        $(row).addClass('red');  // Вагоны отменены
+                    //    }
+                    //} else if (data.status === 1) {
+                    //    $(row).addClass('yellow');  // Вагоны в работе
+                    //} else if (data.status === 2) {
+                    //    $(row).addClass('green');  // Вагоны выполнены
+                    //}
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_list_of_rod();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Fld_Ref_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+
+            case 'list_usage_fee_period': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = false;
+                this.tab_com.paging = true;
+                this.tab_com.searching = true;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 0;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [1, 'desc'];
+                this.tab_com.table_select = {
+                    style: 'multi ',
+                };
+                //scrollCollapse: true,
+                //this.tab_com.table_select = true;
+                this.tab_com.autoWidth = true;
+                this.tab_com.createdRow = function (row, data, index) {
+                    ////$(row).attr('id', data.id); // id строки дислокации вагона
+                    //$(row).attr('data-num', data.num); // data-num номер вагона
+
+                    //if (data.error || data.not_close_letter_wagon_id || data.status > 2) {
+                    //    if (data.status === 3) {
+                    //        $(row).addClass('blue');  // Вагоны отменены
+                    //    } else {
+                    //        $(row).addClass('red');  // Вагоны отменены
+                    //    }
+                    //} else if (data.status === 1) {
+                    //    $(row).addClass('yellow');  // Вагоны в работе
+                    //} else if (data.status === 2) {
+                    //    $(row).addClass('green');  // Вагоны выполнены
+                    //}
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_list_usage_fee_period();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Fld_Ref_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };
