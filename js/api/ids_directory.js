@@ -61,6 +61,7 @@
                 { name: 'organization_service', list: null, fn_get: this.getOrganizationService.bind(this) },
                 { name: 'payer_arrival', list: null, fn_get: this.getPayerArrival.bind(this) },
                 { name: 'payer_sender', list: null, fn_get: this.getPayerSender.bind(this) },
+                { name: 'currency', list: null, fn_get: this.getCurrency.bind(this) },
             ],
             url_api: this.settings.url_api
         });
@@ -71,6 +72,10 @@
 
     //****************************************************************************************
     //-------------------------------- Функции работы с БД через api ---------------
+    //======= [Directory_Currency] (Справочник валют) ===============
+    ids_directory.prototype.getCurrency = function (callback) {
+        this.api_com.get('/DirectoryCurrency', callback);
+    };
     //======= [Directory_PayerArrival] (Справочник платильщиков по прибытию) ===============
     ids_directory.prototype.getPayerArrival = function (callback) {
         this.api_com.get('/DirectoryPayerArrival', callback);
@@ -237,12 +242,17 @@
         this.api_com.get('/DirectoryGenusWagon/' + id, callback);
     };
     //======= Directory_OperatorsWagons (Справочник операторов вагонов) ======================================
+    // Получить список операторов
     ids_directory.prototype.getOperatorsWagons = function (callback) {
         this.api_com.get('/DirectoryOperatorsWagon', callback);
     };
-    // Получить парки по указаной станции c позицией
+    // Получить оператора вагона по id
     ids_directory.prototype.getOperatorsWagonsID = function (id, callback) {
         this.api_com.get('/DirectoryOperatorsWagon/' + id, callback);
+    };
+    // Получить список операторов и родов вагонов
+    ids_directory.prototype.getOperatorsAndGenusWagons = function (callback) {
+        this.api_com.get('/DirectoryOperatorsWagon/genus/all', callback);
     };
     //======= Directory_OwnersWagons (Справочник собствинеков вагонов) ======================================
     ids_directory.prototype.getOwnersWagons = function (callback) {

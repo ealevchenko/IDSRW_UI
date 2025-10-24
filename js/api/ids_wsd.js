@@ -226,10 +226,10 @@
     //================= СЕРВИСЫ =========================================================
     //АРМ, Получить инструментальные письма за период
     ids_wsd.prototype.getViewInstructionalLettersOfPeriod = function (start, stop, callback) {
-        this.api_com.get('/WSD/view/instructional_letters/list/period/start/' + start + '/stop/' + stop , callback);
+        this.api_com.get('/WSD/view/instructional_letters/list/period/start/' + start + '/stop/' + stop, callback);
     };
     ids_wsd.prototype.getViewInstructionalLettersWagonsInProgress = function (callback) {
-        this.api_com.get('/WSD/view/instructional_letters_wagons/list/in_progress' , callback);
+        this.api_com.get('/WSD/view/instructional_letters_wagons/list/in_progress', callback);
     };
     //АРМ, запросить и получить статус вагонов в новом письме
     ids_wsd.prototype.postStatusInstructionalLettersWagons = function (option, callback) {
@@ -242,6 +242,11 @@
     //АРМ, удалить письмо
     ids_wsd.prototype.deleteInstructionalLetters = function (id, callback) {
         this.api_com.delete('/WSD/operation/instructional_letters/delete/', id, callback, callback);
+    };
+
+    //АРМ, Получить список периодов ставок по оператору и роду
+    ids_wsd.prototype.getViewUsageFeePeriodOfOperatorGenus = function (id_operator, id_genus, callback) {
+        this.api_com.get('/WSD/view/usage_fee_period/operator/' + id_operator + '/genus/' + id_genus, callback);
     };
 
     App.ids_wsd = ids_wsd;
