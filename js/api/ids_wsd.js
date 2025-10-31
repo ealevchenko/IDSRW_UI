@@ -248,7 +248,10 @@
     ids_wsd.prototype.getViewUsageFeePeriodOfOperatorGenus = function (id_operator, id_genus, callback) {
         this.api_com.get('/WSD/view/usage_fee_period/operator/' + id_operator + '/genus/' + id_genus, callback);
     };
-
+    //АРМ, Получить список дополнительных условий для указанного периода
+    ids_wsd.prototype.getViewUsageFeePeriodDetaliOfIdPeriod = function (id_usage_fee_period, callback) {
+        this.api_com.get('/WSD/view/usage_fee_period_detali/id_usage_fee_period/' + id_usage_fee_period, callback);
+    };
     App.ids_wsd = ids_wsd;
 
     window.App = App;
