@@ -893,6 +893,30 @@ var get_belongs_element = function (rows, name_field, id) {
         }
         this.$html = div.$html;
     };
+    //<div></div>
+    form_element.prototype.bs_div = function (options) {
+        this.fe = new form_element();
+        this.settings = $.extend({
+            id: null,
+            class: null,
+            style: null,
+            obj_form: null,
+            append_objs: null,
+        }, options);
+        this.$html = $('<div></div>');
+        if (!this.$html || this.$html.length === 0) {
+            throw new Error('Не удалось создать элемент <div class="row"></div>');
+        } else {
+            add_id(this.$html, this.settings.id);
+            add_class(this.$html, this.settings.class);
+            add_tag(this.$html, 'style', this.settings.style);
+            if (this.settings.obj_form !== null && this.settings.append_objs !== null && this.settings.append_objs.length > 0) {
+                this.fe.add_obj(this.$html, this.settings.append_objs, this.settings.obj_form, function (content) {
+
+                }.bind(this));
+            }
+        }
+    };
     //<div class="row">
     form_element.prototype.bs_row = function (options) {
         this.fe = new form_element();
@@ -2999,6 +3023,11 @@ var get_belongs_element = function (rows, name_field, id) {
                 if (obj.obj === 'bs_hr') {
                     obj.options.obj_form = obj_form;
                     var obj_html = new this.bs_hr(obj.options);
+                    add_element(obj_html.$html, content, obj);
+                };
+                if (obj.obj === 'bs_div') {
+                    obj.options.obj_form = obj_form;
+                    var obj_html = new this.bs_div(obj.options);
                     add_element(obj_html.$html, content, obj);
                 };
                 if (obj.obj === 'bs_row') {
