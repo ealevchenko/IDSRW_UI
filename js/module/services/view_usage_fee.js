@@ -23,8 +23,55 @@
             'vs_usfee_card_header_payment_terms': 'Условия расчета',
 
             'vs_usfee_mess_init_module': 'Инициализация модуля view_usage_fee',
-            //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
 
+            'vs_usfee_form_apply': 'Применить',
+            'vs_usfee_form_apply_title': 'Применить условие',
+
+            'vs_usfee_label_date_period_start': 'Начало :',
+            'vs_usfee_title_placeholder_date_period_start': 'Начало',
+            'vs_usfee_title_date_period_start': 'Начало периода...',
+
+            'vs_usfee_label_date_period_stop': 'Окончание :',
+            'vs_usfee_title_placeholder_date_period_stop': 'Окончание',
+            'vs_usfee_title_date_period_stop': 'Окончание периода...',
+
+            'vs_usfee_label_hour_after_30': 'Округление часа после 30 мин.',
+
+            'vs_usfee_label_rate_currency': 'Валюта :',
+            'vs_usfee_text_rate_currency': 'Валюта',
+
+            'vs_usfee_label_rate_value': 'Ставка :',
+            'vs_usfee_title_placeholder_rate_value': 'Ставка',
+            'vs_usfee_text_rate_value': 'Ставка...',
+
+            'vs_usfee_label_derailment_rate_currency': 'Валюта (сход) :',
+            'vs_usfee_text_derailment_rate_currency': 'Валюта (сход)...',
+
+            'vs_usfee_label_derailment_rate_value': 'Ставка (сход) :',
+            'vs_usfee_title_placeholder_derailment_rate_value': 'Ставка (сход)',
+            'vs_usfee_text_derailment_rate_value': 'Ставка (сход)...',
+
+            'vs_usfee_label_coefficient_route_value': 'Коэф. маршрут :',
+            'vs_usfee_title_placeholder_coefficient_route_value': 'Коэф. маршрут',
+            'vs_usfee_text_coefficient_route_value': 'Коэф. маршрут...',
+
+            'vs_usfee_label_coefficient_not_route_value': 'Коэф. не маршрут :',
+            'vs_usfee_title_placeholder_coefficient_not_route_value': 'Коэф. не маршрут',
+            'vs_usfee_text_coefficient_not_route_value': 'Коэф. не маршрут...',
+
+            'vs_usfee_label_grace_time_value1': 'Льгот время 1-е :',
+            'vs_usfee_title_placeholder_grace_time_value1': 'Льгот время 1-е',
+            'vs_usfee_text_grace_time_value1': 'Льгот время 1-е...',
+
+            'vs_usfee_label_grace_time_value2': 'Льгот время 2-е :',
+            'vs_usfee_title_placeholder_grace_time_value2': 'Льгот время 2-е',
+            'vs_usfee_text_grace_time_value2': 'Льгот время 2-е...',
+
+            'vs_usfee_add_rate': 'Добавить условие',
+            'vs_usfee_add_rate_title': 'Добавить дополнительное условие...',
+
+
+            //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
             //'vs_usfee_title_button_lett_num_clear': 'Очистить',
             //'vs_usfee_title_button_lett_num_searsh': 'Поиск по № письма',
             //'vs_usfee_title_button_lett_wagon_clear': 'Очистить',
@@ -98,12 +145,11 @@
             //'vs_usfee_mess_form_letters_edit_not_db_letter_destination_station': 'Станции назначения нет БД ИДС...',
             //'vs_usfee_mess_form_letters_edit_not_status_wagons': 'Статус вагонов в системе не определен!',
             //'vs_usfee_mess_form_letters_edit_not_edit_wagon': 'Вагон {0} в письме закрыт {1} - правка запрещена!',
-            //'vs_usfee_mess_war_form_letters_edit_exist_wagon': 'Вагон {0} уже добавлен в письмо!',
+            'vs_usfee_mess_war_form_letters_edit_exist_wagon': 'Период условия платы по оператору {0} с {1} по {2} уже завершён. Выбор не доступен!',
 
             //'vs_usfee_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
             //'vs_usfee_mess_error_operation_run': 'При выполнении операции «ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ» произошла ошибка, код ошибки: {0}',
             //'vs_usfee_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-
             //'vs_usfee_mess_run_operation_edit_letter': 'Выполняю операцию "ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ"',
             //'vs_usfee_mess_run_operation_delete_letter': 'Выполняю операцию "УДАЛИТЬ ИНСТРУКТИВНОЕ ПИСЬМО"',
             //'vs_usfee_mess_operation_add_letter_ok': 'Операция "ДОБАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
@@ -308,7 +354,7 @@
         this.list_of_payment_terms_setup = new this.fe_ui.bs_col({
             pref: 'xl',
             size: 3,
-            class: 'rounded border border-secondary'
+            class: 'rounded border border-secondary p-2'
         }); // Окно таблицы
         this.list_of_payment_terms_table = new this.fe_ui.bs_col({
             id: 'table-payment-terms',
@@ -316,6 +362,18 @@
             size: 9,
             //class: 'rounded border border-secondary'
         }); // Окно таблицы
+        // Alert payment_terms
+        this.alert_payment_terms = new this.fe_ui.bs_alert({
+            id: null,
+            class: null,
+            style: null,
+            color: null,
+            bt_close: false,
+            fn_click_close: null,
+        });
+        this.list_of_payment_terms_table.$html.append(this.alert_payment_terms.$html);
+        this.payment_terms_alert = new ALERT(this.alert_payment_terms.$html);
+
         row_payment_terms.$html.append(this.list_of_payment_terms_setup.$html).append(this.list_of_payment_terms_table.$html);
         this.list_of_payment_terms.body.$html.append(row_payment_terms.$html);
 
@@ -333,11 +391,12 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 3;
+                var process = 4;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
-                        //this.list_of_letters_setup.$html.append(this.form_letters_setup.$form);
+                        // Добавим форму настройки
+                        this.list_of_payment_terms_setup.$html.append(this.form_payment_terms_setup.$form);
                         //this.info_alert.out_info_message(langView('vs_usfee_mess_info_init', App.Langs));
                         // На проверку окончания инициализации
                         //----------------------------------
@@ -417,6 +476,8 @@
 
                         } else {
                             this.tab_list_of_rod.view(this.list_operators_genus);
+                            this.list_period = [];
+                            this.tab_list_payment_terms.view(this.list_period);
                         }
                         LockScreenOff();
                     }.bind(this),
@@ -461,33 +522,7 @@
                     fn_action_view_detali: function (rows) {
 
                     },
-                    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                        //this.list_period = [];
-                        //if (rowData && rowData.length > 0) {
-                        //    LockScreen(langView('vs_usfee_load_info', App.Langs));
-                        //    $.each(rowData, function (key, el) {
-                        //        this.api_wsd.getViewUsageFeePeriodOfOperatorGenus(el.idOperator, el.idGenus, function (data) {
-                        //            if (data && data.length > 0) {
-                        //                this.list_period = this.list_period.concat(data);
-                        //            } else {
-
-                        //            }
-                        //        }.bind(this));
-                        //    }.bind(this));
-                        //    LockScreenOff();
-
-                        //    //    if (this.list_operators_genus_all && this.list_operators_genus_all.length > 0) {
-                        //    //        $.each(rowData, function (key, el) {
-                        //    //            var genus = this.list_operators_genus_all.filter(function (i) {
-                        //    //                return (i.parentId === null && i.idOperator === el.id) || (i.parentId !== null && i.parentId === el.id); //
-                        //    //            }.bind(this));
-                        //    //            this.list_operators_genus = this.list_operators_genus.concat(genus);
-                        //    //        }.bind(this));
-                        //    //    }
-                        //} else {
-
-                        //}
-                    }.bind(this),
+                    fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) { }.bind(this),
                     fn_select_rows: function (rows, type) {
                         var process_period = 0;
                         // Выход из инициализации
@@ -508,7 +543,54 @@
                                     if (data && data.length > 0) {
                                         this.list_period = this.list_period.concat(data);
                                     } else {
-
+                                        // Создадим новую строку
+                                        var genus = this.api_dir.getGenusWagons_Of_ID(el.idGenus);
+                                        var operator = this.api_dir.getOperatorsWagons_Of_ID(el.idOperator);
+                                        this.list_period.push({
+                                            "idUsageFeePeriod": 0,
+                                            "usageFeePeriodIdOperator": el.idOperator,
+                                            "usageFeePeriodOperatorAbbrRu": operator.abbrRu,
+                                            "usageFeePeriodOperatorRu": operator.operatorsRu,
+                                            "usageFeePeriodOperatorAbbrEn": operator.abbrEn,
+                                            "usageFeePeriodOperatorEn": operator.operatorsEn,
+                                            "usageFeePeriodOperatorsPaid": null,
+                                            "usageFeePeriodOperatorsRop": null,
+                                            "usageFeePeriodOperatorsLocalUse": null,
+                                            "usageFeePeriodOperatorsColor": null,
+                                            "usageFeePeriodIdGenus": el.idGenus,
+                                            "usageFeePeriodGenusRu": genus.genusRu,
+                                            "usageFeePeriodGenusEn": genus.genusEn,
+                                            "usageFeePeriodGenusAbbrRu": genus.abbrRu,
+                                            "usageFeePeriodGenusAbbrEn": genus.abbrEn,
+                                            "usageFeePeriodRodUz": null,
+                                            "usageFeePeriodStart": null,
+                                            "usageFeePeriodStop": null,
+                                            "usageFeePeriodIdCurrency": null,
+                                            "usageFeePeriodCurrencyRu": null,
+                                            "usageFeePeriodCurrencyEn": null,
+                                            "usageFeePeriodCode": null,
+                                            "usageFeePeriodCodeCc": null,
+                                            "usageFeePeriodRate": null,
+                                            "usageFeePeriodIdCurrencyDerailment": null,
+                                            "usageFeePeriodDerailmentCurrencyRu": null,
+                                            "usageFeePeriodDerailmentCurrencyEn": null,
+                                            "usageFeePeriodDerailmentCode": null,
+                                            "usageFeePeriodDerailmentCodeCc": null,
+                                            "usageFeePeriodRateDerailment": null,
+                                            "usageFeePeriodCoefficientRoute": null,
+                                            "usageFeePeriodCoefficientNotRoute": null,
+                                            "usageFeePeriodGraceTime1": null,
+                                            "usageFeePeriodGraceTime2": null,
+                                            "usageFeePeriodNote": null,
+                                            "usageFeePeriodCreate": null,
+                                            "usageFeePeriodCreateUser": null,
+                                            "usageFeePeriodChange": null,
+                                            "usageFeePeriodChangeUser": null,
+                                            "usageFeePeriodClose": null,
+                                            "usageFeePeriodCloseUser": null,
+                                            "usageFeePeriodParentId": null,
+                                            "usageFeePeriodHourAfter30": null
+                                        });
                                     }
                                     process_period--;
                                     out_load_period.call(this, process_period);
@@ -544,7 +626,7 @@
                             action: function () {
                                 this.tab_list_payment_terms.tab_com.obj_t_report.rows(
                                     function (idx, data) {
-                                        return moment().isBefore(data.usageFeePeriodStop);
+                                        return data.idUsageFeePeriod === 0 || moment().isBefore(data.usageFeePeriodStop);
                                     }.bind(this)).select();
                             }.bind(this)
                         },
@@ -561,23 +643,104 @@
                     },
                     fn_action_view_detali: function (rows) { },
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                        //this.filing_wagons_alert.clear_message();
-                        if (rowData && rowData.length > 0) {
-                            if (!moment().isBefore(rowData[0].usageFeePeriodStop)) {
-                                e.preventDefault();
-                                //this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_select_status', App.Langs).format(rowData[0].num, this.view_status_fw_wagons(curr_status), this.view_status_fw_wagons(this.fw_status)));
-                            }
-                        }
+                        this.payment_terms_alert.clear_message();
+                        //if (rowData && rowData.length > 0) {
+                        //    if (rowData[0].idUsageFeePeriod > 0 && !moment().isBefore(rowData[0].usageFeePeriodStop)) {
+                        //        e.preventDefault();
+                        //        this.payment_terms_alert.out_warning_message(langView('vs_usfee_mess_war_form_letters_edit_exist_wagon', App.Langs).format(
+                        //            rowData[0]['usageFeePeriodOperatorAbbr' + ucFirst(App.Lang)],
+                        //            moment(rowData[0].usageFeePeriodStart).format(format_datetime_ru),
+                        //            moment(rowData[0].usageFeePeriodStop).format(format_datetime_ru)));
+                        //    }
+                        //}
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
+                        // Добавим первый элемент
+                        this.$list_rate.empty();
+                        var $li = $('<li></li>', {
+                            class: 'list-group-item d-flex justify-content-between align-items-start'
+                        });
+                        var $div = $('<div></div>', {
+                            class: 'ms-2 me-auto'
+                        });
+                        var $div_info = $('<div></div>', {
+                            class: 'fw-bold',
+                            text: 'Добавить доп. условие...'
+                        });
+                        var $btng = $('<div></div>', {
+                            class: 'btn-group btn-group-sm me-2',
+                            role: 'group'
+                        });
+                        var $icon_add = $('<i class="fa-solid fa-circle-plus"></i>');
+                        var $btn_add = $('<button></button>', {
+                            class: 'btn btn-success',
+                            type: 'button',
+                        });
+                        $btn_add.append($icon_add);
+                        $li.append($div.append($div_info)).append($btng.append($btn_add));
+
+                        //var $dd = $('<li class="list-group-item d-flex justify-content-between align-items-start">' +
+                        //    '<div class="ms-2 me-auto">' +
+                        //    '<div class="fw-bold">Subheading</div>' +
+                        //    'Cras justo odio' +
+                        //    '</div>' +
+                        //    '<span class="badge bg-primary rounded-pill">14</span>' +
+                        //    '</li>');
+                        this.$list_rate.append($li);
                         var rows_select = this.tab_list_payment_terms.tab_com.get_select_row();
                         //this.list_period = [];
                         if (rows_select && rows_select.length > 0) {
+                            // Получить детали
+                            this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(rows_select[0].idUsageFeePeriod, function (data_detali) {
+                                if (data_detali && data_detali.length > 0) {
 
+                                    $.each(data_detali, function (i, el) {
+                                        // Добавить полученные элементы
+                                        var $li = $('<li></li>', {
+                                            class: 'list-group-item d-flex justify-content-between align-items-start'
+                                        });
+                                        var $div = $('<div></div>', {
+                                            class: 'ms-2 me-auto'
+                                        });
+                                        var $div_info = $('<div></div>', {
+                                            class: 'fw-bold',
+                                            text: 'Прибытие'
+                                        });
+                                        $div.append($div_info);
+
+                                        var $btng = $('<div></div>', {
+                                            id: el.id,
+                                            class: 'btn-group btn-group-sm me-2',
+                                            role: 'group'
+                                        });
+                                        var $icon_edit = $('<i class="fa-solid fa-pen-to-square"></i>');
+                                        var $icon_del = $('<i class="fa-solid fa-trash"></i>');
+                                        var $btn_edit = $('<button></button>', {
+                                            class: 'btn btn-warning',
+                                            type: 'button',
+                                        });
+                                        $btn_edit.append($icon_edit);
+                                        var $btn_del = $('<button></button>', {
+                                            class: 'btn btn-danger',
+                                            type: 'button',
+                                        });
+                                        $btn_del.append($icon_del);
+                                        $btng.append($btn_edit).append($btn_del);
+
+                                        $div.append('Станция (ОТПР):' + el.fromStationNameRu);
+                                        $div.append('Груз (ОТПР):' + el.arrivalCargoNameRu);
+
+                                        $li.append($div).append($btng);
+                                        this.$list_rate.append($li);
+                                    }.bind(this));
+                                } else {
+                                }
+                            }.bind(this));
                         } else {
 
                         }
+
                         LockScreenOff();
                     }.bind(this),
                     fn_select_link: function (link) { }.bind(this),
@@ -591,6 +754,593 @@
                     fn_view_detali: function (id_div, data) { },
                     fn_init_complete: function () { },
                     fn_draw_callback: function (settings) { }.bind(this)
+                });
+
+                // форма детального выбора писем
+                this.form_payment_terms_setup = new FD();
+                var objs_pt_setup = [];
+
+                var col_bt_apply = {
+                    obj: 'bs_col',
+                    options: {
+                        id: null,
+                        pref: 'md',
+                        size: 12,
+                        class: 'text-left',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var bt_bt_apply = {
+                    obj: 'bs_button',
+                    options: {
+                        id: null,
+                        name: null,
+                        class: null,
+                        fsize: 'sm',
+                        color: 'success',
+                        text: langView('vs_usfee_form_apply', App.Langs),
+                        title: langView('vs_usfee_form_apply_title', App.Langs),
+                        icon_fa_left: 'fa-solid fa-thumbs-up',  //<i class="fa-solid fa-thumbs-up"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            //this.form_payment_terms_setup.$form.submit();
+                        }.bind(this),
+                    }
+                };
+                var form_input_date_period_start = {
+                    obj: 'bs_form_input_datetime',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'date_period_start',
+                        name: 'date_period_start',
+                        label: langView('vs_usfee_label_date_period_start', App.Langs),
+                        element_type: 'date',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_date_period_start', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: moment().subtract(31, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
+                        element_max: moment().add(31, 'days').format("YYYY-MM-DDThh:mm"),
+                        element_step: null,
+                        element_options: {
+                            default: null, //moment()
+                            format: 'date',
+                            out_format: 'moment',
+                            fn_change: function (e, dt) { }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        form_text: langView('vs_usfee_title_date_period_start', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_date_period_stop = {
+                    obj: 'bs_form_input_datetime',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'date_period_stop',
+                        name: 'date_period_stop',
+                        label: langView('vs_usfee_label_date_period_stop', App.Langs),
+                        element_type: 'date',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_date_period_stop', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: moment().subtract(31, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
+                        element_max: moment().add(31, 'days').format("YYYY-MM-DDThh:mm"),
+                        element_step: null,
+                        element_options: {
+                            default: null, //moment().add(1, 'hour')
+                            format: 'date',
+                            out_format: 'moment',
+                            fn_change: function (e, dt) {
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        form_text: langView('vs_usfee_title_date_period_stop', App.Langs),
+                        form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_check_hour_after_30 = {
+                    obj: 'bs_form_check',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'hour_after_30',
+                        name: 'hour_after_30',
+                        label: langView('vs_usfee_label_hour_after_30', App.Langs),
+                        element_type: 'checkbox',
+                        element_switch: true,
+                        element_inline: false,
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_checked: true,
+                        element_required: false,
+                        element_readonly: false,
+                        element_options: {
+                            default: true,
+                            fn_change: function (e) {
+                                //this.select_apply(this.list_letters, function (select_letters) {
+                                //    this.view_select(select_letters);
+                                //    LockScreenOff();
+                                //}.bind(this));
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col: 'col-md-12 mt-0',
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: null,
+                    },
+                    childs: []
+                };
+                var form_select_rate_currency = {
+                    obj: 'bs_form_select',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'rate_currency',
+                        name: 'rate_currency',
+                        label: langView('vs_usfee_label_rate_currency', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_multiple: false,
+                        element_title: null,
+                        element_required: true,
+                        element_readonly: false,
+                        element_size: null,
+                        element_options: {
+                            data: [],
+                            default: -1,
+                            fn_change: function (e) {
+                                e.preventDefault();
+                            }.bind(this),
+                            fn_check: function (text) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_rate_currency', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_rate_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'rate_value',
+                        name: 'rate_value',
+                        label: langView('vs_usfee_label_rate_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_rate_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_rate_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_select_derailment_rate_currency = {
+                    obj: 'bs_form_select',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'derailment_rate_currency',
+                        name: 'derailment_rate_currency',
+                        label: langView('vs_usfee_label_derailment_rate_currency', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_multiple: false,
+                        element_title: null,
+                        element_required: true,
+                        element_readonly: false,
+                        element_size: null,
+                        element_options: {
+                            data: [],
+                            default: -1,
+                            fn_change: function (e) {
+                                e.preventDefault();
+                            }.bind(this),
+                            fn_check: function (text) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_derailment_rate_currency', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_derailment_rate_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'derailment_rate_value',
+                        name: 'derailment_rate_value',
+                        label: langView('vs_usfee_label_derailment_rate_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_derailment_rate_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_derailment_rate_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_coefficient_route_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'coefficient_route_value',
+                        name: 'coefficient_route_value',
+                        label: langView('vs_usfee_label_coefficient_route_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_coefficient_route_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_coefficient_route_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_coefficient_not_route_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'coefficient_not_route_value',
+                        name: 'coefficient_not_route_value',
+                        label: langView('vs_usfee_label_coefficient_not_route_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_coefficient_not_route_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_coefficient_not_route_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_grace_time_value1 = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'grace_time_value1',
+                        name: 'grace_time_value1',
+                        label: langView('vs_usfee_label_grace_time_value1', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_grace_time_value1', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_grace_time_value1', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_grace_time_value2 = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'pt',
+                        id: 'grace_time_value2',
+                        name: 'grace_time_value2',
+                        label: langView('vs_usfee_label_grace_time_value2', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_grace_time_value2', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_grace_time_value2', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+
+                //var col_add_rate = {
+                //    obj: 'bs_col',
+                //    options: {
+                //        id: null,
+                //        pref: 'md',
+                //        size: 12,
+                //        class: 'text-left mt-2',
+                //        style: null,
+                //    },
+                //    childs: []
+                //};
+                //var bt_add_rate = {
+                //    obj: 'bs_button',
+                //    options: {
+                //        id: null,
+                //        name: null,
+                //        class: null,
+                //        fsize: 'sm',
+                //        color: 'success',
+                //        text: langView('vs_usfee_add_rate', App.Langs),
+                //        title: langView('vs_usfee_add_rate', App.Langs),
+                //        icon_fa_left: 'fa-solid fa-square-plus',  //<i class="fa-solid fa-square-plus"></i>
+                //        icon_fa_right: null,
+                //        fn_click: function (event) {
+                //            event.preventDefault();
+                //            //this.form_payment_terms_setup.$form.submit();
+                //        }.bind(this),
+                //    }
+                //};
+                var row_list_rate = {
+                    obj: 'bs_div',
+                    options: {
+                        id: 'list-rate',
+                        class: 'mt-2',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var col_rate = {
+                    obj: 'bs_col',
+                    options: {
+                        id: null,
+                        pref: 'md',
+                        size: 12,
+                        class: 'bx-2',
+                        style: null,
+                    },
+                    childs: []
+                };
+
+                //<ul class="list-group">
+                //    <li class="list-group-item">An item</li>
+                //    <li class="list-group-item">A second item</li>
+                //    <li class="list-group-item">A third item</li>
+                //    <li class="list-group-item">A fourth item</li>
+                //    <li class="list-group-item">And a fifth one</li>
+                //</ul>
+
+                col_bt_apply.childs.push(bt_bt_apply);
+                objs_pt_setup.push(col_bt_apply);
+                objs_pt_setup.push(form_input_date_period_start);
+                objs_pt_setup.push(form_input_date_period_stop);
+                objs_pt_setup.push(form_check_hour_after_30);
+                objs_pt_setup.push(form_select_rate_currency);
+                objs_pt_setup.push(form_input_rate_value);
+                objs_pt_setup.push(form_select_derailment_rate_currency);
+                objs_pt_setup.push(form_input_derailment_rate_value);
+                objs_pt_setup.push(form_input_coefficient_route_value);
+                objs_pt_setup.push(form_input_coefficient_not_route_value);
+                objs_pt_setup.push(form_input_grace_time_value1);
+                objs_pt_setup.push(form_input_grace_time_value2);
+                //col_add_rate.childs.push(bt_add_rate);
+                //objs_pt_setup.push(col_add_rate);
+                col_rate.childs.push(row_list_rate);
+                objs_pt_setup.push(col_rate);
+                this.form_payment_terms_setup.init({
+                    alert: this.main_alert,
+                    //context: this...$html,
+                    objs: objs_pt_setup,
+                    id: null,
+                    form_class: 'row',
+                    validation: true,
+                    fn_validation: function (result) {
+                        // Валидация успешна
+                        if (result && result.valid) {
+                            if (valid) {
+
+                            }
+                        }
+                    }.bind(this),
+                    fn_html_init: function (res) { }.bind(this),
+                    fn_element_init: null,
+                    fn_init: function (init) {
+
+                        this.$list_rate = $('<ol></ol>', {
+                            class: 'list-group list-group'
+                        });
+                        var $div_rate = this.form_payment_terms_setup.$form.find('div#list-rate');//  $('div#list-rate');
+                        $div_rate.append(this.$list_rate);
+
+
+                        //row_on_setup.$html.append(this.form_payment_terms_setup.$form);
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    }.bind(this),
                 });
 
             }

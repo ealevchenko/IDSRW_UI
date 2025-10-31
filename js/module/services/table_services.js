@@ -329,19 +329,6 @@
                 className: 'dt-body-center',
                 title: langView('tsrv_field_num', App.Langs), width: "30px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'nomMainDoc',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            return row.idDocumentNavigation.nomMainDoc;
-            //        } else {
-            //            return row.nomMainDoc;
-            //        }
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_nomMainDoc', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
             {
                 field: 'nomMainDoc',
                 data: function (row, type, val, meta) {
@@ -358,19 +345,6 @@
                 className: 'dt-body-center',
                 title: langView('tsrv_field_nomDoc', App.Langs), width: "30px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'dateOtpr',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            return row.idDocumentNavigation.dateOtpr ? moment(row.idDocumentNavigation.dateOtpr).format(format_datetime) : null;
-            //        } else {
-            //            return row.dateOtpr ? moment(row.dateOtpr).format(format_datetime) : null;
-            //        }
-            //    },
-            //    className: 'dt-body-nowrap',
-            //    title: langView('tsrv_field_dateOtpr', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
             {
                 field: 'dateOtpr',
                 data: function (row, type, val, meta) {
@@ -379,19 +353,6 @@
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_dateOtpr', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'dateAdoption',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.IdArrivalNavigation) {
-            //            return row.IdArrivalNavigation.dateAdoption ? moment(row.IdArrivalNavigation.dateAdoption).format(format_datetime) : null;
-            //        } else {
-            //            return row.dateAdoption ? moment(row.dateAdoption).format(format_datetime) : null;
-            //        }
-            //    },
-            //    className: 'dt-body-nowrap',
-            //    title: langView('tsrv_field_DateAdoption', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
             {
                 field: 'dateAdoption',
                 data: function (row, type, val, meta) {
@@ -485,19 +446,6 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_arrivalCargoName', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'arrivalUzVagons.idCargoNavigation.cargoName',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.arrivalUzVagons && row.arrivalUzVagons.length > 0) {
-            //            if (row.arrivalUzVagons[0].idCargoNavigation) {
-            //                return row.arrivalUzVagons[0].idCargoNavigation['cargoName' + ucFirst(App.Lang)];
-            //            } else return null;
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-left shorten mw-100',
-            //    title: langView('tsrv_field_arrivalCargoName', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
             {
                 field: 'arrivalCargoName',
                 data: function (row, type, val, meta) {
@@ -526,22 +474,6 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_outgoingCargoEtsngCode', App.Langs), width: "100px", orderable: true, searchable: true
             },
-
-            //{
-            //    field: 'idWagonsRentArrivalNavigation.idOperatorNavigation.abbr',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idWagonsRentArrivalNavigation) {
-            //            if (row.idWagonsRentArrivalNavigation.idOperatorNavigation) {
-            //                return row.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)];
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-left shorten mw-100',
-            //    title: langView('tsrv_field_arrivalOperatorAbbr', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
             {
                 field: 'arrivalOperatorAbbr',
                 data: function (row, type, val, meta) {
@@ -582,36 +514,6 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_arrivalDivisionAbbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'idDocumentNavigation.codePayerSenderNavigation.payerName',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerSenderNavigation) {
-            //                return row.idDocumentNavigation.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)];
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-left shorten mw-100',
-            //    title: langView('tsrv_field_payerSenderName', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
-            //{
-            //    field: 'idDocumentNavigation.codePayerSenderNavigation.payerCode',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerSenderNavigation) {
-            //                return row.idDocumentNavigation.codePayerSenderNavigation.code;
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_payerSenderCode', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
             {
                 field: 'payerSenderName',
                 data: function (row, type, val, meta) {
@@ -664,66 +566,6 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_payerLocalCode', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'idDocumentNavigation.codePayerArrivalNavigation.payerName',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerArrivalNavigation) {
-            //                return row.idDocumentNavigation.codePayerArrivalNavigation['payerName' + ucFirst(App.Lang)];
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-left shorten mw-100',
-            //    title: langView('tsrv_field_payerArrivalName', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
-            //{
-            //    field: 'idDocumentNavigation.codePayerArrivalNavigation.payerCode',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerArrivalNavigation) {
-            //                return row.idDocumentNavigation.codePayerArrivalNavigation.code;
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_payerArrivalCode', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
-            //{
-            //    field: 'idDocumentNavigation.codePayerLocalNavigation.payerName',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerLocalNavigation) {
-            //                return row.idDocumentNavigation.codePayerLocalNavigation['payerName' + ucFirst(App.Lang)];
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-left shorten mw-100',
-            //    title: langView('tsrv_field_payerLocalName', App.Langs), width: "100px", orderable: true, searchable: true
-            //},
-            //{
-            //    field: 'idDocumentNavigation.codePayerLocalNavigation.payerCode',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.idDocumentNavigation) {
-            //            if (row.idDocumentNavigation.codePayerLocalNavigation) {
-            //                return row.idDocumentNavigation.codePayerLocalNavigation.code;
-            //            } else {
-            //                return null;
-            //            }
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_payerLocalCode', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
             {
                 field: 'vesg',
                 data: function (row, type, val, meta) {
@@ -740,35 +582,6 @@
                 className: 'dt-body-end',
                 title: langView('tsrv_field_distanceWay', App.Langs), width: "30px", orderable: true, searchable: true
             },
-            //{
-            //    field: 'arrivalUzVagons.vesg',
-            //    data: function (row, type, val, meta) {
-
-            //        if (row.arrivalUzVagons && row.arrivalUzVagons.length > 0) {
-            //            var vesg = 0;
-            //            $.each(row.arrivalUzVagons, function (i, el) {
-            //                vesg += (el.vesg ? Number(el.vesg) : 0);
-            //            }.bind(this));
-            //            return vesg.toFixed(2);
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_vesg', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
-            //{
-            //    field: 'arrivalUzVagonPays',
-            //    data: function (row, type, val, meta) {
-            //        if (row.arrivalUzVagonPays && row.arrivalUzVagonPays.length > 0) {
-            //            var summa = 0;
-            //            $.each(row.arrivalUzVagonPays, function (i, el) {
-            //                summa += (el.summa ? Number(el.summa) : 0);
-            //            }.bind(this));
-            //            return summa.toFixed(2);
-            //        } else return null;
-            //    },
-            //    className: 'dt-body-center',
-            //    title: langView('tsrv_field_arrivalUzVagonPays', App.Langs), width: "30px", orderable: true, searchable: true
-            //},
             {
                 field: 'outgoingUzVagonPays',
                 data: function (row, type, val, meta) {
@@ -1307,6 +1120,19 @@
                 className: 'dt-body-left shorten mw-200',
                 title: langView('tsrv_field_operators_wagons_operators', App.Langs), width: "200px", orderable: true, searchable: true
             },
+            // Статус платных операторов
+            {
+                field: 'operators_wagons_paid_icon',
+                data: function (row, type, val, meta) {
+                    if (row.paid) {
+                        return '<i class="fa-solid fa-sack-dollar"></i>'
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-center',
+                title: '', width: "18px", orderable: false, searchable: false
+            },
             // Список операторов (get_operators_and_genus)
             {
                 field: 'operators_and_genus_operators',
@@ -1454,6 +1280,27 @@
                 className: 'dt-body-center shorten mw-50',
                 title: langView('tsrv_field_usage_fee_period_genus_abbr', App.Langs), width: "50px", orderable: true, searchable: true
             },
+            //"usageFeePeriodChange": null,
+            //"usageFeePeriodChangeUser": null,
+            // дата правки
+            {
+                field: 'usage_fee_period_change',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodChange ? moment(row.usageFeePeriodChange).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_change', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usage_fee_period_change_user',
+                data: function (row, type, val, meta) {
+                    return row.usageFeePeriodChangeUser;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_change_user', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+
+
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -1772,6 +1619,7 @@
         collums.push({ field: 'checkbox_selection', title: null, class: null });
         collums.push({ field: 'operators_wagons_abbr', title: null, class: null });
         collums.push({ field: 'operators_wagons_operators', title: null, class: null });
+        collums.push({ field: 'operators_wagons_paid_icon', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -1800,6 +1648,8 @@
         collums.push({ field: 'usage_fee_period_coefficient_route', title: null, class: null });
         collums.push({ field: 'usage_fee_period_coefficient_not_route', title: null, class: null });
         collums.push({ field: 'usage_fee_period_genus_abbr', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_change', title: null, class: null });
+        collums.push({ field: 'usage_fee_period_change_user', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
@@ -2482,9 +2332,11 @@
                 //this.tab_com.table_select = true;
                 this.tab_com.autoWidth = false;
                 this.tab_com.createdRow = function (row, data, index) {
-                    ////$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('id', data.id); // id строки дислокации вагона
                     //$(row).attr('data-num', data.num); // data-num номер вагона
-
+                    if (data.color !== null) {
+                        $(row).attr('style', 'background-color:' + data.color + ' !important;');
+                    }
                     //if (data.error || data.not_close_letter_wagon_id || data.status > 2) {
                     //    if (data.status === 3) {
                     //        $(row).addClass('blue');  // Вагоны отменены
