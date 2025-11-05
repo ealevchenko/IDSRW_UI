@@ -70,6 +70,9 @@
             'vs_usfee_add_rate': 'Добавить условие',
             'vs_usfee_add_rate_title': 'Добавить дополнительное условие...',
 
+            'vs_usfee_title_label_code_stn_from': 'Станция (ОТПР) :',
+            'vs_usfee_title_placeholder_code_stn_from': 'Станция (ОТПР)',
+            'vs_usfee_text_code_stn_from': 'Выберите станцию отправления',
 
             //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
             //'vs_usfee_title_button_lett_num_clear': 'Очистить',
@@ -112,6 +115,7 @@
 
             'vs_usfee_title_button_Cancel': 'Отмена',
             'vs_usfee_button_Ok': 'Применить',
+            'vs_usfee_title_form_add_rate': 'Добавить новое условие',
 
             //'vs_usfee_title_button_add_letter': 'Добавить новое письмо',
             //'vs_usfee_title_button_edit_letter': 'Привить существующее письмо',
@@ -199,6 +203,51 @@
         this.result_init = true;
         console.log('Init view_usage_fee');
         LockScreen(langView('vs_usfee_mess_init_module', App.Langs));
+
+        // Инициализация кнопок правки доп условий
+        var init_button_edit = function (el) {
+            this.$html = $('<div></div>', {
+                id: el.id,
+                class: 'btn-group btn-group-sm me-2',
+                role: 'group'
+            });
+            var $icon_edit = $('<i class="fa-solid fa-pen-to-square"></i>');
+            var $icon_del = $('<i class="fa-solid fa-trash"></i>');
+            var $btn_edit = $('<button></button>', {
+                class: 'btn btn-warning',
+                type: 'button',
+            });
+            $btn_edit.append($icon_edit);
+            var $btn_del = $('<button></button>', {
+                class: 'btn btn-danger',
+                type: 'button',
+            });
+            $btn_del.append($icon_del);
+            this.$html.append($btn_edit).append($btn_del);
+        }
+        //<div class="input-group input-group-sm mb-3">
+        //    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+        //    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        //</div>
+        var init_view_field = function (id, label, value) {
+            this.$html = $('<div></div>', {
+                class: 'input-group input-group-sm mb-3'
+            });
+            var $span = $('<span></span>', {
+                class: 'input-group-text fw-bold',
+                id: id,
+                text: label
+            });
+            var $input = $('<input></input>', {
+                type: 'text',
+                class: 'form-control',
+                disabled: 'disabled',
+                'aria-describedby': id,
+                value: value
+            });
+            this.$html.append($span).append($input);
+        }
+
         // теперь выполним инициализацию
         // Определим основные свойства
         this.settings = $.extend({
@@ -391,7 +440,7 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 4;
+                var process = 5;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
@@ -656,18 +705,18 @@
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
-                        // Добавим первый элемент
                         this.$list_rate.empty();
+                        // Добавим первый элемент
                         var $li = $('<li></li>', {
-                            class: 'list-group-item d-flex justify-content-between align-items-start'
-                        });
-                        var $div = $('<div></div>', {
-                            class: 'ms-2 me-auto'
+                            class: 'list-group-item list-group-item-action list-group-item-secondary'
                         });
                         var $div_info = $('<div></div>', {
-                            class: 'fw-bold',
-                            text: 'Добавить доп. условие...'
+                            class: 'd-flex justify-content-between'
                         });
+                        var $h6 = $('<h6></h6>', {
+                            class: 'mb-1'
+                        });
+                        $h6.append('Добавить доп. условие...');
                         var $btng = $('<div></div>', {
                             class: 'btn-group btn-group-sm me-2',
                             role: 'group'
@@ -676,62 +725,93 @@
                         var $btn_add = $('<button></button>', {
                             class: 'btn btn-success',
                             type: 'button',
-                        });
-                        $btn_add.append($icon_add);
-                        $li.append($div.append($div_info)).append($btng.append($btn_add));
 
-                        //var $dd = $('<li class="list-group-item d-flex justify-content-between align-items-start">' +
-                        //    '<div class="ms-2 me-auto">' +
-                        //    '<div class="fw-bold">Subheading</div>' +
-                        //    'Cras justo odio' +
-                        //    '</div>' +
-                        //    '<span class="badge bg-primary rounded-pill">14</span>' +
-                        //    '</li>');
+
+
+                        });
+                        $icon_add.on("click", function (e) {
+                            this.main_alert.clear_message();
+                            this.form_rate_edit.clear_all();
+                            this.mcfd_lg.open(
+                                langView('vs_usfee_title_form_add_rate', App.Langs),
+                                [],
+                                function () {
+                                    //if (typeof callback === 'function') {
+                                    //    callback(this.select_vagons);
+                                    //}
+                                }.bind(this),
+                                function () {
+                                    //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
+                                }.bind(this));
+                        }.bind(this));
+                        $btn_add.append($icon_add);
+                        $btng.append($btn_add);
+                        $div_info.append($h6).append($btng);
+                        $li.append($div_info)
                         this.$list_rate.append($li);
+                        // Получим выбранные периоды
                         var rows_select = this.tab_list_payment_terms.tab_com.get_select_row();
+                        // Пройдемся по периодам и добавим доп условия
                         //this.list_period = [];
-                        if (rows_select && rows_select.length > 0) {
+                        if (rows_select && rows_select.length === 1) {
                             // Получить детали
                             this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(rows_select[0].idUsageFeePeriod, function (data_detali) {
                                 if (data_detali && data_detali.length > 0) {
 
+                                    //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                                    //    <div class="d-flex w-100 justify-content-between">
+                                    //        <h5 class="mb-1">List group item heading</h5>
+                                    //        <small>3 days ago</small>
+                                    //    </div>
+                                    //    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                    //    <small>And some small print.</small>
+                                    //</a>
+
                                     $.each(data_detali, function (i, el) {
                                         // Добавить полученные элементы
                                         var $li = $('<li></li>', {
-                                            class: 'list-group-item d-flex justify-content-between align-items-start'
-                                        });
-                                        var $div = $('<div></div>', {
-                                            class: 'ms-2 me-auto'
+                                            class: 'list-group-item list-group-item-action border-top border-success'
                                         });
                                         var $div_info = $('<div></div>', {
-                                            class: 'fw-bold',
-                                            text: 'Прибытие'
+                                            class: 'd-flex justify-content-between'
                                         });
-                                        $div.append($div_info);
+                                        var $h6 = $('<h6></h6>', {
+                                            class: 'mb-1'
+                                        });
+                                        if (el.codeStnFrom !== null && el.codeStnTo === null) {
+                                            $h6.append('По прибытию...');
+                                        } else if (el.codeStnFrom === null && el.codeStnTo !== null) {
+                                            $h6.append('По отправке...');
+                                        } else {
+                                            if (el.idCargoArrival !== null && el.idCargoOutgoing === null) {
+                                                $h6.append('По прибытию груза...');
+                                            } else if (el.idCargoArrival === null && el.idCargoOutgoing !== null) {
+                                                $h6.append('По отправке груза...');
+                                            } else { $h6.append('...'); }
 
-                                        var $btng = $('<div></div>', {
-                                            id: el.id,
-                                            class: 'btn-group btn-group-sm me-2',
-                                            role: 'group'
-                                        });
-                                        var $icon_edit = $('<i class="fa-solid fa-pen-to-square"></i>');
-                                        var $icon_del = $('<i class="fa-solid fa-trash"></i>');
-                                        var $btn_edit = $('<button></button>', {
-                                            class: 'btn btn-warning',
-                                            type: 'button',
-                                        });
-                                        $btn_edit.append($icon_edit);
-                                        var $btn_del = $('<button></button>', {
-                                            class: 'btn btn-danger',
-                                            type: 'button',
-                                        });
-                                        $btn_del.append($icon_del);
-                                        $btng.append($btn_edit).append($btn_del);
-
-                                        $div.append('Станция (ОТПР):' + el.fromStationNameRu);
-                                        $div.append('Груз (ОТПР):' + el.arrivalCargoNameRu);
-
-                                        $li.append($div).append($btng);
+                                        }
+                                        // Кнопки управления
+                                        var btng = new init_button_edit(el);
+                                        $div_info.append($h6).append(btng.$html);
+                                        $li.append($div_info);
+                                        if (el.codeStnFrom !== null) {
+                                            $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
+                                        }
+                                        if (el.idCargoArrival !== null) {
+                                            $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
+                                        }
+                                        if (el.codeStnTo !== null) {
+                                            $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
+                                        }
+                                        if (el.idCargoOutgoing !== null) {
+                                            $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
+                                        }
+                                        if (el.graceTime !== null) {
+                                            $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
+                                        }
+                                        if (el.rate !== null) {
+                                            //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
+                                        }
                                         this.$list_rate.append($li);
                                     }.bind(this));
                                 } else {
@@ -1337,6 +1417,169 @@
 
 
                         //row_on_setup.$html.append(this.form_payment_terms_setup.$form);
+                        // На проверку окончания инициализации
+                        process--;
+                        out_init(process);
+                    }.bind(this),
+                });
+
+                this.form_rate_edit = new FD();
+                var objs_rate_edit = [];
+                var row_form = {
+                    obj: 'bs_row',
+                    options: {
+                        id: null,
+                        class: null,
+                        style: null,
+                    },
+                    childs: []
+                };
+
+                var form_input_datalist_from_station_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'code_stn_from',
+                        name: 'code_stn_from',
+                        label: langView('vs_usfee_title_label_code_stn_from', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_code_stn_from', App.Langs),
+                        element_required: true,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_external_station,
+                            out_value: true,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                // Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                if (set.value !== '') {
+                                    this.form_letters_edit.clear_all();
+                                    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
+                                }
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 6,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_code_stn_from', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+
+                row_form.childs.push(form_input_datalist_from_station_name);
+                objs_rate_edit.push(row_form);
+
+                this.form_rate_edit.init({
+                    alert: null,
+                    //context: this...$html,
+                    objs: objs_rate_edit,
+                    id: null,
+                    form_class: null,
+                    validation: true,
+                    fn_validation: function (result) {
+                        var valid = result.valid;
+
+                        this.form_rate_edit.valid = valid;
+                    }.bind(this),
+                    fn_html_init: function (res) { }.bind(this),
+                    fn_element_init: null,
+                    fn_init: function (init) {
+                        // Инициалиировать окно правки письма и вагонов в письме
+                        this.mcfd_lg = new MCFD(); // Создадим экземпляр окно правки
+                        this.mcfd_lg.init({
+                            static: true,
+                            keyboard: false,
+                            hidden: true,
+                            centered: true,
+                            form_dialog: this.form_rate_edit,
+                            fsize: 'xl',
+                            bt_close_text: langView('vs_usfee_title_button_Cancel', App.Langs),
+                            bt_ok_text: langView('vs_usfee_button_Ok', App.Langs),
+                            fn_show_modal: function (data) {
+                                //this.form_rate_edit.validation_letters_edit.clear_all();
+                                if (data) {
+                                    //this.form_letters_edit.el.input_text_letter_num.val(data.num);
+                                    //this.form_letters_edit.el.input_datetime_letter_date.disable();
+                                    //this.form_letters_edit.el.input_datetime_letter_date.val(data.dt);
+                                    //this.form_letters_edit.el.datalist_letter_destination_station.val(data.destinationStation);
+                                    //this.form_letters_edit.el.input_text_letter_owner.val(data.owner);
+                                    ////this.form_letters_edit.el.textarea_lett_wagons.val(data.num);
+                                    //this.form_letters_edit.el.textarea_letter_note.val(data.note);
+                                    ////this.form_letters_edit.el.button_lett_wagons_clear;
+                                    ////this.form_letters_edit.tab_wagons.view(data.instructionalLettersWagons);
+                                    //this.data_edit_wagons_letter_form_letters_edit(data.instructionalLettersWagons, function (wagons_letter) {
+                                    //    this.wagons_letter_add = [];
+                                    //    this.wagons_letter_edit = wagons_letter;
+                                    //    this.view_table_form_letters_edit();
+                                    //    //LockScreenOff();
+                                    //}.bind(this))
+                                    ////LockScreenOff();
+                                } else {
+                                    //this.form_letters_edit.el.input_text_letter_num.val('');
+                                    //this.form_letters_edit.el.input_datetime_letter_date.enable();
+                                    //this.form_letters_edit.el.input_datetime_letter_date.val(moment());
+                                    //this.form_letters_edit.el.datalist_letter_destination_station.val(null);
+                                    //this.form_letters_edit.el.input_text_letter_owner.val('');
+                                    //this.form_letters_edit.el.textarea_letter_note.val('');
+                                    //this.form_letters_edit.el.textarea_lett_wagons.val('');
+                                    ////this.form_letters_edit.el.button_lett_wagons_clear;
+                                    //this.wagons_letter_add = [];
+                                    //this.wagons_letter_edit = [];
+                                    //this.view_table_form_letters_edit();
+                                }
+                            }.bind(this),
+                            fn_shown_modal: function (row) {
+                                //this.form_letters_edit.validation_letters_edit.clear_all();
+                                LockScreenOff();
+                            }.bind(this),
+                            fn_update: function (data) {
+
+                            }.bind(this),
+                            fn_click_ok: function (e) {
+                                e.preventDefault();
+                                this.form_rate_edit.clear_all();
+                                this.form_rate_edit.$form.submit();
+                                if (this.form_rate_edit.valid) {
+                                    // Валидация успешна
+                                    //var result = this.form_letters_edit.data;
+                                    //var data = this.form_letters_edit.tab_wagons.tab_com.data;
+                                    //if (result !== null && data !== null && data.length > 0) {
+                                    //    var wagons = [];
+                                    //    $.each(data, function (i, el) {
+                                    //        wagons.push({ id: (el.id === null ? 0 : el.id), num: el.num, status_edit: el.status_edit })
+                                    //    }.bind(this));
+                                    //    var operation = {
+                                    //        id: this.select_row && this.select_row.id ? this.select_row.id : 0,
+                                    //        num: result.input_text_letter_num,
+                                    //        dt: result.input_datetime_letter_date._i,
+                                    //        owner: result.input_text_letter_owner,
+                                    //        destination_station: result.datalist_letter_destination_station,
+                                    //        note: result.textarea_letter_note,
+                                    //        wagons: wagons,
+                                    //        //user: App.User_Name,
+                                    //    };
+                                    //    this.apply(operation);
+                                    //}
+                                    ////this.mcfd_lg.$modal_obj.modal('hide');
+                                }
+                            }.bind(this),
+                        });
                         // На проверку окончания инициализации
                         process--;
                         out_init(process);
