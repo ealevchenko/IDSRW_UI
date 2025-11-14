@@ -1019,6 +1019,58 @@
             return result;
         } else return null; // Объект не найден
     };
+    //*======= (Справочник currency) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllCurrency = function () {
+        var obj = this.api_com.getAllObj('currency');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getCurrency_Of_Id = function (id) {
+        return this.api_com.getObj_Of_field('currency', 'id', id);
+    };
+    // Получить запись по code
+    ids_directory.prototype.getCurrency_Of_Code = function (code) {
+        return this.api_com.getObj_Of_field('currency', 'code', code);
+    };
+    // Получить запись по code_cc
+    ids_directory.prototype.getCurrency_Of_CodeCC = function (code_cc) {
+        return this.api_com.getObj_Of_field('currency', 'codeCC', code_cc);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getCurrency_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('currency', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListCurrency = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('currency', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextCurrency = function () {
+        return this.getListCurrency('id', 'currency', ucFirst(App.Lang));
+    };
+    // Получить существующий 
+    ids_directory.prototype.getExistCurrency = function (id, name) {
+        var obj_db = null;
+        var result = {};
+        if (id !== null && id !== '') {
+            var obj = this.getCurrency_Of_Id(id);
+            obj_db = obj ? obj : null;
+        } else {
+            if (name && name !== '') {
+                var obj = this.getCurrency_Of_Name('currency' + ucFirst(App.Lang), name);
+                obj_db = obj && obj.length > 0 ? obj[0] : obj !== null ? obj : null;
+            } else {
+                return undefined; // Не один параметр не задан
+            }
+        }
+        if (obj_db) {
+            result.id = obj_db.id;
+            result.name = obj_db['currency' + ucFirst(App.Lang)];
+            return result;
+        } else return null; // Объект не найден
+    };
+
     App.ids_directory = ids_directory;
 
     window.App = App;
