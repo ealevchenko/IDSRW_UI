@@ -72,7 +72,26 @@
 
             'vs_usfee_title_label_code_stn_from': 'Станция (ОТПР) :',
             'vs_usfee_title_placeholder_code_stn_from': 'Станция (ОТПР)',
-            'vs_usfee_text_code_stn_from': 'Выберите станцию отправления',
+            'vs_usfee_text_code_stn_from': 'Выберите станцию отправления...',
+
+            'vs_usfee_title_label_arrival_cargo_name': 'Груз (ПРИБ) :',
+            'vs_usfee_title_placeholder_arrival_cargo_name': 'Груз (ПРИБ)',
+            'vs_usfee_text_arrival_cargo_name': 'Выберите груз прибытия...',
+
+            'vs_usfee_title_label_code_stn_on': 'Станция (ПРИБ) :',
+            'vs_usfee_title_placeholder_code_stn_on': 'Станция (ПРИБ)',
+            'vs_usfee_text_code_stn_on': 'Выберите станцию прибытия...',
+
+            'vs_usfee_title_label_outgoing_cargo_name': 'Груз (ОТПР) :',
+            'vs_usfee_title_placeholder_outgoing_cargo_name': 'Груз (ОТПР)',
+            'vs_usfee_text_outgoing_cargo_name': 'Выберите груз отправления...',
+
+            'vs_usfee_label_grace_time_value': 'Льгот время:',
+            'vs_usfee_title_placeholder_grace_time_value': 'Льгот время',
+            'vs_usfee_text_grace_time_value': 'Льгот время...',
+
+            'vs_usfee_label_end_unload': 'По окончанию выгрузки',
+            'vs_usfee_label_start_load': 'С начала погрузки',
 
             //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
             //'vs_usfee_title_button_lett_num_clear': 'Очистить',
@@ -115,19 +134,20 @@
 
             'vs_usfee_title_button_Cancel': 'Отмена',
             'vs_usfee_button_Ok': 'Применить',
-            'vs_usfee_title_form_add_rate': 'Добавить новое условие',
+            'vs_usfee_title_form_add_additional_conditions': 'Добавить новое условие...',
+            'vs_usfee_title_form_edit_additional_conditions': 'Править существующее условие...',
 
             //'vs_usfee_title_button_add_letter': 'Добавить новое письмо',
             //'vs_usfee_title_button_edit_letter': 'Привить существующее письмо',
             //'vs_usfee_title_button_delete_letter': 'Удалить письмо (вагоны в письме должны быть не закрыты!)',
 
             //'vs_usfee_title_button_delete_wagon': 'Удалить вагон из письма (ошибочно добавленный)',
-            //'vs_usfee_title_button_cancel_letter': 'Отмена вагона в письме (собственник отменил письмо)',
+            'vs_usfee_cancel_update_additional_conditions': 'Отмена операции правки дополнительного условия.',
             //'vs_usfee_title_button_clear_letter': 'Очистить статус правки вагона (отмена правки!)',
 
-            //'vs_usfee_title_form_apply_delete_letter': 'УДАЛИТЬ ПИСЬМО?',
-            //'vs_usfee_mess_run_delete_letter': 'Выполнить операцию  "УДАЛИТЬ ПИСЬМО"? Будет удаленно письмо [{0}] от {1}.',
-            //'vs_usfee_cancel_delete_letter': 'Отмена операции "УДАЛИТЬ ПИСЬМО"',
+            'vs_usfee_title_form_apply_additional_conditions': 'УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ?',
+            'vs_usfee_mess_run_delete_additional_conditions': 'Выполнить операцию "УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ"? Будет удаленно доп. условие по станция отпр.[{0}], груз приб.[{1}], станция приб.[{2}], груз отпр.[{3}], льготное время:[{4}], ставка:[{5}].',
+            'vs_usfee_cancel_delete_additional_conditions': 'Отмена операции "УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ"',
 
             'vs_usfee_load_info': 'Загружаю информацию...',
             //'vs_usfee_update_letters': 'Обновляю письма за период...',
@@ -151,14 +171,14 @@
             //'vs_usfee_mess_form_letters_edit_not_edit_wagon': 'Вагон {0} в письме закрыт {1} - правка запрещена!',
             'vs_usfee_mess_war_form_letters_edit_exist_wagon': 'Период условия платы по оператору {0} с {1} по {2} уже завершён. Выбор не доступен!',
 
-            //'vs_usfee_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
-            //'vs_usfee_mess_error_operation_run': 'При выполнении операции «ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ» произошла ошибка, код ошибки: {0}',
-            //'vs_usfee_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-            //'vs_usfee_mess_run_operation_edit_letter': 'Выполняю операцию "ПРАВКИ ИНСТРУКТИВНЫХ ПИСЕМ"',
-            //'vs_usfee_mess_run_operation_delete_letter': 'Выполняю операцию "УДАЛИТЬ ИНСТРУКТИВНОЕ ПИСЬМО"',
-            //'vs_usfee_mess_operation_add_letter_ok': 'Операция "ДОБАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
-            //'vs_usfee_mess_operation_edit_letter_ok': 'Операция "ПРАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
-            //'vs_usfee_mess_operation_delete_letter_ok': 'Операция "УДАЛИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
+            'vs_usfee_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vs_usfee_mess_error_operation_additional_conditions_run': 'При выполнении операции «ПРАВКИ ДОПОЛНИТЕЛЬНОГО УСЛОВИЯ» произошла ошибка, код ошибки: {0}',
+            'vs_usfee_mess_error_operation_delete_additional_conditions_run': 'При выполнении операции «УДАЛИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ» произошла ошибка, код ошибки: {0}',
+            'vs_usfee_mess_run_operation_additional_conditions': 'Выполняю операцию "ПРАВКИ ДОПОЛНИТЕЛЬНОГО УСЛОВИЯ"',
+            'vs_usfee_mess_run_operation_delete_additional_conditions': 'Выполняю операцию "УДАЛИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ"',
+            'vs_usfee_mess_operation_add_additional_conditions_ok': 'Операция "ДОБАВИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
+            'vs_usfee_mess_operation_edit_additional_conditions_ok': 'Операция "ПРАВИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
+            'vs_usfee_mess_operation_delete_additional_conditions_ok': 'Операция "УДАЛИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
         },
         'en':  //default language: English
         {
@@ -203,51 +223,6 @@
         this.result_init = true;
         console.log('Init view_usage_fee');
         LockScreen(langView('vs_usfee_mess_init_module', App.Langs));
-
-        // Инициализация кнопок правки доп условий
-        var init_button_edit = function (el) {
-            this.$html = $('<div></div>', {
-                id: el.id,
-                class: 'btn-group btn-group-sm me-2',
-                role: 'group'
-            });
-            var $icon_edit = $('<i class="fa-solid fa-pen-to-square"></i>');
-            var $icon_del = $('<i class="fa-solid fa-trash"></i>');
-            var $btn_edit = $('<button></button>', {
-                class: 'btn btn-warning',
-                type: 'button',
-            });
-            $btn_edit.append($icon_edit);
-            var $btn_del = $('<button></button>', {
-                class: 'btn btn-danger',
-                type: 'button',
-            });
-            $btn_del.append($icon_del);
-            this.$html.append($btn_edit).append($btn_del);
-        }
-        //<div class="input-group input-group-sm mb-3">
-        //    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
-        //    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-        //</div>
-        var init_view_field = function (id, label, value) {
-            this.$html = $('<div></div>', {
-                class: 'input-group input-group-sm mb-3'
-            });
-            var $span = $('<span></span>', {
-                class: 'input-group-text fw-bold',
-                id: id,
-                text: label
-            });
-            var $input = $('<input></input>', {
-                type: 'text',
-                class: 'form-control',
-                disabled: 'disabled',
-                'aria-describedby': id,
-                value: value
-            });
-            this.$html.append($span).append($input);
-        }
-
         // теперь выполним инициализацию
         // Определим основные свойства
         this.settings = $.extend({
@@ -260,6 +235,8 @@
             fn_close: null,                         // ? пока неработает
         }, options);
         //
+        this.id_usage_fee_period = null;
+        this.id_usage_fee_period_detali = null;
         this.list_operators_all = [];
         this.list_operators = [];
         this.list_operators_genus_all = [];
@@ -452,7 +429,7 @@
                         //this.start = moment().subtract(3, "year");
                         //this.stop = moment();
                         //this.update(this.start, this.stop, function () {
-                        this.tab_list_of_letters.view(this.list_operators);
+                        this.tab_list_of_operators.view(this.list_operators);
                         LockScreenOff();
                         if (typeof this.settings.fn_init === 'function') {
                             console.log('Close view_usage_fee');
@@ -464,6 +441,16 @@
                 // инициализациия
                 // Список операторов
                 this.list_operators_all = this.api_dir.getAllOperatorsWagons();
+
+                this.list_external_station_all = this.api_dir.getAllExternalStation();
+                this.list_external_station = this.api_dir.getListValueTextExternalStation();
+
+                this.list_cargo_all = this.api_dir.getAllCargo();
+                this.list_cargo = this.api_dir.getListValueTextCodeCargo();
+
+                this.list_currency_all = this.api_dir.getAllCurrency();
+                this.list_currency = this.api_dir.getListValueTextCurrency();
+
                 this.list_operators = this.list_operators_all.filter(function (i) {
                     return i.parentId === null;
                 }.bind(this));
@@ -476,8 +463,8 @@
 
                 //out_init(process);
                 // Таблица списка операторов
-                this.tab_list_of_letters = new TSRV('div#table-list-of-operators');
-                this.tab_list_of_letters.init({
+                this.tab_list_of_operators = new TSRV('div#table-list-of-operators');
+                this.tab_list_of_operators.init({
                     alert: this.from_way_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
@@ -488,7 +475,7 @@
                             name: 'select_all',
                             action: function () {
                                 // Выбрать только не принятые вагоны
-                                this.tab_list_of_letters.tab_com.obj_t_report.rows().select();
+                                this.tab_list_of_operators.tab_com.obj_t_report.rows().select();
                             }.bind(this)
                         },
                         { name: 'select_none', action: null },
@@ -510,7 +497,7 @@
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
-                        var rows_select = this.tab_list_of_letters.tab_com.get_select_row();
+                        var rows_select = this.tab_list_of_operators.tab_com.get_select_row();
                         this.list_operators_genus = [];
                         if (rows_select && rows_select.length > 0) {
                             if (this.list_operators_genus_all && this.list_operators_genus_all.length > 0) {
@@ -705,123 +692,126 @@
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
-                        this.$list_rate.empty();
-                        // Добавим первый элемент
-                        var $li = $('<li></li>', {
-                            class: 'list-group-item list-group-item-action list-group-item-secondary'
-                        });
-                        var $div_info = $('<div></div>', {
-                            class: 'd-flex justify-content-between'
-                        });
-                        var $h6 = $('<h6></h6>', {
-                            class: 'mb-1'
-                        });
-                        $h6.append('Добавить доп. условие...');
-                        var $btng = $('<div></div>', {
-                            class: 'btn-group btn-group-sm me-2',
-                            role: 'group'
-                        });
-                        var $icon_add = $('<i class="fa-solid fa-circle-plus"></i>');
-                        var $btn_add = $('<button></button>', {
-                            class: 'btn btn-success',
-                            type: 'button',
 
-
-
-                        });
-                        $icon_add.on("click", function (e) {
-                            this.main_alert.clear_message();
-                            this.form_rate_edit.clear_all();
-                            this.mcfd_lg.open(
-                                langView('vs_usfee_title_form_add_rate', App.Langs),
-                                [],
-                                function () {
-                                    //if (typeof callback === 'function') {
-                                    //    callback(this.select_vagons);
-                                    //}
-                                }.bind(this),
-                                function () {
-                                    //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
-                                }.bind(this));
-                        }.bind(this));
-                        $btn_add.append($icon_add);
-                        $btng.append($btn_add);
-                        $div_info.append($h6).append($btng);
-                        $li.append($div_info)
-                        this.$list_rate.append($li);
+                        //-----------------------------------
                         // Получим выбранные периоды
                         var rows_select = this.tab_list_payment_terms.tab_com.get_select_row();
                         // Пройдемся по периодам и добавим доп условия
-                        //this.list_period = [];
+                        this.id_usage_fee_period = null;
+                        this.id_usage_fee_period_detali = null;
                         if (rows_select && rows_select.length === 1) {
-                            // Получить детали
-                            this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(rows_select[0].idUsageFeePeriod, function (data_detali) {
-                                if (data_detali && data_detali.length > 0) {
+                            this.update_additional_conditions(rows_select[0].idUsageFeePeriod, function () {
+                                LockScreenOff();
+                            }.bind(this))
+                            //this.id_usage_fee_period = rows_select[0].idUsageFeePeriod;
+                            //this.$list_rate.empty();
+                            //// Добавим первый элемент (Добавить условие)
+                            //var $li = $('<li></li>', {
+                            //    class: 'list-group-item list-group-item-action list-group-item-secondary'
+                            //});
+                            //var $div_info = $('<div></div>', {
+                            //    class: 'd-flex justify-content-between'
+                            //});
+                            //var $h6 = $('<h6></h6>', {
+                            //    class: 'mb-1'
+                            //});
+                            //$h6.append('Добавить доп. условие...');
+                            //var $btng = $('<div></div>', {
+                            //    class: 'btn-group btn-group-sm me-2',
+                            //    role: 'group'
+                            //});
+                            //var $icon_add = $('<i class="fa-solid fa-circle-plus"></i>');
+                            //var $btn_add = $('<button></button>', {
+                            //    class: 'btn btn-success',
+                            //    type: 'button',
+                            //});
+                            //$btn_add.on("click", function (e) {
+                            //    //Дбавить условие
+                            //    this.view_form_rate_edit(null);
+                            //}.bind(this));
+                            //$btn_add.append($icon_add);
+                            //$btng.append($btn_add);
+                            //$div_info.append($h6).append($btng);
+                            //$li.append($div_info)
+                            //this.$list_rate.append($li);
+                            ////--------------------------------
+                            //// Получить детали
+                            //this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(rows_select[0].idUsageFeePeriod, function (data_detali) {
+                            //    if (data_detali && data_detali.length > 0) {
+                            //        //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            //        //    <div class="d-flex w-100 justify-content-between">
+                            //        //        <h5 class="mb-1">List group item heading</h5>
+                            //        //        <small>3 days ago</small>
+                            //        //    </div>
+                            //        //    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            //        //    <small>And some small print.</small>
+                            //        //</a>
 
-                                    //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                                    //    <div class="d-flex w-100 justify-content-between">
-                                    //        <h5 class="mb-1">List group item heading</h5>
-                                    //        <small>3 days ago</small>
-                                    //    </div>
-                                    //    <p class="mb-1">Some placeholder content in a paragraph.</p>
-                                    //    <small>And some small print.</small>
-                                    //</a>
-
-                                    $.each(data_detali, function (i, el) {
-                                        // Добавить полученные элементы
-                                        var $li = $('<li></li>', {
-                                            class: 'list-group-item list-group-item-action border-top border-success'
-                                        });
-                                        var $div_info = $('<div></div>', {
-                                            class: 'd-flex justify-content-between'
-                                        });
-                                        var $h6 = $('<h6></h6>', {
-                                            class: 'mb-1'
-                                        });
-                                        if (el.codeStnFrom !== null && el.codeStnTo === null) {
-                                            $h6.append('По прибытию...');
-                                        } else if (el.codeStnFrom === null && el.codeStnTo !== null) {
-                                            $h6.append('По отправке...');
-                                        } else {
-                                            if (el.idCargoArrival !== null && el.idCargoOutgoing === null) {
-                                                $h6.append('По прибытию груза...');
-                                            } else if (el.idCargoArrival === null && el.idCargoOutgoing !== null) {
-                                                $h6.append('По отправке груза...');
-                                            } else { $h6.append('...'); }
-
-                                        }
-                                        // Кнопки управления
-                                        var btng = new init_button_edit(el);
-                                        $div_info.append($h6).append(btng.$html);
-                                        $li.append($div_info);
-                                        if (el.codeStnFrom !== null) {
-                                            $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
-                                        }
-                                        if (el.idCargoArrival !== null) {
-                                            $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
-                                        }
-                                        if (el.codeStnTo !== null) {
-                                            $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
-                                        }
-                                        if (el.idCargoOutgoing !== null) {
-                                            $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
-                                        }
-                                        if (el.graceTime !== null) {
-                                            $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
-                                        }
-                                        if (el.rate !== null) {
-                                            //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
-                                        }
-                                        this.$list_rate.append($li);
-                                    }.bind(this));
-                                } else {
-                                }
-                            }.bind(this));
+                            //        $.each(data_detali, function (i, el) {
+                            //            // Добавить полученные элементы
+                            //            var $li = $('<li></li>', {
+                            //                class: 'list-group-item list-group-item-action border-top border-success'
+                            //            });
+                            //            var $div_info = $('<div></div>', {
+                            //                class: 'd-flex justify-content-between'
+                            //            });
+                            //            var $h6 = $('<h6></h6>', {
+                            //                class: 'mb-1'
+                            //            });
+                            //            if (el.codeStnFrom !== null && el.codeStnTo === null) {
+                            //                $h6.append('По прибытию...');
+                            //            } else if (el.codeStnFrom === null && el.codeStnTo !== null) {
+                            //                $h6.append('По отправке...');
+                            //            } else {
+                            //                if (el.idCargoArrival !== null && el.idCargoOutgoing === null) {
+                            //                    $h6.append('По прибытию груза...');
+                            //                } else if (el.idCargoArrival === null && el.idCargoOutgoing !== null) {
+                            //                    $h6.append('По отправке груза...');
+                            //                } else { $h6.append('...'); }
+                            //            }
+                            //            // Кнопки управления
+                            //            var btng = new init_button_edit(el, function (e) {
+                            //                //Дбавить условие
+                            //                this.view_form_rate_edit(el);
+                            //            }.bind(this), function (e) {
+                            //                //Дбавить условие
+                            //                this.view_form_rate_delete(el);
+                            //            }.bind(this));
+                            //            $div_info.append($h6).append(btng.$html);
+                            //            $li.append($div_info);
+                            //            if (el.arrivalEndUnload !== null) {
+                            //                $li.append(new init_view_field('arrivalEndUnload', 'По оканчанию выгрузки:', el.arrivalEndUnload ? 'Да' : '').$html);
+                            //            }
+                            //            if (el.codeStnFrom !== null) {
+                            //                $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
+                            //            }
+                            //            if (el.idCargoArrival !== null) {
+                            //                $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
+                            //            }
+                            //            if (el.outgoingStartLoad !== null) {
+                            //                $li.append(new init_view_field('outgoingStartLoad', 'По оканчанию выгрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
+                            //            }
+                            //            if (el.codeStnTo !== null) {
+                            //                $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
+                            //            }
+                            //            if (el.idCargoOutgoing !== null) {
+                            //                $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
+                            //            }
+                            //            if (el.graceTime !== null) {
+                            //                $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
+                            //            }
+                            //            if (el.rate !== null) {
+                            //                //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
+                            //            }
+                            //            this.$list_rate.append($li);
+                            //        }.bind(this));
+                            //    } else {
+                            //    }
+                            //}.bind(this));
                         } else {
-
+                            this.$list_rate.empty();
+                            LockScreenOff();
                         }
-
-                        LockScreenOff();
                     }.bind(this),
                     fn_select_link: function (link) { }.bind(this),
                     fn_button_action: function (name, e, dt, node, config) {
@@ -1348,7 +1338,7 @@
                     obj: 'bs_div',
                     options: {
                         id: 'list-rate',
-                        class: 'mt-2',
+                        class: 'mt-2 usage_fee_deteli',
                         style: null,
                     },
                     childs: []
@@ -1447,7 +1437,7 @@
                         element_value: null,
                         element_title: null,
                         element_placeholder: langView('vs_usfee_title_placeholder_code_stn_from', App.Langs),
-                        element_required: true,
+                        element_required: false,
                         element_maxlength: null,
                         element_pattern: null,
                         element_readonly: false,
@@ -1459,11 +1449,11 @@
                             minLength: 1,
                             searchContain: true,
                             fn_change: function (event, set, options) {
-                                // Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
-                                if (set.value !== '') {
-                                    this.form_letters_edit.clear_all();
-                                    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
-                                }
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                //if (set.value !== '') {
+                                //    this.form_letters_edit.clear_all();
+                                //    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
+                                //}
                             }.bind(this),
                             fn_select: function (event, set, options) {
 
@@ -1474,15 +1464,350 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 6,
+                        col_size: 3,
                         col_class: 'mt-0',
                         //form_text: langView('vs_usfee_text_code_stn_from', App.Langs),
                         //form_text_class: null,
                     },
                     childs: []
                 };
+                var form_input_datalist_arrival_cargo_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'id_cargo_arrival',
+                        name: 'id_cargo_arrival',
+                        label: langView('vs_usfee_title_label_arrival_cargo_name', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_arrival_cargo_name', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_cargo,
+                            out_value: false,
+                            out_group: true,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                //if (set.value !== '') {
+                                //    this.form_letters_edit.clear_all();
+                                //    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
+                                //}
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 5,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_arrival_cargo_name', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_check_end_unload = {
+                    obj: 'bs_form_check',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'end_unload',
+                        name: 'end_unload',
+                        label: langView('vs_usfee_label_end_unload', App.Langs),
+                        element_type: 'checkbox',
+                        element_switch: true,
+                        element_inline: false,
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_checked: true,
+                        element_required: false,
+                        element_readonly: false,
+                        element_options: {
+                            default: false,
+                            fn_change: function (e) {
+
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col: 'col-md-12 mt-0',
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_datalist_on_station_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'code_stn_on',
+                        name: 'code_stn_on',
+                        label: langView('vs_usfee_title_label_code_stn_on', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_code_stn_on', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_external_station,
+                            out_value: true,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                //if (set.value !== '') {
+                                //    this.form_letters_edit.clear_all();
+                                //    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
+                                //}
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 3,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_code_stn_on', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_datalist_outgoing_cargo_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'id_cargo_outgoing',
+                        name: 'id_cargo_outgoing',
+                        label: langView('vs_usfee_title_label_outgoing_cargo_name', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_outgoing_cargo_name', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_cargo,
+                            out_value: false,
+                            out_group: true,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                //if (set.value !== '') {
+                                //    this.form_letters_edit.clear_all();
+                                //    var valid = this.validation_letter_destination_station(set.value, 'letter_destination_station', true, false);
+                                //}
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 5,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_outgoing_cargo_name', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_check_start_load = {
+                    obj: 'bs_form_check',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'start_load',
+                        name: 'start_load',
+                        label: langView('vs_usfee_label_start_load', App.Langs),
+                        element_type: 'checkbox',
+                        element_switch: true,
+                        element_inline: false,
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_checked: true,
+                        element_required: false,
+                        element_readonly: false,
+                        element_options: {
+                            default: false,
+                            fn_change: function (e) {
+
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col: 'col-md-12 mt-0',
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_grace_time_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'grace_time_value',
+                        name: 'grace_time_value',
+                        label: langView('vs_usfee_label_grace_time_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_grace_time_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_grace_time_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_select_add_rate_currency = {
+                    obj: 'bs_form_select',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'rate_currency',
+                        name: 'rate_currency',
+                        label: langView('vs_usfee_label_rate_currency', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_multiple: false,
+                        element_title: null,
+                        element_required: false,
+                        element_readonly: false,
+                        element_size: null,
+                        element_options: {
+                            data: this.list_currency,
+                            default: -1,
+                            fn_change: function (e) {
+                                e.preventDefault();
+                            }.bind(this),
+                            fn_check: function (text) {
+
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_rate_currency', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_add_rate_value = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'rate_value',
+                        name: 'rate_value',
+                        label: langView('vs_usfee_label_rate_value', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_rate_value', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 100000000.0,
+                        element_step: 0.01,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var value = $(e.currentTarget).val();
+                                //this.validation_tariff_contract(value, 'tariff_contract', false, true);
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: [bt_apply_tariff_contract],
+                        //form_text: langView('vs_usfee_text_rate_value', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
 
                 row_form.childs.push(form_input_datalist_from_station_name);
+                row_form.childs.push(form_input_datalist_arrival_cargo_name);
+                row_form.childs.push(form_check_end_unload);
+                row_form.childs.push(form_input_datalist_on_station_name);
+                row_form.childs.push(form_input_datalist_outgoing_cargo_name);
+                row_form.childs.push(form_check_start_load);
+                row_form.childs.push(form_input_grace_time_value);
+                row_form.childs.push(form_select_add_rate_currency);
+                row_form.childs.push(form_input_add_rate_value);
                 objs_rate_edit.push(row_form);
 
                 this.form_rate_edit.init({
@@ -1508,44 +1833,39 @@
                             hidden: true,
                             centered: true,
                             form_dialog: this.form_rate_edit,
-                            fsize: 'xl',
+                            fsize: 'lg',
                             bt_close_text: langView('vs_usfee_title_button_Cancel', App.Langs),
                             bt_ok_text: langView('vs_usfee_button_Ok', App.Langs),
                             fn_show_modal: function (data) {
-                                //this.form_rate_edit.validation_letters_edit.clear_all();
+                                this.form_rate_edit.validation_rate_edit.clear_all();
                                 if (data) {
-                                    //this.form_letters_edit.el.input_text_letter_num.val(data.num);
-                                    //this.form_letters_edit.el.input_datetime_letter_date.disable();
-                                    //this.form_letters_edit.el.input_datetime_letter_date.val(data.dt);
-                                    //this.form_letters_edit.el.datalist_letter_destination_station.val(data.destinationStation);
-                                    //this.form_letters_edit.el.input_text_letter_owner.val(data.owner);
-                                    ////this.form_letters_edit.el.textarea_lett_wagons.val(data.num);
-                                    //this.form_letters_edit.el.textarea_letter_note.val(data.note);
-                                    ////this.form_letters_edit.el.button_lett_wagons_clear;
-                                    ////this.form_letters_edit.tab_wagons.view(data.instructionalLettersWagons);
-                                    //this.data_edit_wagons_letter_form_letters_edit(data.instructionalLettersWagons, function (wagons_letter) {
-                                    //    this.wagons_letter_add = [];
-                                    //    this.wagons_letter_edit = wagons_letter;
-                                    //    this.view_table_form_letters_edit();
-                                    //    //LockScreenOff();
-                                    //}.bind(this))
-                                    ////LockScreenOff();
+                                    // Правим
+                                    this.id_usage_fee_period_detali = data.id;
+                                    this.form_rate_edit.el.datalist_code_stn_from.val(data.codeStnFrom);
+                                    this.form_rate_edit.el.datalist_code_stn_on.val(data.codeStnTo);
+                                    this.form_rate_edit.el.datalist_id_cargo_arrival.val(data.idCargoArrival);
+                                    this.form_rate_edit.el.datalist_id_cargo_outgoing.val(data.idCargoOutgoing);
+                                    this.form_rate_edit.el.input_checkbox_end_unload.val(data.arrivalEndUnload);
+                                    this.form_rate_edit.el.input_checkbox_start_load.val(data.outgoingStartLoad);
+                                    this.form_rate_edit.el.input_text_grace_time_value.val(data.graceTime);
+                                    this.form_rate_edit.el.input_text_rate_value.val(data.rate);
+                                    this.form_rate_edit.el.select_rate_currency.val(data.idCurrency);
                                 } else {
-                                    //this.form_letters_edit.el.input_text_letter_num.val('');
-                                    //this.form_letters_edit.el.input_datetime_letter_date.enable();
-                                    //this.form_letters_edit.el.input_datetime_letter_date.val(moment());
-                                    //this.form_letters_edit.el.datalist_letter_destination_station.val(null);
-                                    //this.form_letters_edit.el.input_text_letter_owner.val('');
-                                    //this.form_letters_edit.el.textarea_letter_note.val('');
-                                    //this.form_letters_edit.el.textarea_lett_wagons.val('');
-                                    ////this.form_letters_edit.el.button_lett_wagons_clear;
-                                    //this.wagons_letter_add = [];
-                                    //this.wagons_letter_edit = [];
-                                    //this.view_table_form_letters_edit();
+                                    // Добавляем
+                                    this.id_usage_fee_period_detali = 0;
+                                    this.form_rate_edit.el.datalist_code_stn_from.val('');
+                                    this.form_rate_edit.el.datalist_code_stn_on.val('');
+                                    this.form_rate_edit.el.datalist_id_cargo_arrival.val('');
+                                    this.form_rate_edit.el.datalist_id_cargo_outgoing.val('');
+                                    this.form_rate_edit.el.input_checkbox_end_unload.val(false);
+                                    this.form_rate_edit.el.input_checkbox_start_load.val(false);
+                                    this.form_rate_edit.el.input_text_grace_time_value.val('');
+                                    this.form_rate_edit.el.input_text_rate_value.val('');
+                                    this.form_rate_edit.el.select_rate_currency.val(-1);
                                 }
                             }.bind(this),
                             fn_shown_modal: function (row) {
-                                //this.form_letters_edit.validation_letters_edit.clear_all();
+                                this.form_rate_edit.validation_rate_edit.clear_all();
                                 LockScreenOff();
                             }.bind(this),
                             fn_update: function (data) {
@@ -1557,26 +1877,25 @@
                                 this.form_rate_edit.$form.submit();
                                 if (this.form_rate_edit.valid) {
                                     // Валидация успешна
-                                    //var result = this.form_letters_edit.data;
-                                    //var data = this.form_letters_edit.tab_wagons.tab_com.data;
-                                    //if (result !== null && data !== null && data.length > 0) {
-                                    //    var wagons = [];
-                                    //    $.each(data, function (i, el) {
-                                    //        wagons.push({ id: (el.id === null ? 0 : el.id), num: el.num, status_edit: el.status_edit })
-                                    //    }.bind(this));
-                                    //    var operation = {
-                                    //        id: this.select_row && this.select_row.id ? this.select_row.id : 0,
-                                    //        num: result.input_text_letter_num,
-                                    //        dt: result.input_datetime_letter_date._i,
-                                    //        owner: result.input_text_letter_owner,
-                                    //        destination_station: result.datalist_letter_destination_station,
-                                    //        note: result.textarea_letter_note,
-                                    //        wagons: wagons,
-                                    //        //user: App.User_Name,
-                                    //    };
-                                    //    this.apply(operation);
-                                    //}
-                                    ////this.mcfd_lg.$modal_obj.modal('hide');
+                                    var result = this.form_rate_edit.data;
+                                    if (result !== null && this.id_usage_fee_period !== null) {
+                                        var operation = {
+                                            id: this.id_usage_fee_period_detali,
+                                            id_usage_fee_period: this.id_usage_fee_period,
+                                            code_stn_from: result.datalist_code_stn_from,
+                                            id_cargo_arrival: result.datalist_id_cargo_arrival,
+                                            code_stn_to: result.datalist_code_stn_on,
+                                            id_cargo_outgoing: result.datalist_id_cargo_outgoing,
+                                            grace_time: result.input_text_grace_time_value,
+                                            id_currency: result.select_rate_currency,
+                                            rate: result.input_text_rate_value,
+                                            arrival_end_unload: result.input_checkbox_end_unload,
+                                            outgoing_start_load: result.input_checkbox_start_load,
+                                            //user: App.User_Name,
+                                        };
+                                        this.apply_additional_conditions(operation);
+                                    }
+                                    //this.mcfd_lg.$modal_obj.modal('hide');
                                 }
                             }.bind(this),
                         });
@@ -1599,459 +1918,276 @@
         }.bind(this)); //------- {end this.load_db}
     };
     //------------------------------------------------------------------------
-    //
-    view_usage_fee.prototype.update = function (start, stop, callback) {
+    view_usage_fee.prototype.update_additional_conditions = function (id_usage_fee_period, callback) {
+
+        // Инициализация кнопок правки доп условий
+        var init_button_edit = function (el, on_edit, on_del) {
+            this.$html = $('<div></div>', {
+                id: el.id,
+                class: 'btn-group btn-group-sm me-2',
+                role: 'group'
+            });
+            var $icon_edit = $('<i class="fa-solid fa-pen-to-square"></i>');
+            var $icon_del = $('<i class="fa-solid fa-trash"></i>');
+            var $btn_edit = $('<button></button>', {
+                id: 'edit-' + el.id,
+                class: 'btn btn-warning',
+                type: 'button',
+            });
+            if (typeof on_edit === 'function') {
+                $btn_edit.on("click", on_edit);
+            }
+            $btn_edit.append($icon_edit);
+            var $btn_del = $('<button></button>', {
+                class: 'btn btn-danger',
+                type: 'button',
+            });
+            if (typeof on_del === 'function') {
+                $btn_del.on("click", on_del);
+            }
+            $btn_del.append($icon_del);
+            this.$html.append($btn_edit).append($btn_del);
+        }
+        //<div class="input-group input-group-sm mb-3">
+        //    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+        //    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        //</div>
+        var init_view_field = function (id, label, value) {
+            this.$html = $('<div></div>', {
+                class: 'input-group input-group-sm mb-1'
+            });
+            var $span = $('<span></span>', {
+                class: 'input-group-text fw-bold',
+                id: id,
+                text: label
+            });
+            var $input = $('<input></input>', {
+                type: 'text',
+                class: 'form-control',
+                disabled: 'disabled',
+                'aria-describedby': id,
+                value: value
+            });
+            this.$html.append($span).append($input);
+        }
+
         // Обновим
         this.clear_all();
-        this.list_letters = [];
-        this.select_letters = [];
-        //this.form_verification_invoices_setup.el.input_text_presented1.val('');
-        //this.form_verification_invoices_setup.el.input_text_presented2.val('');
-        //this.form_verification_invoices_setup.el.input_text_presented3.val('');
-        //this.form_searsh_letters.el.textarea_documents_searsh.val('');
-        //this.form_searsh_letters.el.select_code_payer.val('');
-        //this.form_searsh_letters.el.datalist_acts.val('');
-        //this.form_searsh_letters.el.select_id_cargo.val('');
-        //this.form_searsh_letters.el.select_id_station_from.val('');
-        //this.form_searsh_letters.el.select_id_station_on.val('');
-        //this.form_searsh_letters.el.select_id_operator.val('');
-        //this.code_payer = -1;
-        //this.act = -1;
-        //this.id_cargo = -1;
-        //this.code_station_from = -1;
-        //this.code_station_on = -1;
-        //this.id_operator = -1;
-        //this.list_acts = [];
 
-        var sel_start = moment(start).format("YYYY-MM-DDTHH:mm");
-        var sel_stop = moment(stop).format("YYYY-MM-DDTHH:mm");
-        LockScreen(langView('vs_usfee_update_letters', App.Langs));
-        this.main_alert.clear_message();
-        this.info_alert.clear_message();
-        this.api_wsd.getViewInstructionalLettersOfPeriod(sel_start, sel_stop, function (letters) {
-            if (letters !== null && letters.length > 0) {
-                this.list_letters = letters;
-                this.select_letters = letters;
-                this.select_apply(this.list_letters, function (select_letters) {
-                    this.view_select(select_letters);
-                    this.info_alert.out_info_message(langView('vs_usfee_mess_info_select_letters', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_letters.length, select_letters.length));
+        this.id_usage_fee_period = id_usage_fee_period;
+        this.$list_rate.empty();
+        // Добавим первый элемент (Добавить условие)
+        var $li = $('<li></li>', {
+            class: 'list-group-item list-group-item-action list-group-item-secondary'
+        });
+        var $div_info = $('<div></div>', {
+            class: 'd-flex justify-content-between'
+        });
+        var $h6 = $('<h6></h6>', {
+            class: 'mb-1'
+        });
+        $h6.append('Добавить доп. условие...');
+        var $btng = $('<div></div>', {
+            class: 'btn-group btn-group-sm me-2',
+            role: 'group'
+        });
+        var $icon_add = $('<i class="fa-solid fa-circle-plus"></i>');
+        var $btn_add = $('<button></button>', {
+            class: 'btn btn-success',
+            type: 'button',
+        });
+        $btn_add.on("click", function (e) {
+            //Дбавить условие
+            this.view_form_rate_edit(null);
+        }.bind(this));
+        $btn_add.append($icon_add);
+        $btng.append($btn_add);
+        $div_info.append($h6).append($btng);
+        $li.append($div_info)
+        this.$list_rate.append($li);
+        //--------------------------------
+        // Получить детали
+        this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(id_usage_fee_period, function (data_detali) {
+            if (data_detali && data_detali.length > 0) {
+                //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                //    <div class="d-flex w-100 justify-content-between">
+                //        <h5 class="mb-1">List group item heading</h5>
+                //        <small>3 days ago</small>
+                //    </div>
+                //    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                //    <small>And some small print.</small>
+                //</a>
+
+                $.each(data_detali, function (i, el) {
+                    // Добавить полученные элементы
+                    var $li = $('<li></li>', {
+                        class: 'list-group-item list-group-item-action border-top border-success'
+                    });
+                    var $div_info = $('<div></div>', {
+                        class: 'd-flex justify-content-between'
+                    });
+                    var $h6 = $('<h6></h6>', {
+                        class: 'mb-1'
+                    });
+                    if (el.codeStnFrom !== null && el.codeStnTo === null) {
+                        $h6.append('По прибытию...');
+                    } else if (el.codeStnFrom === null && el.codeStnTo !== null) {
+                        $h6.append('По отправке...');
+                    } else {
+                        if (el.idCargoArrival !== null && el.idCargoOutgoing === null) {
+                            $h6.append('По прибытию груза...');
+                        } else if (el.idCargoArrival === null && el.idCargoOutgoing !== null) {
+                            $h6.append('По отправке груза...');
+                        } else { $h6.append('...'); }
+                    }
+                    // Кнопки управления
+                    var btng = new init_button_edit(el, function (e) {
+                        //Дбавить условие
+                        this.view_form_rate_edit(el);
+                    }.bind(this), function (e) {
+                        //Дбавить условие
+                        this.view_form_rate_delete(el);
+                    }.bind(this));
+                    $div_info.append($h6).append(btng.$html);
+                    $li.append($div_info);
+                    if (el.arrivalEndUnload === true) {
+                        $li.append(new init_view_field('arrivalEndUnload', 'По оканчанию выгрузки:', el.arrivalEndUnload ? 'Да' : '').$html);
+                    }
+                    if (el.codeStnFrom !== null) {
+                        $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.idCargoArrival !== null) {
+                        $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.outgoingStartLoad === true) {
+                        $li.append(new init_view_field('outgoingStartLoad', 'По оканчанию выгрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
+                    }
+                    if (el.codeStnTo !== null) {
+                        $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.idCargoOutgoing !== null) {
+                        $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.graceTime !== null) {
+                        $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
+                    }
+                    if (el.rate !== null) {
+                        //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
+                    }
+                    this.$list_rate.append($li);
                 }.bind(this));
             } else {
-                this.tab_list_of_letters.view([]);
-                this.info_alert.out_info_message(langView('vs_usfee_mess_info_searsh_letters', App.Langs).format(moment(start).format("YYYY-MM-DD HH:mm"), moment(stop).format("YYYY-MM-DD HH:mm"), this.list_letters.length));
             }
-            LockScreenOff();
             if (typeof callback === 'function') {
                 callback();
             }
         }.bind(this));
     };
-    // Применить выбор
-    view_usage_fee.prototype.select_apply = function (list_letters, callback) {
-        // Обнулим списки
-        LockScreen(langView('vs_usfee_select_letters', App.Langs));
-        //this.clear_all();
-        this.main_alert.clear_message();
-        this.info_alert.clear_message();
-
-        if (list_letters && list_letters.length > 0) {
-            this.select_letters = list_letters;
-
-            var create_new = this.form_letters_setup.el.input_checkbox_create_new.val();
-            var in_progress = this.form_letters_setup.el.input_checkbox_in_progress.val();
-            var done = this.form_letters_setup.el.input_checkbox_done.val();
-            var replacement = this.form_letters_setup.el.input_checkbox_replacement.val();
-            var canceled = this.form_letters_setup.el.input_checkbox_canceled.val();
-            var deleted = this.form_letters_setup.el.input_checkbox_deleted.val();
-
-            //if (create_new) {
-            this.select_letters = this.select_letters.filter(function (i) {
-                var close = i.instructionalLettersWagons.filter(function (o) { return o.close !== null }.bind(this));
-                var duration = moment.duration(moment().diff(moment(i.dt)));
-                var days = duration.asDays();
-                if (done && close && close.length === i.instructionalLettersWagons.length) {
-                    return true;
-                }
-                var gr = i.instructionalLettersWagons.find(function (o) {
-                    return (create_new && o.status === 0 && o.close === null) ||
-                        (in_progress && o.status === 1 && o.close === null) ||
-                        (replacement && o.status === 3 || (o.status < 2 && o.close !== null)) ||
-                        (canceled && o.status === 4) ||
-                        (deleted && o.status === 0 && days >= 30) ||
-                        o.status === null;
-                }.bind(this));
-                return gr !== undefined;
-            }.bind(this));
-            //}
-
-            // Выборка из списка документов
-            var el_tln = this.form_letters_setup.el.textarea_lett_num;//.$element;
-            this.list_docs = this.form_letters_setup.validation_common_lett.check_control_is_valid_docs_string(el_tln, true, false, true);
-            if (this.list_docs) {
-                this.select_letters = this.select_letters.filter(function (i) {
-                    return this.list_docs.indexOf(i.num) >= 0;
-                }.bind(this));
-            };
-            // Выборка из списка номеров вагонов
-            var el_tlw = this.form_letters_setup.el.textarea_lett_wagon;//.$element;
-            this.list_wagons = this.form_letters_setup.validation_common_lett.check_control_is_valid_nums(el_tlw, false, true, true);
-            if (this.list_wagons) {
-                this.select_letters = this.select_letters.filter(function (i) {
-                    var gr = i.instructionalLettersWagons.find(function (o) {
-                        return this.list_wagons.indexOf(o.num) >= 0;
-                    }.bind(this));
-                    return gr !== undefined;
-                }.bind(this));
-            };
-            //this.info_alert.out_info_message(langView('vs_usfee_mess_info_select_letters', App.Langs).format(moment(this.start).format("YYYY-MM-DD HH:mm"), moment(this.stop).format("YYYY-MM-DD HH:mm"), list_letters.length, this.select_letters.length));
-
-        } else {
-            this.select_letters = [];
-            //this.info_alert.out_info_message(langView('vs_usfee_mess_info_init', App.Langs));
-        }
-        // Событие обновили данные
-        if (typeof callback === 'function') {
-            callback(this.select_letters);
-        }
-    };
-    // Применить выбор
-    view_usage_fee.prototype.view_select = function (select) {
-        this.tab_list_of_letters.view(select);
-        //if (select && select.length > 0) {
-
-        //}
-    };
     //-----------------------------------------------------------------------------
-    // Форма правки письма, показать форму
-    view_usage_fee.prototype.view_form_letters_edit = function (row) {
-        //this.form_letters_edit.validation_letters_edit.clear_all();
+    // Форма правки доп. условий, показать форму
+    view_usage_fee.prototype.view_form_rate_edit = function (row) {
         this.main_alert.clear_message();
-        this.form_letters_edit.clear_all();
+        this.form_rate_edit.clear_all();
         this.mcfd_lg.open(
-            row ? langView('vs_usfee_title_form_edit', App.Langs) : langView('vs_usfee_title_form_add', App.Langs),
+            row ? langView('vs_usfee_title_form_edit_additional_conditions', App.Langs) : langView('vs_usfee_title_form_add_additional_conditions', App.Langs),
             row,
             function () {
-                if (typeof callback === 'function') {
-                    callback(this.select_vagons);
-                }
+                //if (typeof callback === 'function') {
+                //    callback(this.select_vagons);
+                //}
             }.bind(this),
             function () {
-                //this.main_alert.out_warning_message(langView('vs_via_cancel_update_presented', App.Langs));
+                this.main_alert.out_warning_message(langView('vs_usfee_cancel_update_additional_conditions', App.Langs));
             }.bind(this));
     };
     // Форма правки письма, показать форму
-    view_usage_fee.prototype.view_form_letters_delete = function (row) {
+    view_usage_fee.prototype.view_form_rate_delete = function (row) {
         this.main_alert.clear_message();
-        //this.form_letters_edit.clear_all();
-        var mess = langView('vs_usfee_mess_run_delete_letter', App.Langs).format(row.num, moment(row.dt).format(format_date));
+        var mess = langView('vs_usfee_mess_run_delete_additional_conditions', App.Langs).format(
+            row['fromStationName' + ucFirst(App.Lang)] ? row['fromStationName' + ucFirst(App.Lang)] : '',
+            row['arrivalCargoName' + ucFirst(App.Lang)] ? row['arrivalCargoName' + ucFirst(App.Lang)] : '',
+            row['toStationName' + ucFirst(App.Lang)] ? row['toStationName' + ucFirst(App.Lang)] : '',
+            row['outgoingCargoName' + ucFirst(App.Lang)] ? row['outgoingCargoName' + ucFirst(App.Lang)] : '',
+            row.graceTime ? row.graceTime : '', row.rate ? row.rate : '', row.currencyCodeCc ? row.currencyCodeCc : '');
 
         this.mcf_lg.open(
-            langView('vs_usfee_title_form_apply_delete_letter', App.Langs),
+            langView('vs_usfee_title_form_apply_additional_conditions', App.Langs),
             mess,
             function () {
                 //
-                this.apply_delete(row.id, function () {
+                this.apply_additional_conditions_delete(row.id, function () {
 
                 }.bind(this));
             }.bind(this),
             function () {
-                this.main_alert.out_warning_message(langView('vs_usfee_cancel_delete_letter', App.Langs));
+                this.main_alert.out_warning_message(langView('vs_usfee_cancel_delete_additional_conditions', App.Langs));
             }.bind(this));
     };
-    // Форма правки письма, добавить вагон в список с поиском в системе 
-    view_usage_fee.prototype.add_wagons_letter_form_letters_edit = function (callback) {
-        // Выборка из списка номеров вагонов
-        this.form_letters_edit.validation_letters_edit.clear_all();
-        LockScreen(langView('vs_usfee_mess_shearch_wagon', App.Langs));
-        // Получим список вагонов для добавления и сделаем проверку
-        var el_tlw = this.form_letters_edit.el.textarea_lett_wagons;//.$element;
-        this.list_wagons = this.form_letters_edit.validation_letters_edit.check_control_is_valid_nums(el_tlw, true, false, true);
-        // Проверим на существующие вагоны
-        var valid = true;
-        if (this.list_wagons && this.list_wagons.length > 0 && this.wagons_letter && this.wagons_letter.length > 0) {
-            $.each(this.wagons_letter, function (i, el) {
-                var index = this.list_wagons.indexOf(el.num);
-                if (index >= 0) {
-                    // ошибка вагон уже существует
-                    this.form_letters_edit.validation_letters_edit.out_warning_message(langView('vs_usfee_mess_war_form_letters_edit_exist_wagon', App.Langs).format(el.num));
-                    valid = false;
-                } else {
-                    // Добавим вагон в список если этот вагон был добавлен ранее
-                    if (el.id === null) { this.list_wagons.push(el.num); }
-                };
-            }.bind(this));
-        }
-        // Проходим далее на добавление вагонов
-        if (this.list_wagons && valid) {
-            //Получим дату письма
-            var dt_lett = this.form_letters_edit.el.input_datetime_letter_date.val();
-            var option = {
-                nums: this.list_wagons,
-                date_lett: moment(dt_lett).format("YYYY-MM-DD"),
-            }
-            this.api_wsd.postStatusInstructionalLettersWagons(option, function (status_wagon_lett) {
-                if ((status_wagon_lett !== null && status_wagon_lett.length > 0) || (this.select_row !== null && this.select_row.instructionalLettersWagons !== null && this.select_row.instructionalLettersWagons.length > 0)) {
-                    this.data_add_wagons_letter_form_letters_edit(status_wagon_lett, function (wagons_letter) {
-                        this.wagons_letter_add = wagons_letter;
-                        this.view_table_form_letters_edit();
-                        this.form_letters_edit.el.textarea_lett_wagons.val('');
-                    }.bind(this))
-                } else {
-                    this.wagons_letter_add = [];
-                    this.view_table_form_letters_edit();
-                    this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_usfee_mess_form_letters_edit_not_status_wagons', App.Langs));
-                }
-                LockScreenOff();
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }.bind(this));
-        } else {
-            // Событие обновили данные
-            LockScreenOff();
-            if (typeof callback === 'function') {
-                callback();
-            }
-        };
-
-    };
-    // Преобразовать информацию по вагонам (режим добавления)
-    view_usage_fee.prototype.data_add_wagons_letter_form_letters_edit = function (data, callback) {
-        var wagons_letter_add = [];
-        // Пройдемся по статусам добавленных вагонов
-        var not_close_letter_wagon_id = null;
-        var not_close_letter_wagon_status = null;
-        var not_close_letter_id = null;
-        var not_close_letter_num = null;
-        var not_close_letter_dt = null;
-        var note_offer = "";
-
-        if (data && data.length > 0) {
-            $.each(data, function (i, el) {
-                //
-                not_close_letter_wagon_id = null;
-                not_close_letter_wagon_status = null;
-                not_close_letter_id = null;
-                not_close_letter_num = null;
-                not_close_letter_dt = null;
-                note_offer = "";
-
-                if (el.not_close) {
-                    not_close_letter_wagon_id = el.not_close.id;
-                    not_close_letter_wagon_status = el.not_close.status;
-                    not_close_letter_id = el.not_close.idInstructionalLetters;
-                    if (el.not_close.idInstructionalLettersNavigation !== null) {
-                        not_close_letter_num = el.not_close.idInstructionalLettersNavigation.num;
-                        not_close_letter_dt = el.not_close.idInstructionalLettersNavigation.dt;
-                    }
-                    note_offer = langView('vs_usfee_mess_note_offer_not_close', App.Langs).format(not_close_letter_num, moment(not_close_letter_dt).format(format_date_ru));
-                } else {
-                    switch (el.status) {
-                        case 0: {
-                            note_offer = langView('vs_usfee_mess_note_offer_status_0', App.Langs);
-                            break;
-                        }
-                        case 1: {
-                            note_offer = langView('vs_usfee_mess_note_offer_status_1', App.Langs);
-                            break;
-                        }
-                        case 2: {
-                            note_offer = langView('vs_usfee_mess_note_offer_status_2', App.Langs);
-                            break;
-                        }
-                        default: {
-                            note_offer = langView('vs_usfee_mess_note_offer_status_default', App.Langs);
-                            break;
-                        }
-                    }
-                }
-                //
-                wagons_letter_add.push({
-                    id: null,
-                    status_edit: 1,
-                    num: el.num,
-                    rentOperatorAbbrRu: (el.rent !== null && el.rent.idOperatorNavigation !== null ? el.rent.idOperatorNavigation.abbrRu : null),
-                    rentOperatorAbbrEn: (el.rent !== null && el.rent.idOperatorNavigation !== null ? el.rent.idOperatorNavigation.abbrEn : null),
-                    status: el.status,
-                    close: el.close,
-                    note: el.note,
-                    error: el.error,
-                    id_wir: el.id_wir,
-                    dateAdoption: (el.wir !== null && el.wir.idArrivalCarNavigation !== null && el.wir.idArrivalCarNavigation.idArrivalNavigation !== null ? el.wir.idArrivalCarNavigation.idArrivalNavigation.dateAdoption : null),
-                    dateOutgoing: (el.wir !== null && el.wir.idOutgoingCarNavigation !== null && el.wir.idOutgoingCarNavigation.idOutgoingNavigation !== null ? el.wir.idOutgoingCarNavigation.idOutgoingNavigation.dateOutgoing : null),
-                    arrivalOperatorAbbrRu: null,
-                    arrivalOperatorAbbrEn: null,
-                    not_close_letter_wagon_id: not_close_letter_wagon_id,
-                    not_close_letter_wagon_status: not_close_letter_wagon_status,
-                    not_close_letter_id: not_close_letter_id,
-                    not_close_letter_num: not_close_letter_num,
-                    not_close_letter_dt: not_close_letter_dt,
-                    note_offer: note_offer,
-                })
-            }.bind(this));
-        }
-        if (typeof callback === 'function') {
-            callback(wagons_letter_add);
-        }
-    }
-    // Преобразовать информацию по вагонам (режим правки)
-    view_usage_fee.prototype.data_edit_wagons_letter_form_letters_edit = function (data, callback) {
-        var wagons_letter_edit = [];
-        // Пройдемся по вагонам для правки
-        if (data && data.length > 0) {
-            $.each(data, function (i, el) {
-                wagons_letter_edit.push({
-                    id: el.id,
-                    status_edit: null,
-                    num: el.num,
-                    rentOperatorAbbrRu: el.rentOperatorAbbrRu,
-                    rentOperatorAbbrEn: el.rentOperatorAbbrEn,
-                    status: el.status,
-                    close: el.close,
-                    note: el.note,
-                    error: 0,
-                    id_wir: el.idWir,
-                    dateAdoption: el.dateAdoption,
-                    dateOutgoing: el.dateOutgoing,
-                    arrivalOperatorAbbrRu: el.arrivalOperatorAbbrRu,
-                    arrivalOperatorAbbrEn: el.arrivalOperatorAbbrEn,
-                    not_close_letter_wagon_id: null,
-                    not_close_letter_wagon_status: null,
-                    not_close_letter_id: null,
-                    not_close_letter_num: null,
-                    not_close_letter_dt: null,
-                    note_offer: el.note,
-                });
-            }.bind(this));
-        }
-        if (typeof callback === 'function') {
-            callback(wagons_letter_edit);
-        }
-    }
-    // Отобразить вагоны в таблице (для правки и добавления)
-    view_usage_fee.prototype.view_table_form_letters_edit = function () {
-        this.wagons_letter = this.wagons_letter_add.concat(this.wagons_letter_edit);
-        this.form_letters_edit.tab_wagons.view(this.wagons_letter);
-    }
-    // Валидация станции отправки
-    view_usage_fee.prototype.validation_letter_destination_station = function (code, id, not_null, not_alert) {
-        // Нет данных
-        var fn_out_null = function (not_null) {
-            // нет входных данных данных
-            if (not_null) {
-                this.form_letters_edit.set_element_validation_error(id, langView('vs_usfee_mess_form_letters_edit_letter_destination_station', App.Langs), not_alert);
-                return false;
-            } else {
-                this.form_letters_edit.set_element_validation_ok(id, "", not_alert);
-                return true;
-            }
-        }
-        // Нет данных в базе данных
-        var fn_out_undefined = function () {
-            this.form_letters_edit.set_element_validation_error(id, langView('vs_usfee_mess_form_letters_edit_not_db_letter_destination_station', App.Langs), not_alert);
-            return false;
-        }
-        // Ок
-        var fn_out_ok = function () {
-            // Ок
-            this.form_letters_edit.set_element_validation_ok(id, "", not_alert);
-            return true;
-        }
-        //this.form_letters_edit.validation_letters_edit.clear_all();
-        // Проверка
-        if (code === null || code === '') {
-            return fn_out_null.call(this, not_null);
-        }
-        if (code === undefined) {
-            // Нет в базе
-            return fn_out_undefined.call(this);
-        }
-        this.select_obj = this.api_dir.getExistExternalStation(code, null);
-        if (this.select_obj) {
-            return fn_out_ok.call(this);
-        } else {
-            if (this.select_obj === null) {
-                return fn_out_undefined.call(this);
-            } else {
-                return fn_out_null.call(this, not_null);
-            }
-        }
-    }
-    // Применить правку
-    view_usage_fee.prototype.apply = function (data) {
-        LockScreen(langView('vs_usfee_mess_run_operation_edit_letter', App.Langs));
-        var mes_res = data.id === 0 ? langView('vs_usfee_mess_operation_add_letter_ok', App.Langs) : langView('vs_usfee_mess_operation_edit_letter_ok', App.Langs);
-
-        this.api_wsd.postUpdateInstructionalLetters(data, function (result) {
+    // Применить правку льготного условия
+    view_usage_fee.prototype.apply_additional_conditions = function (data) {
+        LockScreen(langView('vs_usfee_mess_run_operation_additional_conditions', App.Langs));
+        var mes_res = data.id === 0 ? langView('vs_usfee_mess_operation_add_additional_conditions_ok', App.Langs) : langView('vs_usfee_mess_operation_edit_additional_conditions_ok', App.Langs);
+        //
+        this.api_wsd.postUpdateUsageFeePeriodDetali(data, function (result) {
             // Проверим на ошибку выполнения запроса api
             if (result && result.status) {
                 var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
-                //console.log('[view_usage_fee] [postUpdateInstructionalLetters] :' + mess);
-                this.form_letters_edit.validation_letters_edit.out_error_message(mess);
-
+                //console.log('[view_usage_fee] [postUpdateUsageFeePeriodDetali] :' + mess);
+                this.form_rate_edit.validation_rate_edit.out_error_message(mess);
                 if (result.errors) {
                     for (var err in result.errors) {
-                        this.form_letters_edit.validation_letters_edit.out_error_message(err + ":" + result.errors[err]);
-                        //console.log('[view_usage_fee] [postUpdateInstructionalLetters] :' + err + ":" + result.errors[err]);
+                        this.form_rate_edit.validation_rate_edit.out_error_message(err + ":" + result.errors[err]);
+                        //console.log('[view_usage_fee] [postUpdateUsageFeePeriodDetali] :' + err + ":" + result.errors[err]);
                     }
                 }
                 LockScreenOff();
             } else {
                 // ошибки выполнения нет проверим ответ запроса
-                if (result && result.result > 0) {
-                    this.form_letters_edit.validation_letters_edit.clear_all();
+                if (result && result >= 0) {
+                    this.form_rate_edit.validation_rate_edit.clear_all();
                     this.mcfd_lg.$modal_obj.modal('hide');
-                    this.update(this.start, this.stop, function () {
+                    this.update_additional_conditions(this.id_usage_fee_period, function () {
                         LockScreenOff();
                         this.main_alert.out_info_message(mes_res);
                     }.bind(this));
                 } else {
                     LockScreenOff();
-                    this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_usfee_mess_error_operation_run', App.Langs).format(result.result));
-                    // Выведем ошибки по вагонно.
-                    $.each(result.listResult, function (i, el) {
-                        if (el.result <= 0) this.form_letters_edit.validation_letters_edit.out_error_message(langView('vs_usfee_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
-                    }.bind(this));
+                    this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_operation_additional_conditions_run', App.Langs).format(result.result));
                 }
             }
 
         }.bind(this));
     };
-    // Выполнить операцию удалить
-    view_usage_fee.prototype.apply_delete = function (id) {
-        LockScreen(langView('vs_usfee_mess_run_operation_delete_letter', App.Langs));
-        this.api_wsd.deleteInstructionalLetters(id, function (result) {
+    // Выполнить операцию удалить льготное условие
+    view_usage_fee.prototype.apply_additional_conditions_delete = function (id) {
+        LockScreen(langView('vs_usfee_mess_run_operation_delete_additional_conditions', App.Langs));
+        this.api_wsd.deleteUsageFeePeriodDetali(id, function (result) {
             // Проверим на ошибку выполнения запроса api
             if (result && result.status) {
                 var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
-                //console.log('[view_usage_fee] [deleteInstructionalLetters] :' + mess);
+                //console.log('[view_usage_fee] [deleteUsageFeePeriodDetali] :' + mess);
                 this.main_alert.out_error_message(mess);
 
                 if (result.errors) {
                     for (var err in result.errors) {
                         this.main_alert.out_error_message(err + ":" + result.errors[err]);
-                        //console.log('[view_usage_fee] [deleteInstructionalLetters] :' + err + ":" + result.errors[err]);
+                        //console.log('[view_usage_fee] [deleteUsageFeePeriodDetali] :' + err + ":" + result.errors[err]);
                     }
                 }
                 LockScreenOff();
             } else {
                 // ошибки выполнения нет проверим ответ запроса
-                if (result && result.result > 0) {
+                if (result && result >= 0) {
                     this.main_alert.clear_message();
-                    this.update(this.start, this.stop, function () {
+                    this.update_additional_conditions(this.id_usage_fee_period, function () {
                         LockScreenOff();
-                        this.main_alert.out_info_message(langView('vs_usfee_mess_operation_delete_letter_ok', App.Langs));
+                        this.main_alert.out_info_message(langView('vs_usfee_mess_operation_delete_additional_conditions_ok', App.Langs));
                     }.bind(this));
                 } else {
                     LockScreenOff();
-                    this.main_alert.out_error_message(langView('vs_usfee_mess_error_operation_run', App.Langs).format(result.result));
-                    // Выведем ошибки по вагонно.
-                    $.each(result.listResult, function (i, el) {
-                        if (el.result <= 0) this.main_alert.out_error_message(langView('vs_usfee_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
-                    }.bind(this));
+                    this.main_alert.out_error_message(langView('vs_usfee_mess_error_operation_delete_additional_conditions_run', App.Langs).format(result));
                 }
             }
-
         }.bind(this));
     };
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
@@ -2067,7 +2203,7 @@
     }
     //  
     view_usage_fee.prototype.clear_all = function () {
-        this.info_alert.clear_message();
+        //this.info_alert.clear_message();
         //this.form_searsh_letters.clear_all();
         /*        this.form_verification_invoices_setup.clear_all();*/
         //this.form_document_pay.el.input_text_doc_pay.$element.removeClass('check-field is-valid is-invalid');
