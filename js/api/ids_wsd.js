@@ -243,7 +243,6 @@
     ids_wsd.prototype.deleteInstructionalLetters = function (id, callback) {
         this.api_com.delete('/WSD/operation/instructional_letters/delete/', id, callback, callback);
     };
-
     //АРМ, Получить список периодов ставок по оператору и роду
     ids_wsd.prototype.getViewUsageFeePeriodOfOperatorGenus = function (id_operator, id_genus, callback) {
         this.api_com.get('/WSD/view/usage_fee_period/operator/' + id_operator + '/genus/' + id_genus, callback);
@@ -252,6 +251,15 @@
     ids_wsd.prototype.getViewUsageFeePeriodDetaliOfIdPeriod = function (id_usage_fee_period, callback) {
         this.api_com.get('/WSD/view/usage_fee_period_detali/id_usage_fee_period/' + id_usage_fee_period, callback);
     };
+    //АРМ, Выполнить обновление дополнительного условия
+    ids_wsd.prototype.postUpdateUsageFeePeriodDetali = function (option, callback) {
+        this.api_com.post('/WSD/operation/usage_fee_period_detali/update/', option, callback, callback);
+    };
+    // АРМ, Удалить дополнительное условие
+    ids_wsd.prototype.deleteUsageFeePeriodDetali = function (id, callback) {
+        this.api_com.delete('/WSD/operation/usage_fee_period_detali/delete/', id, callback, callback);
+    };
+
     App.ids_wsd = ids_wsd;
 
     window.App = App;
