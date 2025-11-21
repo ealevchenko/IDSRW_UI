@@ -251,6 +251,10 @@
     ids_wsd.prototype.getViewUsageFeePeriodDetaliOfIdPeriod = function (id_usage_fee_period, callback) {
         this.api_com.get('/WSD/view/usage_fee_period_detali/id_usage_fee_period/' + id_usage_fee_period, callback);
     };
+    //АРМ, Выполнить обновление условия
+    ids_wsd.prototype.PostUpdateUsageFeePeriod = function (option, callback) {
+        this.api_com.post('/WSD/operation/usage_fee_period/update/', option, callback, callback);
+    };
     //АРМ, Выполнить обновление дополнительного условия
     ids_wsd.prototype.postUpdateUsageFeePeriodDetali = function (option, callback) {
         this.api_com.post('/WSD/operation/usage_fee_period_detali/update/', option, callback, callback);
