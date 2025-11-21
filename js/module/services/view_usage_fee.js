@@ -25,7 +25,9 @@
             'vs_usfee_mess_init_module': 'Инициализация модуля view_usage_fee',
 
             'vs_usfee_form_apply': 'Применить',
-            'vs_usfee_form_apply_title': 'Применить условие',
+            'vs_usfee_form_title_apply': 'Применить условие',
+            'vs_usfee_form_new_uf': 'Создать копию',
+            'vs_usfee_form_title_new_uf': 'Создать копию предыдущего условия',
 
             'vs_usfee_label_date_period_start': 'Начало :',
             'vs_usfee_title_placeholder_date_period_start': 'Начало',
@@ -142,12 +144,18 @@
             //'vs_usfee_title_button_delete_letter': 'Удалить письмо (вагоны в письме должны быть не закрыты!)',
 
             //'vs_usfee_title_button_delete_wagon': 'Удалить вагон из письма (ошибочно добавленный)',
-            'vs_usfee_cancel_update_additional_conditions': 'Отмена операции правки дополнительного условия.',
+            'vs_usfee_cancel_update_additional_conditions': 'Отмена операции правки "ПРАВКИ ДОПОЛНИТЕЛЬНОГО УСЛОВИЯ"',
             //'vs_usfee_title_button_clear_letter': 'Очистить статус правки вагона (отмена правки!)',
 
             'vs_usfee_title_form_apply_additional_conditions': 'УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ?',
             'vs_usfee_mess_run_delete_additional_conditions': 'Выполнить операцию "УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ"? Будет удаленно доп. условие по станция отпр.[{0}], груз приб.[{1}], станция приб.[{2}], груз отпр.[{3}], льготное время:[{4}], ставка:[{5}].',
             'vs_usfee_cancel_delete_additional_conditions': 'Отмена операции "УДАЛИТЬ ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЕ"',
+
+            'vs_usfee_title_form_apply_ufd': 'ПРАВИТЬ УСЛОВИЕ?',
+            'vs_usfee_mess_run_add_apply_ufd': 'Выполнить операцию "СОЗДАТЬ УСЛОВИЕ"? Будет создано новое условие на период с [{0}] по [{1}].',
+            'vs_usfee_mess_run_edit_apply_ufd': 'Выполнить операцию "ПРАВИТЬ УСЛОВИЕ"? Будет изменено условие за период с [{0}] по [{1}].',
+            'vs_usfee_cancel_add_apply_ufd': 'Отмена операции "СОЗДАТЬ УСЛОВИЕ"',
+            'vs_usfee_cancel_edit_apply_ufd': 'Отмена операции "ПРАВИТЬ УСЛОВИЕ"',
 
             'vs_usfee_load_info': 'Загружаю информацию...',
             //'vs_usfee_update_letters': 'Обновляю письма за период...',
@@ -169,7 +177,24 @@
             //'vs_usfee_mess_form_letters_edit_not_db_letter_destination_station': 'Станции назначения нет БД ИДС...',
             //'vs_usfee_mess_form_letters_edit_not_status_wagons': 'Статус вагонов в системе не определен!',
             //'vs_usfee_mess_form_letters_edit_not_edit_wagon': 'Вагон {0} в письме закрыт {1} - правка запрещена!',
-            'vs_usfee_mess_war_form_letters_edit_exist_wagon': 'Период условия платы по оператору {0} с {1} по {2} уже завершён. Выбор не доступен!',
+            //'vs_usfee_mess_war_form_letters_edit_exist_wagon': 'Период условия платы по оператору {0} с {1} по {2} уже завершён. Выбор не доступен!',
+            'vs_usfee_mess_war_form_select_ufp_exist': 'Выбор не доступен период с оператором {0} и родом вагона {1} уже выбран!',
+
+            'vs_usfee_mess_error_from_end_unload': 'Выбран признак по окончанию выгрузки, но не указан груз!',
+            'vs_usfee_mess_error_to_start_load': 'Выбран признак от начала погрузки, но не указан груз!',
+            'vs_usfee_mess_error_start_load_and_end_unload_grace_time': 'Выбран признак от начала погрузки или по окончанию выгрузки и указанно льготное время, льготное время учитываться не будет!',
+            'vs_usfee_mess_error_rate_value_is_null': 'Введете ставку',
+            'vs_usfee_mess_error_rate_currency_is_null': 'Выберите валюту',
+            'vs_usfee_mess_error_is_null_rate_and_grace_time': 'Не выбрана не ставка не льготный период?',
+            'vs_usfee_mess_error_valid_before_date': 'Время начала должно быть меньше времени окончания!',
+            'vs_usfee_mess_error_valid_before_date_old': 'Время начала должно быть меньше времени окончания предыдущего периода {0}!',
+            //'vs_usfee_mess_error_date_period_start_is_null': 'Время начала должно быть меньше времени окончания!',
+
+            'vs_usfee_mess_error_id_cargo_arrival': 'Укажите Груз (ПРИБ)',
+            'vs_usfee_mess_error_id_cargo_outgoing': 'Укажите Груз (ОТПР)',
+
+            'vs_usfee_mess_error_grace_time_value_is_not_null': 'Льготное время не используется',
+            'vs_usfee_mess_error_grace_time_value_is_null': 'Введите льготное время',
 
             'vs_usfee_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
             'vs_usfee_mess_error_operation_additional_conditions_run': 'При выполнении операции «ПРАВКИ ДОПОЛНИТЕЛЬНОГО УСЛОВИЯ» произошла ошибка, код ошибки: {0}',
@@ -179,6 +204,9 @@
             'vs_usfee_mess_operation_add_additional_conditions_ok': 'Операция "ДОБАВИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
             'vs_usfee_mess_operation_edit_additional_conditions_ok': 'Операция "ПРАВИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
             'vs_usfee_mess_operation_delete_additional_conditions_ok': 'Операция "УДАЛИТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ" - выполнена',
+
+            'vs_usfee_mess_run_operation_edit_ufp': 'Выполняю операцию "ПРАВКИ УСЛОВИЯ"',
+
         },
         'en':  //default language: English
         {
@@ -242,6 +270,8 @@
         this.list_operators_genus_all = [];
         this.list_operators_genus = [];
         this.list_period = [];
+        this.select_period = null;  // Выбранный период для правки (выводится в окне правки)
+        this.select_rows_ufp = [];  // выбранные периоды оператор и род (список выбранных периодов используется для контроля неповторяющихся периодов род-оператор)
 
         // Создадим ссылку на модуль работы с базой данных
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
@@ -397,7 +427,8 @@
             bt_close: false,
             fn_click_close: null,
         });
-        this.list_of_payment_terms_table.$html.append(this.alert_payment_terms.$html);
+        row_payment_terms.$html.append(this.alert_payment_terms.$html);
+        //this.list_of_payment_terms_table.$html.append(this.alert_payment_terms.$html);
         this.payment_terms_alert = new ALERT(this.alert_payment_terms.$html);
 
         row_payment_terms.$html.append(this.list_of_payment_terms_setup.$html).append(this.list_of_payment_terms_table.$html);
@@ -417,25 +448,21 @@
             if (pr_load === 0) {
                 //==============================================================
                 // Инициализация после загрузки библиотек
-                var process = 5;
+                var process = 6;
                 // Выход из инициализации
                 var out_init = function (process) {
                     if (process === 0) {
                         // Добавим форму настройки
                         this.list_of_payment_terms_setup.$html.append(this.form_payment_terms_setup.$form);
-                        //this.info_alert.out_info_message(langView('vs_usfee_mess_info_init', App.Langs));
                         // На проверку окончания инициализации
                         //----------------------------------
-                        //this.start = moment().subtract(3, "year");
-                        //this.stop = moment();
-                        //this.update(this.start, this.stop, function () {
                         this.tab_list_of_operators.view(this.list_operators);
+                        this.view_form_payment_terms_setup(this.select_period); // сбросить настройки
                         LockScreenOff();
                         if (typeof this.settings.fn_init === 'function') {
                             console.log('Close view_usage_fee');
                             this.settings.fn_init(this.result_init);
                         }
-                        //}.bind(this));
                     }
                 }.bind(this);
                 // инициализациия
@@ -465,7 +492,7 @@
                 // Таблица списка операторов
                 this.tab_list_of_operators = new TSRV('div#table-list-of-operators');
                 this.tab_list_of_operators.init({
-                    alert: this.from_way_alert,
+                    alert: null,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
                     type_report: 'list_of_operators',
@@ -497,6 +524,8 @@
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
+                        this.select_period = null;
+                        this.view_form_payment_terms_setup(this.select_period);
                         var rows_select = this.tab_list_of_operators.tab_com.get_select_row();
                         this.list_operators_genus = [];
                         if (rows_select && rows_select.length > 0) {
@@ -532,7 +561,7 @@
                 // Таблица списка родов груза
                 this.tab_list_of_rod = new TSRV('div#table-list-of-rod');
                 this.tab_list_of_rod.init({
-                    alert: this.from_way_alert,
+                    alert: null,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
                     type_report: 'list_of_rod',
@@ -561,10 +590,12 @@
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) { }.bind(this),
                     fn_select_rows: function (rows, type) {
                         var process_period = 0;
+                        this.select_period = null;
                         // Выход из инициализации
                         var out_load_period = function (process_period) {
                             if (process_period === 0) {
                                 this.tab_list_payment_terms.view(this.list_period);
+                                this.view_form_payment_terms_setup(this.select_period);
                                 LockScreenOff();
                             }
                         };
@@ -599,15 +630,15 @@
                                             "usageFeePeriodGenusAbbrRu": genus.abbrRu,
                                             "usageFeePeriodGenusAbbrEn": genus.abbrEn,
                                             "usageFeePeriodRodUz": null,
-                                            "usageFeePeriodStart": null,
-                                            "usageFeePeriodStop": null,
-                                            "usageFeePeriodIdCurrency": null,
+                                            "usageFeePeriodStart": moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format(),
+                                            "usageFeePeriodStop": moment().endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format(),
+                                            "usageFeePeriodIdCurrency": -1,
                                             "usageFeePeriodCurrencyRu": null,
                                             "usageFeePeriodCurrencyEn": null,
                                             "usageFeePeriodCode": null,
                                             "usageFeePeriodCodeCc": null,
                                             "usageFeePeriodRate": null,
-                                            "usageFeePeriodIdCurrencyDerailment": null,
+                                            "usageFeePeriodIdCurrencyDerailment": -1,
                                             "usageFeePeriodDerailmentCurrencyRu": null,
                                             "usageFeePeriodDerailmentCurrencyEn": null,
                                             "usageFeePeriodDerailmentCode": null,
@@ -632,7 +663,6 @@
                                     out_load_period.call(this, process_period);
                                 }.bind(this));
                             }.bind(this));
-
                         } else {
                             out_load_period.call(this, process_period);
                         }
@@ -652,7 +682,7 @@
                 // Таблица списка периодов
                 this.tab_list_payment_terms = new TSRV('div#table-payment-terms');
                 this.tab_list_payment_terms.init({
-                    alert: this.from_way_alert,
+                    alert: this.payment_terms_alert,
                     class_table: 'table table-sm table-success table-small table-striped table-bordered border-secondary',
                     detali_table: false,
                     type_report: 'list_usage_fee_period',
@@ -660,10 +690,35 @@
                         {
                             name: 'select_all',
                             action: function () {
+                                var data = this.tab_list_payment_terms.tab_com.obj_t_report.rows().data();
+                                var rows_ufp = []
+
+                                $.each(data, function (i, el) {
+                                    var ufp = rows_ufp.find(function (o) {
+                                        return o.id_operator === el.usageFeePeriodIdOperator && o.id_genus === el.usageFeePeriodIdGenus;
+                                    }.bind(this));
+                                    if (!ufp) {
+                                        rows_ufp.push({
+                                            id: el.idUsageFeePeriod,
+                                            id_operator: el.usageFeePeriodIdOperator,
+                                            id_genus: el.usageFeePeriodIdGenus
+                                        });
+                                    }
+
+                                }.bind(this));
+                                //
                                 this.tab_list_payment_terms.tab_com.obj_t_report.rows(
                                     function (idx, data) {
-                                        return data.idUsageFeePeriod === 0 || moment().isBefore(data.usageFeePeriodStop);
+                                        var rupf = rows_ufp.find(function (o) {
+                                            return o.id === data.idUsageFeePeriod;
+                                        }.bind(this));
+                                        return rupf;
                                     }.bind(this)).select();
+
+                                //this.tab_list_payment_terms.tab_com.obj_t_report.rows(
+                                //    function (idx, data) {
+                                //        return data.idUsageFeePeriod === 0 || moment().isBefore(data.usageFeePeriodStop);
+                                //    }.bind(this)).select();
                             }.bind(this)
                         },
                         { name: 'select_none', action: null },
@@ -679,136 +734,74 @@
                     },
                     fn_action_view_detali: function (rows) { },
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                        this.payment_terms_alert.clear_message();
+                        this.form_payment_terms_setup.clear_all();
+                        var exist = this.select_rows_ufp.find(function (o) {
+                            return o.id_operator === rowData[0].usageFeePeriodIdOperator && o.id_genus === rowData[0].usageFeePeriodIdGenus && o.id !== rowData[0].idUsageFeePeriod;
+                        }.bind(this));
+                        if (exist) {
+                            e.preventDefault();
+                            this.payment_terms_alert.out_warning_message(langView('vs_usfee_mess_war_form_select_ufp_exist', App.Langs).format(
+                                rowData[0]['usageFeePeriodOperatorAbbr' + ucFirst(App.Lang)],
+                                rowData[0]['usageFeePeriodGenus' + ucFirst(App.Lang)]
+                            ));
+                        }
+
                         //if (rowData && rowData.length > 0) {
-                        //    if (rowData[0].idUsageFeePeriod > 0 && !moment().isBefore(rowData[0].usageFeePeriodStop)) {
-                        //        e.preventDefault();
-                        //        this.payment_terms_alert.out_warning_message(langView('vs_usfee_mess_war_form_letters_edit_exist_wagon', App.Langs).format(
-                        //            rowData[0]['usageFeePeriodOperatorAbbr' + ucFirst(App.Lang)],
-                        //            moment(rowData[0].usageFeePeriodStart).format(format_datetime_ru),
-                        //            moment(rowData[0].usageFeePeriodStop).format(format_datetime_ru)));
-                        //    }
+                        //    //if (rowData[0].idUsageFeePeriod > 0 && !moment().isBefore(rowData[0].usageFeePeriodStop)) {
+                        //    //    e.preventDefault();
+                        //    //    this.payment_terms_alert.out_warning_message(langView('vs_usfee_mess_war_form_letters_edit_exist_wagon', App.Langs).format(
+                        //    //        rowData[0]['usageFeePeriodOperatorAbbr' + ucFirst(App.Lang)],
+                        //    //        moment(rowData[0].usageFeePeriodStart).format(format_datetime_ru),
+                        //    //        moment(rowData[0].usageFeePeriodStop).format(format_datetime_ru)));
+                        //    //}
                         //}
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         LockScreen(langView('vs_usfee_load_info', App.Langs));
-
+                        this.select_rows_ufp = [];
+                        this.select_period = null; //  сбросить выбранный период
                         //-----------------------------------
                         // Получим выбранные периоды
                         var rows_select = this.tab_list_payment_terms.tab_com.get_select_row();
                         // Пройдемся по периодам и добавим доп условия
                         this.id_usage_fee_period = null;
                         this.id_usage_fee_period_detali = null;
-                        if (rows_select && rows_select.length === 1) {
-                            this.update_additional_conditions(rows_select[0].idUsageFeePeriod, function () {
-                                LockScreenOff();
-                            }.bind(this))
-                            //this.id_usage_fee_period = rows_select[0].idUsageFeePeriod;
-                            //this.$list_rate.empty();
-                            //// Добавим первый элемент (Добавить условие)
-                            //var $li = $('<li></li>', {
-                            //    class: 'list-group-item list-group-item-action list-group-item-secondary'
-                            //});
-                            //var $div_info = $('<div></div>', {
-                            //    class: 'd-flex justify-content-between'
-                            //});
-                            //var $h6 = $('<h6></h6>', {
-                            //    class: 'mb-1'
-                            //});
-                            //$h6.append('Добавить доп. условие...');
-                            //var $btng = $('<div></div>', {
-                            //    class: 'btn-group btn-group-sm me-2',
-                            //    role: 'group'
-                            //});
-                            //var $icon_add = $('<i class="fa-solid fa-circle-plus"></i>');
-                            //var $btn_add = $('<button></button>', {
-                            //    class: 'btn btn-success',
-                            //    type: 'button',
-                            //});
-                            //$btn_add.on("click", function (e) {
-                            //    //Дбавить условие
-                            //    this.view_form_rate_edit(null);
-                            //}.bind(this));
-                            //$btn_add.append($icon_add);
-                            //$btng.append($btn_add);
-                            //$div_info.append($h6).append($btng);
-                            //$li.append($div_info)
-                            //this.$list_rate.append($li);
-                            ////--------------------------------
-                            //// Получить детали
-                            //this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(rows_select[0].idUsageFeePeriod, function (data_detali) {
-                            //    if (data_detali && data_detali.length > 0) {
-                            //        //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                            //        //    <div class="d-flex w-100 justify-content-between">
-                            //        //        <h5 class="mb-1">List group item heading</h5>
-                            //        //        <small>3 days ago</small>
-                            //        //    </div>
-                            //        //    <p class="mb-1">Some placeholder content in a paragraph.</p>
-                            //        //    <small>And some small print.</small>
-                            //        //</a>
+                        // Основные условия
+                        if (rows_select && rows_select.length > 0) {
+                            // Получить все записи
+                            var all_rows = this.tab_list_payment_terms.tab_com.obj_t_report.rows().data();
+                            // Пройдемся по выбору
+                            $.each(rows_select, function (i, el) {
 
-                            //        $.each(data_detali, function (i, el) {
-                            //            // Добавить полученные элементы
-                            //            var $li = $('<li></li>', {
-                            //                class: 'list-group-item list-group-item-action border-top border-success'
-                            //            });
-                            //            var $div_info = $('<div></div>', {
-                            //                class: 'd-flex justify-content-between'
-                            //            });
-                            //            var $h6 = $('<h6></h6>', {
-                            //                class: 'mb-1'
-                            //            });
-                            //            if (el.codeStnFrom !== null && el.codeStnTo === null) {
-                            //                $h6.append('По прибытию...');
-                            //            } else if (el.codeStnFrom === null && el.codeStnTo !== null) {
-                            //                $h6.append('По отправке...');
-                            //            } else {
-                            //                if (el.idCargoArrival !== null && el.idCargoOutgoing === null) {
-                            //                    $h6.append('По прибытию груза...');
-                            //                } else if (el.idCargoArrival === null && el.idCargoOutgoing !== null) {
-                            //                    $h6.append('По отправке груза...');
-                            //                } else { $h6.append('...'); }
-                            //            }
-                            //            // Кнопки управления
-                            //            var btng = new init_button_edit(el, function (e) {
-                            //                //Дбавить условие
-                            //                this.view_form_rate_edit(el);
-                            //            }.bind(this), function (e) {
-                            //                //Дбавить условие
-                            //                this.view_form_rate_delete(el);
-                            //            }.bind(this));
-                            //            $div_info.append($h6).append(btng.$html);
-                            //            $li.append($div_info);
-                            //            if (el.arrivalEndUnload !== null) {
-                            //                $li.append(new init_view_field('arrivalEndUnload', 'По оканчанию выгрузки:', el.arrivalEndUnload ? 'Да' : '').$html);
-                            //            }
-                            //            if (el.codeStnFrom !== null) {
-                            //                $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
-                            //            }
-                            //            if (el.idCargoArrival !== null) {
-                            //                $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
-                            //            }
-                            //            if (el.outgoingStartLoad !== null) {
-                            //                $li.append(new init_view_field('outgoingStartLoad', 'По оканчанию выгрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
-                            //            }
-                            //            if (el.codeStnTo !== null) {
-                            //                $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
-                            //            }
-                            //            if (el.idCargoOutgoing !== null) {
-                            //                $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
-                            //            }
-                            //            if (el.graceTime !== null) {
-                            //                $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
-                            //            }
-                            //            if (el.rate !== null) {
-                            //                //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
-                            //            }
-                            //            this.$list_rate.append($li);
-                            //        }.bind(this));
-                            //    } else {
-                            //    }
-                            //}.bind(this));
+                                var first_row = all_rows.filter(function (i) {
+                                    return i.usageFeePeriodIdOperator === el.usageFeePeriodIdOperator && i.usageFeePeriodIdGenus === el.usageFeePeriodIdGenus;
+                                }.bind(this)).sort(function (a, b) {
+                                    return new Date(b.usageFeePeriodStart) - new Date(a.usageFeePeriodStart)
+                                }.bind(this))
+
+                                this.select_rows_ufp.push({
+                                    id: el.idUsageFeePeriod,
+                                    id_operator: el.usageFeePeriodIdOperator,
+                                    id_genus: el.usageFeePeriodIdGenus,
+                                    start: first_row && first_row.length > 0 ? first_row[0].usageFeePeriodStart : null,
+                                    stop: first_row && first_row.length > 0 ? first_row[0].usageFeePeriodStop : null,
+                                    edit: el.idUsageFeePeriod > 0 && (moment(first_row[0].usageFeePeriodStart).isBefore(moment()) && moment().isBefore(moment(first_row[0].usageFeePeriodStop))) ? true : false
+                                });
+                            }.bind(this));
+                            // Вывести настройки
+                            this.select_period = rows_select[rows_select.length - 1];
+                            this.view_form_payment_terms_setup(this.select_period);
+                            // Дополнительные условия
+                            if (rows_select && rows_select.length === 1) {
+                                this.update_additional_conditions(rows_select[0].idUsageFeePeriod, function () {
+                                    LockScreenOff();
+                                }.bind(this))
+                            } else {
+                                this.$list_rate.empty();
+                                LockScreenOff();
+                            }
                         } else {
+                            this.view_form_payment_terms_setup(this.select_period);
                             this.$list_rate.empty();
                             LockScreenOff();
                         }
@@ -844,18 +837,95 @@
                 var bt_bt_apply = {
                     obj: 'bs_button',
                     options: {
-                        id: null,
-                        name: null,
-                        class: null,
+                        id: 'apply_uf',
+                        name: 'apply_uf',
+                        class: 'me-2',
                         fsize: 'sm',
                         color: 'success',
                         text: langView('vs_usfee_form_apply', App.Langs),
-                        title: langView('vs_usfee_form_apply_title', App.Langs),
+                        title: langView('vs_usfee_form_title_apply', App.Langs),
                         icon_fa_left: 'fa-solid fa-thumbs-up',  //<i class="fa-solid fa-thumbs-up"></i>
                         icon_fa_right: null,
                         fn_click: function (event) {
                             event.preventDefault();
-                            //this.form_payment_terms_setup.$form.submit();
+                            this.main_alert.clear_message();
+                            this.form_payment_terms_setup.clear_all();
+                            this.form_payment_terms_setup.$form.submit();
+                            if (this.form_payment_terms_setup.valid) {
+                                var result = this.form_payment_terms_setup.data;
+                                // определим это новое условие
+                                var b_add = this.id_usage_fee_period === 0;
+                                //var row_add = this.select_rows_ufp.find(function (o) {
+                                //    return o.id === 0;
+                                //}.bind(this));
+
+                                //row_add = row_add & this.id_usage_fee_period === 0;
+
+                                //this.id_usage_fee_period
+                                //
+                                var mess = langView((b_add ? 'vs_usfee_mess_run_add_apply_ufd' : 'vs_usfee_mess_run_edit_apply_ufd'), App.Langs).format(
+                                    moment(result.input_datetime_date_period_start).format(format_datetime_ru),
+                                    moment(result.input_datetime_date_period_stop).format(format_datetime_ru)
+                                );
+
+                                this.mcf_lg.open(
+                                    langView('vs_usfee_title_form_apply_ufd', App.Langs),
+                                    mess,
+                                    function () {
+
+                                        var list_period_edit = [];
+                                        $.each(this.select_rows_ufp, function (key, el) {
+                                            list_period_edit.push({
+                                                id: el.id,
+                                                id_operator: el.id_operator,
+                                                id_genus: el.id_genus,
+                                                type: el.edit ? 1 : 0
+                                            });
+                                        }.bind(this));
+
+                                        var operation = {
+                                            id: this.id_usage_fee_period,
+                                            start: result.input_datetime_date_period_start,
+                                            stop: result.input_datetime_date_period_stop,
+                                            hour_after_30: result.input_checkbox_hour_after_30,
+                                            id_currency: result.select_rate_currency,
+                                            rate: result.input_text_rate_value,
+                                            id_currency_derailment: result.select_derailment_rate_currency,
+                                            rate_derailment: result.input_text_derailment_rate_value,
+                                            coefficient_route: result.input_text_coefficient_route_value,
+                                            coefficient_not_route: result.input_text_coefficient_not_route_value,
+                                            grace_time_1: result.input_text_grace_time_value1,
+                                            grace_time_2: result.input_text_grace_time_value2,
+                                            note: '',
+                                            list_period_edit: list_period_edit,
+
+                                        };
+                                        this.apply_ufp(operation);
+                                    }.bind(this),
+                                    function () {
+                                        this.main_alert.out_warning_message(langView((b_add ? 'vs_usfee_cancel_add_apply_ufd' : 'vs_usfee_cancel_edit_apply_ufd'), App.Langs));
+                                    }.bind(this)
+                                );
+                            }
+                        }.bind(this),
+                    }
+                };
+                var bt_bt_new = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'new_uf',
+                        name: 'new_uf',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'warning',
+                        text: langView('vs_usfee_form_new_uf', App.Langs),
+                        title: langView('vs_usfee_form_title_new_uf', App.Langs),
+                        icon_fa_left: 'fa-solid fa-arrow-up-right-from-square',  //<i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.form_payment_terms_setup.clear_all();
+                            this.new_usage_fee_period();
                         }.bind(this),
                     }
                 };
@@ -988,7 +1058,7 @@
                         element_readonly: false,
                         element_size: null,
                         element_options: {
-                            data: [],
+                            data: this.list_currency,
                             default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
@@ -1022,7 +1092,7 @@
                         element_value: null,
                         element_title: null,
                         element_placeholder: langView('vs_usfee_title_placeholder_rate_value', App.Langs),
-                        element_required: false,
+                        element_required: true,
                         element_maxlength: null,
                         element_pattern: null,
                         element_readonly: false,
@@ -1064,11 +1134,11 @@
                         element_value: null,
                         element_multiple: false,
                         element_title: null,
-                        element_required: true,
+                        element_required: false,
                         element_readonly: false,
                         element_size: null,
                         element_options: {
-                            data: [],
+                            data: this.list_currency,
                             default: -1,
                             fn_change: function (e) {
                                 e.preventDefault();
@@ -1304,36 +1374,6 @@
                     },
                     childs: []
                 };
-
-                //var col_add_rate = {
-                //    obj: 'bs_col',
-                //    options: {
-                //        id: null,
-                //        pref: 'md',
-                //        size: 12,
-                //        class: 'text-left mt-2',
-                //        style: null,
-                //    },
-                //    childs: []
-                //};
-                //var bt_add_rate = {
-                //    obj: 'bs_button',
-                //    options: {
-                //        id: null,
-                //        name: null,
-                //        class: null,
-                //        fsize: 'sm',
-                //        color: 'success',
-                //        text: langView('vs_usfee_add_rate', App.Langs),
-                //        title: langView('vs_usfee_add_rate', App.Langs),
-                //        icon_fa_left: 'fa-solid fa-square-plus',  //<i class="fa-solid fa-square-plus"></i>
-                //        icon_fa_right: null,
-                //        fn_click: function (event) {
-                //            event.preventDefault();
-                //            //this.form_payment_terms_setup.$form.submit();
-                //        }.bind(this),
-                //    }
-                //};
                 var row_list_rate = {
                     obj: 'bs_div',
                     options: {
@@ -1364,6 +1404,7 @@
                 //</ul>
 
                 col_bt_apply.childs.push(bt_bt_apply);
+                col_bt_apply.childs.push(bt_bt_new);
                 objs_pt_setup.push(col_bt_apply);
                 objs_pt_setup.push(form_input_date_period_start);
                 objs_pt_setup.push(form_input_date_period_stop);
@@ -1381,19 +1422,58 @@
                 col_rate.childs.push(row_list_rate);
                 objs_pt_setup.push(col_rate);
                 this.form_payment_terms_setup.init({
-                    alert: this.main_alert,
+                    alert: this.payment_terms_alert,
                     //context: this...$html,
                     objs: objs_pt_setup,
                     id: null,
                     form_class: 'row',
                     validation: true,
                     fn_validation: function (result) {
+
                         // Валидация успешна
                         if (result && result.valid) {
-                            if (valid) {
-
+                            var valid = result.valid;
+                            if (this.select_rows_ufp) {
+                                var row_max_old_date = this.select_rows_ufp.filter(function (i) {
+                                    return i.id > 0;
+                                }.bind(this)).sort(function (a, b) {
+                                    return new Date(b.stop) - new Date(a.stop);
+                                }.bind(this));
                             }
+
+                            var max_old_date = (row_max_old_date !== null && row_max_old_date.length > 0) ? row_max_old_date[0].stop : null;
+
+                            if (!moment(result.new.input_datetime_date_period_start).isBefore(result.new.input_datetime_date_period_stop)) {
+                                this.form_payment_terms_setup.set_element_validation_error('date_period_start', langView('vs_usfee_mess_error_valid_before_date', App.Langs), false);
+                                valid = false;
+                            }
+
+                            if (max_old_date !== null && !moment(max_old_date).isBefore(result.new.input_datetime_date_period_start)) {
+                                this.form_payment_terms_setup.set_element_validation_error('date_period_start', langView('vs_usfee_mess_error_valid_before_date_old', App.Langs).format(moment(max_old_date).format(format_datetime_ru)), false);
+                                valid = false;
+                            }
+
+                            if (result.new.select_rate_currency >= 0 && result.new.input_text_rate_value === null) {
+                                this.form_payment_terms_setup.set_element_validation_error('rate_value', langView('vs_usfee_mess_error_rate_value_is_null', App.Langs), false);
+                                valid = false;
+                            }
+                            if (result.new.select_rate_currency == -1 && result.new.input_text_rate_value !== null) {
+                                this.form_payment_terms_setup.set_element_validation_error('rate_currency', langView('vs_usfee_mess_error_rate_currency_is_null', App.Langs), false);
+                                valid = false;
+                            }
+                            if (result.new.select_derailment_rate_currency >= 0 && result.new.input_text_derailment_rate_value === null) {
+                                this.form_payment_terms_setup.set_element_validation_error('derailment_rate_value', langView('vs_usfee_mess_error_rate_value_is_null', App.Langs), false);
+                                valid = false;
+                            }
+                            if (result.new.select_derailment_rate_currency == -1 && result.new.input_text_derailment_rate_value !== null) {
+                                this.form_payment_terms_setup.set_element_validation_error('derailment_rate_currency', langView('vs_usfee_mess_error_rate_currency_is_null', App.Langs), false);
+                                valid = false;
+                            }
+
+
+                            this.form_payment_terms_setup.valid = valid;
                         }
+
                     }.bind(this),
                     fn_html_init: function (res) { }.bind(this),
                     fn_element_init: null,
@@ -1693,8 +1773,8 @@
                         element_pattern: null,
                         element_readonly: false,
                         element_min: 0,
-                        element_max: 100000000.0,
-                        element_step: 0.01,
+                        element_max: 1000,
+                        element_step: 1,
                         element_options: {
                             default: '',
                             fn_change: function (e) {
@@ -1819,7 +1899,46 @@
                     validation: true,
                     fn_validation: function (result) {
                         var valid = result.valid;
+                        if (valid) {
+                            if (result.new.input_checkbox_end_unload) {
+                                if (result.new.datalist_id_cargo_arrival === null) {
+                                    this.form_rate_edit.set_element_validation_error('id_cargo_arrival', langView('vs_usfee_mess_error_id_cargo_arrival', App.Langs), true);
+                                    this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_from_end_unload', App.Langs));
+                                    valid = false;
+                                }
 
+                            }
+                            if (result.new.input_checkbox_start_load) {
+                                if (result.new.datalist_id_cargo_outgoing === null) {
+                                    this.form_rate_edit.set_element_validation_error('id_cargo_outgoing', langView('vs_usfee_mess_error_id_cargo_outgoing', App.Langs), true);
+                                    this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_to_start_load', App.Langs));
+                                    valid = false;
+                                }
+                            }
+                            if ((result.new.input_checkbox_end_unload || result.new.input_checkbox_start_load) && result.new.input_text_grace_time_value !== null) {
+
+                                this.form_rate_edit.set_element_validation_error('grace_time_value', langView('vs_usfee_mess_error_grace_time_value_is_not_null', App.Langs), true);
+                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_start_load_and_end_unload_grace_time', App.Langs));
+                                valid = false;
+                            }
+                            if (result.new.select_rate_currency >= 0 && result.new.input_text_rate_value === null) {
+                                this.form_rate_edit.set_element_validation_error('rate_value', langView('vs_usfee_mess_error_rate_value_is_null', App.Langs), false);
+                                valid = false;
+                            }
+                            if (result.new.select_rate_currency == -1 && result.new.input_text_rate_value !== null) {
+                                this.form_rate_edit.set_element_validation_error('rate_currency', langView('vs_usfee_mess_error_rate_currency_is_null', App.Langs), false);
+                                valid = false;
+                            }
+                            if (result.new.select_rate_currency == -1 && result.new.input_text_rate_value === null && result.new.input_text_grace_time_value === null) {
+                                this.form_rate_edit.set_element_validation_error('rate_value', langView('vs_usfee_mess_error_rate_value_is_null', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('rate_currency', langView('vs_usfee_mess_error_rate_currency_is_null', App.Langs), true);
+                                if (!result.new.input_checkbox_end_unload && !result.new.input_checkbox_start_load) {
+                                    this.form_rate_edit.set_element_validation_error('grace_time_value', langView('vs_usfee_mess_error_grace_time_value_is_null', App.Langs), true);
+                                }
+                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_is_null_rate_and_grace_time', App.Langs));
+                                valid = false;
+                            }
+                        }
                         this.form_rate_edit.valid = valid;
                     }.bind(this),
                     fn_html_init: function (res) { }.bind(this),
@@ -2072,7 +2191,7 @@
                         $li.append(new init_view_field('graceTime', 'Льготное время:', el.graceTime).$html);
                     }
                     if (el.rate !== null) {
-                        //$li.append(new init_view_field('graceTime', 'Льготное время:', el.grace_time).$html);
+                        $li.append(new init_view_field('rate', 'Ставка:', el.rate ? Number(el.rate).toFixed(2) + ' (' + el.currencyCodeCc + ')' : '').$html);
                     }
                     this.$list_rate.append($li);
                 }.bind(this));
@@ -2084,6 +2203,113 @@
         }.bind(this));
     };
     //-----------------------------------------------------------------------------
+    // Вывести информацию по общей ставке
+    view_usage_fee.prototype.view_form_payment_terms_setup = function (date) {
+        this.form_payment_terms_setup.clear_all();
+        if (date !== null) {
+            this.id_usage_fee_period = date.idUsageFeePeriod;
+            // Проверим запись для правки закрыта
+            var row_close = date.idUsageFeePeriod > 0 && !moment().isBefore(date.usageFeePeriodStop)
+            this.form_payment_terms_setup.el.button_new_uf.prop("disabled", !row_close);
+            this.form_payment_terms_setup.el.button_apply_uf.prop("disabled", row_close);
+            if (row_close) {
+                this.form_payment_terms_setup.el.input_datetime_date_period_start.val(moment(date.usageFeePeriodStart));
+                this.form_payment_terms_setup.el.input_datetime_date_period_start.disable();
+                this.form_payment_terms_setup.el.input_datetime_date_period_stop.val(moment(date.usageFeePeriodStop));
+                this.form_payment_terms_setup.el.input_datetime_date_period_stop.disable();
+                this.form_payment_terms_setup.el.input_checkbox_hour_after_30.val(date.usageFeePeriodHourAfter30);
+                this.form_payment_terms_setup.el.input_checkbox_hour_after_30.disable();
+                this.form_payment_terms_setup.el.select_rate_currency.val(date.usageFeePeriodIdCurrency);
+                this.form_payment_terms_setup.el.select_rate_currency.disable();
+                this.form_payment_terms_setup.el.input_text_rate_value.val(date.usageFeePeriodRate);
+                this.form_payment_terms_setup.el.input_text_rate_value.disable();
+                this.form_payment_terms_setup.el.select_derailment_rate_currency.val(date.usageFeePeriodIdCurrencyDerailment);
+                this.form_payment_terms_setup.el.select_derailment_rate_currency.disable();
+                this.form_payment_terms_setup.el.input_text_derailment_rate_value.val(date.usageFeePeriodRateDerailment);
+                this.form_payment_terms_setup.el.input_text_derailment_rate_value.disable();
+                this.form_payment_terms_setup.el.input_text_coefficient_route_value.val(date.usageFeePeriodCoefficientRoute);
+                this.form_payment_terms_setup.el.input_text_coefficient_route_value.disable();
+                this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.val(date.usageFeePeriodCoefficientNotRoute);
+                this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.disable();
+                this.form_payment_terms_setup.el.input_text_grace_time_value1.val(date.usageFeePeriodGraceTime1);
+                this.form_payment_terms_setup.el.input_text_grace_time_value1.disable();
+                this.form_payment_terms_setup.el.input_text_grace_time_value2.val(date.usageFeePeriodGraceTime2);
+                this.form_payment_terms_setup.el.input_text_grace_time_value2.disable();
+            } else {
+                this.form_payment_terms_setup.el.input_datetime_date_period_start.val(moment(date.usageFeePeriodStart));
+                this.form_payment_terms_setup.el.input_datetime_date_period_start.enable();
+                this.form_payment_terms_setup.el.input_datetime_date_period_stop.val(moment(date.usageFeePeriodStop));
+                this.form_payment_terms_setup.el.input_datetime_date_period_stop.enable();
+                this.form_payment_terms_setup.el.input_checkbox_hour_after_30.val(date.usageFeePeriodHourAfter30);
+                this.form_payment_terms_setup.el.input_checkbox_hour_after_30.enable();
+                this.form_payment_terms_setup.el.select_rate_currency.val(date.usageFeePeriodIdCurrency);
+                this.form_payment_terms_setup.el.select_rate_currency.enable();
+                this.form_payment_terms_setup.el.input_text_rate_value.val(date.usageFeePeriodRate);
+                this.form_payment_terms_setup.el.input_text_rate_value.enable();
+                this.form_payment_terms_setup.el.select_derailment_rate_currency.val(date.usageFeePeriodIdCurrencyDerailment);
+                this.form_payment_terms_setup.el.select_derailment_rate_currency.enable();
+                this.form_payment_terms_setup.el.input_text_derailment_rate_value.val(date.usageFeePeriodRateDerailment);
+                this.form_payment_terms_setup.el.input_text_derailment_rate_value.enable();
+                this.form_payment_terms_setup.el.input_text_coefficient_route_value.val(date.usageFeePeriodCoefficientRoute);
+                this.form_payment_terms_setup.el.input_text_coefficient_route_value.enable();
+                this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.val(date.usageFeePeriodCoefficientNotRoute);
+                this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.enable();
+                this.form_payment_terms_setup.el.input_text_grace_time_value1.val(date.usageFeePeriodGraceTime1);
+                this.form_payment_terms_setup.el.input_text_grace_time_value1.enable();
+                this.form_payment_terms_setup.el.input_text_grace_time_value2.val(date.usageFeePeriodGraceTime2);
+                this.form_payment_terms_setup.el.input_text_grace_time_value2.enable();
+            }
+        } else {
+            this.form_payment_terms_setup.el.button_new_uf.prop("disabled", true);
+            this.form_payment_terms_setup.el.button_apply_uf.prop("disabled", true);
+            this.form_payment_terms_setup.el.input_datetime_date_period_start.val(null);
+            this.form_payment_terms_setup.el.input_datetime_date_period_start.disable();
+            this.form_payment_terms_setup.el.input_datetime_date_period_stop.val(null);
+            this.form_payment_terms_setup.el.input_datetime_date_period_stop.disable();
+            this.form_payment_terms_setup.el.input_checkbox_hour_after_30.val(false);
+            this.form_payment_terms_setup.el.input_checkbox_hour_after_30.disable();
+            this.form_payment_terms_setup.el.select_rate_currency.val(-1);
+            this.form_payment_terms_setup.el.select_rate_currency.disable();
+            this.form_payment_terms_setup.el.input_text_rate_value.val(null);
+            this.form_payment_terms_setup.el.input_text_rate_value.disable();
+            this.form_payment_terms_setup.el.select_derailment_rate_currency.val(-1);
+            this.form_payment_terms_setup.el.select_derailment_rate_currency.disable();
+            this.form_payment_terms_setup.el.input_text_derailment_rate_value.val(null);
+            this.form_payment_terms_setup.el.input_text_derailment_rate_value.disable();
+            this.form_payment_terms_setup.el.input_text_coefficient_route_value.val(null);
+            this.form_payment_terms_setup.el.input_text_coefficient_route_value.disable();
+            this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.val(null);
+            this.form_payment_terms_setup.el.input_text_coefficient_not_route_value.disable();
+            this.form_payment_terms_setup.el.input_text_grace_time_value1.val(null);
+            this.form_payment_terms_setup.el.input_text_grace_time_value1.disable();
+            this.form_payment_terms_setup.el.input_text_grace_time_value2.val(null);
+            this.form_payment_terms_setup.el.input_text_grace_time_value2.disable();
+        }
+    }
+    // Создать новую строку периода по примеру старой
+    view_usage_fee.prototype.new_usage_fee_period = function () {
+        if (this.select_period !== null && this.select_rows_ufp !== null && this.select_rows_ufp.length > 0) {
+
+            var new_row = JSON.parse(JSON.stringify(this.select_period));
+            //this.select_rows_ufp.filter(function (i) { return i.idUsageFeePeriod > 0; }.bind(this))
+
+            var row_max_old_date = this.select_rows_ufp.filter(function (i) {
+                return i.id > 0;
+            }.bind(this)).sort(function (a, b) {
+                return new Date(b.stop) - new Date(a.stop);
+            }.bind(this));
+            new_row.idUsageFeePeriod = 0;
+            var max_old_date = row_max_old_date !== null ? row_max_old_date[0].stop : null;
+            if (max_old_date === null) {
+                new_row.usageFeePeriodStart = moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format();
+                new_row.usageFeePeriodStop = moment().endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format();
+            } else {
+                new_row.usageFeePeriodStart = moment(max_old_date).add(1, 'days').set({ 'hour': 0, 'minute': 0, 'second': 0 }).format();
+                new_row.usageFeePeriodStop = moment(max_old_date).add(1, 'days').endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format();
+            }
+            this.view_form_payment_terms_setup(new_row);
+        }
+    }
     // Форма правки доп. условий, показать форму
     view_usage_fee.prototype.view_form_rate_edit = function (row) {
         this.main_alert.clear_message();
@@ -2123,6 +2349,43 @@
                 this.main_alert.out_warning_message(langView('vs_usfee_cancel_delete_additional_conditions', App.Langs));
             }.bind(this));
     };
+    // Применить правку условия расчета
+    view_usage_fee.prototype.apply_ufp = function (data) {
+        LockScreen(langView('vs_usfee_mess_run_operation_edit_ufp', App.Langs));
+        //var mes_res = data.id === 0 ? langView('vs_usfee_mess_operation_add_additional_conditions_ok', App.Langs) : langView('vs_usfee_mess_operation_edit_additional_conditions_ok', App.Langs);
+        ////
+        this.api_wsd.PostUpdateUsageFeePeriod(data, function (result) {
+            // Проверим на ошибку выполнения запроса api
+            //if (result !== null && result.status) {
+            //    var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
+            //    //console.log('[view_usage_fee] [postUpdateUsageFeePeriodDetali] :' + mess);
+            //    this.form_rate_edit.validation_rate_edit.out_error_message(mess);
+            //    if (result.errors) {
+            //        for (var err in result.errors) {
+            //            this.form_rate_edit.validation_rate_edit.out_error_message(err + ":" + result.errors[err]);
+            //            //console.log('[view_usage_fee] [postUpdateUsageFeePeriodDetali] :' + err + ":" + result.errors[err]);
+            //        }
+            //    }
+            //    LockScreenOff();
+            //} else {
+            //    // ошибки выполнения нет проверим ответ запроса
+            //    if (result >= 0) {
+            //        this.form_rate_edit.validation_rate_edit.clear_all();
+            //        this.mcfd_lg.result = true; //
+            //        this.mcfd_lg.$modal_obj.modal('hide');
+            //        this.update_additional_conditions(this.id_usage_fee_period, function () {
+            //            LockScreenOff();
+            //            this.main_alert.out_info_message(mes_res);
+            //        }.bind(this));
+            //    } else {
+            //        LockScreenOff();
+            //        this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_operation_additional_conditions_run', App.Langs).format(result.result));
+            //    }
+            //}
+            LockScreenOff();
+        }.bind(this));
+
+    };
     // Применить правку льготного условия
     view_usage_fee.prototype.apply_additional_conditions = function (data) {
         LockScreen(langView('vs_usfee_mess_run_operation_additional_conditions', App.Langs));
@@ -2130,7 +2393,7 @@
         //
         this.api_wsd.postUpdateUsageFeePeriodDetali(data, function (result) {
             // Проверим на ошибку выполнения запроса api
-            if (result && result.status) {
+            if (result !== null && result.status) {
                 var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
                 //console.log('[view_usage_fee] [postUpdateUsageFeePeriodDetali] :' + mess);
                 this.form_rate_edit.validation_rate_edit.out_error_message(mess);
@@ -2143,8 +2406,9 @@
                 LockScreenOff();
             } else {
                 // ошибки выполнения нет проверим ответ запроса
-                if (result && result >= 0) {
+                if (result >= 0) {
                     this.form_rate_edit.validation_rate_edit.clear_all();
+                    this.mcfd_lg.result = true; // 
                     this.mcfd_lg.$modal_obj.modal('hide');
                     this.update_additional_conditions(this.id_usage_fee_period, function () {
                         LockScreenOff();
@@ -2163,7 +2427,7 @@
         LockScreen(langView('vs_usfee_mess_run_operation_delete_additional_conditions', App.Langs));
         this.api_wsd.deleteUsageFeePeriodDetali(id, function (result) {
             // Проверим на ошибку выполнения запроса api
-            if (result && result.status) {
+            if (result !== null && result.status) {
                 var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
                 //console.log('[view_usage_fee] [deleteUsageFeePeriodDetali] :' + mess);
                 this.main_alert.out_error_message(mess);
@@ -2177,7 +2441,7 @@
                 LockScreenOff();
             } else {
                 // ошибки выполнения нет проверим ответ запроса
-                if (result && result >= 0) {
+                if (result >= 0) {
                     this.main_alert.clear_message();
                     this.update_additional_conditions(this.id_usage_fee_period, function () {
                         LockScreenOff();
