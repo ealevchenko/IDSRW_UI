@@ -151,6 +151,9 @@ var get_belongs_element = function (rows, name_field, id) {
     return false;
 };
 
+
+
+
 (function (window) {
     'use strict';
 
@@ -165,23 +168,141 @@ var get_belongs_element = function (rows, name_field, id) {
     //App.Url_Api = url_api_main;
     App.Url_Api = url_api_test;
 
-    // Определим AdminInfo - информацию об api которое подключено к UI
-    App.AdminInfo = {};
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    xhr.open("GET", App.Url_Api + "/Admin/user_info");
-    // обработчик получения ответа сервера
-    xhr.onload = () => {
-        if (xhr.status == 200) {
-            // если код ответа 200
-            App.AdminInfo = JSON.parse(xhr.responseText);
-            console.log("Server response: ", xhr.statusText);
-        } else {                                // иначе выводим текст статуса
-            App.AdminInfo = {};
-            console.log("Server response: ", xhr.statusText);
-        }
+
+
+    function api_admin() {
+
     };
-    xhr.send();     // выполняем запрос
+    // Информация по учетной записи
+    api_admin.prototype.get_admin_info = function (callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open("GET", App.Url_Api + "/Admin/user_info");
+        // обработчик получения ответа сервера
+        xhr.onload = () => {
+            var result = {};
+            if (xhr.status == 200) {
+                // если код ответа 200
+                result = JSON.parse(xhr.responseText);
+            }
+            if (typeof callback === 'function') {
+                callback(result);
+            }
+        };
+        xhr.send();     // выполняем запрос
+    };
+    // Получит учетная запись пренадлежит указаной роли
+    api_admin.prototype.get_admin_is_role = function (role, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open("GET", App.Url_Api + "/Admin/is_role/" + role);
+        // обработчик получения ответа сервера
+        xhr.onload = () => {
+            var result = false;
+            if (xhr.status == 200) {
+                // если код ответа 200
+                result = JSON.parse(xhr.responseText);
+            }
+            if (typeof callback === 'function') {
+                callback(result);
+            }
+        };
+        xhr.send();     // выполняем запрос
+    };
+    // Получит учетная запись пренадлежит cgbcre ролей
+    api_admin.prototype.get_admin_is_roles = function (roles, callback) {
+
+        var result_roles = [];
+        var arr_roles = roles.split(';');
+
+        var count = arr_roles.length;
+        var out_get = function (count, role, result) {
+            result_roles.push({ role: role, result: result });
+            if (count === 0) {
+                if (typeof callback === 'function') {
+                    callback(result_roles);
+                }
+            }
+        };
+
+        $.each(arr_roles, function (i, el) {
+            this.get_admin_is_role(el, function (result) {
+                count--;
+                out_get(count, el, result);
+            }.bind(this));
+        }.bind(this));
+    }
+
+    App.api_admin = api_admin;
+
+
+    //// Получить имя пользователя
+    //var get_admin_info = function (callback) {
+    //    const xhr = new XMLHttpRequest();
+    //    xhr.withCredentials = true;
+    //    xhr.open("GET", App.Url_Api + "/Admin/user_info");
+    //    // обработчик получения ответа сервера
+    //    xhr.onload = () => {
+    //        var result = {};
+    //        if (xhr.status == 200) {
+    //            // если код ответа 200
+    //            result = JSON.parse(xhr.responseText);
+    //        }
+    //        if (typeof callback === 'function') {
+    //            callback(result);
+    //        }
+    //    };
+    //    xhr.send();     // выполняем запрос
+    //};
+    //// Пренедлежит роли
+    //var get_admin_is_role = function (role, callback) {
+    //    const xhr = new XMLHttpRequest();
+    //    xhr.withCredentials = true;
+    //    xhr.open("GET", App.Url_Api + "/Admin/is_role/" + role);
+    //    // обработчик получения ответа сервера
+    //    xhr.onload = () => {
+    //        var result = false;
+    //        if (xhr.status == 200) {
+    //            // если код ответа 200
+    //            result = JSON.parse(xhr.responseText);
+    //        }
+    //        if (typeof callback === 'function') {
+    //            callback(result);
+    //        }
+    //    };
+    //    xhr.send();     // выполняем запрос
+    //};
+
+    var ADMIN = App.api_admin;
+    var admin = new ADMIN();
+
+    App.AdminInfo = {};
+    admin.get_admin_info(function (data) {
+        App.AdminInfo = data;
+    }.bind(this));
+
+    //App.AdmRole = false;
+    //get_admin_is_role('KRR-LG-PA-RailWay_Developers', function (data) {
+    //    App.AdmRole = data;
+    //}.bind(this));
+
+    // Определим AdminInfo - информацию об api которое подключено к UI
+    //App.AdminInfo = {};
+    //const xhr = new XMLHttpRequest();
+    //xhr.withCredentials = true;
+    //xhr.open("GET", App.Url_Api + "/Admin/user_info");
+    //// обработчик получения ответа сервера
+    //xhr.onload = () => {
+    //    if (xhr.status == 200) {
+    //        // если код ответа 200
+    //        App.AdminInfo = JSON.parse(xhr.responseText);
+    //        console.log("Server response: ", xhr.statusText);
+    //    } else {                                // иначе выводим текст статуса
+    //        App.AdminInfo = {};
+    //        console.log("Server response: ", xhr.statusText);
+    //    }
+    //};
+    //xhr.send();     // выполняем запрос
 
     //let cnt = localStorage.getItem('visitCount');
     //// Устанавливаем счетчик в 0, если посещение впервые
