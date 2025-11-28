@@ -741,8 +741,8 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: moment().subtract(1, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
-                    element_max: moment().add(1, 'days').format("YYYY-MM-DDThh:mm"),
+                    element_min: moment().subtract(1, 'days').format("YYYY-MM-DDTHH:mm"), //"2024-05-05T00:00"
+                    element_max: moment().add(1, 'days').format("YYYY-MM-DDTHH:mm"),
                     element_step: null,
                     element_options: {
                         default: moment(),
@@ -780,8 +780,8 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
-                    element_max: moment().add(10, 'days').format("YYYY-MM-DDThh:mm"),
+                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDTHH:mm"), //"2024-05-05T00:00"
+                    element_max: moment().add(10, 'days').format("YYYY-MM-DDTHH:mm"),
                     element_step: null,
                     element_options: {
                         default: moment(),
@@ -900,8 +900,8 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
-                    element_max: moment().add(10, 'days').format("YYYY-MM-DDThh:mm"),
+                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDTHH:mm"), //"2024-05-05T00:00"
+                    element_max: moment().add(10, 'days').format("YYYY-MM-DDTHH:mm"),
                     element_step: null,
                     element_options: {
                         default: moment(),
@@ -1025,8 +1025,8 @@
                     element_maxlength: null,
                     element_pattern: null,
                     element_readonly: false,
-                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDThh:mm"), //"2024-05-05T00:00"
-                    element_max: moment().add(10, 'days').format("YYYY-MM-DDThh:mm"),
+                    element_min: moment().subtract(10, 'days').format("YYYY-MM-DDTHH:mm"), //"2024-05-05T00:00"
+                    element_max: moment().add(10, 'days').format("YYYY-MM-DDTHH:mm"),
                     element_step: null,
                     element_options: {
                         default: moment(),
