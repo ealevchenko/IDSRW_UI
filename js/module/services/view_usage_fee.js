@@ -254,14 +254,14 @@
         this.fe_ui = new FE();
         // Получим роль
         var admin = new ADMIN();
-        var RoleAdmin = 'KRR-LG_TD-IDSRW_ADMIN'; //KRR-LG-PA-RailWay_Developers
+        //var RoleAdmin = 'KRR-LG_TD-IDSRW_ADMIN'; //KRR-LG-PA-RailWay_Developers
         this.rAdmin = false;
-        var RoleRW = 'KRR-LG_TD-IDSRW_PAY';
+        //var RoleRW = 'KRR-LG_TD-IDSRW_PAY';
         this.rRW = false;
-        var RoleRO = '';
+        //var RoleRO = 'KRR-LG_TD-IDSRW_PAY_RO';
         this.rRO = false;
         this.Roles = [];
-        admin.get_admin_is_roles(RoleAdmin + ';' + RoleRW + ';' + RoleRO, function (data) {
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.PAY_RW + ';' + 'Not_Role', function (data) {
             this.Roles = data;
             if (this.Roles && this.Roles.length > 0) {
                 var res = this.Roles.find(function (o) { return o.role === RoleAdmin }.bind(this)); this.rAdmin = res ? res.result : false;
