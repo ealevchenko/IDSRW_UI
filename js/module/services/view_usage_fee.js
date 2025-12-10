@@ -160,6 +160,12 @@
             'vs_usfee_cancel_edit_apply_ufd': 'Отмена операции "ПРАВИТЬ УСЛОВИЕ"',
 
             'vs_usfee_load_info': 'Загружаю информацию...',
+
+            //'vs_usfee_mess_info_detali_title_add': 'Добавить доп. условие...',
+            //'vs_usfee_mess_info_detali_title_arr': 'По прибытию...',
+            //'vs_usfee_mess_info_detali_title_out': 'По отправке...',
+
+
             //'vs_usfee_update_letters': 'Обновляю письма за период...',
             //'vs_usfee_select_letters': 'Поиск писем согласно выбора...',
 
@@ -254,29 +260,24 @@
         this.fe_ui = new FE();
         // Получим роль
         var admin = new ADMIN();
-        //var RoleAdmin = 'KRR-LG_TD-IDSRW_ADMIN'; //KRR-LG-PA-RailWay_Developers
         this.rAdmin = false;
-        //var RoleRW = 'KRR-LG_TD-IDSRW_PAY';
         this.rRW = false;
-        //var RoleRO = 'KRR-LG_TD-IDSRW_PAY_RO';
-        this.rRO = false;
         this.Roles = [];
-        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.PAY_RW + ';' + 'Not_Role', function (data) {
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.PAY_RW, function (data) {
             this.Roles = data;
             if (this.Roles && this.Roles.length > 0) {
-                var res = this.Roles.find(function (o) { return o.role === RoleAdmin }.bind(this)); this.rAdmin = res ? res.result : false;
-                var res = this.Roles.find(function (o) { return o.role === RoleRW }.bind(this)); this.rRW = res ? res.result : false;
-                var res = this.Roles.find(function (o) { return o.role === RoleRO }.bind(this)); this.rRO = res ? res.result : false;
+                var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
+                var res = this.Roles.find(function (o) { return o.role === Roles.PAY_RW }.bind(this)); this.rRW = res ? res.result : false;
             }
             //this.rAdmin = false;
-            //this.rRW = true;
-            this.rRO = true;
+            //this.rRW = false;
         }.bind(this));
 
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
     view_usage_fee.prototype.init = function (options) {
+
         this.result_init = true;
         console.log('Init view_usage_fee');
         LockScreen(langView('vs_usfee_mess_init_module', App.Langs));
@@ -291,6 +292,27 @@
             fn_db_update: null,                     // Выполнить обновление баз данных если были изменения
             fn_close: null,                         // ? пока неработает
         }, options);
+        // Главный Alert
+        this.alert = new this.fe_ui.bs_alert({
+            id: null,
+            class: null,
+            style: null,
+            color: null,
+            bt_close: false,
+            fn_click_close: null,
+        });
+        this.$main.append(this.alert.$html);
+        this.main_alert = new ALERT(this.alert.$html);
+        // доступ
+        if (!this.rAdmin && !this.rRW) {
+            this.main_alert.out_warning_message('Для учетной записи [' + App.AdminInfo.name + '], доступ к ставкам для расчета платы за пользование ограничен!')
+            //this.$main.append('Для учетной записи ' + App.AdminInfo.name +' - доступ ограничен');
+            if (typeof this.settings.fn_init === 'function') {
+                console.log('Close view_usage_fee');
+                this.settings.fn_init(false);
+            }
+            return;
+        };
         //
         this.id_usage_fee_period = null;
         this.id_usage_fee_period_detali = null;
@@ -301,7 +323,6 @@
         this.list_period = [];
         this.select_period = null;  // Выбранный период для правки (выводится в окне правки)
         this.select_rows_ufp = [];  // выбранные периоды оператор и род (список выбранных периодов используется для контроля неповторяющихся периодов род-оператор)
-
         // Создадим ссылку на модуль работы с базой данных
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
@@ -318,17 +339,19 @@
             bt_ok_text: langView('vs_usfee_button_Ok', App.Langs),
         });
 
-        // Главный Alert
-        this.alert = new this.fe_ui.bs_alert({
-            id: null,
-            class: null,
-            style: null,
-            color: null,
-            bt_close: false,
-            fn_click_close: null,
-        });
-        this.$main.append(this.alert.$html);
-        this.main_alert = new ALERT(this.alert.$html);
+        //// Главный Alert
+        //this.alert = new this.fe_ui.bs_alert({
+        //    id: null,
+        //    class: null,
+        //    style: null,
+        //    color: null,
+        //    bt_close: false,
+        //    fn_click_close: null,
+        //});
+        //this.$main.append(this.alert.$html);
+        //this.main_alert = new ALERT(this.alert.$html);
+
+
         // Создать макет панели (Плата за пользование)
         this.card_services = new this.fe_ui.bs_card({
             border_color: 'border-primary',
@@ -592,6 +615,7 @@
                         // На проверку окончания инициализации
                         //bts.titleAttr(langView('vopulc_title_attr_button_new_filing', App.Langs));
                         $('div#tab-tr-table-list-of-rod_wrapper').find('.btn-group').addClass('btn-group-sm');
+                        $('div#tab-tr-table-list-of-rod_wrapper').find('.dt-scroll').css("position", "static");
                         process--;
                         out_init(process);
                     },
@@ -603,83 +627,6 @@
                         this.update_ufp(function (result) {
                             LockScreenOff();
                         }.bind(this))
-                        //var process_period = 0;
-                        //this.select_period = null;
-                        //// Выход из инициализации
-                        //var out_load_period = function (process_period) {
-                        //    if (process_period === 0) {
-                        //        this.tab_list_payment_terms.view(this.list_period);
-                        //        this.view_form_payment_terms_setup(this.select_period);
-                        //        LockScreenOff();
-                        //    }
-                        //};
-
-                        //LockScreen(langView('vs_usfee_load_info', App.Langs));
-                        //var rows_select = this.tab_list_of_rod.tab_com.get_select_row();
-                        //process_period = rows_select.length;
-                        //this.list_period = [];
-                        //if (rows_select && rows_select.length > 0) {
-                        //    $.each(rows_select, function (key, el) {
-                        //        this.api_wsd.getViewUsageFeePeriodOfOperatorGenus(el.idOperator, el.idGenus, function (data) {
-                        //            if (data && data.length > 0) {
-                        //                this.list_period = this.list_period.concat(data);
-                        //            } else {
-                        //                // Создадим новую строку
-                        //                var genus = this.api_dir.getGenusWagons_Of_ID(el.idGenus);
-                        //                var operator = this.api_dir.getOperatorsWagons_Of_ID(el.idOperator);
-                        //                this.list_period.push({
-                        //                    "idUsageFeePeriod": 0,
-                        //                    "usageFeePeriodIdOperator": el.idOperator,
-                        //                    "usageFeePeriodOperatorAbbrRu": operator.abbrRu,
-                        //                    "usageFeePeriodOperatorRu": operator.operatorsRu,
-                        //                    "usageFeePeriodOperatorAbbrEn": operator.abbrEn,
-                        //                    "usageFeePeriodOperatorEn": operator.operatorsEn,
-                        //                    "usageFeePeriodOperatorsPaid": null,
-                        //                    "usageFeePeriodOperatorsRop": null,
-                        //                    "usageFeePeriodOperatorsLocalUse": null,
-                        //                    "usageFeePeriodOperatorsColor": null,
-                        //                    "usageFeePeriodIdGenus": el.idGenus,
-                        //                    "usageFeePeriodGenusRu": genus.genusRu,
-                        //                    "usageFeePeriodGenusEn": genus.genusEn,
-                        //                    "usageFeePeriodGenusAbbrRu": genus.abbrRu,
-                        //                    "usageFeePeriodGenusAbbrEn": genus.abbrEn,
-                        //                    "usageFeePeriodRodUz": null,
-                        //                    "usageFeePeriodStart": moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format("YYYY-MM-DDTHH:mm"),
-                        //                    "usageFeePeriodStop": moment().endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format("YYYY-MM-DDTHH:mm"),
-                        //                    "usageFeePeriodIdCurrency": -1,
-                        //                    "usageFeePeriodCurrencyRu": null,
-                        //                    "usageFeePeriodCurrencyEn": null,
-                        //                    "usageFeePeriodCode": null,
-                        //                    "usageFeePeriodCodeCc": null,
-                        //                    "usageFeePeriodRate": null,
-                        //                    "usageFeePeriodIdCurrencyDerailment": -1,
-                        //                    "usageFeePeriodDerailmentCurrencyRu": null,
-                        //                    "usageFeePeriodDerailmentCurrencyEn": null,
-                        //                    "usageFeePeriodDerailmentCode": null,
-                        //                    "usageFeePeriodDerailmentCodeCc": null,
-                        //                    "usageFeePeriodRateDerailment": null,
-                        //                    "usageFeePeriodCoefficientRoute": null,
-                        //                    "usageFeePeriodCoefficientNotRoute": null,
-                        //                    "usageFeePeriodGraceTime1": null,
-                        //                    "usageFeePeriodGraceTime2": null,
-                        //                    "usageFeePeriodNote": null,
-                        //                    "usageFeePeriodCreate": null,
-                        //                    "usageFeePeriodCreateUser": null,
-                        //                    "usageFeePeriodChange": null,
-                        //                    "usageFeePeriodChangeUser": null,
-                        //                    "usageFeePeriodClose": null,
-                        //                    "usageFeePeriodCloseUser": null,
-                        //                    "usageFeePeriodParentId": null,
-                        //                    "usageFeePeriodHourAfter30": null
-                        //                });
-                        //            }
-                        //            process_period--;
-                        //            out_load_period.call(this, process_period);
-                        //        }.bind(this));
-                        //    }.bind(this));
-                        //} else {
-                        //    out_load_period.call(this, process_period);
-                        //}
                     }.bind(this),
                     fn_select_link: function (link) { }.bind(this),
                     fn_button_action: function (name, e, dt, node, config) {
@@ -2176,54 +2123,56 @@
                     if (data && data.length > 0) {
                         this.list_period = this.list_period.concat(data);
                     } else {
-                        // Создадим новую строку
-                        var genus = this.api_dir.getGenusWagons_Of_ID(el.idGenus);
-                        var operator = this.api_dir.getOperatorsWagons_Of_ID(el.idOperator);
-                        this.list_period.push({
-                            "idUsageFeePeriod": 0,
-                            "usageFeePeriodIdOperator": el.idOperator,
-                            "usageFeePeriodOperatorAbbrRu": operator.abbrRu,
-                            "usageFeePeriodOperatorRu": operator.operatorsRu,
-                            "usageFeePeriodOperatorAbbrEn": operator.abbrEn,
-                            "usageFeePeriodOperatorEn": operator.operatorsEn,
-                            "usageFeePeriodOperatorsPaid": null,
-                            "usageFeePeriodOperatorsRop": null,
-                            "usageFeePeriodOperatorsLocalUse": null,
-                            "usageFeePeriodOperatorsColor": null,
-                            "usageFeePeriodIdGenus": el.idGenus,
-                            "usageFeePeriodGenusRu": genus.genusRu,
-                            "usageFeePeriodGenusEn": genus.genusEn,
-                            "usageFeePeriodGenusAbbrRu": genus.abbrRu,
-                            "usageFeePeriodGenusAbbrEn": genus.abbrEn,
-                            "usageFeePeriodRodUz": null,
-                            "usageFeePeriodStart": moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format("YYYY-MM-DDTHH:mm"),
-                            "usageFeePeriodStop": moment().endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format("YYYY-MM-DDTHH:mm"),
-                            "usageFeePeriodIdCurrency": -1,
-                            "usageFeePeriodCurrencyRu": null,
-                            "usageFeePeriodCurrencyEn": null,
-                            "usageFeePeriodCode": null,
-                            "usageFeePeriodCodeCc": null,
-                            "usageFeePeriodRate": null,
-                            "usageFeePeriodIdCurrencyDerailment": -1,
-                            "usageFeePeriodDerailmentCurrencyRu": null,
-                            "usageFeePeriodDerailmentCurrencyEn": null,
-                            "usageFeePeriodDerailmentCode": null,
-                            "usageFeePeriodDerailmentCodeCc": null,
-                            "usageFeePeriodRateDerailment": null,
-                            "usageFeePeriodCoefficientRoute": null,
-                            "usageFeePeriodCoefficientNotRoute": null,
-                            "usageFeePeriodGraceTime1": null,
-                            "usageFeePeriodGraceTime2": null,
-                            "usageFeePeriodNote": null,
-                            "usageFeePeriodCreate": null,
-                            "usageFeePeriodCreateUser": null,
-                            "usageFeePeriodChange": null,
-                            "usageFeePeriodChangeUser": null,
-                            "usageFeePeriodClose": null,
-                            "usageFeePeriodCloseUser": null,
-                            "usageFeePeriodParentId": null,
-                            "usageFeePeriodHourAfter30": null
-                        });
+                        if (this.rAdmin || this.rRW) { //
+                            // Создадим новую строку
+                            var genus = this.api_dir.getGenusWagons_Of_ID(el.idGenus);
+                            var operator = this.api_dir.getOperatorsWagons_Of_ID(el.idOperator);
+                            this.list_period.push({
+                                "idUsageFeePeriod": 0,
+                                "usageFeePeriodIdOperator": el.idOperator,
+                                "usageFeePeriodOperatorAbbrRu": operator.abbrRu,
+                                "usageFeePeriodOperatorRu": operator.operatorsRu,
+                                "usageFeePeriodOperatorAbbrEn": operator.abbrEn,
+                                "usageFeePeriodOperatorEn": operator.operatorsEn,
+                                "usageFeePeriodOperatorsPaid": null,
+                                "usageFeePeriodOperatorsRop": null,
+                                "usageFeePeriodOperatorsLocalUse": null,
+                                "usageFeePeriodOperatorsColor": null,
+                                "usageFeePeriodIdGenus": el.idGenus,
+                                "usageFeePeriodGenusRu": genus.genusRu,
+                                "usageFeePeriodGenusEn": genus.genusEn,
+                                "usageFeePeriodGenusAbbrRu": genus.abbrRu,
+                                "usageFeePeriodGenusAbbrEn": genus.abbrEn,
+                                "usageFeePeriodRodUz": null,
+                                "usageFeePeriodStart": moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format("YYYY-MM-DDTHH:mm"),
+                                "usageFeePeriodStop": moment().endOf('month').set({ 'hour': 23, 'minute': 59, 'second': 59 }).format("YYYY-MM-DDTHH:mm"),
+                                "usageFeePeriodIdCurrency": -1,
+                                "usageFeePeriodCurrencyRu": null,
+                                "usageFeePeriodCurrencyEn": null,
+                                "usageFeePeriodCode": null,
+                                "usageFeePeriodCodeCc": null,
+                                "usageFeePeriodRate": null,
+                                "usageFeePeriodIdCurrencyDerailment": -1,
+                                "usageFeePeriodDerailmentCurrencyRu": null,
+                                "usageFeePeriodDerailmentCurrencyEn": null,
+                                "usageFeePeriodDerailmentCode": null,
+                                "usageFeePeriodDerailmentCodeCc": null,
+                                "usageFeePeriodRateDerailment": null,
+                                "usageFeePeriodCoefficientRoute": null,
+                                "usageFeePeriodCoefficientNotRoute": null,
+                                "usageFeePeriodGraceTime1": null,
+                                "usageFeePeriodGraceTime2": null,
+                                "usageFeePeriodNote": null,
+                                "usageFeePeriodCreate": null,
+                                "usageFeePeriodCreateUser": null,
+                                "usageFeePeriodChange": null,
+                                "usageFeePeriodChangeUser": null,
+                                "usageFeePeriodClose": null,
+                                "usageFeePeriodCloseUser": null,
+                                "usageFeePeriodParentId": null,
+                                "usageFeePeriodHourAfter30": null
+                            });
+                        }
                     }
                     process_period--;
                     out_load_period.call(this, process_period);
@@ -2387,7 +2336,7 @@
                         $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
                     }
                     if (el.outgoingStartLoad === true) {
-                        $li.append(new init_view_field('outgoingStartLoad', 'По оканчанию выгрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
+                        $li.append(new init_view_field('outgoingStartLoad', 'С начала погрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
                     }
                     if (el.codeStnTo !== null) {
                         $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
