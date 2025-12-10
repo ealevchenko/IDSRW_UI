@@ -1171,8 +1171,8 @@
             {
                 field: 'usage_fee_period_status_period',
                 data: function (row, type, val, meta) {
-                    if (row.usageFeePeriodStop != null) {
-                        if (moment().isBefore(row.usageFeePeriodStop)) {
+                    if (row.idUsageFeePeriod > 0) {
+                        if (row.usageFeePeriodStop != null && moment().isBefore(row.usageFeePeriodStop)) {
                             return '<i class="fa-solid fa-calendar-check" style="color:#008000"></i>';
                         } else {
                             return '<i class="fa-solid fa-calendar-xmark" style="color:#ff6868"></i>';
@@ -1180,6 +1180,15 @@
                     } else {
                         return '<i class="fa-solid fa-calendar-plus" style="color:#1b1bff"></i>';
                     }
+                    //if (row.usageFeePeriodStop != null && idUsageFeePeriod) {
+                    //    if (moment().isBefore(row.usageFeePeriodStop)) {
+                    //        return '<i class="fa-solid fa-calendar-check" style="color:#008000"></i>';
+                    //    } else {
+                    //        return '<i class="fa-solid fa-calendar-xmark" style="color:#ff6868"></i>';
+                    //    }
+                    //} else {
+                    //    return '<i class="fa-solid fa-calendar-plus" style="color:#1b1bff"></i>';
+                    //}
                 },
                 className: 'dt-body-center',
                 title: '', width: "18px", orderable: false, searchable: false
