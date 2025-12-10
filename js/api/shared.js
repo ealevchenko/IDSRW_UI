@@ -129,7 +129,7 @@ var AJAXComplete = function () {
                 }
             },
             error: function (x, y, z) {
-                OnAJAXError("api_common" + api_url, x, y, z);
+                OnAJAXError("api_common" + api_url, x, y, z, callback);
             },
             complete: function () {
                 AJAXComplete();
