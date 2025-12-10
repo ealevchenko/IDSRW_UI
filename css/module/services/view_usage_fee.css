@@ -4,3 +4,7 @@
 .usage_fee_deteli {
     /*font-size: 0.8rem;*/
 }
+
+div.dt-scroll, div.dtfh-floatingparent {
+    position: static !important
+}
