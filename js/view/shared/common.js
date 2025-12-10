@@ -6,11 +6,12 @@ var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
 // ** РОЛИ ****************************
 var Roles = {
     ADMIN: "KRR-LG_TD-IDSRW_ADMIN",                 // Администратор системы
-    ACESS: "KRR-LG_TD-IDSRW_ACESS",                 // Просмотр системы (общий вход в систему)
     // ПРИБЫТИЕ 
     ACCEPT_RW: "KRR-LG_TD-IDSRW_ACCEPT",            // Ввод информации по прибытию вагонов с внешней сети УЗ
+    ACCEPT_RW: "KRR-LG_TD-IDSRO_ACCEPT",            // Ввод информации по прибытию вагонов с внешней сети УЗ
     // ОТПРАВКА 
     SEND_RW: "KRR-LG_TD-IDSRW_SEND",                // Ввод информации по отправлению вагонов на внешнюю сеть УЗ
+    SEND_RW: "KRR-LG_TD-IDSRO_SEND",                // Ввод информации по отправлению вагонов на внешнюю сеть УЗ
     // СЕРВИСЫ  
     // Сверка накладных
     TRF_ACCEPT_RW: "KRR-LG_TD-IDSRW_TRF_ACCEPT",    // Ввод данных в сервис  "Расчет стоимости перевозки груза по прибытию
@@ -27,7 +28,7 @@ var Roles = {
     COM_STAT_RW: "KRR-LG_TD-IDSRW_COM_STAT",        // Ввод данных, корректировка разметки вагонов с сервисе "Разметка коммерческого состояния вагонов"  
     COND_ARR_RW: "KRR-LG_TD-IDSRW_COND_ARR",        // Ввод данных, корректировка разметки вагонов по прибытияю с нешней сети УЗ в сервисе "Разметка по прибытию"
     COND_SEND_RW: "KRR-LG_TD-IDSRW_COND_SEND"       // Ввод данных, корректировка разметки вагонов по отправлению  на внешнюю сеть УЗ в сервисе  "  Разметка по отправлению" 
-},
+};
    
 var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
 var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
