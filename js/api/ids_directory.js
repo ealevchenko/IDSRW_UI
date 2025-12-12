@@ -40,6 +40,7 @@
             list_load: [
                 { name: 'cargo', list: null, fn_get: this.getCargo.bind(this) },
                 { name: 'cargo_group', list: null, fn_get: this.getCargoGroup.bind(this) },
+                { name: 'cargo_out_group', list: null, fn_get: this.getCargoOutGroup.bind(this) },
                 { name: 'cargo_etsng', list: null, fn_get: this.getCargoETSNG.bind(this) },
                 { name: 'internal_cargo', list: null, fn_get: this.getInternalCargo.bind(this) },
                 //{ name: 'internal_cargo_group', list: null, fn_get: this.getInternalCargoGroup.bind(this) },
@@ -125,54 +126,14 @@
         this.api_com.get('/DirectoryCargo', callback);
     };
     //======= Directory_CargoGroup (Справочник группа грузов) ======================================
-    //ids_directory.prototype.getCargoGroup = function (callback) {
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: this.settings.url_api + '/DirectoryCargoGroup',
-    //        async: true,
-    //        dataType: 'json',
-    //        beforeSend: function () {
-    //            AJAXBeforeSend();
-    //        },
-    //        success: function (data) {
-    //            if (typeof callback === 'function') {
-    //                callback(data);
-    //            }
-    //        },
-    //        error: function (x, y, z) {
-    //            OnAJAXError("ids_directory.getCargoGroup", x, y, z);
-    //        },
-    //        complete: function () {
-    //            AJAXComplete();
-    //        },
-    //    });
-    //};
     ids_directory.prototype.getCargoGroup = function (callback) {
         this.api_com.get('/DirectoryCargoGroup', callback);
     };
+    //======= Directory_CargoGroup (Справочник группа грузов по отправке) ======================================
+    ids_directory.prototype.getCargoOutGroup = function (callback) {
+        this.api_com.get('/DirectoryCargoOutGroup', callback);
+    };
     //======= Directory_CargoETSNG (Справочник грузов ЕТСНГ) ======================================
-    //ids_directory.prototype.getCargoETSNG = function (callback) {
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: this.settings.url_api + '/DirectoryCargoEtsng',
-    //        async: true,
-    //        dataType: 'json',
-    //        beforeSend: function () {
-    //            AJAXBeforeSend();
-    //        },
-    //        success: function (data) {
-    //            if (typeof callback === 'function') {
-    //                callback(data);
-    //            }
-    //        },
-    //        error: function (x, y, z) {
-    //            OnAJAXError("ids_directory.getCargoETSNG", x, y, z);
-    //        },
-    //        complete: function () {
-    //            AJAXComplete();
-    //        },
-    //    });
-    //};
     ids_directory.prototype.getCargoETSNG = function (callback) {
         this.api_com.get('/DirectoryCargoEtsng', callback);
     };
@@ -798,6 +759,28 @@
         }
         return list;
     };
+    // Получить списки (Value, Text, Code-етснг, Desabled) по указанной группе прибытия
+    ids_directory.prototype.getListValueTextCodeCargoOfGroup = function (id_group) {
+        var list_obj = this.getAllCargo();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj.filter(function (i) { return i.idGroup === id_group; }.bind(this)), function (i, el) {
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.idCargoEtsngNavigation.code, disabled: false, empty: el.emptyWeight });
+            }.bind(this));
+        }
+        return list;
+    };
+    // Получить списки (Value, Text, Code-етснг, Desabled) по указанной группе отправки
+    ids_directory.prototype.getListValueTextCodeCargoOfOutGroup = function (id_group) {
+        var list_obj = this.getAllCargo();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj.filter(function (i) { return i.idOutGroup === id_group; }.bind(this)), function (i, el) {
+                list.push({ value: el['id'], text: el['cargoName' + ucFirst(App.Lang)], group: el.idCargoEtsngNavigation.code, disabled: false, empty: el.emptyWeight });
+            }.bind(this));
+        }
+        return list;
+    };
     // Получить существующий 
     ids_directory.prototype.getExistCargo = function (id, name) {
         var obj_db = null;
@@ -851,7 +834,28 @@
     ids_directory.prototype.getListValueTextCargoGroup = function () {
         return this.getListCargoGroup('id', 'cargoGroupName', ucFirst(App.Lang));
     };
-
+    //*======= ids_directory.list_cargo_out_group  (Справочник группы грузов по отправке) ======================================
+    // Получить все записи
+    ids_directory.prototype.getAllCargoOutGroup = function () {
+        var obj = this.api_com.getAllObj('cargo_out_group');
+        return obj ? obj.list : null;
+    };
+    // Получить запись по id
+    ids_directory.prototype.getCargoOutGroup_Of_ID = function (id) {
+        return this.api_com.getObj_Of_field('cargo_out_group', 'id', id);
+    };
+    // Получить записи по имени
+    ids_directory.prototype.getCargoOutGroup_Of_Name = function (name, text) {
+        return this.api_com.getObj_Of_field('cargo_out_group', name, text);
+    };
+    // Получить списки (Value, Text, Desabled) по указоным полям
+    ids_directory.prototype.getListCargoOutGroup = function (fvalue, ftext, lang, filter) {
+        return this.api_com.getListObj('cargo_out_group', fvalue, ftext, lang, filter);
+    };
+    // Получить списки (Value, Text, Desabled) по умолчанию
+    ids_directory.prototype.getListValueTextCargoOutGroup = function () {
+        return this.getListCargoOutGroup('id', 'cargoGroupName', ucFirst(App.Lang));
+    };
     //*======= ids_directory.list_cargo_etsng  (Справочник грузов ЕТСНГ) ======================================
     // Получить все записи
     ids_directory.prototype.getAllCargoETSNG = function () {
