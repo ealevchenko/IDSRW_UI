@@ -82,6 +82,10 @@
             'vs_usfee_title_placeholder_arrival_cargo_name': 'Груз (ПРИБ)',
             'vs_usfee_text_arrival_cargo_name': 'Выберите груз прибытия...',
 
+            'vs_usfee_title_label_arrival_cargo_group_name': 'Группа груза (ПРИБ) :',
+            'vs_usfee_title_placeholder_arrival_cargo_group_name': 'Группа (ПРИБ)',
+            'vs_usfee_text_arrival_cargo_group_name': 'Выберите группу груза прибытия...',
+
             'vs_usfee_title_label_code_stn_on': 'Станция (ПРИБ) :',
             'vs_usfee_title_placeholder_code_stn_on': 'Станция (ПРИБ)',
             'vs_usfee_text_code_stn_on': 'Выберите станцию прибытия...',
@@ -90,12 +94,16 @@
             'vs_usfee_title_placeholder_outgoing_cargo_name': 'Груз (ОТПР)',
             'vs_usfee_text_outgoing_cargo_name': 'Выберите груз отправления...',
 
+            'vs_usfee_title_label_outgoing_cargo_group_name': 'Группа груза (ОТПР) :',
+            'vs_usfee_title_placeholder_outgoing_cargo_group_name': 'Группа (ОТПР)',
+            'vs_usfee_text_outgoing_cargo_group_name': 'Выберите группу груза отправления...',
+
             'vs_usfee_label_grace_time_value': 'Льгот время:',
             'vs_usfee_title_placeholder_grace_time_value': 'Льгот время',
             'vs_usfee_text_grace_time_value': 'Льгот время...',
 
-            'vs_usfee_label_end_unload': 'По окончанию выгрузки',
-            'vs_usfee_label_start_load': 'С начала погрузки',
+            'vs_usfee_label_end_unload': 'До окончания выгрузки',
+            'vs_usfee_label_start_load': 'До начала погрузки',
 
             //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
             //'vs_usfee_title_button_lett_num_clear': 'Очистить',
@@ -202,7 +210,9 @@
             //'vs_usfee_mess_error_date_period_start_is_null': 'Время начала должно быть меньше времени окончания!',
 
             'vs_usfee_mess_error_id_cargo_arrival': 'Укажите Груз (ПРИБ)',
+            'vs_usfee_mess_error_id_cargo_group_arrival': 'Укажите Группу (ПРИБ)',
             'vs_usfee_mess_error_id_cargo_outgoing': 'Укажите Груз (ОТПР)',
+            'vs_usfee_mess_error_id_cargo_group_outgoing': 'Укажите Группу (ОТПР)',
 
             'vs_usfee_mess_error_grace_time_value_is_not_null': 'Льготное время не используется',
             'vs_usfee_mess_error_grace_time_value_is_null': 'Введите льготное время',
@@ -316,6 +326,16 @@
         //
         this.id_usage_fee_period = null;
         this.id_usage_fee_period_detali = null;
+
+        this.list_cargo_group_all = [];
+        this.list_cargo_group = [];
+        this.list_cargo_out_group_all = [];
+        this.list_cargo_out_group = [];
+
+        this.list_cargo_all = []; // справочник грузов
+        this.list_cargo_arr = []; // список грузов прибытие
+        this.list_cargo_out = []; // список грузов отправка
+
         this.list_operators_all = [];
         this.list_operators = [];
         this.list_operators_genus_all = [];
@@ -524,8 +544,15 @@
                 this.list_external_station_all = this.api_dir.getAllExternalStation();
                 this.list_external_station = this.api_dir.getListValueTextExternalStation();
 
+                this.list_cargo_group_all = this.api_dir.getAllCargoGroup();
+                this.list_cargo_group = this.api_dir.getListValueTextCargoGroup();
+
+                this.list_cargo_out_group_all = this.api_dir.getAllCargoOutGroup();
+                this.list_cargo_out_group = this.api_dir.getListValueTextCargoOutGroup();
+
                 this.list_cargo_all = this.api_dir.getAllCargo();
-                this.list_cargo = this.api_dir.getListValueTextCodeCargo();
+                this.list_cargo_arr = this.api_dir.getListValueTextCodeCargo();
+                this.list_cargo_out = this.api_dir.getListValueTextCodeCargo();
 
                 this.list_currency_all = this.api_dir.getAllCurrency();
                 this.list_currency = this.api_dir.getListValueTextCurrency();
@@ -1574,9 +1601,59 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 3,
+                        col_size: 2,
                         col_class: 'mt-0',
                         //form_text: langView('vs_usfee_text_code_stn_from', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_datalist_arrival_cargo_group_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'id_cargo_group_arrival',
+                        name: 'id_cargo_group_arrival',
+                        label: langView('vs_usfee_title_label_arrival_cargo_group_name', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_arrival_cargo_group_name', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_cargo_group,
+                            out_value: false,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                if (set.value === '' && set.text === '') {
+                                    /*this.form_letters_edit.clear_all();*/
+                                    this.list_cargo_arr = this.api_dir.getListValueTextCodeCargo();
+                                    this.form_rate_edit.el.datalist_id_cargo_arrival.update(this.list_cargo_arr, -1);
+                                }
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+                                if (set.value !== null) {
+                                    this.list_cargo_arr = this.api_dir.getListValueTextCodeCargoOfGroup(set.value);
+                                    this.form_rate_edit.el.datalist_id_cargo_arrival.update(this.list_cargo_arr, -1);
+                                }
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 3,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_arrival_cargo_group_name', App.Langs),
                         //form_text_class: null,
                     },
                     childs: []
@@ -1598,7 +1675,7 @@
                         element_pattern: null,
                         element_readonly: false,
                         element_options: {
-                            data: this.list_cargo,
+                            data: this.list_cargo_arr,
                             out_value: false,
                             out_group: true,
                             default: '',
@@ -1620,7 +1697,7 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 5,
+                        col_size: 4,
                         col_class: 'mt-0',
                         //form_text: langView('vs_usfee_text_arrival_cargo_name', App.Langs),
                         //form_text_class: null,
@@ -1655,7 +1732,7 @@
                         feedback_class: null,
                         col: 'col-md-12 mt-0',
                         col_prefix: 'md',
-                        col_size: 4,
+                        col_size: 3,
                         col_class: null,
                     },
                     childs: []
@@ -1699,9 +1776,59 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 3,
+                        col_size: 2,
                         col_class: 'mt-0',
                         //form_text: langView('vs_usfee_text_code_stn_on', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_datalist_outgoing_cargo_group_name = {
+                    obj: 'bs_form_input_datalist',
+                    options: {
+                        validation_group: 'rate_edit',
+                        id: 'id_cargo_group_outgoing',
+                        name: 'id_cargo_group_outgoing',
+                        label: langView('vs_usfee_title_label_outgoing_cargo_group_name', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: 'flexdatalist',
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_usfee_title_placeholder_outgoing_cargo_group_name', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_options: {
+                            data: this.list_cargo_out_group,
+                            out_value: false,
+                            out_group: false,
+                            default: '',
+                            minLength: 1,
+                            searchContain: true,
+                            fn_change: function (event, set, options) {
+                                //// Убрал вывод ошибки, при открытии окна и заполненя этого компонента, приходит событие set.value = '' и вываливается ошибка
+                                if (set.value === '' && set.text === '') {
+                                    /*this.form_letters_edit.clear_all();*/
+                                    this.list_cargo_out = this.api_dir.getListValueTextCodeCargo();
+                                    this.form_rate_edit.el.datalist_id_cargo_outgoing.update(this.list_cargo_out, -1);
+                                }
+                            }.bind(this),
+                            fn_select: function (event, set, options) {
+                                if (set.value !== null) {
+                                    this.list_cargo_out = this.api_dir.getListValueTextCodeCargoOfOutGroup(set.value);
+                                    this.form_rate_edit.el.datalist_id_cargo_outgoing.update(this.list_cargo_out, -1);
+                                }
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 3,
+                        col_class: 'mt-0',
+                        //form_text: langView('vs_usfee_text_outgoing_cargo_group_name', App.Langs),
                         //form_text_class: null,
                     },
                     childs: []
@@ -1723,7 +1850,7 @@
                         element_pattern: null,
                         element_readonly: false,
                         element_options: {
-                            data: this.list_cargo,
+                            data: this.list_cargo_out,
                             out_value: false,
                             out_group: true,
                             default: '',
@@ -1745,7 +1872,7 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 5,
+                        col_size: 4,
                         col_class: 'mt-0',
                         //form_text: langView('vs_usfee_text_outgoing_cargo_name', App.Langs),
                         //form_text_class: null,
@@ -1780,7 +1907,7 @@
                         feedback_class: null,
                         col: 'col-md-12 mt-0',
                         col_prefix: 'md',
-                        col_size: 4,
+                        col_size: 3,
                         col_class: null,
                     },
                     childs: []
@@ -1910,9 +2037,11 @@
                 };
 
                 row_form.childs.push(form_input_datalist_from_station_name);
+                row_form.childs.push(form_input_datalist_arrival_cargo_group_name);
                 row_form.childs.push(form_input_datalist_arrival_cargo_name);
                 row_form.childs.push(form_check_end_unload);
                 row_form.childs.push(form_input_datalist_on_station_name);
+                row_form.childs.push(form_input_datalist_outgoing_cargo_group_name);
                 row_form.childs.push(form_input_datalist_outgoing_cargo_name);
                 row_form.childs.push(form_check_start_load);
                 row_form.childs.push(form_input_grace_time_value);
@@ -1931,16 +2060,26 @@
                         var valid = result.valid;
                         if (valid) {
                             if (result.new.input_checkbox_end_unload) {
-                                if (result.new.datalist_id_cargo_arrival === null) {
-                                    this.form_rate_edit.set_element_validation_error('id_cargo_arrival', langView('vs_usfee_mess_error_id_cargo_arrival', App.Langs), true);
+                                if (result.new.datalist_id_cargo_arrival === null && result.new.datalist_id_cargo_group_arrival === null) {
+                                    if (result.new.datalist_id_cargo_arrival === null) {
+                                        this.form_rate_edit.set_element_validation_error('id_cargo_arrival', langView('vs_usfee_mess_error_id_cargo_arrival', App.Langs), true);
+                                    }
+                                    if (result.new.datalist_id_cargo_group_arrival === null) {
+                                        this.form_rate_edit.set_element_validation_error('id_cargo_group_arrival', langView('vs_usfee_mess_error_id_cargo_group_arrival', App.Langs), true);
+                                    }
                                     this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_from_end_unload', App.Langs));
                                     valid = false;
                                 }
 
                             }
                             if (result.new.input_checkbox_start_load) {
-                                if (result.new.datalist_id_cargo_outgoing === null) {
-                                    this.form_rate_edit.set_element_validation_error('id_cargo_outgoing', langView('vs_usfee_mess_error_id_cargo_outgoing', App.Langs), true);
+                                if (result.new.datalist_id_cargo_outgoing === null && result.new.datalist_id_cargo_group_outgoing === null) {
+                                    if (result.new.datalist_id_cargo_outgoing === null) {
+                                        this.form_rate_edit.set_element_validation_error('id_cargo_outgoing', langView('vs_usfee_mess_error_id_cargo_outgoing', App.Langs), true);
+                                    }
+                                    if (result.new.datalist_id_cargo_group_outgoing === null) {
+                                        this.form_rate_edit.set_element_validation_error('id_cargo_group_outgoing', langView('vs_usfee_mess_error_id_cargo_group_outgoing', App.Langs), true);
+                                    }
                                     this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_to_start_load', App.Langs));
                                     valid = false;
                                 }
@@ -1982,7 +2121,7 @@
                             hidden: true,
                             centered: true,
                             form_dialog: this.form_rate_edit,
-                            fsize: 'lg',
+                            fsize: 'xl',
                             bt_close_text: langView('vs_usfee_title_button_Cancel', App.Langs),
                             bt_ok_text: langView('vs_usfee_button_Ok', App.Langs),
                             fn_show_modal: function (data) {
@@ -1992,6 +2131,8 @@
                                     this.id_usage_fee_period_detali = data.id;
                                     this.form_rate_edit.el.datalist_code_stn_from.val(data.codeStnFrom);
                                     this.form_rate_edit.el.datalist_code_stn_on.val(data.codeStnTo);
+                                    this.form_rate_edit.el.datalist_id_cargo_group_arrival.val(data.idCargoGroupArrival);
+                                    this.form_rate_edit.el.datalist_id_cargo_group_outgoing.val(data.idCargoGroupOutgoing);
                                     this.form_rate_edit.el.datalist_id_cargo_arrival.val(data.idCargoArrival);
                                     this.form_rate_edit.el.datalist_id_cargo_outgoing.val(data.idCargoOutgoing);
                                     this.form_rate_edit.el.input_checkbox_end_unload.val(data.arrivalEndUnload);
@@ -2004,6 +2145,8 @@
                                     this.id_usage_fee_period_detali = 0;
                                     this.form_rate_edit.el.datalist_code_stn_from.val('');
                                     this.form_rate_edit.el.datalist_code_stn_on.val('');
+                                    this.form_rate_edit.el.datalist_id_cargo_group_arrival.val(-1);
+                                    this.form_rate_edit.el.datalist_id_cargo_group_outgoing.val(-1);
                                     this.form_rate_edit.el.datalist_id_cargo_arrival.val('');
                                     this.form_rate_edit.el.datalist_id_cargo_outgoing.val('');
                                     this.form_rate_edit.el.input_checkbox_end_unload.val(false);
@@ -2032,8 +2175,10 @@
                                             id: this.id_usage_fee_period_detali,
                                             id_usage_fee_period: this.id_usage_fee_period,
                                             code_stn_from: result.datalist_code_stn_from,
+                                            id_cargo_group_arrival: result.datalist_id_cargo_group_arrival,
                                             id_cargo_arrival: result.datalist_id_cargo_arrival,
                                             code_stn_to: result.datalist_code_stn_on,
+                                            id_cargo_group_outgoing: result.datalist_id_cargo_group_outgoing,
                                             id_cargo_outgoing: result.datalist_id_cargo_outgoing,
                                             grace_time: result.input_text_grace_time_value,
                                             id_currency: result.select_rate_currency,
@@ -2057,7 +2202,7 @@
             }
         }.bind(this);
         // Библиотеки по умолчанию
-        this.default_db_names = ['operators_wagons', 'genus_wagon', 'currency', 'external_station', 'cargo'];// [];
+        this.default_db_names = ['operators_wagons', 'genus_wagon', 'currency', 'external_station', 'cargo', 'cargo_group', 'cargo_out_group'];// [];
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
@@ -2327,19 +2472,25 @@
                     $div_info.append($h6).append(btng.$html);
                     $li.append($div_info);
                     if (el.arrivalEndUnload === true) {
-                        $li.append(new init_view_field('arrivalEndUnload', 'По оканчанию выгрузки:', el.arrivalEndUnload ? 'Да' : '').$html);
+                        $li.append(new init_view_field('arrivalEndUnload', 'До оканчания выгрузки:', el.arrivalEndUnload ? 'Да' : '').$html);
                     }
                     if (el.codeStnFrom !== null) {
                         $li.append(new init_view_field('codeStnFrom', 'Станция (ОТПР):', el['fromStationName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.idCargoGroupArrival !== null) {
+                        $li.append(new init_view_field('idCargoGroupArrival', 'Группа (ПРИБ):', el['arrivalCargoGroupName' + ucFirst(App.Lang)]).$html);
                     }
                     if (el.idCargoArrival !== null) {
                         $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
                     }
                     if (el.outgoingStartLoad === true) {
-                        $li.append(new init_view_field('outgoingStartLoad', 'С начала погрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
+                        $li.append(new init_view_field('outgoingStartLoad', 'До начала погрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
                     }
                     if (el.codeStnTo !== null) {
                         $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
+                    }
+                    if (el.idCargoGroupOutgoing !== null) {
+                        $li.append(new init_view_field('idCargoGroupOutgoing', 'Группа (ОТПР):', el['outgoingCargoGroupName' + ucFirst(App.Lang)]).$html);
                     }
                     if (el.idCargoOutgoing !== null) {
                         $li.append(new init_view_field('idCargoOutgoing', 'Груз (ОТПР):', el['outgoingCargoName' + ucFirst(App.Lang)]).$html);
