@@ -103,7 +103,7 @@
             'vs_usfee_text_grace_time_value': 'Льгот время...',
 
             'vs_usfee_label_end_unload': 'До окончания выгрузки',
-            'vs_usfee_label_start_load': 'До начала погрузки',
+            'vs_usfee_label_start_load': 'От начала погрузки',
 
             //'vs_usfee_mess_shearch_wagon': 'Обработка вагонов в системе',
             //'vs_usfee_title_button_lett_num_clear': 'Очистить',
@@ -197,9 +197,10 @@
             'vs_usfee_mess_war_form_select_ufp_exist': 'Выбор не доступен период с оператором {0} и родом вагона {1} уже выбран!',
             'vs_usfee_mess_war_not_select_rows_ufp': 'Правка невозможна, не выбраны периоды для правки!',
 
-            'vs_usfee_mess_error_from_end_unload': 'Выбран признак по окончанию выгрузки, но не указан груз!',
+            'vs_usfee_mess_error_from_end_unload': 'Выбран признак до окончания выгрузки, но не указан груз!',
             'vs_usfee_mess_error_to_start_load': 'Выбран признак от начала погрузки, но не указан груз!',
-            'vs_usfee_mess_error_start_load_and_end_unload_grace_time': 'Выбран признак от начала погрузки или по окончанию выгрузки и указанно льготное время, льготное время учитываться не будет!',
+            'vs_usfee_mess_error_start_load_and_end_unload_grace_time': 'Выбран признак до начала погрузки и от окончания выгрузки - данное условие не допустимо!',
+            'vs_usfee_mess_error_start_load_or_end_unload_grace_time': 'Выбран признак до начала погрузки или от окончания выгрузки и указанно льготное время, льготное время учитываться не будет!',
             'vs_usfee_mess_error_rate_value_is_null': 'Введете ставку',
             'vs_usfee_mess_error_rate_currency_is_null': 'Выберите валюту',
             'vs_usfee_mess_error_is_null_rate_and_grace_time': 'Не выбрана не ставка не льготный период?',
@@ -2059,6 +2060,10 @@
                     fn_validation: function (result) {
                         var valid = result.valid;
                         if (valid) {
+                            if (result.new.input_checkbox_end_unload && result.new.input_checkbox_start_load) {
+                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_start_load_and_end_unload_grace_time', App.Langs));
+                                valid = false;
+                            }
                             if (result.new.input_checkbox_end_unload) {
                                 if (result.new.datalist_id_cargo_arrival === null && result.new.datalist_id_cargo_group_arrival === null) {
                                     if (result.new.datalist_id_cargo_arrival === null) {
@@ -2087,7 +2092,7 @@
                             if ((result.new.input_checkbox_end_unload || result.new.input_checkbox_start_load) && result.new.input_text_grace_time_value !== null) {
 
                                 this.form_rate_edit.set_element_validation_error('grace_time_value', langView('vs_usfee_mess_error_grace_time_value_is_not_null', App.Langs), true);
-                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_start_load_and_end_unload_grace_time', App.Langs));
+                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_start_load_or_end_unload_grace_time', App.Langs));
                                 valid = false;
                             }
                             if (result.new.select_rate_currency >= 0 && result.new.input_text_rate_value === null) {
@@ -2484,7 +2489,7 @@
                         $li.append(new init_view_field('idCargoArrival', 'Груз (ПРИБ):', el['arrivalCargoName' + ucFirst(App.Lang)]).$html);
                     }
                     if (el.outgoingStartLoad === true) {
-                        $li.append(new init_view_field('outgoingStartLoad', 'До начала погрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
+                        $li.append(new init_view_field('outgoingStartLoad', 'От начала погрузки:', el.outgoingStartLoad ? 'Да' : '').$html);
                     }
                     if (el.codeStnTo !== null) {
                         $li.append(new init_view_field('codeStnTo', 'Станция (ПРИБ):', el['toStationName' + ucFirst(App.Lang)]).$html);
