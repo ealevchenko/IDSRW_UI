@@ -197,8 +197,10 @@
             'vs_usfee_mess_war_form_select_ufp_exist': 'Выбор не доступен период с оператором {0} и родом вагона {1} уже выбран!',
             'vs_usfee_mess_war_not_select_rows_ufp': 'Правка невозможна, не выбраны периоды для правки!',
 
+            'vs_usfee_mess_error_is_already_exists': 'Выбранные условия уже существуют!',
             'vs_usfee_mess_error_from_end_unload': 'Выбран признак до окончания выгрузки, но не указан груз!',
             'vs_usfee_mess_error_to_start_load': 'Выбран признак от начала погрузки, но не указан груз!',
+            'vs_usfee_mess_error_not_select_option_and_select_rate': 'Невыбраны условия для ставки или льготного времени!',
             'vs_usfee_mess_error_start_load_and_end_unload_grace_time': 'Выбран признак до начала погрузки и от окончания выгрузки - данное условие не допустимо!',
             'vs_usfee_mess_error_start_load_or_end_unload_grace_time': 'Выбран признак до начала погрузки или от окончания выгрузки и указанно льготное время, льготное время учитываться не будет!',
             'vs_usfee_mess_error_rate_value_is_null': 'Введете ставку',
@@ -210,6 +212,9 @@
 
             //'vs_usfee_mess_error_date_period_start_is_null': 'Время начала должно быть меньше времени окончания!',
 
+
+            'vs_usfee_mess_error_code_stn_from': 'Укажите станцию',
+            'vs_usfee_mess_error_code_stn_on': 'Укажите станцию',
             'vs_usfee_mess_error_id_cargo_arrival': 'Укажите Груз (ПРИБ)',
             'vs_usfee_mess_error_id_cargo_group_arrival': 'Укажите Группу (ПРИБ)',
             'vs_usfee_mess_error_id_cargo_outgoing': 'Укажите Груз (ОТПР)',
@@ -342,6 +347,7 @@
         this.list_operators_genus_all = [];
         this.list_operators_genus = [];
         this.list_period = [];
+        this.list_period_detaly = [];
         this.select_period = null;  // Выбранный период для правки (выводится в окне правки)
         this.select_rows_ufp = [];  // выбранные периоды оператор и род (список выбранных периодов используется для контроля неповторяющихся периодов род-оператор)
         // Создадим ссылку на модуль работы с базой данных
@@ -2060,6 +2066,44 @@
                     fn_validation: function (result) {
                         var valid = result.valid;
                         if (valid) {
+
+                            if (this.list_period_detaly !== null && this.list_period_detaly.length > 0 && this.id_usage_fee_period_detali === 0) {
+                                var exis_detali = this.list_period_detaly.filter(function (i) {
+                                    return i.codeStnFrom === result.new.datalist_code_stn_from &&
+                                        i.idCargoGroupArrival === result.new.datalist_id_cargo_group_arrival &&
+                                        i.idCargoArrival === result.new.datalist_id_cargo_arrival &&
+                                        i.codeStnTo === result.new.datalist_code_stn_on &&
+                                        i.idCargoGroupOutgoing === result.new.datalist_id_cargo_group_outgoing &&
+                                        i.idCargoOutgoing === result.new.datalist_id_cargo_outgoing &&
+                                        i.arrivalEndUnload === result.new.input_checkbox_start_load &&
+                                        i.outgoingStartLoad === result.new.input_checkbox_end_unload
+                                }.bind(this));
+                                if (exis_detali && exis_detali.length > 0) {
+                                    this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_is_already_exists', App.Langs));
+                                    valid = false;
+                                }
+                            }
+
+                            if (result.new.datalist_code_stn_from === null &&
+                                result.new.datalist_code_stn_on === null &&
+                                result.new.datalist_id_cargo_group_arrival === null &&
+                                result.new.datalist_id_cargo_group_outgoing === null &&
+                                result.new.datalist_id_cargo_arrival === null &&
+                                result.new.datalist_id_cargo_outgoing === null &&
+                                !result.new.input_checkbox_start_load &&
+                                !result.new.input_checkbox_end_unload &&
+                                (result.new.input_text_rate_value !== null ||
+                                    result.new.input_text_grace_time_value !== null)
+                            ) {
+                                this.form_rate_edit.set_element_validation_error('code_stn_from', langView('vs_usfee_mess_error_code_stn_from', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('code_stn_on', langView('vs_usfee_mess_error_code_stn_on', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('id_cargo_arrival', langView('vs_usfee_mess_error_id_cargo_arrival', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('id_cargo_group_arrival', langView('vs_usfee_mess_error_id_cargo_group_arrival', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('id_cargo_outgoing', langView('vs_usfee_mess_error_id_cargo_outgoing', App.Langs), true);
+                                this.form_rate_edit.set_element_validation_error('id_cargo_group_outgoing', langView('vs_usfee_mess_error_id_cargo_group_outgoing', App.Langs), true);
+                                this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_not_select_option_and_select_rate', App.Langs));
+                                valid = false;
+                            }
                             if (result.new.input_checkbox_end_unload && result.new.input_checkbox_start_load) {
                                 this.form_rate_edit.validation_rate_edit.out_error_message(langView('vs_usfee_mess_error_start_load_and_end_unload_grace_time', App.Langs));
                                 valid = false;
@@ -2434,7 +2478,9 @@
         //--------------------------------
         // Получить детали
         this.api_wsd.getViewUsageFeePeriodDetaliOfIdPeriod(id_usage_fee_period, function (data_detali) {
+            this.list_period_detaly = [];
             if (data_detali && data_detali.length > 0) {
+                this.list_period_detaly = data_detali;
                 //<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                 //    <div class="d-flex w-100 justify-content-between">
                 //        <h5 class="mb-1">List group item heading</h5>
