@@ -255,6 +255,11 @@
     ids_wsd.prototype.PostUpdateUsageFeePeriod = function (option, callback) {
         this.api_com.post('/WSD/operation/usage_fee_period/update/', option, callback, callback);
     };
+    // АРМ, Удалить условия
+    ids_wsd.prototype.deleteUsageFeePeriod = function (data, callback) {
+        this.api_com.post('/WSD/operation/usage_fee_period/delete/', data, callback, callback);
+    };
+
     //АРМ, Выполнить обновление дополнительного условия
     ids_wsd.prototype.postUpdateUsageFeePeriodDetali = function (option, callback) {
         this.api_com.post('/WSD/operation/usage_fee_period_detali/update/', option, callback, callback);
