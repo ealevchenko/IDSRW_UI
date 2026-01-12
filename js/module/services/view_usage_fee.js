@@ -24,12 +24,15 @@
 
             'vs_usfee_mess_init_module': 'Инициализация модуля view_usage_fee',
 
-            'vs_usfee_form_adm_edit': 'Править(АДМ)',
+            'vs_usfee_form_adm_edit': 'Режим(АДМ)',
             'vs_usfee_form_title_adm_edit': 'Править условие (административная функция)...',
             'vs_usfee_form_apply': 'Применить',
             'vs_usfee_form_title_apply': 'Применить условие',
-            'vs_usfee_form_new_uf': 'Создать копию',
+            'vs_usfee_form_new_uf': 'Копия',
             'vs_usfee_form_title_new_uf': 'Создать копию предыдущего условия',
+            'vs_usfee_form_delete': 'Удалить',
+            'vs_usfee_form_title_delete': 'Удалить условие (если по данному условию не было расчетов!)',
+
 
             'vs_usfee_label_date_period_start': 'Начало :',
             'vs_usfee_title_placeholder_date_period_start': 'Начало',
@@ -167,6 +170,10 @@
             'vs_usfee_cancel_add_apply_ufd': 'Отмена операции "СОЗДАТЬ УСЛОВИЕ"',
             'vs_usfee_cancel_edit_apply_ufd': 'Отмена операции "ПРАВИТЬ УСЛОВИЕ"',
 
+            'vs_usfee_mess_run_delete_fee_period': 'Выполнить операцию "УДАЛИТЬ УСЛОВИЕ"? Будет удаленны условия [{0}]',
+            'vs_usfee_cancel_delete_fee_period': 'Отмена операции "УДАЛИТЬ УСЛОВИЕ"',
+
+
             'vs_usfee_load_info': 'Загружаю информацию...',
 
             //'vs_usfee_mess_info_detali_title_add': 'Добавить доп. условие...',
@@ -235,6 +242,10 @@
             'vs_usfee_mess_run_operation_edit_ufp': 'Выполняю операцию "ПРАВКИ УСЛОВИЯ"',
             'vs_usfee_mess_error_operation_edit_ufp_run': 'При выполнении операции «ПРАВКИ УСЛОВИЯ» произошла ошибка, код ошибки: {0}',
             'vs_usfee_mess_operation_edit_ufp_ok': 'Операция "ПРАВКИ УСЛОВИЯ" - выполнена',
+            'vs_usfee_mess_run_operation_edit_ufp_delete': 'Выполняю операцию "УДАЛИТЬ УСЛОВИЕ"',
+            'vs_usfee_mess_error_operation_edit_ufp_delete_run': 'При выполнении операции «УДАЛИТЬ УСЛОВИЕ» произошла ошибка, код ошибки: {0}',
+            'vs_usfee_mess_operation_edit_ufp_delete_ok': 'Операция "УДАЛИТЬ УСЛОВИЕ" - выполнена',
+
         },
         'en':  //default language: English
         {
@@ -789,7 +800,8 @@
                                 }.bind(this));
 
                                 // Сформируем признак правки
-                                var edit = this.rRW ? (el.idUsageFeePeriod > 0 && (moment(el.usageFeePeriodStart).isBefore(moment()) && moment().isBefore(moment(el.usageFeePeriodStop))) ? true : false) : false;
+                                //var edit = this.rRW ? (el.idUsageFeePeriod > 0 && (moment(el.usageFeePeriodStart).isBefore(moment()) && moment().isBefore(moment(el.usageFeePeriodStop))) ? true : false) : false;
+                                var edit = this.rRW ? (el.idUsageFeePeriod > 0 && (moment().isBefore(moment(el.usageFeePeriodStop))) ? true : false) : false;
                                 // Формируем выбранные строки
                                 this.select_rows_ufp.push({
                                     id: el.idUsageFeePeriod,
@@ -951,7 +963,7 @@
                     options: {
                         id: 'new_uf',
                         name: 'new_uf',
-                        class: null,
+                        class: 'me-2',
                         fsize: 'sm',
                         color: 'warning',
                         text: langView('vs_usfee_form_new_uf', App.Langs),
@@ -962,6 +974,25 @@
                             event.preventDefault();
                             this.form_payment_terms_setup.clear_all();
                             this.new_usage_fee_period();
+                        }.bind(this),
+                    }
+                };
+                var bt_bt_delete = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'delete',
+                        name: 'delete',
+                        class: null,
+                        fsize: 'sm',
+                        color: 'danger',
+                        text: langView('vs_usfee_form_delete', App.Langs),
+                        title: langView('vs_usfee_form_title_delete', App.Langs),
+                        icon_fa_left: 'fa-solid fa-trash-can',  //<i class="fa-solid fa-trash-can"></i>
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.form_payment_terms_setup.clear_all();
+                            this.delete_fee_period();
                         }.bind(this),
                     }
                 };
@@ -1441,6 +1472,7 @@
                 col_bt_apply.childs.push(bt_bt_adm_edit);
                 col_bt_apply.childs.push(bt_bt_apply);
                 col_bt_apply.childs.push(bt_bt_new);
+                col_bt_apply.childs.push(bt_bt_delete);
                 objs_pt_setup.push(col_bt_apply);
                 objs_pt_setup.push(form_input_date_period_start);
                 objs_pt_setup.push(form_input_date_period_stop);
@@ -2576,16 +2608,20 @@
         if (this.rRW) {
             this.form_payment_terms_setup.el.button_new_uf.show();
             this.form_payment_terms_setup.el.button_apply_uf.show();
+            this.form_payment_terms_setup.el.button_delete.show();
         } else {
             this.form_payment_terms_setup.el.button_new_uf.hide();
             this.form_payment_terms_setup.el.button_apply_uf.hide();
+            this.form_payment_terms_setup.el.button_delete.hide();
         }
         if (date !== null) {
             this.id_usage_fee_period = date.idUsageFeePeriod;
             // Проверим запись для правки закрыта
             var row_close = date.idUsageFeePeriod > 0 && !moment().isBefore(date.usageFeePeriodStop)
-            this.form_payment_terms_setup.el.button_new_uf.prop("disabled", !row_close);
+            //this.form_payment_terms_setup.el.button_new_uf.prop("disabled", !row_close);
+            this.form_payment_terms_setup.el.button_new_uf.prop("disabled", false);
             this.form_payment_terms_setup.el.button_apply_uf.prop("disabled", row_close);
+            this.form_payment_terms_setup.el.button_delete.prop("disabled", row_close || this.id_usage_fee_period === 0); // не активна если старая или создаеться
             this.form_payment_terms_setup.el.button_adm_edit.prop("disabled", !(row_close && this.select_rows_ufp !== null && this.select_rows_ufp.length === 1));
             if (row_close) {
                 this.form_payment_terms_setup.el.input_datetime_date_period_start.val(moment(date.usageFeePeriodStart).format("YYYY-MM-DDTHH:mm"));
@@ -2651,6 +2687,7 @@
         } else {
             this.form_payment_terms_setup.el.button_new_uf.prop("disabled", true);
             this.form_payment_terms_setup.el.button_apply_uf.prop("disabled", true);
+            this.form_payment_terms_setup.el.button_delete.prop("disabled", true);
             this.form_payment_terms_setup.el.input_datetime_date_period_start.val(null);
             this.form_payment_terms_setup.el.input_datetime_date_period_start.disable();
             this.form_payment_terms_setup.el.input_datetime_date_period_stop.val(null);
@@ -2732,6 +2769,36 @@
             }.bind(this))
         }
     }
+    // Удалить условие
+    view_usage_fee.prototype.delete_fee_period = function () {
+        if (this.select_period !== null && this.select_rows_ufp !== null && this.select_rows_ufp.length > 0) {
+            var list_period_delete = [];
+            var list_mess = "";
+            $.each(this.select_rows_ufp, function (key, el) {
+                if (el.edit) {
+                    list_period_delete.push(el.id);
+                    list_mess += "условие (" + el.id + "), оператор: (" + el.operator + ") род: (" + el.genus + ") начало: " + moment(el.start).set({ 'hour': 0, 'minute': 0, 'second': 0 }).format(format_datetime_ru) + " окончание: " + moment(el.stop).set({ 'hour': 23, 'minute': 59, 'second': 59 }).format(format_datetime_ru) + "; \n";
+                }
+
+            }.bind(this));
+            this.main_alert.clear_message();
+            var mess = langView('vs_usfee_mess_run_delete_fee_period', App.Langs).format(list_mess);
+            this.mcf_lg.open(
+                langView('vs_usfee_title_form_apply_additional_conditions', App.Langs),
+                mess,
+                function () {
+                    //
+                    this.apply_ufp_delete(list_period_delete, function () {
+
+                    }.bind(this));
+                }.bind(this),
+                function () {
+                    this.main_alert.out_warning_message(langView('vs_usfee_cancel_delete_fee_period', App.Langs));
+                }.bind(this));
+
+            //this.view_form_payment_terms_setup(new_row);
+        }
+    }
 
     // Форма правки доп. условий, показать форму
     view_usage_fee.prototype.view_form_rate_edit = function (row) {
@@ -2752,7 +2819,7 @@
     // Форма правки письма, показать форму
     view_usage_fee.prototype.view_form_rate_delete = function (row) {
         this.main_alert.clear_message();
-        var mess = langView('vs_usfee_mess_run_delete_additional_conditions', App.Langs).format(
+        var mess = langView('vs_usfee_mess_run_delete_fee_period', App.Langs).format(
             row['fromStationName' + ucFirst(App.Lang)] ? row['fromStationName' + ucFirst(App.Lang)] : '',
             row['arrivalCargoName' + ucFirst(App.Lang)] ? row['arrivalCargoName' + ucFirst(App.Lang)] : '',
             row['toStationName' + ucFirst(App.Lang)] ? row['toStationName' + ucFirst(App.Lang)] : '',
@@ -2808,6 +2875,43 @@
         }.bind(this));
 
     };
+    // Применить правку условия расчета
+    view_usage_fee.prototype.apply_ufp_delete = function (data) {
+        LockScreen(langView('vs_usfee_mess_run_operation_edit_ufp_delete', App.Langs));
+        //
+        var mes_res = langView('vs_usfee_mess_operation_edit_ufp_delete_ok', App.Langs);
+        //
+        this.api_wsd.deleteUsageFeePeriod(data, function (result) {
+            // Проверим на ошибку выполнения запроса api
+            if (result !== null && result.status) {
+                var mess = langView('vs_usfee_mess_error_api', App.Langs).format(result.status, result.title);
+                //console.log('[view_usage_fee] [PostUpdateUsageFeePeriod] :' + mess);
+                this.form_payment_terms_setup.validation_pt.out_error_message(mess);
+                if (result.errors) {
+                    for (var err in result.errors) {
+                        this.form_payment_terms_setup.validation_pt.out_error_message(err + ":" + result.errors[err]);
+                        //console.log('[view_usage_fee] [PostUpdateUsageFeePeriod] :' + err + ":" + result.errors[err]);
+                    }
+                }
+                LockScreenOff();
+            } else {
+                // ошибки выполнения нет проверим ответ запроса
+                if (result !== null && result.result >= 0) {
+                    this.form_payment_terms_setup.validation_pt.clear_all();
+                    this.update_ufp(function () {
+                        LockScreenOff();
+                        this.main_alert.out_info_message(mes_res);
+                    }.bind(this));
+                } else {
+                    LockScreenOff();
+                    this.form_payment_terms_setup.validation_pt.out_error_message(langView('vs_usfee_mess_error_operation_edit_ufp_delete_run', App.Langs).format(result.result));
+                }
+            }
+            LockScreenOff();
+        }.bind(this));
+
+    };
+
     // Применить правку льготного условия
     view_usage_fee.prototype.apply_additional_conditions = function (data) {
         LockScreen(langView('vs_usfee_mess_run_operation_additional_conditions', App.Langs));
