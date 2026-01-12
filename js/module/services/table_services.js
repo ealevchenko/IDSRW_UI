@@ -2420,7 +2420,7 @@
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
                 this.tab_com.leftColumns = 0;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [1, 'desc'];
+                this.tab_com.order_column = [2, 'desc'];
                 this.tab_com.table_select = {
                     style: 'multi ',
                 };
