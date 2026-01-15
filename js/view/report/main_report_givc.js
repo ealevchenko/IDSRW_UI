@@ -32,8 +32,6 @@
     var API_GIVC = App.api_givc;
     var API_DIRECTORY = App.ids_directory;
     var TRGIVC = App.table_report_givc;
-    //var api_givc = new API_GIVC({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-    //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
     var api_givc = new API_GIVC({ url_api: App.Url_Api });
     var api_dir = new API_DIRECTORY({ url_api: App.Url_Api });
     // Модуль инициализаии компонентов формы
