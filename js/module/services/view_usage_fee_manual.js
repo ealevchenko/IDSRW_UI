@@ -41,6 +41,18 @@
 
             'vs_ufeem_mess_error_wagon_num_error': 'Номер вагона не прошел проверку на системную нумерацию!',
 
+            'vs_ufeem_title_label_fee_calc_time': 'Время(расч.):',
+            'vs_ufeem_title_placeholder_fee_calc_time': 'Время, час.',
+            'vs_ufeem_text_label_fee_calc_time': 'Расчитанное время пользования вагоном ...',
+
+            'vs_ufeem_title_label_fee_manual_time_hour': 'Время',
+            'vs_ufeem_title_label_fee_manual_time_minutes': '(ручной):',
+            'vs_ufeem_title_placeholder_fee_manual_time': '00',
+            //'vs_ufeem_text_label_fee_manual_time': 'Время пользование вагоном введеное в ручную ...',
+
+            'vs_ufeem_title_label_fee_amount_note': 'Примечание:',
+            'vs_ufeem_title_placeholder_fee_amount_note': 'Примечание',
+            'vs_ufeem_text_fee_amount_note': 'Добавьте примечание на правку ...',
 
             //'vs_ufeem_title_label_doc_pay': 'Тариф ЭПД (kod=001):',
             //'vs_ufeem_title_placeholder_doc_pay': 'Тариф ЭПД',
@@ -59,6 +71,9 @@
             //'vs_ufeem_title_label_station_from': 'Станция отправления:',
             //'vs_ufeem_text_label_station_from': 'Выберите станцию ...',
 
+            'vs_ufeem_form_apply': 'Применить',
+            'vs_ufeem_form_title_apply': 'Применить корректировку платы за пользование...',
+
             'vs_ufeem_title_button_Cancel': 'Отмена',
             'vs_ufeem_button_Ok': 'Применить',
 
@@ -67,7 +82,7 @@
             //'vs_ufeem_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
             //'vs_ufeem_title_button_clear_tariff_contract': 'Очистить ж.д. тариф по договору...',
 
-            //'vs_ufeem_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+            'vs_ufeem_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
 
             //'vs_ufeem_mess_run_update_doc_pay': 'Править тариф ЭПД (kod=001) по документу [{0}], будет внесен новый тариф :{1} вместо тарифа :{2}.',
             //'vs_ufeem_cancel_update_doc_pay': 'Отмена правки тарифа ЭПД.',
@@ -94,6 +109,11 @@
             //'vs_ufeem_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
             //'vs_ufeem_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбрано {3}',
 
+            'vs_ufeem_mess_error_not_select_usage_fee': 'Не выбран расчет для правки!',
+            'vs_ufeem_mess_war_not_change_value': 'В расчете нет правок для изменения записи!',
+
+            'vs_ufeem_mess_run_update_usage_fee': 'Будет выполнена операция корректировки платы и времени пользования вагоном. Новая плата [{0}], время [{1}] и приечание [{2}]',
+            'vs_ufeem_cancel_update_usage_fee': 'Отмена операции корректировки платы и времени пользования вагоном',
             //'vs_ufeem_mess_error_not_doc_pay': 'Не указан новый тариф ЭПД!',
             //'vs_ufeem_mess_error_exist_doc_pay': 'Указаный тариф ЭПД не отличается от существующего!',
 
@@ -174,8 +194,12 @@
             bt_ok_text: langView('vs_ufeem_button_Ok', App.Langs),
         });
 
-        this.num = null; // Номер вагона
+        this.num = null;            // Номер вагона
         this.usage_fee_wagons = []; // список расчетов
+        this.usage_fee_id = null;   // Выбранный расчет для правки
+        this.usage_fee_manual_fee_amount = null;
+        this.usage_fee_manual_time = null;
+        this.usage_fee_note = null;
         // Главный Alert
         this.alert = new this.fe_ui.bs_alert({
             id: null,
@@ -271,6 +295,8 @@
                 var out_init = function (process) {
                     if (process === 0) {
                         this.usage_fee_wagons_setup.$html.append(this.form_edit_usege_fee.$form);
+                        this.form_edit_usege_fee.el.input_text_fee_amount.disable();
+                        this.form_edit_usege_fee.el.input_text_fee_calc_time.disable();
 
                         // На проверку окончания инициализации
                         //----------------------------------
@@ -395,6 +421,96 @@
                 // форма правки платы за пользование
                 this.form_edit_usege_fee = new FD();
                 var objs_eufee = [];
+                var col_bt_apply = {
+                    obj: 'bs_col',
+                    options: {
+                        id: null,
+                        pref: 'md',
+                        size: 12,
+                        class: 'text-left mt-0',
+                        style: null,
+                    },
+                    childs: []
+                };
+                var bt_bt_apply = {
+                    obj: 'bs_button',
+                    options: {
+                        id: 'apply_uf',
+                        name: 'apply_uf',
+                        class: 'me-2',
+                        fsize: 'sm',
+                        color: 'success',
+                        text: langView('vs_ufeem_form_apply', App.Langs),
+                        title: langView('vs_ufeem_form_title_apply', App.Langs),
+                        icon_fa_left: 'fa-solid fa-thumbs-up',
+                        icon_fa_right: null,
+                        fn_click: function (event) {
+                            event.preventDefault();
+                            this.clear_all();
+                            this.form_edit_usege_fee.$form.submit();
+                            if (this.form_edit_usege_fee.valid) {
+
+                            }
+
+                            //if (this.form_edit_usege_fee.valid) {
+                            //    var result = this.form_payment_terms_setup.data;
+                            //    // определим это новое условие
+                            //    var b_add = this.id_usage_fee_period === 0;
+                            //    //var row_add = this.select_rows_ufp.find(function (o) {
+                            //    //    return o.id === 0;
+                            //    //}.bind(this));
+
+                            //    //row_add = row_add & this.id_usage_fee_period === 0;
+
+                            //    //this.id_usage_fee_period
+                            //    //
+                            //    var mess = langView((b_add ? 'vs_usfee_mess_run_add_apply_ufd' : 'vs_usfee_mess_run_edit_apply_ufd'), App.Langs).format(
+                            //        moment(result.input_datetime_date_period_start).set({ 'hour': 0, 'minute': 0, 'second': 0 }).format(format_datetime_ru),
+                            //        moment(result.input_datetime_date_period_stop).set({ 'hour': 23, 'minute': 59, 'second': 59 }).format(format_datetime_ru)
+                            //    );
+
+                            //    this.mcf_lg.open(
+                            //        langView('vs_usfee_title_form_apply_ufd', App.Langs),
+                            //        mess,
+                            //        function () {
+
+                            //            var list_period_edit = [];
+                            //            $.each(this.select_rows_ufp, function (key, el) {
+                            //                list_period_edit.push({
+                            //                    id: el.id,
+                            //                    id_operator: el.id_operator,
+                            //                    id_genus: el.id_genus,
+                            //                    type: el.edit ? 1 : 0
+                            //                });
+                            //            }.bind(this));
+
+                            //            var operation = {
+                            //                id: this.id_usage_fee_period,
+                            //                start: moment(result.input_datetime_date_period_start).set({ 'hour': 0, 'minute': 0, 'second': 0 }).format("YYYY-MM-DDTHH:mm:ss"),
+                            //                stop: moment(result.input_datetime_date_period_stop).set({ 'hour': 23, 'minute': 59, 'second': 59 }).format("YYYY-MM-DDTHH:mm:ss"),
+                            //                hour_after_30: result.input_checkbox_hour_after_30,
+                            //                id_currency: result.select_rate_currency,
+                            //                rate: result.input_text_rate_value,
+                            //                id_currency_derailment: result.select_derailment_rate_currency,
+                            //                rate_derailment: result.input_text_derailment_rate_value,
+                            //                coefficient_route: result.input_text_coefficient_route_value,
+                            //                coefficient_not_route: result.input_text_coefficient_not_route_value,
+                            //                grace_time_1: result.input_text_grace_time_value1,
+                            //                grace_time_2: result.input_text_grace_time_value2,
+                            //                note: '',
+                            //                list_period_edit: list_period_edit,
+
+                            //            };
+                            //            this.apply_ufp(operation);
+                            //        }.bind(this),
+                            //        function () {
+                            //            this.main_alert.out_warning_message(langView((b_add ? 'vs_usfee_cancel_add_apply_ufd' : 'vs_usfee_cancel_edit_apply_ufd'), App.Langs));
+                            //        }.bind(this)
+                            //    );
+                            //}
+                        }.bind(this),
+                    }
+                };
                 var form_input_fee_amount = {
                     obj: 'bs_form_input',
                     options: {
@@ -411,10 +527,10 @@
                         element_required: false,
                         element_maxlength: null,
                         element_pattern: null,
-                        element_readonly: true,
-                        //element_min: 0,
-                        //element_max: 100000000.0,
-                        //element_step: 0.01,
+                        element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
                         element_options: {
                             default: '',
                             fn_change: function (e) {
@@ -422,19 +538,15 @@
                                 //this.validation_doc_pay(value, 'doc_pay', false, true)
                             }.bind(this),
                         },
-                        validation: true,
+                        validation: false,
                         feedback_invalid: null,
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 12,
+                        col_size: 4,
                         col_class: 'mt-0',
-                        //group_append_class: null,
-                        //group_append_id: null,
-                        //group_append_html: null,
-                        //group_append_objs: null,
-                        form_text: langView('vs_ufeem_text_label_fee_amount', App.Langs),
-                        form_text_class: null,
+                        //form_text: langView('vs_ufeem_text_label_fee_amount', App.Langs),
+                        //form_text_class: null,
                     },
                     childs: []
                 };
@@ -470,19 +582,192 @@
                         feedback_valid: null,
                         feedback_class: null,
                         col_prefix: 'md',
-                        col_size: 12,
+                        col_size: 8,
                         col_class: 'mt-0',
                         //group_append_class: null,
                         //group_append_id: null,
                         //group_append_html: null,
                         //group_append_objs: null,
-                        form_text: langView('vs_ufeem_text_label_fee_amount_manual', App.Langs),
-                        form_text_class: null,
+                        //form_text: langView('vs_ufeem_text_label_fee_amount_manual', App.Langs),
+                        //form_text_class: null,
                     },
                     childs: []
                 };
+                var form_input_fee_calc_time = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'edit_ufee',
+                        id: 'fee_calc_time',
+                        name: 'fee_calc_time',
+                        label: langView('vs_ufeem_title_label_fee_calc_time', App.Langs),
+                        element_type: 'text',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ufeem_title_placeholder_fee_calc_time', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: null,
+                        element_max: null,
+                        element_step: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                //this.validation_doc_pay(value, 'doc_pay', false, true)
+                            }.bind(this),
+                        },
+                        validation: false,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        //group_append_class: null,
+                        //group_append_id: null,
+                        //group_append_html: null,
+                        //group_append_objs: null,
+                        //form_text: langView('vs_ufeem_text_label_fee_calc_time', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_fee_manual_time_h = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'edit_ufee',
+                        id: 'fee_amount_manual_hour',
+                        name: 'fee_amount_manual_hour',
+                        label: langView('vs_ufeem_title_label_fee_manual_time_hour', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ufeem_title_placeholder_fee_manual_time', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 1000,
+                        element_step: 1,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                //this.validation_doc_pay(value, 'doc_pay', false, true)
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        group_prepend: true,
+                        group_prepend_class: null,
+                        group_prepend_id: null,
+                        group_prepend_html: 'Ч:',
+                        //form_text: langView('vs_ufeem_text_label_fee_manual_time', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_input_fee_manual_time_m = {
+                    obj: 'bs_form_input',
+                    options: {
+                        validation_group: 'edit_ufee',
+                        id: 'fee_amount_manual_minute',
+                        name: 'fee_amount_manual_minute',
+                        label: langView('vs_ufeem_title_label_fee_manual_time_minutes', App.Langs),
+                        element_type: 'number',
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ufeem_title_placeholder_fee_manual_time', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_pattern: null,
+                        element_readonly: false,
+                        element_min: 0,
+                        element_max: 59,
+                        element_step: 1,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                var value = $(e.currentTarget).val();
+                                //this.validation_doc_pay(value, 'doc_pay', false, true)
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 4,
+                        col_class: 'mt-0',
+                        group_prepend: true,
+                        group_prepend_class: null,
+                        group_prepend_id: null,
+                        group_prepend_html: 'М:',
+                        //form_text: langView('vs_ufeem_text_label_fee_manual_time', App.Langs),
+                        //form_text_class: null,
+                    },
+                    childs: []
+                };
+                var form_textarea_fee_amount_note = {
+                    obj: 'bs_form_textarea',
+                    options: {
+                        validation_group: 'edit_ufee',
+                        id: 'fee_amount_note',
+                        name: 'fee_amount_note',
+                        label: langView('vs_ufeem_title_label_fee_amount_note', App.Langs),
+                        element_fsize: 'sm',
+                        element_class: null,
+                        element_value: null,
+                        element_title: null,
+                        element_placeholder: langView('vs_ufeem_title_placeholder_fee_amount_note', App.Langs),
+                        element_required: false,
+                        element_maxlength: null,
+                        element_readonly: false,
+                        element_cols: null,
+                        element_rows: 3,
+                        element_wrap: null,
+                        element_options: {
+                            default: '',
+                            fn_change: function (e) {
+                                //var text = $(e.currentTarget).val();
+                                /*main_alert.clear_message(); main_alert.out_info_message('element_textarea : ' + text);*/
+                            }.bind(this),
+                        },
+                        validation: true,
+                        feedback_invalid: null,
+                        feedback_valid: null,
+                        feedback_class: null,
+                        col_prefix: 'md',
+                        col_size: 12,
+                        col_class: 'mt-0',
+                        form_text: langView('vs_ufeem_text_fee_amount_note', App.Langs),
+                        form_text_class: null
+                    },
+                    childs: []
+                };
+                col_bt_apply.childs.push(bt_bt_apply);
+                objs_eufee.push(col_bt_apply);
                 objs_eufee.push(form_input_fee_amount);
                 objs_eufee.push(form_input_fee_amount_manual);
+                objs_eufee.push(form_input_fee_calc_time);
+                objs_eufee.push(form_input_fee_manual_time_h);
+                objs_eufee.push(form_input_fee_manual_time_m);
+                objs_eufee.push(form_textarea_fee_amount_note);
+                /*                objs_eufee.push(form_input_fee_manual_time);*/
                 this.form_edit_usege_fee.init({
                     alert: this.main_alert,
                     //context: this.div_form_search.$html,
@@ -493,39 +778,58 @@
                     fn_validation: function (result) {
                         // Валидация успешна
                         if (result && result.valid) {
-                            var valid = this.validation_register_sent_wagons(result);
+                            /*                            var valid = this.validation_register_sent_wagons(result);*/
+                            var valid = result.valid;
                             if (valid) {
-                                var pay = null;
-                                if (this.type === 0) {
-                                    var mess = langView('vs_ufeem_mess_run_update_doc_pay', App.Langs).format(this.nomDoc, result.new.input_text_doc_pay, this.current_doc_pay);
-                                    pay = result.new.input_text_doc_pay ? Number(Number(result.new.input_text_doc_pay * 100).toFixed(0)) : null;
+                                if (this.usage_fee_id === null) {
+                                    this.main_alert.out_error_message(langView('vs_ufeem_mess_error_not_select_usage_fee', App.Langs));
+                                    valid = false;
                                 }
-                                if (this.type === 1) {
-                                    var mess = langView('vs_ufeem_mess_run_update_tariff_contract', App.Langs).format(this.nomDoc, result.new.input_text_tariff_contract);
-                                    pay = result.new.input_text_tariff_contract ? Number(Number(result.new.input_text_tariff_contract * 100).toFixed(0)) : null;
+                                // определим минуты
+                                var time = null;
+                                var hour = this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.val();
+                                var minute = this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.val();
+                                var fee_amount = this.form_edit_usege_fee.el.input_text_fee_amount_manual.val();
+                                var note = this.form_edit_usege_fee.el.textarea_fee_amount_note.val();
+
+                                if (hour !== null || minute !== null) {
+                                    if (hour !== null) {
+                                        time = hour * 60;
+                                    }
+                                    if (minute !== null) {
+                                        time = time !== null ? (time + minute) : minute;
+                                    }
                                 }
-                                if (this.type === 2) {
-                                    var mess = langView('vs_ufeem_mess_run_clear_tariff_contract', App.Langs).format(this.nomDoc);
-                                    pay = null;
+                                if (this.usage_fee_manual_time === time &&
+                                    this.usage_fee_manual_fee_amount === fee_amount &&
+                                    (this.usage_fee_note === note || (this.usage_fee_note !== note  && this.usage_fee_note === null && note === ''))
+                                ) {
+                                    this.main_alert.out_warning_message(langView('vs_ufeem_mess_war_not_change_value', App.Langs));
+                                    valid = false;
                                 }
+                            }
+                            // Сформировать обновление
+                            if (valid) {
+                                var mess = langView('vs_ufeem_mess_run_update_usage_fee', App.Langs).format(fee_amount,
+                                    getHoursFromMinuts(time),
+                                    note);
                                 this.mcf_lg.open(
                                     langView('vs_ufeem_title_form_apply', App.Langs),
                                     mess,
                                     function () {
                                         // Принять
                                         var operation = {
-                                            id_document: this.id,
-                                            type: this.type,
-                                            value: pay
+                                            id: this.usage_fee_id,
+                                            manual_time: time,
+                                            manual_fee_amount: fee_amount,
+                                            note: note
                                         };
                                         this.apply_update(operation, function () {
 
                                         }.bind(this));
                                     }.bind(this),
                                     function () {
-                                        if (this.type === 0) this.main_alert.out_warning_message(langView('vs_ufeem_cancel_update_doc_pay', App.Langs));
-                                        if (this.type === 1) this.main_alert.out_warning_message(langView('vs_ufeem_cancel_update_tariff_contract', App.Langs));
-                                        if (this.type === 2) this.main_alert.out_warning_message(langView('vs_ufeem_cancel_clear_tariff_contract', App.Langs));
+                                        this.main_alert.out_warning_message(langView('vs_ufeem_cancel_update_usage_fee', App.Langs));
                                     }.bind(this)
                                 );
                             }
@@ -564,35 +868,46 @@
 
                     },
                     fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                        this.main_alert.clear_message();
-                        if (rowData && rowData.length > 0) {
-                            if (rowData[0].dateList !== null) {
-                                e.preventDefault();
-                                //this.id = null;
-                                //this.type = null;
-                                //this.current_doc_pay = null;
-                                //this.current_tariff_contract = null;
-                                //this.main_alert.out_warning_message(langView('vs_ufeem_mess_error_select', App.Langs).format(rowData[0].nomDoc, rowData[0].numList, moment(rowData[0].dateList).format(format_datetime_ru)));
-                                //this.form_edit_usege_fee.el.input_text_doc_pay.val(null);
-                                //this.form_edit_usege_fee.el.input_text_tariff_contract.val(null);
-                            }
-                        }
+                        //this.main_alert.clear_message();
+                        //if (rowData && rowData.length > 0) {
+                        //    if (rowData[0].dateList !== null) {
+                        //        e.preventDefault();
+                        //        //this.id = null;
+                        //        //this.type = null;
+                        //        //this.current_doc_pay = null;
+                        //        //this.current_tariff_contract = null;
+                        //        //this.main_alert.out_warning_message(langView('vs_ufeem_mess_error_select', App.Langs).format(rowData[0].nomDoc, rowData[0].numList, moment(rowData[0].dateList).format(format_datetime_ru)));
+                        //        //this.form_edit_usege_fee.el.input_text_doc_pay.val(null);
+                        //        //this.form_edit_usege_fee.el.input_text_tariff_contract.val(null);
+                        //    }
+                        //}
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         this.form_edit_usege_fee.clear_all();
-                        //this.id = null;
-                        //this.type = null;
-                        //this.current_doc_pay = null;
-                        //this.current_tariff_contract = null;
-                        //this.nomDoc = null;
+                        this.usage_fee_id = null;
+                        this.usage_fee_manual_fee_amount = null;
+                        this.usage_fee_manual_time = null;
+                        this.usage_fee_note = null;
+                        this.form_edit_usege_fee.el.input_text_fee_amount.val('');
+                        this.form_edit_usege_fee.el.input_text_fee_amount.disable();
+                        this.form_edit_usege_fee.el.input_text_fee_amount_manual.val('');
+                        this.form_edit_usege_fee.el.input_text_fee_calc_time.val('');
+                        this.form_edit_usege_fee.el.input_text_fee_calc_time.disable();
+                        this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.val('');
+                        this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.val('');
+                        this.form_edit_usege_fee.el.textarea_fee_amount_note.val('');
                         if (type === "select") {
-                            //this.id = rows[0].id;
-                            //this.current_doc_pay = rows[0].outgoingUZDocumentPay !== null ? Number(rows[0].outgoingUZDocumentPay / 100).toFixed(2) : null;
-                            //this.current_tariff_contract = rows[0].tariffContract !== null ? Number(rows[0].tariffContract / 100).toFixed(2) : null;
-                            //this.nomDoc = rows[0].nomDoc;
+                            this.usage_fee_id = rows[0].UsageFeeId;
+                            this.usage_fee_manual_fee_amount = rows[0].usageFeeManualFeeAmount;
+                            this.usage_fee_manual_time = rows[0].usageFeeManualTime;
+                            this.usage_fee_note = rows[0].usageFeeNote;
+                            this.form_edit_usege_fee.el.input_text_fee_amount.val(rows[0].usageFeeCalcFeeAmount);
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual.val(rows[0].usageFeeManualFeeAmount);
+                            this.form_edit_usege_fee.el.input_text_fee_calc_time.val(getHoursFromMinuts(rows[0].usageFeeCalcTime));
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.val(rows[0].usageFeeManualTime !== null ? parseInt(rows[0].usageFeeManualTime / 60) : '');
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.val(rows[0].usageFeeManualTime !== null ? parseInt(rows[0].usageFeeManualTime % 60) : '');
+                            this.form_edit_usege_fee.el.textarea_fee_amount_note.val(rows[0].usageFeeNote);
                         }
-                        //this.form_edit_usege_fee.el.input_text_doc_pay.val(this.current_doc_pay);
-                        //this.form_edit_usege_fee.el.input_text_tariff_contract.val(this.current_tariff_contract);
                     }.bind(this),
                     fn_select_link: function (link) {
 
