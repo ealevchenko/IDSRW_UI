@@ -149,6 +149,7 @@
             'tsrv_field_usageFeeCalcFeeAmount': 'Плата (расч.), грн',
             'tsrv_field_usageFeeManualTime': 'Время пользования (ручн.), час',
             'tsrv_field_usageFeeManualFeeAmount': 'Плата (ручн.), грн',
+            'tsrv_field_CargoReturns': 'Возвратный',
 
             'tsrv_title_status_0': 'Создано',
             'tsrv_title_status_1': 'В работе',
@@ -316,18 +317,18 @@
 
     var TAB_COMMON = App.table_common; // Общий модуль таблиц*/
 
-    var getHoursFromMinuts = function (minutes) {
-        if (minutes && minutes > 0) {
-            var h = parseInt(minutes / 60);
-            h = h < 10 ? '0' + h : h;
-            var m = minutes % 60;
-            m = m < 10 ? '0' + m : m;
-            //return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
-            return `${h.toString().padStart(1, '0')}:${m.toString().padStart(2, '0')}`;
-        } else {
-            return null;
-        }
-    };
+    //var getHoursFromMinuts = function (minutes) {
+    //    if (minutes && minutes > 0) {
+    //        var h = parseInt(minutes / 60);
+    //        h = h < 10 ? '0' + h : h;
+    //        var m = minutes % 60;
+    //        m = m < 10 ? '0' + m : m;
+    //        //return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
+    //        return `${h.toString().padStart(1, '0')}:${m.toString().padStart(2, '0')}`;
+    //    } else {
+    //        return null;
+    //    }
+    //};
 
     //function getTimeFromMins(mins) {
     //    let hours = Math.trunc(mins / 60);
@@ -1515,6 +1516,19 @@
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_usageFeeDerailment', App.Langs), width: "50px", orderable: true, searchable: true
             },
+            {
+                field: 'arrivalUzVagonCargoReturns',
+                data: function (row, type, val, meta) {
+                    if (row.arrivalUzVagonCargoReturns) {
+                        return langView('tsrv_title_yes', App.Langs);
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_CargoReturns', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            
             // дата создания
             {
                 field: 'usageFeeCreate',
@@ -1949,6 +1963,7 @@
         collums.push({ field: 'wagonRodAbbr', title: null, class: null });
         collums.push({ field: 'outgoingUzVagonOutgoingWagonsRentOperatorAbbr', title: null, class: null });
         collums.push({ field: 'outgoingUzVagonConditionAbbr', title: null, class: null });
+        collums.push({ field: 'arrivalUzVagonCargoReturns', title: null, class: null });
         collums.push({ field: 'arrivalSostavDateAdoption', title: null, class: null });
         collums.push({ field: 'arrivalSostavDateAdoptionAct', title: null, class: null });
         collums.push({ field: 'outgoingSostavDateOutgoing', title: null, class: null });
@@ -2796,13 +2811,13 @@
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 this.tab_com.leftColumns = 4;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [7, 'desc'];
+                this.tab_com.order_column = [8, 'desc'];
                 //this.tab_com.type_select_rows = 2; // Выбирать одну
                 //this.tab_com.table_select = {
                 //    style: 'multi'
                 //};
                 //scrollCollapse: true,
-                this.tab_com.table_select = false;
+                this.tab_com.table_select = true;
                 this.tab_com.autoWidth = false;
                 this.tab_com.createdRow = function (row, data, index) {
                     //$(row).attr('id', data.id); // id строки дислокации вагона
