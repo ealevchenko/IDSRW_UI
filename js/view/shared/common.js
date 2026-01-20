@@ -30,10 +30,10 @@ var Roles = {
     COND_SEND_RW: "KRR-LG_TD-IDSRW_COND_SEND"       // Ввод данных, корректировка разметки вагонов по отправлению  на внешнюю сеть УЗ в сервисе  "  Разметка по отправлению" 
 };
 
-//var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
-//var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
-var url_api_test = "https://localhost:7280";
-var url_api_main = "https://localhost:7280";
+var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
+//var url_api_test = "https://localhost:7280";
+//var url_api_main = "https://localhost:7280";
 
 var url_web_main = "https://krr-app-paweb01.europe.mittalco.com/idsrw";
 var url_web_test = "https://krr-tst-padev02.europe.mittalco.com/idsrw";
