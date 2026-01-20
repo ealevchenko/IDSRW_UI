@@ -2820,7 +2820,7 @@
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = false;
                 this.tab_com.createdRow = function (row, data, index) {
-                    //$(row).attr('id', data.id); // id строки дислокации вагона
+                    $(row).attr('id', data.outgoingCarId); // id строки дислокации вагона
                     //$(row).attr('data-num', data.num); // data-num номер вагона
                     //if (data.verification !== null) {
                     //    if (data.dateList === null) {
