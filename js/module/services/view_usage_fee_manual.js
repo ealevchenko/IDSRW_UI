@@ -22,14 +22,9 @@
 
             'vs_ufeem_mess_init_module': 'Инициализация модуля view_usage_fee_manual',
             'vs_ufeem_mess_search_wagons': 'Загружаю информацию по вагону...',
-            //'vs_ufeem_mess_load_operation': 'Загружаю форму операции',
-
-            //'vs_ufeem_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
-            //'vs_ufeem_mess_error_not_document': 'Не выбран документ для правки!',
 
             'vs_ufeem_title_label_num_wagon': 'Найти вагон:',
             'vs_ufeem_title_placeholder_num_wagon': '№ вагона',
-            //'vs_ufeem_text_label_num_wagon': 'Скорректируйте тариф ЭПД ...',
 
             'vs_ufeem_title_label_fee_amount': 'Плата(расч.):',
             'vs_ufeem_title_placeholder_fee_amount': 'Плата, грн.',
@@ -43,33 +38,14 @@
 
             'vs_ufeem_title_label_fee_calc_time': 'Время(расч.):',
             'vs_ufeem_title_placeholder_fee_calc_time': 'Время, час.',
-            'vs_ufeem_text_label_fee_calc_time': 'Расчитанное время пользования вагоном ...',
+            'vs_ufeem_text_label_fee_calc_time': 'Рассчитанное время пользования вагоном ...',
 
             'vs_ufeem_title_label_fee_manual_time_hour': 'Время',
             'vs_ufeem_title_label_fee_manual_time_minutes': '(ручной):',
             'vs_ufeem_title_placeholder_fee_manual_time': '00',
-            //'vs_ufeem_text_label_fee_manual_time': 'Время пользование вагоном введеное в ручную ...',
-
             'vs_ufeem_title_label_fee_amount_note': 'Примечание:',
             'vs_ufeem_title_placeholder_fee_amount_note': 'Примечание',
             'vs_ufeem_text_fee_amount_note': 'Добавьте примечание на правку ...',
-
-            //'vs_ufeem_title_label_doc_pay': 'Тариф ЭПД (kod=001):',
-            //'vs_ufeem_title_placeholder_doc_pay': 'Тариф ЭПД',
-            //'vs_ufeem_text_label_doc_pay': 'Скорректируйте тариф ЭПД ...',
-
-            //'vs_ufeem_title_label_tariff_contract': 'Ж.д. тариф по договору, грн:',
-            //'vs_ufeem_title_placeholder_tariff_contract': 'Ж.д. тариф по договору',
-            //'vs_ufeem_text_label_tariff_contract': 'Введите Ж.д. тариф по договору(грн)...',
-
-            //'vs_ufeem_title_label_payer': 'Плательщик ОТПР:',
-            //'vs_ufeem_text_label_payer': 'Выберите плательщика ...',
-
-            //'vs_ufeem_title_label_cargo': 'груз ОТПР:',
-            //'vs_ufeem_text_label_cargo': 'Выберите груз ...',
-
-            //'vs_ufeem_title_label_station_from': 'Станция отправления:',
-            //'vs_ufeem_text_label_station_from': 'Выберите станцию ...',
 
             'vs_ufeem_form_apply': 'Применить',
             'vs_ufeem_form_title_apply': 'Применить корректировку платы за пользование...',
@@ -79,57 +55,76 @@
 
             'vs_ufeem_button_search': 'Найти',
             'vs_ufeem_title_button_search': 'Найти все платы по вагону...',
-            //'vs_ufeem_title_button_tariff_contract': 'Обновить ж.д. тариф по договору...',
-            //'vs_ufeem_title_button_clear_tariff_contract': 'Очистить ж.д. тариф по договору...',
 
             'vs_ufeem_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
-
-            //'vs_ufeem_mess_run_update_doc_pay': 'Править тариф ЭПД (kod=001) по документу [{0}], будет внесен новый тариф :{1} вместо тарифа :{2}.',
-            //'vs_ufeem_cancel_update_doc_pay': 'Отмена правки тарифа ЭПД.',
-            //'vs_ufeem_mess_ok_update_doc_pay': 'По документу  [{0}] обнавлен тариф ЭПД (kod=001)',
-            //'vs_ufeem_mess_error_update_doc_pay': 'При обновлении тарифа ЭПД по документу [{0}], - произошла ошибка. Код ошибки {1}',
-
-            //'vs_ufeem_mess_run_update_tariff_contract': 'Править ж.д. тариф по договору по документу [{0}], будет внесен новый ж.д. тариф :{1}',
-            //'vs_ufeem_cancel_update_tariff_contract': 'Отмена правки ж.д. тарифа.',
-            //'vs_ufeem_mess_ok_update_tariff_contract': 'По документу  [{0}] обнавлен ж.д. тариф по договору',
-            //'vs_ufeem_mess_error_update_tariff_contract': 'При обновлении ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
-
-            //'vs_ufeem_mess_run_clear_tariff_contract': 'Очистить ж.д. тариф по договору по документу [{0}]',
-            //'vs_ufeem_cancel_clear_tariff_contract': 'Отмена очистки ж.д. тарифа.',
-            //'vs_ufeem_mess_ok_clear_tariff_contract': 'По документу  [{0}] удален ж.д. тариф по договору',
-            //'vs_ufeem_mess_error_clear_tariff_contract': 'При очистки ж.д. тарифа по договору по документу [{0}], - произошла ошибка. Код ошибки {1}',
-
-            //'vs_ufeem_mess_error_select': 'Документ {0} для правки закрыт, по документу была произведена сверка, перечень №{1} от {2}',
-
-            //'vs_ufeem_load_main_docs': 'Загружаю документы за период...',
-            //'vs_ufeem_update_main_docs': 'Обновляю документы выбранные за период...',
-            //'vs_ufeem_select_main_docs': 'Поиск документов согласно выбора...',
-
-            //'vs_ufeem_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            //'vs_ufeem_mess_info_add_main_docs': 'За период c {0} по {1}, найдено {2} документов.',
-            //'vs_ufeem_mess_info_select_main_docs': 'За период c {0} по {1}, найдено {2} документов, выбрано {3}',
 
             'vs_ufeem_mess_error_not_select_usage_fee': 'Не выбран расчет для правки!',
             'vs_ufeem_mess_war_not_change_value': 'В расчете нет правок для изменения записи!',
 
-            'vs_ufeem_mess_run_update_usage_fee': 'Будет выполнена операция корректировки платы и времени пользования вагоном. Новая плата [{0}], время [{1}] и приечание [{2}]',
+            'vs_ufeem_mess_run_update_usage_fee': 'Будет выполнена операция корректировки платы и времени пользования вагоном. Новая плата [{0}], время [{1}] и примечание [{2}]',
             'vs_ufeem_cancel_update_usage_fee': 'Отмена операции корректировки платы и времени пользования вагоном',
-            //'vs_ufeem_mess_error_not_doc_pay': 'Не указан новый тариф ЭПД!',
-            //'vs_ufeem_mess_error_exist_doc_pay': 'Указаный тариф ЭПД не отличается от существующего!',
-
-            //'vs_ufeem_mess_error_not_tariff_contract': 'Не указан тариф по договору!',
-            //'vs_ufeem_mess_error_exist_tariff_contract': 'Указаный тариф по договору не отличается от существующего!',
-
-            //'vs_ufeem_mess_war_not_select_docs': 'Не выбрана накладная для правки!',
+            'vs_ufeem_mess_error_update_usage_fee': 'При выполнении операции корректировки платы, произошла ошибка. Код ошибки {0}',
+            'vs_ufeem_mess_ok_update_usage_fee': 'Операция корректировки платы за пользование - выполнена!',
+            'vs_ufeem_mess_war_access_denied': 'Для учетной записи [{0}], доступ к корректировке платы за пользование в ручном режиме ограничен!',
 
         },
         'en':  //default language: English
         {
+            'vs_ufeem_card_header_card_services': 'КОРРЕКТИРОВКА ИТОГОВОЙ СУММЫ ПЛАТЫ В РУЧНОМ РЕЖИМЕ',
+            'vs_ufeem_card_header_usage_fee_wagons': 'ПЕРЕЧЕНЬ ВАГОНОВ ДЛЯ КОРРЕКЦИИ',
 
+            'vs_ufeem_mess_init_module': 'Инициализация модуля view_usage_fee_manual',
+            'vs_ufeem_mess_search_wagons': 'Загружаю информацию по вагону...',
+
+            'vs_ufeem_title_label_num_wagon': 'Найти вагон:',
+            'vs_ufeem_title_placeholder_num_wagon': '№ вагона',
+
+            'vs_ufeem_title_label_fee_amount': 'Плата(расч.):',
+            'vs_ufeem_title_placeholder_fee_amount': 'Плата, грн.',
+            'vs_ufeem_text_label_fee_amount': 'Расчитанная плата за пользование вагоном ...',
+
+            'vs_ufeem_title_label_fee_amount_manual': 'Плата(ручн.):',
+            'vs_ufeem_title_placeholder_fee_amount_manual': 'Плата, грн.',
+            'vs_ufeem_text_label_fee_amount_manual': 'Плата за пользование вагоном введена в ручную ...',
+
+            'vs_ufeem_mess_error_wagon_num_error': 'Номер вагона не прошел проверку на системную нумерацию!',
+
+            'vs_ufeem_title_label_fee_calc_time': 'Время(расч.):',
+            'vs_ufeem_title_placeholder_fee_calc_time': 'Время, час.',
+            'vs_ufeem_text_label_fee_calc_time': 'Рассчитанное время пользования вагоном ...',
+
+            'vs_ufeem_title_label_fee_manual_time_hour': 'Время',
+            'vs_ufeem_title_label_fee_manual_time_minutes': '(ручной):',
+            'vs_ufeem_title_placeholder_fee_manual_time': '00',
+            'vs_ufeem_title_label_fee_amount_note': 'Примечание:',
+            'vs_ufeem_title_placeholder_fee_amount_note': 'Примечание',
+            'vs_ufeem_text_fee_amount_note': 'Добавьте примечание на правку ...',
+
+            'vs_ufeem_form_apply': 'Применить',
+            'vs_ufeem_form_title_apply': 'Применить корректировку платы за пользование...',
+
+            'vs_ufeem_title_button_Cancel': 'Отмена',
+            'vs_ufeem_button_Ok': 'Применить',
+
+            'vs_ufeem_button_search': 'Найти',
+            'vs_ufeem_title_button_search': 'Найти все платы по вагону...',
+
+            'vs_ufeem_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
+
+            'vs_ufeem_mess_error_not_select_usage_fee': 'Не выбран расчет для правки!',
+            'vs_ufeem_mess_war_not_change_value': 'В расчете нет правок для изменения записи!',
+
+            'vs_ufeem_mess_run_update_usage_fee': 'Будет выполнена операция корректировки платы и времени пользования вагоном. Новая плата [{0}], время [{1}] и примечание [{2}]',
+            'vs_ufeem_cancel_update_usage_fee': 'Отмена операции корректировки платы и времени пользования вагоном',
+            'vs_ufeem_mess_error_update_usage_fee': 'При выполнении операции корректировки платы, произошла ошибка. Код ошибки {0}',
+            'vs_ufeem_mess_ok_update_usage_fee': 'Операция корректировки платы за пользование - выполнена!',
+            'vs_ufeem_mess_war_access_denied': 'Для учетной записи [{0}], доступ к корректировке платы за пользование в ручном режиме ограничен!',
         }
     };
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
+
+    var ADMIN = App.api_admin;
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var MCF = App.modal_confirm_form;
@@ -157,6 +152,21 @@
             throw new Error('Не удалось найти элемент с селектором: ' + selector);
         }
         this.fe_ui = new FE();
+        // Получим роль
+        var admin = new ADMIN();
+        this.rAdmin = false;
+        this.rRW = false;
+        this.Roles = [];
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.PAY_RW, function (data) {
+            this.Roles = data;
+            if (this.Roles && this.Roles.length > 0) {
+                var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
+                var res = this.Roles.find(function (o) { return o.role === Roles.PAY_RW }.bind(this)); this.rRW = res ? res.result : false;
+            }
+            if (this.rAdmin) { this.rRW = true; } // 
+            //this.rAdmin = false;
+            //this.rRW = false;
+        }.bind(this));
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
@@ -196,6 +206,7 @@
 
         this.num = null;            // Номер вагона
         this.usage_fee_wagons = []; // список расчетов
+        this.id = null;
         this.usage_fee_id = null;   // Выбранный расчет для правки
         this.usage_fee_manual_fee_amount = null;
         this.usage_fee_manual_time = null;
@@ -211,6 +222,16 @@
         });
         this.$main.append(this.alert.$html);
         this.main_alert = new ALERT(this.alert.$html);
+
+        // доступ
+        if (!this.rAdmin && !this.rRW) {
+            this.main_alert.out_warning_message(langView('vs_ufeem_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
+            if (typeof this.settings.fn_init === 'function') {
+                console.log('Close view_usage_fee_manual');
+                this.settings.fn_init(false);
+            }
+            return;
+        };
         // Создать макет панели (КОРРЕКТИРОВКА ИТОГОВОЙ СУММЫ ПЛАТЫ В РУЧНОМ РЕЖИМЕ)
         this.card_services = new this.fe_ui.bs_card({
             border_color: 'border-primary',
@@ -297,7 +318,22 @@
                         this.usage_fee_wagons_setup.$html.append(this.form_edit_usege_fee.$form);
                         this.form_edit_usege_fee.el.input_text_fee_amount.disable();
                         this.form_edit_usege_fee.el.input_text_fee_calc_time.disable();
-
+                        // настройка от доступа
+                        if (this.rAdmin || this.rRW) {
+                            this.form_select_wagons.el.button_search_wagon.prop("disabled", false);
+                            this.form_edit_usege_fee.el.button_apply_uf.prop("disabled", false);
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual.enable();
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.enable();
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.enable();
+                            this.form_edit_usege_fee.el.textarea_fee_amount_note.enable();
+                        } else {
+                            this.form_select_wagons.el.button_search_wagon.prop("disabled", true);
+                            this.form_edit_usege_fee.el.button_apply_uf.prop("disabled", true)
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual.disable();
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.disable();
+                            this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.disable();
+                            this.form_edit_usege_fee.el.textarea_fee_amount_note.disable();
+                        }
                         // На проверку окончания инициализации
                         //----------------------------------
                         LockScreenOff();
@@ -316,8 +352,8 @@
                 var bt_search = {
                     obj: 'bs_button',
                     options: {
-                        id: 'search-wagon',
-                        name: 'search-wagon',
+                        id: 'search_wagon',
+                        name: 'search_wagon',
                         class: 'col-auto',
                         fsize: 'sm',
                         color: 'success',
@@ -326,17 +362,23 @@
                         icon_fa_left: 'fa-solid fa-magnifying-glass',//<i class="fa-solid fa-magnifying-glass"></i>
                         icon_fa_right: null,
                         fn_click: function (event) {
-                            //event.preventDefault();
-                            this.form_select_wagons.submit(event);
-                            if (this.form_select_wagons.valid) {
-                                var result = this.form_select_wagons.data;
-                                // Обновим информацию
-                                this.update(result.input_text_num_wagon, function (usage_fee_wagons) {
-                                    this.view_usage_fee_wagons(usage_fee_wagons, function () {
-                                        LockScreenOff();
+                            event.preventDefault();
+                            if (this.rAdmin || this.rRW) {
+                                this.form_select_wagons.submit(event);
+                                if (this.form_select_wagons.valid) {
+                                    var result = this.form_select_wagons.data;
+                                    this.id = null;
+                                    // Обновим информацию
+                                    this.update(result.input_text_num_wagon, function (usage_fee_wagons) {
+                                        this.view_usage_fee_wagons(usage_fee_wagons, function () {
+                                            LockScreenOff();
+                                        }.bind(this));
                                     }.bind(this));
-                                }.bind(this));
+                                }
+                            } else {
+                                this.main_alert.out_warning_message(langView('vs_ufeem_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
                             }
+
                         }.bind(this),
                     }
                 };
@@ -447,67 +489,14 @@
                         fn_click: function (event) {
                             event.preventDefault();
                             this.clear_all();
-                            this.form_edit_usege_fee.$form.submit();
-                            if (this.form_edit_usege_fee.valid) {
+                            if (this.rAdmin || this.rRW) {
+                                this.form_edit_usege_fee.$form.submit();
+                                //if (this.form_edit_usege_fee.valid) {
 
+                                //}
+                            } else {
+                                this.main_alert.out_warning_message(langView('vs_ufeem_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
                             }
-
-                            //if (this.form_edit_usege_fee.valid) {
-                            //    var result = this.form_payment_terms_setup.data;
-                            //    // определим это новое условие
-                            //    var b_add = this.id_usage_fee_period === 0;
-                            //    //var row_add = this.select_rows_ufp.find(function (o) {
-                            //    //    return o.id === 0;
-                            //    //}.bind(this));
-
-                            //    //row_add = row_add & this.id_usage_fee_period === 0;
-
-                            //    //this.id_usage_fee_period
-                            //    //
-                            //    var mess = langView((b_add ? 'vs_usfee_mess_run_add_apply_ufd' : 'vs_usfee_mess_run_edit_apply_ufd'), App.Langs).format(
-                            //        moment(result.input_datetime_date_period_start).set({ 'hour': 0, 'minute': 0, 'second': 0 }).format(format_datetime_ru),
-                            //        moment(result.input_datetime_date_period_stop).set({ 'hour': 23, 'minute': 59, 'second': 59 }).format(format_datetime_ru)
-                            //    );
-
-                            //    this.mcf_lg.open(
-                            //        langView('vs_usfee_title_form_apply_ufd', App.Langs),
-                            //        mess,
-                            //        function () {
-
-                            //            var list_period_edit = [];
-                            //            $.each(this.select_rows_ufp, function (key, el) {
-                            //                list_period_edit.push({
-                            //                    id: el.id,
-                            //                    id_operator: el.id_operator,
-                            //                    id_genus: el.id_genus,
-                            //                    type: el.edit ? 1 : 0
-                            //                });
-                            //            }.bind(this));
-
-                            //            var operation = {
-                            //                id: this.id_usage_fee_period,
-                            //                start: moment(result.input_datetime_date_period_start).set({ 'hour': 0, 'minute': 0, 'second': 0 }).format("YYYY-MM-DDTHH:mm:ss"),
-                            //                stop: moment(result.input_datetime_date_period_stop).set({ 'hour': 23, 'minute': 59, 'second': 59 }).format("YYYY-MM-DDTHH:mm:ss"),
-                            //                hour_after_30: result.input_checkbox_hour_after_30,
-                            //                id_currency: result.select_rate_currency,
-                            //                rate: result.input_text_rate_value,
-                            //                id_currency_derailment: result.select_derailment_rate_currency,
-                            //                rate_derailment: result.input_text_derailment_rate_value,
-                            //                coefficient_route: result.input_text_coefficient_route_value,
-                            //                coefficient_not_route: result.input_text_coefficient_not_route_value,
-                            //                grace_time_1: result.input_text_grace_time_value1,
-                            //                grace_time_2: result.input_text_grace_time_value2,
-                            //                note: '',
-                            //                list_period_edit: list_period_edit,
-
-                            //            };
-                            //            this.apply_ufp(operation);
-                            //        }.bind(this),
-                            //        function () {
-                            //            this.main_alert.out_warning_message(langView((b_add ? 'vs_usfee_cancel_add_apply_ufd' : 'vs_usfee_cancel_edit_apply_ufd'), App.Langs));
-                            //        }.bind(this)
-                            //    );
-                            //}
                         }.bind(this),
                     }
                 };
@@ -802,17 +791,19 @@
                                 }
                                 if (this.usage_fee_manual_time === time &&
                                     this.usage_fee_manual_fee_amount === fee_amount &&
-                                    (this.usage_fee_note === note || (this.usage_fee_note !== note  && this.usage_fee_note === null && note === ''))
+                                    (this.usage_fee_note === note || (this.usage_fee_note !== note && this.usage_fee_note === null && note === ''))
                                 ) {
                                     this.main_alert.out_warning_message(langView('vs_ufeem_mess_war_not_change_value', App.Langs));
                                     valid = false;
                                 }
                             }
+
                             // Сформировать обновление
-                            if (valid) {
-                                var mess = langView('vs_ufeem_mess_run_update_usage_fee', App.Langs).format(fee_amount,
-                                    getHoursFromMinuts(time),
-                                    note);
+                            if (valid && (this.rAdmin || this.rRW)) {
+                                var stime = getHoursFromMinuts(time);
+                                var mess = langView('vs_ufeem_mess_run_update_usage_fee', App.Langs).format(fee_amount !== null ? Number(fee_amount).toFixed(2) : '-без платы-',
+                                    stime !== null ? stime : '-без времени-',
+                                    note !== null ? note : '');
                                 this.mcf_lg.open(
                                     langView('vs_ufeem_title_form_apply', App.Langs),
                                     mess,
@@ -884,6 +875,7 @@
                     }.bind(this),
                     fn_select_rows: function (rows, type) {
                         this.form_edit_usege_fee.clear_all();
+                        this.id = null;
                         this.usage_fee_id = null;
                         this.usage_fee_manual_fee_amount = null;
                         this.usage_fee_manual_time = null;
@@ -897,7 +889,8 @@
                         this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.val('');
                         this.form_edit_usege_fee.el.textarea_fee_amount_note.val('');
                         if (type === "select") {
-                            this.usage_fee_id = rows[0].UsageFeeId;
+                            this.id = rows[0].outgoingCarId;
+                            this.usage_fee_id = rows[0].usageFeeId;
                             this.usage_fee_manual_fee_amount = rows[0].usageFeeManualFeeAmount;
                             this.usage_fee_manual_time = rows[0].usageFeeManualTime;
                             this.usage_fee_note = rows[0].usageFeeNote;
@@ -992,7 +985,7 @@
     view_usage_fee_manual.prototype.view_usage_fee_wagons = function (usage_fee_wagons, callback) {
         this.usage_fee_wagons = usage_fee_wagons;
         LockScreen(langView('vs_ufeem_mess_search_wagons', App.Langs));
-        this.tab_usage_fee_wagons.view(this.usage_fee_wagons);
+        this.tab_usage_fee_wagons.view(this.usage_fee_wagons, this.id);
         if (typeof callback === 'function') {
             callback(usage_fee_wagons);
         }
@@ -1000,53 +993,18 @@
     //--------------------------------------------------------------------------------
     // Обновить 
     view_usage_fee_manual.prototype.apply_update = function (data, callback) {
-        //var result = 1;
-        this.ids_outgoing.postUpdatePayOutgoingUzDocument(data, function (result) {
-            var mess_ok = null;
-            var mess_error = null;
+        this.api_wsd.postUsageFeeWagon(data, function (result) {
             this.clear_all();
             if (result >= 0) {
-                // Ок
-                if (data.type === 0) {
-                    mess_ok = langView('vs_ufeem_mess_ok_update_doc_pay', App.Langs).format(this.nomDoc);
-                }
-                if (data.type === 1) {
-                    mess_ok = langView('vs_ufeem_mess_ok_update_tariff_contract', App.Langs).format(this.nomDoc);
-                }
-                if (data.type === 2) {
-                    mess_ok = langView('vs_ufeem_mess_ok_clear_tariff_contract', App.Langs).format(this.nomDoc);
-                }
-                LockScreen(langView('vs_ufeem_update_main_docs', App.Langs));
-                this.ids_outgoing.getRegisterOutgoingUzDocumentOfId(data.id_document, function (document) {
-                    var doc = this.get_document(document);
-                    var exist_doc = this.list_document.find(function (o) {
-                        return o.id === doc.id;
+                // Обновим информацию
+                this.update(this.num, function (usage_fee_wagons) {
+                    this.view_usage_fee_wagons(usage_fee_wagons, function () {
+                        LockScreenOff();
+                        this.main_alert.out_info_message(langView('vs_ufeem_mess_ok_update_usage_fee', App.Langs).format());
                     }.bind(this));
-                    if (exist_doc && doc) {
-                        var res = this.list_document.indexOf(exist_doc);
-                        this.list_document[res] = doc;
-                        this.select_apply(function (select) {
-                            this.view_select(select, doc.id);
-                            this.main_alert.out_info_message(mess_ok);
-                            LockScreenOff();
-                            if (typeof callback === 'function') {
-                                callback(result);
-                            }
-                        }.bind(this));
-                    }
                 }.bind(this));
             } else {
-
-                if (data.type === 0) {
-                    mess_error = langView('vs_ufeem_mess_error_update_doc_pay', App.Langs).format(this.nomDoc, result);
-                }
-                if (data.type === 1) {
-                    mess_error = langView('vs_ufeem_mess_error_update_tariff_contract', App.Langs).format(this.nomDoc, result);
-                }
-                if (data.type === 1) {
-                    mess_error = langView('vs_ufeem_mess_error_clear_tariff_contract', App.Langs).format(this.nomDoc, result);
-                }
-                this.main_alert.out_error_message(mess_error);
+                this.main_alert.out_error_message(langView('vs_ufeem_mess_error_update_usage_fee', App.Langs).format(result));
                 LockScreenOff();
                 if (typeof callback === 'function') {
                     callback(result);
