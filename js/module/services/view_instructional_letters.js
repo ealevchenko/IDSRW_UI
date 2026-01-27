@@ -135,6 +135,7 @@
             'vs_ilet_title_label_canceled': 'Письма отменённые',
             'vs_ilet_title_label_deleted': 'Письма требующие внимания',
 
+
             'vs_ilet_title_letter_num': '№ письма',
             'vs_ilet_title_placeholder_letter_num': '№ письма',
 
@@ -161,7 +162,7 @@
 
             'vs_ilet_title_button_add_letter': 'Добавить новое письмо',
             'vs_ilet_title_button_edit_letter': 'Привить существующее письмо',
-            'vs_ilet_title_button_delete_letter': 'Удалить письмо (вагоны в письме должны быть не закрыты!)',
+            'vs_ilet_title_button_delete_letter': 'Удалить письмо или вагоны в письме со статусом [Удалить] (вагоны в письме должны быть не закрыты или иметь статус [Удалить]!)',
 
             'vs_ilet_title_button_delete_wagon': 'Удалить вагон из письма (ошибочно добавленный)',
             'vs_ilet_title_button_cancel_letter': 'Отмена вагона в письме (собственник отменил письмо)',
@@ -253,7 +254,6 @@
             //this.rAdmin = false;
             //this.rRW = false;
         }.bind(this));
-
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
@@ -1550,8 +1550,6 @@
                     }.bind(this),
                     fn_enable_button: function (tb) {
                         //var index = tb.obj_t_report.rows({ selected: true });
-
-
                         var data = tb.obj_t_report.rows({ selected: true }).data();
                         var bts_add = tb.obj_t_report.buttons([3]);
                         var bts_edit = tb.obj_t_report.buttons([4]);
