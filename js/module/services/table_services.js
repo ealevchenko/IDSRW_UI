@@ -25,17 +25,21 @@
             'tsrv_field_nomDoc': '№ накл.',
             'tsrv_field_dateOtpr': 'Дата отправления на АМКР',
             'tsrv_field_DateAdoption': 'Дата приема',
+            'tsrv_field_DateAdoptionAct': 'Дата приема (акт)',
             'tsrv_field_stationFromName': 'Cт. отпр.',
             'tsrv_field_arrivalNameStnFrom': 'Cт. отпр.',
             'tsrv_field_outgoingCodeStnFrom': '(ЭПД) Код ст. отправления',
             'tsrv_field_outgoingNameStnFrom': '(ЭПД) Станция отправления',
             'tsrv_field_stationToName': 'Cт. приб.',
             'tsrv_field_arrivalNameStnTo': 'Cт. приб.',
+            'tsrv_field_stationToNameoutgoing': 'Cт. назн.',
             'tsrv_field_outgoingCodeStnTo': '(ЭПД) Код ст. назначения',
             'tsrv_field_outgoingNameStnTo': '(ЭПД) Станция назначения',
             'tsrv_field_inlandrailwayAbbr': 'Дорога ОТПР',
             'tsrv_field_arrivalCargoName': 'Груз ПРИБ',
+            'tsrv_field_arrivalCargoGroupName': 'Группа груз ПРИБ',
             'tsrv_field_outgoingCargoName': 'Груз ОТПР',
+            'tsrv_field_outgoingCargoGroupName': 'Группа груз ОТПР',
             'tsrv_field_arrivalOperatorAbbr': 'Оператор по АМКР ПРИБ',
             'tsrv_field_outgoingOperatorAbbr': 'Оператор по АМКР ОТПР',
             'tsrv_field_toDivisionName': 'Цех получатель',
@@ -74,6 +78,7 @@
             'tsrv_field_dateReadinessUz': 'Дата и время готовности',
             'tsrv_field_dateReadinessAmkr': 'Дата и время предъявления',
             'tsrv_field_dateOutgoing': 'Дата и время сдачи',
+            'tsrv_field_dateOutgoingAct': 'Дата и время сдачи (акт)',
             'tsrv_field_rodAbbr': 'Род',
             'tsrv_field_numList': 'Перечень',
             'tsrv_field_dateList': 'От',
@@ -128,6 +133,24 @@
             'tsrv_field_change': 'Строку правили',
             'tsrv_field_change_user': 'Правил',
 
+            'tsrv_field_DateStartUnload': 'Начало выгрузки',
+            'tsrv_field_DateEndUnload': 'Окончание выгрузки',
+            'tsrv_field_DateStartLoad': 'Начало погрузки',
+            'tsrv_field_DateEndLoad': 'Окончание погрузки',
+            'tsrv_field_ConditionAbbr': 'Разметка',
+            'tsrv_field_usageFeeRoute': 'Маршрут/не маршрут',
+            'tsrv_field_usageFeeDerailment': 'Сход',
+            'tsrv_field_usageFeeCreate': 'Строка создана',
+            'tsrv_field_usageFeeCreateUser': 'Создал',
+            'tsrv_field_usageFeeChange': 'Строку правили',
+            'tsrv_field_usageFeeChangeUser': 'Правил',
+            'tsrv_field_usageFeeDowntime': 'Общий простой',
+            'tsrv_field_usageFeeCalcTime': 'Время пользования (расчетное), час',
+            'tsrv_field_usageFeeCalcFeeAmount': 'Плата (расч.), грн',
+            'tsrv_field_usageFeeManualTime': 'Время пользования (ручн.), час',
+            'tsrv_field_usageFeeManualFeeAmount': 'Плата (ручн.), грн',
+            'tsrv_field_CargoReturns': 'Возвратный',
+
             'tsrv_title_status_0': 'Создано',
             'tsrv_title_status_1': 'В работе',
             'tsrv_title_status_2': 'Выполнено',
@@ -135,10 +158,11 @@
             'tsrv_title_status_4': 'Отменено',
             'tsrv_title_status_5': 'Удалить',
 
+            'tsrv_title_route': 'маршрут',
+            'tsrv_title_no_route': 'не маршрут',
+
             'tsrv_title_no_epd': 'без ЭПД',
             'tsrv_title_yes': 'Да',
-
-            //'tsrv_title_link_num': 'Показать историю по вагону...',
 
             'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
@@ -159,17 +183,21 @@
             'tsrv_field_nomDoc': '№ накл.',
             'tsrv_field_dateOtpr': 'Дата отправления на АМКР',
             'tsrv_field_DateAdoption': 'Дата приема',
+            'tsrv_field_DateAdoptionAct': 'Дата приема (акт)',
             'tsrv_field_stationFromName': 'Cт. отпр.',
             'tsrv_field_arrivalNameStnFrom': 'Cт. отпр.',
             'tsrv_field_outgoingCodeStnFrom': '(ЭПД) Код ст. отправления',
             'tsrv_field_outgoingNameStnFrom': '(ЭПД) Станция отправления',
             'tsrv_field_stationToName': 'Cт. приб.',
             'tsrv_field_arrivalNameStnTo': 'Cт. приб.',
+            'tsrv_field_stationToNameoutgoing': 'Cт. назн.',
             'tsrv_field_outgoingCodeStnTo': '(ЭПД) Код ст. назначения',
             'tsrv_field_outgoingNameStnTo': '(ЭПД) Станция назначения',
             'tsrv_field_inlandrailwayAbbr': 'Дорога ОТПР',
             'tsrv_field_arrivalCargoName': 'Груз ПРИБ',
+            'tsrv_field_arrivalCargoGroupName': 'Группа груз ПРИБ',
             'tsrv_field_outgoingCargoName': 'Груз ОТПР',
+            'tsrv_field_outgoingCargoGroupName': 'Группа груз ОТПР',
             'tsrv_field_arrivalOperatorAbbr': 'Оператор по АМКР ПРИБ',
             'tsrv_field_outgoingOperatorAbbr': 'Оператор по АМКР ОТПР',
             'tsrv_field_toDivisionName': 'Цех получатель',
@@ -208,6 +236,7 @@
             'tsrv_field_dateReadinessUz': 'Дата и время готовности',
             'tsrv_field_dateReadinessAmkr': 'Дата и время предъявления',
             'tsrv_field_dateOutgoing': 'Дата и время сдачи',
+            'tsrv_field_dateOutgoingAct': 'Дата и время сдачи (акт)',
             'tsrv_field_rodAbbr': 'Род',
             'tsrv_field_numList': 'Перечень',
             'tsrv_field_dateList': 'От',
@@ -249,6 +278,13 @@
             'tsrv_field_change': 'Строку правили',
             'tsrv_field_change_user': 'Правил',
 
+            'tsrv_field_DateStartUnload': 'Начало выгрузки',
+            'tsrv_field_DateEndUnload': 'Окончание выгрузки',
+            'tsrv_field_DateStartLoad': 'Начало погрузки',
+            'tsrv_field_DateEndLoad': 'Окончание погрузки',
+            'tsrv_field_ConditionAbbr': 'Разметка',
+            'tsrv_field_usageFeeRoute': 'Маршрут/не маршрут',
+
             'tsrv_title_status_0': 'Создано',
             'tsrv_title_status_1': 'В работе',
             'tsrv_title_status_2': 'Выполнено',
@@ -258,7 +294,8 @@
 
             'tsrv_title_no_epd': 'без ЭПД',
 
-            //'tsrv_title_link_num': 'Показать историю по вагону...',
+            'tsrv_title_route': 'маршрут',
+            'tsrv_title_no_route': 'не маршрут',
 
             'tsrv_title_button_select_all': 'Выбрать все',
             'tsrv_title_button_select_all_wagon': 'Все вагоны',
@@ -280,18 +317,24 @@
 
     var TAB_COMMON = App.table_common; // Общий модуль таблиц*/
 
-    var getHoursFromMinuts = function (minutes) {
-        if (minutes && minutes > 0) {
-            var h = parseInt(minutes / 60);
-            h = h < 10 ? '0' + h : h;
-            var m = minutes % 60;
-            m = m < 10 ? '0' + m : m;
-            //return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
-            return `${h.toString().padStart(1, '0')}:${m.toString().padStart(2, '0')}`;
-        } else {
-            return null;
-        }
-    };
+    //var getHoursFromMinuts = function (minutes) {
+    //    if (minutes && minutes > 0) {
+    //        var h = parseInt(minutes / 60);
+    //        h = h < 10 ? '0' + h : h;
+    //        var m = minutes % 60;
+    //        m = m < 10 ? '0' + m : m;
+    //        //return `${h.toString().padStart(6, '0')}:${m.toString().padStart(2, '0')}`;
+    //        return `${h.toString().padStart(1, '0')}:${m.toString().padStart(2, '0')}`;
+    //    } else {
+    //        return null;
+    //    }
+    //};
+
+    //function getTimeFromMins(mins) {
+    //    let hours = Math.trunc(mins / 60);
+    //    let minutes = mins % 60;
+    //    return hours + ':' + minutes;
+    //};
 
     //-----------------------------------------------------------------------------------------
     // Конструктор
@@ -1308,8 +1351,259 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tsrv_field_change_user', App.Langs), width: "100px", orderable: true, searchable: true
             },
-
-
+            // usage_fee_wagons
+            // род
+            {
+                field: 'wagonRodAbbr',
+                data: function (row, type, val, meta) {
+                    return row['wagonRodAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_rodAbbr', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // оператор
+            {
+                field: 'outgoingUzVagonOutgoingWagonsRentOperatorAbbr',
+                data: function (row, type, val, meta) {
+                    return row['outgoingUzVagonOutgoingWagonsRentOperatorAbbr' + ucFirst(App.Lang)];;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingOperatorAbbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            //
+            {
+                field: 'arrivalSostavDateAdoption',
+                data: function (row, type, val, meta) {
+                    return row.arrivalSostavDateAdoption ? moment(row.arrivalSostavDateAdoption).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateAdoption', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrivalSostavDateAdoptionAct',
+                data: function (row, type, val, meta) {
+                    return row.arrivalSostavDateAdoptionAct ? moment(row.arrivalSostavDateAdoptionAct).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateAdoptionAct', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingSostavDateOutgoing',
+                data: function (row, type, val, meta) {
+                    return row.outgoingSostavDateOutgoing ? moment(row.outgoingSostavDateOutgoing).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateOutgoing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingSostavDateOutgoingAct',
+                data: function (row, type, val, meta) {
+                    return row.outgoingSostavDateOutgoingAct ? moment(row.outgoingSostavDateOutgoingAct).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_dateOutgoingAct', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrivalUzVagonCargoName',
+                data: function (row, type, val, meta) {
+                    return row['arrivalUzVagonCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_arrivalCargoName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrivalUzVagonCargoGroupName',
+                data: function (row, type, val, meta) {
+                    return row['arrivalUzVagonCargoGroupName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_arrivalCargoGroupName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUzVagonCargoName',
+                data: function (row, type, val, meta) {
+                    return row['outgoingUzVagonCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingCargoName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUzVagonCargoGroupName',
+                data: function (row, type, val, meta) {
+                    return row['outgoingUzVagonCargoGroupName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_outgoingCargoGroupName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeDateStartUnload',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeDateStartUnload ? moment(row.usageFeeDateStartUnload).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateStartUnload', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeDateEndUnload',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeDateEndUnload ? moment(row.usageFeeDateEndUnload).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateEndUnload', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeDateStartLoad',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeDateStartLoad ? moment(row.usageFeeDateStartLoad).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateStartLoad', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeDateEndLoad',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeDateEndLoad ? moment(row.usageFeeDateEndLoad).format(format_datetime) : null
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_DateEndLoad', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrivalUzDocumentStationFromName',
+                data: function (row, type, val, meta) {
+                    return row['arrivalUzDocumentStationFromName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_stationFromName', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'outgoingUzDocumentStationToName',
+                data: function (row, type, val, meta) {
+                    return row['outgoingUzDocumentStationToName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_stationToNameoutgoing', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Разметка
+            {
+                field: 'outgoingUzVagonConditionAbbr',
+                data: function (row, type, val, meta) {
+                    return row['outgoingUzVagonConditionAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_ConditionAbbr', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeRoute',
+                data: function (row, type, val, meta) {
+                    if (row.usageFeeRoute) {
+                        return langView('tsrv_title_route', App.Langs);
+                    } else {
+                        return langView('tsrv_title_no_route', App.Langs);
+                    }
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usageFeeRoute', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeDerailment',
+                data: function (row, type, val, meta) {
+                    if (row.usageFeeRoute) {
+                        return langView('tsrv_title_yes', App.Langs);
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usageFeeDerailment', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'arrivalUzVagonCargoReturns',
+                data: function (row, type, val, meta) {
+                    if (row.arrivalUzVagonCargoReturns) {
+                        return langView('tsrv_title_yes', App.Langs);
+                    } else {
+                        return '';
+                    }
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_CargoReturns', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            
+            // дата создания
+            {
+                field: 'usageFeeCreate',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeCreate ? moment(row.usageFeeCreate).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usageFeeCreate', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeCreateUser',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeCreateUser;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_usageFeeCreateUser', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // дата правки
+            {
+                field: 'usageFeeChange',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeChange ? moment(row.usageFeeChange).format(format_datetime_ru) : null;
+                },
+                className: 'dt-body-nowrap',
+                title: langView('tsrv_field_usageFeeChange', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeChangeUser',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeChangeUser;
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tsrv_field_usageFeeChangeUser', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            // Оплата
+            {
+                field: 'usageFeeDowntime',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeDowntime !== null ? getHoursFromMinuts(row.usageFeeDowntime) : null;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_usageFeeDowntime', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeCalcTime',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeCalcTime !== null ? getHoursFromMinuts(row.usageFeeCalcTime * 60) : null
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_usageFeeCalcTime', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeCalcFeeAmount',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeCalcFeeAmount !== null ? Number(row.usageFeeCalcFeeAmount).toFixed(2) : null;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_usageFeeCalcFeeAmount', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeManualTime',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeManualTime !== null ? getHoursFromMinuts(row.usageFeeManualTime) : null
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_usageFeeManualTime', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            {
+                field: 'usageFeeManualFeeAmount',
+                data: function (row, type, val, meta) {
+                    return row.usageFeeManualFeeAmount !== null ? Number(row.usageFeeManualFeeAmount).toFixed(2) : null;
+                },
+                className: 'dt-body-center',
+                title: langView('tsrv_field_usageFeeManualFeeAmount', App.Langs), width: "50px", orderable: true, searchable: true
+            },
         ];
         this.tab_com.list_collums = this.tab_com.list_collums.concat(list_collums);
         // Перечень кнопок
@@ -1662,6 +1956,61 @@
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
 
+    table_services.prototype.init_columns_usage_fee_wagons = function () {
+        var collums = [];
+        //collums.push({ field: 'numeration', title: null, class: null });
+        collums.push({ field: 'num', title: null, class: null });
+        collums.push({ field: 'wagonRodAbbr', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonOutgoingWagonsRentOperatorAbbr', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonConditionAbbr', title: null, class: null });
+        collums.push({ field: 'arrivalUzVagonCargoReturns', title: null, class: null });
+        collums.push({ field: 'arrivalSostavDateAdoption', title: null, class: null });
+        collums.push({ field: 'arrivalSostavDateAdoptionAct', title: null, class: null });
+        collums.push({ field: 'outgoingSostavDateOutgoing', title: null, class: null });
+        collums.push({ field: 'outgoingSostavDateOutgoingAct', title: null, class: null });
+
+        collums.push({ field: 'arrivalUzDocumentStationFromName', title: null, class: null });
+
+        collums.push({ field: 'arrivalUzVagonCargoGroupName', title: null, class: null });
+        collums.push({ field: 'arrivalUzVagonCargoName', title: null, class: null });
+
+        collums.push({ field: 'usageFeeDateStartUnload', title: null, class: null });
+        collums.push({ field: 'usageFeeDateEndUnload', title: null, class: null });
+
+        collums.push({ field: 'outgoingUzDocumentStationToName', title: null, class: null });
+
+        collums.push({ field: 'outgoingUzVagonCargoGroupName', title: null, class: null });
+        collums.push({ field: 'outgoingUzVagonCargoName', title: null, class: null });
+
+        collums.push({ field: 'usageFeeDateStartLoad', title: null, class: null });
+        collums.push({ field: 'usageFeeDateEndLoad', title: null, class: null });
+
+        collums.push({ field: 'usageFeeRoute', title: null, class: null });
+        collums.push({ field: 'usageFeeDerailment', title: null, class: null });
+
+        collums.push({ field: 'usageFeeDowntime', title: null, class: null });
+        collums.push({ field: 'usageFeeCalcTime', title: null, class: null });
+        collums.push({ field: 'usageFeeCalcFeeAmount', title: null, class: null });
+        collums.push({ field: 'usageFeeManualTime', title: null, class: null });
+        collums.push({ field: 'usageFeeManualFeeAmount', title: null, class: null });
+
+        collums.push({ field: 'usageFeeCreate', title: null, class: null });
+        collums.push({ field: 'usageFeeCreateUser', title: null, class: null });
+        collums.push({ field: 'usageFeeChange', title: null, class: null });
+        collums.push({ field: 'usageFeeChangeUser', title: null, class: null });
+
+
+        //collums.push({ field: 'dateOutgoing', title: null, class: null });
+        //collums.push({ field: 'outgoingCargoName', title: null, class: null });
+        //collums.push({ field: 'outgoingCargoEtsngCode', title: null, class: null });
+        //collums.push({ field: 'vesg', title: null, class: null });
+        //collums.push({ field: 'outgoingOperatorAbbr', title: null, class: null });
+
+        //collums.push({ field: 'outgoingUzVagonPays', title: null, class: null });
+        //collums.push({ field: 'outgoingUzVagonPaysAdd', title: null, class: null });
+        //collums.push({ field: 'outgoingUzVagonPaysAll', title: null, class: null });
+        return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
+    };
     //------------------------------- КНОПКИ ----------------------------------------------------
     // инициализация кнопок  
     //-------------------------------------------------------------------------------------------
@@ -2420,7 +2769,7 @@
                 this.tab_com.fixedHeader = false;            // вкл. фикс. заголовка
                 this.tab_com.leftColumns = 0;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [1, 'desc'];
+                this.tab_com.order_column = [2, 'desc'];
                 this.tab_com.table_select = {
                     style: 'multi ',
                 };
@@ -2447,6 +2796,44 @@
                 this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
                 this.tab_com.table_columns = this.init_columns_list_usage_fee_period();
                 this.tab_com.table_buttons = this.tab_com.init_button_Ex_Fld_Ref_Pag(this.tab_com.settings.setup_buttons);
+                this.tab_com.dom = 'Bfrtip';
+                break;
+            };
+
+            case 'usage_fee_wagons': {
+                this.tab_com.lengthMenu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, langView('t_com_title_all', App.Langs)]];
+                this.tab_com.pageLength = 10;
+                this.tab_com.deferRender = true;
+                this.tab_com.paging = true;
+                this.tab_com.searching = false;
+                this.tab_com.ordering = true;
+                this.tab_com.info = true;
+                this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
+                this.tab_com.leftColumns = 3;
+                this.tab_com.columnDefs = null;
+                this.tab_com.order_column = [7, 'desc'];
+                //this.tab_com.type_select_rows = 2; // Выбирать одну
+                //this.tab_com.table_select = {
+                //    style: 'multi'
+                //};
+                //scrollCollapse: true,
+                this.tab_com.table_select = true;
+                this.tab_com.autoWidth = false;
+                this.tab_com.createdRow = function (row, data, index) {
+                    $(row).attr('id', data.outgoingCarId); // id строки дислокации вагона
+                    //$(row).attr('data-num', data.num); // data-num номер вагона
+                    //if (data.verification !== null) {
+                    //    if (data.dateList === null) {
+                    //        $(row).addClass('yellow');  // Отметим вагон расчитан
+                    //    } else {
+                    //        $(row).addClass('green');  // Отметим вагон сверен
+                    //    }
+                    //}
+                }.bind(this);
+                this.tab_com.drawCallback = this.tab_com.settings.fn_draw_callback;
+                this.tab_com.initComplete = this.tab_com.settings.fn_init_complete;
+                this.tab_com.table_columns = this.init_columns_usage_fee_wagons();
+                this.tab_com.table_buttons = this.tab_com.init_button_Ex_Prn_Fld_Pag(this.tab_com.settings.setup_buttons);
                 this.tab_com.dom = 'Bfrtip';
                 break;
             };

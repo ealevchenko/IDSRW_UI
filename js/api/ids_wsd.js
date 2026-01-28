@@ -243,6 +243,10 @@
     ids_wsd.prototype.deleteInstructionalLetters = function (id, callback) {
         this.api_com.delete('/WSD/operation/instructional_letters/delete/', id, callback, callback);
     };
+    //АРМ, Получить список расчитаных плат за пользование по указаному номеру вагона
+    ids_wsd.prototype.getViewUsageFeeWagonOfNum = function (num, callback) {
+        this.api_com.get('/WSD/view/usage_fee/wagon/' + num, callback);
+    };
     //АРМ, Получить список периодов ставок по оператору и роду
     ids_wsd.prototype.getViewUsageFeePeriodOfOperatorGenus = function (id_operator, id_genus, callback) {
         this.api_com.get('/WSD/view/usage_fee_period/operator/' + id_operator + '/genus/' + id_genus, callback);
@@ -251,10 +255,19 @@
     ids_wsd.prototype.getViewUsageFeePeriodDetaliOfIdPeriod = function (id_usage_fee_period, callback) {
         this.api_com.get('/WSD/view/usage_fee_period_detali/id_usage_fee_period/' + id_usage_fee_period, callback);
     };
+    //АРМ, Выполнить обновление расчета платы за пользование
+    ids_wsd.prototype.postUsageFeeWagon = function (option, callback) {
+        this.api_com.post('/WSD/operation/usage_fee/update/', option, callback, callback);
+    };
     //АРМ, Выполнить обновление условия
     ids_wsd.prototype.PostUpdateUsageFeePeriod = function (option, callback) {
         this.api_com.post('/WSD/operation/usage_fee_period/update/', option, callback, callback);
     };
+    // АРМ, Удалить условия
+    ids_wsd.prototype.deleteUsageFeePeriod = function (data, callback) {
+        this.api_com.post('/WSD/operation/usage_fee_period/delete/', data, callback, callback);
+    };
+
     //АРМ, Выполнить обновление дополнительного условия
     ids_wsd.prototype.postUpdateUsageFeePeriodDetali = function (option, callback) {
         this.api_com.post('/WSD/operation/usage_fee_period_detali/update/', option, callback, callback);

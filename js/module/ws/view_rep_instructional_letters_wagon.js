@@ -18,11 +18,7 @@
         'default':  //default language: ru
         {
             'vr_ilw_card_header_group_wagons': 'ОТЧЕТ "ИНСТРУКТИВНЫЕ ПИСЬМА В РАБОТЕ"',
-            //'vr_ilw_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
-            //'vr_ilw_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
             'vr_ilw_mess_init_module': 'Инициализация модуля view_rep_instructional_letters_wagon',
-            //'vr_ilw_mess_load_operation': 'Загружаю форму операции',
-
             'vr_ilw_obrwc_title_button_apply': 'ОБНОВИТЬ',
             'vr_ilw_obrwc_title_button_title_apply': 'Обновить выборку...',
             'vr_ilw_obrwc_title_button_clear': 'СБРОСИТЬ',
@@ -30,43 +26,13 @@
 
             'vr_ilw_title_button_Cancel': 'Отмена',
             'vr_ilw_button_Ok': 'Применить',
-
-            //'vr_ilw_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
-
-            //'vr_ilw_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
-            //'vr_ilw_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
-            //'vr_ilw_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
-            //'vr_ilw_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
-
-            //'vr_ilw_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
-            //'vr_ilw_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
-            //'vr_ilw_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
-            //'vr_ilw_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
-
-            //'vr_ilw_mess_error_not_document': 'Не выбран документ для правки!',
-            //'vr_ilw_mess_error_document_pay_not_change': 'Тариф без изменений!',
-            //'vr_ilw_mess_error_payer_not_change': 'Плательщик без изменений!',
-            //'vr_ilw_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
-
-            ////'vr_ilw_load_main_docs': 'Загружаю документы за период...',
             'vr_ilw_load': 'Загружаю инструктивные письма в работе на {0}...',
-            //'vr_ilw_where': 'Обновляю оперативный остаток вагонов на АМКР...',
-            //'vr_ilw_clear': 'Сбрасываю выборку оперативного остатка вагонов на АМКР...',
-            ////'vr_ilw_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            ////'vr_ilw_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
-
-            ////'vr_ilw_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
-            //'vr_ilw_field_view_type_way_outer_way': 'ПЕРЕГОН',
-            //'vr_ilw_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
+            'vr_ilw_mess_war_access_denied': 'Для учетной записи [{0}], доступ к информации по инструктивным письмам - ограничен!',
         },
         'en':  //default language: English
         {
             'vr_ilw_card_header_group_wagons': 'ОТЧЕТ "ИНСТРУКТИВНЫЕ ПИСЬМА В РАБОТЕ"',
-            //'vr_ilw_card_header_cost_calculation': 'РАСЧЕТ СТОИМОСТИ',
-            //'vr_ilw_card_header_register_accepted_wagons': 'РАСЧЕТ ПРИНЯТЫХ ВАГОНОВ',
             'vr_ilw_mess_init_module': 'Инициализация модуля view_rep_instructional_letters_wagon',
-            //'vr_ilw_mess_load_operation': 'Загружаю форму операции',
-
             'vr_ilw_obrwc_title_button_apply': 'ОБНОВИТЬ',
             'vr_ilw_obrwc_title_button_title_apply': 'Обновить выборку...',
             'vr_ilw_obrwc_title_button_clear': 'СБРОСИТЬ',
@@ -74,38 +40,14 @@
 
             'vr_ilw_title_button_Cancel': 'Отмена',
             'vr_ilw_button_Ok': 'Применить',
-
-            //'vr_ilw_title_form_apply': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ',
-
-            //'vr_ilw_mess_run_update_document_pay': 'Выполнить обновление "Тарифа ПРИБЫТИЯ", заменить тариф [{0}] на новый тариф [{1}].',
-            //'vr_ilw_mess_ok_update_document_pay': 'По документу №{0} обновлен "Тариф ПРИБЫТИЯ", новый тариф [{1}].',
-            //'vr_ilw_mess_error_update_document_pay': 'При обновлении "Тарифа ПРИБЫТИЯ" [{0}], документа № {1} - произошла ошибка. Код ошибки {2}',
-            //'vr_ilw_cancel_update_document_pay': 'Отмена обновления "Тарифа ПРИБЫТИЯ"',
-
-            //'vr_ilw_mess_run_update_cost_calculation': 'Выполнить обновление расчета по плательщику {0},с тарифом по договору [{1}].',
-            //'vr_ilw_mess_ok_update_cost_calculation': 'По документу №{0} выполнен расчет, обновлен плательщик {1} и тариф {2}.',
-            //'vr_ilw_mess_error_update_cost_calculation': 'При обновлении плательщика {0} и тарифа {1}, документа № {3} - произошла ошибка. Код ошибки {4}',
-            //'vr_ilw_cancel_update_cost_calculation': 'Отмена обновления расчета по плательщику',
-
-            //'vr_ilw_mess_error_not_document': 'Не выбран документ для правки!',
-            //'vr_ilw_mess_error_document_pay_not_change': 'Тариф без изменений!',
-            //'vr_ilw_mess_error_payer_not_change': 'Плательщик без изменений!',
-            //'vr_ilw_mess_error_tariff_contract_not_change': 'Ж.д. тариф по договору без изменений!',
-
-            ////'vr_ilw_load_main_docs': 'Загружаю документы за период...',
             'vr_ilw_load': 'Загружаю инструктивные письма в работе на {0}...',
-            //'vr_ilw_where': 'Обновляю оперативный остаток вагонов на АМКР...',
-            //'vr_ilw_clear': 'Сбрасываю выборку оперативного остатка вагонов на АМКР...',
-            ////'vr_ilw_mess_info_init': 'Выберите период и дату и нажмите кнопку [Выбрать]',
-            ////'vr_ilw_mess_info_add_main_docs': 'За период c {0} по {1}, загружено {2} накладных',
-
-            ////'vr_ilw_mess_war_not_select_docs': 'Не выбран номер накладной для отображения информации!',
-            //'vr_ilw_field_view_type_way_outer_way': 'ПЕРЕГОН',
-            //'vr_ilw_field_view_type_way_way': 'ПУТЬ СТАНЦИИ',
+            'vr_ilw_mess_war_access_denied': 'Для учетной записи [{0}], доступ к информации по инструктивным письмам - ограничен!',
         }
     };
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
+
+    var ADMIN = App.api_admin;
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
     var MCF = App.modal_confirm_form;
@@ -132,6 +74,21 @@
             throw new Error('Не удалось найти элемент с селектором: ' + selector);
         }
         this.fe_ui = new FE();
+        // Получим роль
+        var admin = new ADMIN();
+        this.rAdmin = false;
+        this.rRW = false;
+        this.Roles = [];
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.LETTERS, function (data) {
+            this.Roles = data;
+            if (this.Roles && this.Roles.length > 0) {
+                var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
+                var res = this.Roles.find(function (o) { return o.role === Roles.LET_WORK_RO }.bind(this)); this.rRW = res ? res.result : false;
+            }
+            if (this.rAdmin) { this.rRW = true; } // 
+            //this.rAdmin = false;
+            //this.rRW = false;
+        }.bind(this));
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
@@ -176,6 +133,15 @@
         });
         this.$main.append(this.alert.$html);
         this.main_alert = new ALERT(this.alert.$html);
+        // доступ
+        if (!this.rAdmin && !this.rRW) {
+            this.main_alert.out_warning_message(langView('vr_ilw_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
+            if (typeof this.settings.fn_init === 'function') {
+                console.log('Close view_rep_instructional_letters_wagon');
+                this.settings.fn_init(false);
+            }
+            return;
+        };
         // Создать макет панели 
         this.card_report = new this.fe_ui.bs_card({
             border_color: 'border-primary',
@@ -362,10 +328,6 @@
         this.default_db_names = [];
 
         this.ilwagons = [];
-        //this.calc_usages = [];
-
-        /*        this.select_data = []; // выборка */
-
         // Загружаем стандартные библиотеки
         this.load_db(this.default_db_names, false, function (result) {
             // Закончена загрузка
@@ -384,14 +346,21 @@
     //};
     // загрузить и показать
     view_rep_instructional_letters_wagon.prototype.view = function (callback) {
-        this.clear_all();
-        this.load(function (wagons) {
-            this.vr_lilw.view(wagons);
+        if (this.rAdmin || this.rRW) {
+            this.clear_all();
+            this.load(function (wagons) {
+                this.vr_lilw.view(wagons);
+                if (typeof callback === 'function') {
+                    LockScreenOff();
+                    callback(wagons);
+                }
+            }.bind(this));
+        } else {
             if (typeof callback === 'function') {
                 LockScreenOff();
                 callback(wagons);
             }
-        }.bind(this));
+        }
     };
     // выбрать и показать
     //view_rep_instructional_letters_wagon.prototype.update_view = function (callback) {

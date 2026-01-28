@@ -40,6 +40,7 @@
             'vs_ilet_title_label_canceled': 'Письма отменённые',
             'vs_ilet_title_label_deleted': 'Письма требующие внимания',
 
+
             'vs_ilet_title_letter_num': '№ письма',
             'vs_ilet_title_placeholder_letter_num': '№ письма',
 
@@ -66,7 +67,7 @@
 
             'vs_ilet_title_button_add_letter': 'Добавить новое письмо',
             'vs_ilet_title_button_edit_letter': 'Привить существующее письмо',
-            'vs_ilet_title_button_delete_letter': 'Удалить письмо (вагоны в письме должны быть не закрыты!)',
+            'vs_ilet_title_button_delete_letter': 'Удалить письмо или вагоны в письме со статусом [Удалить] (вагоны в письме должны быть не закрыты или иметь статус [Удалить]!)',
 
             'vs_ilet_title_button_delete_wagon': 'Удалить вагон из письма (ошибочно добавленный)',
             'vs_ilet_title_button_cancel_letter': 'Отмена вагона в письме (собственник отменил письмо)',
@@ -107,6 +108,7 @@
             'vs_ilet_mess_operation_add_letter_ok': 'Операция "ДОБАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
             'vs_ilet_mess_operation_edit_letter_ok': 'Операция "ПРАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
             'vs_ilet_mess_operation_delete_letter_ok': 'Операция "УДАЛИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
+            'vs_ilet_mess_war_access_denied': 'Для учетной записи [{0}], доступ к информации по инструктивным письмам - ограничен!',
         },
         'en':  //default language: English
         {
@@ -133,6 +135,7 @@
             'vs_ilet_title_label_canceled': 'Письма отменённые',
             'vs_ilet_title_label_deleted': 'Письма требующие внимания',
 
+
             'vs_ilet_title_letter_num': '№ письма',
             'vs_ilet_title_placeholder_letter_num': '№ письма',
 
@@ -159,7 +162,7 @@
 
             'vs_ilet_title_button_add_letter': 'Добавить новое письмо',
             'vs_ilet_title_button_edit_letter': 'Привить существующее письмо',
-            'vs_ilet_title_button_delete_letter': 'Удалить письмо (вагоны в письме должны быть не закрыты!)',
+            'vs_ilet_title_button_delete_letter': 'Удалить письмо или вагоны в письме со статусом [Удалить] (вагоны в письме должны быть не закрыты или иметь статус [Удалить]!)',
 
             'vs_ilet_title_button_delete_wagon': 'Удалить вагон из письма (ошибочно добавленный)',
             'vs_ilet_title_button_cancel_letter': 'Отмена вагона в письме (собственник отменил письмо)',
@@ -200,10 +203,13 @@
             'vs_ilet_mess_operation_add_letter_ok': 'Операция "ДОБАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
             'vs_ilet_mess_operation_edit_letter_ok': 'Операция "ПРАВИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
             'vs_ilet_mess_operation_delete_letter_ok': 'Операция "УДАЛИТЬ ИНСТРУКТИВНОЕ ПИСЬМО" - выполнена',
+            'vs_ilet_mess_war_access_denied': 'Для учетной записи [{0}], доступ к информации по инструктивным письмам - ограничен!',
         }
     };
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
+
+    var ADMIN = App.api_admin;
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
 
@@ -233,6 +239,21 @@
             throw new Error('Не удалось найти элемент с селектором: ' + selector);
         }
         this.fe_ui = new FE();
+        // Получим роль
+        var admin = new ADMIN();
+        this.rAdmin = false;
+        this.rRW = false;
+        this.Roles = [];
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.LETTERS, function (data) {
+            this.Roles = data;
+            if (this.Roles && this.Roles.length > 0) {
+                var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
+                var res = this.Roles.find(function (o) { return o.role === Roles.LETTERS }.bind(this)); this.rRW = res ? res.result : false;
+            }
+            if (this.rAdmin) { this.rRW = true; } // 
+            //this.rAdmin = false;
+            //this.rRW = false;
+        }.bind(this));
     }
     //------------------------------- ИНИЦИАЛИЗАЦИЯ И ОТОБРАЖЕНИЕ ----------------------------------
     // Инициализация
@@ -287,6 +308,17 @@
         });
         this.$main.append(this.alert.$html);
         this.main_alert = new ALERT(this.alert.$html);
+
+        // доступ
+        if (!this.rAdmin && !this.rRW) {
+            this.main_alert.out_warning_message(langView('vs_ilet_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
+            if (typeof this.settings.fn_init === 'function') {
+                console.log('Close view_instructional_letters');
+                this.settings.fn_init(false);
+            }
+            return;
+        };
+
         // Создать макет панели (Инструктивных писем)
         this.card_services = new this.fe_ui.bs_card({
             border_color: 'border-primary',
@@ -1487,43 +1519,61 @@
 
                     }.bind(this),
                     fn_button_action: function (name, e, dt, node, config) {
-                        if (name === 'add') {
-                            this.select_row = null;
-                            this.view_form_letters_edit(this.select_row);
-                        }
-                        if (name === 'edit') {
-                            var rows = this.tab_list_of_letters.tab_com.get_select_row();
-                            if (rows.length > 0) {
-                                this.select_row = rows[0];
+                        this.main_alert.clear_message();
+                        if (this.rAdmin || this.rRW) {
+                            if (name === 'add') {
+
+                                this.select_row = null;
                                 this.view_form_letters_edit(this.select_row);
                             }
-                        }
-                        if (name === 'delete') {
-                            //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
-                            var rows = this.tab_list_of_letters.tab_com.get_select_row();
-                            if (rows.length > 0) {
-                                this.select_row = rows[0];
-                                this.view_form_letters_delete(this.select_row);
+                            if (name === 'edit') {
+                                var rows = this.tab_list_of_letters.tab_com.get_select_row();
+                                if (rows.length > 0) {
+                                    this.select_row = rows[0];
+                                    this.view_form_letters_edit(this.select_row);
+                                }
                             }
+                            if (name === 'delete') {
+                                //LockScreen(langView('vodlc_mess_clear_sostav', App.Langs));
+                                var rows = this.tab_list_of_letters.tab_com.get_select_row();
+                                if (rows.length > 0) {
+                                    this.select_row = rows[0];
+                                    this.view_form_letters_delete(this.select_row);
+                                }
+                            }
+                        } else {
+
+                            this.main_alert.out_warning_message(langView('vs_ilet_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
                         }
+
 
                     }.bind(this),
                     fn_enable_button: function (tb) {
                         //var index = tb.obj_t_report.rows({ selected: true });
                         var data = tb.obj_t_report.rows({ selected: true }).data();
+                        var bts_add = tb.obj_t_report.buttons([3]);
                         var bts_edit = tb.obj_t_report.buttons([4]);
                         var bts_del = tb.obj_t_report.buttons([5]);
-                        if (data && data.length > 0) {
-                            var row = data[0];
-                            var in_progress = row.instructionalLettersWagons.filter(function (i) { return i.status < 2 && i.close === null }.bind(this));
-                            var close = row.instructionalLettersWagons.filter(function (i) { return i.close !== null }.bind(this));
-                            bts_edit.enable(data && data.length > 0 && in_progress && in_progress.length > 0); // отображение кнопки добавить
-                            bts_del.enable(data && data.length > 0 && close && close.length === 0); // отображение кнопки добавить
-
+                        if (this.rAdmin || this.rRW) {
+                            bts_add.enable(true);
+                            if (data && data.length > 0) {
+                                var row = data[0];
+                                var in_progress = row.instructionalLettersWagons.filter(function (i) { return i.status < 2 && i.close === null }.bind(this));
+                                var close = row.instructionalLettersWagons.filter(function (i) { return i.close !== null }.bind(this));
+                                var del = row.instructionalLettersWagons.filter(function (i) { return i.status === 5 }.bind(this));
+                                bts_edit.enable(data && data.length > 0 && in_progress && in_progress.length > 0); // отображение кнопки добавить
+                                bts_del.enable(data && data.length > 0 && ((close && close.length === 0) || (del && del.length > 0))); // отображение кнопки добавить
+                            } else {
+                                bts_edit.enable(false);
+                                bts_del.enable(false);
+                            }
                         } else {
+                            bts_add.enable(false);
                             bts_edit.enable(false);
                             bts_del.enable(false);
                         }
+
+
 
                     }.bind(this),
                     fn_view_detali: function (id_div, data) {
@@ -1662,7 +1712,7 @@
                         (in_progress && o.status === 1 && o.close === null) ||
                         (replacement && o.status === 3 || (o.status < 2 && o.close !== null)) ||
                         (canceled && o.status === 4) ||
-                        (deleted && o.status === 0 && days >= 30) ||
+                        (deleted && ((o.status === 0 && days >= 30) || (o.status === 5))) ||
                         o.status === null;
                 }.bind(this));
                 return gr !== undefined;

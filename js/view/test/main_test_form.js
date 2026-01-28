@@ -28,8 +28,7 @@
 
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
-    //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-    //var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
+
     var api_dir = new API_DIRECTORY({ url_api: App.Url_Api });
     var api_wsd = new IDS_WSD({ url_api: App.Url_Api });
     // Модуль инициализаии компонентов формы

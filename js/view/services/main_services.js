@@ -81,8 +81,6 @@
     // Операции
     var API_DIRECTORY = App.ids_directory;
     var IDS_WSD = App.ids_wsd;
-    //var api_dir = new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
-    //var api_wsd = new IDS_WSD({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
 
     var api_dir = new API_DIRECTORY({ url_api: App.Url_Api });
     var api_wsd = new IDS_WSD({ url_api: App.Url_Api });
@@ -115,6 +113,9 @@
 
     var VUSFEE = App.view_usage_fee;
     var vusfee = new VUSFEE('main.container-fluid');
+
+    var VUSFEEM = App.view_usage_fee_manual;
+    var vusfeem = new VUSFEEM('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
     var FE = App.form_element;
@@ -288,6 +289,23 @@
                         }
                         case 'usfee': {
                             vusfee.init({
+                                alert: null,
+                                api_dir: null,
+                                api_wsd: null,
+                                ids_arrival: null,
+                                ids_outgoing: null,
+                                fn_db_update: null,
+                                fn_init: function () {
+                                    LockScreenOff();
+                                },
+                                fn_close: function (upd) {
+
+                                }
+                            });
+                            break;
+                        }
+                        case 'usfeem': {
+                            vusfeem.init({
                                 alert: null,
                                 api_dir: null,
                                 api_wsd: null,

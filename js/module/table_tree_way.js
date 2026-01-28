@@ -90,9 +90,8 @@
             fn_select_station: null,
         }, options);
         // определим библиотеку  dir
-        //this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API" });
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
-;
+        ;
         this.$tw.attr("style", "overflow-x:auto");
         this.$tw.empty();
         this.$table = new this.fe_ui.table({
@@ -348,17 +347,22 @@
         LockScreen(langView('mess_load_station', App.Langs));
         this.api_dir.getViewStatusAllStation(function (stations) {
             if (typeof callback === 'function') {
-                var current_stations = stations.filter(function (i) {
-                    return !i.station_uz;
-                });
-                if (list_station && list_station.length > 0) {
-                    current_stations = current_stations.filter(function (i) {
-                        return list_station.find(function (o) {
-                            return o.id == i.id && o.checked;
-                        });
+                if (stations) {
+                    var current_stations = stations.filter(function (i) {
+                        return !i.station_uz;
                     });
+                    if (list_station && list_station.length > 0) {
+                        current_stations = current_stations.filter(function (i) {
+                            return list_station.find(function (o) {
+                                return o.id == i.id && o.checked;
+                            });
+                        });
+                    }
+                    callback(current_stations);
+
+                } else {
+                    callback([]);
                 }
-                callback(current_stations);
             }
         }.bind(this));
     };
