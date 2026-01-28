@@ -1374,7 +1374,7 @@
             {
                 field: 'arrivalSostavDateAdoption',
                 data: function (row, type, val, meta) {
-                    return row.arrivalSostavDateAdoption ? moment(row.arrivalSostavDateAdoption).format(format_datetime_ru) : null
+                    return row.arrivalSostavDateAdoption ? moment(row.arrivalSostavDateAdoption).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateAdoption', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1382,7 +1382,7 @@
             {
                 field: 'arrivalSostavDateAdoptionAct',
                 data: function (row, type, val, meta) {
-                    return row.arrivalSostavDateAdoptionAct ? moment(row.arrivalSostavDateAdoptionAct).format(format_datetime_ru) : null
+                    return row.arrivalSostavDateAdoptionAct ? moment(row.arrivalSostavDateAdoptionAct).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateAdoptionAct', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1390,7 +1390,7 @@
             {
                 field: 'outgoingSostavDateOutgoing',
                 data: function (row, type, val, meta) {
-                    return row.outgoingSostavDateOutgoing ? moment(row.outgoingSostavDateOutgoing).format(format_datetime_ru) : null
+                    return row.outgoingSostavDateOutgoing ? moment(row.outgoingSostavDateOutgoing).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_dateOutgoing', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1398,7 +1398,7 @@
             {
                 field: 'outgoingSostavDateOutgoingAct',
                 data: function (row, type, val, meta) {
-                    return row.outgoingSostavDateOutgoingAct ? moment(row.outgoingSostavDateOutgoingAct).format(format_datetime_ru) : null
+                    return row.outgoingSostavDateOutgoingAct ? moment(row.outgoingSostavDateOutgoingAct).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_dateOutgoingAct', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1438,7 +1438,7 @@
             {
                 field: 'usageFeeDateStartUnload',
                 data: function (row, type, val, meta) {
-                    return row.usageFeeDateStartUnload ? moment(row.usageFeeDateStartUnload).format(format_datetime_ru) : null
+                    return row.usageFeeDateStartUnload ? moment(row.usageFeeDateStartUnload).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateStartUnload', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1446,7 +1446,7 @@
             {
                 field: 'usageFeeDateEndUnload',
                 data: function (row, type, val, meta) {
-                    return row.usageFeeDateEndUnload ? moment(row.usageFeeDateEndUnload).format(format_datetime_ru) : null
+                    return row.usageFeeDateEndUnload ? moment(row.usageFeeDateEndUnload).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateEndUnload', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1454,7 +1454,7 @@
             {
                 field: 'usageFeeDateStartLoad',
                 data: function (row, type, val, meta) {
-                    return row.usageFeeDateStartLoad ? moment(row.usageFeeDateStartLoad).format(format_datetime_ru) : null
+                    return row.usageFeeDateStartLoad ? moment(row.usageFeeDateStartLoad).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateStartLoad', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1462,7 +1462,7 @@
             {
                 field: 'usageFeeDateEndLoad',
                 data: function (row, type, val, meta) {
-                    return row.usageFeeDateEndLoad ? moment(row.usageFeeDateEndLoad).format(format_datetime_ru) : null
+                    return row.usageFeeDateEndLoad ? moment(row.usageFeeDateEndLoad).format(format_datetime) : null
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tsrv_field_DateEndLoad', App.Langs), width: "100px", orderable: true, searchable: true
@@ -1958,7 +1958,7 @@
 
     table_services.prototype.init_columns_usage_fee_wagons = function () {
         var collums = [];
-        collums.push({ field: 'numeration', title: null, class: null });
+        //collums.push({ field: 'numeration', title: null, class: null });
         collums.push({ field: 'num', title: null, class: null });
         collums.push({ field: 'wagonRodAbbr', title: null, class: null });
         collums.push({ field: 'outgoingUzVagonOutgoingWagonsRentOperatorAbbr', title: null, class: null });
@@ -2809,9 +2809,9 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 4;
+                this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [8, 'desc'];
+                this.tab_com.order_column = [7, 'desc'];
                 //this.tab_com.type_select_rows = 2; // Выбирать одну
                 //this.tab_com.table_select = {
                 //    style: 'multi'
