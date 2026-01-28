@@ -79,7 +79,7 @@
         this.rAdmin = false;
         this.rRW = false;
         this.Roles = [];
-        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.LETTERS, function (data) {
+        admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.LET_WORK_RO, function (data) {
             this.Roles = data;
             if (this.Roles && this.Roles.length > 0) {
                 var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
