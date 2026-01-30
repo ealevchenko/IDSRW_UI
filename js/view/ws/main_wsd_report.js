@@ -41,7 +41,7 @@
     var OBARWC = App.view_rep_operating_balance_rw_cars;
     var obarwc = new OBARWC('main.container-fluid');
 
-    var LILW = App.view_rep_instructional_letters_wagon; 
+    var LILW = App.view_rep_instructional_letters_wagon;
     var lilw = new LILW('main.container-fluid');
 
     // Модуль инициализаии компонентов формы
@@ -134,10 +134,15 @@
                                 api_dir: null,
                                 api_wsd: null,
                                 fn_db_update: null,
-                                fn_init: function () {
-                                    lilw.view(function (wagons) {
+                                fn_init: function (result) {
+                                    if (result) {
+                                        lilw.view(function (wagons) {
+                                            LockScreenOff();
+                                        }.bind(this));
+                                    } else {
                                         LockScreenOff();
-                                    }.bind(this));
+                                    }
+
                                 }
                             });
                             break;

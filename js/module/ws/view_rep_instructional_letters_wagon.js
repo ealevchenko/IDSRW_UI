@@ -85,7 +85,7 @@
                 var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
                 var res = this.Roles.find(function (o) { return o.role === Roles.LET_WORK_RO }.bind(this)); this.rRW = res ? res.result : false;
             }
-            if (this.rAdmin) { this.rRW = true; } // 
+            if (this.rAdmin === true) { this.rRW = true; } // 
             //this.rAdmin = false;
             //this.rRW = false;
         }.bind(this));
@@ -105,7 +105,7 @@
             /*            ids_arrival: null,                      // сылки на библиотеки api arrival*/
             fn_init: null,                          // Окончание инициализации
         }, options);
-        //
+
         // Создадим ссылку на модуль работы с базой данных
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
@@ -358,7 +358,7 @@
         } else {
             if (typeof callback === 'function') {
                 LockScreenOff();
-                callback(wagons);
+                callback([]);
             }
         }
     };
