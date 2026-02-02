@@ -896,7 +896,7 @@
                             this.usage_fee_note = rows[0].usageFeeNote;
                             this.form_edit_usege_fee.el.input_text_fee_amount.val(rows[0].usageFeeCalcFeeAmount);
                             this.form_edit_usege_fee.el.input_text_fee_amount_manual.val(rows[0].usageFeeManualFeeAmount);
-                            this.form_edit_usege_fee.el.input_text_fee_calc_time.val(getHoursFromMinuts(rows[0].usageFeeCalcTime));
+                            this.form_edit_usege_fee.el.input_text_fee_calc_time.val(getHoursFromMinuts(rows[0].usageFeeDowntime));
                             this.form_edit_usege_fee.el.input_text_fee_amount_manual_hour.val(rows[0].usageFeeManualTime !== null ? parseInt(rows[0].usageFeeManualTime / 60) : '');
                             this.form_edit_usege_fee.el.input_text_fee_amount_manual_minute.val(rows[0].usageFeeManualTime !== null ? parseInt(rows[0].usageFeeManualTime % 60) : '');
                             this.form_edit_usege_fee.el.textarea_fee_amount_note.val(rows[0].usageFeeNote);
