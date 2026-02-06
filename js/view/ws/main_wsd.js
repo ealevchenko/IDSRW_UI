@@ -63,9 +63,9 @@
             'mwsd_mess_error_searsh_wagon': 'Ошибка поиска вагона в системе ИДС, введен неправильный номер {0}',
             'mwsd_mess_error_searsh_way': 'Ошибка определения пути в системе ИДС, id_way = {0}',
             'mwsd_mess_error_not_searsh_wagon': 'Ошибка, вагон № {0} – не найден!',
-
-
-
+            'mwsd_mess_war_access_denied': 'Для учетной записи [{0}], доступ к АРМ диспетчера ограничен!',
+            'mwsd_mess_war_operation_access_denied': 'Для учетной записи [{0}], доступ к операциям {1} ограничен!',
+            'mwsd_mess_war_services_access_denied': 'Для учетной записи [{0}], доступ к сервисам {1} ограничен!',
         },
         'en':  //default language: English
         {
@@ -121,12 +121,17 @@
             'mwsd_mess_error_searsh_wagon': 'Ошибка поиска вагона в системе ИДС, введен неправильный номер {0}',
             'mwsd_mess_error_searsh_way': 'Ошибка определения пути в системе ИДС, id_way = {0}',
             'mwsd_mess_error_not_searsh_wagon': 'Ошибка, вагон № {0} – не найден!',
+            'mwsd_mess_war_access_denied': 'Для учетной записи [{0}], доступ к АРМ диспетчера ограничен!',
+            'mwsd_mess_war_operation_access_denied': 'Для учетной записи [{0}], доступ к операциям {1} ограничен!',
+            'mwsd_mess_war_services_access_denied': 'Для учетной записи [{0}], доступ к сервисам {1} ограничен!',
         }
     };
 
     // Определим глобальные переменные
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang)); //, getLanguages($.Text_Common, App.Lang), getLanguages($.Text_Table, App.Lang)
     //App.User_Name = $('input#username').val();
+
+    var ADMIN = App.api_admin;
 
     // Состояние загрузки
     var loading_status = {
@@ -305,10 +310,20 @@
     var operators_arrival = [];
     var user_info = {};
 
-    var userAgent = navigator.userAgent.toLowerCase();
+    //var userAgent = navigator.userAgent.toLowerCase();
     //var user = window.userID;
     //var userInfo = window.ShowpadLib.getUserInfo();
 
+
+    // Получим роль
+    var admin = new ADMIN();
+    var rAdmin = false;
+    var rOperCorrect = false;   // Работа в АРМ диспетчера : Операции с вагоном :ВЫГРУЗКА ВАГОНОВ, ПОГРУЗКА ВАГОНОВ,ОЧИСТКА ВАГОНОВ
+    var rOperRW = false;        // Работа в АРМ диспетчера : Операции с вагоном :ВЫГРУЗКА ВАГОНОВ, ПОГРУЗКА ВАГОНОВ,ОЧИСТКА ВАГОНОВ
+    var rTropRW = false;        // Выполнение  в АРМ диспетчера транспортных операций :  Отправить состав на станции АМКР; Принять состав на станции АМКР; Возврат или отмена операции оправки ; Дислокация вагонов на станции; Роспуск вагонов на станции, Отправить состав на УЗ; Предъявление состава на УЗ
+    var rOrRW = false;          // Выполнение  в АРМ диспетчера  операции с вагоном: автоматическая расстановка вагонов, ручная расстановка, реверс вагонов
+    var rNoteRW = false;        // Ввод, корректировка, удаление примечания по вагону  - сервис  "Править примечание по группе вагонов"
+    var rRO = false;
 
     $(function () {
 
@@ -322,1267 +337,1368 @@
 
         }, 1000);
 
-        //sessionStorage.setItem("username", "ediks");
-        //var d = sessionStorage.getItem("username");
-        // загрузить данные 
-        var load_wagons_of_way = function (id_way, num, callback) {
-            if (id_way !== null && id_way >= 0) {
-                wagons = [];
-                calc_wagons = [];
-                LockScreen(langView('mwsd_mess_load_wagons', App.Langs));
-                var pr_load = 2;
-                var out_load1 = function (pr_load) {
-                    if (pr_load === 0) {
-                        $.each(calc_wagons, function (i, el) {
-                            if (el.error === 0) {
-                                var wag = wagons.find(function (o) {
-                                    return o.num === el.num;
-                                }.bind(this));
-                                if (wag) {
-                                    wag.arrivalUsageFee = el.calcFeeAmount;
+        var dRoles = [];
+
+        admin.get_admin_is_roles(Roles.ADMIN +
+            ';' + Roles.ARM_OPERATIONS_RW +
+            ';' + Roles.ARM_OPERATIONS_CORREECT_RW +
+            ';' + Roles.ARM_TROP_RW +
+            ';' + Roles.ARM_OR_RW +
+            ';' + Roles.ARM_NOTE_RW +
+            ';' + Roles.ARM_RO
+            , function (data) {
+                dRoles = data;
+                if (dRoles && dRoles.length > 0) {
+                    var res = dRoles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); rAdmin = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_OPERATIONS_RW }.bind(this)); rOperRW = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_OPERATIONS_CORREECT_RW }.bind(this)); rOperCorrect = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_TROP_RW }.bind(this)); rTropRW = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_OR_RW }.bind(this)); rOrRW = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_NOTE_RW }.bind(this)); rNoteRW = res ? res.result : false;
+                    var res = dRoles.find(function (o) { return o.role === Roles.ARM_RO }.bind(this)); rRO = res ? res.result : false;
+                }
+                if (rAdmin) { rOperRW = true; rOperCorrect = true; rTropRW = true; rOrRW = true; rNoteRW = true; rRO = true } //
+                if (rOperCorrect || rOperRW || rTropRW || rOrRW || rNoteRW) { rRO = true } //
+                // тестим
+                //rAdmin = false;
+                //rOperRW = false;
+                //rOperCorrect = false;
+                //rTropRW = false;
+                //rOrRW = false;
+                //rNoteRW = false;
+                //rRO = false;
+
+                if (rRO) {
+                    //=============================================================================
+                    // Основная загрузка
+                    //sessionStorage.setItem("username", "ediks");
+                    //var d = sessionStorage.getItem("username");
+                    // загрузить данные 
+                    var load_wagons_of_way = function (id_way, num, callback) {
+                        if (id_way !== null && id_way >= 0) {
+                            wagons = [];
+                            calc_wagons = [];
+                            LockScreen(langView('mwsd_mess_load_wagons', App.Langs));
+                            var pr_load = 2;
+                            var out_load1 = function (pr_load) {
+                                if (pr_load === 0) {
+                                    $.each(calc_wagons, function (i, el) {
+                                        if (el.error === 0) {
+                                            var wag = wagons.find(function (o) {
+                                                return o.num === el.num;
+                                            }.bind(this));
+                                            if (wag) {
+                                                wag.arrivalUsageFee = el.calcFeeAmount;
+                                            }
+                                        }
+                                    }.bind(this));
+                                    main_alert.clear_message();
+                                    if (typeof callback === 'function') {
+                                        callback(wagons);
+                                    }
                                 }
+                            };
+                            // Загрузить вагоны на пути
+                            api_wsd.getViewWagonsOfIdWay(id_way, function (ws) {
+                                wagons = ws;
+                                pr_load--;
+                                out_load1(pr_load);
+                            });
+                            // Расчитать плату за пользование
+                            api_wsd.getCalcUsageFeeCarsOfWay(id_way, function (calc_ws) {
+                                calc_wagons = calc_ws;
+                                pr_load--;
+                                out_load1(pr_load);
+                            });
+
+                        } else {
+                            if (typeof callback === 'function') {
+                                callback([]);
+                            }
+                        };
+                    };
+                    var load_total_balance = function (callback) {
+                        balance = [];
+                        LockScreen(langView('mwsd_mess_load_balance', App.Langs));
+                        api_wsd.getViewTotalBalance(function (balance) {
+                            balance = balance;
+                            if (typeof callback === 'function') {
+                                callback(balance);
                             }
                         }.bind(this));
-                        main_alert.clear_message();
-                        if (typeof callback === 'function') {
-                            callback(wagons);
-                        }
-                    }
-                };
-                // Загрузить вагоны на пути
-                api_wsd.getViewWagonsOfIdWay(id_way, function (ws) {
-                    wagons = ws;
-                    pr_load--;
-                    out_load1(pr_load);
-                });
-                // Расчитать плату за пользование
-                api_wsd.getCalcUsageFeeCarsOfWay(id_way, function (calc_ws) {
-                    calc_wagons = calc_ws;
-                    pr_load--;
-                    out_load1(pr_load);
-                });
-
-            } else {
-                if (typeof callback === 'function') {
-                    callback([]);
-                }
-            };
-        };
-        var load_total_balance = function (callback) {
-            balance = [];
-            LockScreen(langView('mwsd_mess_load_balance', App.Langs));
-            api_wsd.getViewTotalBalance(function (balance) {
-                balance = balance;
-                if (typeof callback === 'function') {
-                    callback(balance);
-                }
-            }.bind(this));
-        };
-        var load_operators_of_station = function (id_station, callback) {
-            operators = []; operators_way = []; operators_send = []; operators_arrival = [];
-            if (id_station !== null && id_station >= 0) {
-                var pr_lo = 3;
-                var out_pr_lo = function (pr_lo) {
-                    if (pr_lo === 0) {
-                        if (typeof callback === 'function') {
-                            $.each(operators_way, function (i, el) {
-                                var op = operators.find(function (o) { return o.idOperator === el.idOperator; }.bind(this));
-                                if (!op) {
-                                    operators.push({
-                                        idOperator: el.idOperator,
-                                        operatorAbbrRu: el.operatorAbbrRu,
-                                        operatorAbbrEn: el.operatorAbbrEn,
-                                        operatorColor: el.operatorColor,
-                                        countOperators: el.countOperators
-                                    });
-                                } else {
-                                    op.countOperators += el.countOperators;
-                                }
-                            }.bind(this));
-                            callback(operators, operators_way, operators_send, operators_arrival);
-                        }
-                    }
-                }.bind(this);
-                LockScreen(langView('mwsd_mess_load_operators', App.Langs));
-                api_wsd.getViewOperatorsOfStation(id_station, function (result) {
-                    operators_way = result;
-                    pr_lo--;
-                    out_pr_lo(pr_lo);
-                }.bind(this));
-                api_wsd.getViewOperatorsSendOfIdStation(id_station, function (result) {
-                    operators_send = result;
-                    pr_lo--;
-                    out_pr_lo(pr_lo);
-                }.bind(this));
-                api_wsd.getViewOperatorsArrivalOfIdStation(id_station, function (result) {
-                    operators_arrival = result;
-                    pr_lo--;
-                    out_pr_lo(pr_lo);
-                }.bind(this));
-            } else {
-                if (typeof callback === 'function') {
-                    callback([], [], [], []);
-                }
-            };
-        };
-        // Обновить данные
-        var refresh_tree_way = function (upd, callback) {
-
-            if (upd > 0) {
-                var out_refresh = function (pr_refresh) {
-                    if (pr_refresh === 0) {
-                        if (typeof callback === 'function') {
-                            callback(balance);
-                        }
-                    }
-                }.bind(this);
-
-                var pr_refresh = upd === 1 ? 2 : 3;
-                // Обновить дерево путей
-                tw.update(function () {
-                    pr_refresh--;
-                    out_refresh(pr_refresh);
-                });
-                // Загрузить вагоны на пути
-                load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
-                    tws.view(wagons)
-                    pr_refresh--;
-                    out_refresh(pr_refresh);
-                });
-                if (upd === 2) {
-                    // Показать баланс
-                    load_total_balance(function (balance) {
-                        ttb.view(balance)
-                        pr_refresh--;
-                        out_refresh(pr_refresh);
-                    });
-                }
-            }
-        }
-        //var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
-
-        // Окно для ввода номера вагона - поиск
-        var $find_num_wagon = $('input#find-num-wagon').val('').on('keydown',
-            function (event) {
-                if (event.code == 'Enter') {
-                    var num = $find_num_wagon.val();
-                    searsh_wagon(num);
-                }
-            });
-        // Найти вагон
-        var $bt_find_wagon = $('button#find-wagon').on('click', function (e) {
-            $bt_find_wagon.prop("disabled", true);
-            var num = $find_num_wagon.val();
-            searsh_wagon(num);
-        });
-        // Функция поиска вагона
-        var searsh_wagon = function (num) {
-            main_alert.clear_message();
-            var view = false;
-            if (!isNumeric(num)) {
-                // Ошибка ввода
-                main_alert.out_error_message(langView('mwsd_mess_error_searsh_wagon', App.Langs).format(num));
-                $bt_find_wagon.prop("disabled", false);
-                //LockScreenOff();
-            } else {
-                LockScreen(langView('mwsd_title_mess_find_wagon', App.Langs));
-                api_wsd.getViewDislocationAMKRWagonOfNum(num, function (result) {
-                    LockScreenOff();
-                    if (result) {
-                        if (result.status > 0 && result.status < 4) {
-                            view = true;
-                        }
-                        mcf.open(
-                            langView('mwsd_title_form_searsh', App.Langs),
-                            result.info + (view ? " \nПоказать вагон?" : ""),
-                            function () {
-                                if (view) {
-                                    var way = list_way.find(function (o) {
-                                        return o.id === result.view_wagon_dislocation.idWay;
-                                    });
-                                    if (way) {
-                                        LockScreen(langView('mwsd_title_form_apply_searsh_wagon', App.Langs));
-                                        current_num_wagon = num;
-                                        var id_station = way.idStation;
-                                        var id_park = way.idPark;
-                                        var id_way = way.id;
-                                        tw.open_way(id_station, id_park, id_way);
-                                        //tw.open_way(id_station, id_park, id_way, function () {
-
-                                        //}.bind(this));
-                                    } else {
-                                        //main_alert.clear_message();
-                                        main_alert.out_error_message(langView('mwsd_mess_error_searsh_way', App.Langs).format(result.view_wagon_dislocation.idWay));
-                                        //LockScreenOff();
+                    };
+                    var load_operators_of_station = function (id_station, callback) {
+                        operators = []; operators_way = []; operators_send = []; operators_arrival = [];
+                        if (id_station !== null && id_station >= 0) {
+                            var pr_lo = 3;
+                            var out_pr_lo = function (pr_lo) {
+                                if (pr_lo === 0) {
+                                    if (typeof callback === 'function') {
+                                        $.each(operators_way, function (i, el) {
+                                            var op = operators.find(function (o) { return o.idOperator === el.idOperator; }.bind(this));
+                                            if (!op) {
+                                                operators.push({
+                                                    idOperator: el.idOperator,
+                                                    operatorAbbrRu: el.operatorAbbrRu,
+                                                    operatorAbbrEn: el.operatorAbbrEn,
+                                                    operatorColor: el.operatorColor,
+                                                    countOperators: el.countOperators
+                                                });
+                                            } else {
+                                                op.countOperators += el.countOperators;
+                                            }
+                                        }.bind(this));
+                                        callback(operators, operators_way, operators_send, operators_arrival);
                                     }
-                                    //result.status
-                                    //main_alert.clear_message();
-                                    $bt_find_wagon.prop("disabled", false);
-                                    //LockScreenOff();
-                                } else {
-                                    $bt_find_wagon.prop("disabled", false);
-                                    LockScreenOff();
                                 }
-
-                            }.bind(this),
-                            function () {
-                                //main_alert.clear_message();
-                                $bt_find_wagon.prop("disabled", false);
-                                LockScreenOff();
+                            }.bind(this);
+                            LockScreen(langView('mwsd_mess_load_operators', App.Langs));
+                            api_wsd.getViewOperatorsOfStation(id_station, function (result) {
+                                operators_way = result;
+                                pr_lo--;
+                                out_pr_lo(pr_lo);
                             }.bind(this));
-                    } else {
-                        main_alert.out_error_message(langView('mwsd_mess_error_not_searsh_wagon', App.Langs).format(num));
-                        $bt_find_wagon.prop("disabled", false);
-                    }
-                }.bind(this));
-            };
-        };
-
-        var mcf = new MCF(); // Создадим экземпляр окно сообщений
-        mcf.init({
-            static: true,
-            keyboard: false,
-            hidden: true,
-            centered: true,
-            fsize: 'lg',
-            bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
-            bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
-        });
-
-        var mcf_mp = new MCF(); // Создадим экземпляр окно ручной расстановки
-        mcf_mp.init({
-            static: true,
-            keyboard: false,
-            hidden: true,
-            centered: true,
-            fsize: 'sm',
-            modal_class: 'modal-dialog-scrollable',
-            bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
-            bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
-            fn_click_ok: function (e) {
-                e.preventDefault();
-                var inp = $('form#manual-position').find('input');
-                var psts = [];
-                var valid = true;
-                $.each(inp, function (i, el) {
-                    var value = $(el).val();
-                    var num = $(el).attr('data-num');
-                    var id = $(el).attr('id');
-                    $(el).removeClass('is-invalid');
-                    if (!value || value == "0") {
-                        $(el).addClass('is-invalid');
-                        valid = false;
-                    } else {
-                        var pos = psts.find(function (o) { return o.position == value }.bind(this));
-                        if (!pos) {
-                            psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
+                            api_wsd.getViewOperatorsSendOfIdStation(id_station, function (result) {
+                                operators_send = result;
+                                pr_lo--;
+                                out_pr_lo(pr_lo);
+                            }.bind(this));
+                            api_wsd.getViewOperatorsArrivalOfIdStation(id_station, function (result) {
+                                operators_arrival = result;
+                                pr_lo--;
+                                out_pr_lo(pr_lo);
+                            }.bind(this));
                         } else {
-                            $(el).addClass('is-invalid');
-                            valid = false;
+                            if (typeof callback === 'function') {
+                                callback([], [], [], []);
+                            }
+                        };
+                    };
+                    // Обновить данные
+                    var refresh_tree_way = function (upd, callback) {
+
+                        if (upd > 0) {
+                            var out_refresh = function (pr_refresh) {
+                                if (pr_refresh === 0) {
+                                    if (typeof callback === 'function') {
+                                        callback(balance);
+                                    }
+                                }
+                            }.bind(this);
+
+                            var pr_refresh = upd === 1 ? 2 : 3;
+                            // Обновить дерево путей
+                            tw.update(function () {
+                                pr_refresh--;
+                                out_refresh(pr_refresh);
+                            });
+                            // Загрузить вагоны на пути
+                            load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
+                                tws.view(wagons)
+                                pr_refresh--;
+                                out_refresh(pr_refresh);
+                            });
+                            if (upd === 2) {
+                                // Показать баланс
+                                load_total_balance(function (balance) {
+                                    ttb.view(balance)
+                                    pr_refresh--;
+                                    out_refresh(pr_refresh);
+                                });
+                            }
                         }
                     }
-                }.bind(this));
-                if (valid) {
-                    psts = psts.sort(function (a, b) {
-                        return Number(a.position) - Number(b.position)
+                    //var bs_operation_detali = new bootstrap.Offcanvas($('#operation-detali'))
+
+                    // Окно для ввода номера вагона - поиск
+                    var $find_num_wagon = $('input#find-num-wagon').val('').on('keydown',
+                        function (event) {
+                            if (event.code == 'Enter') {
+                                var num = $find_num_wagon.val();
+                                searsh_wagon(num);
+                            }
+                        });
+                    // Найти вагон
+                    var $bt_find_wagon = $('button#find-wagon').on('click', function (e) {
+                        $bt_find_wagon.prop("disabled", true);
+                        var num = $find_num_wagon.val();
+                        searsh_wagon(num);
                     });
-                    $.each(psts, function (i, el) {
-                        if (el.position !== (i + 1)) {
-                            $(el.el).addClass('is-invalid');
-                            valid = false;
-                        }
-                    }.bind(this))
-                    if (valid) {
-                        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
-                        var operation = {
-                            id_way: current_id_way,
-                            positions: psts
-                        };
-                        api_wsd.postManualPosition(operation, function (result) {
-                            // Проверим на ошибку выполнения запроса api
-                            if (result === undefined || result === null) {
-                                var mess = langView('mwsd_mess_error_api', App.Langs);
-                                console.log('[main_wsd] [postManualPosition] :' + mess);
-                                main_alert.clear_message();
-                                main_alert.out_error_message(mess);
+                    // Функция поиска вагона
+                    var searsh_wagon = function (num) {
+                        main_alert.clear_message();
+                        var view = false;
+                        if (!isNumeric(num)) {
+                            // Ошибка ввода
+                            main_alert.out_error_message(langView('mwsd_mess_error_searsh_wagon', App.Langs).format(num));
+                            $bt_find_wagon.prop("disabled", false);
+                            //LockScreenOff();
+                        } else {
+                            LockScreen(langView('mwsd_title_mess_find_wagon', App.Langs));
+                            api_wsd.getViewDislocationAMKRWagonOfNum(num, function (result) {
                                 LockScreenOff();
+                                if (result) {
+                                    if (result.status > 0 && result.status < 4) {
+                                        view = true;
+                                    }
+                                    mcf.open(
+                                        langView('mwsd_title_form_searsh', App.Langs),
+                                        result.info + (view ? " \nПоказать вагон?" : ""),
+                                        function () {
+                                            if (view) {
+                                                var way = list_way.find(function (o) {
+                                                    return o.id === result.view_wagon_dislocation.idWay;
+                                                });
+                                                if (way) {
+                                                    LockScreen(langView('mwsd_title_form_apply_searsh_wagon', App.Langs));
+                                                    current_num_wagon = num;
+                                                    var id_station = way.idStation;
+                                                    var id_park = way.idPark;
+                                                    var id_way = way.id;
+                                                    tw.open_way(id_station, id_park, id_way);
+                                                    //tw.open_way(id_station, id_park, id_way, function () {
+
+                                                    //}.bind(this));
+                                                } else {
+                                                    //main_alert.clear_message();
+                                                    main_alert.out_error_message(langView('mwsd_mess_error_searsh_way', App.Langs).format(result.view_wagon_dislocation.idWay));
+                                                    //LockScreenOff();
+                                                }
+                                                //result.status
+                                                //main_alert.clear_message();
+                                                $bt_find_wagon.prop("disabled", false);
+                                                //LockScreenOff();
+                                            } else {
+                                                $bt_find_wagon.prop("disabled", false);
+                                                LockScreenOff();
+                                            }
+
+                                        }.bind(this),
+                                        function () {
+                                            //main_alert.clear_message();
+                                            $bt_find_wagon.prop("disabled", false);
+                                            LockScreenOff();
+                                        }.bind(this));
+                                } else {
+                                    main_alert.out_error_message(langView('mwsd_mess_error_not_searsh_wagon', App.Langs).format(num));
+                                    $bt_find_wagon.prop("disabled", false);
+                                }
+                            }.bind(this));
+                        };
+                    };
+
+                    var mcf = new MCF(); // Создадим экземпляр окно сообщений
+                    mcf.init({
+                        static: true,
+                        keyboard: false,
+                        hidden: true,
+                        centered: true,
+                        fsize: 'lg',
+                        bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
+                        bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+                    });
+
+                    var mcf_mp = new MCF(); // Создадим экземпляр окно ручной расстановки
+                    mcf_mp.init({
+                        static: true,
+                        keyboard: false,
+                        hidden: true,
+                        centered: true,
+                        fsize: 'sm',
+                        modal_class: 'modal-dialog-scrollable',
+                        bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
+                        bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+                        fn_click_ok: function (e) {
+                            e.preventDefault();
+                            var inp = $('form#manual-position').find('input');
+                            var psts = [];
+                            var valid = true;
+                            $.each(inp, function (i, el) {
+                                var value = $(el).val();
+                                var num = $(el).attr('data-num');
+                                var id = $(el).attr('id');
+                                $(el).removeClass('is-invalid');
+                                if (!value || value == "0") {
+                                    $(el).addClass('is-invalid');
+                                    valid = false;
+                                } else {
+                                    var pos = psts.find(function (o) { return o.position == value }.bind(this));
+                                    if (!pos) {
+                                        psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
+                                    } else {
+                                        $(el).addClass('is-invalid');
+                                        valid = false;
+                                    }
+                                }
+                            }.bind(this));
+                            if (valid) {
+                                psts = psts.sort(function (a, b) {
+                                    return Number(a.position) - Number(b.position)
+                                });
+                                $.each(psts, function (i, el) {
+                                    if (el.position !== (i + 1)) {
+                                        $(el.el).addClass('is-invalid');
+                                        valid = false;
+                                    }
+                                }.bind(this))
+                                if (valid) {
+                                    LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                                    var operation = {
+                                        id_way: current_id_way,
+                                        positions: psts
+                                    };
+                                    api_wsd.postManualPosition(operation, function (result) {
+                                        // Проверим на ошибку выполнения запроса api
+                                        if (result === undefined || result === null) {
+                                            var mess = langView('mwsd_mess_error_api', App.Langs);
+                                            console.log('[main_wsd] [postManualPosition] :' + mess);
+                                            main_alert.clear_message();
+                                            main_alert.out_error_message(mess);
+                                            LockScreenOff();
+                                        } else {
+                                            if (result > 0) {
+                                                refresh_tree_way(1, function () {
+                                                    main_alert.clear_message();
+                                                    main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
+                                                    this.result = true;
+                                                    this.$modal_obj.modal('hide');
+                                                    LockScreenOff();
+                                                }.bind(this));
+
+                                            } else {
+                                                if (result < 0) {
+                                                    main_alert.clear_message();
+                                                    main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
+                                                } else {
+                                                    main_alert.clear_message();
+                                                    main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
+                                                }
+                                                LockScreenOff();
+                                            }
+                                        }
+                                    }.bind(this));
+                                    //mcf.open(
+                                    //    langView('mwsd_title_form_apply', App.Langs),
+                                    //    langView('mwsd_confirm_mess_apply_operation_manual', App.Langs).format(wagons.length),
+                                    //    function () {
+                                    //        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                                    //        var operation = {
+                                    //            id_way: current_id_way,
+                                    //            positions: psts
+                                    //        };
+                                    //        api_wsd.postManualPosition(operation, function (result) {
+                                    //            // Проверим на ошибку выполнения запроса api
+                                    //            if (result === undefined || result === null) {
+                                    //                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                    //                console.log('[main_wsd] [postManualPosition] :' + mess);
+                                    //                main_alert.clear_message();
+                                    //                main_alert.out_error_message(mess);
+                                    //                LockScreenOff();
+                                    //            } else {
+                                    //                if (result > 0) {
+                                    //                    refresh_tree_way(1, function () {
+                                    //                        main_alert.clear_message();
+                                    //                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
+                                    //                        this.result = true;
+                                    //                        this.$modal_obj.modal('hide');
+                                    //                        LockScreenOff();
+                                    //                    }.bind(this));
+
+                                    //                } else {
+                                    //                    if (result < 0) {
+                                    //                        main_alert.clear_message();
+                                    //                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
+                                    //                    } else {
+                                    //                        main_alert.clear_message();
+                                    //                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
+                                    //                    }
+                                    //                    LockScreenOff();
+                                    //                }
+                                    //            }
+                                    //        }.bind(this));
+                                    //    }.bind(this),
+                                    //    function () {
+                                    //        main_alert.clear_message();
+                                    //        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
+                                    //    }.bind(this));
+                                }
+                            }
+                        }
+                    });
+
+                    // Загрузим справочники
+                    load_db(['station', 'ways'], true, function (result) {
+                        var process = 19;
+                        // Выход из инициализации
+                        var out_init = function (process) {
+                            if (process === 0) {
+                                // События окна операторы
+                                $('#offcanvas-operator-detali').on('shown.bs.offcanvas', function (event) {
+                                    //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+
+                                }.bind(this));
+                                // События акардиона окна операторы
+                                $('#accordion-operators-of-station').on('shown.bs.collapse', function (event) {
+                                    $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+                                    //switch (event.target.id) {
+                                    //    case 'view-operators-of-station': {
+                                    //        break;
+                                    //    };
+                                    //};
+                                }.bind(this));
+
+                                var pr_1 = 2;
+                                var out_pr1 = function (pr_1) {
+                                    if (pr_1 === 0) {
+                                        LockScreenOff();
+                                    }
+                                }.bind(this);
+
+                                tw.view(list_station_visible, null, null, null, function () {
+                                    pr_1--;
+                                    out_pr1(pr_1);
+                                });
+
+                                load_total_balance(function (balance) {
+                                    ttb.view(balance)
+                                    pr_1--;
+                                    out_pr1(pr_1);
+                                });
+                            }
+                        }.bind(this);
+
+                        api_wsd.getAdminInfo(function (info) {
+                            user_info = info;
+                            process--;
+                            //console.log('[main_wsd] [api_wsd] process ' + process);
+                            out_init(process);
+                        })
+
+                        // Кнопки основного меню (Внешние операции)
+                        $('#btn-external-operations').on('click', 'button', function (event) {
+                            if (rTropRW) {
+                                switch (event.currentTarget.id) {
+                                    case 'send-cars': {
+
+                                        vooc.view(current_id_way);
+                                        break;
+                                    };
+                                    case 'arrival-cars': {
+                                        voac.view(current_id_way);
+                                        break;
+                                    };
+                                    case 'return-cars': {
+                                        vorc.view(current_id_way);
+                                        break;
+                                    };
+                                };
                             } else {
-                                if (result > 0) {
-                                    refresh_tree_way(1, function () {
+                                LockScreenOff();
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Отправки-Прибытия-Возврата]"));
+                            }
+                        });
+                        // Кнопки основного меню (Внутрение операции)
+                        $('#btn-internal-operations').on('click', 'button', function (event) {
+                            switch (event.currentTarget.id) {
+                                case 'dissolution': {
+                                    if (rTropRW) {
+                                        vodc.view(current_id_way);
+                                    } else {
+                                        LockScreenOff();
                                         main_alert.clear_message();
-                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
-                                        this.result = true;
-                                        this.$modal_obj.modal('hide');
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Роспуска]"));
+                                    }
+                                    break;
+                                };
+                                case 'dislocation': {
+                                    if (rTropRW) {
+                                        vodlc.view(current_id_way);
+                                    } else {
+                                        LockScreenOff();
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Дислокации]"));
+                                    }
+                                    break;
+                                };
+                                case 'unloading': {
+                                    if (rOperRW || rOperCorrect || rRO) {
+                                        if (App.wsd_setup.control_way_devision) {
+                                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
+                                                vopunlc.view(current_id_way);
+                                            } else {
+                                                main_alert.clear_message();
+                                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                                            }
+                                        } else {
+                                            vopunlc.view(current_id_way);
+                                        }
+                                    } else {
+                                        LockScreenOff();
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Выгрузка]"));
+                                    }
+                                    break;
+                                };
+                                case 'loading': {
+                                    if (rOperRW || rOperCorrect || rRO) {
+                                        if (App.wsd_setup.control_way_devision) {
+                                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
+                                                voplc.view(current_id_way);
+                                            } else {
+                                                main_alert.clear_message();
+                                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
+                                            }
+                                        } else {
+                                            voplc.view(current_id_way, { rAdmin, rOperRW, rOperCorrect, rRO });
+                                        }
+                                    } else {
+                                        LockScreenOff();
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Погрузка]"));
+                                    }
+
+                                    break;
+                                };
+                                case 'cleaning': {
+                                    if (rOperRW || rOperCorrect || rRO) {
+                                        vopclc.view(current_id_way);
+                                    } else {
+                                        LockScreenOff();
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Очистка]"));
+                                    }
+                                    break;
+                                };
+                                case 'processing': {
+                                    //voppsc.view(current_id_way);
+                                    break;
+                                };
+                            };
+                        });
+                        // Кнопки основного меню (Отправка на УЗ)
+                        $('#btn-uz-operations').on('click', 'button', function (event) {
+                            if (rTropRW) {
+                                switch (event.currentTarget.id) {
+                                    case 'provide': {
+                                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
+                                            voprc.view(current_id_way);
+                                        } else {
+                                            main_alert.clear_message();
+                                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
+                                        }
+                                        break;
+                                    };
+                                    case 'sending_uz': {
+                                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
+                                            vopsuz.view(current_id_way);
+                                        } else {
+                                            main_alert.clear_message();
+                                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
+                                        }
+                                        break;
+                                    };
+                                };
+                            } else {
+                                LockScreenOff();
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Предъявление-Отправка УЗ]"));
+                            }
+                        });
+                        // Кнопки основного меню (Маневры на пути)
+                        $('#btn-way-operation').on('click', 'button', function (event) {
+                            if (rOperRW || rOperCorrect || rTropRW || rOrRW) {
+                                switch (event.currentTarget.id) {
+                                    case 'auto-position': {
+                                        if (current_id_way) {
+                                            if (wagons && wagons.length > 0) {
+                                                mcf.open(
+                                                    langView('mwsd_title_form_apply', App.Langs),
+                                                    langView('mwsd_confirm_mess_apply_operation_auto', App.Langs).format(wagons.length),
+                                                    function () {
+                                                        LockScreen(langView('mwsd_title_form_apply_operation_auto', App.Langs));
+                                                        var operation = {
+                                                            id_way: current_id_way,
+                                                            position: 1,
+                                                            reverse: false
+                                                        };
+                                                        api_wsd.postAutoPosition(operation, function (result) {
+                                                            // Проверим на ошибку выполнения запроса api
+                                                            if (result === undefined || result === null) {
+                                                                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
+                                                                main_alert.clear_message();
+                                                                main_alert.out_error_message(mess);
+                                                                LockScreenOff();
+                                                            } else {
+                                                                if (result > 0) {
+                                                                    refresh_tree_way(1, function () {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_auto', App.Langs).format(result));
+                                                                        LockScreenOff();
+                                                                    }.bind(this));
+
+                                                                } else {
+                                                                    if (result < 0) {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_auto', App.Langs).format(result));
+                                                                    } else {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_auto', App.Langs));
+                                                                    }
+                                                                    LockScreenOff();
+                                                                }
+                                                            }
+                                                        }.bind(this));
+                                                    }.bind(this),
+                                                    function () {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_auto', App.Langs));
+                                                    }.bind(this));
+                                            } else {
+                                                main_alert.clear_message();
+                                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
+                                            }
+                                        } else {
+                                            main_alert.clear_message();
+                                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
+                                        }
+                                        break;
+                                    };
+                                    case 'reverce-position': {
+                                        if (current_id_way) {
+                                            if (wagons && wagons.length > 0) {
+                                                mcf.open(
+                                                    langView('mwsd_title_form_apply', App.Langs),
+                                                    langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
+                                                    function () {
+                                                        LockScreen(langView('mwsd_title_form_apply_operation_reverce', App.Langs));
+                                                        var operation = {
+                                                            id_way: current_id_way,
+                                                            position: 1,
+                                                            reverse: true
+                                                        };
+                                                        api_wsd.postAutoPosition(operation, function (result) {
+                                                            // Проверим на ошибку выполнения запроса api
+                                                            if (result === undefined || result === null) {
+                                                                var mess = langView('mwsd_mess_error_api', App.Langs);
+                                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
+                                                                main_alert.clear_message();
+                                                                main_alert.out_error_message(mess);
+                                                                LockScreenOff();
+                                                            } else {
+                                                                if (result > 0) {
+                                                                    refresh_tree_way(1, function () {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_reverce', App.Langs).format(result));
+                                                                        LockScreenOff();
+                                                                    }.bind(this));
+
+                                                                } else {
+                                                                    if (result < 0) {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_reverce', App.Langs).format(result));
+                                                                    } else {
+                                                                        main_alert.clear_message();
+                                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_reverce', App.Langs));
+                                                                    }
+                                                                    LockScreenOff();
+                                                                }
+                                                            }
+                                                        }.bind(this));
+                                                    }.bind(this),
+                                                    function () {
+                                                        main_alert.clear_message();
+                                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_reverce', App.Langs));
+                                                    }.bind(this));
+                                            } else {
+                                                main_alert.clear_message();
+                                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
+                                            }
+                                        } else {
+                                            main_alert.clear_message();
+                                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
+                                        }
+                                        break;
+                                    };
+                                    case 'manual-position': {
+                                        main_alert.clear_message();
+                                        if (current_id_way) {
+                                            if (wagons && wagons.length > 0) {
+
+                                                wagons = wagons.sort(function (a, b) {
+                                                    return Number(a.position) - Number(b.position)
+                                                });
+                                                var $form = $('<form id="manual-position" class="row g-3 needs-validation" novalidate></form>')
+                                                var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
+                                                var $thead = $('<thead></thead>');
+                                                var $tr = $('<tr></tr>');
+                                                $tr.append('<th scope="col">№ предл.</th>');
+                                                $tr.append('<th scope="col">№ тек.</th>');
+                                                $tr.append('<th scope="col">№ вагона</th>');
+                                                $table.append($thead.append($tr));
+                                                var $tbody = $('<tbody class="table-group-divider"></tbody>');
+                                                for (var iw = 0; iw < wagons.length; iw++) {
+                                                    var $tr = $('<tr></tr>');
+                                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId + '" data-num="' + wagons[iw].num + '" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
+                                                    $tr.append('<td>' + wagons[iw].position + '</td>');
+                                                    $tr.append('<td>' + wagons[iw].num + '</td>');
+                                                    $tbody.append($tr);
+                                                }
+                                                $table.append($tbody);
+                                                $form.append($table);
+                                                //
+                                                //$form.on("submit", function (event) {
+                                                //    var valid = false;
+                                                //    var inp = $('form#manual-position').find('input');
+                                                //    $(inp[0]).addClass('ban');
+                                                //    if (!valid) {
+                                                //        event.stopPropagation();
+                                                //    }
+                                                //});
+                                                mcf_mp.open(
+                                                    langView('mwsd_title_form_apply_manual_position', App.Langs),
+                                                    $form,
+                                                    //langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
+                                                    function () {
+                                                        //$form.submit();
+
+                                                        //var inp = $('form#manual-position').find('input');
+                                                        //$(inp[0]).addClass('ban');
+                                                        //if (!valid) {
+                                                        //    event.stopPropagation();
+                                                        //}
+
+                                                        //LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
+                                                    }.bind(this),
+                                                    function () {
+                                                        //main_alert.clear_message();
+                                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
+                                                    }.bind(this));
+                                            } else {
+                                                //main_alert.clear_message();
+                                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
+                                            }
+                                        } else {
+                                            //main_alert.clear_message();
+                                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
+                                        }
+                                        break;
+                                    };
+                                };
+                            } else {
+                                LockScreenOff();
+                                main_alert.clear_message();
+                                main_alert.out_warning_message(langView('mwsd_mess_war_operation_access_denied', App.Langs).format(App.AdminInfo.name, "[Расстановки вагонов]"));
+                            }
+                        });
+                        // Кнопки основного меню (Сервисы)
+                        $('#link-services').on('click', 'a', function (event) {
+                            switch (event.currentTarget.id) {
+                                case 'update-note': {
+                                    if (rNoteRW) {
+                                        vopunc.view(current_id_way);
+                                    } else {
+                                        LockScreenOff();
+                                        main_alert.clear_message();
+                                        main_alert.out_warning_message(langView('mwsd_mess_war_services_access_denied', App.Langs).format(App.AdminInfo.name, "[Правки примечания]"));
+                                    }
+                                    break;
+                                };
+                            };
+                        });
+                        list_station = api_dir.getAllStation();
+                        list_way = api_dir.getAllWays();
+                        // Настроим выбор станций
+                        var $el_dlg_select_station = $('#station-select')
+                        var $list_select_station = $el_dlg_select_station.find('.list-group');
+                        // получим из сокета какие станции отображать
+                        var list_station_visible = null;
+                        var select_station_tree = $.cookie("select_station_tree");
+                        if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
+                        //-------------------------------------------------
+                        // Инициализация компонент выбора станций для отображения
+                        // Загрузим список станций
+                        $list_select_station.empty();
+                        //<label class="list-group-item">
+                        //    <input class="form-check-input me-1" type="checkbox" value="" checked="checked">
+                        //        First checkbox
+                        //</label>
+                        $.each(list_station.filter(function (i) {
+                            return !i.stationUz;
+                        }.bind(this)), function (key, el) {
+                            if (!el.delete) {
+                                var checked = 'checked';
+                                if (list_station_visible) {
+                                    var st_enable = list_station_visible.find(function (o) {
+                                        return o.id == el.id;
+                                    });
+                                    if (st_enable && !st_enable.checked) {
+                                        checked = null;
+                                    }
+                                }
+                                var label = new fe_ui.label({
+                                    class: 'list-group-item list-group-item-secondary p-0 px-2',
+                                    label: el.stationNameRu
+                                });
+                                var input = new fe_ui.input({
+                                    //id: el.id,
+                                    value: el.id,
+                                    checked: checked,
+                                    type: 'checkbox',
+                                    class: 'form-check-input me-1',
+                                    title: null,
+                                    placeholder: null,
+                                    required: null,
+                                    maxlength: null,
+                                    pattern: null,
+                                    readonly: false,
+                                    min: null,
+                                    max: null,
+                                    step: null,
+                                });
+                            }
+                            $list_select_station.append(label.$html.prepend(input.$html));
+                        }.bind(this));
+                        // Выбрать или отменить выбор
+                        var CheckedStations = function (checked) {
+                            var cb_list = $('.list-group input[type="checkbox"]');
+                            $.each(cb_list, function (i, el) {
+                                $(el).prop("checked", checked);
+                            });
+                        }
+                        // Обработка кнопок выбора списка станций
+                        $('#btn-station-select').on('click', 'button', function (event) {
+                            switch (event.currentTarget.id) {
+                                case 'select-all': {
+                                    CheckedStations(true);
+                                    break;
+                                };
+                                case 'deselect-all': {
+                                    var cb_list = $('.list-group input[type="checkbox"]');
+                                    CheckedStations(false);
+                                    break;
+                                };
+                                case 'save': {
+                                    var cb_list = $('.list-group input[type="checkbox"]');
+                                    var list = [];
+                                    $.each(cb_list, function (i, el) {
+                                        list.push({ id: el.value, checked: $(el).prop("checked") })
+                                    });
+                                    $.cookie("select_station_tree", JSON.stringify(list), { expires: 365 });
+                                    $('#dropdownListgroup').collapse('hide');
+                                    var select_station_tree = $.cookie("select_station_tree");
+                                    if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
+                                    tw.view(list_station_visible, current_id_station, current_id_park, current_id_way);
+                                    break;
+                                };
+                                case 'close': {
+                                    $('#dropdownListgroup').collapse('hide');
+                                    break;
+                                };
+                            };
+                        });
+                        // ---------------------------------------------------
+                        // Инициализация дерева путей
+                        tw.init({
+                            api_dir: api_dir,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [tw] process ' + process);
+                                out_init(process);
+                            },
+                            fn_select_way: function (id_station, id_park, id_way, option) {
+                                // Обработка выбранного пути
+                                current_id_station = id_station;
+                                current_id_park = id_park;
+                                current_id_way = id_way;
+                                current_option_way = option;
+                                load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
+                                    tws.view_of_tag(wagons, 'data-num', current_num_wagon);
+                                    LockScreenOff();
+                                });
+                            }.bind(this),
+                            fn_select_station: function (id_station) {
+
+                                $('#operator-detali-label').empty().append("Операторы по " + list_station.find(function (o) { return o.id == id_station }.bind(this))['stationName' + ucFirst(App.Lang)]);
+                                load_operators_of_station(id_station, function (operators, operators_way, operators_send, operators_arrival) {
+                                    tos.view(operators);
+                                    tows.view(operators_way);
+                                    toss.view(operators_send);
+                                    toas.view(operators_arrival);
+                                    //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
+                                    LockScreenOff();
+                                });
+                            }.bind(this),
+                        });
+                        // Обработка кнопок дерева путей
+                        $('#btn-tree-way').on('click', 'button', function (event) {
+                            switch (event.currentTarget.id) {
+                                case 'open-park': {
+                                    tw.open_tree(false);
+                                    break;
+                                };
+                                case 'open-way': {
+                                    tw.open_tree(true);
+                                    break;
+                                };
+                                case 'close-tree': {
+                                    tw.close_tree();
+                                    break;
+                                };
+                                case 'refresh-tree': {
+                                    refresh_tree_way(2, function () {
                                         LockScreenOff();
                                     }.bind(this));
 
-                                } else {
-                                    if (result < 0) {
-                                        main_alert.clear_message();
-                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
-                                    } else {
-                                        main_alert.clear_message();
-                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
-                                    }
-                                    LockScreenOff();
-                                }
-                            }
-                        }.bind(this));
-                        //mcf.open(
-                        //    langView('mwsd_title_form_apply', App.Langs),
-                        //    langView('mwsd_confirm_mess_apply_operation_manual', App.Langs).format(wagons.length),
-                        //    function () {
-                        //        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
-                        //        var operation = {
-                        //            id_way: current_id_way,
-                        //            positions: psts
-                        //        };
-                        //        api_wsd.postManualPosition(operation, function (result) {
-                        //            // Проверим на ошибку выполнения запроса api
-                        //            if (result === undefined || result === null) {
-                        //                var mess = langView('mwsd_mess_error_api', App.Langs);
-                        //                console.log('[main_wsd] [postManualPosition] :' + mess);
-                        //                main_alert.clear_message();
-                        //                main_alert.out_error_message(mess);
-                        //                LockScreenOff();
-                        //            } else {
-                        //                if (result > 0) {
-                        //                    refresh_tree_way(1, function () {
-                        //                        main_alert.clear_message();
-                        //                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
-                        //                        this.result = true;
-                        //                        this.$modal_obj.modal('hide');
-                        //                        LockScreenOff();
-                        //                    }.bind(this));
+                                    break;
+                                };
+                            };
+                        });
+                        //$('.btn-all').on('click', function (event) {
+                        //    switch (event.currentTarget.id) {
 
-                        //                } else {
-                        //                    if (result < 0) {
-                        //                        main_alert.clear_message();
-                        //                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
-                        //                    } else {
-                        //                        main_alert.clear_message();
-                        //                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
-                        //                    }
-                        //                    LockScreenOff();
-                        //                }
-                        //            }
-                        //        }.bind(this));
-                        //    }.bind(this),
-                        //    function () {
-                        //        main_alert.clear_message();
-                        //        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
-                        //    }.bind(this));
-                    }
-                }
-            }
-        });
-
-        // Загрузим справочники
-        load_db(['station', 'ways'], true, function (result) {
-            var process = 19;
-            // Выход из инициализации
-            var out_init = function (process) {
-                if (process === 0) {
-                    // События окна операторы
-                    $('#offcanvas-operator-detali').on('shown.bs.offcanvas', function (event) {
-                        //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
-
-                    }.bind(this));
-                    // События акардиона окна операторы
-                    $('#accordion-operators-of-station').on('shown.bs.collapse', function (event) {
-                        $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
-                        //switch (event.target.id) {
-                        //    case 'view-operators-of-station': {
-                        //        break;
                         //    };
-                        //};
-                    }.bind(this));
-
-                    var pr_1 = 2;
-                    var out_pr1 = function (pr_1) {
-                        if (pr_1 === 0) {
-                            LockScreenOff();
-                        }
-                    }.bind(this);
-
-                    tw.view(list_station_visible, null, null, null, function () {
-                        pr_1--;
-                        out_pr1(pr_1);
-                    });
-
-                    load_total_balance(function (balance) {
-                        ttb.view(balance)
-                        pr_1--;
-                        out_pr1(pr_1);
-                    });
-                }
-            }.bind(this);
-
-            api_wsd.getAdminInfo(function (info) {
-                user_info = info;
-                process--;
-                //console.log('[main_wsd] [api_wsd] process ' + process);
-                out_init(process);
-            })
-
-            // Кнопки основного меню (Внешние операции)
-            $('#btn-external-operations').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'send-cars': {
-                        vooc.view(current_id_way);
-                        break;
-                    };
-                    case 'arrival-cars': {
-                        voac.view(current_id_way);
-                        break;
-                    };
-                    case 'return-cars': {
-                        vorc.view(current_id_way);
-                        break;
-                    };
-                };
-            });
-            // Кнопки основного меню (Внутрение операции)
-            $('#btn-internal-operations').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'dissolution': {
-                        vodc.view(current_id_way);
-                        break;
-                    };
-                    case 'dislocation': {
-                        vodlc.view(current_id_way);
-                        break;
-                    };
-                    case 'unloading': {
-                        if (App.wsd_setup.control_way_devision) {
-                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
-                                vopunlc.view(current_id_way);
-                            } else {
-                                main_alert.clear_message();
-                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
-                            }
-                        } else {
-                            vopunlc.view(current_id_way);
-                        }
-                        break;
-                    };
-                    case 'loading': {
-                        if (App.wsd_setup.control_way_devision) {
-                            if (current_option_way !== null && current_option_way["id-devision"] > 0) {
-                                voplc.view(current_id_way);
-                            } else {
-                                main_alert.clear_message();
-                                main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
-                            }
-                        } else {
-                            voplc.view(current_id_way);
-                        }
-                        break;
-                    };
-                    case 'cleaning': {
-                        vopclc.view(current_id_way);
-                        break;
-                    };
-                    case 'processing': {
-                        //voppsc.view(current_id_way);
-                        break;
-                    };
-                };
-            });
-            // Кнопки основного меню (Отправка на УЗ)
-            $('#btn-uz-operations').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'provide': {
-                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
-                            voprc.view(current_id_way);
-                        } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
-                        }
-                        break;
-                    };
-                    case 'sending_uz': {
-                        if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
-                            vopsuz.view(current_id_way);
-                        } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
-                        }
-                        break;
-                    };
-                };
-            });
-            // Кнопки основного меню (Маневры на пути)
-            $('#btn-way-operation').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'auto-position': {
-                        if (current_id_way) {
-                            if (wagons && wagons.length > 0) {
-                                mcf.open(
-                                    langView('mwsd_title_form_apply', App.Langs),
-                                    langView('mwsd_confirm_mess_apply_operation_auto', App.Langs).format(wagons.length),
-                                    function () {
-                                        LockScreen(langView('mwsd_title_form_apply_operation_auto', App.Langs));
-                                        var operation = {
-                                            id_way: current_id_way,
-                                            position: 1,
-                                            reverse: false
-                                        };
-                                        api_wsd.postAutoPosition(operation, function (result) {
-                                            // Проверим на ошибку выполнения запроса api
-                                            if (result === undefined || result === null) {
-                                                var mess = langView('mwsd_mess_error_api', App.Langs);
-                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
-                                                main_alert.clear_message();
-                                                main_alert.out_error_message(mess);
-                                                LockScreenOff();
-                                            } else {
-                                                if (result > 0) {
-                                                    refresh_tree_way(1, function () {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_auto', App.Langs).format(result));
-                                                        LockScreenOff();
-                                                    }.bind(this));
-
-                                                } else {
-                                                    if (result < 0) {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_auto', App.Langs).format(result));
-                                                    } else {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_auto', App.Langs));
-                                                    }
-                                                    LockScreenOff();
-                                                }
-                                            }
-                                        }.bind(this));
+                        //});
+                        //-----------------------------------------------------
+                        // Инициализация модуля "Таблица вагоны на пути"
+                        /*var tws = new TWS('div#cars-way');*/
+                        tws.init({
+                            alert: null,
+                            class_table: 'table table-sm table-cars-way table-striped table-success',
+                            detali_table: false,
+                            type_report: 'cars_way',     //
+                            link_num: true,
+                            ids_wsd: null,
+                            setup_buttons: [
+                                {
+                                    name: 'statement1',
+                                    action: function (e, dt, node, config) {
+                                        tws.tab_com.button_action(config.button, e, dt, node, config);
                                     }.bind(this),
-                                    function () {
-                                        main_alert.clear_message();
-                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_auto', App.Langs));
-                                    }.bind(this));
-                            } else {
-                                main_alert.clear_message();
-                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
-                            }
-                        } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_auto', App.Langs)));
-                        }
-                        break;
-                    };
-                    case 'reverce-position': {
-                        if (current_id_way) {
-                            if (wagons && wagons.length > 0) {
-                                mcf.open(
-                                    langView('mwsd_title_form_apply', App.Langs),
-                                    langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
-                                    function () {
-                                        LockScreen(langView('mwsd_title_form_apply_operation_reverce', App.Langs));
-                                        var operation = {
-                                            id_way: current_id_way,
-                                            position: 1,
-                                            reverse: true
-                                        };
-                                        api_wsd.postAutoPosition(operation, function (result) {
-                                            // Проверим на ошибку выполнения запроса api
-                                            if (result === undefined || result === null) {
-                                                var mess = langView('mwsd_mess_error_api', App.Langs);
-                                                console.log('[main_wsd] [postAutoPosition] :' + mess);
-                                                main_alert.clear_message();
-                                                main_alert.out_error_message(mess);
-                                                LockScreenOff();
-                                            } else {
-                                                if (result > 0) {
-                                                    refresh_tree_way(1, function () {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_reverce', App.Langs).format(result));
-                                                        LockScreenOff();
-                                                    }.bind(this));
-
-                                                } else {
-                                                    if (result < 0) {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_error_message(langView('mwsd_mess_error_operation_reverce', App.Langs).format(result));
-                                                    } else {
-                                                        main_alert.clear_message();
-                                                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_reverce', App.Langs));
-                                                    }
-                                                    LockScreenOff();
-                                                }
-                                            }
-                                        }.bind(this));
+                                    enabled: false
+                                },
+                                {
+                                    name: 'statement2',
+                                    action: function (e, dt, node, config) {
+                                        tws.tab_com.button_action(config.button, e, dt, node, config);
                                     }.bind(this),
-                                    function () {
-                                        main_alert.clear_message();
-                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_reverce', App.Langs));
-                                    }.bind(this));
-                            } else {
-                                main_alert.clear_message();
-                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
-                            }
-                        } else {
-                            main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_reverce', App.Langs)));
-                        }
-                        break;
-                    };
-                    case 'manual-position': {
-                        main_alert.clear_message();
-                        if (current_id_way) {
-                            if (wagons && wagons.length > 0) {
-
-                                wagons = wagons.sort(function (a, b) {
-                                    return Number(a.position) - Number(b.position)
-                                });
-                                var $form = $('<form id="manual-position" class="row g-3 needs-validation" novalidate></form>')
-                                var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
-                                var $thead = $('<thead></thead>');
-                                var $tr = $('<tr></tr>');
-                                $tr.append('<th scope="col">№ предл.</th>');
-                                $tr.append('<th scope="col">№ тек.</th>');
-                                $tr.append('<th scope="col">№ вагона</th>');
-                                $table.append($thead.append($tr));
-                                var $tbody = $('<tbody class="table-group-divider"></tbody>');
-                                for (var iw = 0; iw < wagons.length; iw++) {
-                                    var $tr = $('<tr></tr>');
-                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId + '" data-num="' + wagons[iw].num + '" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
-                                    $tr.append('<td>' + wagons[iw].position + '</td>');
-                                    $tr.append('<td>' + wagons[iw].num + '</td>');
-                                    $tbody.append($tr);
+                                    enabled: false
                                 }
-                                $table.append($tbody);
-                                $form.append($table);
-                                //
-                                //$form.on("submit", function (event) {
-                                //    var valid = false;
-                                //    var inp = $('form#manual-position').find('input');
-                                //    $(inp[0]).addClass('ban');
-                                //    if (!valid) {
-                                //        event.stopPropagation();
-                                //    }
-                                //});
-                                mcf_mp.open(
-                                    langView('mwsd_title_form_apply_manual_position', App.Langs),
-                                    $form,
-                                    //langView('mwsd_confirm_mess_apply_operation_reverce', App.Langs).format(wagons.length),
-                                    function () {
-                                        //$form.submit();
+                            ],
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [tws] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
 
-                                        //var inp = $('form#manual-position').find('input');
-                                        //$(inp[0]).addClass('ban');
-                                        //if (!valid) {
-                                        //    event.stopPropagation();
-                                        //}
+                            },
+                            fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
+                                //this.on_alert.clear_message();
+                                //if (rowData && rowData.length > 0 && rowData[0].id_wim_arrival === null) {
+                                //    e.preventDefault();
+                                //    this.on_alert.out_warning_message(langView('vortc_mess_warning_wagon_existing_way', App.Langs).format(rowData[0].num));
+                                //}
+                            }.bind(this),
+                            fn_select_rows: function (rows) {
 
-                                        //LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
-                                    }.bind(this),
-                                    function () {
-                                        //main_alert.clear_message();
-                                        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
-                                    }.bind(this));
-                            } else {
-                                //main_alert.clear_message();
-                                main_alert.out_warning_message(langView('mwsd_mess_war_not_wagons_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
+                            }.bind(this),
+                            fn_select_link: function (link) {
+
+                            }.bind(this),
+                            fn_button_action: function (name, e, dt, node, config) {
+                                if (name === 'statement1') {
+                                    if (current_id_way !== null) {
+                                        window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&format=A4L&id=" + current_id_way, "Print");
+                                    }
+                                }
+                                if (name === 'statement2') {
+                                    if (current_id_way !== null) {
+                                        window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
+                                    }
+                                }
+                            }.bind(this),
+                            fn_enable_button: function (tb) {
+
+                            }.bind(this),
+                            //fn_action_view_detali: function (rows) {
+
+                            //},
+                            //fn_select_rows: function (rows) {
+
+                            //}.bind(this),
+                            //fn_select_link: function (link) {
+
+                            //}.bind(this),
+                        });
+                        //-----------------------------------------------------
+                        // Инициализация модуля "Таблица остаток"
+                        /*var ttb = new TWS('div#total-balance');*/
+                        ttb.init({
+                            alert: null,
+                            class_table: 'table table-sm table-hover table-total-balance',
+                            detali_table: false,
+                            type_report: 'total_balance',     //
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [ttb] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_select_rows: function (rows) {
+
+                            }.bind(this),
+                            fn_select_link: function (link) {
+
+                            }.bind(this),
+                        });
+                        //-----------------------------------------------------
+                        // Инициализация модуля "Таблица операторы на станции"
+                        /*var tos = new TWS('div#operators-station');*/
+                        tos.init({
+                            alert: null,
+                            class_table: 'table table-sm table-hover table-total-balance',
+                            detali_table: false,
+                            type_report: 'operators_station',
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [tos] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_select_rows: function (rows) {
+
+                            }.bind(this),
+                            fn_select_link: function (link) {
+
+                            }.bind(this),
+                        });
+                        // Инициализация модуля "Таблица операторы по путям на станции"
+                        /*var tows = new TWS('div#operators-way-station');*/
+                        tows.init({
+                            alert: null,
+                            class_table: 'table table-sm table-hover table-total-balance',
+                            detali_table: false,
+                            type_report: 'operators_way_station',
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [tows] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_select_rows: function (rows) {
+
+                            }.bind(this),
+                            fn_select_link: function (id) {
+                                api_dir.getWaysOfId(id, function (way) {
+                                    if (way) {
+                                        tw.open_way(way.idStation, way.idPark, way.id);
+                                    }
+                                }.bind(this))
+                            }.bind(this),
+                        });
+                        // Инициализация модуля "Таблица операторы отправленные со станции"
+                        /*var toss = new TWS('div#operators-send-station');*/
+                        toss.init({
+                            alert: null,
+                            class_table: 'table table-sm table-hover table-total-balance',
+                            detali_table: false,
+                            type_report: 'operators_send_station',
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [toss] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_select_rows: function (rows) {
+
+                            }.bind(this),
+                        });
+                        // Инициализация модуля "Таблица операторы прибывающие на станцию"
+                        /*var toas = new TWS('div#operators-arrival-station');*/
+                        toas.init({
+                            alert: null,
+                            class_table: 'table table-sm table-hover table-total-balance',
+                            detali_table: false,
+                            type_report: 'operators_arrival_station',
+                            link_num: false,
+                            ids_wsd: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [toas] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
+
+                            },
+                            fn_select_rows: function (rows) {
+
+                            }.bind(this),
+                        });
+                        // Операции прием вагонов
+                        voac.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [voac] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
                             }
-                        } else {
-                            //main_alert.clear_message();
-                            main_alert.out_warning_message(langView('mwsd_mess_war_not_select_way', App.Langs).format(langView('mwsd_title_operation_manual_position', App.Langs)));
-                        }
-                        break;
-                    };
-                };
-            });
-            // Кнопки основного меню (Маневры на пути)
-            $('#link-services').on('click', 'a', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'update-note': {
-                        vopunc.view(current_id_way);
-                        break;
-                    };
-                };
-            });
-            list_station = api_dir.getAllStation();
-            list_way = api_dir.getAllWays();
-            // Настроим выбор станций
-            var $el_dlg_select_station = $('#station-select')
-            var $list_select_station = $el_dlg_select_station.find('.list-group');
-            // получим из сокета какие станции отображать
-            var list_station_visible = null;
-            var select_station_tree = $.cookie("select_station_tree");
-            if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
-            //-------------------------------------------------
-            // Инициализация компонент выбора станций для отображения
-            // Загрузим список станций
-            $list_select_station.empty();
-            //<label class="list-group-item">
-            //    <input class="form-check-input me-1" type="checkbox" value="" checked="checked">
-            //        First checkbox
-            //</label>
-            $.each(list_station.filter(function (i) {
-                return !i.stationUz;
-            }.bind(this)), function (key, el) {
-                if (!el.delete) {
-                    var checked = 'checked';
-                    if (list_station_visible) {
-                        var st_enable = list_station_visible.find(function (o) {
-                            return o.id == el.id;
                         });
-                        if (st_enable && !st_enable.checked) {
-                            checked = null;
-                        }
-                    }
-                    var label = new fe_ui.label({
-                        class: 'list-group-item list-group-item-secondary p-0 px-2',
-                        label: el.stationNameRu
-                    });
-                    var input = new fe_ui.input({
-                        //id: el.id,
-                        value: el.id,
-                        checked: checked,
-                        type: 'checkbox',
-                        class: 'form-check-input me-1',
-                        title: null,
-                        placeholder: null,
-                        required: null,
-                        maxlength: null,
-                        pattern: null,
-                        readonly: false,
-                        min: null,
-                        max: null,
-                        step: null,
-                    });
+                        // Операции отправка вагонов
+                        vooc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vooc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции возврат вагонов
+                        vorc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vorc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции роспуска
+                        vodc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vodc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции дислокации
+                        vodlc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vodlc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции предъявления
+                        voprc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vodlc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции отправить
+                        vopsuz.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vopsuz] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(2, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции выгрузка
+                        vopunlc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vopunlc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(upd, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции погрузка
+                        voplc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [voplc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(upd, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции очистки
+                        vopclc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vopclc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(upd, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // сервис примечаний
+                        vopunc.init({
+                            alert: null,
+                            api_dir: null,
+                            api_wsd: null,
+                            fn_db_update: null,
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [vopunc] process ' + process);
+                                out_init(process);
+                            },
+                            fn_close: function (upd) {
+                                // На обновления дерева путей, баланса ....
+                                refresh_tree_way(upd, function () {
+                                    LockScreenOff();
+                                }.bind(this));
+                            }
+                        });
+                        // Операции обработки
+                        //voppsc.init({
+                        //    alert: null,
+                        //    api_dir: null,
+                        //    api_wsd: null,
+                        //    fn_db_update: null,
+                        //    fn_init: function () {
+                        //        // На проверку окончания инициализации
+                        //        process--;
+                        //        //console.log('[main_wsd] [vopclc] process ' + process);
+                        //        out_init(process);
+                        //    },
+                        //    fn_close: function (upd) {
+                        //        // На обновления дерева путей, баланса ....
+                        //        refresh_tree_way(upd, function () {
+                        //            LockScreenOff();
+                        //        }.bind(this));
+                        //    }
+                        //});
+                    }.bind(this));
+                    // Окончание основной загрузки
+                    //=============================================================================
+                } else {
+                    LockScreenOff();
+                    main_alert.clear_message();
+                    main_alert.out_warning_message(langView('mwsd_mess_war_access_denied', App.Langs).format(App.AdminInfo.name));
                 }
-                $list_select_station.append(label.$html.prepend(input.$html));
+
+
             }.bind(this));
-            // Выбрать или отменить выбор
-            var CheckedStations = function (checked) {
-                var cb_list = $('.list-group input[type="checkbox"]');
-                $.each(cb_list, function (i, el) {
-                    $(el).prop("checked", checked);
-                });
-            }
-            // Обработка кнопок выбора списка станций
-            $('#btn-station-select').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'select-all': {
-                        CheckedStations(true);
-                        break;
-                    };
-                    case 'deselect-all': {
-                        var cb_list = $('.list-group input[type="checkbox"]');
-                        CheckedStations(false);
-                        break;
-                    };
-                    case 'save': {
-                        var cb_list = $('.list-group input[type="checkbox"]');
-                        var list = [];
-                        $.each(cb_list, function (i, el) {
-                            list.push({ id: el.value, checked: $(el).prop("checked") })
-                        });
-                        $.cookie("select_station_tree", JSON.stringify(list), { expires: 365 });
-                        $('#dropdownListgroup').collapse('hide');
-                        var select_station_tree = $.cookie("select_station_tree");
-                        if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
-                        tw.view(list_station_visible, current_id_station, current_id_park, current_id_way);
-                        break;
-                    };
-                    case 'close': {
-                        $('#dropdownListgroup').collapse('hide');
-                        break;
-                    };
-                };
-            });
-            // ---------------------------------------------------
-            // Инициализация дерева путей
-            tw.init({
-                api_dir: api_dir,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [tw] process ' + process);
-                    out_init(process);
-                },
-                fn_select_way: function (id_station, id_park, id_way, option) {
-                    // Обработка выбранного пути
-                    current_id_station = id_station;
-                    current_id_park = id_park;
-                    current_id_way = id_way;
-                    current_option_way = option;
-                    load_wagons_of_way(current_id_way, current_num_wagon, function (wagons) {
-                        tws.view_of_tag(wagons, 'data-num', current_num_wagon);
-                        LockScreenOff();
-                    });
-                }.bind(this),
-                fn_select_station: function (id_station) {
 
-                    $('#operator-detali-label').empty().append("Операторы по " + list_station.find(function (o) { return o.id == id_station }.bind(this))['stationName' + ucFirst(App.Lang)]);
-                    load_operators_of_station(id_station, function (operators, operators_way, operators_send, operators_arrival) {
-                        tos.view(operators);
-                        tows.view(operators_way);
-                        toss.view(operators_send);
-                        toas.view(operators_arrival);
-                        //$.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
-                        LockScreenOff();
-                    });
-                }.bind(this),
-            });
-            // Обработка кнопок дерева путей
-            $('#btn-tree-way').on('click', 'button', function (event) {
-                switch (event.currentTarget.id) {
-                    case 'open-park': {
-                        tw.open_tree(false);
-                        break;
-                    };
-                    case 'open-way': {
-                        tw.open_tree(true);
-                        break;
-                    };
-                    case 'close-tree': {
-                        tw.close_tree();
-                        break;
-                    };
-                    case 'refresh-tree': {
-                        refresh_tree_way(2, function () {
-                            LockScreenOff();
-                        }.bind(this));
-
-                        break;
-                    };
-                };
-            });
-            //$('.btn-all').on('click', function (event) {
-            //    switch (event.currentTarget.id) {
-
-            //    };
-            //});
-            //-----------------------------------------------------
-            // Инициализация модуля "Таблица вагоны на пути"
-            /*var tws = new TWS('div#cars-way');*/
-            tws.init({
-                alert: null,
-                class_table: 'table table-sm table-cars-way table-striped table-success',
-                detali_table: false,
-                type_report: 'cars_way',     //
-                link_num: true,
-                ids_wsd: null,
-                setup_buttons: [
-                    {
-                        name: 'statement1',
-                        action: function (e, dt, node, config) {
-                            tws.tab_com.button_action(config.button, e, dt, node, config);
-                        }.bind(this),
-                        enabled: false
-                    },
-                    {
-                        name: 'statement2',
-                        action: function (e, dt, node, config) {
-                            tws.tab_com.button_action(config.button, e, dt, node, config);
-                        }.bind(this),
-                        enabled: false
-                    }
-                ],
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [tws] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                    //this.on_alert.clear_message();
-                    //if (rowData && rowData.length > 0 && rowData[0].id_wim_arrival === null) {
-                    //    e.preventDefault();
-                    //    this.on_alert.out_warning_message(langView('vortc_mess_warning_wagon_existing_way', App.Langs).format(rowData[0].num));
-                    //}
-                }.bind(this),
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-                fn_select_link: function (link) {
-
-                }.bind(this),
-                fn_button_action: function (name, e, dt, node, config) {
-                    if (name === 'statement1') {
-                        if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&format=A4L&id=" + current_id_way, "Print");
-                        }
-                    }
-                    if (name === 'statement2') {
-                        if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
-                        }
-                    }
-                }.bind(this),
-                fn_enable_button: function (tb) {
-
-                }.bind(this),
-                //fn_action_view_detali: function (rows) {
-
-                //},
-                //fn_select_rows: function (rows) {
-
-                //}.bind(this),
-                //fn_select_link: function (link) {
-
-                //}.bind(this),
-            });
-            //-----------------------------------------------------
-            // Инициализация модуля "Таблица остаток"
-            /*var ttb = new TWS('div#total-balance');*/
-            ttb.init({
-                alert: null,
-                class_table: 'table table-sm table-hover table-total-balance',
-                detali_table: false,
-                type_report: 'total_balance',     //
-                link_num: false,
-                ids_wsd: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [ttb] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-                fn_select_link: function (link) {
-
-                }.bind(this),
-            });
-            //-----------------------------------------------------
-            // Инициализация модуля "Таблица операторы на станции"
-            /*var tos = new TWS('div#operators-station');*/
-            tos.init({
-                alert: null,
-                class_table: 'table table-sm table-hover table-total-balance',
-                detali_table: false,
-                type_report: 'operators_station',
-                link_num: false,
-                ids_wsd: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [tos] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-                fn_select_link: function (link) {
-
-                }.bind(this),
-            });
-            // Инициализация модуля "Таблица операторы по путям на станции"
-            /*var tows = new TWS('div#operators-way-station');*/
-            tows.init({
-                alert: null,
-                class_table: 'table table-sm table-hover table-total-balance',
-                detali_table: false,
-                type_report: 'operators_way_station',
-                link_num: false,
-                ids_wsd: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [tows] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-                fn_select_link: function (id) {
-                    api_dir.getWaysOfId(id, function (way) {
-                        if (way) {
-                            tw.open_way(way.idStation, way.idPark, way.id);
-                        }
-                    }.bind(this))
-                }.bind(this),
-            });
-            // Инициализация модуля "Таблица операторы отправленные со станции"
-            /*var toss = new TWS('div#operators-send-station');*/
-            toss.init({
-                alert: null,
-                class_table: 'table table-sm table-hover table-total-balance',
-                detali_table: false,
-                type_report: 'operators_send_station',
-                link_num: false,
-                ids_wsd: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [toss] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-            });
-            // Инициализация модуля "Таблица операторы прибывающие на станцию"
-            /*var toas = new TWS('div#operators-arrival-station');*/
-            toas.init({
-                alert: null,
-                class_table: 'table table-sm table-hover table-total-balance',
-                detali_table: false,
-                type_report: 'operators_arrival_station',
-                link_num: false,
-                ids_wsd: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [toas] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
-
-                },
-                fn_select_rows: function (rows) {
-
-                }.bind(this),
-            });
-            // Операции прием вагонов
-            voac.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [voac] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции отправка вагонов
-            vooc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vooc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции возврат вагонов
-            vorc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vorc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции роспуска
-            vodc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vodc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции дислокации
-            vodlc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vodlc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции предъявления
-            voprc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vodlc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции отправить
-            vopsuz.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vopsuz] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(2, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции выгрузка
-            vopunlc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vopunlc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(upd, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции погрузка
-            voplc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [voplc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(upd, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции очистки
-            vopclc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vopclc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(upd, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // сервис примечаний
-            vopunc.init({
-                alert: null,
-                api_dir: null,
-                api_wsd: null,
-                fn_db_update: null,
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [vopunc] process ' + process);
-                    out_init(process);
-                },
-                fn_close: function (upd) {
-                    // На обновления дерева путей, баланса ....
-                    refresh_tree_way(upd, function () {
-                        LockScreenOff();
-                    }.bind(this));
-                }
-            });
-            // Операции обработки
-            //voppsc.init({
-            //    alert: null,
-            //    api_dir: null,
-            //    api_wsd: null,
-            //    fn_db_update: null,
-            //    fn_init: function () {
-            //        // На проверку окончания инициализации
-            //        process--;
-            //        //console.log('[main_wsd] [vopclc] process ' + process);
-            //        out_init(process);
-            //    },
-            //    fn_close: function (upd) {
-            //        // На обновления дерева путей, баланса ....
-            //        refresh_tree_way(upd, function () {
-            //            LockScreenOff();
-            //        }.bind(this));
-            //    }
-            //});
-        }.bind(this));
     });
 
 })(jQuery); // End of use strict

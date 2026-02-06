@@ -318,6 +318,8 @@
     // Определлим список текста для этого модуля
     App.Langs = $.extend(true, App.Langs, getLanguages($.Text_View, App.Lang));
 
+    /*    var ADMIN = App.api_admin;*/
+
     // js/module/view_op_common.js
     var VIEW_COMMON = App.view_op_common;
     var VIEW_CFILING = App.view_op_common_filing;
@@ -329,8 +331,32 @@
     function view_op_loading_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
         this.cfiling = new VIEW_CFILING();
-    }
+        this.access = {};
+        // Получим роль
+        //var admin = new ADMIN();
+        //this.rAdmin = false;
+        //this.rCorrect = false;
+        //this.rRW = false;
+        //this.rRO = false;
+        //this.Roles = [];
+        //admin.get_admin_is_roles(Roles.ADMIN + ';' + Roles.ARM_OPERATIONS + ';' + Roles.ARM_OPERATIONS_CORREECT + ';' + Roles.ARM_RO, function (data) {
+        //    this.Roles = data;
+        //    if (this.Roles && this.Roles.length > 0) {
+        //        var res = this.Roles.find(function (o) { return o.role === Roles.ADMIN }.bind(this)); this.rAdmin = res ? res.result : false;
+        //        var res = this.Roles.find(function (o) { return o.role === Roles.ARM_OPERATIONS }.bind(this)); this.rRW = res ? res.result : false;
+        //        var res = this.Roles.find(function (o) { return o.role === Roles.ARM_OPERATIONS_CORREECT }.bind(this)); this.rCorrect = res ? res.result : false;
+        //        var res = this.Roles.find(function (o) { return o.role === Roles.ARM_RO }.bind(this)); this.rRO = res ? res.result : false;
+        //    }
+        //    if (this.rAdmin) { this.rRW = true; this.rCorrect = true; this.rRO = true } //
+        //    if (this.rCorrect) { this.rRO = true } //
+        //    if (this.rRW) { this.rRO = true } //
+        //    this.rAdmin = false;
+        //    //this.rCorrect = false;
+        //    //this.rRW = false;
+        //    //this.rRO = false;
+        //}.bind(this));
 
+    }
     //var s_reg = 'required-field';
     //var s_not_reg = 'not-required-field';
     //var s_check = 'check-field';
@@ -349,6 +375,17 @@
             fn_init: null,
             fn_close: null,
         }, options);
+        // Активация элемента правки в зависимости от прав
+        var element_edit = function (element) {
+            if (element) {
+                if (this.rRW || this.rAdm) {
+                    element.enable();
+                } else {
+                    element.disable();
+                }
+            }
+        }
+
         // Инициализация при старте (обявдение доп переменных)
         var start_init = function () {
             this.select_devision_from = null;       // Выбранный элемент
@@ -635,7 +672,9 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_filing_wagons_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.$form.submit();
+                        }
                     }.bind(this),
                 }
             };
@@ -653,7 +692,9 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_filing_wagons_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.$form.submit();
+                        }
                     }.bind(this),
                 }
             };
@@ -671,7 +712,9 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_filing_wagons_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.$form.submit();
+                        }
                     }.bind(this),
                 }
             };
@@ -689,7 +732,10 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_filing_wagons_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.$form.submit();
+                        }
+
                     }.bind(this),
                 }
             };
@@ -707,7 +753,10 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_filing_wagons_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.$form.submit();
+                        }
+
                     }.bind(this),
                 }
             };
@@ -2194,7 +2243,8 @@
             // Отобразить настройки для открытии операции
             var view_setup_operation_open = function () {
                 if (this.id_filing === 0) {
-                    this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();
+                    //this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();
+                    element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_devision_from);
                     this.form_filing_wagons_setup.el.datalist_id_devision_from.$element_fl.addClass('required-field');
                 } else {
                     this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
@@ -2202,7 +2252,8 @@
                 }
                 // есть выбранные вагоны
                 if (rows.length > 0) {
-                    this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
+                    //this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
+                    element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_start);
                     this.form_filing_wagons_setup.el.input_datetime_time_start.$element.addClass('required-field');
                     // Определим есть вагон с амкр
                     var amkr_vz = rows.find(function (o) {
@@ -2220,7 +2271,8 @@
                         this.$div_loading_ip.hide();
                         //this.form_filing_wagons_setup.el.datalist_code_station_uz.enable();
                         //this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.addClass('not-required-field');
-                        this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
+                        //this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.datalist_cargo_etsng);
                         this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty !== true }.bind(this)), -1);
                         this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.addClass('not-required-field');
                     }
@@ -2232,7 +2284,8 @@
                         //this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.addClass('not-required-field');
                         //this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
                         //this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.addClass('not-required-field');
-                        this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                        //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_internal_cargo);
                         this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), -1);
                         this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.addClass('not-required-field');
                     }
@@ -2258,19 +2311,30 @@
                             this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_stop', App.Langs));
                         }
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        this.form_filing_wagons_setup.el.button_operation_close.show();
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.el.button_operation_close.show();
+                        } else {
+                            this.form_filing_wagons_setup.el.button_operation_close.hide();
+                        }
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.addClass('required-field');
-                        this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                        //this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.select_id_status_load);
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, this.default_status_load)
                         view_set_status_load.call(this, this.default_status_load);
                     } else {
                         this.filing_wagons_alert_info.clear_message();
                         this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_1_edit', App.Langs));
-                        this.form_filing_wagons_setup.el.button_operation_apply.show();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.el.button_operation_apply.show();
+                        } else {
+                            this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                        }
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('not-required-field');
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all);
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
@@ -2480,8 +2544,10 @@
                 if (date_stop === null || !date_stop._isValid) {
                     this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.addClass('not-required-field');
                     this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.addClass('not-required-field');
-                    this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
-                    this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                    //this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
+                    element_edit.call(this, this.form_filing_wagons_setup.el.datalist_cargo_etsng);
+                    //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                    element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_internal_cargo);
                     this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].currentCargoIdCargo);
                     this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].currentInternalCargoIdInternalCargo);
                 } else {
@@ -2509,8 +2575,8 @@
                 if (id !== -1) {
                     // статус оперделен
                     if (this.fw_status === 1 || this.fw_status === 2 || this.fw_status === 3) {
-                        if (!ip_select) this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
-                        if (ip_select) this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
+                        if (!ip_select) element_edit.call(this, this.form_filing_wagons_setup.el.datalist_cargo_etsng); //this.form_filing_wagons_setup.el.datalist_cargo_etsng.enable();
+                        if (ip_select) element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_internal_cargo); // this.form_filing_wagons_setup.el.datalist_id_internal_cargo.enable();
                         // общие
                         this.form_filing_wagons_setup.el.input_text_num_nakl_total.disable();
                         this.form_filing_wagons_setup.el.input_text_vesg_total.disable();
@@ -2527,25 +2593,31 @@
                             // Выбраны все вагоны или не все но остальные закрыты как порожние
                             if ((rows_all && rows !== null && rows.length > 1) || (rows !== null && rows.length > 0 && exist_rows_empty && !rows_all)) {
                                 // общие
-                                this.form_filing_wagons_setup.el.input_datetime_time_document_total.enable();
+                                //this.form_filing_wagons_setup.el.input_datetime_time_document_total.enable();
+                                element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_document_total);
                                 view_set_date_document_total.call(this, false);
                                 if (ip_select) {
-                                    this.form_filing_wagons_setup.el.input_text_vesg_total.enable();
+                                    //this.form_filing_wagons_setup.el.input_text_vesg_total.enable();
+                                    element_edit.call(this, this.form_filing_wagons_setup.el.input_text_vesg_total);
                                     this.form_filing_wagons_setup.el.input_text_vesg_total.val(rows[0].vesgFiling ? Number(rows[0].vesgFilig) / 1000 : null);
-                                    this.form_filing_wagons_setup.el.input_text_num_nakl_total.enable();
+                                    //this.form_filing_wagons_setup.el.input_text_num_nakl_total.enable();
+                                    element_edit.call(this, this.form_filing_wagons_setup.el.input_text_num_nakl_total);
                                     this.form_filing_wagons_setup.el.input_text_num_nakl_total.val(rows[0].numFiling);
                                 }
                             }
                             // выбрана 1 запись и это не все
                             if (rows !== null && rows.length === 1) { // && !rows_all
                                 if (ip_select) {
-                                    this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
+                                    //this.form_filing_wagons_setup.el.input_text_num_nakl.enable();
+                                    element_edit.call(this, this.form_filing_wagons_setup.el.input_text_num_nakl);
                                     this.form_filing_wagons_setup.el.input_text_num_nakl.val((this.fw_status !== 3 ? rows[0].internalDocNum : rows[0].filingInternalDocNum));
-                                    this.form_filing_wagons_setup.el.input_text_vesg.enable();
+                                    //this.form_filing_wagons_setup.el.input_text_vesg.enable();
+                                    element_edit.call(this, this.form_filing_wagons_setup.el.input_text_vesg);
                                     this.form_filing_wagons_setup.el.input_text_vesg.val((this.fw_status !== 3 ? (rows[0].currentVesg ? Number(rows[0].currentVesg) / 1000 : null) : (rows[0].filingVesg ? Number(rows[0].filingVesg) / 1000 : null)));
                                 }
                                 this.form_filing_wagons_setup.el.input_datetime_time_start.val((this.fw_status !== 3 ? rows[0].currentOperationStart : rows[0].filingOperationStart));
-                                this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
+                                //this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
+                                element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_document);
                                 this.form_filing_wagons_setup.el.input_datetime_time_document.val(null);
                                 view_set_date_document.call(this, (this.fw_status !== 3 ? rows[0].moveCargoDocReceived !== null : rows[0].filingMoveCargoDocReceived !== null));
                             } else {
@@ -2555,18 +2627,19 @@
                                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
                                 // ?? если уз можно дату документа добавить на группу вагонов
                                 if (!ip_select && !exist_rows_empty && !rows_all) {
-                                    this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
+                                    //this.form_filing_wagons_setup.el.input_datetime_time_document.enable();
+                                    element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_document);
                                     this.form_filing_wagons_setup.el.input_datetime_time_document.val(null);
                                     view_set_date_document.call(this, false);
                                 }
                                 //}
 
                             }
-                            if (!ip_select) this.form_filing_wagons_setup.el.datalist_code_station_uz.enable();
+                            if (!ip_select) element_edit.call(this, this.form_filing_wagons_setup.el.datalist_code_station_uz); // this.form_filing_wagons_setup.el.datalist_code_station_uz.enable();
                             //this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all);
-                            if (ip_select) this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
+                            if (ip_select) element_edit.call(this, this.form_filing_wagons_setup.el.select_id_station_amkr_on); // this.form_filing_wagons_setup.el.select_id_station_amkr_on.enable();
                             //this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all);
-                            if (ip_select) this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
+                            if (ip_select) element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_devision_on); // this.form_filing_wagons_setup.el.datalist_id_devision_on.enable();
                             // Отобразим значения
                             this.form_filing_wagons_setup.el.datalist_code_station_uz.val((this.fw_status !== 3 ? rows[0].codeExternalStation : rows[0].filingCodeExternalStation))//code_external_station
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.val((this.fw_status !== 3 ? (rows[0].idStationOnAmkr === null ? -1 : rows[0].idStationOnAmkr) : (rows[0].filingIdStationOnAmkr === null ? -1 : rows[0].filingIdStationOnAmkr))); // id_station_on_amkr
@@ -2622,12 +2695,19 @@
             // Обновим кнопку добавить в подачу\создать черновик
             var rows = this["tfw_" + this.type_filing].tab_com.get_select_row(); // Получим выбранные вагоны в подаче
             var bts = this["twwf_" + this.type_filing].tab_com.obj_t_report.buttons([7]);
-            bts.enable();
+            if (this.rRW || this.rAdm) {
+                bts.enable();
+            } else {
+                bts.disable();
+            }
             bts.text(langView('voplc_title_button_new_filing', App.Langs));
             //bts.titleAttr(langView('voplc_title_attr_button_new_filing', App.Langs));
             var fws_bts = this["tfw_" + this.type_filing].tab_com.obj_t_report.buttons([7]);
-            fws_bts.disable();
-
+            if (this.rRW || this.rAdm) {
+                fws_bts.enable();
+            } else {
+                fws_bts.disable();
+            }
             // Определим выбор панели
             var uz_select = $(this.$radio_loading[0]).prop('checked');
             var ip_select = $(this.$radio_loading[1]).prop('checked');
@@ -2710,7 +2790,11 @@
                 fws_bts.enable();
                 this.filing_wagons_alert_info.clear_message();
                 this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_draft', App.Langs));
-                this.form_filing_wagons_setup.el.button_filing_add.show();
+                if (this.rRW || this.rAdm) {
+                    this.form_filing_wagons_setup.el.button_filing_add.show();
+                } else {
+                    this.form_filing_wagons_setup.el.button_filing_add.hide();
+                }
                 this.form_filing_wagons_setup.el.button_filing_apply.hide();
                 this.form_filing_wagons_setup.el.button_operation_apply.hide();
                 this.form_filing_wagons_setup.el.button_operation_open.hide();
@@ -2726,12 +2810,17 @@
                 // Выбрана подача (покажем данные по подаче)
                 if (this.create_filing) {
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
-                    if (this.close_filing === null) this.form_filing_wagons_setup.el.button_filing_apply.show();
+                    if (this.close_filing === null && (this.rRW || this.rAdm)) this.form_filing_wagons_setup.el.button_filing_apply.show();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
                     this.form_filing_wagons_setup.el.button_operation_close.hide();
                 } else {
-                    this.form_filing_wagons_setup.el.button_filing_add.show();
+                    if (this.rRW || this.rAdm) {
+                        this.form_filing_wagons_setup.el.button_filing_add.show();
+                    } else {
+                        this.form_filing_wagons_setup.el.button_filing_add.hide();
+                    }
+
                     this.form_filing_wagons_setup.el.button_filing_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
@@ -2739,7 +2828,8 @@
                 }
                 // подача закрыта ?
                 if (this.close_filing === null) {
-                    this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();
+                    //this.form_filing_wagons_setup.el.datalist_id_devision_from.enable();
+                    element_edit.call(this, this.form_filing_wagons_setup.el.datalist_id_devision_from);
                     //this.form_filing_wagons_setup.el.select_id_station_amkr_from.enable();
                     this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_filing', App.Langs));
                 } else {
@@ -2749,7 +2839,7 @@
                 this.form_filing_wagons_setup.el.datalist_id_devision_from.val(this.division_from);
                 //this.form_filing_wagons_setup.el.datalist_id_devision_from.$element_fl.removeClass(s_all);
                 this.form_filing_wagons_setup.el.input_text_num_nakl_total.val(this.num_filing);
-                this.form_filing_wagons_setup.el.input_text_vesg_total.val(this.vesg_filing !== null ? Number(this.vesg_filing)/1000 : null);
+                this.form_filing_wagons_setup.el.input_text_vesg_total.val(this.vesg_filing !== null ? Number(this.vesg_filing) / 1000 : null);
                 this.form_filing_wagons_setup.el.input_datetime_time_document_total.val(this.doc_received_filing);
                 // Проверим выбраны вагоны
                 switch (this.fw_status) {
@@ -2761,7 +2851,12 @@
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        this.form_filing_wagons_setup.el.button_operation_open.show();
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.el.button_operation_open.show();
+                        } else {
+                            this.form_filing_wagons_setup.el.button_operation_open.hide();
+                        }
+
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
                         view_setup_operation_open.call(this);
                         break;
@@ -2800,12 +2895,16 @@
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_open.hide();
-                        this.form_filing_wagons_setup.el.button_operation_close.show();
-
+                        if (this.rRW || this.rAdm) {
+                            this.form_filing_wagons_setup.el.button_operation_close.show();
+                        } else {
+                            this.form_filing_wagons_setup.el.button_operation_close.hide();
+                        }
                         this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
 
                         //this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass('required-field');
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                        element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
                         view_set_date_stop.call(this, true); // отобразить закрыть (там же отображение согласно статуса)
                         break;
@@ -2860,16 +2959,22 @@
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.val(rows[0].currentInternalCargoIdInternalCargo);//current_internal_cargo_id_internal_cargo
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all);
                         } else {
-                            this.form_filing_wagons_setup.el.button_operation_apply.show();
+                            if (this.rRW || this.rAdm) {
+                                this.form_filing_wagons_setup.el.button_operation_apply.show();
+                            } else {
+                                this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                            }
                             this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2', App.Langs));
 
-                            this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                            //this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                            element_edit.call(this, this.form_filing_wagons_setup.el.select_id_status_load);
                             //this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, rows[0].currentIdLoadingStatus)
                             this.default_status_load = rows[0].currentIdLoadingStatus;
                             //view_set_status_load.call(this, rows[0].currentIdLoadingStatus);
 
                             //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows[0].currentOperationStart);
-                            this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
+                            element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop);
+                            //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                             //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows[0].currentOperationEnd);
                             view_set_date_stop.call(this, true); // отобразить закрыть (там же отображение согласно статуса)
                         }
@@ -2924,7 +3029,11 @@
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.val(rows[0].filingInternalCargoIdInternalCargo);//current_internal_cargo_id_internal_cargo
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all);
                         } else {
-                            this.form_filing_wagons_setup.el.button_operation_apply.show();
+                            if (this.rRW || this.rAdm) {
+                                this.form_filing_wagons_setup.el.button_operation_apply.show();
+                            } else {
+                                this.form_filing_wagons_setup.el.button_operation_apply.hide();
+                            }
                             this.filing_wagons_alert_info.out_info_message(langView('voplc_mess_info_wagon_mode_2', App.Langs));
                             //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                             //this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, rows[0].currentIdLoadingStatus)
@@ -3280,7 +3389,6 @@
 
             this.cfiling.init({
                 alert: this.settings.alert,
-
                 type_filing: 2,         // Погрузка
                 wagon_operation: App.wsd_setup.operations.loading_uz,    // операция над вагоном
                 view_com: this.view_com,
@@ -3354,11 +3462,13 @@
         }, function () { }.bind(this));
     };
 
-    view_op_loading_cars.prototype.view = function (id_way) {
-        this.cfiling.view(id_way);
+    view_op_loading_cars.prototype.view = function (id_way, access) {
+        this.access = access;
+        if (this.access.rAdmin || this.access.rOperRW || this.access.rOperCorrect || this.access.rRO) {
+            this.cfiling.view(id_way, (access ? access.rAdmin : false), (access ? access.rOperRW : false), (access ? access.rRO : false), (access ? access.rOperCorrect : false));
+        }
     }
     // Отображение после нажатия выбора погрузка уз\вз 
-
     App.view_op_loading_cars = view_op_loading_cars;
 
     window.App = App;

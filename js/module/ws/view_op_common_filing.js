@@ -286,6 +286,10 @@
             fn_close: null,                         // ? пока неработает
         }, options);
         //
+        this.rAdm = false;
+        this.rRW = false;
+        this.rRO = false;
+        this.rCorrect = false;
         // Создадим ссылку на модуль работы с базой данных
         this.view_com = this.settings.view_com ? this.settings.view_com : null;  // Определим ссылку на базовую библиотеку api
         this.api_dir = this.settings.api_dir ? this.settings.api_dir : new API_DIRECTORY({ url_api: App.Url_Api });
@@ -809,7 +813,7 @@
 
                             if (rows != null && rows.length > 0) {
                                 this.id_filing = rows[0].idFiling;
-                                if (this.id_filing === 0) bts.enable(); // активируем очистить черновик
+                                if (this.id_filing === 0 && (this.rAdm || this.rRW)) bts.enable(); // активируем очистить черновик
                                 this.station_from = rows[0].filingIdStation;
                                 this.division_from = rows[0].filingDivisionIdDivision;
                                 this.num_filing = rows[0].numFiling;
@@ -1396,7 +1400,9 @@
                         }
                     }.bind(this),
                     fn_enable_button: function (tb) {
-
+                        //var index = tb.obj_t_report.rows({ selected: true })
+                        //var bts = tb.obj_t_report.buttons([7]);
+                        //bts.enable(false); // отображение кнопки 
                     }.bind(this),
                 });
                 //====================================================================
@@ -1424,8 +1430,13 @@
             out_load(pr_load);
         }
     };
-    view_op_common_filing.prototype.view = function (id_way) {
+    view_op_common_filing.prototype.view = function (id_way, rAdm, rRW, rRO, rCorrect) {
         // Если указана станция выполним коррекцию по станции
+        this.rAdm = rAdm;
+        this.rRW = rRW;
+        this.rRO = rRO;
+        this.rCorrect = rCorrect;
+        
         this.view_com.open();
         LockScreen(langView('voplc_mess_load_operation', App.Langs));
         // Очистить сообщения и форму
@@ -1441,38 +1452,6 @@
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
-        //// Определим время выборки
-        //var date = this.form_filing_setup.el.input_datetime_time_period_start.val();
-        //switch (this.type) {
-        //    case 1: {
-        //        // жд.сутки
-        //        this.start = moment(date).subtract(1, 'd').set({ 'hour': 20, 'minute': 1, 'second': 0 })._d;
-        //        this.stop = moment(date).set({ 'hour': 20, 'minute': 0, 'second': 0 })._d;
-        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_1', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-        //        break;
-        //    }
-        //    case 2: {
-        //        //календарные сутки
-        //        this.start = moment(date).set({ 'hour': 0, 'minute': 1, 'second': 0 })._d;
-        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_2', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-        //        break;
-        //    }
-        //    case 3: {
-        //        // месяц
-        //        this.start = moment(date).set({ 'date': 1, 'hour': 0, 'minute': 1, 'second': 0 })._d;
-        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 0 })._d;
-        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + langView('vopcf_title_period_3', App.Langs) + ' : ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-        //        break;
-        //    }
-        //    default: {
-        //        // по умолчанию
-        //        this.start = moment(date).set({ 'hour': 0, 'minute': 0, 'second': 0 })._d;
-        //        this.stop = moment(date).set({ 'hour': 23, 'minute': 59, 'second': 59 })._d;
-        //        this.card_filing.header.$html.empty().append(langView('vopcf_card_header_filing', App.Langs) + ' [ ' + moment(this.start).format("YYYY-MM-DD HH:mm") + " - " + moment(this.stop).format("YYYY-MM-DD HH:mm") + " ]");
-        //        break;
-        //    }
-        //};
         // Сбросим вагоны переноса
         this.id_station_unload = -1;
         var id_station = -1;
@@ -1483,7 +1462,6 @@
                 id_station = way.idStation;
                 // Отобразим выбор на панеле
                 this.form_filing_setup.el.select_id_station_unload.val(id_station);
-
             }
         };
         // Дополнительная обработка в панели выбранной операции
