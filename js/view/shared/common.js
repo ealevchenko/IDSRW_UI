@@ -3,15 +3,16 @@ var format_date_ru = "DD.MM.YYYY";
 var format_time = "HH:mm:ss";
 var format_datetime = "YYYY-MM-DD HH:mm:ss";
 var format_datetime_ru = "DD.MM.YYYY HH:mm:ss";
+
 // ** РОЛИ ****************************
 var Roles = {
     ADMIN: "KRR-LG_TD-IDSRW_ADMIN",                 // Администратор системы
     // ПРИБЫТИЕ 
     ACCEPT_RW: "KRR-LG_TD-IDSRW_ACCEPT",            // Ввод информации по прибытию вагонов с внешней сети УЗ
-    ACCEPT_RW: "KRR-LG_TD-IDSRO_ACCEPT",            // Ввод информации по прибытию вагонов с внешней сети УЗ
+    ACCEPT_RO: "KRR-LG_TD-IDSRO_ACCEPT",            // Ввод информации по прибытию вагонов с внешней сети УЗ
     // ОТПРАВКА 
     SEND_RW: "KRR-LG_TD-IDSRW_SEND",                // Ввод информации по отправлению вагонов на внешнюю сеть УЗ
-    SEND_RW: "KRR-LG_TD-IDSRO_SEND",                // Ввод информации по отправлению вагонов на внешнюю сеть УЗ
+    SEND_RO: "KRR-LG_TD-IDSRO_SEND",                // Ввод информации по отправлению вагонов на внешнюю сеть УЗ
     // СЕРВИСЫ  
     // Сверка накладных
     TRF_ACCEPT_RW: "KRR-LG_TD-IDSRW_TRF_ACCEPT",    // Ввод данных в сервис  "Расчет стоимости перевозки груза по прибытию
@@ -20,20 +21,27 @@ var Roles = {
     DOK_SEND_RW: "KRR-LG_TD-IDSRW_DOK_SEND",        // Ввод данных в сервис "Сверка накладных по  отправлению"
     DOK_RO: "KRR-LG_TD-IDSRO_DOK",                  // Просмотр информации в сервисе "Поиск накладных"
     // .....
-    PAY_RW: "KRR-LG_TD-IDSRW_PAY",                 // Ввод ставок и корректировки платы за пользование , времени нахождения вагона в сервисе " Расчет платы за пользование"
-    LETTERS: "KRR-LG_TD-IDSRW_LETTERS",             // Ввод , корректировка, отмена информации по инструктивным письмам в сервисе " Инструктивные письма"
-    LET_WORK_RO: "KRR-LG_TD-IDSRO_LET_WORK",        // Просмотр информации в сервисе "Инструктивные письма в работе"
-    DIRECTORY_RW: "KRR-LG_TD-IDSRW_DIRECTORY",      // Ввод, корректировка информации в справочниках системы
-    ADDRESS_RW: "KRR-LG_TD-IDSRW_ADDRESS",          // Ввод данных, корректировка с сервисе " Заадресовка вагонов"  
-    COM_STAT_RW: "KRR-LG_TD-IDSRW_COM_STAT",        // Ввод данных, корректировка разметки вагонов с сервисе "Разметка коммерческого состояния вагонов"  
-    COND_ARR_RW: "KRR-LG_TD-IDSRW_COND_ARR",        // Ввод данных, корректировка разметки вагонов по прибытияю с нешней сети УЗ в сервисе "Разметка по прибытию"
-    COND_SEND_RW: "KRR-LG_TD-IDSRW_COND_SEND"       // Ввод данных, корректировка разметки вагонов по отправлению  на внешнюю сеть УЗ в сервисе  "  Разметка по отправлению" 
+    PAY_RW: "KRR-LG_TD-IDSRW_PAY",                          // Ввод ставок и корректировки платы за пользование , времени нахождения вагона в сервисе " Расчет платы за пользование"
+    LETTERS: "KRR-LG_TD-IDSRW_LETTERS",                     // Ввод , корректировка, отмена информации по инструктивным письмам в сервисе " Инструктивные письма"
+    LET_WORK_RO: "KRR-LG_TD-IDSRO_LET_WORK",                // Просмотр информации в сервисе "Инструктивные письма в работе"
+    DIRECTORY_RW: "KRR-LG_TD-IDSRW_DIRECTORY",              // Ввод, корректировка информации в справочниках системы
+    ADDRESS_RW: "KRR-LG_TD-IDSRW_ADDRESS",                  // Ввод данных, корректировка с сервисе " Заадресовка вагонов"  
+    COM_STAT_RW: "KRR-LG_TD-IDSRW_COM_STAT",                // Ввод данных, корректировка разметки вагонов с сервисе "Разметка коммерческого состояния вагонов"  
+    COND_ARR_RW: "KRR-LG_TD-IDSRW_COND_ARR",                // Ввод данных, корректировка разметки вагонов по прибытияю с нешней сети УЗ в сервисе "Разметка по прибытию"
+    COND_SEND_RW: "KRR-LG_TD-IDSRW_COND_SEND",              // Ввод данных, корректировка разметки вагонов по отправлению  на внешнюю сеть УЗ в сервисе  "  Разметка по отправлению"
+    // Операции АРМ диспетчера
+    ARM_RO: "KRR-LG_TD-IDSRO_ARM",                              // Просмотр АРМ диспетчера, отчетов и поиск по вагону   
+    ARM_OPERATIONS_CORREECT_RW: "KRR-LG_TD-IDSRW_CORREECT",     // Правки в подачах погрузки, выгрузки, очистки
+    ARM_OPERATIONS_RW: "KRR-LG_TD-IDSRW_ARM_OPERATIONS",        // Работа в АРМ диспетчера : Операции с вагоном :ВЫГРУЗКА ВАГОНОВ, ПОГРУЗКА ВАГОНОВ,ОЧИСТКА ВАГОНОВ
+    ARM_TROP_RW: "KRR-LG_TD-IDSRW_ARM_TROP",                    // Выполнение  в АРМ диспетчера транспортных операций :  Отправить состав на станции АМКР; Принять состав на станции АМКР; Возврат или отмена операции оправки ; Дислокация вагонов на станции; Роспуск вагонов на станции, Отправить состав на УЗ; Предъявление состава на УЗ
+    ARM_OR_RW: "KRR-LG_TD-IDSRW_ARM_OR",                        // Выполнение  в АРМ диспетчера  операции с вагоном: автоматическая расстановка вагонов, ручная расстановка, реверс вагонов
+    ARM_NOTE_RW: "KRR-LG_TD-IDSRW_ARM_NOTE",                    // Ввод, корректировка, удаление примечания по вагону  - сервис  "Править примечание по группе вагонов"
 };
 
-var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
-var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
-//var url_api_test = "https://localhost:7280";
-//var url_api_main = "https://localhost:7280";
+//var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+//var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://localhost:7280";
+var url_api_main = "https://localhost:7280";
 
 var url_web_main = "https://krr-app-paweb01.europe.mittalco.com/idsrw";
 var url_web_test = "https://krr-tst-padev02.europe.mittalco.com/idsrw";
@@ -217,8 +225,8 @@ var getHoursFromMinuts = function (minutes) {
     //console.log("lang: ", $.cookie('lang'));
     App.Lang = 'ru';
     //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
+    App.Url_Api = url_api_test;
     //App.Url_Api = url_api_main;
-    App.Url_Api = url_api_main;
 
 
 
