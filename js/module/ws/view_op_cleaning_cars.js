@@ -796,7 +796,7 @@
                 filingWayAbbrEn: row ? row.filingWayAbbrEn : way.wayAbbrEn,
                 filingWayIdDevision: row ? row.filingWayIdDevision : way.idDevision,
                 countFilingWagons: row ? 1 : wagons.length,
-                countCleaningWagons: row ? (row.filingWayEnd !== null ? 1 : 0) : 0,
+                countCleaningWagons: row ? (row.filingWayEnd !== null && (row.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || row.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) ? 1 : 0) : 0,
                 filingDivisionIdDivision: row ? row.filingDivisionIdDivision : division ? division.id : null,
                 filingDivisionCode: row ? row.filingDivisionCode : division ? division.code : null,
                 filingDivisionNameRu: row ? row.filingDivisionNameRu : division ? division.nameDivisionRu : null,

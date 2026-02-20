@@ -1436,7 +1436,7 @@
         this.rRW = rRW;
         this.rRO = rRO;
         this.rCorrect = rCorrect;
-        
+
         this.view_com.open();
         LockScreen(langView('voplc_mess_load_operation', App.Langs));
         // Очистить сообщения и форму
@@ -1714,9 +1714,16 @@
 
                     } else {
                         st.countFilingWagons++;
-                        st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
-                        st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
-                        st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
+                        if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
+                            st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        }
+                        if (el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) {
+                            st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        }
+                        if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) {
+                            st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
+                        }
+
                     }
                 }.bind(this));
                 this.wagons_filing = wagons;

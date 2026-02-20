@@ -1961,7 +1961,7 @@
                 filingWayAbbrEn: row ? row.filingWayAbbrEn : way.wayAbbrEn,
                 filingWayIdDevision: row ? row.filingWayIdDevision : way.idDevision,
                 countFilingWagons: row ? 1 : wagons.length,
-                countLoadingWagons: row ? (row.filingWayEnd !== null ? 1 : 0) : 0,
+                countLoadingWagons: row ? (row.filingWayEnd !== null && (row.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && row.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) ? 1 : 0) : 0,
                 filingDivisionIdDivision: row ? row.filingDivisionIdDivision : division ? division.id : null,
                 filingDivisionCode: row ? row.filingDivisionCode : division ? division.code : null,
                 filingDivisionNameRu: row ? row.filingDivisionNameRu : division ? division.nameDivisionRu : null,
@@ -2503,8 +2503,8 @@
                         $.each(this.filing_wagons, function (i, el) {
                             var exist = rows.find(function (o) { return o.num === el.num; }.bind(this));
                             if (!exist) {
-                                if ((el.currentIdLoadingStatus === 0 && el.filingWayEnd === null) ||
-                                    (el.currentIdLoadingStatus !== 0 && el.filingWayEnd !== null)) {
+                                if (((el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean) && el.filingWayEnd === null) ||
+                                    ((el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) && el.filingWayEnd !== null)) {
                                     exist_rows_empty = false;
                                     return false;
                                 }
@@ -2632,6 +2632,14 @@
                                     this.form_filing_wagons_setup.el.input_datetime_time_document.val(null);
                                     view_set_date_document.call(this, false);
                                 }
+                                // else {
+                                //    if (!exist_rows_empty && !rows_all) {
+                                //        element_edit.call(this, this.form_filing_wagons_setup.el.input_datetime_time_document);
+                                //        this.form_filing_wagons_setup.el.input_datetime_time_document.val(null);
+                                //        view_set_date_document.call(this, (this.fw_status !== 3 ? rows[0].moveCargoDocReceived !== null : rows[0].filingMoveCargoDocReceived !== null));
+                                //    }
+                                //}
+
                                 //}
 
                             }
@@ -3080,11 +3088,16 @@
                         $.each(this.filing_wagons, function (i, el) {
                             var exist = rows.find(function (o) { return o.num === el.num; }.bind(this));
                             if (!exist) {
-                                if ((el.currentIdLoadingStatus === 0 && el.filingWayEnd === null) ||
-                                    (el.currentIdLoadingStatus !== 0 && el.filingWayEnd !== null)) {
+                                if (((el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean) && el.filingWayEnd === null) ||
+                                    ((el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) && el.filingWayEnd !== null)) {
                                     all_rows_empty = false;
                                     return false;
                                 }
+                                //if ((el.currentIdLoadingStatus === 0 && el.filingWayEnd === null) ||
+                                //    (el.currentIdLoadingStatus !== 0 && el.filingWayEnd !== null)) {
+                                //    all_rows_empty = false;
+                                //    return false;
+                                //}
                             }
                         }.bind(this));
                     } else {
