@@ -773,6 +773,36 @@
                 childs: []
             };
 
+            var bt_edit_date_start = {
+                obj: 'bs_button',
+                options: {
+                    id: 'edit_date_start',
+                    name: 'edit_date_start',
+                    class: null,
+                    fsize: 'sm',
+                    color: 'danger',
+                    text: null,
+                    title: 'edit',
+                    icon_fa_left: 'fa-solid fa-pen-to-square',//<i class="fa-solid fa-pen-to-square"></i>
+                    icon_fa_right: null,
+                    fn_click: null,
+                }
+            };
+            var bt_save_date_start = {
+                obj: 'bs_button',
+                options: {
+                    id: 'save_date_start',
+                    name: 'save_date_start',
+                    class: null,
+                    fsize: 'sm',
+                    color: 'success',
+                    text: null,
+                    title: 'save',
+                    icon_fa_left: 'fa-solid fa-floppy-disk',//<i class="fa-solid fa-floppy-disk"></i>
+                    icon_fa_right: null,
+                    fn_click: null,
+                }
+            };
             var form_input_datetime_time_start = {
                 obj: 'bs_form_input_datetime',
                 options: {
@@ -807,10 +837,44 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
+                    group_append_class: null,
+                    group_append_id: null,
+                    group_append_html: null,
+                    group_append_objs: [bt_edit_date_start, bt_save_date_start],
                     form_text: langView('voplc_text_time_start', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
+            };
+            var bt_edit_date_stop = {
+                obj: 'bs_button',
+                options: {
+                    id: 'edit_date_stop',
+                    name: 'edit_date_stop',
+                    class: null,
+                    fsize: 'sm',
+                    color: 'danger',
+                    text: null,
+                    title: 'edit',
+                    icon_fa_left: 'fa-solid fa-pen-to-square',//<i class="fa-solid fa-pen-to-square"></i>
+                    icon_fa_right: null,
+                    fn_click: null,
+                }
+            };
+            var bt_save_date_stop = {
+                obj: 'bs_button',
+                options: {
+                    id: 'save_date_stop',
+                    name: 'save_date_stop',
+                    class: null,
+                    fsize: 'sm',
+                    color: 'success',
+                    text: null,
+                    title: 'save',
+                    icon_fa_left: 'fa-solid fa-floppy-disk',//<i class="fa-solid fa-floppy-disk"></i>
+                    icon_fa_right: null,
+                    fn_click: null,
+                }
             };
             var form_input_datetime_time_stop = {
                 obj: 'bs_form_input_datetime',
@@ -850,6 +914,10 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
+                    group_append_class: null,
+                    group_append_id: null,
+                    group_append_html: null,
+                    group_append_objs: [bt_edit_date_stop, bt_save_date_stop],
                     form_text: langView('voplc_text_time_stop', App.Langs),
                     form_text_class: null,
                 },
@@ -2727,6 +2795,10 @@
             this.form_filing_wagons_setup.el.button_operation_open.hide();
             this.form_filing_wagons_setup.el.button_operation_close.hide();
             // Время
+            this.form_filing_wagons_setup.el.button_edit_date_start.hide();
+            this.form_filing_wagons_setup.el.button_save_date_start.hide();
+            this.form_filing_wagons_setup.el.button_edit_date_stop.hide();
+            this.form_filing_wagons_setup.el.button_save_date_stop.hide();
             this.form_filing_wagons_setup.el.input_datetime_time_start.$element.removeClass(s_all);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all);
             // Глоб поля
@@ -2894,6 +2966,11 @@
                             this.$div_loading_uz.hide();
                             this.$div_loading_ip.show();
                         }
+
+                        this.form_filing_wagons_setup.el.button_edit_date_start.show();
+                        //this.form_filing_wagons_setup.el.button_save_date_start.hide();
+                        //this.form_filing_wagons_setup.el.button_edit_date_stop.hide();
+                        //this.form_filing_wagons_setup.el.button_save_date_stop.hide();
                         // загрузить статусы взависимости от операции
                         this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(rows[0].currentIdOperation);
 
@@ -2935,6 +3012,11 @@
                             this.$div_loading_uz.hide();
                             this.$div_loading_ip.show();
                         }
+
+                        this.form_filing_wagons_setup.el.button_edit_date_start.show();
+                        //this.form_filing_wagons_setup.el.button_save_date_start.hide();
+                        //this.form_filing_wagons_setup.el.button_edit_date_stop.show();
+                        //this.form_filing_wagons_setup.el.button_save_date_stop.hide();
                         // загрузить статусы взависимости от операции
                         this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(rows[0].currentIdOperation);
 
@@ -3007,6 +3089,12 @@
                             this.$div_loading_uz.hide();
                             this.$div_loading_ip.show();
                         }
+
+                        this.form_filing_wagons_setup.el.button_edit_date_start.show();
+                        this.form_filing_wagons_setup.el.button_save_date_start.hide();
+                        this.form_filing_wagons_setup.el.button_edit_date_stop.show();
+                        this.form_filing_wagons_setup.el.button_save_date_stop.hide();
+                        //
                         this.list_status_load = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(rows[0].filingIdOperation);
                         // выбраны вагоны ушли (но надо проверить на документ)
                         this.filing_wagons_alert_info.clear_message();
