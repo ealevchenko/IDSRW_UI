@@ -80,6 +80,7 @@
             'vopcf_mess_error_operation_run_add_filing': 'При создании подачи для {0} произошла ошибка, код ошибки: {1}',
             'vopcf_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
+            'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
 
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
@@ -281,6 +282,7 @@
             fn_apply_update_operation_filing: null, // Выполнить операцию открыть-закрыть операции над вагонами (+ админка)
             fn_apply_add_wagon_filing: null,        // Выполнить операцию добавить в подачу вагоны
             fn_apply_del_wagon_filing: null,        // Выполнить операцию убрать вагоны из подачи
+            fn_apply_update_date_filing: null,      // Выполнить обновить дату начала или конца подачи
             fn_apply_update: null,                  // Выполнить update таблиц после выполнения операций над вагонами или подачи
             fn_db_update: null,                     // Выполнить обновление баз данных если были изменения
             fn_close: null,                         // ? пока неработает
@@ -1442,6 +1444,7 @@
         // Очистить сообщения и форму
         this.form_filing_setup.clear_all();
         this.form_filing_wagons_setup.clear_all();
+        this.form_filing_setup.el.input_datetime_time_period_start.val(moment());
         this.wagons = [];
         this.wagons_filing = [];
         this.id_filing = null;          // id подачи (изменяется при выборе подачи)
@@ -2008,6 +2011,48 @@
             }.bind(this));
         }
     }
+    // Выполнить операцию убрать вагоны из подачи
+    view_op_common_filing.prototype.apply_update_date_filing = function (data) {
+        if (typeof this.settings.fn_apply_update_date_filing === 'function') {
+            this.settings.fn_apply_update_date_filing.call(this, data, function (result) {
+                // Проверим на ошибку выполнения запроса api
+                if (result && result.status) {
+                    var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
+                    console.log('[view_op_common_filing] [apply_update_date_filing] :' + mess);
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+                    if (result.errors) {
+                        for (var err in result.errors) {
+                            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+                            console.log('[view_op_common_filing] [apply_update_date_filing] :' + err + ":" + result.errors[err]);
+                        }
+                    }
+                    LockScreenOff();
+                } else {
+                    this.apply_update(result, langView('vopcf_mess_ok_operation_update_date_filing', App.Langs).format(result.count));
+                }
+            }.bind(this));
+        } else {
+            //LockScreen(langView('vopcf_mess_run_operation_del_wagon_filing', App.Langs));
+            //this.view_com.api_wsd.postDeleteWagonFiling(data, function (result) {
+            //    // Проверим на ошибку выполнения запроса api
+            //    if (result && result.status) {
+            //        var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+            //        console.log('[view_op_common_filing] [postDeleteWagonFiling] :' + mess);
+            //        this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+            //        if (result.errors) {
+            //            for (var err in result.errors) {
+            //                this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+            //                console.log('[view_op_common_filing] [postDeleteWagonFiling] :' + err + ":" + result.errors[err]);
+            //            }
+            //        }
+            //        LockScreenOff();
+            //    } else {
+            //        this.apply_update(result, langView('vopcf_mess_ok_operation_del_wagon_filing', App.Langs).format(result.count, this.id_filing));
+            //    }
+            //}.bind(this));
+        }
+    }
+
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     view_op_common_filing.prototype.apply_update = function (result, mess_ok, mess_err) {
         this.settings.view_com.update_wsd = 1;
