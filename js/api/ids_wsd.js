@@ -114,7 +114,10 @@
     ids_wsd.prototype.getViewWagonsFilingOfPeriodIdStation = function (start, stop, id, callback) {
         this.api_com.get('/WSD/view/wagons/filing/period/start/' + start + '/stop/' + stop + '/station/id/' + id, callback);
     };
-
+    // Получить список операций предыдущей и следующей по id_wim
+    ids_wsd.prototype.getViewHistoryOperationsOfIdWim = function (id, callback) {
+        this.api_com.get('/WSD/view/operation/history/wim/' + id, callback);
+    };
     //================= ВНУТРЕНЕЕ ПЕРЕМЕЩЕНИЕ (Плата за пользование) =============================================
     // Расчет платы за пользование вагонов на пути
     ids_wsd.prototype.getCalcUsageFeeCarsOfWay = function (id, callback) {
@@ -213,7 +216,10 @@
     ids_wsd.prototype.postUpdateFiling = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
     };
-
+    //АРМ, Операция править дату подачи
+    ids_wsd.prototype.postUpdateDateFiling = function (operation, callback) {
+        this.api_com.post('/WSD/update/date/filing/', operation, callback, callback);
+    };
     // Поиск групы вагонов 
     ids_wsd.prototype.postViewWagonsOfListNums = function (nums, callback) {
         this.api_com.post('/WSD/view/wagon/nums/', nums, callback);
