@@ -187,6 +187,13 @@ var get_max_element = function (rows, name_field) {
     }
     return null;
 };
+var get_min_element = function (rows, name_field) {
+    if (rows && rows.length > 0) {
+        var oe = rows.filter(function (i) { return i[name_field]; }.bind(this)).sort(function (a, b) { return new Date(a[name_field]) - new Date(b[name_field]); }.bind(this));
+        return oe && oe.length > 0 ? oe[0][name_field] : null;
+    }
+    return null;
+};
 var get_belongs_element = function (rows, name_field, id) {
     if (rows && rows.length > 0) {
         var oe = rows.filter(function (i) { return i[name_field] === id; }.bind(this));
@@ -3092,6 +3099,12 @@ var getHoursFromMinuts = function (minutes) {
         this.disable = function (clear) {
             if (clear) this.val(null);
             this.$element.prop("disabled", true);
+        };
+        this.min = function (value) {
+            this.$element.attr("min", value ? value : "");
+        };
+        this.max = function (value) {
+            this.$element.attr("max", value ? value : "");
         };
         this.init();
     };
