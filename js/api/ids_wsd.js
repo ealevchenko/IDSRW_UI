@@ -172,6 +172,10 @@
     ids_wsd.prototype.postManualPosition = function (operation, callback) {
         this.api_com.post('/WSD/operation/way/manual_position/', operation, callback, callback);
     };
+    // Получить список следующих подач по вагонам подачи по id_filing
+    ids_wsd.prototype.GetViewNextFilingOfIdFiling = function (id, callback) {
+        this.api_com.get('/WSD/view/filing_next/filing/' + id, callback);
+    };
     //АРМ, Операция создать подачу (выгрузка)
     ids_wsd.prototype.postAddFilingUnloading = function (operation, callback) {
         this.api_com.post('/WSD/add/filing/operation/unloading/', operation, callback, callback);
@@ -212,9 +216,14 @@
     //ids_wsd.prototype.postUpdateFilingOperationProcessing = function (operation, callback) {
     //    this.api_com.post('/WSD/update/filing/operation/processing/', operation, callback, callback);
     //};
+
     //АРМ, Операция править подачу цех получатель
     ids_wsd.prototype.postUpdateFiling = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
+    };
+    //АРМ, Операция удалить(отмена) подачу или выбранные вагоны (админка, подача или вагоны закрыты)
+    ids_wsd.prototype.postDeleteFiling = function (operation, callback) {
+        this.api_com.post('/WSD/delete/filing/', operation, callback, callback);
     };
     //АРМ, Операция править дату подачи
     ids_wsd.prototype.postUpdateDateFiling = function (operation, callback) {
