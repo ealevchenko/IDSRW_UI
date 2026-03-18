@@ -335,6 +335,7 @@
             'tws_title_button_add_group': 'Добавить вагоны',
             'tws_title_button_clear_filing': 'Открыть подачу',
             'tws_title_button_clear_draft': 'Убрать черновик',
+            'tws_title_button_delete_filing': 'Удалить (Адм.)',
             'tws_title_button_collect_sostav': 'Собрать',
             'tws_title_button_title_collect_sostav': 'Собрать вагоны для предъявления по номерам вагонов...',
             'tws_title_button_del_wagons_sostav': 'Убрать из состава',
@@ -664,6 +665,7 @@
             'tws_title_button_add_group': 'Добавить вагоны',
             'tws_title_button_clear_filing': 'Открыть подачу',
             'tws_title_button_clear_draft': 'Убрать черновик',
+            'tws_title_button_delete_filing': 'Удалить (Адм.)',
             'tws_title_button_collect_sostav': 'Собрать',
             'tws_title_button_title_collect_sostav': 'Собрать вагоны для предъявления по номерам вагонов...',
             'tws_title_button_del_wagons_sostav': 'Убрать из состава',
@@ -3125,6 +3127,15 @@
                 attr: {
                     title: '',
                     id: 'clear-draft'
+                },
+            },
+            {
+                button: 'delete_filing',
+                text: langView('tws_title_button_delete_filing', App.Langs),
+                className: 'btn btn-danger',
+                attr: {
+                    title: '',
+                    id: 'delete-filing'
                 },
             },
             {
