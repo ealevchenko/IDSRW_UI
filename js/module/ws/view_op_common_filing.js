@@ -70,9 +70,10 @@
 
             'vopcf_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
             'vopcf_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
-            'vopcf_mess_add_filing': 'Переношу вагоны в существующую подачу.',
-            'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
-            'vopcf_mess_clear_draft': 'Удаляю черновик подачи.',
+            'vopcf_mess_add_filing': 'Переношу вагоны в существующую подачу...',
+            'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи...',
+            'vopcf_mess_clear_draft': 'Удаляю черновик подачи...',
+            'vopcf_mess_operation_delete_filing': 'Удаляю подачу и информацию по операциям вагонов подачи...',
 
             'vopcf_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для {0}',
             'vopcf_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
@@ -86,15 +87,17 @@
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
             'vopcf_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
             'vopcf_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
+            'vopcf_mess_run_operation_delete_filing': 'Выполняю операцию удаления вагонов и подачи.',
 
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
             'vopcf_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
 
-            'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
+            'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{0}].',
             'vopcf_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
             'vopcf_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
             'vopcf_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
+            'vopcf_mess_ok_operation_delete_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
 
             'vopcf_title_form_apply': 'Править подачу',
             'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
@@ -103,25 +106,37 @@
             'vopcf_mess_warning_wagon_ban_error_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статусов выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
+            'vopcf_mess_warning_ban_error_operation_delete': 'Админ-операция «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ [{0}]» - заблокирована, по вагонам подачи уже открыты следующие подачи',
+            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}} ',
+
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
-            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1} или рода вагона {2})',
             'vopcf_mess_warning_wagon_current_not_empty': 'Вагон № {0} для операций очистка заблокирован (несоответствие статуса {1})',
             'vopcf_mess_warning_wagon_ban_processing': 'Вагон № {0} для операций обработки заблокирован (предъявлен,незакрытая подача, незаконченая операция, операция не очистка)',
             'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
             'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
+            'vopcf_mess_warning_wagon_ban_add_uz_filing': 'Запрет! Операция добавления вагонов, по которым недопустима операция «Погрузка УЗ» в подачу, в которой уже открыта «Погрузка УЗ» - невозможна!',
 
             'vopcf_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
             'vopcf_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
             'vopcf_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
 
-            'vopcf_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
-            'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
+            'vopcf_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу.',
+            'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи.',
+            'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи".',
+            'vopcf_mess_cancel_operation_mode_operation_delete_filing': 'Отмена админ-операции «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ».',
 
             'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
+            //'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить операцию «УДАЛИТЬ ПОДАЧУ [{0}]». Внимание подача будет удалена, по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
+            'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить админ-операцию «УДАЛИТЬ',
+            'vopcf_confirm_mess_apply_operation_delete_filing1': ' ПОДАЧУ [{0}]».',
+            'vopcf_confirm_mess_apply_operation_delete_filing2': ' ВАГОНЫ ПОДАЧИ [{0}]».',
+            'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
+            'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
+            'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
 
         },
         'en':  //default language: English
@@ -179,9 +194,10 @@
 
             'vopcf_mess_create_filing': 'Формирую "черновик" подачи, переношу вагоны...',
             'vopcf_mess_create_filing_delete_wagon': 'Формирую "черновик" подачи, удаляю вагоны...',
-            'vopcf_mess_add_filing': 'Переношу вагоны в существующую подачу.',
-            'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи.',
-            'vopcf_mess_clear_draft': 'Удаляю черновик подачи.',
+            'vopcf_mess_add_filing': 'Переношу вагоны в существующую подачу...',
+            'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи...',
+            'vopcf_mess_clear_draft': 'Удаляю черновик подачи...',
+            'vopcf_mess_operation_delete_filing': 'Удаляю подачу и информацию по операциям вагонов подачи...',
 
             'vopcf_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для {0}',
             'vopcf_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
@@ -189,20 +205,23 @@
             'vopcf_mess_error_operation_run_add_filing': 'При создании подачи для {0} произошла ошибка, код ошибки: {1}',
             'vopcf_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
+            'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
 
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
             'vopcf_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
             'vopcf_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
+            'vopcf_mess_run_operation_delete_filing': 'Выполняю операцию удаления вагонов и подачи.',
 
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
             'vopcf_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
 
-            'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{1}].',
+            'vopcf_mess_ok_operation_update_filing': 'Обновлена информация в подаче [{0}].',
             'vopcf_mess_ok_operation_update_operation_filing': 'Обновлена операция по вагонам {0} шт. в подаче [{1}].',
             'vopcf_mess_ok_operation_add_wagon_filing': 'Вагоны в количестве {0} шт. добавлены в подачу [{1}].',
             'vopcf_mess_ok_operation_del_wagon_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
+            'vopcf_mess_ok_operation_delete_filing': 'Вагоны в количестве {0} шт. удалены из подачи [{1}].',
 
             'vopcf_title_form_apply': 'Править подачу',
             'vopcf_mess_warning_wagon_ban_select_status': 'Вагон № {0} для выбора заблокирован (статус вагона :[{1}], отличается от статуса выбранных ранее вагонов :[{2}])',
@@ -211,25 +230,38 @@
             'vopcf_mess_warning_wagon_ban_error_status': 'Вагон № {0} для выбора заблокирован (статус вагона отличается от статусов выбранных ранее вагонов!)',
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
+            'vopcf_mess_warning_ban_error_operation_delete': 'Админ-операция «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ [{0}]» - заблокирована, по вагонам подачи уже открыты следующие подачи',
+            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}} ',
+
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
             'vopcf_mess_warning_wagon_ban_filing_way': 'Вагон № {0} для операций заблокирован (вагон уже выбран для подачи)',
-            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1})',
+            'vopcf_mess_warning_wagon_current_load_busy': 'Вагон № {0} для операций погрузка заблокирован (несоответствие статуса {1} или рода вагона {2})',
             'vopcf_mess_warning_wagon_current_not_empty': 'Вагон № {0} для операций очистка заблокирован (несоответствие статуса {1})',
             'vopcf_mess_warning_wagon_ban_processing': 'Вагон № {0} для операций обработки заблокирован (предъявлен,незакрытая подача, незаконченая операция, операция не очистка)',
             'vopcf_mess_warning_wagon_current_unload_busy': 'Вагон № {0} для операций выгрузка заблокирован (несоответствие статуса {1} или нет даты получения документа {2})',
             'vopcf_mess_warning_wagon_ban_new_filing': 'Запрет! На пути :{0} не закрытая подача {1}. Операция создания новой - невозможна!',
             'vopcf_mess_warning_change_filing_ban': 'Смена подачи недопустима завершите операцию с "Черновиком"',
+            'vopcf_mess_warning_wagon_ban_add_uz_filing': 'Запрет! Операция добавления вагонов, по которым недопустима операция «Погрузка УЗ» в подачу, в которой уже открыта «Погрузка УЗ» - невозможна!',
 
             'vopcf_confirm_mess_apply_add_wagon_filing': 'Добавить {0} вагона(ов) в существующую подачу {1}.',
             'vopcf_confirm_mess_apply_delete_wagon_filing': 'Удалить {0} вагона(ов) из существующей подачи {1}.',
             'vopcf_confirm_mess_apply_delete_wagon_warning_close': ' ВНИМАНИЕ! подача будет закрыта автоматически (все вагоны в подаче имеют статус завершенной операции).',
 
-            'vopcf_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу для "ВЫГРУЗКИ ВАГОНОВ"',
-            'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи "ВЫГРУЗКИ ВАГОНОВ"',
-            'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи"',
+            'vopcf_mess_cancel_operation_mode_add_wagon': 'Отмена операции добавления вагонов в подачу.',
+            'vopcf_mess_cancel_operation_mode_delete_wagon': 'Отмена операции удаления вагонов из подачи.',
+            'vopcf_mess_cancel_operation_mode_clear_draft': 'Отмена операции "Удалить черновик подачи".',
+            'vopcf_mess_cancel_operation_mode_operation_delete_filing': 'Отмена админ-операции «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ».',
 
             'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
+            //'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить операцию «УДАЛИТЬ ПОДАЧУ [{0}]». Внимание подача будет удалена, по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
+            'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить админ-операцию «УДАЛИТЬ',
+            'vopcf_confirm_mess_apply_operation_delete_filing1': ' ПОДАЧУ [{0}]».',
+            'vopcf_confirm_mess_apply_operation_delete_filing2': ' ВАГОНЫ ПОДАЧИ [{0}]».',
+            'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
+            'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
+            'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
+
         }
     };
     // Определлим список текста для этого модуля
@@ -278,7 +310,8 @@
             fn_view_setup_filing: null,             // Отображение элементов окна правки и создания подачи и операции (в зависимости от операции)
             fn_validation: null,                    // Валидация правки подачи и операций над вагонами (в зависимости от операции)
             fn_apply_add_filing: null,              // Выполнить операцию создать подачу
-            fn_apply_update_filing: null,           // Выполнить операцию править подачу 
+            fn_apply_update_filing: null,           // Выполнить операцию править подачу
+            fn_apply_delete_filing: null,           // Выполнить операцию удалить подачу
             fn_apply_update_operation_filing: null, // Выполнить операцию открыть-закрыть операции над вагонами (+ админка)
             fn_apply_add_wagon_filing: null,        // Выполнить операцию добавить в подачу вагоны
             fn_apply_del_wagon_filing: null,        // Выполнить операцию убрать вагоны из подачи
@@ -772,6 +805,13 @@
                                 this["tlf_" + this.type_filing].tab_com.button_action(config.button, e, dt, node, config);
                             }.bind(this),
                             enabled: false
+                        },
+                        {
+                            name: 'delete_filing',
+                            action: function (e, dt, node, config) {
+                                this["tlf_" + this.type_filing].tab_com.button_action(config.button, e, dt, node, config);
+                            }.bind(this),
+                            enabled: false
                         }
                     ],
                     link_num: false,
@@ -807,7 +847,7 @@
                         this.doc_received_filing = null;// дата получения документа (изменяется при выборе подачи)
                         this.status_load = -1;
                         this.create_filing = null;
-                        this.close_filing = null;
+                        this.close_filing = null;       // Признак время закрытия подачи
                         this.fw_status = null; // сбросим статус выбора вагонов
                         var bts = this["tlf_" + this.type_filing].tab_com.obj_t_report.buttons([5]);
                         bts.disable();
@@ -886,8 +926,26 @@
                                 );
                             }
                         }
+                        if (name === 'delete_filing') {
+                            this.view_delete_filing(this.id_filing);
+                        }
                     }.bind(this),
                     fn_enable_button: function (tb) {
+                        var bts = tb.obj_t_report.buttons([6]);
+                        if (this.rAdm) {
+                            var data = tb.obj_t_report.rows({ selected: true }).data();
+                            if (data && data.length > 0) {
+                                //var close = data.filter(function (i) {
+                                //    return i.filingEnd !== null;
+                                //}.bind(this));
+                                //bts.enable((close !== undefined && close.length === 0) || this.rAdm); // отображение кнопки 
+                                bts.enable(this.rAdm);
+                            } else {
+                                bts.enable(false); // отображение кнопки 
+                            }
+                        } else {
+                            bts.enable(false);
+                        }
                     }.bind(this),
                 });
 
@@ -1024,7 +1082,9 @@
                                             e.preventDefault();
                                             this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_operation', App.Langs).format(rowData[0].num));
                                         } else {
-                                            if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus) {
+                                            if (rows[0].currentIdLoadingStatus !== rowData[0].currentIdLoadingStatus &&
+                                                (rows[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && rows[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean && rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean)
+                                            ) {
                                                 e.preventDefault();
                                                 this.filing_wagons_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_error_loading_status', App.Langs).format(rowData[0].num));
 
@@ -1082,12 +1142,8 @@
                             this.view_wagons_of_filing(this.id_filing, function () { LockScreenOff(); }.bind(this));
                         }
                         if (name === 'del_wagons_filing') {
-                            this.from_way_alert.clear_message();
-                            this.form_filing_setup.clear_all();
-                            this.form_filing_wagons_setup.clear_all();
-                            this.form_from_setup.clear_all();
+                            this.clear_all();
                             if (this.id_way_unload >= 0) {
-
                                 // Убрать
                                 var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                                 if (rows !== null && rows.length > 0) {
@@ -1113,40 +1169,55 @@
                                         LockScreenOff();
 
                                     } else {
-                                        // Подача
-                                        var buff = [];
-                                        $.each(this.filing_wagons, function (i, el) {
-                                            var res = rows.find(function (o) {
-                                                return o.idWim === el.idWim;
 
-                                            }.bind(this));
-                                            if (!res) { buff.push(el) };
-                                        }.bind(this));
-                                        // Сколько осталось открытых операций
-                                        var open = buff.filter(function (i) {
-                                            return i.filingEnd == null;
+                                        var close = rows.filter(function (i) {
+                                            return i.filingEnd !== null;
                                         }.bind(this))
-                                        // 
-                                        this.view_com.mcf_lg.open(
-                                            langView('vopcf_title_form_apply', App.Langs),
-                                            langView('vopcf_confirm_mess_apply_delete_wagon_filing', App.Langs).format(rows.length, this.id_filing) + (!open || open.length === 0 ? langView('vopcf_confirm_mess_apply_delete_wagon_warning_close', App.Langs) : ''),
-                                            function () {
-                                                // убрать вагоны из подачи
-                                                LockScreen(langView('vopcf_mess_del_filing', App.Langs));
-                                                var list_wagons = [];
+                                        // есть закрытые вагоны
+                                        if (close !== undefined && close.length > 0) {
+                                            if (this.rAdm) {
+                                                // Выполнить удаление вагонов из подачи (административными средствами)
+                                                var list_id = [];
                                                 $.each(rows, function (i, el) {
-                                                    list_wagons.push(el.idWim);
+                                                    list_id.push(el.idWim);
                                                 }.bind(this));
-                                                var operation = {
-                                                    id_filing: this.id_filing,
-                                                    wagons: list_wagons
-                                                };
-                                                this.apply_del_wagon_filing(operation);
-                                            }.bind(this),
-                                            function () {
-                                                this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_operation_mode_delete_wagon', App.Langs));
-                                            }.bind(this)
-                                        );
+                                                this.view_delete_filing(this.id_filing, list_id);
+                                            }
+                                        } else {
+                                            // Выполнить удаление вагонов из подачи (выбраны не закрытые операции)
+                                            var buff = [];
+                                            $.each(this.filing_wagons, function (i, el) {
+                                                var res = rows.find(function (o) {
+                                                    return o.idWim === el.idWim;
+                                                }.bind(this));
+                                                if (!res) { buff.push(el) };
+                                            }.bind(this));
+                                            // Сколько осталось открытых операций
+                                            var open = buff.filter(function (i) {
+                                                return i.filingEnd == null;
+                                            }.bind(this))
+                                            // 
+                                            this.view_com.mcf_lg.open(
+                                                langView('vopcf_title_form_apply', App.Langs),
+                                                langView('vopcf_confirm_mess_apply_delete_wagon_filing', App.Langs).format(rows.length, this.id_filing) + (!open || open.length === 0 ? langView('vopcf_confirm_mess_apply_delete_wagon_warning_close', App.Langs) : ''),
+                                                function () {
+                                                    // убрать вагоны из подачи
+                                                    LockScreen(langView('vopcf_mess_del_filing', App.Langs));
+                                                    var list_wagons = [];
+                                                    $.each(rows, function (i, el) {
+                                                        list_wagons.push(el.idWim);
+                                                    }.bind(this));
+                                                    var operation = {
+                                                        id_filing: this.id_filing,
+                                                        wagons: list_wagons
+                                                    };
+                                                    this.apply_del_wagon_filing(operation);
+                                                }.bind(this),
+                                                function () {
+                                                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_operation_mode_delete_wagon', App.Langs));
+                                                }.bind(this)
+                                            );
+                                        }
                                     }
                                 } else {
                                     this.from_way_alert.out_warning_message(langView('vopcf_mess_not_select_wagon_return', App.Langs));
@@ -1158,6 +1229,20 @@
                         }
                     }.bind(this),
                     fn_enable_button: function (tb) {
+                        var bts = tb.obj_t_report.buttons([7]);
+                        if (this.rRW || this.rAdm) {
+                            var data = tb.obj_t_report.rows({ selected: true }).data();
+                            if (data && data.length > 0) {
+                                var close = data.filter(function (i) {
+                                    return i.filingEnd !== null;
+                                }.bind(this));
+                                bts.enable((close !== undefined && close.length === 0) || this.rAdm); // отображение кнопки 
+                            } else {
+                                bts.enable(false); // отображение кнопки 
+                            }
+                        } else {
+                            bts.enable(false);
+                        }
 
                     }.bind(this),
                 });
@@ -1314,7 +1399,7 @@
                             }
                             if (this.type_filing === 2 && rowData[0].currentLoadBusy) {
                                 e.preventDefault();
-                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)]));
+                                this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_current_load_busy', App.Langs).format(rowData[0].num, rowData[0]['currentLoadingStatus' + ucFirst(App.Lang)], rowData[0]['wagonRodAbbr' + ucFirst(App.Lang)]));
                             }
                             if (this.type_filing === 3 &&
                                 (rowData[0].currentIdLoadingStatus !== App.wsd_setup.loading_status.empty &&
@@ -1360,37 +1445,51 @@
                                     // Добавить
                                     var rows = this["twwf_" + this.type_filing].tab_com.get_select_row();
                                     if (rows !== null && rows.length > 0) {
-                                        if (!this.id_filing) {
-                                            this.id_filing_old = null;
-                                            // Создать черновик
-                                            LockScreen(langView('vopcf_mess_create_filing', App.Langs));
-                                            // Выполнить операцию добавить вагоны
-                                            $.each(rows, function (i, el) {
-                                                el['id_wir_unload'] = el.wirId;
-                                            }.bind(this));
-                                            this.view_wagons(this.id_filing); // Обновить вагоны на пути приема
-                                            LockScreenOff();
-
-                                        } else {
-                                            this.view_com.mcf_lg.open(
-                                                langView('vopcf_title_form_apply', App.Langs),
-                                                langView('vopcf_confirm_mess_apply_add_wagon_filing', App.Langs).format(rows.length, this.id_filing),
-                                                function () {
-                                                    // Добавить вагоны в существующую подачу
-                                                    LockScreen(langView('vopcf_mess_add_filing', App.Langs));
-                                                    var list_wagons = [];
-                                                    $.each(rows, function (i, el) {
-                                                        list_wagons.push(el.wimId);
-                                                    }.bind(this));
-                                                    var operation = {
-                                                        id_filing: this.id_filing,
-                                                        wagons: list_wagons
-                                                    };
-                                                    this.apply_add_wagon_filing(operation);
-                                                }.bind(this),
-                                                function () {
-                                                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_operation_mode_add_wagon', App.Langs));
+                                        // Проверим. Исключим возможность добавить вагоны КМК вз в подачу с операцией погрузка уз
+                                        // Определим есть вагон с амкр
+                                        var amkr_vz = rows.find(function (o) {
+                                            return o.operatorGroup === 'amkr_vz';
+                                        }.bind(this));
+                                        var rows_all = this["tfw_" + this.type_filing].tab_com.obj_t_report.rows().data().toArray();    // Получим все вагоны в подаче
+                                        // Определим операции которые уже выбранны
+                                        var operation = rows_all.find(function (o) {
+                                            return o.currentIdOperation !== null;
+                                        }.bind(this));
+                                        if (!(amkr_vz !== undefined && operation !== undefined && operation.currentIdOperation == App.wsd_setup.operations.loading_uz)) {
+                                            if (!this.id_filing) {
+                                                this.id_filing_old = null;
+                                                // Создать черновик
+                                                LockScreen(langView('vopcf_mess_create_filing', App.Langs));
+                                                // Выполнить операцию добавить вагоны
+                                                $.each(rows, function (i, el) {
+                                                    el['id_wir_unload'] = el.wirId;
                                                 }.bind(this));
+                                                this.view_wagons(this.id_filing); // Обновить вагоны на пути приема
+                                                LockScreenOff();
+
+                                            } else {
+                                                this.view_com.mcf_lg.open(
+                                                    langView('vopcf_title_form_apply', App.Langs),
+                                                    langView('vopcf_confirm_mess_apply_add_wagon_filing', App.Langs).format(rows.length, this.id_filing),
+                                                    function () {
+                                                        // Добавить вагоны в существующую подачу
+                                                        LockScreen(langView('vopcf_mess_add_filing', App.Langs));
+                                                        var list_wagons = [];
+                                                        $.each(rows, function (i, el) {
+                                                            list_wagons.push(el.wimId);
+                                                        }.bind(this));
+                                                        var operation = {
+                                                            id_filing: this.id_filing,
+                                                            wagons: list_wagons
+                                                        };
+                                                        this.apply_add_wagon_filing(operation);
+                                                    }.bind(this),
+                                                    function () {
+                                                        this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_operation_mode_add_wagon', App.Langs));
+                                                    }.bind(this));
+                                            }
+                                        } else {
+                                            this.from_way_alert.out_warning_message(langView('vopcf_mess_warning_wagon_ban_add_uz_filing', App.Langs));
                                         }
                                     } else {
                                         this.from_way_alert.out_warning_message(langView('vopcf_mess_not_select_wagon_from', App.Langs));
@@ -1432,6 +1531,7 @@
             out_load(pr_load);
         }
     };
+    //
     view_op_common_filing.prototype.view = function (id_way, rAdm, rRW, rRO, rCorrect) {
         // Если указана станция выполним коррекцию по станции
         this.rAdm = rAdm;
@@ -1717,16 +1817,24 @@
 
                     } else {
                         st.countFilingWagons++;
-                        if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
+                        //if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
+                        //    st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        //}
+                        //if (el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) {
+                        //    st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
+                        //}
+                        //if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) {
+                        //    st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
+                        //}
+                        if (el.filingIdLoadingStatus === App.wsd_setup.loading_status.empty || el.filingIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
                             st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
                         }
-                        if (el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) {
+                        if (el.filingIdLoadingStatus !== App.wsd_setup.loading_status.empty && el.filingIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) {
                             st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
                         }
-                        if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) {
+                        if (el.filingIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || el.filingIdLoadingStatus !== App.wsd_setup.loading_status.empty) {
                             st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
                         }
-
                     }
                 }.bind(this));
                 this.wagons_filing = wagons;
@@ -1742,6 +1850,72 @@
             if (typeof callback === 'function') {
                 callback(this.wagons_filing);
             }
+        }
+    };
+
+    view_op_common_filing.prototype.view_delete_filing = function (id_filing, list_id) {
+        if (id_filing > 0 && this.rAdm) {
+            this.clear_all();
+            LockScreen(langView('vopcf_mess_load_filing_wagon', App.Langs));
+            this.view_com.api_wsd.GetViewNextFilingOfIdFiling(id_filing, function (result) {
+                if (result && result.length > 0) {
+                    // Запрет операции
+                    var list_next = result.filter(function (i) {
+                        return i.idFilingNext !== null;
+                    }.bind(this));
+                    // Проверим только на выбранные вагоны
+                    if (list_id) {
+                        list_next = list_next.filter(function (i) {
+                            return list_id.indexOf(i.idWim) !== -1;
+                        }.bind(this));
+                    }
+                    // Выведем на запрет
+                    if (list_next && list_next.length > 0) {
+                        var mess_error = langView('vopcf_mess_warning_ban_error_operation_delete', App.Langs).format(id_filing);
+                        $.each(list_next, function (i, el) {
+                            mess_error += langView('vopcf_mess_warning_ban_error_operation_delete1', App.Langs).format(el.num, el.idFilingNext);
+                        }.bind(this));
+                        this.form_filing_setup.validation_common_filing.out_warning_message(mess_error);
+                        LockScreenOff();
+                    } else {
+                        // Сформируем сообщение
+                        var mess = langView('vopcf_confirm_mess_apply_operation_delete_filing', App.Langs);
+                        if (list_id === undefined) {
+                            mess += langView('vopcf_confirm_mess_apply_operation_delete_filing1', App.Langs).format(id_filing);
+                        } else {
+                            mess += langView('vopcf_confirm_mess_apply_operation_delete_filing2', App.Langs).format(id_filing);
+                        }
+                        mess += langView('vopcf_confirm_mess_apply_operation_delete_filing3', App.Langs).format(result.length, list_id ? list_id.length : result.length);
+                        if (list_id === undefined) {
+                            mess += langView('vopcf_confirm_mess_apply_operation_delete_filing4', App.Langs);
+                        }
+                        mess += langView('vopcf_confirm_mess_apply_operation_delete_filing5', App.Langs);
+                        // Удалить операцию
+                        this.view_com.mcf_lg.open(
+                            langView('vopcf_title_form_apply', App.Langs),
+                            mess,
+                            function () {
+                                // Добавить вагоны в существующую подачу
+                                LockScreen(langView('vopcf_mess_operation_delete_filing', App.Langs));
+                                var list_wagons = [];
+                                $.each(result, function (i, el) {
+                                    list_wagons.push(el.idWim);
+                                }.bind(this));
+                                var operation = {
+                                    id_filing: id_filing,
+                                    wagons: list_id && list_id.length > 0 ? list_id : list_wagons
+                                };
+                                this.apply_delete_filing(operation);
+                                //LockScreenOff();
+                            }.bind(this),
+                            function () {
+                                this.form_filing_setup.validation_common_filing.out_warning_message(langView('vopcf_mess_cancel_operation_mode_operation_delete_filing', App.Langs));
+                            }.bind(this)
+                        );
+                        LockScreenOff();
+                    }
+                }
+            }.bind(this));
         }
     };
     // Показать все (сотавы, вагоны)
@@ -1816,14 +1990,14 @@
             if (id_filing > 0) {
                 this.filing_wagons = this.wagons_filing.filter(function (i) {
                     return i.idFiling === id_filing;
-                }.bind(this)).sort(function (a, b) { return a.position - b.position });
+                }.bind(this)).sort(function (a, b) { return a.idWim - b.idWim }); // idWim  return a.position - b.position
                 if (!this.filing_wagons || this.filing_wagons.length === 0) {
                     this.id_filing = null; this.id_filing_old = null;
                 }
             } else {
                 var wagons_filing_add = this.wagons.filter(function (i) {
                     return i.id_wir_unload !== null;
-                }).sort(function (a, b) { return a.position - b.position });
+                }).sort(function (a, b) { return a.wimId - b.wimId }); // wimId    .sort(function (a, b) { return a.position - b.position });
                 if (wagons_filing_add !== null && wagons_filing_add.length > 0) {
                     // Получим список вагонов
                     $.each(wagons_filing_add, function (key, el) {
@@ -1931,6 +2105,31 @@
                     LockScreenOff();
                 } else {
                     this.apply_update(result, langView('vopcf_mess_ok_operation_update_filing', App.Langs).format(this.id_filing));
+                }
+            }.bind(this));
+        }
+    };
+    // Выполнить операцию удалить подачу или вагоны из подачи
+    view_op_common_filing.prototype.apply_delete_filing = function (data) {
+        if (typeof this.settings.fn_apply_delete_filing === 'function') {
+            this.settings.fn_apply_delete_filing.call(this, data);
+        } else {
+            LockScreen(langView('vopcf_mess_run_operation_delete_filing', App.Langs));
+            this.view_com.api_wsd.postDeleteFiling(data, function (result) {
+                // Проверим на ошибку выполнения запроса api
+                if (result && result.status) {
+                    var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+                    console.log('[view_op_common_filing] [apply_delete_filing] :' + mess);
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+                    if (result.errors) {
+                        for (var err in result.errors) {
+                            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+                            console.log('[view_op_common_filing] [apply_delete_filingg] :' + err + ":" + result.errors[err]);
+                        }
+                    }
+                    LockScreenOff();
+                } else {
+                    this.apply_update(result, langView('vopcf_mess_ok_operation_delete_filing', App.Langs).format(result ? result.count : 0, this.id_filing));
                 }
             }.bind(this));
         }
@@ -2118,7 +2317,6 @@
         this.form_filing_setup.clear_all();
         this.form_filing_wagons_setup.clear_all();
         this.form_from_setup.clear_all();
-
     }
 
     //------------------------------- УДАЛЕНИЕ ОБЪЕКТОВ ---------------------------------------------
