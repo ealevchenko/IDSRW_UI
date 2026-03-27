@@ -316,6 +316,7 @@
             fn_apply_add_wagon_filing: null,        // Выполнить операцию добавить в подачу вагоны
             fn_apply_del_wagon_filing: null,        // Выполнить операцию убрать вагоны из подачи
             fn_apply_update_date_filing: null,      // Выполнить обновить дату начала или конца подачи
+            fn_apply_correct_filing: null,          // Выполнить коррекцию параметров подачи
             fn_apply_update: null,                  // Выполнить update таблиц после выполнения операций над вагонами или подачи
             fn_db_update: null,                     // Выполнить обновление баз данных если были изменения
             fn_close: null,                         // ? пока неработает
@@ -2251,7 +2252,29 @@
             //}.bind(this));
         }
     }
-
+    // Выполнить операцию коррекции параметров подачи
+    view_op_common_filing.prototype.apply_correct_filing = function (data) {
+        if (typeof this.settings.fn_apply_correct_filing === 'function') {
+            this.settings.fn_apply_correct_filing.call(this, data, function (result) {
+                // Проверим на ошибку выполнения запроса api
+                if (result && result.status) {
+                    var mess = langView('vopcf_mess_error_api', App.Langs).format(result.status, result.title);
+                    console.log('[view_op_common_filing] [apply_correct_filing] :' + mess);
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(mess);
+                    if (result.errors) {
+                        for (var err in result.errors) {
+                            this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(err + ":" + result.errors[err]);
+                            console.log('[view_op_common_filing] [apply_correct_filing] :' + err + ":" + result.errors[err]);
+                        }
+                    }
+                    LockScreenOff();
+                } else {
+                    this.apply_update(result, langView('vopcf_mess_ok_operation_update_date_filing', App.Langs).format(result.count));
+                }
+            }.bind(this));
+        } else {
+        }
+    }
     // Обновить информацию в таблицах или выввести ошибки после выполнения операций
     view_op_common_filing.prototype.apply_update = function (result, mess_ok, mess_err) {
         this.settings.view_com.update_wsd = 1;
