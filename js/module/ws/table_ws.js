@@ -2743,7 +2743,7 @@
             {
                 field: 'filing_internal_doc_num',
                 data: function (row, type, val, meta) {
-                    if (row.numFiling !== null) {
+                    if (row.numFiling && row.numFiling !== "") {
                         return row.numFiling;
                     } else {
                         return row.filingInternalDocNum;
