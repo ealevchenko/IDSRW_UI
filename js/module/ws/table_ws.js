@@ -4077,10 +4077,10 @@
         var collums = [];
         collums.push({ field: 'type_filing', title: null, class: null });
         collums.push({ field: 'status_filing', title: null, class: null });
-        collums.push({ field: 'doc_received_filing', title: null, class: null });
         //collums.push({ field: 'num_filing', title: null, class: null });
         //collums.push({ field: 'vesg_filing', title: null, class: null });
         collums.push({ field: 'id_wf', title: null, class: null });
+        collums.push({ field: 'doc_received_filing', title: null, class: null });
         collums.push({ field: 'filing_station_name', title: null, class: null });
         collums.push({ field: 'filing_park_abbr', title: null, class: null });
         collums.push({ field: 'filing_way_abbr', title: null, class: null });
@@ -5625,7 +5625,7 @@
                 //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 //this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [2, 'asc'];
+                this.tab_com.order_column = [2, 'desc'];
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
@@ -5659,7 +5659,7 @@
                 //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 //this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [2, 'asc'];
+                this.tab_com.order_column = [2, 'desc'];
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
@@ -5693,7 +5693,7 @@
                 //this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
                 //this.tab_com.leftColumns = 2;
                 this.tab_com.columnDefs = null;
-                this.tab_com.order_column = [2, 'asc'];
+                this.tab_com.order_column = [2, 'desc'];
                 this.tab_com.type_select_rows = 1; // Выбирать одну
                 this.tab_com.table_select = true;
                 this.tab_com.autoWidth = true;
