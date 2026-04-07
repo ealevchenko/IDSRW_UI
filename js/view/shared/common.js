@@ -170,6 +170,9 @@ var is_valid_num_wagon = function (num) {
     return false;
 };
 
+
+
+
 var get_result_select = function (value) {
     if (value === null) return value;
     if (!isNaN(Number(value))) {
@@ -2923,7 +2926,7 @@ var getHoursFromMinuts = function (minutes) {
             this.alist = get_alist(this.settings.data);
             this.$element.flexdatalist("data", this.alist);
             var ex_val = this.$element.flexdatalist("value");
-            if (value != ex_val) {
+            if ((ex_val === "" && value === 0) || value != ex_val) {
                 //this.$element.flexdatalist("value", value);
                 this.val(value);
             }
