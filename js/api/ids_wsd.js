@@ -210,7 +210,7 @@
     };
     //АРМ, Операция править подачу, админка (погрузка)
     ids_wsd.prototype.postCorrectFilingOperationLoading = function (operation, callback) {
-        this.api_com.post('/WSD/update/correct/filing/operation/loading/', operation, callback, callback);
+        this.api_com.post('/WSD/correct/filing/operation/loading/', operation, callback, callback);
     };
     //АРМ, Операция править подачу начать операцию, закончить операцию, админка (очистка)
     ids_wsd.prototype.postUpdateFilingOperationCleaning = function (operation, callback) {
