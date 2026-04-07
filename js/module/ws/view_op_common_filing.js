@@ -82,6 +82,7 @@
             'vopcf_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
             'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
+            'vopcf_mess_ok_operation_correct_filing': 'Коррекция информации по подаче выполнена, код выполнения {0}',
 
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
@@ -139,7 +140,7 @@
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
 
         },
-        'en':  //default language: English
+        'en':
         {
             'vopcf_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
@@ -206,6 +207,7 @@
             'vopcf_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
             'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
             'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
+            'vopcf_mess_ok_operation_correct_filing': 'Коррекция информации по подаче выполнена, код выполнения {0}',
 
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
@@ -2269,7 +2271,7 @@
                     }
                     LockScreenOff();
                 } else {
-                    this.apply_update(result, langView('vopcf_mess_ok_operation_update_date_filing', App.Langs).format(result.count));
+                    this.apply_update(result, langView('vopcf_mess_ok_operation_correct_filing', App.Langs).format(result.result));
                 }
             }.bind(this));
         } else {
