@@ -213,6 +213,9 @@
 
         operations: operations,
         loading_status: loading_status,
+        is_loading_empty: function (loading_status) {
+            return (loading_status === App.wsd_setup.loading_status.empty || loading_status === App.wsd_setup.loading_status.empty_clean);
+        },
         list_empty_group: [11, 16, 20],
     }
 
