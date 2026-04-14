@@ -212,6 +212,14 @@
     ids_wsd.prototype.postCorrectFilingOperationLoading = function (operation, callback) {
         this.api_com.post('/WSD/correct/filing/operation/loading/', operation, callback, callback);
     };
+    //АРМ, Операция править подачу, админка (выгрузка)
+    ids_wsd.prototype.postCorrectFilingOperationUnloading = function (operation, callback) {
+        this.api_com.post('/WSD/correct/filing/operation/unloading/', operation, callback, callback);
+    };
+    //АРМ, Операция править подачу, админка (очистка)
+    ids_wsd.prototype.postCorrectFilingOperationCleaning = function (operation, callback) {
+        this.api_com.post('/WSD/correct/filing/operation/cleaning/', operation, callback, callback);
+    };
     //АРМ, Операция править подачу начать операцию, закончить операцию, админка (очистка)
     ids_wsd.prototype.postUpdateFilingOperationCleaning = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/operation/cleaning/', operation, callback, callback);
