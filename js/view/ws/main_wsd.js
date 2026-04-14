@@ -825,16 +825,16 @@
                                     break;
                                 };
                                 case 'unloading': {
-                                    if (rOperRW || rOperCorrect || rRO) {
+                                    if (rAdmin || rOperRW || rOperCorrect || rRO) {
                                         if (App.wsd_setup.control_way_devision) {
                                             if (current_option_way !== null && current_option_way["id-devision"] > 0) {
-                                                vopunlc.view(current_id_way);
+                                                vopunlc.view(current_id_way, { rAdmin, rOperRW, rOperCorrect, rRO });
                                             } else {
                                                 main_alert.clear_message();
                                                 main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
                                             }
                                         } else {
-                                            vopunlc.view(current_id_way);
+                                            vopunlc.view(current_id_way, { rAdmin, rOperRW, rOperCorrect, rRO });
                                         }
                                     } else {
                                         LockScreenOff();
@@ -844,10 +844,10 @@
                                     break;
                                 };
                                 case 'loading': {
-                                    if (rOperRW || rOperCorrect || rRO) {
+                                    if (rAdmin || rOperRW || rOperCorrect || rRO) {
                                         if (App.wsd_setup.control_way_devision) {
                                             if (current_option_way !== null && current_option_way["id-devision"] > 0) {
-                                                voplc.view(current_id_way);
+                                                voplc.view(current_id_way, { rAdmin, rOperRW, rOperCorrect, rRO });
                                             } else {
                                                 main_alert.clear_message();
                                                 main_alert.out_warning_message(langView('mwsd_mess_war_not_way_devision', App.Langs));
