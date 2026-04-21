@@ -34,13 +34,11 @@
             'vopcf_title_type_filing_2': 'погрузки',
             'vopcf_title_type_filing_3': 'очистки',
             /*            'vopcf_title_type_filing_4': 'обработки',*/
-
             'vopcf_title_operation_type_filing_0': '',
             'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
             /*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
-
             'vopcf_title_label_period': 'Выборка за:',
             'vopcf_text_label_period': 'Выборка за указанный период',
             'vopcf_title_time_period_start': 'С даты',
@@ -146,14 +144,12 @@
             'vopcf_mess_cancel_operation_mode_operation_delete_filing': 'Отмена админ-операции «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ».',
 
             'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
-            //'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить операцию «УДАЛИТЬ ПОДАЧУ [{0}]». Внимание подача будет удалена, по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
             'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить админ-операцию «УДАЛИТЬ',
             'vopcf_confirm_mess_apply_operation_delete_filing1': ' ПОДАЧУ [{0}]».',
             'vopcf_confirm_mess_apply_operation_delete_filing2': ' ВАГОНЫ ПОДАЧИ [{0}]».',
             'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
             'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
-
         },
         'en':
         {
@@ -174,13 +170,11 @@
             'vopcf_title_type_filing_2': 'погрузки',
             'vopcf_title_type_filing_3': 'очистки',
             /*            'vopcf_title_type_filing_4': 'обработки',*/
-
             'vopcf_title_operation_type_filing_0': '',
             'vopcf_title_operation_type_filing_1': '"ВЫГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_2': '"ПОГРУЗКИ ВАГОНОВ"',
             'vopcf_title_operation_type_filing_3': '"ОЧИСТКА ВАГОНОВ"',
             /*            'vopcf_title_operation_type_filing_4': '"ОБРАБОТКА ВАГОНОВ"',*/
-
             'vopcf_title_label_period': 'Выборка за:',
             'vopcf_text_label_period': 'Выборка за указанный период',
             'vopcf_title_time_period_start': 'С даты',
@@ -191,6 +185,18 @@
 
             'vopcf_title_label_way_from': 'Путь {0}:',
             'vopcf_text_label_way_from': 'Выберите путь {0}...',
+
+            'vopcf_mess_error_time_aplly': 'Укажите дату',
+            'vopcf_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше или равна даты выполнения последней операции [{0}]',
+            'vopcf_mess_error_start_time_end': 'Дата начала выполнения операции не может быть больше или равна минимальной дате окончания операции в подаче [{0}] и длиться не менее [{1}] мин.',
+            'vopcf_confirm_mess_apply_update_date_start': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] начала операции!',
+            'vopcf_mess_cancel_update_date_start': 'Отмена правки даты начала операции!',
+            'vopcf_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции [{0}] и длиться не менее [{1}] мин.',
+            'vopcf_mess_error_stop_time_start': 'Дата окончания операции не может быть больше или равна минимальной дате начала следующей операции в подаче [{0}] и длиться не менее [{1}] мин.',
+            'vopcf_confirm_mess_apply_update_date_stop': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] окончания операции!',
+            'vopcf_mess_cancel_update_date_stop': 'Отмена правки даты окончания операции!',
+            'vopcf_confirm_mess_apply_update_devision_from': 'Править подачу {0}? В подаче будет изменен цех {1} на [{2}]!',
+            'vopcf_mess_cancel_update_devision_from': 'Отмена правки цеха {0}!',
 
             'vopcf_confirm_title': 'Внимание!',
             'vopcf_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
@@ -214,6 +220,7 @@
             'vopcf_mess_del_filing': 'Удаляю вагоны из существующей подачи...',
             'vopcf_mess_clear_draft': 'Удаляю черновик подачи...',
             'vopcf_mess_operation_delete_filing': 'Удаляю подачу и информацию по операциям вагонов подачи...',
+            'vopcf_mess_select': 'Выбираю...',
 
             'vopcf_mess_run_operation_add_filing': 'Выполняю операцию создать подачу для {0}',
             'vopcf_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
@@ -229,6 +236,8 @@
             'vopcf_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
             'vopcf_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
             'vopcf_mess_run_operation_delete_filing': 'Выполняю операцию удаления вагонов и подачи.',
+            'vopcf_mess_run_operation_update_date_filing': 'Выполняю операцию корректировки даты выполнения операции.',
+
 
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
@@ -271,14 +280,12 @@
             'vopcf_mess_cancel_operation_mode_operation_delete_filing': 'Отмена админ-операции «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ».',
 
             'vopcf_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
-            //'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить операцию «УДАЛИТЬ ПОДАЧУ [{0}]». Внимание подача будет удалена, по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
             'vopcf_confirm_mess_apply_operation_delete_filing': 'Выполнить админ-операцию «УДАЛИТЬ',
             'vopcf_confirm_mess_apply_operation_delete_filing1': ' ПОДАЧУ [{0}]».',
             'vopcf_confirm_mess_apply_operation_delete_filing2': ' ВАГОНЫ ПОДАЧИ [{0}]».',
             'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
             'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
-
         }
     };
     // Определлим список текста для этого модуля
@@ -2589,12 +2596,16 @@
                 }.bind(this));
             } else {
                 LockScreenOff();
-                this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_run_wagon_filing', App.Langs).format(result ? result.result : -1));
-                // Выведем ошибки по вагонно.
-                if (result && result.lResult) {
-                    $.each(result.lResult, function (i, el) {
-                        if (el.result <= 0) this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
-                    }.bind(this));
+                if (result && result.result < 0) {
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_run_wagon_filing', App.Langs).format(result ? result.result : -1));
+                    // Выведем ошибки по вагонно.
+                    if (result && result.lResult) {
+                        $.each(result.lResult, function (i, el) {
+                            if (el.result < 0) this.form_filing_wagons_setup.validation_common_filing_wagons.out_error_message(langView('vopcf_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                        }.bind(this));
+                    }
+                } else {
+
                 }
             }
         }
