@@ -24,8 +24,6 @@
             'voplc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
             'voplc_title_form_apply': 'Править подачу',
             'voplc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
-            //'voplc_title_form_delete': 'Удалить подачу',
-            //'voplc_title_form_delete_title': 'Выполнить операцию "УДАЛИТЬ ВАГОНОВ"',
             'voplc_title_form_operation_open': 'Открыть операцию',
             'voplc_title_form_operation_open_title': 'Открыть операцию по вагону(ам) в подаче.',
             'voplc_title_form_operation_close': 'Закрыть операцию',
@@ -154,7 +152,6 @@
             'voplc_mess_error_max_vesg_total': 'Указанный вес больше общей грузоподъемности {0}т. по всем вагонам.',
             'voplc_mess_error_time_aplly': 'Укажите дату',
             'voplc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше или равна даты выполнения последней операции [{0}]',
-            //'voplc_mess_error_start_time_end': 'Дата начала выполнения операции не может быть больше или равна минимальной дате окончания операции в подаче [{0}] и длиться не менее [{1}] мин.',
             'voplc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
             'voplc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voplc_mess_error_min_time_docum': 'Дата получения документа не может быть меньше текущей даты, отклонение {0} мин.',
@@ -168,6 +165,8 @@
             'voplc_mess_error_not_wagons_cargo_not_status': 'Выбранный груз несоответствует статусу.',
 
             'voplc_mess_warning_ban_edit_status': 'По выбранному вагону [{0}] запрет смены статуса, по вагону открыта следующая подача [{1}].',
+            'voplc_mess_warning_ban_edit_status_close_wir': 'Внимание! По выбранному вагону [{0}] закрыта строка внутреннего перемещения, вагон сдан на УЗ!',
+            'voplc_mess_warning_ban_edit_status_outgoing_car': 'Внимание! По выбранному вагону [{0}] открыта операция предъявления, вагон сдается на УЗ!',
 
             'voplc_mess_error_filing_station_on_amkr': 'Выберите станцию назначения',
             'voplc_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
@@ -176,25 +175,20 @@
             'voplc_mess_error_stop_time_aplly1': 'Дата окончания операции не может быть меньше или равна дате начала операции [{0}] и длиться не менее [{1}] мин.',
             'voplc_mess_error_stop_time_start': 'Дата окончания операции не может быть больше или равна минимальной дате начала следующей операции в подаче [{0}] и длиться не менее [{1}] мин.',
 
-
             'voplc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ПОГРУЗКИ ВАГОНОВ"!',
             'voplc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ПОГРУЗКИ ВАГОНОВ"!',
             'voplc_mess_cancel_operation_mode_2': 'Отмена операции начала "ПОГРУЗКИ" над вагонами подачи!',
             'voplc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ПОГРУЗКИ" над вагонами подачи!',
             'voplc_mess_cancel_operation_mode_4': 'Отмена правки информации по закрытым операциям "ПОГРУЗКИ"!',
             'voplc_mess_cancel_operation_mode_5': 'Отмена закрытия документа по закрытым операциям "ПОГРУЗКИ"!',
-            //'voplc_mess_cancel_update_date_start': 'Отмена правки даты начала операции!',
-            //'voplc_mess_cancel_update_date_stop': 'Отмена правки даты окончания операции!',
             'voplc_mess_cancel_correct_filing': 'Отмена правки подачи "ПОГРУЗКИ"!',
 
             'voplc_mess_load_operation': 'Загружаю операции...',
             'voplc_mess_load_filing_wagon': 'Загружаю вагоны подач...',
-            //'voplc_mess_select': 'Выбираю...',
             'voplc_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
             'voplc_confirm_title': 'Внимание!',
             'voplc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ПОГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для погрузки {4} ваг.',
-            //'voplc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, выбрано подразделение: {2}, определенна погрузка: {3}? Станция, подразделение и тип погрузки будут обновлены по всем вагонам подачи (!Внимание. При смене типа погрузки будет сброшен груз и станция УЗ.)',
             'voplc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, ',
             'voplc_confirm_mess_apply_update_filing1': 'выбрано новое подразделение: [{0}], ',
             'voplc_confirm_mess_apply_update_filing2': 'определенна новая погрузка: [{0}]? ',
@@ -209,9 +203,7 @@
             'voplc_confirm_mess_apply_update_filing_edit_document': 'Править документы в подаче {0}? Определено для правки {1} ваг. Внимание! Так как по вагонам указана дата получения документа, вагон для правки груза, станции назначения и цеха получателя будет закрыт. Если в подаче по всем вагонам закрыты операции и введена дата получения документа – подача будет закрыта!',
             'voplc_confirm_mess_apply_update_filing_close_document': 'Закрыть документ в подаче {0}? Определено для закрытия {1} ваг. Внимание! Так как по вагонам указана дата получения документа вагон для правки груза, станции назначения и цеха получателя будет закрыт. Если в подаче по всем вагонам закрыты операции и введена дата получения документа – подача будет закрыта!',
             'voplc_confirm_mess_apply_update_filing_close_total_document': 'Закрыть общий документ в подаче {0}? Определено для закрытия {1} ваг. Внимание! Указана общая для всех вагонов дата получения документа, общий вес и накладная, соответственно подача будет закрыта по всем вагонам!',
-            //'voplc_confirm_mess_apply_update_date_start': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] начала операции!',
             'voplc_confirm_mess_apply_update_date_stop': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] окончания операции!',
-
 
             'voplc_confirm_mess_apply_correct_mode_10': 'Править подачу {0}? Определен для правки "Общий документ". В подаче будет изменена дата получения общего документа [{1}]',
             'voplc_confirm_mess_apply_correct_mode1_10': ', № накладной [{0}] и общий вес подачи [{1}](т.)!',
@@ -231,7 +223,7 @@
             'voplc_confirm_mess_apply_correct_mode3_15': ', станция назначения УЗ [{0}]',
             'voplc_mess_run_operation_correct_filing': 'Выполняю админ-операцию корректировки подачи {0}',
         },
-        'en':
+        'en': //language: English
         {
             'voplc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "ПОГРУЗКА ВАГОНОВ"',
 
@@ -239,8 +231,6 @@
             'voplc_title_form_add_title': 'Создать новую "ПОДАЧА ВАГОНОВ"',
             'voplc_title_form_apply': 'Править подачу',
             'voplc_title_form_apply_title': 'Выполнить операцию "ПОДАЧА ВАГОНОВ"',
-            //'voplc_title_form_delete': 'Удалить подачу',
-            //'voplc_title_form_delete_title': 'Выполнить операцию "УДАЛИТЬ ВАГОНОВ"',
             'voplc_title_form_operation_open': 'Открыть операцию',
             'voplc_title_form_operation_open_title': 'Открыть операцию по вагону(ам) в подаче.',
             'voplc_title_form_operation_close': 'Закрыть операцию',
@@ -264,6 +254,8 @@
             'voplc_title_bt_save_station_uz': 'Обновить станцию назначения (УЗ) (только администратор).',
             'voplc_title_bt_edit_cargo_etsng': 'Править груз по ЕТСНГ (только администратор).',
             'voplc_title_bt_save_cargo_etsng': 'Обновить груз по ЕТСНГ (только администратор).',
+            'voplc_title_bt_edit_devision_from': 'Править цех получатель (только администратор).',
+            'voplc_title_bt_save_devision_from': 'Обновить цех получатель (только администратор).',
 
             'voplc_title_time_start': 'Время начала:',
             'voplc_text_time_start': 'Время начала операции ограниченно +(-)1день',
@@ -367,7 +359,6 @@
             'voplc_mess_error_max_vesg_total': 'Указанный вес больше общей грузоподъемности {0}т. по всем вагонам.',
             'voplc_mess_error_time_aplly': 'Укажите дату',
             'voplc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше или равна даты выполнения последней операции [{0}]',
-            //'voplc_mess_error_start_time_end': 'Дата начала выполнения операции не может быть больше или равна минимальной дате окончания операции в подаче [{0}] и длиться не менее [{1}] мин.',
             'voplc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
             'voplc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voplc_mess_error_min_time_docum': 'Дата получения документа не может быть меньше текущей даты, отклонение {0} мин.',
@@ -381,6 +372,8 @@
             'voplc_mess_error_not_wagons_cargo_not_status': 'Выбранный груз несоответствует статусу.',
 
             'voplc_mess_warning_ban_edit_status': 'По выбранному вагону [{0}] запрет смены статуса, по вагону открыта следующая подача [{1}].',
+            'voplc_mess_warning_ban_edit_status_close_wir': 'Внимание! По выбранному вагону [{0}] закрыта строка внутреннего перемещения, вагон сдан на УЗ!',
+            'voplc_mess_warning_ban_edit_status_outgoing_car': 'Внимание! По выбранному вагону [{0}] открыта операция предъявления, вагон сдается на УЗ!',
 
             'voplc_mess_error_filing_station_on_amkr': 'Выберите станцию назначения',
             'voplc_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
@@ -389,24 +382,20 @@
             'voplc_mess_error_stop_time_aplly1': 'Дата окончания операции не может быть меньше или равна дате начала операции [{0}] и длиться не менее [{1}] мин.',
             'voplc_mess_error_stop_time_start': 'Дата окончания операции не может быть больше или равна минимальной дате начала следующей операции в подаче [{0}] и длиться не менее [{1}] мин.',
 
-
             'voplc_mess_cancel_operation_mode_0': 'Отмена операции создать подачу для "ПОГРУЗКИ ВАГОНОВ"!',
             'voplc_mess_cancel_operation_mode_1': 'Отмена операции правки подачи "ПОГРУЗКИ ВАГОНОВ"!',
             'voplc_mess_cancel_operation_mode_2': 'Отмена операции начала "ПОГРУЗКИ" над вагонами подачи!',
             'voplc_mess_cancel_operation_mode_3': 'Отмена завершения операции "ПОГРУЗКИ" над вагонами подачи!',
             'voplc_mess_cancel_operation_mode_4': 'Отмена правки информации по закрытым операциям "ПОГРУЗКИ"!',
             'voplc_mess_cancel_operation_mode_5': 'Отмена закрытия документа по закрытым операциям "ПОГРУЗКИ"!',
-            //'voplc_mess_cancel_update_date_start': 'Отмена правки даты начала операции!',
-            //'voplc_mess_cancel_update_date_stop': 'Отмена правки даты окончания операции!',
             'voplc_mess_cancel_correct_filing': 'Отмена правки подачи "ПОГРУЗКИ"!',
 
             'voplc_mess_load_operation': 'Загружаю операции...',
-            //'voplc_mess_select': 'Выбираю...',
+            'voplc_mess_load_filing_wagon': 'Загружаю вагоны подач...',
             'voplc_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
             'voplc_confirm_title': 'Внимание!',
             'voplc_confirm_mess_apply_create_filing': 'Создать подачу для операции "ПОГРУЗКА ВАГОНОВ" на станции {0}, на пути {1}, в подразделении {2}? Определено для подачи {3} ваг., определено для погрузки {4} ваг.',
-            //'voplc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, выбрано подразделение: {2}, определенна погрузка: {3}? Станция, подразделение и тип погрузки будут обновлены по всем вагонам подачи (!Внимание. При смене типа погрузки будет сброшен груз и станция УЗ.)',
             'voplc_confirm_mess_apply_update_filing': 'Править подачу {0}, выбрана станция АМКР: {1}, ',
             'voplc_confirm_mess_apply_update_filing1': 'выбрано новое подразделение: [{0}], ',
             'voplc_confirm_mess_apply_update_filing2': 'определенна новая погрузка: [{0}]? ',
@@ -421,9 +410,7 @@
             'voplc_confirm_mess_apply_update_filing_edit_document': 'Править документы в подаче {0}? Определено для правки {1} ваг. Внимание! Так как по вагонам указана дата получения документа, вагон для правки груза, станции назначения и цеха получателя будет закрыт. Если в подаче по всем вагонам закрыты операции и введена дата получения документа – подача будет закрыта!',
             'voplc_confirm_mess_apply_update_filing_close_document': 'Закрыть документ в подаче {0}? Определено для закрытия {1} ваг. Внимание! Так как по вагонам указана дата получения документа вагон для правки груза, станции назначения и цеха получателя будет закрыт. Если в подаче по всем вагонам закрыты операции и введена дата получения документа – подача будет закрыта!',
             'voplc_confirm_mess_apply_update_filing_close_total_document': 'Закрыть общий документ в подаче {0}? Определено для закрытия {1} ваг. Внимание! Указана общая для всех вагонов дата получения документа, общий вес и накладная, соответственно подача будет закрыта по всем вагонам!',
-            //'voplc_confirm_mess_apply_update_date_start': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] начала операции!',
             'voplc_confirm_mess_apply_update_date_stop': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] окончания операции!',
-
 
             'voplc_confirm_mess_apply_correct_mode_10': 'Править подачу {0}? Определен для правки "Общий документ". В подаче будет изменена дата получения общего документа [{1}]',
             'voplc_confirm_mess_apply_correct_mode1_10': ', № накладной [{0}] и общий вес подачи [{1}](т.)!',
@@ -3046,9 +3033,17 @@
                                     var sel_wag = rows.find(function (o) {
                                         return o.num === el.num;
                                     }.bind(this));
-                                    if (sel_wag && el.idFilingNext !== null) {
-                                        e_status = false;
-                                        this.form_filing_setup.validation_common_filing.out_warning_message(langView('voplc_mess_warning_ban_edit_status', App.Langs).format(el.num, el.idFilingNext));
+                                    if (sel_wag) {
+                                        if (el.idFilingNext !== null) {
+                                            e_status = false;
+                                            this.filing_wagons_alert.out_warning_message(langView('voplc_mess_warning_ban_edit_status', App.Langs).format(el.num, el.idFilingNext));
+                                        } else {
+                                            if (el.wirClose !== null) {
+                                                this.filing_wagons_alert.out_warning_message(langView('voplc_mess_warning_ban_edit_status_close_wir', App.Langs).format(el.num));
+                                            } else if (el.idOutgoingCar !== null) {
+                                                this.filing_wagons_alert.out_warning_message(langView('voplc_mess_warning_ban_edit_status_outgoing_car', App.Langs).format(el.num));
+                                            }
+                                        }
                                     }
                                 }.bind(this));
                                 // Разрешение правки статуса
