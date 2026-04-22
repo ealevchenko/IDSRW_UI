@@ -2658,21 +2658,27 @@
                 // (будут добавлены новые поля текущий груз, тек цех пол, тек цех погр..)
                 // а пока предварительно эти с null
                 //-------------------------------------------------
+                currentWimcId: row.currentWimcId, // ID текущей строки груза 
                 internalDocNum: row.internalDocNum,
                 idWeighingNum: row.idWeighingNum,
                 moveCargoDocReceived: row.moveCargoDocReceived,
+                // Текущий груз (составной )
                 currentCargoIdGroup: row.currentCargoIdGroup,
-                currentCargoGroupNameRu: row.currentCargoGroupNameRu,
-                currentCargoGroupNameEn: row.currentCargoGroupNameEn,
                 currentCargoIdCargo: row.currentCargoIdCargo,
-                currentCargoNameRu: row.currentCargoNameRu,
-                currentCargoNameEn: row.currentCargoNameEn,
                 currentInternalCargoIdGroup: row.currentInternalCargoIdGroup,
-                currentInternalCargoGroupNameRu: row.currentInternalCargoGroupNameRu,
-                currentInternalCargoGroupNameEn: row.currentInternalCargoGroupNameEn,
                 currentInternalCargoIdInternalCargo: row.currentInternalCargoIdInternalCargo,
-                currentInternalCargoNameRu: row.currentInternalCargoNameRu,
-                currentInternalCargoNameEn: row.currentInternalCargoNameEn,
+                viewCurrentCargoNameRu: row.viewCurrentCargoNameRu,
+                viewCurrentCargoNameEn: row.viewCurrentCargoNameEn,
+                viewCurrentCargoGroupNameRu: row.viewCurrentCargoGroupNameRu,
+                viewCurrentCargoGroupNameEn: row.viewCurrentCargoGroupNameEn,
+                //currentCargoGroupNameRu: row.currentCargoGroupNameRu,
+                //currentCargoGroupNameEn: row.currentCargoGroupNameEn,
+                //currentCargoNameRu: row.currentCargoNameRu,
+                //currentCargoNameEn: row.currentCargoNameEn,
+                //currentInternalCargoGroupNameRu: row.currentInternalCargoGroupNameRu,
+                //currentInternalCargoGroupNameEn: row.currentInternalCargoGroupNameEn,
+                //currentInternalCargoNameRu: row.currentInternalCargoNameRu,
+                //currentInternalCargoNameEn: row.currentInternalCargoNameEn,
                 currentVesg: row.currentVesg,
                 idStationFromAmkr: row.idStationFromAmkr,
                 currentStationFromAmkrNameRu: row.currentStationFromAmkrNameRu,
@@ -2722,20 +2728,27 @@
                 filingOperationNameEn: row && row.filingOperationNameEn ? row.filingOperationNameEn : null,
                 filingOperationStart: row && row.filingOperationStart ? row.filingOperationStart : null,
                 filingOperationEnd: row && row.filingOperationEnd ? row.filingOperationEnd : null,
+
+                filingWimcId: row && row.filingWimcId ? row.filingWimcId : null,  // ID строки груза подачи
                 filingInternalDocNum: row && row.filingInternalDocNum ? row.filingInternalDocNum : null,
                 filingMoveCargoDocReceived: row && row.filingMoveCargoDocReceived ? row.filingMoveCargoDocReceived : null,
+
                 filingCargoIdGroup: row && row.filingCargoIdGroup ? row.filingCargoIdGroup : null,
-                filingCargoGroupNameRu: row && row.filingCargoGroupNameRu ? row.filingCargoGroupNameRu : null,
-                filingCargoGroupNameEn: row && row.filingCargoGroupNameEn ? row.filingCargoGroupNameEn : null,
                 filingCargoIdCargo: row && row.filingCargoIdCargo ? row.filingCargoIdCargo : null,
-                filingCargoNameRu: row && row.filingCargoNameRu ? row.filingCargoNameRu : null,
-                filingCargoNameEn: row && row.filingCargoNameEn ? row.filingCargoNameEn : null,
                 filingInternalCargoIdGroup: row && row.filingInternalCargoIdGroup ? row.filingInternalCargoIdGroup : null,
-                filingInternalCargoGroupNameRu: row && row.filingInternalCargoGroupNameRu ? row.filingInternalCargoGroupNameRu : null,
-                filingInternalCargoGroupNameEn: row && row.filingInternalCargoGroupNameEn ? row.filingInternalCargoGroupNameEn : null,
                 filingInternalCargoIdInternalCargo: row && row.filingInternalCargoIdInternalCargo ? row.filingInternalCargoIdInternalCargo : null,
-                filingInternalCargoNameRu: row && row.filingInternalCargoNameRu ? row.filingInternalCargoNameRu : null,
-                filingInternalCargoNameEn: row && row.filingInternalCargoNameEn ? row.filingInternalCargoNameEn : null,
+                viewFilingCargoNameRu: row && row.viewFilingCargoNameRu ? row.viewFilingCargoNameRu : null,
+                viewFilingCargoNameEn: row && row.viewFilingCargoNameEn ? row.viewFilingCargoNameEn : null,
+                viewFilingCargoGroupNameRu: row && row.viewFilingCargoGroupNameRu ? row.viewFilingCargoGroupNameRu : null,
+                viewFilingCargoGroupNameEn: row && row.viewFilingCargoGroupNameEn ? row.viewFilingCargoGroupNameEn : null,
+                //filingCargoGroupNameRu: row && row.filingCargoGroupNameRu ? row.filingCargoGroupNameRu : null,
+                //filingCargoGroupNameEn: row && row.filingCargoGroupNameEn ? row.filingCargoGroupNameEn : null,
+                //filingCargoNameRu: row && row.filingCargoNameRu ? row.filingCargoNameRu : null,
+                //filingCargoNameEn: row && row.filingCargoNameEn ? row.filingCargoNameEn : null,
+                //filingInternalCargoGroupNameRu: row && row.filingInternalCargoGroupNameRu ? row.filingInternalCargoGroupNameRu : null,
+                //filingInternalCargoGroupNameEn: row && row.filingInternalCargoGroupNameEn ? row.filingInternalCargoGroupNameEn : null,
+                //filingInternalCargoNameRu: row && row.filingInternalCargoNameRu ? row.filingInternalCargoNameRu : null,
+                //filingInternalCargoNameEn: row && row.filingInternalCargoNameEn ? row.filingInternalCargoNameEn : null,
                 filingVesg: row && row.filingVesg ? row.filingVesg : null,
                 filingIdStationFromAmkr: row && row.filingIdStationFromAmkr ? row.filingIdStationFromAmkr : null,
                 filingStationFromAmkrNameRu: row && row.filingStationFromAmkrNameRu ? row.filingStationFromAmkrNameRu : null,
@@ -2762,6 +2775,15 @@
                 filingDivisionOnNameEn: row && row.filingDivisionOnNameEn ? row.filingDivisionOnNameEn : null,
                 filingDivisionOnAbbrRu: row && row.filingDivisionOnAbbrRu ? row.filingDivisionOnAbbrRu : null,
                 filingDivisionOnAbbrEn: row && row.filingDivisionOnAbbrEn ? row.filingDivisionOnAbbrEn : null,
+                // Предыдущий груз
+                oldIdOperation: row && row.oldIdOperation ? row.oldIdOperation : null,
+                oldOperationNameRu: row && row.oldOperationNameRu ? row.oldOperationNameRu : null,
+                oldOperationNameEn: row && row.oldOperationNameEn ? row.oldOperationNameEn : null,
+                oldWimcId: row && row.oldWimcId ? row.oldWimcId : null,
+                oldCargoIdCargo: row && row.oldCargoIdCargo ? row.oldCargoIdCargo : null,
+                oldInternalCargoIdInternalCargo: row && row.oldInternalCargoIdInternalCargo ? row.oldInternalCargoIdInternalCargo : null,
+                viewOldCargoNameRu: row && row.viewOldCargoNameRu ? row.viewOldCargoNameRu : null,
+                viewOldCargoNameEn: row && row.viewOldCargoNameEn ? row.viewOldCargoNameEn : null,
                 //-------------------------------------------------
             };
         }
@@ -4579,14 +4601,17 @@
                             this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_load, rows[0].currentIdLoadingStatus);
                             this.form_filing_wagons_setup.el.datalist_code_station_uz.val(rows[0].codeExternalStation);
                             this.form_filing_wagons_setup.el.datalist_code_station_uz.$element_fl.removeClass(s_all);
-                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].filingCargoIdCargo);
+                            //this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].filingCargoIdCargo);
+                            this.form_filing_wagons_setup.el.datalist_cargo_etsng.update(this.list_cargo, rows[0].filingCargoIdCargo);
                             //this.form_filing_wagons_setup.el.datalist_cargo_etsng.val(rows[0].currentCargoIdCargo);
                             this.form_filing_wagons_setup.el.datalist_cargo_etsng.$element_fl.removeClass(s_all);
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.val(rows[0].idStationOnAmkr === null ? -1 : rows[0].idStationOnAmkr);
                             this.form_filing_wagons_setup.el.select_id_station_amkr_on.$element.removeClass(s_all);
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.val(rows[0].idDivisionOn);// id_division_on
                             this.form_filing_wagons_setup.el.datalist_id_devision_on.$element_fl.removeClass(s_all);
-                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].filingInternalCargoIdInternalCargo);
+                            //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo.filter(function (i) { return i.empty !== true }.bind(this)), rows[0].filingInternalCargoIdInternalCargo);
+                            this.form_filing_wagons_setup.el.datalist_id_internal_cargo.update(this.list_internal_cargo, rows[0].filingInternalCargoIdInternalCargo);
+
                             //this.form_filing_wagons_setup.el.datalist_id_internal_cargo.val(rows[0].currentInternalCargoIdInternalCargo);//current_internal_cargo_id_internal_cargo
                             this.form_filing_wagons_setup.el.datalist_id_internal_cargo.$element_fl.removeClass(s_all);
                         } else {

@@ -939,21 +939,27 @@
                 // (будут добавлены новые поля текущий груз, тек цех пол, тек цех погр..)
                 // а пока предварительно эти с null
                 //-------------------------------------------------
+                currentWimcId: row.currentWimcId, // ID текущей строки груза 
                 internalDocNum: row.internalDocNum,
                 idWeighingNum: row.idWeighingNum,
                 moveCargoDocReceived: row.moveCargoDocReceived,
+                // Текущий груз (составной )
                 currentCargoIdGroup: row.currentCargoIdGroup,
-                currentCargoGroupNameRu: row.currentCargoGroupNameRu,
-                currentCargoGroupNameEn: row.currentCargoGroupNameEn,
                 currentCargoIdCargo: row.currentCargoIdCargo,
-                currentCargoNameRu: row.currentCargoNameRu,
-                currentCargoNameEn: row.currentCargoNameEn,
                 currentInternalCargoIdGroup: row.currentInternalCargoIdGroup,
-                currentInternalCargoGroupNameRu: row.currentInternalCargoGroupNameRu,
-                currentInternalCargoGroupNameEn: row.currentInternalCargoGroupNameEn,
                 currentInternalCargoIdInternalCargo: row.currentInternalCargoIdInternalCargo,
-                currentInternalCargoNameRu: row.currentInternalCargoNameRu,
-                currentInternalCargoNameEn: row.currentInternalCargoNameEn,
+                viewCurrentCargoNameRu: row.viewCurrentCargoNameRu,
+                viewCurrentCargoNameEn: row.viewCurrentCargoNameEn,
+                viewCurrentCargoGroupNameRu: row.viewCurrentCargoGroupNameRu,
+                viewCurrentCargoGroupNameEn: row.viewCurrentCargoGroupNameEn,
+                //currentCargoGroupNameRu: row.currentCargoGroupNameRu,
+                //currentCargoGroupNameEn: row.currentCargoGroupNameEn,
+                //currentCargoNameRu: row.currentCargoNameRu,
+                //currentCargoNameEn: row.currentCargoNameEn,
+                //currentInternalCargoGroupNameRu: row.currentInternalCargoGroupNameRu,
+                //currentInternalCargoGroupNameEn: row.currentInternalCargoGroupNameEn,
+                //currentInternalCargoNameRu: row.currentInternalCargoNameRu,
+                //currentInternalCargoNameEn: row.currentInternalCargoNameEn,
                 currentVesg: row.currentVesg,
                 idStationFromAmkr: row.idStationFromAmkr,
                 currentStationFromAmkrNameRu: row.currentStationFromAmkrNameRu,
@@ -995,6 +1001,15 @@
                 //filingIdOrganizationService: row.filingIdOrganizationService,
                 //filingOrganizationServiceRu: row.filingOrganizationServiceRu,
                 //filingOrganizationServiceEn: row.filingOrganizationServiceEn,
+                // Предыдущий груз
+                oldIdOperation: row && row.oldIdOperation ? row.oldIdOperation : null,
+                oldOperationNameRu: row && row.oldOperationNameRu ? row.oldOperationNameRu : null,
+                oldOperationNameEn: row && row.oldOperationNameEn ? row.oldOperationNameEn : null,
+                oldWimcId: row && row.oldWimcId ? row.oldWimcId : null,
+                oldCargoIdCargo: row && row.oldCargoIdCargo ? row.oldCargoIdCargo : null,
+                oldInternalCargoIdInternalCargo: row && row.oldInternalCargoIdInternalCargo ? row.oldInternalCargoIdInternalCargo : null,
+                viewOldCargoNameRu: row && row.viewOldCargoNameRu ? row.viewOldCargoNameRu : null,
+                viewOldCargoNameEn: row && row.viewOldCargoNameEn ? row.viewOldCargoNameEn : null,
                 //-------------------------------------------------
             };
         }

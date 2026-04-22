@@ -213,14 +213,15 @@
             'tws_field_filing_end': 'Дата окончания выгрузки',
             'tws_field_current_cargo_group_name': 'Группа груза ТЕКУЩ',
             'tws_field_current_cargo_name': 'Груз ТЕКУЩ',
-            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',
-            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',
+/*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
+/*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
             'tws_field_filing_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
             'tws_field_filing_cargo_name': 'Груз ТЕКУЩ (подача)',
-            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
-            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',
+            'tws_field_old_cargo_name': 'Груз ПРЕД (подача)',
+/*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
+/*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
             'tws_field_current_common_cargo_name': 'Груз ТЕКУЩ',
-            'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
+            //'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
             'tws_field_filing_division_from_abbr': 'Цех погрузки ТЕКУЩ (подача)',
             'tws_field_current_division_on_abbr': 'Цех получатель ТЕКУЩ',
@@ -543,14 +544,15 @@
             'tws_field_filing_end': 'Дата окончания выгрузки',
             'tws_field_current_cargo_group_name': 'Группа груза ТЕКУЩ',
             'tws_field_current_cargo_name': 'Груз ТЕКУЩ',
-            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',
-            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',
+/*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
+/*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
             'tws_field_filing_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
             'tws_field_filing_cargo_name': 'Груз ТЕКУЩ (подача)',
-            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
-            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',
+            'tws_field_old_cargo_name': 'Груз ПРЕД (подача)',
+/*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
+/*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
             'tws_field_current_common_cargo_name': 'Груз ТЕКУЩ',
-            'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
+            //'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
             'tws_field_filing_division_from_abbr': 'Цех погрузки ТЕКУЩ (подача)',
             'tws_field_current_division_on_abbr': 'Цех получатель ТЕКУЩ',
@@ -2407,7 +2409,7 @@
             {
                 field: 'current_cargo_group_name',
                 data: function (row, type, val, meta) {
-                    return row['currentCargoGroupName' + ucFirst(App.Lang)];
+                    return row['viewCurrentCargoGroupName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2416,67 +2418,67 @@
             {
                 field: 'current_cargo_name',
                 data: function (row, type, val, meta) {
-                    return row['currentCargoName' + ucFirst(App.Lang)];
+                    return row['viewCurrentCargoName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Группа груза внутреняя 
-            {
-                field: 'current_internal_cargo_group_name',
-                data: function (row, type, val, meta) {
-                    return row['currentInternalCargoGroupName' + ucFirst(App.Lang)];
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_current_internal_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
+            //{
+            //    field: 'current_internal_cargo_group_name',
+            //    data: function (row, type, val, meta) {
+            //        return row['currentInternalCargoGroupName' + ucFirst(App.Lang)];
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_current_internal_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
             // Груз внутрений 
-            {
-                field: 'current_internal_cargo_name',
-                data: function (row, type, val, meta) {
-                    return row['currentInternalCargoName' + ucFirst(App.Lang)];
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_current_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
-            // Груз группа ТЕКУЩ
+            //{
+            //    field: 'current_internal_cargo_name',
+            //    data: function (row, type, val, meta) {
+            //        return row['currentInternalCargoName' + ucFirst(App.Lang)];
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_current_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
+            // Груз группа подачи
             {
                 field: 'filing_cargo_group_name',
                 data: function (row, type, val, meta) {
-                    return row['filingCargoGroupName' + ucFirst(App.Lang)];
+                    return row['viewFilingCargoGroupName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            // Груз ТЕКУЩ
+            // Груз подачи
             {
                 field: 'filing_cargo_name',
                 data: function (row, type, val, meta) {
-                    return row['filingCargoName' + ucFirst(App.Lang)];
+                    return row['viewFilingCargoName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // Группа груза внутреняя 
-            {
-                field: 'filing_internal_cargo_group_name',
-                data: function (row, type, val, meta) {
-                    return row['filingInternalCargoGroupName' + ucFirst(App.Lang)];
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_filing_internal_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
+            //{
+            //    field: 'filing_internal_cargo_group_name',
+            //    data: function (row, type, val, meta) {
+            //        return row['filingInternalCargoGroupName' + ucFirst(App.Lang)];
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_filing_internal_cargo_group_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
             // Груз внутрений 
-            {
-                field: 'filing_internal_cargo_name',
-                data: function (row, type, val, meta) {
-                    return row['filingInternalCargoName' + ucFirst(App.Lang)];
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_filing_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
+            //{
+            //    field: 'filing_internal_cargo_name',
+            //    data: function (row, type, val, meta) {
+            //        return row['filingInternalCargoName' + ucFirst(App.Lang)];
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_filing_internal_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
 
-            // Груз текущий (ЕТСНГ или внутрений) 
+            // Груз текущий (ЕТСНГ или внутрений) (! старое определение)
             {
                 field: 'current_common_cargo_name',
                 data: function (row, type, val, meta) {
@@ -2493,32 +2495,32 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
-            {
-                field: 'last_common_cargo_name',
-                data: function (row, type, val, meta) {
-                    if (row.currentCargoIdGroup !== null) {
-                        return row['currentCargoName' + ucFirst(App.Lang)];
-                    } else {
-                        return row['currentInternalCargoName' + ucFirst(App.Lang)];
-                    }
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
+            //{
+            //    field: 'last_common_cargo_name',
+            //    data: function (row, type, val, meta) {
+            //        if (row.currentCargoIdGroup !== null) {
+            //            return row['currentCargoName' + ucFirst(App.Lang)];
+            //        } else {
+            //            return row['currentInternalCargoName' + ucFirst(App.Lang)];
+            //        }
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_current_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
             //
             // Груз текущий (ЕТСНГ или внутрений) 
-            {
-                field: 'filing_common_cargo_name',
-                data: function (row, type, val, meta) {
-                    if (row.filingCargoIdGroup !== null) {
-                        return row['filingCargoName' + ucFirst(App.Lang)];
-                    } else {
-                        return row['filingInternalCargoName' + ucFirst(App.Lang)];
-                    }
-                },
-                className: 'dt-body-left shorten mw-100',
-                title: langView('tws_field_filing_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
-            },
+            //{
+            //    field: 'filing_common_cargo_name',
+            //    data: function (row, type, val, meta) {
+            //        if (row.filingCargoIdGroup !== null) {
+            //            return row['filingCargoName' + ucFirst(App.Lang)];
+            //        } else {
+            //            return row['filingInternalCargoName' + ucFirst(App.Lang)];
+            //        }
+            //    },
+            //    className: 'dt-body-left shorten mw-100',
+            //    title: langView('tws_field_filing_common_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
+            //},
             // текущий вес
             {
                 field: 'current_vesg',
@@ -2769,6 +2771,15 @@
                 },
                 className: 'dt-body-nowrap',
                 title: langView('tws_field_filing_move_cargo_doc_received', App.Langs), width: "50px", orderable: true, searchable: true
+            },
+            // Груз предыдущей подачи
+            {
+                field: 'old_cargo_name',
+                data: function (row, type, val, meta) {
+                    return row['viewOldCargoName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_old_cargo_name', App.Langs), width: "100px", orderable: true, searchable: true
             },
             // --- ViewWagonsFiling
             {
@@ -4139,56 +4150,27 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
         collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         collums.push({ field: 'current_internal_doc_num', title: null, class: null });
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_type', title: null, class: null });
-        //collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
-        collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        //collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
-        //collums.push({ field: 'arrival_cargo_name', title: null, class: null });
-        collums.push({ field: 'arrival_sertification_data', title: null, class: null });
-        //collums.push({ field: 'arrival_station_from_name', title: null, class: null });
-        //collums.push({ field: 'arrival_division_amkr_abbr', title: null, class: null });
-        //collums.push({ field: 'arrival_station_amkr_name', title: null, class: null });
-        collums.push({ field: 'current_loading_status', title: null, class: null });
-        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        collums.push({ field: 'current_division_from_abbr', title: null, class: null });
-        collums.push({ field: 'current_division_on_abbr', title: null, class: null });
-        collums.push({ field: 'current_external_station_on_name', title: null, class: null });
-        collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
-        /*        collums.push({ field: 'current_vesg', title: null, class: null });*/
-        collums.push({ field: 'current_operation_name', title: null, class: null });
-        //collums.push({ field: 'wir_note2', title: null, class: null });
-        //collums.push({ field: 'current_operation_start', title: null, class: null });
-        //collums.push({ field: 'current_operation_end', title: null, class: null });
-        // ... Груз и цех текущий
-        collums.push({ field: 'filing_start', title: null, class: null });
-        collums.push({ field: 'filing_end', title: null, class: null });
+        collums.push({ field: 'old_cargo_name', title: null, class: null });
+        collums.push({ field: 'filing_condition_abbr', title: null, class: null });
+        collums.push({ field: 'filing_loading_status', title: null, class: null });
+        collums.push({ field: 'filing_operation_name', title: null, class: null });
+        collums.push({ field: 'filing_operation_start', title: null, class: null });
+        collums.push({ field: 'filing_operation_end', title: null, class: null });
+        collums.push({ field: 'filing_cargo_name', title: null, class: null });
+        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
         collums.push({ field: 'create_user_filing', title: null, class: null });
-        // тестим
-        collums.push({ field: 'filing_condition_abbr', title: null, class: 'pink' });
-        collums.push({ field: 'filing_loading_status', title: null, class: 'pink' });
-        collums.push({ field: 'filing_operation_name', title: null, class: 'pink' });
-        collums.push({ field: 'filing_operation_start', title: null, class: 'pink' });
-        collums.push({ field: 'filing_operation_end', title: null, class: 'pink' });
-        collums.push({ field: 'filing_internal_doc_num', title: null, class: 'pink' });
-        collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: 'pink' });
-        collums.push({ field: 'filing_common_cargo_name', title: null, class: 'pink' }); // 31
-        //collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });
-        //collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });
-        collums.push({ field: 'filing_vesg', title: null, class: 'pink' });
-        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: 'pink' });
-        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: 'pink' });
-        collums.push({ field: 'filing_external_station_on_name', title: null, class: 'pink' });
-        collums.push({ field: 'filing_division_from_abbr', title: null, class: 'pink' });
-        collums.push({ field: 'filing_division_on_abbr', title: null, class: 'pink' });
-
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
     table_ws.prototype.init_columns_filing_wagons_2 = function () {
@@ -4203,39 +4185,20 @@
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
-        //collums.push({ field: 'internal_doc_num', title: null, class: null });
-        //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
-        //collums.push({ field: 'current_loading_status', title: null, class: null });
-        //collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        //collums.push({ field: 'current_division_from_abbr', title: null, class: null });
-        //collums.push({ field: 'current_division_on_abbr', title: null, class: null });
-        //collums.push({ field: 'current_external_station_on_name', title: null, class: null });
-        //collums.push({ field: 'current_station_from_amkr_abbr', title: null, class: null });
-        //collums.push({ field: 'current_station_on_amkr_abbr', title: null, class: null });
-        //collums.push({ field: 'current_vesg', title: null, class: null });
-        //collums.push({ field: 'wir_note2', title: null, class: null });
-        //collums.push({ field: 'current_operation_name', title: null, class: null });
-        //collums.push({ field: 'filing_start', title: langView('tws_field_filing_way_start_load', App.Langs), class: null });
-        //collums.push({ field: 'filing_end', title: langView('tws_field_filing_way_end_load', App.Langs), class: null });
-        //collums.push({ field: 'current_operation_start', title: null, class: null });
-        //collums.push({ field: 'current_operation_end', title: null, class: null });
-        collums.push({ field: 'filing_condition_abbr', title: null, class: null }); //pink 
-        collums.push({ field: 'filing_loading_status', title: null, class: null });//pink 
-        collums.push({ field: 'filing_operation_name', title: null, class: null });//pink 
-        collums.push({ field: 'filing_operation_start', title: null, class: null });//pink 
-        collums.push({ field: 'filing_operation_end', title: null, class: null });//pink 
-        collums.push({ field: 'filing_internal_doc_num', title: null, class: null });//pink 
-        collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: null });//pink 
-        collums.push({ field: 'filing_common_cargo_name', title: null, class: null });//pink 
-        //collums.push({ field: 'filing_cargo_name', title: null, class: 'pink' });//pink 
-        //collums.push({ field: 'filing_internal_cargo_name', title: null, class: 'pink' });//pink 
+        collums.push({ field: 'filing_condition_abbr', title: null, class: null });
+        collums.push({ field: 'filing_loading_status', title: null, class: null });
+        collums.push({ field: 'filing_operation_name', title: null, class: null });
+        collums.push({ field: 'filing_operation_start', title: null, class: null });
+        collums.push({ field: 'filing_operation_end', title: null, class: null });
+        collums.push({ field: 'filing_internal_doc_num', title: null, class: null });
+        collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: null });
+        collums.push({ field: 'filing_cargo_name', title: null, class: null });
         collums.push({ field: 'filing_vesg', title: null, class: null });
-        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });//pink 
-        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });//pink 
-        collums.push({ field: 'filing_external_station_on_name', title: null, class: null });//pink 
-        collums.push({ field: 'filing_division_from_abbr', title: null, class: null });//pink 
-        collums.push({ field: 'filing_division_on_abbr', title: null, class: null });//pink 
-        //
+        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
         collums.push({ field: 'create_user_filing', title: null, class: null });
         collums.push({ field: 'change_filing', title: null, class: null });
@@ -4250,16 +4213,13 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
+        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
-        //collums.push({ field: 'internal_doc_num', title: null, class: null });
-        //collums.push({ field: 'move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
-        collums.push({ field: 'current_common_cargo_name', title: null, class: null });
-        //collums.push({ field: 'wir_note2', title: null, class: null });
+        collums.push({ field: 'current_cargo_name', title: null, class: null });
         collums.push({ field: 'current_organization_service', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
     };
@@ -5759,7 +5719,7 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 2;
+                this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
                 this.tab_com.type_select_rows = 2; // Выбирать одну
@@ -5883,7 +5843,7 @@
                 this.tab_com.ordering = true;
                 this.tab_com.info = true;
                 this.tab_com.fixedHeader = true;            // вкл. фикс. заголовка
-                this.tab_com.leftColumns = 2;
+                this.tab_com.leftColumns = 3;
                 this.tab_com.columnDefs = null;
                 this.tab_com.order_column = [0, 'asc'];
                 this.tab_com.type_select_rows = 2; // Выбирать одну
