@@ -1847,15 +1847,6 @@
 
                     } else {
                         st.countFilingWagons++;
-                        //if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty || el.currentIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
-                        //    st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
-                        //}
-                        //if (el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty && el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty_clean) {
-                        //    st.countLoadingWagons += (el.filingEnd !== null ? 1 : 0);
-                        //}
-                        //if (el.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean || el.currentIdLoadingStatus !== App.wsd_setup.loading_status.empty) {
-                        //    st.countCleaningWagons += (el.filingEnd !== null ? 1 : 0);
-                        //}
                         if (el.filingIdLoadingStatus === App.wsd_setup.loading_status.empty || el.filingIdLoadingStatus === App.wsd_setup.loading_status.dirty) {
                             st.countUnloadingWagons += (el.filingEnd !== null ? 1 : 0);
                         }
