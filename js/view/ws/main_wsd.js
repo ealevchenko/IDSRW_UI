@@ -865,7 +865,7 @@
                                 };
                                 case 'cleaning': {
                                     if (rOperRW || rOperCorrect || rRO) {
-                                        vopclc.view(current_id_way);
+                                        vopclc.view(current_id_way, { rAdmin, rOperRW, rOperCorrect, rRO });
                                     } else {
                                         LockScreenOff();
                                         main_alert.clear_message();
