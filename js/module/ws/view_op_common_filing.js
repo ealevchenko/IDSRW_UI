@@ -60,7 +60,9 @@
             'vopcf_confirm_mess_apply_update_date_stop': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] окончания операции!',
             'vopcf_mess_cancel_update_date_stop': 'Отмена правки даты окончания операции!',
             'vopcf_confirm_mess_apply_update_devision_from': 'Править подачу {0}? В подаче будет изменен цех {1} на [{2}]!',
+            'vopcf_confirm_mess_apply_update_organization_service': 'Править подачу {0} {1}? В подаче будет изменена организация на [{2}]!',
             'vopcf_mess_cancel_update_devision_from': 'Отмена правки цеха {0}!',
+            'vopcf_mess_cancel_update_organization_service': 'Отмена правки организации {0}!',
 
             'vopcf_confirm_title': 'Внимание!',
             'vopcf_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
@@ -94,6 +96,8 @@
             'vopcf_mess_error_operation_run_wagon_filing': 'При выполнении операции с вагонами подачи, произошла ошибка, код ошибки: {0}',
             'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
             'vopcf_mess_ok_operation_correct_filing': 'Коррекция информации по подаче выполнена, код выполнения {0}',
+
+            'vopcf_mess_error_filing_organization_service': 'Выберите организацию выполняющую работу',
 
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
@@ -150,6 +154,7 @@
             'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
             'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
+
         },
         'en':
         {
@@ -2319,6 +2324,7 @@
                         doc_received: null,
                         mode: 9,
                         id_division: id_devision_from,
+                        id_organization_service: null,
                         wagons: null
                     };
                     // 
@@ -2330,7 +2336,47 @@
             );
         }
     }
-
+    //
+    view_op_common_filing.prototype.view_set_organization_service_edit = function () {
+        this.el_enable.call(this, this.form_filing_wagons_setup.el.select_id_organization_service, [this.rCorrect, this.rAdm]);
+        this.form_filing_wagons_setup.el.button_edit_organization_service.hide();
+        this.bt_show(this.form_filing_wagons_setup.el.button_save_organization_service, [this.rCorrect, this.rAdm]);
+    }
+    // Обновить организацию (погрузки\разгрузки\очистки)
+    view_op_common_filing.prototype.view_set_organization_service_save = function () {
+        this.clear_all();
+        var valid = true;
+        var id_organization_service = this.form_filing_wagons_setup.el.select_id_organization_service.val();
+        if (id_organization_service < 0) {
+            this.form_filing_wagons_setup.set_element_validation_error('id_organization_service', langView('vopcf_mess_error_filing_organization_service', App.Langs), false);
+            valid = false;
+        }
+        // выполнить операцию
+        if (valid) {
+            this.view_com.mcf_lg.open(
+                langView('vopcf_title_form_apply', App.Langs),
+                langView('vopcf_confirm_mess_apply_update_organization_service', App.Langs).format(langView('vopcf_title_type_filing_' + this.type_filing, App.Langs), this.id_filing, this.form_filing_wagons_setup.el.select_id_organization_service.text()),
+                function () {
+                    // Правим подачу
+                    var operation = {
+                        id_filing: this.id_filing,
+                        num_filing: null,
+                        vesg: null,
+                        doc_received: null,
+                        mode: 8,
+                        id_division: null,
+                        id_organization_service: id_organization_service,
+                        wagons: null
+                    };
+                    // 
+                    this.apply_correct_filing(operation);
+                }.bind(this),
+                function () {
+                    this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_update_organization_service', App.Langs).format(langView('vopcf_title_type_filing_' + this.type_filing, App.Langs)));
+                }.bind(this)
+            );
+        }
+    }
     //--------------------------------------------------------------------------------
     // Уточняющая валидация данных
     view_op_common_filing.prototype.validation = function (result, mode) {
