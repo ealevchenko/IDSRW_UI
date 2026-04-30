@@ -58,7 +58,7 @@
             'vopclc_title_button_add_filing': 'Добавить в подачу',
 
             'vopclc_mess_warning_ban_edit_status': 'По выбранному вагону [{0}] запрет смены статуса, по вагону открыта следующая подача [{1}].',
-            'vopclc_mess_warning_ban_edit_status1': 'По выбранном вагонам в кол [{0}] шт., запрет смены статуса, по вагонам разный предыдущий статус (порожний и грязный). Чистый-[{1}] шт., Порожний-[{2}] шт., Грязный-[{3}] шт., выберите вагоны с одинаковыми предыдущими статусами и смените статус!',
+            'vopclc_mess_warning_ban_edit_status1': 'Запрет смены статуса, по выбранном вагонам в кол [{0}] шт., определен разный предыдущий статус: чистый-[{1}] шт.; порожний-[{2}] шт.; грязный-[{3}] шт. Выберите один вагон или вагоны с одинаковым предыдущим статусом и смените статус!',
             'vopclc_mess_warning_ban_edit_status_close_wir': 'Внимание! По выбранному вагону [{0}] закрыта строка внутреннего перемещения, вагон сдан на УЗ!',
             'vopclc_mess_warning_ban_edit_status_outgoing_car': 'Внимание! По выбранному вагону [{0}] открыта операция предъявления, вагон сдается на УЗ!',
 
@@ -1211,8 +1211,8 @@
         }
         // Отображение элементов окна правки и создания подачи и операции (в зависимости от операции)
         var view_setup_filing = function (command) {
-            var s_reg = s_reg;
-            var s_not_reg = s_not_reg;
+            var s_reg = 'required-field';
+            var s_not_reg = 'not-required-field';
             var s_check = 'check-field';
             var s_valid = 'is-valid';
             var s_invalid = 'is-invalid';
@@ -1220,7 +1220,7 @@
 
             // Включить правку статуса
             var view_set_status_load_edit = function () {
-                if (this.rCorrect || this.rAdm) {
+                if ((this.close_filing === null && this.rRW) || this.rCorrect || this.rAdm) {
                     //var id_status_load = this.form_filing_wagons_setup.el.select_id_status_load.val();
                     var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
                     var e_status = true;
@@ -1258,16 +1258,15 @@
                                 var dirty = old_wio.filter(function (i) {
                                     return i.id_status_load === App.wsd_setup.loading_status.dirty;
                                 }.bind(this));
-                                if ((empty.length > 0 && dirty.length === 0) ||
-                                    (empty.length === 0 && dirty.length > 0)) {
-                                    this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(rows[0].filingIdOperation);
-                                    // Если нет вагонов со статусом грязный, тогда уберем статус грязный из списка.
+                                if (old_wio.length > 0 && get_is_equal(old_wio, 'id_status_load')) {
+                                    // Предыдущие статусы одинаковые (статус порожний чистый остается)
+                                    // Если нет вагонов с предыдущим статусом грязный, тогда уберем статус грязный из списка.
                                     if (dirty.length === 0) {
                                         this.list_status_cleaning = this.list_status_cleaning.filter(function (i) {
                                             return i.value !== App.wsd_setup.loading_status.dirty;
                                         }.bind(this));
                                     }
-                                    // Если нет вагонов со статусом порожний, тогда уберем статус порожний из списка.
+                                    // Если нет вагонов с предыдущим статусом порожний, тогда уберем статус порожний из списка.
                                     if (empty.length === 0) {
                                         this.list_status_cleaning = this.list_status_cleaning.filter(function (i) {
                                             return i.value !== App.wsd_setup.loading_status.empty;
@@ -1278,7 +1277,8 @@
                                     this.form_filing_wagons_setup.el.button_edit_status_load.hide();
                                     this.form_filing_wagons_setup.el.button_save_status_load.show();
                                 } else {
-                                    this.form_filing_setup.validation_common_filing.out_warning_message(langView('vopclc_mess_warning_ban_edit_status1', App.Langs).format(old_wio.length, (empty_clean ? empty_clean.length : 0), (empty ? empty.length : 0), (dirty ? dirty.length : 0)));
+                                    this.filing_wagons_alert.out_warning_message(langView('vopclc_mess_warning_ban_edit_status1', App.Langs).format(old_wio.length, (empty_clean ? empty_clean.length : 0), (empty ? empty.length : 0), (dirty ? dirty.length : 0)));
+
                                 }
                             }
                             LockScreenOff();
@@ -1364,19 +1364,17 @@
                 if (rows !== null && rows.length > 0) {
                     this.el_enable(this.form_filing_wagons_setup.el.input_datetime_time_start, roles);
                     this.el_enable(this.form_filing_wagons_setup.el.input_datetime_time_stop, roles);
-                    //this.form_filing_wagons_setup.el.input_datetime_time_start.enable();
-                    //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                     this.form_filing_wagons_setup.el.input_datetime_time_start.$element.removeClass(s_all).addClass(s_reg);
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass(s_not_reg);
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
                     this.el_enable(this.form_filing_wagons_setup.el.select_id_organization_service, roles);
-                    //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                 }
                 view_set_date_stop.call(this, false);
             }
             // Проверка на ввод даты окончания операции (режимы править или закрыть)
             var view_set_date_stop = function (isValid) {
                 var roles = [this.rRW, this.rAdm];
+                var rows = this["tfw_" + this.type_filing].tab_com.get_select_row(); // Получим выбранные вагоны в подаче
                 if (this.fw_status === 0 || this.fw_status === 1) {
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
@@ -1392,10 +1390,43 @@
                         this.form_filing_wagons_setup.el.select_id_status_load.$element.removeClass(s_all).addClass(s_reg);
                         this.el_enable(this.form_filing_wagons_setup.el.select_id_status_load, roles);
                         //this.form_filing_wagons_setup.el.select_id_status_load.enable();
+                        // скорректируем сисок статуса
+                        if (rows && rows.length > 0) {
+                            // Проверим статус погрзки должен быть одинаковый по всем вагонам
+                            var empty_clean = rows.filter(function (i) {
+                                return this.fw_status > 1 ? i.filingIdLoadingStatus === App.wsd_setup.loading_status.empty_clean : i.currentIdLoadingStatus === App.wsd_setup.loading_status.empty_clean;
+                            }.bind(this));
+                            var empty = rows.filter(function (i) {
+                                return this.fw_status > 1 ? i.filingIdLoadingStatus === App.wsd_setup.loading_status.empty : i.currentIdLoadingStatus === App.wsd_setup.loading_status.empty;
+                            }.bind(this));
+                            var dirty = rows.filter(function (i) {
+                                return this.fw_status > 1 ? i.filingIdLoadingStatus === App.wsd_setup.loading_status.dirty : i.currentIdLoadingStatus === App.wsd_setup.loading_status.dirty;
+                            }.bind(this));
+                            // скорректируем
+                            if ((empty_clean.length > 0 && ((empty.length > 0 || dirty.length > 0) || (empty.length === 0 && dirty.length === 0))) ||
+                                (empty_clean.length === 0) && ((empty.length > 0 && dirty.length > 0) || (empty.length === 0 && dirty.length === 0))
+                            ) {
+                                this.list_status_cleaning = this.list_status_cleaning.filter(function (i) {
+                                    return i.value === App.wsd_setup.loading_status.empty_clean;
+                                }.bind(this));
+                            } else if (empty_clean.length === 0) {
+                                if (empty.length > 0 && dirty.length === 0) {
+                                    this.list_status_cleaning = this.list_status_cleaning.filter(function (i) {
+                                        return i.value !== App.wsd_setup.loading_status.dirty;
+                                    }.bind(this));
+                                }
+                                if (empty.length === 0 && dirty.length > 0) {
+                                    this.list_status_cleaning = this.list_status_cleaning.filter(function (i) {
+                                        return i.value !== App.wsd_setup.loading_status.empty;
+                                    }.bind(this));
+                                }
+                            }
+                        }
+
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning);
                         if (this.id_filing !== 0) {
                             this.bt_show(this.form_filing_wagons_setup.el.button_operation_close, roles);
-                            /*                            this.form_filing_wagons_setup.el.button_operation_close.show();*/
+                            //this.form_filing_wagons_setup.el.button_operation_close.show();
                         }
                     } else {
                         //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
@@ -1417,9 +1448,6 @@
                                 this.bt_show(this.form_filing_wagons_setup.el.button_operation_apply, roles);
                             }
                         }
-                        //else {
-                        //    //this.form_filing_wagons_setup.el.button_operation_open.show();
-                        //}
                     }
                 }
             }
@@ -1428,10 +1456,16 @@
                 // (Админка) коррекция
                 if (this.fw_status === 2 || this.fw_status === 3) {
                     var roles = [this.rCorrect, this.rAdm];
-                    //var roles1 = [this.rRW, this.rCorrect, this.rAdm];
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, roles);
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, roles);
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, roles);
+                    var roles1 = [this.rRW, this.rCorrect, this.rAdm];
+                    if (this.close_filing === null) {
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, roles1);
+                        //this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, roles1);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, roles1);
+                    } else {
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, roles);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, roles);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, roles);
+                    }
                     //this.bt_show(this.form_filing_wagons_setup.el.button_edit_organization_service, roles);
                 }
             }
@@ -1492,7 +1526,9 @@
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
             if (rows_all && rows_all.length > 0) {
-                this.form_filing_wagons_setup.el.select_id_organization_service.val(rows_all[0].filingIdOrganizationService);
+                this.form_filing_wagons_setup.el.select_id_organization_service.val(rows_all[0].filingIdOrganizationService !== null ? rows_all[0].filingIdOrganizationService : this.default_organization_service);
+            } else {
+                this.form_filing_wagons_setup.el.select_id_organization_service.val(this.default_organization_service);
             }
             //this.form_filing_wagons_setup.el.select_id_organization_service.val(this.default_organization_service);
             this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
@@ -1501,6 +1537,8 @@
             this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();
             this.form_filing_wagons_setup.el.select_id_organization_service.disable();
             this.form_filing_wagons_setup.el.select_id_status_load.disable();
+
+            this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
 
             if (this.id_filing === 0) {
                 // черновик
@@ -1534,6 +1572,8 @@
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
                     this.form_filing_wagons_setup.el.button_operation_close.hide();
                 }
+                var start_date = get_min_element(rows_all, 'filingOperationStart'); // Определим минимальную границу 
+                var end_date = get_max_element(rows_all, 'filingOperationEnd'); // Определим минимальную границу 
                 this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
                 this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
                 if (this.close_filing === null) {
@@ -1568,14 +1608,13 @@
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_open.hide();
                         this.bt_show(this.form_filing_wagons_setup.el.button_operation_close, [this.rRW, this.rAdm]);
-                        //this.form_filing_wagons_setup.el.button_operation_close.show();
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, [this.rRW, this.rCorrect, this.rAdm]);
                         this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW]);
-                        /*                        this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();*/
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
-                        this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning)
-
+                        //this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning)
                         view_set_date_stop.call(this, true); // отобразить закрыть
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
                         //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                         /*                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].currentIdOrganizationService : this.default_organization_service); // Заменить на поле организации*/
                         break;
@@ -1591,24 +1630,28 @@
                             this.bt_show(this.form_filing_wagons_setup.el.button_operation_apply, [this.rRW, this.rAdm]);
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2', App.Langs));
                             this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass(s_reg);
-                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                            //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
                             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : moment());
                             this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass(s_reg);
                             this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW, this.rAdm]);
                             //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                             this.el_enable.call(this, this.form_filing_wagons_setup.el.select_id_organization_service, [this.rRW, this.rAdm]);
                             //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
-                            /*                            this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].filingIdOrganizationService : this.default_organization_service);*/
+                            //this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].filingIdOrganizationService : this.default_organization_service);
                         } else {
                             //this.form_filing_wagons_setup.el.select_id_organization_service.disable();
-                            view_set_correct.call(this);
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2_close', App.Langs));
-                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
-                            this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : -1);
-                            /*                            this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].filingIdOrganizationService : -1);*/
+                            //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
+                            //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
+                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : null);
+                            //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : -1);
+                            //this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].filingIdOrganizationService : -1);
                         }
+                        view_set_correct.call(this);
+                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
                         break;
                     }
                     case 3: {
@@ -1617,10 +1660,13 @@
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : null);
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : -1);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : -1);
+                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
                         //this.form_filing_wagons_setup.el.select_id_organization_service.disable();
                         //this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].filingIdOrganizationService : -1);
                         view_set_correct.call(this);
