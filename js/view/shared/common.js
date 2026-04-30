@@ -46,8 +46,6 @@ var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
 var url_web_main = "https://krr-app-paweb01.europe.mittalco.com/idsrw";
 var url_web_test = "https://krr-tst-padev02.europe.mittalco.com/idsrw";
 
-
-
 /* ----------------------------------------------------------
         Вывод текста согласно региональных настроек
 -------------------------------------------------------------*/
@@ -171,8 +169,6 @@ var is_valid_num_wagon = function (num) {
 };
 
 
-
-
 var get_result_select = function (value) {
     if (value === null) return value;
     if (!isNaN(Number(value))) {
@@ -204,7 +200,15 @@ var get_belongs_element = function (rows, name_field, id) {
     }
     return false;
 };
-
+// получить равны значения поля в списке
+var get_is_equal = function (rows, name_field) {
+    if (rows && rows.length > 0) {
+        return rows.every(function (el) {
+            return el[name_field] === rows[0][name_field];
+        }.bind(this));
+    }
+};
+//
 var getHoursFromMinuts = function (minutes) {
     if (minutes !== null) {
         if (minutes > 0) {
@@ -220,7 +224,6 @@ var getHoursFromMinuts = function (minutes) {
     } else {
         return null;
     }
-
 };
 
 
