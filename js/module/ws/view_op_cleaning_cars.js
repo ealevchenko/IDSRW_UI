@@ -1367,6 +1367,7 @@
                     this.form_filing_wagons_setup.el.input_datetime_time_start.$element.removeClass(s_all).addClass(s_reg);
                     this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass(s_not_reg);
                     this.form_filing_wagons_setup.el.input_datetime_time_start.val(moment());
+                    //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment().add(5, 'm'));
                     this.el_enable(this.form_filing_wagons_setup.el.select_id_organization_service, roles);
                 }
                 view_set_date_stop.call(this, false);
@@ -1531,14 +1532,15 @@
                 this.form_filing_wagons_setup.el.select_id_organization_service.val(this.default_organization_service);
             }
             //this.form_filing_wagons_setup.el.select_id_organization_service.val(this.default_organization_service);
-            this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
+            this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
+            this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, -1);
+            //this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.disable();
             this.form_filing_wagons_setup.el.input_datetime_time_stop.disable();
             this.form_filing_wagons_setup.el.select_id_organization_service.disable();
             this.form_filing_wagons_setup.el.select_id_status_load.disable();
 
-            this.list_status_cleaning = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
 
             if (this.id_filing === 0) {
                 // черновик
@@ -1560,7 +1562,7 @@
                 // Выбрана подача (покажем данные по подаче)
                 if (this.create_filing) {
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
-                    if (this.close_filing === null) this.bt_show(this.form_filing_wagons_setup.el.button_filing_apply, [this.rRW]); //this.form_filing_wagons_setup.el.button_filing_apply.show();
+                    if (this.close_filing === null) this.bt_show(this.form_filing_wagons_setup.el.button_filing_apply, [this.rRW, this.rAdm]);
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
                     this.form_filing_wagons_setup.el.button_operation_close.hide();
@@ -1572,10 +1574,13 @@
                     this.form_filing_wagons_setup.el.button_operation_open.hide();
                     this.form_filing_wagons_setup.el.button_operation_close.hide();
                 }
-                var start_date = get_min_element(rows_all, 'filingOperationStart'); // Определим минимальную границу 
-                var end_date = get_max_element(rows_all, 'filingOperationEnd'); // Определим минимальную границу 
-                this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
-                this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
+                //var start_date = get_min_element(rows_all, 'filingOperationStart'); // Определим минимальную границу 
+                //var end_date = get_max_element(rows_all, 'filingOperationEnd'); // Определим минимальную границу 
+                //this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
+                //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
+                //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.end_filing ? moment(this.end_filing) : (end_date ? moment(end_date) : null));
+                this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.start_filing ? moment(this.start_filing) : moment());
+                this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.end_filing ? moment(this.end_filing) : null);
                 if (this.close_filing === null) {
                     this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_filing', App.Langs));
                 } else {
@@ -1593,7 +1598,6 @@
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.bt_show(this.form_filing_wagons_setup.el.button_operation_open, [this.rRW, this.rAdm]);
-                        /*                        this.form_filing_wagons_setup.el.button_operation_open.show();*/
                         this.form_filing_wagons_setup.el.button_operation_close.hide();
                         view_setup_operation_open.call(this);
                         break;
@@ -1609,11 +1613,9 @@
                         this.form_filing_wagons_setup.el.button_operation_open.hide();
                         this.bt_show(this.form_filing_wagons_setup.el.button_operation_close, [this.rRW, this.rAdm]);
                         this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, [this.rRW, this.rCorrect, this.rAdm]);
-                        this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW]);
+                        this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW, this.rAdm]);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
-                        //this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_cleaning, this.default_status_cleaning)
                         view_set_date_stop.call(this, true); // отобразить закрыть
-                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
                         //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
                         /*                        this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].currentIdOrganizationService : this.default_organization_service); // Заменить на поле организации*/
@@ -1630,26 +1632,16 @@
                             this.bt_show(this.form_filing_wagons_setup.el.button_operation_apply, [this.rRW, this.rAdm]);
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2', App.Langs));
                             this.form_filing_wagons_setup.el.select_id_organization_service.$element.addClass(s_reg);
-                            //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
-                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : moment());
                             this.form_filing_wagons_setup.el.input_datetime_time_stop.$element.removeClass(s_all).addClass(s_reg);
                             this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW, this.rAdm]);
-                            //this.form_filing_wagons_setup.el.input_datetime_time_stop.enable();
                             this.el_enable.call(this, this.form_filing_wagons_setup.el.select_id_organization_service, [this.rRW, this.rAdm]);
-                            //this.form_filing_wagons_setup.el.select_id_organization_service.enable();
-                            //this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length > 0 ? rows[0].filingIdOrganizationService : this.default_organization_service);
                         } else {
-                            //this.form_filing_wagons_setup.el.select_id_organization_service.disable();
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
                             this.filing_wagons_alert_info.out_info_message(langView('vopclc_mess_info_wagon_mode_2_close', App.Langs));
-                            //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                            this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
-                            //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
-                            this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : null);
-                            //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : -1);
-                            //this.form_filing_wagons_setup.el.select_id_organization_service.val(rows && rows.length === 1 ? rows[0].filingIdOrganizationService : -1);
                         }
+                        //
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : this.close_filing === null ? moment() : null);
                         view_set_correct.call(this);
                         this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
                         break;

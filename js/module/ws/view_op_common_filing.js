@@ -378,6 +378,8 @@
 
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
+        this.start_filing = null;       // время начала подачи мин время операции (изменяется при выборе подачи)
+        this.end_filing = null;         // время окончания подачи макс время операции (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
 
         this.stations = [];             // Список станций (полный)
@@ -878,6 +880,9 @@
                         this.status_load = -1;
                         this.create_filing = null;
                         this.close_filing = null;       // Признак время закрытия подачи
+                        this.start_filing = null;       // время начала подачи мин время операции (изменяется при выборе подачи)
+                        this.end_filing = null;         // время окончания подачи макс время операции (изменяется при выборе подачи)
+
                         this.fw_status = null; // сбросим статус выбора вагонов
                         var bts = this["tlf_" + this.type_filing].tab_com.obj_t_report.buttons([5]);
                         bts.disable();
@@ -894,6 +899,8 @@
                                 this.id_way_filing = rows[0].filingIdWay;
                                 this.create_filing = rows[0].createFiling;
                                 this.close_filing = rows[0].closeFiling;
+                                this.start_filing = rows[0].startFiling;       // время начала подачи мин время операции (изменяется при выборе подачи)
+                                this.end_filing = rows[0].endFiling;       // время окончания подачи макс время операции (изменяется при выборе подачи)
                             }
 
                             var out_pr2 = function () {
@@ -1584,6 +1591,8 @@
         this.division_from = -1;          // подразделение подачи (изменяется при выборе подачи)
         this.create_filing = null;      // время создания подачи (изменяется при выборе подачи)
         this.close_filing = null;       // время закрытия подачи (изменяется при выборе подачи)
+        this.start_filing = null;       // время начала подачи мин время операции (изменяется при выборе подачи)
+        this.end_filing = null;       // время окончания подачи макс время операции (изменяется при выборе подачи)
         this.fw_status = null;          // Статус выбраноых вагонов в подаче (0-null, 1-начата, 2-закрыта, 3-закрыта и вагон уже нестоит)
         // Сбросим вагоны переноса
         this.id_station_unload = -1;
@@ -2154,10 +2163,10 @@
                 valid = false;
             }
             // Проверка на конец операции или начало следующей (если операция не окончена)
-            if (this.max_date_start !== null || end_date !== null) {
+            if (this.max_date_start !== null || (this.close_filing !== null && end_date !== null)) {
                 var next = moment(end_date ? end_date : this.max_date_start);
-                var minutes = aplly.diff(next, 'minutes');
-                if ((minutes + App.wsd_setup.load_period_min) > 0) {
+                var minutes = next.diff(aplly, 'minutes');
+                if (minutes <= App.wsd_setup.load_period_min) {
                     this.form_filing_wagons_setup.set_element_validation_error('time_start', langView('vopcf_mess_error_start_time_end', App.Langs).format(next.format(format_datetime_ru), App.wsd_setup.load_period_min), false);
                     valid = false;
                 }

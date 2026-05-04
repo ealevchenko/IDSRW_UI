@@ -1537,10 +1537,18 @@
             var view_set_correct = function () {
                 // (Админка) коррекция
                 if (this.fw_status === 2 || this.fw_status === 3) {
-                    var roles = [this.rRW, this.rAdm];
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, [this.rRW, this.rCorrect, this.rAdm]);
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, [this.rCorrect, this.rAdm]);
-                    this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, [this.rCorrect, this.rAdm]);
+                    var roles = [this.rCorrect, this.rAdm];
+                    var roles1 = [this.rRW, this.rCorrect, this.rAdm];
+                    if (this.close_filing === null) {
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, roles1);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, roles1);
+                        //this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, roles1);
+                    } else {
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, roles);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_stop, roles);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_status_load, roles);
+                    }
+
                 }
             }
 
@@ -1600,7 +1608,11 @@
             this.form_filing_wagons_setup.el.input_datetime_time_start.val(null);
             this.form_filing_wagons_setup.el.input_datetime_time_stop.val(null);
             this.form_filing_wagons_setup.el.datalist_id_devision_from.val(-1);
-            this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
+            //var id_operation = this.get_operation_of_status_load(rows[0].filingIdLoadingStatus);
+            //this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(id_operation);
+            this.list_status_unload = this.view_com.api_dir.getListValueTextWagonLoadingStatusOfWagonOperation(this.settings.wagon_operation);
+            this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_unload, -1)
+            //this.form_filing_wagons_setup.el.select_id_status_load.val(-1);
             this.form_filing_wagons_setup.el.select_id_station_amkr_from.val(-1);
 
             this.form_filing_wagons_setup.el.input_datetime_time_start.disable();
@@ -1608,6 +1620,7 @@
             this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
             this.form_filing_wagons_setup.el.select_id_status_load.disable();
             this.form_filing_wagons_setup.el.select_id_station_amkr_from.disable();
+
 
             if (this.id_filing === 0) {
                 // черновик
@@ -1628,17 +1641,17 @@
                 if (this.create_filing) {
                     this.form_filing_wagons_setup.el.button_filing_add.hide();
                     //if ((this.close_filing === null && this.rRW) || (this.rAdm || this.rCorrect)) { this.bt_show(this.form_filing_wagons_setup.el.button_filing_apply, [this.rRW, this.rAdm, this.rCorrect]); }
-                    if (this.close_filing === null) {
-                        this.bt_show(this.form_filing_wagons_setup.el.button_filing_apply, [this.rRW]);
-                    }
+                    if (this.close_filing === null) this.bt_show(this.form_filing_wagons_setup.el.button_filing_apply, [this.rRW]);
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                 } else {
                     this.bt_show(this.form_filing_wagons_setup.el.button_filing_add, [this.rRW, this.rAdm]);
                     this.form_filing_wagons_setup.el.button_filing_apply.hide();
                     this.form_filing_wagons_setup.el.button_operation_apply.hide();
                 }
-                this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
-                this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
+                //this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.create_filing ? moment(this.create_filing) : moment());
+                //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.create_filing ? moment(this.close_filing) : null);
+                this.form_filing_wagons_setup.el.input_datetime_time_start.val(this.start_filing ? moment(this.start_filing) : moment());
+                this.form_filing_wagons_setup.el.input_datetime_time_stop.val(this.end_filing ? moment(this.end_filing) : null);
 
                 if (this.close_filing === null) {
                     this.el_enable.call(this, this.form_filing_wagons_setup.el.datalist_id_devision_from, [this.rRW]);
@@ -1677,13 +1690,15 @@
                         this.form_filing_wagons_setup.el.button_filing_add.hide();
                         this.form_filing_wagons_setup.el.button_filing_apply.hide();
                         this.bt_show(this.form_filing_wagons_setup.el.button_operation_apply, [this.rRW, this.rAdm]);
+
                         this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
                         //this.el_enable.call(this, this.form_filing_wagons_setup.el.input_datetime_time_stop, [this.rRW, this.rAdm]);
                         //this.el_enable.call(this, this.form_filing_wagons_setup.el.select_id_status_load, [this.rRW, this.rAdm]);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(moment());
                         this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_unload, this.default_status_unload)
                         view_set_date_stop.call(this, true); // отобразить закрыть
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].currentOperationStart) : null);
+                        this.bt_show(this.form_filing_wagons_setup.el.button_edit_date_start, [this.rRW, this.rCorrect, this.rAdm]);
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
                         break;
                     }
                     case 2: {
@@ -1697,6 +1712,7 @@
                         //if (this.close_filing !== null) {
                         //    view_set_correct.call(this);
                         //}
+                        view_set_correct.call(this);
                         if (this.close_filing === null) {
                             //this.form_filing_wagons_setup.el.select_id_status_load.enable();
                             this.el_enable.call(this, this.form_filing_wagons_setup.el.select_id_status_load, [this.rRW, this.rAdm]);
@@ -1704,15 +1720,18 @@
                             this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_2', App.Langs));
 
                         } else {
-                            view_set_correct.call(this);
+                            //view_set_correct.call(this);
                             this.form_filing_wagons_setup.el.select_id_status_load.disable();
                             this.form_filing_wagons_setup.el.button_operation_apply.hide();
                             this.filing_wagons_alert_info.out_info_message(langView('vopulc_mess_info_wagon_mode_2_close', App.Langs));
                         }
                         this.form_filing_wagons_setup.el.select_id_station_amkr_from.disable();
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : this.default_status_unload);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : this.close_filing === null ? moment() : null);
+                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : this.default_status_unload);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : this.default_status_unload);
                         break;
                     }
                     case 3: {
@@ -1725,9 +1744,12 @@
                         this.form_filing_wagons_setup.el.button_operation_apply.hide();
                         this.form_filing_wagons_setup.el.datalist_id_devision_from.disable();
                         this.form_filing_wagons_setup.el.select_id_status_load.disable();
-                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
-                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : this.default_status_unload);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length === 1 ? moment(rows[0].filingOperationStart) : null);
+                        //this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length === 1 ? moment(rows[0].filingOperationEnd) : null);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : this.default_status_unload);
+                        this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
+                        this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : null);
+                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
                         view_set_correct.call(this);
                         break;
                     }
