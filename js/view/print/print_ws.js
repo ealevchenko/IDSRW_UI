@@ -610,7 +610,7 @@
                     }
                     $('body').append('<h2 style="text-align:center;">' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</h2>');
                     $('body').append('<p style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title1', App.Langs).format(station_name, moment().format(format_datetime_ru)) + '</p>');
-                    $('body').append('<p class="weight" style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title2', App.Langs).format(way_name) + '</p>');
+                    $('body').append('<p class="max weight" style="text-align:center;">' + langView('prn_ws_title_view_ws_statement_title2', App.Langs).format(way_name) + '</p>');
                     $('body').append('<br />');
                     if (type === 1) {
                         table_statement1($('body'), wagons);
