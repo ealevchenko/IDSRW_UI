@@ -77,16 +77,27 @@ table {
 
     table thead {
         display: table-header-group;
-/*        page-break-inside: avoid;
+        /*        page-break-inside: avoid;
         page-break-after: auto;*/
     }
 
     table tfoot {
         display: table-footer-group;
-/*        page-break-inside: avoid;
+        /*        page-break-inside: avoid;
         page-break-after: auto;*/
     }
 
+.fz-14 {
+    font-size: 14px !important;
+}
+
+.fz-15 {
+    font-size: 15px !important;
+}
+
+.fz-16 {
+    font-size: 16px !important;
+}
 
 .table-title {
     /*max-width: 200mm;*/
@@ -109,6 +120,10 @@ table {
         padding-left: 2px;
     }
 
+        .table-title td.fz-14 {
+            /*border: 1px solid #000000;*/
+            font-size: 14px;
+        }
 
 .table-info {
     /*max-width: 200mm;*/

@@ -574,9 +574,9 @@
                 //
                 var $tr = $('<tr></tr>');
                 $tr.append('<td>' + wagons[iw].position + '</td>');
-                $tr.append('<td>' + wagons[iw].num + '</td>');
+                $tr.append('<td class="fz-16">' + wagons[iw].num + '</td>');
                 $tr.append('<td>' + wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)] + '</td>');
-                $tr.append('<td>' + wagons[iw].wagonAdm + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].wagonAdm) + '</td>');
                 $tr.append('<td>' + wagons[iw]['operatorAbbr' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] + '</td>');
                 $tr.append('<td>' + wagons[iw]['currentLoadingStatus' + ucFirst(App.Lang)] + '</td>');
