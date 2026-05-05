@@ -60,6 +60,9 @@
                 if (report === 'ws_statement2') {
                     prnws.view_ws_statement(2, format, id);
                 }
+                if (report === 'ws_statement3') {
+                    prnws.view_ws_statement(3, format, id);
+                }
             }
         }.bind(this);
         // Инициализация модуля "print_arr"

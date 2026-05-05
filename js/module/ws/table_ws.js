@@ -345,6 +345,7 @@
             'tws_title_button_move_wagons': 'Перенести на путь',
             'tws_title_button_statement1': 'Ведомость1',
             'tws_title_button_statement2': 'Ведомость2',
+            'tws_title_button_statement3': 'Ведомость3',
         },
         'en':  //default language: English
         {
@@ -674,6 +675,7 @@
             'tws_title_button_move_wagons': 'Перенести на путь',
             'tws_title_button_statement1': 'Ведомость1',
             'tws_title_button_statement2': 'Ведомость2',
+            'tws_title_button_statement3': 'Ведомость3',
         }
     };
     // Определлим список текста для этого модуля
@@ -3177,6 +3179,11 @@
             {
                 button: 'statement2',
                 text: langView('tws_title_button_statement2', App.Langs),
+                className: 'btn btn-secondary'
+            },
+            {
+                button: 'statement3',
+                text: langView('tws_title_button_statement3', App.Langs),
                 className: 'btn btn-secondary'
             },
         ];

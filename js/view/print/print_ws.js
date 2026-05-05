@@ -130,6 +130,14 @@
         }
     }
 
+    var getSpace = function (n) {
+        var res = "";
+        for (var i = 0; i < n; i++) {
+            res += "&nbsp;"
+        }
+        return res
+    }
+
     function print_ws() {
 
     }
@@ -399,7 +407,7 @@
                 $tr.append('<td>' + OutText(curr_cargo) + '</td>');
                 $tr.append('<td>' + OutText(ext_station) + '</td>');
                 $tr.append('<td>' + (wagons[iw].existLoadDocument ? langView('prn_ws_title_yes', App.Langs) : '') + '</td>');
-                $tr.append('<td>' + (wagons[iw].endPreviousFiling===null ? OutText(wagons[iw].idPreviousFiling) : '') + '</td>');
+                $tr.append('<td>' + (wagons[iw].endPreviousFiling === null ? OutText(wagons[iw].idPreviousFiling) : '') + '</td>');
                 $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
                 $tbody.append($tr);
             }
@@ -518,6 +526,83 @@
             $body.append($table_gr);
 
         }
+
+        var table_statement3 = function ($body, wagons) {
+            var $table = $('<table class="table-info"></table>');
+            var $thead = $('<thead></thead>');
+            var $tr = $('<tr></tr>');
+            $tr.append('<th scope="col">№</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_num_wagon', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_rod', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_adm', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_operator', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_curr_condition', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_status', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_curr_cargo', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_curr_uz_station', App.Langs) + '</th>');
+            $tr.append('<th scope="col">' + langView('prn_ws_table_title_note2', App.Langs) + '</th>');
+            $tr.append('<th scope="col"></th>');
+
+            $table.append($thead.append($tr));
+            var $tbody = $('<tbody></tbody>');
+            for (var iw = 0; iw < wagons.length; iw++) {
+                var curr_cargo = '';
+                var ext_station = '';
+                //curr_cargo
+                if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
+                    if (wagons[iw].currentCargoIdGroup !== null) {
+                        curr_cargo = wagons[iw]['currentCargoName' + ucFirst(App.Lang)];
+                    } else {
+                        curr_cargo = wagons[iw]['currentInternalCargoName' + ucFirst(App.Lang)];
+                    }
+                } else {
+                    curr_cargo = wagons[iw]['arrivalCargoName' + ucFirst(App.Lang)];;
+                }
+                //ext_station
+                if (wagons[iw].currentIdLoadingStatus !== 0 && wagons[iw].currentIdLoadingStatus !== 3 && wagons[iw].currentIdLoadingStatus !== 8) {
+                    if (wagons[iw].moveCargoCreate !== null && wagons[iw].moveCargoClose === null) {
+                        ext_station = wagons[iw]['currentExternalStationOnName' + ucFirst(App.Lang)];
+                    } else {
+                        ext_station = wagons[iw]['arrivalStationFromName' + ucFirst(App.Lang)];;
+                    }
+                };
+                // группировка элементов
+                var oe = operations.find(function (o) {
+                    return o.id == wagons[iw].idOperator
+                }.bind(this));
+                if (!oe) { operations.push({ id: wagons[iw].idOperator, text: wagons[iw]['operatorAbbr' + ucFirst(App.Lang)], count: 1 }) } else { oe.count += 1; }
+                //
+                var $tr = $('<tr></tr>');
+                $tr.append('<td>' + wagons[iw].position + '</td>');
+                $tr.append('<td>' + wagons[iw].num + '</td>');
+                $tr.append('<td>' + wagons[iw]['wagonRodAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw].wagonAdm + '</td>');
+                $tr.append('<td>' + wagons[iw]['operatorAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['currentConditionAbbr' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + wagons[iw]['currentLoadingStatus' + ucFirst(App.Lang)] + '</td>');
+                $tr.append('<td>' + OutText(curr_cargo) + '</td>');
+                $tr.append('<td>' + OutText(ext_station) + '</td>');
+                $tr.append('<td>' + OutText(wagons[iw].wirNote2) + '</td>');
+                $tr.append('<td>' + getSpace(30) +'</td>');
+                $tbody.append($tr);
+            }
+            $table.append($tbody);
+            $body.append($table);
+            $body.append('<br />');
+            var $table_gr = $('<table class=""></table>');
+            var $tbody_gr = $('<tbody></tbody>');
+            var $tr_th = $('<tr></tr>');
+            $tr_th.append('<th colspan="2">Итого по оператору</th>');
+            $tbody_gr.append($tr_th)
+            for (var ig = 0; ig < operations.length; ig++) {
+                var $tr_gr = $('<tr></tr>');
+                $tr_gr.append('<td>' + operations[ig].text +  '</td>');
+                $tr_gr.append('<td class="total">' + operations[ig].count + '</td>');
+                $table_gr.append($tbody_gr.append($tr_gr));
+            }
+            $body.append($table_gr);
+
+        }
         var pr_load = 2;
 
         var out_load = function (pr_load) {
@@ -525,7 +610,7 @@
                 if (wagons && wagons.length > 0) {
                     LockScreen(langView('prn_ws_mess_load_print', App.Langs));
                     $('head').prepend('<title>' + langView('prn_ws_title_view_ws_statement', App.Langs) + '</title>');
-/*                    $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');*/
+                    /*                    $('head').append('<link rel="stylesheet" type="text/css" href="../../../idsrw_ui/css/module/print/print.css">');*/
                     if (format == 'A4') {
                         $('body').addClass('a4');
                     }
@@ -541,6 +626,9 @@
                     }
                     if (type === 2) {
                         table_statement2($('body'), wagons);
+                    }
+                    if (type === 3) {
+                        table_statement3($('body'), wagons);
                     }
                 }
                 LockScreenOff();

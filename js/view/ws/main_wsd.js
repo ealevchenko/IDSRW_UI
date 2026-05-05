@@ -1180,6 +1180,13 @@
                             tws.tab_com.button_action(config.button, e, dt, node, config);
                         }.bind(this),
                         enabled: false
+                    },
+                    {
+                        name: 'statement3',
+                        action: function (e, dt, node, config) {
+                            tws.tab_com.button_action(config.button, e, dt, node, config);
+                        }.bind(this),
+                        enabled: false
                     }
                 ],
                 fn_init: function () {
@@ -1213,6 +1220,11 @@
                     if (name === 'statement2') {
                         if (current_id_way !== null) {
                             window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
+                        }
+                    }
+                    if (name === 'statement3') {
+                        if (current_id_way !== null) {
+                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement3&format=A4&id=" + current_id_way, "Print");
                         }
                     }
                 }.bind(this),
