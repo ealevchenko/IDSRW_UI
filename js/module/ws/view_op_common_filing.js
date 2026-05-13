@@ -106,7 +106,6 @@
             'vopcf_mess_run_operation_delete_filing': 'Выполняю операцию удаления вагонов и подачи.',
             'vopcf_mess_run_operation_update_date_filing': 'Выполняю операцию корректировки даты выполнения операции.',
 
-
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
             'vopcf_mess_not_select_wagon_return': 'Выберите вагоны которые нужно убрать из подачи!',
@@ -154,9 +153,8 @@
             'vopcf_confirm_mess_apply_operation_delete_filing3': ' Определено вагонов в подаче [{0}], будет удален(о) [{1}] вагон(ов). Внимание',
             'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
-
         },
-        'en':
+        'en':  // language: en
         {
             'vopcf_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
@@ -201,7 +199,9 @@
             'vopcf_confirm_mess_apply_update_date_stop': 'Править подачу {0}? Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменена дата [{2}] окончания операции!',
             'vopcf_mess_cancel_update_date_stop': 'Отмена правки даты окончания операции!',
             'vopcf_confirm_mess_apply_update_devision_from': 'Править подачу {0}? В подаче будет изменен цех {1} на [{2}]!',
+            'vopcf_confirm_mess_apply_update_organization_service': 'Править подачу {0} {1}? В подаче будет изменена организация на [{2}]!',
             'vopcf_mess_cancel_update_devision_from': 'Отмена правки цеха {0}!',
+            'vopcf_mess_cancel_update_organization_service': 'Отмена правки организации {0}!',
 
             'vopcf_confirm_title': 'Внимание!',
             'vopcf_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны для подачи в количестве {1} будут сброшены! ',
@@ -236,13 +236,14 @@
             'vopcf_mess_ok_operation_update_date_filing': 'Время в подаче обновленно, код выполнения {0}',
             'vopcf_mess_ok_operation_correct_filing': 'Коррекция информации по подаче выполнена, код выполнения {0}',
 
+            'vopcf_mess_error_filing_organization_service': 'Выберите организацию выполняющую работу',
+
             'vopcf_mess_run_operation_update_filing': 'Выполняю операцию править подачу {0}',
             'vopcf_mess_run_operation_update_operation_filing': 'Выполняю операцию править операции {0} в подаче.',
             'vopcf_mess_run_operation_add_wagon_filing': 'Выполняю операцию добавить вагон(ы) в подачу.',
             'vopcf_mess_run_operation_del_wagon_filing': 'Выполняю операцию убрать вагон(ы) из подачи.',
             'vopcf_mess_run_operation_delete_filing': 'Выполняю операцию удаления вагонов и подачи.',
             'vopcf_mess_run_operation_update_date_filing': 'Выполняю операцию корректировки даты выполнения операции.',
-
 
             'vopcf_mess_not_select_wagon_from': 'Выберите вагоны для формирования подачи!',
             'vopcf_mess_not_select_way_from': 'Выберите путь с которого будет сформирована подача!',
