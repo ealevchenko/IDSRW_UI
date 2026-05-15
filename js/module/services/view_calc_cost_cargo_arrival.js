@@ -1051,7 +1051,7 @@
                             nameStnFrom: document.codeStnFromNavigation ? document.codeStnFromNavigation['stationName' + ucFirst(App.Lang)] : null,
                             nameStnTo: document.codeStnToNavigation ? document.codeStnToNavigation['stationName' + ucFirst(App.Lang)] : null,
                             arrivalCargoName: el.idCargoNavigation['cargoName' + ucFirst(App.Lang)],
-                            arrivalOperatorAbbr: el.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)],
+                            arrivalOperatorAbbr: el.idWagonsRentArrivalNavigation.idOperatorNavigation !== null ? el.idWagonsRentArrivalNavigation.idOperatorNavigation['abbr' + ucFirst(App.Lang)] : null,
                             toDivisionAbbr: el.idDivisionOnAmkrNavigation['divisionAbbr' + ucFirst(App.Lang)],
                             payerSenderCode: document.codePayerSenderNavigation ? document.codePayerSenderNavigation.code : null,
                             payerSenderName: document.codePayerSenderNavigation ? document.codePayerSenderNavigation['payerName' + ucFirst(App.Lang)] : null,
