@@ -237,7 +237,6 @@
         this.cfiling = new VIEW_CFILING();
         this.access = {};
     }
-
     // инициализация модуля
     view_op_unloading_cars.prototype.init = function (options) {
         this.result_init = true;
@@ -1399,8 +1398,11 @@
                 filingCargoIdCargo: row && row.filingCargoIdCargo ? row.filingCargoIdCargo : null,
                 filingInternalCargoIdGroup: row && row.filingInternalCargoIdGroup ? row.filingInternalCargoIdGroup : null,
                 filingInternalCargoIdInternalCargo: row && row.filingInternalCargoIdInternalCargo ? row.filingInternalCargoIdInternalCargo : null,
-                viewFilingCargoNameRu: row && row.viewFilingCargoNameRu ? row.viewFilingCargoNameRu : null,
-                viewFilingCargoNameEn: row && row.viewFilingCargoNameEn ? row.viewFilingCargoNameEn : null,
+
+                //viewFilingCargoNameRu: row && row.viewFilingCargoNameRu ? row.viewFilingCargoNameRu : null,
+                //viewFilingCargoNameEn: row && row.viewFilingCargoNameEn ? row.viewFilingCargoNameEn : null,
+                viewFilingCargoNameRu: row && row.viewCurrentCargoNameRu ? row.viewCurrentCargoNameRu : null,
+                viewFilingCargoNameEn: row && row.viewCurrentCargoNameEn ? row.viewCurrentCargoNameEn : null,
                 viewFilingCargoGroupNameRu: row && row.viewFilingCargoGroupNameRu ? row.viewFilingCargoGroupNameRu : null,
                 viewFilingCargoGroupNameEn: row && row.viewFilingCargoGroupNameEn ? row.viewFilingCargoGroupNameEn : null,
                 //filingCargoGroupNameRu: row && row.filingCargoGroupNameRu ? row.filingCargoGroupNameRu : null,
@@ -1415,8 +1417,10 @@
                 filingIdStationFromAmkr: row && row.filingIdStationFromAmkr ? row.filingIdStationFromAmkr : null,
                 filingStationFromAmkrNameRu: row && row.filingStationFromAmkrNameRu ? row.filingStationFromAmkrNameRu : null,
                 filingStationFromAmkrNameEn: row && row.filingStationFromAmkrNameEn ? row.filingStationFromAmkrNameEn : null,
-                filingStationFromAmkrAbbrRu: row && row.filingStationFromAmkrAbbrRu ? row.filingStationFromAmkrAbbrRu : null,
-                filingStationFromAmkrAbbrEn: row && row.filingStationFromAmkrAbbrEn ? row.filingStationFromAmkrAbbrEn : null,
+                //filingStationFromAmkrAbbrRu: row && row.filingStationFromAmkrAbbrRu ? row.filingStationFromAmkrAbbrRu : null,
+                //filingStationFromAmkrAbbrEn: row && row.filingStationFromAmkrAbbrEn ? row.filingStationFromAmkrAbbrEn : null,
+                viewFilingStationFromAmkrAbbrRu: row && row.filingStationFromAmkrAbbrRu ? row.filingStationFromAmkrAbbrRu : null,
+                viewFilingStationFromAmkrAbbrEn: row && row.filingStationFromAmkrAbbrEn ? row.filingStationFromAmkrAbbrEn : null,
                 filingIdDivisionFrom: row && row.filingIdDivisionFrom ? row.filingIdDivisionFrom : null,
                 filingDivisionFromCode: row && row.filingDivisionFromCode ? row.filingDivisionFromCode : null,
                 filingDivisionFromNameRu: row && row.filingDivisionFromNameRu ? row.filingDivisionFromNameRu : null,
@@ -1444,8 +1448,10 @@
                 oldWimcId: row && row.oldWimcId ? row.oldWimcId : null,
                 oldCargoIdCargo: row && row.oldCargoIdCargo ? row.oldCargoIdCargo : null,
                 oldInternalCargoIdInternalCargo: row && row.oldInternalCargoIdInternalCargo ? row.oldInternalCargoIdInternalCargo : null,
-                viewOldCargoNameRu: row && row.viewOldCargoNameRu ? row.viewOldCargoNameRu : null,
-                viewOldCargoNameEn: row && row.viewOldCargoNameEn ? row.viewOldCargoNameEn : null,
+                viewOldCargoNameRu: row && row.viewCurrentCargoNameRu ? row.viewCurrentCargoNameRu : null,
+                viewOldCargoNameEn: row && row.viewCurrentCargoNameEn ? row.viewCurrentCargoNameEn : null,
+                //viewOldCargoNameRu: row && row.viewOldCargoNameRu ? row.viewOldCargoNameRu : null,
+                //viewOldCargoNameEn: row && row.viewOldCargoNameEn ? row.viewOldCargoNameEn : null,
                 //-------------------------------------------------
             };
         }
@@ -1697,6 +1703,11 @@
             // Обновим кнопку добавить в подачу\создать черновик
             var rows = this["tfw_" + this.type_filing].tab_com.get_select_row(); // Получим выбранные вагоны в подаче
             var rows_all = this["tfw_" + this.type_filing].tab_com.obj_t_report.rows().data().toArray();    // Получим все вагоны в подаче
+
+            var rows_open = rows_all.filter(function (i) {
+                return i.filingOperationStart !== null && (i.filingIdOperation == App.wsd_setup.operations.loading_uz || i.filingIdOperation == App.wsd_setup.operations.loading_if);
+            }.bind(this));
+            var br_open = rows_open && rows_open.length > 0; // Бит признака наличия открытой операции
             // Определим организацию подачи
             var default_organization = rows_all.find(function (o) { return o.filingIdOrganizationService !== null }.bind(this));
             this.default_organization_service = default_organization ? default_organization.filingIdOrganizationService : 0;
@@ -2036,7 +2047,7 @@
                 }
             }
             // проверка исполнителя
-            if (mode === 0 || mode === 1) {
+            if (mode === 1 || mode === 2) {
                 if (result.new && result.new.select_id_organization_service < 0) {
                     this.form_filing_wagons_setup.set_element_validation_error('id_organization_service', langView('vopclc_mess_error_filing_organization_service', App.Langs), false);
                     valid = false;
@@ -2158,7 +2169,7 @@
             fn_close: this.settings.fn_close,
         }, function () { }.bind(this));
     };
-
+    // показать модуль
     view_op_unloading_cars.prototype.view = function (id_way, access) {
         this.access = access;
         if (access && (this.access.rAdmin || this.access.rOperRW || this.access.rOperCorrect || this.access.rRO)) {

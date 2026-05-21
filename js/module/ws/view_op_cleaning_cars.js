@@ -211,7 +211,6 @@
         this.cfiling = new VIEW_CFILING();
         this.access = {};
     }
-
     // инициализация модуля
     view_op_cleaning_cars.prototype.init = function (options) {
         this.result_init = true;
@@ -1814,7 +1813,7 @@
                 }
             }
             // проверка исполнителя
-            if (mode === 0 || mode === 1) {
+            if (mode === 1) {
                 if (result.new && result.new.select_id_organization_service < 0) {
                     this.form_filing_wagons_setup.set_element_validation_error('id_organization_service', langView('vopclc_mess_error_filing_organization_service', App.Langs), false);
                     valid = false;
@@ -1934,7 +1933,7 @@
             fn_close: this.settings.fn_close,
         }, function () { }.bind(this));
     };
-
+    // показать модуль
     view_op_cleaning_cars.prototype.view = function (id_way, access) {
         this.access = access;
         if (access && (this.access.rAdmin || this.access.rOperRW || this.access.rOperCorrect || this.access.rRO)) {

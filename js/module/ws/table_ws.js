@@ -2580,6 +2580,14 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'view_filing_division_from_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewFilingDivisionFromAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_division_from_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // цех отправления текущй
             {
                 field: 'last_division_from_abbr',
@@ -2612,6 +2620,14 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'view_filing_division_on_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewFilingDivisionOnAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_division_on_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // цех прибытия текущй
             {
                 field: 'last_division_on_abbr',
@@ -2640,6 +2656,14 @@
                 field: 'filing_external_station_on_name',
                 data: function (row, type, val, meta) {
                     return row['filingExternalStationOnName' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'view_filing_external_station_on_name',
+                data: function (row, type, val, meta) {
+                    return row['viewFilingExternalStationOnName' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_external_station_on_name', App.Langs), width: "100px", orderable: true, searchable: true
@@ -2677,6 +2701,14 @@
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
+            {
+                field: 'view_filing_station_from_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewFilingStationFromAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_station_from_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
             // Станция отправления ТЕКУЩ
             {
                 field: 'last_station_from_amkr_abbr',
@@ -2706,6 +2738,14 @@
                 field: 'filing_station_on_amkr_abbr',
                 data: function (row, type, val, meta) {
                     return row['filingStationOnAmkrAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_filing_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'view_filing_station_on_amkr_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewFilingStationOnAmkrAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_filing_station_on_amkr_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -4164,11 +4204,11 @@
         collums.push({ field: 'filing_operation_start', title: null, class: null });
         collums.push({ field: 'filing_operation_end', title: null, class: null });
         collums.push({ field: 'filing_cargo_name', title: null, class: null });
-        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
-        collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
-        collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'view_filing_station_from_amkr_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
+        //collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
         collums.push({ field: 'create_user_filing', title: null, class: null });
         return this.tab_com.init_columns_detali(collums, this.tab_com.list_collums);
@@ -4194,11 +4234,16 @@
         collums.push({ field: 'filing_move_cargo_doc_received', title: null, class: null });
         collums.push({ field: 'filing_cargo_name', title: null, class: null });
         collums.push({ field: 'filing_vesg', title: null, class: null });
-        collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
-        collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
-        collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
-        collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_station_from_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'view_filing_station_from_amkr_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_station_on_amkr_abbr', title: null, class: null });
+        collums.push({ field: 'view_filing_station_on_amkr_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_external_station_on_name', title: null, class: null });
+        collums.push({ field: 'view_filing_external_station_on_name', title: null, class: null });
+        //collums.push({ field: 'filing_division_from_abbr', title: null, class: null });
+        collums.push({ field: 'view_filing_division_from_abbr', title: null, class: null });
+        //collums.push({ field: 'filing_division_on_abbr', title: null, class: null });
+        collums.push({ field: 'view_filing_division_on_abbr', title: null, class: null });
         collums.push({ field: 'create_filing', title: null, class: null });
         collums.push({ field: 'create_user_filing', title: null, class: null });
         collums.push({ field: 'change_filing', title: null, class: null });
