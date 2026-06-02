@@ -803,9 +803,25 @@
                 title: langView('tws_field_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'view_operator_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewOperatorAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_operator_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
                 field: 'limiting_abbr',
                 data: function (row, type, val, meta) {
                     return row['limitingAbbr' + ucFirst(App.Lang)];
+                },
+                className: 'dt-body-left shorten mw-100',
+                title: langView('tws_field_limiting_abbr', App.Langs), width: "100px", orderable: true, searchable: true
+            },
+            {
+                field: 'view_limiting_abbr',
+                data: function (row, type, val, meta) {
+                    return row['viewLimitingAbbr' + ucFirst(App.Lang)];
                 },
                 className: 'dt-body-left shorten mw-100',
                 title: langView('tws_field_limiting_abbr', App.Langs), width: "100px", orderable: true, searchable: true
@@ -4190,11 +4206,11 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'view_operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'arrival_nom_main_doc', title: null, class: null });
         collums.push({ field: 'arrival_nom_doc', title: null, class: null });
         collums.push({ field: 'current_internal_doc_num', title: null, class: null });
-        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'view_limiting_abbr', title: null, class: null });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_type', title: null, class: null });
         collums.push({ field: 'old_cargo_name', title: null, class: null });
@@ -4221,10 +4237,10 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'view_operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
-        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'view_limiting_abbr', title: null, class: null });
         collums.push({ field: 'filing_condition_abbr', title: null, class: null });
         collums.push({ field: 'filing_loading_status', title: null, class: null });
         collums.push({ field: 'filing_operation_name', title: null, class: null });
@@ -4258,11 +4274,11 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
-        collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
+        collums.push({ field: 'view_operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
-        collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'view_limiting_abbr', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
         collums.push({ field: 'current_cargo_name', title: null, class: null });
         collums.push({ field: 'current_organization_service', title: null, class: null });
