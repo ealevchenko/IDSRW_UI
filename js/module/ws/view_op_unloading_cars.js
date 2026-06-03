@@ -1274,6 +1274,12 @@
                 limitingNameEn: row.limitingNameEn,
                 limitingAbbrRu: row.limitingAbbrRu,
                 limitingAbbrEn: row.limitingAbbrEn,
+                //
+                viewOperatorAbbrRu: row.operatorAbbrRu,
+                viewOperatorAbbrEn: row.operatorAbbrEn,
+                viewLimitingAbbrRu: row.limitingAbbrRu,
+                viewLimitingAbbrEn: row.limitingAbbrEn,
+                //
                 arrivalConditionNameRu: row.arrivalConditionNameRu,
                 arrivalConditionNameEn: row.arrivalConditionNameEn,
                 arrivalConditionAbbrRu: row.arrivalConditionAbbrRu,
