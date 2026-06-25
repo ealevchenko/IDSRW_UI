@@ -1360,7 +1360,8 @@
                         langView('vopclc_title_form_apply', App.Langs),
                         mess,
                         function () {
-                            this.apply_correct_filing(data, callback);
+                            //this.apply_correct_filing(data, callback);
+                            this.apply_update_operation_filing(data, callback);
                         }.bind(this),
                         function () {
                             this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopclc_mess_cancel_correct_filing', App.Langs));

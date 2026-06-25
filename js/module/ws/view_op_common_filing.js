@@ -124,7 +124,7 @@
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
             'vopcf_mess_warning_ban_error_operation_delete': 'Админ-операция «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ [{0}]» - заблокирована, по вагонам подачи уже открыты следующие подачи',
-            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}} ',
+            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}] ',
 
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
@@ -154,7 +154,7 @@
             'vopcf_confirm_mess_apply_operation_delete_filing4': ' подача будет удалена',
             'vopcf_confirm_mess_apply_operation_delete_filing5': ', по вагонам подачи будет удалена вся информация об операции, статусе и грузе!',
         },
-        'en':  // language: en
+        'en':
         {
             'vopcf_card_header_filing': 'ПОДАЧИ ПО СТАНЦИИ',
 
@@ -263,7 +263,7 @@
             'vopcf_mess_warning_wagon_ban_error_doc_received': 'Вагон № {0} для выбора заблокирован (Отличаются даты получения документа!)',
 
             'vopcf_mess_warning_ban_error_operation_delete': 'Админ-операция «УДАЛИТЬ ПОДАЧУ ИЛИ ВАГОНЫ ПОДАЧИ [{0}]» - заблокирована, по вагонам подачи уже открыты следующие подачи',
-            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}} ',
+            'vopcf_mess_warning_ban_error_operation_delete1': ', вагон [{0}] - подача [{1}] ',
 
             'vopcf_mess_warning_wagon_ban_busy': 'Вагон № {0} для операций заблокирован (предъявлен,незакрытая подача, незаконченая операция...)',
             'vopcf_mess_warning_wagon_ban_exists': 'Вагон № {0} для операций заблокирован (вагон уже пренадлежит выбранной подаче :[{1}])',
@@ -2332,13 +2332,14 @@
                         num_filing: null,
                         vesg: null,
                         doc_received: null,
-                        mode: 9,
+                        mode: 1,
                         id_division: id_devision_from,
                         id_organization_service: null,
                         wagons: null
                     };
                     // 
-                    this.apply_correct_filing(operation);
+                    //this.apply_correct_filing(operation);
+                    this.apply_update_filing(operation);
                 }.bind(this),
                 function () {
                     this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_update_devision_from', App.Langs).format(langView('vopcf_title_type_filing_' + this.type_filing, App.Langs)));
@@ -2373,13 +2374,14 @@
                         num_filing: null,
                         vesg: null,
                         doc_received: null,
-                        mode: 8,
+                        mode: 1,
                         id_division: null,
                         id_organization_service: id_organization_service,
                         wagons: null
                     };
                     // 
-                    this.apply_correct_filing(operation);
+                    //this.apply_correct_filing(operation);
+                    this.apply_update_filing(operation);
                 }.bind(this),
                 function () {
                     this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopcf_mess_cancel_update_organization_service', App.Langs).format(langView('vopcf_title_type_filing_' + this.type_filing, App.Langs)));
@@ -2446,7 +2448,8 @@
             this.settings.fn_apply_delete_filing.call(this, data);
         } else {
             LockScreen(langView('vopcf_mess_run_operation_delete_filing', App.Langs));
-            this.view_com.api_wsd.postDeleteFiling(data, function (result) {
+            //this.view_com.api_wsd.postDeleteFiling(data, function (result) {
+            this.view_com.api_wsd.postDeleteWagonFiling(data, function (result) {
                 // Проверим на ошибку выполнения запроса api
                 if (result && result.status) {
                     var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);

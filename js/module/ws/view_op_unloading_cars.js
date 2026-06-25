@@ -116,7 +116,7 @@
             'vopulc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
             'vopulc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
             'vopulc_mess_run_operation_correct_filing': 'Выполняю админ-операцию корректировки подачи {0}',
-            'vopulc_confirm_mess_apply_correct_mode_20': 'Выполняю админ-операцию правки статуса подачи {0}. Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменен статус выгрузки [{2}]!',
+            'vopulc_confirm_mess_apply_correct_mode_10': 'Выполняю админ-операцию правки статуса подачи {0}. Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменен статус выгрузки [{2}]!',
         },
         'en':  //language: en
         {
@@ -218,7 +218,7 @@
             'vopulc_confirm_mess_apply_update_filing_status_operation': 'Править подачу {0}. Определено для правки {1} ваг., указан новый статус {2}.',
             'vopulc_confirm_mess_apply_clear_draft': 'Убрать черновик подачи созданный на пути {0}?.',
             'vopulc_mess_run_operation_correct_filing': 'Выполняю админ-операцию корректировки подачи {0}',
-            'vopulc_confirm_mess_apply_correct_mode_20': 'Выполняю админ-операцию правки статуса подачи {0}. Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменен статус выгрузки [{2}]!',
+            'vopulc_confirm_mess_apply_correct_mode_10': 'Выполняю админ-операцию правки статуса подачи {0}. Определено для правки {1} ваг. В подаче по выбранным вагонам будет изменен статус выгрузки [{2}]!',
         }
     };
     // Определлим список текста для этого модуля
@@ -1542,7 +1542,7 @@
                     }.bind(this));
                 }
             }
-            // Обновить правку статуса (mode:20)
+            // Обновить правку статуса (mode:10)
             var view_set_status_load_save = function () {
                 var valid = true;
                 var rows = this["tfw_" + this.type_filing].tab_com.get_select_row();
@@ -1572,9 +1572,11 @@
                             num_filing: null,
                             vesg: null,
                             doc_received: null,
-                            mode: 20,
+                            mode: 10,
                             wagons: list_wagons
                         };
+
+                        
                         view_correct_filing.call(this, operation);
                     }
                 }
@@ -1584,8 +1586,8 @@
                 var mess = "";
                 if (data && data.wagons) {
                     switch (data.mode) {
-                        // Обновить статус (mode:20)
-                        case 20: {
+                        // Обновить статус (mode:10)
+                        case 10: {
                             var status_load = this.view_com.api_dir.getWagonLoadingStatus_Of_Id(data.wagons[0].id_status_load);
                             mess = langView('vopulc_confirm_mess_apply_correct_mode_' + data.mode, App.Langs).format(
                                 this.id_filing,
@@ -1595,12 +1597,12 @@
                             break;
                         }
                     }
-
                     this.view_com.mcf_lg.open(
                         langView('vopulc_title_form_apply', App.Langs),
                         mess,
                         function () {
-                            this.apply_correct_filing(data, callback);
+                            //this.apply_correct_filing(data, callback);
+                            this.apply_update_operation_filing(data, callback);
                         }.bind(this),
                         function () {
                             this.form_filing_wagons_setup.validation_common_filing_wagons.out_warning_message(langView('vopulc_mess_cancel_correct_filing', App.Langs));
@@ -1913,7 +1915,9 @@
                         //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length === 1 ? rows[0].filingIdLoadingStatus : this.default_status_unload);
                         this.form_filing_wagons_setup.el.input_datetime_time_start.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationStart') ? moment(rows[0].filingOperationStart) : null);
                         this.form_filing_wagons_setup.el.input_datetime_time_stop.val(rows && rows.length > 0 && get_is_equal(rows, 'filingOperationEnd') ? moment(rows[0].filingOperationEnd) : null);
-                        this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
+                        //this.form_filing_wagons_setup.el.select_id_status_load.val(rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1);
+                        this.form_filing_wagons_setup.el.select_id_status_load.update(this.list_status_unload, rows && rows.length > 0 && get_is_equal(rows, 'filingIdLoadingStatus') ? rows[0].filingIdLoadingStatus : -1)
+
                         view_set_correct.call(this);
                         break;
                     }

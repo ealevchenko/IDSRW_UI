@@ -233,10 +233,10 @@
     ids_wsd.prototype.postUpdateFiling = function (operation, callback) {
         this.api_com.post('/WSD/update/filing/', operation, callback, callback);
     };
-    //АРМ, Операция удалить(отмена) подачу или выбранные вагоны (админка, подача или вагоны закрыты)
-    ids_wsd.prototype.postDeleteFiling = function (operation, callback) {
-        this.api_com.post('/WSD/delete/filing/', operation, callback, callback);
-    };
+    // //АРМ, Операция удалить(отмена) подачу или выбранные вагоны (админка, подача или вагоны закрыты)
+    // ids_wsd.prototype.postDeleteFiling = function (operation, callback) {
+    //     this.api_com.post('/WSD/delete/filing/', operation, callback, callback);
+    // };
     //АРМ, Операция править дату подачи
     ids_wsd.prototype.postUpdateDateFiling = function (operation, callback) {
         this.api_com.post('/WSD/update/date/filing/', operation, callback, callback);
