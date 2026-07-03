@@ -1,4 +1,8 @@
-﻿
+﻿/* ===============================================
+-= Модуль панель операции выдвигающееся окно =-
+  + js/view/shared/common.js
+
+==================================================*/
 (function (window) {
     'use strict';
 
@@ -69,8 +73,6 @@
         this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: App.Url_Api });
 
         this.update_wsd = 0; // Признак обновлять данны после закрытия окна (0-нет, 1-только дерево, 2-обновить все)
-
-        //this.api_wsd = this.settings.api_wsd ? this.settings.api_wsd : new IDS_WSD({ url_api: "https://localhost:7280" });
 
         this.offcanvas = new this.fe_ui.bs_offcanvas({
             id: null,
