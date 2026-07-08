@@ -38,10 +38,10 @@ var Roles = {
     ARM_NOTE_RW: "KRR-LG_TD-IDSRW_ARM_NOTE",                    // Ввод, корректировка, удаление примечания по вагону  - сервис  "Править примечание по группе вагонов"
 };
 
-var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
-var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
-//var url_api_test = "https://localhost:7280";
-//var url_api_main = "https://localhost:7280";
+// var url_api_main = "https://krr-app-paweb01.europe.mittalco.com/IDSRW_API";
+// var url_api_test = "https://krr-tst-padev02.europe.mittalco.com/IDSRW_API";
+var url_api_test = "https://localhost:7280";
+var url_api_main = "https://localhost:7280";
 
 var url_web_main = "https://krr-app-paweb01.europe.mittalco.com/idsrw";
 var url_web_test = "https://krr-tst-padev02.europe.mittalco.com/idsrw";
@@ -238,8 +238,8 @@ var getHoursFromMinuts = function (minutes) {
     //console.log("lang: ", $.cookie('lang'));
     App.Lang = 'ru';
     //App.Lang = ($.cookie('lang') === undefined ? 'ru' : $.cookie('lang'));
-    //App.Url_Api = url_api_test;
-    App.Url_Api = url_api_main;
+    App.Url_Api = url_api_test;
+    //App.Url_Api = url_api_main;
 
 
 
