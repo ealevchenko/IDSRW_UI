@@ -109,9 +109,12 @@
             //'voprc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
             'voprc_mess_not_select_way_on': 'Выберите путь для предъявления вагонов!',
             'voprc_mess_not_status_provide_sostav': 'Статус предъявленного состава не позволяет выполнить данную операцию',
+            'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
             'voprc_mess_not_select_provide_sostav': 'Выберите предявленый состав!',
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
             'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
+
+            'voprc_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
 
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
@@ -231,6 +234,7 @@
             //'voprc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
             'voprc_mess_not_select_way_on': 'Выберите путь для предъявления вагонов!',
             'voprc_mess_not_status_provide_sostav': 'Статус предъявленного состава не позволяет выполнить данную операцию',
+            'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
             'voprc_mess_not_select_provide_sostav': 'Выберите предявленый состав!',
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
             'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
@@ -272,6 +276,27 @@
     var TWS = App.table_ws;
     function view_op_provide_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
+        this.rAdm = false;
+        this.rRW = false;
+        this.rRO = false;
+    }
+    //-------------------------------------------------------------------------
+    // Проверим список ролей на истину
+    view_op_provide_cars.prototype.is_role = function (role) {
+        var rl = role ? role.find(function (o) { return o; }.bind(this)) : null;
+        return rl ? true : false;
+    }
+    // Активация элемента правки в зависимости от ролей
+    view_op_provide_cars.prototype.el_enable = function (element, role) {
+        if (element) {
+            if (this.is_role(role)) { element.enable(); } else { element.disable(); }
+        }
+    }
+    // визуализация кнопки управления в зависимости от ролей
+    view_op_provide_cars.prototype.bt_show = function (button, role) {
+        if (button) {
+            if (this.is_role(role)) { button.show(); } else { button.hide(); }
+        }
     }
     // инициализация модуля
     view_op_provide_cars.prototype.init = function (options) {
@@ -497,7 +522,11 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.form_on_setup.$form.submit();
+                        if (this.rRW || this.rAdm) {
+                            this.form_on_setup.$form.submit();
+                        } else {
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
                     }.bind(this),
                 }
             };
@@ -610,7 +639,11 @@
                     icon_fa_right: null,
                     fn_click: function (event) {
                         event.preventDefault();
-                        this.edit_dt_provide();
+                        if (this.rRW || this.rAdm) {
+                            this.edit_dt_provide();
+                        } else {
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
                     }.bind(this),
                 }
             };
@@ -718,6 +751,8 @@
                 fn_element_init: null,
                 fn_init: function (init) {
                     this.on_setup.$html.append(this.form_on_setup.$form);
+                    this.form_on_setup.el.button_apply.hide(); // спрячем
+                    this.form_on_setup.el.button_edit_time.prop('disabled', true);
                     // На проверку окончания инициализации
                     process--;
                     //console.log('[view_op_provide_cars] [form_on_setup] process ' + process);
@@ -727,7 +762,7 @@
 
             var fieldset_sostav_formed = new this.view_com.fe_ui.fieldset({ legend: langView('voprc_title_fieldset_sostav_formed', App.Langs) });
 
-            // Таблица открытые предъявленые составы
+            // Таблица предъявленые составы
             this.tprs_opprc = new TWS('div#op-prc-provide-sostav');
             this.tprs_opprc.init({
                 caption: langView('voprc_table_caption_provide_sostav', App.Langs), //
@@ -752,6 +787,7 @@
                     this.form_on_setup.validation_common_on.clear_all();
                 }.bind(this),
                 fn_select_rows: function (rows, type) {
+                    this.from_alert.clear_message();
                     this.form_on_setup.validation_common_on.clear_all();
                     this.form_on_setup.el.button_edit_time.prop('disabled', true);
                     this.form_on_setup.el.input_datetime_time_aplly.val(moment());
@@ -764,7 +800,7 @@
                             this.id_sostav_provide = rows[0].id;
                             this.num_sostav = rows[0].numDoc;
                             if (rows[0].status === 0 || rows[0].status === 1) {
-                                this.form_on_setup.el.button_edit_time.prop('disabled', false);
+                                if (this.rRW || this.rAdm) this.form_on_setup.el.button_edit_time.prop('disabled', false);
                                 this.form_on_setup.el.input_datetime_time_aplly.val(moment(rows[0].dateReadinessAmkr));
                                 this.datetime_time_aplly = rows[0].dateReadinessAmkr;
                             }
@@ -854,18 +890,22 @@
                     }
                     if (name === 'del_wagons_sostav') {
                         this.on_alert.clear_message();
-                        var rows = this.tpwos_opprc.tab_com.get_select_row();
-                        if (rows !== null && rows.length > 0) {
-                            LockScreen(langView('voprc_mess_clear_sostav', App.Langs));
-                            // Выполнить операцию добавить вагоны
-                            $.each(rows, function (i, el) {
-                                el['id_wir_from'] = null;
-                                el['position_new'] = null;
-                            }.bind(this));
-                            this.view_wagons(); // Обновить вагоны на пути приема
-                            LockScreenOff();
+                        if (this.rRW || this.rAdm) {
+                            var rows = this.tpwos_opprc.tab_com.get_select_row();
+                            if (rows !== null && rows.length > 0) {
+                                LockScreen(langView('voprc_mess_clear_sostav', App.Langs));
+                                // Выполнить операцию добавить вагоны
+                                $.each(rows, function (i, el) {
+                                    el['id_wir_from'] = null;
+                                    el['position_new'] = null;
+                                }.bind(this));
+                                this.view_wagons(); // Обновить вагоны на пути приема
+                                LockScreenOff();
+                            } else {
+                                this.on_alert.out_warning_message(langView('voprc_mess_not_select_wagon_on', App.Langs));
+                            }
                         } else {
-                            this.on_alert.out_warning_message(langView('voprc_mess_not_select_wagon_on', App.Langs));
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
                         }
                     }
                 }.bind(this),
@@ -958,19 +998,41 @@
                     }
                     if (name === 'add_sostav') {
                         this.from_alert.clear_message();
-                        var select_sostav = this.provide_sostav.find(function (o) {
-                            return o.id === this.id_sostav_provide
-                        }.bind(this)); this.id_sostav_provide
+                        if (this.rRW || this.rAdm) {
+                            // Получим выбранный состав
+                            var select_sostav = this.provide_sostav.find(function (o) {
+                                return o.id === this.id_sostav_provide
+                            }.bind(this));
+                            //this.id_sostav_provide
+                            if (this.id_way >= 0) {
+                                var valid_operation = 0; // 0-нет операций; 1-создать новый; 2-добавить вагон в состав
+                                if (select_sostav) {
+                                    // состав выбран для добавления
+                                    if (this.provide_sostav !== null && this.provide_sostav.length > 0 && (select_sostav.status === 0 || select_sostav.status === 1)) {
+                                        // Добавить вагоны
+                                        valid_operation = 2;
 
-
-                        if (this.id_way >= 0) {
-                            if ((this.provide_sostav === null) || (this.provide_sostav.length === 0) ||
-                                (this.provide_sostav !== null && this.provide_sostav.length > 0 &&
-                                    //(this.provide_sostav[0].status === 0 || this.provide_sostav[0].status === 1)
-                                    (select_sostav && select_sostav.status === 0 || select_sostav.status === 1)
-                                )) {
-                                if ((this.provide_sostav !== null && this.provide_sostav.length > 0 && this.id_sostav_provide !== null) ||
-                                    (this.provide_sostav === null) || (this.provide_sostav.length === 0)) {
+                                    } else {
+                                        this.from_alert.out_warning_message(langView('voprc_mess_not_status_provide_sostav', App.Langs));
+                                    }
+                                } else {
+                                    // состав не выбран
+                                    if (this.provide_sostav !== null && this.provide_sostav.length > 0) {
+                                        // но есть ппредъявленные
+                                        var open_provide_sostav = this.provide_sostav.find(function (o) { return o.status < 2 }.bind(this));
+                                        if (!open_provide_sostav) {
+                                            // создать состав
+                                            valid_operation = 1;
+                                        } else {
+                                            this.from_alert.out_warning_message(langView('voprc_mess_not_status_provide_sostav1', App.Langs));
+                                        }
+                                    } else {
+                                        // создать состав
+                                        valid_operation = 1;
+                                    }
+                                }
+                                if (valid_operation > 0) {
+                                    // выполним операцию
                                     var rows = this.twfrom_opprc.tab_com.get_select_row();
                                     if (rows !== null && rows.length > 0) {
                                         LockScreen(langView('voprc_mess_create_sostav', App.Langs));
@@ -983,27 +1045,47 @@
                                     } else {
                                         this.from_alert.out_warning_message(langView('voprc_mess_not_select_wagon_from', App.Langs));
                                     }
-                                } else {
-                                    this.from_alert.out_warning_message(langView('voprc_mess_not_select_provide_sostav', App.Langs));
                                 }
+                                // if ((this.provide_sostav === null) || (this.provide_sostav.length === 0) ||
+                                //     (this.provide_sostav !== null && this.provide_sostav.length > 0 &&
+                                //         //(this.provide_sostav[0].status === 0 || this.provide_sostav[0].status === 1)
+                                //         (select_sostav && select_sostav.status === 0 || select_sostav && select_sostav.status === 1)
+                                //     )) {
+
+                                // if ((this.provide_sostav !== null && this.provide_sostav.length > 0 && this.id_sostav_provide !== null) ||
+                                //     (this.provide_sostav === null) || (this.provide_sostav.length === 0)) {
+                                //     var rows = this.twfrom_opprc.tab_com.get_select_row();
+                                //     if (rows !== null && rows.length > 0) {
+                                //         LockScreen(langView('voprc_mess_create_sostav', App.Langs));
+                                //         // Выполнить операцию добавить вагоны
+                                //         $.each(rows, function (i, el) {
+                                //             el['id_wir_from'] = el.wirId;
+                                //         }.bind(this));
+                                //         this.view_wagons(); // Обновить вагоны на пути приема
+                                //         LockScreenOff();
+                                //     } else {
+                                //         this.from_alert.out_warning_message(langView('voprc_mess_not_select_wagon_from', App.Langs));
+                                //     }
+                                // } else {
+                                //     this.from_alert.out_warning_message(langView('voprc_mess_not_select_provide_sostav', App.Langs));
+                                // }
+
+                                // } else {
+                                //     this.from_alert.out_warning_message(langView('voprc_mess_not_status_provide_sostav', App.Langs));
+                                // }
                             } else {
-                                this.from_alert.out_warning_message(langView('voprc_mess_not_status_provide_sostav', App.Langs));
+                                this.from_alert.out_warning_message(langView('voprc_mess_not_select_way_on', App.Langs));
                             }
                         } else {
-                            this.from_alert.out_warning_message(langView('voprc_mess_not_select_way_on', App.Langs));
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
                         }
-
-
                     }
                     if (name === 'collect_sostav') {
-                        this.collect_sostav();
-                        //if (this.view_collect_sostav) {
-                        //    this.from_table.$html.removeClass('col-7').addClass('col');
-                        //} else {
-                        //    this.from_table.$html.removeClass('col').addClass('col-7');
-                        //    $.fn.dataTable.tables({ visible: false, api: true }).columns.adjust();
-                        //}
-                        //this.view_collect_sostav = !this.view_collect_sostav;
+                        if (this.rRW || this.rAdm) {
+                            this.collect_sostav();
+                        } else {
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
                     }
                 }.bind(this),
                 fn_enable_button: function (tb) {
@@ -1237,77 +1319,81 @@
                         }
                     }
                     if (name === 'move_wagons') {
-                        if (this.list_collect_wagons !== null && this.list_collect_wagons.length > 0) {
-                            var move_collect_wagons = this.list_collect_wagons.filter(function (i) {
-                                return i.exist;
 
-                            }.bind(this));
-                            if (move_collect_wagons !== null && move_collect_wagons.length > 0) {
-                                this.view_com.mcf.open(
-                                    langView('voprc_title_form_move', App.Langs),
-                                    langView('voprc_confirm_mess_move', App.Langs).format(move_collect_wagons.length, this.form_on_setup.el.select_id_station.text(), this.form_on_setup.el.select_id_way.text()),
-                                    function () {
-                                        var nums = [];
-                                        $.each(move_collect_wagons.sort(function (a, b) {
-                                            return a.position - b.position;
-                                        }), function (i, el) {
-                                            nums.push(el.num);
-                                        });
-                                        var operation = {
-                                            id_way_on: this.id_way,
-                                            nums: nums,
-                                            lead_time: moment()._d,
-                                        };
-                                        LockScreen(langView('voprc_mess_run_operation_move', App.Langs));
-                                        this.view_com.api_wsd.postMoveWagonsProvideWayOfStationAMKR(operation, function (result) {
-                                            // Проверим на ошибку выполнения запроса api
-                                            if (result && result.status) {
-                                                var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
-                                                console.log('[view_op_provide_cars] [postMoveWagonsProvideWayOfStationAMKR] :' + mess);
-                                                this.form_collect_setup.validation_common_collect.out_error_message(mess);
-                                                if (result.errors) {
-                                                    for (var err in result.errors) {
-                                                        this.form_collect_setup.validation_common_collect.out_error_message(err + ":" + result.errors[err]);
-                                                        console.log('[view_op_provide_cars] [postMoveWagonsProvideWayOfStationAMKR] :' + err + ":" + result.errors[err]);
+                        if (this.rRW || this.rAdm) {
+                            if (this.list_collect_wagons !== null && this.list_collect_wagons.length > 0) {
+                                var move_collect_wagons = this.list_collect_wagons.filter(function (i) {
+                                    return i.exist;
+                                }.bind(this));
+                                if (move_collect_wagons !== null && move_collect_wagons.length > 0) {
+                                    this.view_com.mcf.open(
+                                        langView('voprc_title_form_move', App.Langs),
+                                        langView('voprc_confirm_mess_move', App.Langs).format(move_collect_wagons.length, this.form_on_setup.el.select_id_station.text(), this.form_on_setup.el.select_id_way.text()),
+                                        function () {
+                                            var nums = [];
+                                            $.each(move_collect_wagons.sort(function (a, b) {
+                                                return a.position - b.position;
+                                            }), function (i, el) {
+                                                nums.push(el.num);
+                                            });
+                                            var operation = {
+                                                id_way_on: this.id_way,
+                                                nums: nums,
+                                                lead_time: moment()._d,
+                                            };
+                                            LockScreen(langView('voprc_mess_run_operation_move', App.Langs));
+                                            this.view_com.api_wsd.postMoveWagonsProvideWayOfStationAMKR(operation, function (result) {
+                                                // Проверим на ошибку выполнения запроса api
+                                                if (result && result.status) {
+                                                    var mess = langView('voprc_mess_error_api', App.Langs).format(result.status, result.title);
+                                                    console.log('[view_op_provide_cars] [postMoveWagonsProvideWayOfStationAMKR] :' + mess);
+                                                    this.form_collect_setup.validation_common_collect.out_error_message(mess);
+                                                    if (result.errors) {
+                                                        for (var err in result.errors) {
+                                                            this.form_collect_setup.validation_common_collect.out_error_message(err + ":" + result.errors[err]);
+                                                            console.log('[view_op_provide_cars] [postMoveWagonsProvideWayOfStationAMKR] :' + err + ":" + result.errors[err]);
+                                                        }
                                                     }
-                                                }
-                                                LockScreenOff();
-                                            } else {
-                                                //result = {};
-                                                //result.result = 1;
-                                                if (result && result.result > 0) {
-                                                    this.form_collect_setup.validation_common_collect.clear_all();
-                                                    // Обновим пути отправки 1 поток
-                                                    this.load_of_way(this.id_way, function () {
-                                                        // Сбросим таблицу вагонов
-                                                        this.list_collect_wagons = [];
-                                                        this.tcw_opprc.view(this.list_collect_wagons, null);
-                                                        this.view_wagons_from();
-                                                        LockScreenOff();
-                                                    }.bind(this));
-
-                                                } else {
                                                     LockScreenOff();
-                                                    this.form_collect_setup.validation_common_collect.out_error_message(langView('voprc_mess_error_operation_run', App.Langs).format(result ? result.result : -1));
-                                                    // Выведем ошибки по вагонно.
-                                                    if (result && result.list_rs) {
-                                                        $.each(result.listResult, function (i, el) {
-                                                            if (el.result <= 0) this.form_collect_setup.validation_common_collect.out_error_message(langView('voprc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                                                } else {
+                                                    //result = {};
+                                                    //result.result = 1;
+                                                    if (result && result.result > 0) {
+                                                        this.form_collect_setup.validation_common_collect.clear_all();
+                                                        // Обновим пути отправки 1 поток
+                                                        this.load_of_way(this.id_way, function () {
+                                                            // Сбросим таблицу вагонов
+                                                            this.list_collect_wagons = [];
+                                                            this.tcw_opprc.view(this.list_collect_wagons, null);
+                                                            this.view_wagons_from();
+                                                            LockScreenOff();
                                                         }.bind(this));
+
+                                                    } else {
+                                                        LockScreenOff();
+                                                        this.form_collect_setup.validation_common_collect.out_error_message(langView('voprc_mess_error_operation_run', App.Langs).format(result ? result.result : -1));
+                                                        // Выведем ошибки по вагонно.
+                                                        if (result && result.list_rs) {
+                                                            $.each(result.listResult, function (i, el) {
+                                                                if (el.result <= 0) this.form_collect_setup.validation_common_collect.out_error_message(langView('voprc_mess_error_operation_wagons_run', App.Langs).format(el.num, el.result));
+                                                            }.bind(this));
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        }.bind(this));
+                                            }.bind(this));
 
-                                    }.bind(this),
-                                    function () {
-                                        this.from_alert.out_warning_message(langView('voprc_mess_cancel_operation_move', App.Langs));
-                                    }.bind(this));
+                                        }.bind(this),
+                                        function () {
+                                            this.from_alert.out_warning_message(langView('voprc_mess_cancel_operation_move', App.Langs));
+                                        }.bind(this));
+                                } else {
+                                    this.from_alert.out_warning_message(langView('voprc_mess_warning_not_collect_wagons_amkr', App.Langs));
+                                }
                             } else {
-                                this.from_alert.out_warning_message(langView('voprc_mess_warning_not_collect_wagons_amkr', App.Langs));
+                                this.from_alert.out_warning_message(langView('voprc_mess_warning_not_collect_wagons', App.Langs));
                             }
                         } else {
-                            this.from_alert.out_warning_message(langView('voprc_mess_warning_not_collect_wagons', App.Langs));
+                            this.on_alert.out_warning_message(langView('voprc_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
                         }
                     }
                 }.bind(this),
@@ -1347,6 +1433,7 @@
 
         }.bind(this)); //------- {end this.view_com.load_db}
     };
+    //
     view_op_provide_cars.prototype.collect_sostav = function () {
         if (this.view_collect_sostav) {
             this.from_table.$html.removeClass('col-7').addClass('col');
@@ -1357,33 +1444,50 @@
         this.view_collect_sostav = !this.view_collect_sostav;
     }
     // Показать данные 
-    view_op_provide_cars.prototype.view = function (id_way) {
+    view_op_provide_cars.prototype.view = function (id_way, access) {
+        this.rAdm = access && access.rAdmin ? access.rAdmin : false;
+        this.rRW = access && access.rTropRW ? access.rTropRW : false;
+        this.rRO = access && access.rRO ? access.rRO : false;
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
-        LockScreen(langView('voprc_mess_load_operation', App.Langs));
-        // Очистить сообщения и форму
-        this.form_on_setup.clear_all();
-        // Сбросим установки (время)
-        this.form_on_setup.el.input_datetime_time_aplly.val(moment());
-        this.wagons = [];
-        this.wagons_on = [];
-        // Сбросим вагоны переноса
-        this.id_sostav_provide = null;
-        this.num_sostav = null;
-        this.id_way = -1;
-        this.id_station = -1;
-        var id_station = -1;
-        if (id_way > 0) {
-            var way = this.view_com.api_dir.getWays_Of_Id(id_way);
-            if (way) {
-                id_station = way.idStation;
-                // Отобразим выбор на панеле
-                this.form_on_setup.el.select_id_station.val(id_station);
+        if (this.rRO) {
+            LockScreen(langView('voprc_mess_load_operation', App.Langs));
+
+            var tpwos_bts = this.tpwos_opprc.tab_com.obj_t_report.buttons([7]);
+            var twfrom_bts = this.twfrom_opprc.tab_com.obj_t_report.buttons([7, 8]);
+            if (this.rRW || this.rAdm) {
+                tpwos_bts.enable();
+                twfrom_bts.enable();
+            } else {
+                tpwos_bts.disable();
+                twfrom_bts.disable();
             }
-        };
-        this.update(id_station, id_way, function () {
-            LockScreenOff();
-        }.bind(this));
+            // Очистить сообщения и форму
+            this.form_on_setup.clear_all();
+            this.bt_show(this.form_on_setup.el.button_apply, [this.rRW, this.rAdm]);
+            // Сбросим установки (время)
+            this.form_on_setup.el.input_datetime_time_aplly.val(moment());
+            this.wagons = [];
+            this.wagons_on = [];
+            // Сбросим вагоны переноса
+            this.id_sostav_provide = null;
+            this.num_sostav = null;
+            this.id_way = -1;
+            this.id_station = -1;
+            var id_station = -1;
+            if (id_way > 0) {
+                var way = this.view_com.api_dir.getWays_Of_Id(id_way);
+                if (way) {
+                    id_station = way.idStation;
+                    // Отобразим выбор на панеле
+                    this.form_on_setup.el.select_id_station.val(id_station);
+                }
+            };
+            this.update(id_station, id_way, function () {
+                LockScreenOff();
+            }.bind(this));
+        }
+
     };
     // Проверка вагоны выбраны?
     view_op_provide_cars.prototype.isAddWagon = function (callback_ok, callback_not) {
@@ -1763,6 +1867,7 @@
         }
         return valid;
     }
+    //
     view_op_provide_cars.prototype.validation_collect = function (result) {
         var valid = true;
         var el_vs = this.form_collect_setup.el.textarea_vagon_searsh;//.$element;
@@ -1856,14 +1961,6 @@
             this.form_on_setup.set_element_validation_error('time_aplly', langView('voprc_mess_error_max_provide_time_aplly', App.Langs).format(App.wsd_setup.provide_dt_apply_max), false);
             valid = false;
         }
-        //if (minutes < min_provide_dt_apply) {
-        //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_min_provide_time_aplly', App.Langs).format(min_provide_dt_apply * -1));
-        //    valid = false;
-        //}
-        //if (minutes > max_provide_dt_apply) {
-        //    this.form_on_setup.validation_common_on.set_object_error($(el_dta), langView('voprc_mess_error_max_provide_time_aplly', App.Langs).format(max_provide_dt_apply));
-        //    valid = false;
-        //}
         if (valid) {
             this.view_com.mcf.open(
                 langView('voprc_title_form_apply', App.Langs),

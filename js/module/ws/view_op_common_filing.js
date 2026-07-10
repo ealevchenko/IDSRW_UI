@@ -1260,7 +1260,6 @@
                                 } else {
                                     this.from_way_alert.out_warning_message(langView('vopcf_mess_not_select_wagon_return', App.Langs));
                                 }
-
                             } else {
                                 this.from_way_alert.out_warning_message(langView('vopcf_mess_not_select_way_from', App.Langs));
                             }

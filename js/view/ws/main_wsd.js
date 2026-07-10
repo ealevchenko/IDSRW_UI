@@ -881,11 +881,11 @@
                         });
                         // Кнопки основного меню (Отправка на УЗ)
                         $('#btn-uz-operations').on('click', 'button', function (event) {
-                            if (rTropRW) {
+                            if (rAdmin || rTropRW || true) {
                                 switch (event.currentTarget.id) {
                                     case 'provide': {
                                         if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
-                                            voprc.view(current_id_way);
+                                            voprc.view(current_id_way, { rAdmin, rTropRW, rRO:true });
                                         } else {
                                             main_alert.clear_message();
                                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
