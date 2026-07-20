@@ -20,7 +20,6 @@
             'voprc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
             'voprc_card_header_on': 'ПРЕДЪЯВИТЬ СОСТАВ',
             'voprc_card_header_from': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
-            //'voprc_card_header_collect_way': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
             'voprc_card_header_collect_way': 'СОБРАТЬ ПО ВСЕМ СТАНЦИЯМ',
 
             'voprc_title_label_way': 'Путь для предъявления:',
@@ -69,32 +68,20 @@
             'voprc_table_caption_provide_sostav': 'Предъявленные составы',
             'voprc_table_caption_collect_wagons': 'Вагоны для предъявления',
 
-            //'voprc_mess_warning_not_num_sostav': 'Нет названия состава!',
-            //'voprc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
-
             'voprc_mess_warning_wagon_ban_status1': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, по которому идет предъявление на УЗ)!',
             'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
 
-            // 'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            // 'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
-            // 'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
-
-
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
 
-            //'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             'voprc_mess_error_not_time_aplly': 'Введите дату предъявления',
             'voprc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
             'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voprc_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
             'voprc_mess_error_sostav_provide_time_aplly': 'Состав уже предъявлен с датой {0}, при добавлении вагонов нельзя изменить дату предъявления!',
-            //'voprc_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
-            //'voprc_mess_error_max_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мак. отклонение (мин) = {0}',
             'voprc_mess_error_min_provide_time_aplly': 'Время выполнения- меньше текущей даты {0} мин',
             'voprc_mess_error_max_provide_time_aplly': 'Время выполнения- больше текущей даты {0} мин',
             'voprc_mess_error_not_wagons': 'Не выбраны вагоны для предъявления (в окне «ПРЕДЪЯВИТЬ СОСТАВ» , выберите станцию и путь, в окне «ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ» выберите вагоны).',
@@ -112,7 +99,6 @@
             'voprc_mess_run_operation_move': 'Выполняю операцию сбора вагонов на пути предъявления',
             'voprc_mess_not_select_wagon_from': 'Выберите вагоны для предъявления!',
             'voprc_mess_not_select_wagon_on': 'Выберите вагоны для отмены предъявления!',
-            //'voprc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
             'voprc_mess_not_select_way_on': 'Выберите путь для предъявления вагонов!',
             'voprc_mess_not_status_provide_sostav': 'Статус предъявленного состава не позволяет выполнить данную операцию',
             'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
@@ -126,18 +112,11 @@
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю предъявленные и сданные вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю вагоны предъявленные в составе...',
-            //'voprc_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
-            //'voprc_mess_update_operation': 'Обновляю операции...',
             'voprc_mess_init_panel': 'Выполняю инициализацию модуля ...',
-            //'voprc_mess_destroy_operation': 'Закрываю форму...',
             'voprc_mess_create_sostav': 'Формирую состав для предъявления, переношу вагоны...',
             'voprc_mess_clear_sostav': 'Формирую состав для предъявления, убираю выбранные вагоны...',
-            //'voprc_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
-            //'voprc_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
 
             'voprc_confirm_title': 'Внимание!',
-            //'voprc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
-            //'voprc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             'voprc_confirm_mess_apply_provide_sostav': 'Выполнить операцию «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ» в количестве: {0} (ваг.), станция предъявления: {1}, путь предъявления: {2}?',
             'voprc_confirm_mess_apply_add_provide_sostav': 'Добавить вагоны к предъявленному составу {0} в количестве: {1} (ваг.), станция предъявления: {2}, путь предъявления: {3}?',
             'voprc_confirm_mess_edit_dt_apply_provide_sostav': 'Выполнить правку даты и времени предъявления состава на УЗ, старое время предъявления: {0}, новое время предъявления: {1}?',
@@ -151,7 +130,6 @@
             'voprc_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ»',
             'voprc_card_header_on': 'ПРЕДЪЯВИТЬ СОСТАВ',
             'voprc_card_header_from': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
-            //'voprc_card_header_collect_way': 'ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ',
             'voprc_card_header_collect_way': 'СОБРАТЬ ПО ВСЕМ СТАНЦИЯМ',
 
             'voprc_title_label_way': 'Путь для предъявления:',
@@ -200,32 +178,20 @@
             'voprc_table_caption_provide_sostav': 'Предъявленные составы',
             'voprc_table_caption_collect_wagons': 'Вагоны для предъявления',
 
-            //'voprc_mess_warning_not_num_sostav': 'Нет названия состава!',
-            //'voprc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
-
             'voprc_mess_warning_wagon_ban_status1': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, по которому идет предъявление на УЗ)!',
             'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
 
-            // 'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            // 'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
-            // 'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
-
-
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
 
-            //'voprc_mess_error_equal_locomotive': 'Локомотив №1 и №2 равны',
-            //'voprc_mess_error_not_locomotive': 'В справочнике ИДС отсутствует локомотив № {0}',
             'voprc_mess_error_not_time_aplly': 'Введите дату предъявления',
             'voprc_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
             'voprc_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты, отклонение {0} мин',
             'voprc_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
             'voprc_mess_error_equals_provide_time_aplly': 'Новая и старая дата выполнения операции должна отличаться!',
             'voprc_mess_error_sostav_provide_time_aplly': 'Состав уже предъявлен с датой {0}, при добавлении вагонов нельзя изменить дату предъявления!',
-            //'voprc_mess_error_min_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мин. отклонение (мин) = {0}',
-            //'voprc_mess_error_max_provide_time_aplly': 'Дата выполнения операции не может быть меньше предыдущей даты предъявления, мак. отклонение (мин) = {0}',
             'voprc_mess_error_min_provide_time_aplly': 'Время выполнения- меньше текущей даты {0} мин',
             'voprc_mess_error_max_provide_time_aplly': 'Время выполнения- больше текущей даты {0} мин',
             'voprc_mess_error_not_wagons': 'Не выбраны вагоны для предъявления (в окне «ПРЕДЪЯВИТЬ СОСТАВ» , выберите станцию и путь, в окне «ВАГОНЫ ДЛЯ ПРЕДЪЯВЛЕНИЯ» выберите вагоны).',
@@ -243,7 +209,6 @@
             'voprc_mess_run_operation_move': 'Выполняю операцию сбора вагонов на пути предъявления',
             'voprc_mess_not_select_wagon_from': 'Выберите вагоны для предъявления!',
             'voprc_mess_not_select_wagon_on': 'Выберите вагоны для отмены предъявления!',
-            //'voprc_mess_not_select_way_from': 'Выберите путь начала дислокации!',
             'voprc_mess_not_select_way_on': 'Выберите путь для предъявления вагонов!',
             'voprc_mess_not_status_provide_sostav': 'Статус предъявленного состава не позволяет выполнить данную операцию',
             'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
@@ -251,22 +216,17 @@
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
             'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
 
+            'voprc_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
+
             'voprc_mess_load_operation': 'Загружаю операции...',
             'voprc_mess_load_wagons': 'Загружаю вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю предъявленные и сданные вагоны на пути...',
             'voprc_mess_load_provide_sostav': 'Загружаю вагоны предъявленные в составе...',
-            //'voprc_mess_load_sostav_outer_ways': 'Загружаю составы на подходах...',
-            //'voprc_mess_update_operation': 'Обновляю операции...',
             'voprc_mess_init_panel': 'Выполняю инициализацию модуля ...',
-            //'voprc_mess_destroy_operation': 'Закрываю форму...',
             'voprc_mess_create_sostav': 'Формирую состав для предъявления, переношу вагоны...',
             'voprc_mess_clear_sostav': 'Формирую состав для предъявления, убираю выбранные вагоны...',
-            //'voprc_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
-            //'voprc_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
 
             'voprc_confirm_title': 'Внимание!',
-            //'voprc_confirm_mess_new_sostav': 'Вы уверены что хотите изменить станцию отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
-            //'voprc_confirm_mess_new_way': 'Вы уверены что хотите изменить путь отправления? Все выбранные и перенесённые вагоны в количестве {0} будут сброшены! ',
             'voprc_confirm_mess_apply_provide_sostav': 'Выполнить операцию «ПРЕДЪЯВЛЕНИЕ СОСТАВА НА УЗ» в количестве: {0} (ваг.), станция предъявления: {1}, путь предъявления: {2}?',
             'voprc_confirm_mess_apply_add_provide_sostav': 'Добавить вагоны к предъявленному составу {0} в количестве: {1} (ваг.), станция предъявления: {2}, путь предъявления: {3}?',
             'voprc_confirm_mess_edit_dt_apply_provide_sostav': 'Выполнить правку даты и времени предъявления состава на УЗ, старое время предъявления: {0}, новое время предъявления: {1}?',
@@ -1823,27 +1783,6 @@
         //var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
         var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });
         var operation_end = get_max_element(wagons, 'currentOperationEnd');
-        //
-        //if (result.new && result.new.input_datetime_time_aplly) {
-        //    var curr = moment();
-        //    var aplly = moment(result.new.input_datetime_time_aplly);
-        //    var old = moment(operation_end);
-
-        //    var minutes = old.diff(aplly, 'minutes');
-        //    if (minutes > 0) {
-        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
-        //        valid = false;
-        //    }
-        //    var minutes = aplly.diff(curr, 'minutes');
-        //    if (minutes < App.wsd_setup.return_start_dt_min) {
-        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_min * -1), false);
-        //        valid = false;
-        //    }
-        //    if (minutes > App.wsd_setup.return_start_dt_max) {
-        //        this.form_on_setup.set_element_validation_error('time_aplly', langView('vortc_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.return_start_dt_max), false);
-        //        valid = false;
-        //    }
-        //}
         // Проверим время
         if (result.new && result.new.input_datetime_time_aplly) {
             //this.id_sostav_provide
@@ -1890,7 +1829,6 @@
             }
         }
         // Проверим состав
-
         if (wagons === null || wagons.length === 0) {
             this.form_on_setup.validation_common_on.out_error_message(langView('voprc_mess_error_not_wagons', App.Langs))
             valid = false;
@@ -2038,7 +1976,6 @@
                 }.bind(this));
         }
     };
-
     // Очистить сообщения
     view_op_provide_cars.prototype.out_clear = function () {
         if (this.settings.alert) {
