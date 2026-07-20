@@ -280,23 +280,23 @@ table.table.dataTable > thead > tr > th.green {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.green {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.green {
     color: rgb(var(--dt-row-green-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.green {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.green {
     color: rgb(var(--dt-row-green-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.green a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.green a {
         color: rgb(var(--dt-row-green-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.green {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.green {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.green {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.green {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-green), 0.85);
 }
 /*Светло зеленая ячейка*/
@@ -304,23 +304,23 @@ table.table.dataTable > thead > tr > th.lgreen {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-green));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lgreen {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgreen {
     color: rgb(var(--dt-row-l-green-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lgreen {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgreen {
     color: rgb(var(--dt-row-l-green-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.lgreen a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgreen a {
         color: rgb(var(--dt-row-l-green-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lgreen {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.lgreen {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-green));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lgreen {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.lgreen {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-green), 0.85);
 }
 /*Феолетовая ячейка*/
@@ -328,23 +328,23 @@ table.table.dataTable > thead > tr > th.violet {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.violet {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.violet {
     color: rgb(var(--dt-row-violet-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.violet {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.violet {
     color: rgb(var(--dt-row-violet-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.violet a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.violet a {
         color: rgb(var(--dt-row-violet-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.violet {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.violet {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.violet {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.violet {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-violet), 0.85);
 }
 /*Красная ячейка*/
@@ -352,23 +352,23 @@ table.table.dataTable > thead > tr > th.red {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.red {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.red {
     color: rgb(var(--dt-row-red-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.red {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.red {
     color: rgb(var(--dt-row-red-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.red a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.red a {
         color: rgb(var(--dt-row-red-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.red {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.red {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.red {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.red {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-red), 0.85);
 }
 /*Розовая ячейка*/
@@ -376,23 +376,23 @@ table.table.dataTable > thead > tr > th.pink {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.pink {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.pink {
     color: rgb(var(--dt-row-pink-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.pink {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.pink {
     color: rgb(var(--dt-row-pink-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.pink a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.pink a {
         color: rgb(var(--dt-row-pink-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.pink {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.pink {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.pink {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.pink {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-pink), 0.85);
 }
 /*Желтая ячейка*/
@@ -400,23 +400,23 @@ table.table.dataTable > thead > tr > th.yellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.yellow {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.yellow {
     color: rgb(var(--dt-row-yellow-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.yellow {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.yellow {
     color: rgb(var(--dt-row-yellow-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.yellow a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.yellow a {
         color: rgb(var(--dt-row-yellow-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.yellow {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.yellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.yellow {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.yellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-yellow), 0.85);
 }
 /*Светло желтая ячейка*/
@@ -424,23 +424,23 @@ table.table.dataTable > thead > tr > th.lyellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lyellow {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lyellow {
     color: rgb(var(--dt-row-l-yellow-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lyellow {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lyellow {
     color: rgb(var(--dt-row-l-yellow-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.lyellow a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lyellow a {
         color: rgb(var(--dt-row-l-yellow-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lyellow {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.lyellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lyellow {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.lyellow {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-yellow), 0.85);
 }
 /*Синяя ячейка*/
@@ -448,23 +448,23 @@ table.table.dataTable > thead > tr > th.blue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.blue {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.blue {
     color: rgb(var(--dt-row-blue-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.blue {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.blue {
     color: rgb(var(--dt-row-blue-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.blue a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.blue a {
         color: rgb(var(--dt-row-blue-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.blue {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.blue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.blue {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.blue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-blue), 0.85);
 }
 /*Голубая ячейка*/
@@ -472,23 +472,23 @@ table.table.dataTable > thead > tr > th.lblue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lblue {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lblue {
     color: rgb(var(--dt-row-l-blue-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lblue {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lblue {
     color: rgb(var(--dt-row-l-blue-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.lblue a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lblue a {
         color: rgb(var(--dt-row-l-blue-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lblue {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.lblue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lblue {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.lblue {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-blue), 0.85);
 }
 /*Серая ячейка*/
@@ -496,23 +496,23 @@ table.table.dataTable > thead > tr > th.grey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.grey {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.grey {
     color: rgb(var(--dt-row-grey-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.grey {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.grey {
     color: rgb(var(--dt-row-grey-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.grey a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.grey a {
         color: rgb(var(--dt-row-grey-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.grey {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.grey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.grey {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.grey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-grey), 0.85);
 }
 /*Светло-серая ячейка*/
@@ -520,23 +520,23 @@ table.table.dataTable > thead > tr > th.lgrey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lgrey {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgrey {
     color: rgb(var(--dt-row-l-grey-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.lgrey {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgrey {
     color: rgb(var(--dt-row-l-grey-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.lgrey a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.lgrey a {
         color: rgb(var(--dt-row-l-grey-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.lgrey {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.lgrey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.lgrey {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.lgrey {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-l-grey), 0.85);
 }
 /*Берюзовая ячейка*/
@@ -544,23 +544,23 @@ table.table.dataTable > thead > tr > th.turquoise {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.turquoise {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.turquoise {
     color: rgb(var(--dt-row-turquoise-text));
 }
 
-table.table.dataTable > tbody > tr:not(.selected) > td.turquoise {
+table.table.dataTable > tbody > tr:not(.selected, .ban) > td.turquoise {
     color: rgb(var(--dt-row-turquoise-text))
 }
 
-    table.table.dataTable > tbody > tr:not(.selected) > td.turquoise a {
+    table.table.dataTable > tbody > tr:not(.selected, .ban) > td.turquoise a {
         color: rgb(var(--dt-row-turquoise-link))
     }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+1) > td.turquoise {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+1) > td.turquoise {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise));
 }
 
-table.dataTable.table-striped > tbody > tr:not(.selected):nth-of-type(2n+0) > td.turquoise {
+table.dataTable.table-striped > tbody > tr:not(.selected, .ban):nth-of-type(2n+0) > td.turquoise {
     box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-turquoise), 0.85);
 }
 
