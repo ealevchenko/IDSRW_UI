@@ -54,8 +54,10 @@
             'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
             'tws_field_current_loading_status': 'Статус',
             'tws_field_filing_loading_status': 'Статус (подача)',
+            'tws_field_current_wagon_provide': 'Запрет (вагон предъявлен)',
             'tws_field_current_wagon_busy': 'Запрет (новых операций)',
             'tws_field_current_move_busy': 'Запрет (перемещений)',
+            'tws_field_current_filing_busy': 'Запрет (подача открыта)',
             'tws_field_current_load_busy': 'Запрет (погрузки)',
             'tws_field_current_unload_busy': 'Запрет (выгрузки)',
             'tws_field_exist_load_document': 'Наличие документа',
@@ -213,13 +215,13 @@
             'tws_field_filing_end': 'Дата окончания выгрузки',
             'tws_field_current_cargo_group_name': 'Группа груза ТЕКУЩ',
             'tws_field_current_cargo_name': 'Груз ТЕКУЩ',
-/*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
-/*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
+            /*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
+            /*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
             'tws_field_filing_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
             'tws_field_filing_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_old_cargo_name': 'Груз ПРЕД (подача)',
-/*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
-/*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
+            /*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
+            /*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
             'tws_field_current_common_cargo_name': 'Груз ТЕКУЩ',
             //'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
@@ -386,8 +388,10 @@
             'tws_field_arrival_division_amkr_abbr': 'Цех получ.',
             'tws_field_current_loading_status': 'Статус',
             'tws_field_filing_loading_status': 'Статус (подача)',
+            'tws_field_current_wagon_provide': 'Запрет (вагон предъявлен)',
             'tws_field_current_wagon_busy': 'Запрет (новых операций)',
             'tws_field_current_move_busy': 'Запрет (перемещений)',
+            'tws_field_current_filing_busy': 'Запрет (подача открыта)',
             'tws_field_current_load_busy': 'Запрет (погрузки)',
             'tws_field_current_unload_busy': 'Запрет (выгрузки)',
             'tws_field_exist_load_document': 'Наличие документа',
@@ -545,13 +549,13 @@
             'tws_field_filing_end': 'Дата окончания выгрузки',
             'tws_field_current_cargo_group_name': 'Группа груза ТЕКУЩ',
             'tws_field_current_cargo_name': 'Груз ТЕКУЩ',
-/*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
-/*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
+            /*            'tws_field_current_internal_cargo_group_name': 'Группа груза ТЕКУЩ',*/
+            /*            'tws_field_current_internal_cargo_name': 'Груз ТЕКУЩ',*/
             'tws_field_filing_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',
             'tws_field_filing_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_old_cargo_name': 'Груз ПРЕД (подача)',
-/*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
-/*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
+            /*            'tws_field_filing_internal_cargo_group_name': 'Группа груза ТЕКУЩ (подача)',*/
+            /*            'tws_field_filing_internal_cargo_name': 'Груз ТЕКУЩ (подача)',*/
             'tws_field_current_common_cargo_name': 'Груз ТЕКУЩ',
             //'tws_field_filing_common_cargo_name': 'Груз ТЕКУЩ (подача)',
             'tws_field_current_division_from_abbr': 'Цех погрузки ТЕКУЩ',
@@ -1021,6 +1025,14 @@
                 title: langView('tws_field_current_loading_status', App.Langs), width: "100px", orderable: true, searchable: true
             },
             {
+                field: 'current_wagon_provide',
+                data: function (row, type, val, meta) {
+                    return row.currentWagonProvide ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_current_wagon_provide', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
                 field: 'current_wagon_busy',
                 data: function (row, type, val, meta) {
                     return row.currentWagonBusy ? langView('t_com_title_yes', App.Langs) : '';
@@ -1035,6 +1047,14 @@
                 },
                 className: 'dt-body-center',
                 title: langView('tws_field_current_move_busy', App.Langs), width: "30px", orderable: true, searchable: true
+            },
+            {
+                field: 'current_filing_busy',
+                data: function (row, type, val, meta) {
+                    return row.currentFilingBusy ? langView('t_com_title_yes', App.Langs) : '';
+                },
+                className: 'dt-body-center',
+                title: langView('tws_field_current_filing_busy', App.Langs), width: "30px", orderable: true, searchable: true
             },
             {
                 field: 'current_load_busy',
@@ -3945,16 +3965,20 @@
         } else {
             collums.push({ field: 'num', title: null, class: null });
         }
-        collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
-        collums.push({ field: 'operator_paid', title: null, class: null });//        
+        //collums.push({ field: 'operator_paid', title: null, class: null });//
+        collums.push({ field: 'current_filing_busy', title: null, class: null });//
+        //collums.push({ field: 'exist_load_document', title: null, class: null });//
         collums.push({ field: 'current_wagon_busy', title: null, class: null });//
+        //collums.push({ field: 'current_move_busy', title: null, class: 'pink' });
+        collums.push({ field: 'current_wagon_provide', title: null, class: null });//
         collums.push({ field: 'wagon_rod_abbr', title: null, class: null });//
         collums.push({ field: 'wagon_type', title: null, class: null });
         collums.push({ field: 'wagon_gruzp_doc', title: null, class: null });
         collums.push({ field: 'wagon_gruzp_uz', title: null, class: null });
         collums.push({ field: 'wagon_adm', title: null, class: null });
+        collums.push({ field: 'current_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_condition_abbr', title: null, class: null });
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
         collums.push({ field: 'current_loading_status', title: null, class: null });
@@ -5365,7 +5389,7 @@
                     }
                     // Цвет оператора
                     if (data.operatorColor && data.operatorColor !== '') {
-                        $('td', row).eq(4).attr('style', 'background-color:' + data.operatorColor)
+                        $('td', row).eq(3).attr('style', 'background-color:' + data.operatorColor)
                         //$('td.operator', row).attr('style', 'background-color:' + data.operatorColor)
                     }
                     //// Проверим если по оператору контролировать норму времени, тогда проверить
@@ -5377,7 +5401,11 @@
                     //        $('td', row).eq(1).addClass('idle-time-error');
                     //    };
                     //}
-                    if (data.id_wir_from !== null || data.currentWagonBusy || data.currentMoveBusy || data.outgoingSostavStatus !== null) {
+                    if (data.id_wir_from !== null ||
+                        data.currentWagonBusy ||
+                        data.currentMoveBusy ||
+                        data.outgoingSostavStatus !== null ||
+                        data.currentFilingBusy) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл

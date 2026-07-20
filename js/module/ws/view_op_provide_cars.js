@@ -71,9 +71,15 @@
 
             //'voprc_mess_warning_not_num_sostav': 'Нет названия состава!',
             //'voprc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
-            'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
-            'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+            'voprc_mess_warning_wagon_ban_status1': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, по которому идет предъявление на УЗ)!',
+            'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
+            'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
+            'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
+
+            // 'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            // 'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
+            // 'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
@@ -196,9 +202,15 @@
 
             //'voprc_mess_warning_not_num_sostav': 'Нет названия состава!',
             //'voprc_mess_warning_wagon_ban_disl_on_way': 'Вагон № {0} для операций заблокирован (вагон стоит на пути приема)',
-            'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
-            'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+
+            'voprc_mess_warning_wagon_ban_status1': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, по которому идет предъявление на УЗ)!',
+            'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
+            'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
+            'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
+
+            // 'voprc_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            // 'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон уже предъявлен)',
+            // 'voprc_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для предъявления заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
@@ -969,20 +981,38 @@
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
                     this.from_alert.clear_message();
-                    if (rowData && rowData.length > 0) {
-                        if (rowData[0].outgoingSostavStatus !== null || rowData[0].currentIdOperation === 9) {
+                    if (rowData[0].outgoingSostavStatus !== null) {
+                        if (rowData[0].outgoingSostavStatus < 2) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_status1', App.Langs).format(rowData[0].num));
                         }
-                        if (rowData[0].id_wir_from !== null) {
+                        if (rowData[0].outgoingSostavStatus == 2) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_provide_way', App.Langs).format(rowData[0].num));
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_status2', App.Langs).format(rowData[0].num));
                         }
-                        if (rowData[0].currentMoveBusy) {
+                    } else {
+                        if (rowData[0].currentFilingBusy) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_filing', App.Langs).format(rowData[0].num, rowData[0].idFiling !== null ? rowData[0].idFiling : rowData[0].idPreviousFiling));
+                        } else if (rowData[0].currentWagonBusy) {
+                            e.preventDefault();
+                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_busy', App.Langs).format(rowData[0].num, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                         }
                     }
+                    // if (rowData && rowData.length > 0) {
+                    //     if (rowData[0].outgoingSostavStatus !== null || rowData[0].currentIdOperation === 9) {
+                    //         e.preventDefault();
+                    //         this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                    //     }
+                    //     if (rowData[0].id_wir_from !== null) {
+                    //         e.preventDefault();
+                    //         this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_provide_way', App.Langs).format(rowData[0].num));
+                    //     }
+                    //     if (rowData[0].currentMoveBusy) {
+                    //         e.preventDefault();
+                    //         this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                    //     }
+                    // }
 
                 }.bind(this),
                 fn_select_rows: function (rows) {
