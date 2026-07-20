@@ -546,7 +546,7 @@
                                     }
                                     mcf.open(
                                         langView('mwsd_title_form_searsh', App.Langs),
-                                        result.info + (view ? " \nПоказать вагон?" : ""),
+                                        result.info + (view ? "\nПоказать вагон?" : ""),
                                         function () {
                                             if (view) {
                                                 var way = list_way.find(function (o) {
