@@ -458,6 +458,39 @@
             return !i.wayDelete && i.idStation === id_station
         });
     };
+    // Получить списки (Value, Text, Park, Desabled, devision) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextParkDevisionWaysOfStation = function (id_station) {
+        var list_obj = this.getAllWays();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj.filter(function (i) { return i.idStation === id_station; }.bind(this)), function (i, el) {
+                list.push({
+                    value: el['id'],
+                    text: el['wayNum' + ucFirst(App.Lang)] + '-' + el['wayAbbr' + ucFirst(App.Lang)],
+                    group: (el.idParkNavigation ? el.idParkNavigation['parkAbbr' + ucFirst(App.Lang)] : ''),
+                    disabled: false,
+                    devision: (el.idDevisionNavigation ? el.idDevisionNavigation['divisionAbbr' + ucFirst(App.Lang)] : '')
+                });
+            }.bind(this));
+        }
+        return list;
+    };
+    // Получить списки (Value, Text, Group[park-devision], Desabled) по умолчанию с учетом станции
+    ids_directory.prototype.getListValueTextGroupWaysOfStation = function (id_station) {
+        var list_obj = this.getAllWays();
+        var list = [];
+        if (list_obj && list_obj.length > 0) {
+            $.each(list_obj.filter(function (i) { return i.idStation === id_station; }.bind(this)), function (i, el) {
+                list.push({
+                    value: el['id'],
+                    text: el['wayNum' + ucFirst(App.Lang)] + '-' + el['wayAbbr' + ucFirst(App.Lang)],
+                    group: (el.idParkNavigation ? '{' + el.idParkNavigation['parkAbbr' + ucFirst(App.Lang)] + '}': '') + (el.idDevisionNavigation ? '-{' + el.idDevisionNavigation['divisionAbbr' + ucFirst(App.Lang)] + '}' : ''),
+                    disabled: false,
+                });
+            }.bind(this));
+        }
+        return list;
+    };
     // Получить списки путей с выходом на УЗ (Value, Text, Desabled) по умолчанию с учетом станции
     ids_directory.prototype.getListValueTextCrossingUzWaysOfStation = function (id_station) {
         return this.getListWays('id', 'wayNum', 'wayName', ucFirst(App.Lang), function (i) {
