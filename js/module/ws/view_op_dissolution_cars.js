@@ -161,6 +161,9 @@
 
     function view_op_dissolution_cars(selector) {
         this.view_com = new VIEW_COMMON(selector);
+        this.rAdm = false;
+        this.rRW = false;
+        this.rRO = false;
     }
     // инициализация модуля
     view_op_dissolution_cars.prototype.init = function (options) {
@@ -949,35 +952,39 @@
         }.bind(this)); //------- {end this.view_com.load_db}
     };
     // Показать данные 
-    view_op_dissolution_cars.prototype.view = function (id_way) {
+    view_op_dissolution_cars.prototype.view = function (id_way, access) {
+        this.rAdm = access && access.rAdmin ? access.rAdmin : false;
+        this.rRW = access && access.rTropRW ? access.rTropRW : false;
+        this.rRO = access && access.rRO ? access.rRO : false;
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
-        LockScreen(langView('vopss_mess_load_operation', App.Langs));
-        // Очистить сообщения и форму
-        this.form_on_setup.clear_all();
-        this.form_from_setup.clear_all();
-        // Сбросим установки (время и локомотивы)
-        this.form_on_setup.el.datalist_locomotive1.val('');
-        //this.form_on_setup.el.datalist_locomotive2.val('');
-        this.form_on_setup.el.input_datetime_time_start.val(moment());
-        this.form_on_setup.el.input_datetime_time_stop.val(moment().add(1, 'hour'));
-        // Сбросим вагоны переноса
-        var id_station = -1;
-        this.id_station = -1;
-        this.id_way = -1;
-        if (id_way > 0) {
-            var way = this.view_com.api_dir.getWays_Of_Id(id_way);
-            if (way) {
-                id_station = way.idStation;
-                // Отобразим выбор на панеле
-                this.form_from_setup.el.select_id_station.val(id_station);
-                //this.id_way = id_way;
-            }
-        };
-        this.update(id_station, id_way, function () {
-            LockScreenOff();
-        }.bind(this));
-
+        if (this.rRO) {
+            LockScreen(langView('vopss_mess_load_operation', App.Langs));
+           // Очистить сообщения и форму
+            this.form_on_setup.clear_all();
+            this.form_from_setup.clear_all();
+            // Сбросим установки (время и локомотивы)
+            this.form_on_setup.el.datalist_locomotive1.val('');
+            //this.form_on_setup.el.datalist_locomotive2.val('');
+            this.form_on_setup.el.input_datetime_time_start.val(moment());
+            this.form_on_setup.el.input_datetime_time_stop.val(moment().add(1, 'hour'));
+            // Сбросим вагоны переноса
+            var id_station = -1;
+            this.id_station = -1;
+            this.id_way = -1;
+            if (id_way > 0) {
+                var way = this.view_com.api_dir.getWays_Of_Id(id_way);
+                if (way) {
+                    id_station = way.idStation;
+                    // Отобразим выбор на панеле
+                    this.form_from_setup.el.select_id_station.val(id_station);
+                    //this.id_way = id_way;
+                }
+            };
+            this.update(id_station, id_way, function () {
+                LockScreenOff();
+            }.bind(this));
+        }
     };
     // Обновить информацию
     view_op_dissolution_cars.prototype.update = function (id_station, id_way, callback) {

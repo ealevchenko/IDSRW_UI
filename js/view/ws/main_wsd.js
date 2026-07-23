@@ -805,8 +805,8 @@
                         $('#btn-internal-operations').on('click', 'button', function (event) {
                             switch (event.currentTarget.id) {
                                 case 'dissolution': {
-                                    if (rTropRW) {
-                                        vodc.view(current_id_way);
+                                    if (rAdmin || rTropRW) {
+                                        vodc.view(current_id_way, { rAdmin, rTropRW, rRO: false }); // роспуск
                                     } else {
                                         LockScreenOff();
                                         main_alert.clear_message();
@@ -815,8 +815,8 @@
                                     break;
                                 };
                                 case 'dislocation': {
-                                    if (rTropRW) {
-                                        vodlc.view(current_id_way);
+                                    if (rAdmin || rTropRW) {
+                                        vodlc.view(current_id_way, { rAdmin, rTropRW, rRO: true }); // дислокация
                                     } else {
                                         LockScreenOff();
                                         main_alert.clear_message();
@@ -885,7 +885,7 @@
                                 switch (event.currentTarget.id) {
                                     case 'provide': {
                                         if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
-                                            voprc.view(current_id_way, { rAdmin, rTropRW, rRO:false });
+                                            voprc.view(current_id_way, { rAdmin, rTropRW, rRO:true });
                                         } else {
                                             main_alert.clear_message();
                                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
