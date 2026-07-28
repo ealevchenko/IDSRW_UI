@@ -23,128 +23,139 @@
     {
         'default':  //default language: ru
         {
-            'vopss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
-            'vopss_card_header_on': 'ПУТИ РОСПУСКА',
-            'vopss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
-            'vopss_title_label_station': 'Станция роспуска:',
-            'vopss_text_label_station': 'Выберите станцию роспуска ...',
-            'vopss_title_label_way_from': 'Путь роспуска:',
-            'vopss_title_text_way_from': 'Выберите путь роспуска вагонов ...',
+            'vopdss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_card_header_on': 'ПУТИ РОСПУСКА',
+            'vopdss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
+            'vopdss_title_label_station': 'Станция роспуска:',
+            'vopdss_text_label_station': 'Выберите станцию роспуска ...',
+            'vopdss_title_label_way_from': 'Путь роспуска:',
+            'vopdss_title_text_way_from': 'Выберите путь роспуска вагонов ...',
 
-            'vopss_title_label_locomotive1': 'Локомотив №1:',
-            'vopss_title_placeholder_locomotive': ' № локомотива',
-            'vopss_title_time_start': 'Начало выполнения',
-            'vopss_title_time_stop': 'Конец выполнения',
-            'vopss_title_placeholder_time_start': 'Начало выполнения',
-            'vopss_title_placeholder_time_stop': 'Конец выполнения',
-            'vopss_title_form_apply': 'Выполнить',
-            'vopss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_title_label_locomotive1': 'Локомотив №1:',
+            'vopdss_title_placeholder_locomotive': ' № локомотива',
+            'vopdss_title_time_start': 'Начало выполнения',
+            'vopdss_title_time_stop': 'Конец выполнения',
+            'vopdss_title_placeholder_time_start': 'Начало выполнения',
+            'vopdss_title_placeholder_time_stop': 'Конец выполнения',
+            'vopdss_title_form_apply': 'Выполнить',
+            'vopdss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
-            'vopss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
-            'vopss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+            'vopdss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vopdss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
+            'vopdss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
+            'vopdss_title_button_head': 'Голова',
+            'vopdss_title_button_tail': 'Хвост',
 
+            'vopdss_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
+            'vopdss_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
 
-            'vopss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+            'vopdss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
-            //'vopss_mess_error_required_locomotive': 'Выберите Локомотив',
-            //'vopss_mess_error_required_datetime_start': 'Укажите время начала',
-            //'vopss_mess_error_required_datetime_stop': 'Укажите время конца',
-            'vopss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
-            'vopss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
-            'vopss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
-            'vopss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
-            'vopss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
+            'vopdss_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
+            'vopdss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopdss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
+            'vopdss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopdss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopdss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
 
-            'vopss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
-            'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
-            'vopss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-            'vopss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vopdss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
+            'vopdss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
+            'vopdss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vopdss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
-            'vopss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
-            'vopss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
+            'vopdss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
-            'vopoc_mess_not_select_way_on': 'Выберите путь для роспуска',
-            'vopoc_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
-            'vopoc_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
-            'vopss_mess_ok_operation': 'Вагоны перенесены на пути роспуска, в количестве {0} (ваг.)',
+            'vopdss_mess_not_select_way_on': 'Выберите путь для роспуска',
+            'vopdss_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
+            'vopdss_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
+            'vopdss_mess_ok_operation': 'Вагоны перенесены на пути роспуска, в количестве {0} (ваг.)',
 
-            'vopss_mess_load_operation': 'Загружаю операции...',
-            'vopss_mess_load_wagons': 'Загружаю вагоны на пути...',
-            'vopss_mess_load_ways': 'Загружаю пути дислокации...',
+            'vopdss_mess_load_operation': 'Загружаю операции...',
+            'vopdss_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopdss_mess_load_ways': 'Загружаю пути дислокации...',
+            'vopdss_mess_create_sostav': 'Формирую маршрут роспуска, переношу вагоны...',
+            'vopdss_mess_clear_sostav': 'Формирую маршрут роспуска, убираю выбранные вагоны...',
+            'vopdss_mess_head_sostav': 'Формирую порядок роспуска голова-хвост',
+            'vopdss_mess_reverse_sostav': 'Формирую порядок роспуска, реверс вагонов...',
 
-            'vopss_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            'vopdss_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
-            'vopss_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
+            'vopdss_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
 
-            'vopss_confirm_title': 'Внимание!',
-            'vopss_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            'vopss_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            'vopss_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
+            'vopdss_confirm_title': 'Внимание!',
+            'vopdss_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopdss_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopdss_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
         },
         'en':  //default language: English
         {
-            'vopss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
-            'vopss_card_header_on': 'ПУТИ РОСПУСКА',
-            'vopss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
-            'vopss_title_label_station': 'Станция роспуска:',
-            'vopss_text_label_station': 'Выберите станцию роспуска ...',
-            'vopss_title_label_way_from': 'Путь роспуска:',
-            'vopss_title_text_way_from': 'Выберите путь роспуска вагонов ...',
+            'vopdss_card_header_panel': 'ВЫПОЛНИТЬ ОПЕРАЦИЮ "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_card_header_on': 'ПУТИ РОСПУСКА',
+            'vopdss_card_header_from': 'ВАГОНЫ ДЛЯ РОСПУСКА',
+            'vopdss_title_label_station': 'Станция роспуска:',
+            'vopdss_text_label_station': 'Выберите станцию роспуска ...',
+            'vopdss_title_label_way_from': 'Путь роспуска:',
+            'vopdss_title_text_way_from': 'Выберите путь роспуска вагонов ...',
 
-            'vopss_title_label_locomotive1': 'Локомотив №1:',
-            'vopss_title_placeholder_locomotive': ' № локомотива',
-            'vopss_title_time_start': 'Начало выполнения',
-            'vopss_title_time_stop': 'Конец выполнения',
-            'vopss_title_placeholder_time_start': 'Начало выполнения',
-            'vopss_title_placeholder_time_stop': 'Конец выполнения',
-            'vopss_title_form_apply': 'Выполнить',
-            'vopss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_title_label_locomotive1': 'Локомотив №1:',
+            'vopdss_title_placeholder_locomotive': ' № локомотива',
+            'vopdss_title_time_start': 'Начало выполнения',
+            'vopdss_title_time_stop': 'Конец выполнения',
+            'vopdss_title_placeholder_time_start': 'Начало выполнения',
+            'vopdss_title_placeholder_time_stop': 'Конец выполнения',
+            'vopdss_title_form_apply': 'Выполнить',
+            'vopdss_title_form_apply_title': 'Выполнить операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
-            'vopss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
-            'vopss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
-            'vopss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
+            'vopdss_mess_warning_wagon_ban_status': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу который имеет статус :[{1}])',
+            'vopdss_mess_warning_wagon_ban_dess_way': 'Вагон № {0} для операций заблокирован (вагон уже перенесен на путь роспуска :[{1}])',
+            'vopdss_mess_warning_wagon_ban_move_busy': 'Вагон № {0} для перемещения заблокирован (вагон принадлежит составу со статусом :[{1}] или вагон пренадлежит подаче :[{2}] по которой не открыта или незакрыта операция :[{3}])',
 
+            'vopdss_title_button_head': 'Голова',
+            'vopdss_title_button_tail': 'Хвост',
 
+            'vopdss_mess_head_sostav': 'Формирую порядок дислокации голова-хвост',
+            'vopdss_mess_reverse_sostav': 'Формирую порядок дислокации, реверс вагонов...',
 
-            'vopss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
+            'vopdss_mess_warning_wagon_existing_way': 'Вагон № {0} для операций заблокирован (вагон стоит на текущем пути!))',
 
-            //'vopss_mess_error_required_locomotive': 'Выберите Локомотив',
-            //'vopss_mess_error_required_datetime_start': 'Укажите время начала',
-            //'vopss_mess_error_required_datetime_stop': 'Укажите время конца',
-            'vopss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
-            'vopss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
-            'vopss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
-            'vopss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
-            'vopss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
+            'vopdss_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
+            'vopdss_mess_error_start_time_aplly': 'Дата начала выполнения операции не может быть меньше даты выполнения последней операции [{0}]',
+            'vopdss_mess_error_stop_time_aplly': 'Дата окончания операции не может быть меньше или равна дате начала операции',
+            'vopdss_mess_error_min_time_aplly': 'Дата выполнения операции не может быть меньше текущей даты,  отклонение {0} мин',
+            'vopdss_mess_error_max_time_aplly': 'Дата выполнения операции не может быть больше текущей даты, отклонение {0} мин.',
+            'vopdss_mess_error_period_time': 'Операция должна длиться не менее {0} мин.',
 
-            'vopss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
-            'vopss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
-            'vopss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
-            'vopss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
+            'vopdss_mess_error_not_wagons': 'Не выбраны вагоны для операции роспуск (в окне «ВАГОНЫ ДЛЯ РОСПУСКА», выберите станцию и путь начала роспуска, в окне «ПУТИ РОСПУСКА» выберите путь на который будет произведен роспуск и перенесите вагоны роспуска).',
+            'vopdss_mess_error_operation_run': 'При выполнении операции «РОСПУСК СОСТАВА НА СТАНЦИИ» произошла ошибка, код ошибки: {0}',
+            'vopdss_mess_error_operation_wagons_run': 'Вагон № {0}, код ошибки: {1}',
+            'vopdss_mess_error_api': 'Ошибка выполнения запроса status: {0}, title: {1}',
 
-            'vopss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
-            'vopss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
+            'vopdss_mess_cancel_operation': 'Операция "РОСПУСК СОСТАВА НА СТАНЦИИ" – отменена',
+            'vopdss_mess_run_operation': 'Выполняю операцию "РОСПУСК СОСТАВА НА СТАНЦИИ"',
 
-            'vopoc_mess_not_select_way_on': 'Выберите путь для роспуска',
-            'vopoc_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
-            'vopoc_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
-            'vopss_mess_ok_operation': 'Вагоны перенесены на пути роспуска, в количестве {0} (ваг.)',
+            'vopdss_mess_not_select_way_on': 'Выберите путь для роспуска',
+            'vopdss_mess_not_select_wagon_from': 'Выберите вагоны для роспуска',
+            'vopdss_mess_not_select_wagon_on': 'Выберите вагоны для отмены роспуска',
+            'vopdss_mess_ok_operation': 'Вагоны перенесены на пути роспуска, в количестве {0} (ваг.)',
 
-            'vopss_mess_load_operation': 'Загружаю операции...',
-            'vopss_mess_load_wagons': 'Загружаю вагоны на пути...',
-            'vopss_mess_load_ways': 'Загружаю пути дислокации...',
+            'vopdss_mess_load_operation': 'Загружаю операции...',
+            'vopdss_mess_load_wagons': 'Загружаю вагоны на пути...',
+            'vopdss_mess_load_ways': 'Загружаю пути дислокации...',
+            'vopdss_mess_create_sostav': 'Формирую маршрут роспуска, переношу вагоны...',
+            'vopdss_mess_clear_sostav': 'Формирую маршрут роспуска, убираю выбранные вагоны...',
+            'vopdss_mess_head_sostav': 'Формирую порядок роспуска голова-хвост',
+            'vopdss_mess_reverse_sostav': 'Формирую порядок роспуска, реверс вагонов...',
 
-            'vopss_mess_init_panel': 'Выполняю инициализацию модуля ...',
+            'vopdss_mess_init_panel': 'Выполняю инициализацию модуля ...',
 
-            'vopss_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
+            'vopdss_mess_clear_sostav': 'Формирую роспуск, убираю выбранные вагоны...',
 
-            'vopss_confirm_title': 'Внимание!',
-            'vopss_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            'vopss_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
-            'vopss_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
-
+            'vopdss_confirm_title': 'Внимание!',
+            'vopdss_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopdss_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь роспуска {0}? Все выбранные вагоны в количестве {1} будут сброшены! ',
+            'vopdss_confirm_mess_apply_dissolutionl_wagons': 'Выполнить операцию "РОСПУСКА ВАГОНОВ" в количестве: {0} (ваг.), станция роспуска {1}, путь начала роспуска {2}',
         }
     };
     // Определлим список текста для этого модуля
@@ -196,17 +207,21 @@
         this.locomotives = [];      // Список локомотивов (полный)
         this.list_locomotive = [];  // Список локомотивов (value\text\desabled)
 
-        //this.station = null;        // Станция отправления
+        this.id_way_dissolution = null; // id пути выбранного для роспуска
+        this.head = [];                 // Признак голова(true)\хвост(false), по умолчанию хвост
+        this.reverse = [];
+
+        //this.station = null;          // Станция отправления
         this.wagons = [];               // Список вагонов на пути отправки (рабочий)
         this.dissolution_ways = [];     // Список путей приема роспуска (рабочий)
         this.wagons_on = [];            // Список вагонов на пути выбранного приема (рабочий)
         this.view_com.$title.empty();
-        this.view_com.$title.append(langView('vopss_card_header_panel', App.Langs));
+        this.view_com.$title.append(langView('vopdss_card_header_panel', App.Langs));
         this.view_com.$op.empty();
         this.view_com.close();
 
         // Сообщение
-        LockScreen(langView('vopss_mess_init_panel', App.Langs));
+        LockScreen(langView('vopdss_mess_init_panel', App.Langs));
         //----------------------------------
         // Alert
         this.alert = new this.view_com.fe_ui.bs_alert({
@@ -226,7 +241,7 @@
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
-            header_text: langView('vopss_card_header_on', App.Langs),
+            header_text: langView('vopdss_card_header_on', App.Langs),
             body_color: null,
             body_bg: null,
             body_text: null,
@@ -267,7 +282,7 @@
             header_class: 'fw-bold text-uppercase',
             header_color: null,
             header_bg: null,
-            header_text: langView('vopss_card_header_from', App.Langs),
+            header_text: langView('vopdss_card_header_from', App.Langs),
             body_color: null,
             body_bg: null,
             body_text: null,
@@ -359,8 +374,8 @@
                     class: null,
                     fsize: 'sm',
                     color: 'primary',
-                    text: langView('vopss_title_form_apply', App.Langs),
-                    title: langView('vopss_title_form_apply_title', App.Langs),
+                    text: langView('vopdss_title_form_apply', App.Langs),
+                    title: langView('vopdss_title_form_apply_title', App.Langs),
                     icon_fa_left: 'fa-solid fa-train-subway',  //<i class="fa-solid fa-train-subway"></i>
                     icon_fa_right: null,
                     fn_click: function (event) {
@@ -386,12 +401,12 @@
                     validation_group: 'common',
                     id: 'locomotive1',
                     name: 'locomotive1',
-                    label: langView('vopss_title_label_locomotive1', App.Langs),
+                    label: langView('vopdss_title_label_locomotive1', App.Langs),
                     element_fsize: 'sm',
                     element_class: 'flexdatalist',
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopss_title_placeholder_locomotive', App.Langs),
+                    element_placeholder: langView('vopdss_title_placeholder_locomotive', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -425,13 +440,13 @@
                     validation_group: 'common',
                     id: 'time_start',
                     name: 'time_start',
-                    label: langView('vopss_title_time_start', App.Langs),
+                    label: langView('vopdss_title_time_start', App.Langs),
                     element_type: 'datetime-local',
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopss_title_placeholder_time_start', App.Langs),
+                    element_placeholder: langView('vopdss_title_placeholder_time_start', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -453,7 +468,7 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
-                    form_text: langView('vopss_title_time_start', App.Langs),
+                    form_text: langView('vopdss_title_time_start', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -464,13 +479,13 @@
                     validation_group: 'common',
                     id: 'time_stop',
                     name: 'time_stop',
-                    label: langView('vopss_title_time_stop', App.Langs),
+                    label: langView('vopdss_title_time_stop', App.Langs),
                     element_type: 'datetime-local',
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
                     element_title: null,
-                    element_placeholder: langView('vopss_title_placeholder_time_stop', App.Langs),
+                    element_placeholder: langView('vopdss_title_placeholder_time_stop', App.Langs),
                     element_required: true,
                     element_maxlength: null,
                     element_pattern: null,
@@ -492,7 +507,7 @@
                     col_prefix: 'md',
                     col_size: 6,
                     col_class: 'mt-0',
-                    form_text: langView('vopss_title_time_stop', App.Langs),
+                    form_text: langView('vopdss_title_time_stop', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -518,9 +533,9 @@
                             var wagons = this.wagons.filter(function (i) {
                                 return i.id_way_dissolution !== null;
                             }.bind(this));
-                            var message = langView('vopss_confirm_mess_apply_dissolutionl_wagons', App.Langs).format((wagons ? wagons.length : 0), this.form_from_setup.el.select_id_station.text(), this.form_from_setup.el.select_id_way_from.text());
+                            var message = langView('vopdss_confirm_mess_apply_dissolutionl_wagons', App.Langs).format((wagons ? wagons.length : 0), this.form_from_setup.el.select_id_station.text(), this.form_from_setup.el.select_id_way_from.text());
                             this.view_com.mcf.open(
-                                langView('vopss_title_form_apply', App.Langs),
+                                langView('vopdss_title_form_apply', App.Langs),
                                 message,
                                 function () {
                                     // Принять
@@ -529,7 +544,14 @@
                                     if (wagons && wagons.length > 0) {
                                         // Получим перечень вагонов и новую позицию
                                         $.each(wagons.sort(function (a, b) { return a.position_new - b.position_new; }), function (i, el) {
-                                            list_dissolution.push({ wir_id: el.wirId, position: el.position_new, id_way_dissolution: el.id_way_dissolution })
+                                            list_dissolution.push({
+                                                wir_id: el.wirId,
+                                                //position: el.position_new,
+                                                position: el.position,
+                                                id_way_dissolution: el.id_way_dissolution,
+                                                reverse: this.reverse[el.id_way_dissolution],
+                                                head: this.head[el.id_way_dissolution]
+                                            })
                                         }.bind(this));
                                         // Сформируем операцию
                                         var operation = {
@@ -544,7 +566,7 @@
                                     }
                                 }.bind(this),
                                 function () {
-                                    this.form_on_setup.validation_common.out_warning_message(langView('vopss_mess_cancel_operation', App.Langs));
+                                    this.form_on_setup.validation_common.out_warning_message(langView('vopdss_mess_cancel_operation', App.Langs));
                                 }.bind(this));
                         }
                     }
@@ -564,6 +586,7 @@
             //this.on_table.$html.empty();
             this.on_table.$html.append(row_diss_way_cars.$html);
             /*console.log('add row_arr_cars_way');*/
+            // Cписок путей
             this.tdw_opdc = new TWS('div#op-dc-dissolution-ways');
             this.tdw_opdc.init({
                 alert: this.on_alert,
@@ -609,7 +632,7 @@
 
                 }.bind(this),
             });
-
+            // Список вагонов на пути
             this.tdwc_opdc = new TWS('div#op-dc-dissolution-way-cars');
             this.tdwc_opdc.init({
                 alert: this.on_alert,
@@ -630,7 +653,33 @@
                     {
                         name: 'del_wagons_sostav',
                         action: function (e, dt, node, config) {
-                            this.tdwc_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            if (this.rRW || this.rAdm) {
+                                this.tdwc_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                            }
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'head_tail',
+                        action: function (e, dt, node, config) {
+                            if (this.rRW || this.rAdm) {
+                                this.tdwc_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                            }
+                        }.bind(this),
+                        enabled: false
+                    },
+                    {
+                        name: 'reverse',
+                        action: function (e, dt, node, config) {
+                            if (this.rRW || this.rAdm) {
+                                this.tdwc_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                            }
                         }.bind(this),
                         enabled: false
                     }
@@ -650,7 +699,7 @@
                     this.on_alert.clear_message();
                     if (rowData && rowData.length > 0 && rowData[0].id_way_dissolution === null) {
                         e.preventDefault();
-                        this.on_alert.out_warning_message(langView('vopss_mess_warning_wagon_existing_way', App.Langs).format(rowData[0].num));
+                        this.on_alert.out_warning_message(langView('vopdss_mess_warning_wagon_existing_way', App.Langs).format(rowData[0].num));
                     }
                 }.bind(this),
                 fn_select_rows: function (rows) {
@@ -665,50 +714,94 @@
                         LockScreenOff();
                     }
                     if (name === 'del_wagons_sostav') {
-                        this.on_alert.clear_message();
-                        var rows = this.tdwc_opdc.tab_com.get_select_row();
-                        if (rows && rows.length > 0) {
-                            LockScreen(langView('vopss_mess_clear_sostav', App.Langs));
-                            $.each(rows, function (i, el) {
-                                el['position_new'] = null;
-                                el['id_way_dissolution'] = null;
-                                el['num_way_dissolution'] = null
-                            }.bind(this));
-                            var wagon_max_position = (this.wagons_on !== null && this.wagons_on.length > 0) ? this.wagons_on.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current }) : null;
-                            var position_start = wagon_max_position && wagon_max_position.position_new !== null ? wagon_max_position.position_new + 1 : 1;
-                            // Выполнить операцию добавить вагоны
-                            var wagons_from = this.wagons.filter(function (i) {
-                                return i.id_way_dissolution === this.id_way_dissolution;
-                            }.bind(this));
-                            // перенумеруем
-                            $.each(wagons_from, function (i, el) {
-                                el['position_new'] = position_start;
-                                position_start++;
-                            }.bind(this));
-                            var tr = this.tdw_opdc.tab_com.$table_report.find('tr.selected');
-                            if (tr && tr.length > 0) {
-                                var $td = $(tr[0].cells[2]);
-                                // Получим количество
-                                var wagons_add = this.wagons.filter(function (i) {
+                        this.clear_all();
+                        if (this.rRW || this.rAdm) {
+                            var rows = this.tdwc_opdc.tab_com.get_select_row();
+                            if (rows && rows.length > 0) {
+                                LockScreen(langView('vopdss_mess_clear_sostav', App.Langs));
+                                $.each(rows, function (i, el) {
+                                    el['position_new'] = null;
+                                    el['id_way_dissolution'] = null;
+                                    el['num_way_dissolution'] = null
+                                }.bind(this));
+                                var wagon_max_position = (this.wagons_on !== null && this.wagons_on.length > 0) ? this.wagons_on.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current }) : null;
+                                var position_start = wagon_max_position && wagon_max_position.position_new !== null ? wagon_max_position.position_new + 1 : 1;
+                                // Выполнить операцию добавить вагоны
+                                var wagons_from = this.wagons.filter(function (i) {
                                     return i.id_way_dissolution === this.id_way_dissolution;
                                 }.bind(this));
-                                if (wagons_add !== null && wagons_add.length > 0) {
-                                    $(tr).addClass('yellow');
-                                    $td.empty().append(wagons_add.length);
-                                } else {
-                                    $td.empty().append(0);
-                                    $(tr).removeClass('yellow');
+                                // перенумеруем
+                                $.each(wagons_from, function (i, el) {
+                                    el['position_new'] = position_start;
+                                    position_start++;
+                                }.bind(this));
+                                var tr = this.tdw_opdc.tab_com.$table_report.find('tr.selected');
+                                if (tr && tr.length > 0) {
+                                    var $td = $(tr[0].cells[2]);
+                                    // Получим количество
+                                    var wagons_add = this.wagons.filter(function (i) {
+                                        return i.id_way_dissolution === this.id_way_dissolution;
+                                    }.bind(this));
+                                    if (wagons_add !== null && wagons_add.length > 0) {
+                                        $(tr).addClass('yellow');
+                                        $td.empty().append(wagons_add.length);
+                                    } else {
+                                        $td.empty().append(0);
+                                        $(tr).removeClass('yellow');
+                                    }
                                 }
-                            }
-                            this.view_wagons_dissolution()
-                            LockScreenOff();
-                        } else {
+                                this.view_wagons_dissolution()
+                                LockScreenOff();
+                            } else {
 
-                            this.on_alert.out_warning_message(langView('vopoc_mess_not_select_wagon_on', App.Langs));
-                        };
+                                this.on_alert.out_warning_message(langView('vopdss_mess_not_select_wagon_on', App.Langs));
+                            };
+                        } else {
+                            this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
+                    }
+                    if (name === 'reverse') {
+                        this.clear_all();
+                        if (this.rRW || this.rAdm) {
+                            if (this.id_way_dissolution !== null) {
+
+                                LockScreen(langView('vopdss_mess_reverse_sostav', App.Langs));
+                                this.reverse[this.id_way_dissolution] = !this.reverse[this.id_way_dissolution];
+                                this.view_wagons_dissolution()
+                                LockScreenOff();
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_not_select_way_on', App.Langs));
+                            }
+                        } else {
+                            this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
+                    }
+                    if (name === 'head_tail') {
+                        this.clear_all();
+                        if (this.rRW || this.rAdm) {
+                            if (this.id_way_dissolution !== null) {
+                                LockScreen(langView('vopdss_mess_head_sostav', App.Langs));
+                                this.head[this.id_way_dissolution] = !this.head[this.id_way_dissolution];
+                                this.view_wagons_dissolution()
+                                LockScreenOff();
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_not_select_way_on', App.Langs));
+                            }
+                        } else {
+                            this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                        }
                     }
                 }.bind(this),
                 fn_enable_button: function (tb) {
+                    var bts = tb.obj_t_report.buttons([8]);
+                    if (this.id_way_dissolution !== null) {
+                        if (this.head[this.id_way_dissolution]) {
+                            bts.text(langView('vopdss_title_button_head', App.Langs));
+                        } else {
+                            bts.text(langView('vopdss_title_button_tail', App.Langs));
+                        }
+                    }
+
                 }.bind(this),
             });
             //-------------------------------------------------------------------
@@ -722,7 +815,7 @@
                     validation_group: 'common_from',
                     id: 'id_station',
                     name: 'id_station',
-                    label: langView('vopss_title_label_station', App.Langs),
+                    label: langView('vopdss_title_label_station', App.Langs),
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
@@ -753,7 +846,7 @@
                     col_prefix: 'md',
                     col_size: 12,
                     col_class: 'mt-0',
-                    form_text: langView('vopss_title_label_station', App.Langs),
+                    form_text: langView('vopdss_title_label_station', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -764,7 +857,7 @@
                     validation_group: 'common',
                     id: 'id_way_from',
                     name: 'id_way_from',
-                    label: langView('vopss_title_label_way_from', App.Langs),
+                    label: langView('vopdss_title_label_way_from', App.Langs),
                     element_fsize: 'sm',
                     element_class: null,
                     element_value: null,
@@ -796,7 +889,7 @@
                     col_prefix: 'md',
                     col_size: 12,
                     col_class: 'mt-0',
-                    form_text: langView('vopss_title_text_way_from', App.Langs),
+                    form_text: langView('vopdss_title_text_way_from', App.Langs),
                     form_text_class: null,
                 },
                 childs: []
@@ -828,7 +921,7 @@
 
             var row_diss_cars_from = new this.view_com.fe_ui.bs_row({ id: 'op-dc-dissolution-cars-from', class: 'pt-2' });
             this.from_table.$html.append(row_diss_cars_from.$html);
-
+            // Список вагонов на пути роспуска
             this.todcf_opdc = new TWS('div#op-dc-dissolution-cars-from');
             this.todcf_opdc.init({
                 alert: this.from_alert,
@@ -840,8 +933,9 @@
                         name: 'select_all_wagon',
                         action: function () {
                             // Выбрать только не принятые вагоны
-                            this.from_alert.clear_message();
-                            this.form_from_setup.clear_all();
+                            this.clear_all();
+                            // this.from_alert.clear_message();
+                            // this.form_from_setup.clear_all();
                             this.todcf_opdc.tab_com.obj_t_report.rows(function (idx, data, node) {
                                 return data.id_way_dissolution === null && !data.currentMoveBusy && !data.outgoingSostavStatus;
                             }).select();
@@ -851,7 +945,11 @@
                     {
                         name: 'add_sostav',
                         action: function (e, dt, node, config) {
-                            this.todcf_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            if (this.rRW || this.rAdm) {
+                                this.todcf_opdc.tab_com.button_action(config.button, e, dt, node, config);
+                            } else {
+                                this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
+                            }
                         }.bind(this),
                         enabled: false
                     }
@@ -868,20 +966,21 @@
 
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                    this.from_alert.clear_message();
-                    this.form_from_setup.clear_all();
+                    this.clear_all();
+                    //this.from_alert.clear_message();
+                    //this.form_from_setup.clear_all();
                     if (rowData && rowData.length > 0) {
                         if (rowData[0].outgoingSostavStatus > 0) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('vopss_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
+                            this.from_alert.out_warning_message(langView('vopdss_mess_warning_wagon_ban_status', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus));
                         }
                         if (rowData[0].num_way_dissolution !== null) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('vopss_mess_warning_wagon_ban_dess_way', App.Langs).format(rowData[0].num, rowData[0].num_way_dissolution));
+                            this.from_alert.out_warning_message(langView('vopdss_mess_warning_wagon_ban_dess_way', App.Langs).format(rowData[0].num, rowData[0].num_way_dissolution));
                         }
                         if (rowData[0].currentMoveBusy) {
                             e.preventDefault();
-                            this.from_alert.out_warning_message(langView('vopss_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                            this.from_alert.out_warning_message(langView('vopdss_mess_warning_wagon_ban_move_busy', App.Langs).format(rowData[0].num, rowData[0].outgoingSostavStatus, rowData[0].idFiling, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
                         }
                     }
                 }.bind(this),
@@ -896,52 +995,60 @@
                         LockScreenOff();
                     }
                     if (name === 'add_sostav') {
-                        this.from_alert.clear_message();
-                        if (this.id_way_dissolution > 0) {
-                            var rows = this.todcf_opdc.tab_com.get_select_row();
-                            if (rows !== null && rows.length > 0) {
-                                LockScreen(langView('vopoc_mess_create_sostav', App.Langs));
-                                // Выполнить операцию добавить вагоны
-                                var wagons_add = this.wagons.filter(function (i) {
-                                    return i.id_way_dissolution === this.id_way_dissolution;
-                                }.bind(this));
-                                var wagon_max_position = null;
-                                if (wagons_add !== null && wagons_add.length > 0) {
-                                    wagon_max_position = wagons_add.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current });
-                                } else {
-                                    wagon_max_position = (this.wagons_on !== null && this.wagons_on.length > 0) ? this.wagons_on.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current }) : null;
-                                }
-                                var position_start = wagon_max_position && wagon_max_position.position_new !== null ? wagon_max_position.position_new + 1 : 1;
+                        this.clear_all();
+                        //this.from_alert.clear_message();
+                        if (this.rRW || this.rAdm) {
 
-                                $.each(rows, function (i, el) {
-                                    el['position_new'] = position_start;
-                                    el['id_way_dissolution'] = this.id_way_dissolution;
-                                    el['num_way_dissolution'] = this.num_way_dissolution
-                                    position_start++;
-                                }.bind(this));
-                                var tr = this.tdw_opdc.tab_com.$table_report.find('tr.selected');
-                                if (tr && tr.length > 0) {
-                                    var $td = $(tr[0].cells[2]);
-                                    // Получим количество
+                            if (this.id_way_dissolution > 0) {
+                                var rows = this.todcf_opdc.tab_com.get_select_row();
+                                if (rows !== null && rows.length > 0) {
+                                    LockScreen(langView('vopdss_mess_create_sostav', App.Langs));
+                                    // Выполнить операцию добавить вагоны
                                     var wagons_add = this.wagons.filter(function (i) {
                                         return i.id_way_dissolution === this.id_way_dissolution;
                                     }.bind(this));
+                                    var wagon_max_position = null;
                                     if (wagons_add !== null && wagons_add.length > 0) {
-                                        $(tr).addClass('yellow');
-                                        $td.empty().append(wagons_add.length);
+                                        wagon_max_position = wagons_add.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current });
                                     } else {
-                                        $td.empty().append(0);
-                                        $(tr).removeClass('yellow');
+                                        wagon_max_position = (this.wagons_on !== null && this.wagons_on.length > 0) ? this.wagons_on.reduce(function (prev, current, index, array) { return prev.position_new > current.position_new ? prev : current }) : null;
                                     }
+                                    var position_start = wagon_max_position && wagon_max_position.position_new !== null ? wagon_max_position.position_new + 1 : 1;
+
+                                    $.each(rows, function (i, el) {
+                                        el['position_new'] = position_start;
+                                        el['id_way_dissolution'] = this.id_way_dissolution;
+                                        el['num_way_dissolution'] = this.num_way_dissolution
+                                        position_start++;
+                                    }.bind(this));
+                                    var tr = this.tdw_opdc.tab_com.$table_report.find('tr.selected');
+                                    if (tr && tr.length > 0) {
+                                        var $td = $(tr[0].cells[2]);
+                                        // Получим количество
+                                        var wagons_add = this.wagons.filter(function (i) {
+                                            return i.id_way_dissolution === this.id_way_dissolution;
+                                        }.bind(this));
+                                        if (wagons_add !== null && wagons_add.length > 0) {
+                                            $(tr).addClass('yellow');
+                                            $td.empty().append(wagons_add.length);
+                                        } else {
+                                            $td.empty().append(0);
+                                            $(tr).removeClass('yellow');
+                                        }
+                                    }
+                                    this.view_wagons_dissolution()
+                                    LockScreenOff();
+                                } else {
+                                    this.from_alert.out_warning_message(langView('vopdss_mess_not_select_wagon_from', App.Langs));
                                 }
-                                this.view_wagons_dissolution()
-                                LockScreenOff();
                             } else {
-                                this.from_alert.out_warning_message(langView('vopoc_mess_not_select_wagon_from', App.Langs));
+                                this.from_alert.out_warning_message(langView('vopdss_mess_not_select_way_on', App.Langs));
                             }
                         } else {
-                            this.from_alert.out_warning_message(langView('vopoc_mess_not_select_way_on', App.Langs));
+                            this.on_alert.out_warning_message(langView('vopdss_mess_error_access_denied', App.Langs).format(App.AdminInfo ? App.AdminInfo.name : ''));
                         }
+
+
                     }
                 }.bind(this),
                 fn_enable_button: function (tb) {
@@ -959,10 +1066,11 @@
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
         if (this.rRO) {
-            LockScreen(langView('vopss_mess_load_operation', App.Langs));
-           // Очистить сообщения и форму
-            this.form_on_setup.clear_all();
-            this.form_from_setup.clear_all();
+            LockScreen(langView('vopdss_mess_load_operation', App.Langs));
+            // Очистить сообщения и форму
+            this.clear_all();
+            // this.form_on_setup.clear_all();
+            // this.form_from_setup.clear_all();
             // Сбросим установки (время и локомотивы)
             this.form_on_setup.el.datalist_locomotive1.val('');
             //this.form_on_setup.el.datalist_locomotive2.val('');
@@ -1039,8 +1147,8 @@
             }.bind(this));
             if (wagons_add && wagons_add.length > 0) {
                 this.view_com.mcf.open(
-                    langView('vopss_confirm_title', App.Langs),
-                    langView('vopss_confirm_mess_change_station', App.Langs).format(this.form_from_setup.el.select_id_station.text(), wagons_add.length),
+                    langView('vopdss_confirm_title', App.Langs),
+                    langView('vopdss_confirm_mess_change_station', App.Langs).format(this.form_from_setup.el.select_id_station.text(), wagons_add.length),
                     function () {
                         if (typeof callback_ok === 'function') {
                             callback_ok();
@@ -1105,8 +1213,8 @@
             }.bind(this));
             if (wagons_add && wagons_add.length > 0 && id_way > 0) {
                 this.view_com.mcf.open(
-                    langView('vopss_confirm_title', App.Langs),
-                    langView('vopss_confirm_mess_change_way', App.Langs).format(this.form_from_setup.el.select_id_way_from.text(), wagons_add.length),
+                    langView('vopdss_confirm_title', App.Langs),
+                    langView('vopdss_confirm_mess_change_way', App.Langs).format(this.form_from_setup.el.select_id_way_from.text(), wagons_add.length),
                     function () {
                         if (typeof callback_ok === 'function') {
                             callback_ok();
@@ -1134,7 +1242,7 @@
     view_op_dissolution_cars.prototype.load_of_way = function (id_way, callback) {
         if (id_way !== null && id_way >= 0) {
             this.id_way = id_way;
-            LockScreen(langView('vopss_mess_load_wagons', App.Langs));
+            LockScreen(langView('vopdss_mess_load_wagons', App.Langs));
             this.view_com.api_wsd.getViewWagonsOfIdWay(id_way, function (wagons) {
                 // модифицировать данные взависимости от отчета
                 if (wagons) {
@@ -1163,9 +1271,10 @@
     view_op_dissolution_cars.prototype.load_dissolution_ways = function (id_way, callback) {
         this.id_way_dissolution = null;
         this.num_way_dissolution = null;
+
         this.wagons_on = [];
         if (id_way !== null && id_way >= 0) {
-            LockScreen(langView('vopss_mess_load_ways', App.Langs));
+            LockScreen(langView('vopdss_mess_load_ways', App.Langs));
             var way = this.ways.find(function (o) {
                 return o.id === id_way;
             }.bind(this));
@@ -1175,10 +1284,14 @@
                     var ways_diss = ways.filter(function (i) {
                         return i.dissolution;
                     }.bind(this));
+                    this.head = [];
+                    this.reverse = [];
                     if (ways_diss) {
                         $.each(ways_diss, function (i, el) {
                             el['countDissWagons'] = 0;
-                        });
+                            this.head[el.id] = false;       // сформируем перечень признаков голова\хвост
+                            this.reverse[el.id] = false;    // сформируем перечень признаков реверс
+                        }.bind(this));
                     }
                     this.dissolution_ways = ways_diss;
                     // Событие обновили данные
@@ -1204,7 +1317,7 @@
     // Загрузить пути выбраные для приема роспуска
     view_op_dissolution_cars.prototype.load_wagons_dissolution_way_on = function (id_way_on, callback) {
         if (id_way_on !== null && id_way_on >= 0) {
-            LockScreen(langView('vopss_mess_load_wagons', App.Langs));
+            LockScreen(langView('vopdss_mess_load_wagons', App.Langs));
             this.view_com.api_wsd.getViewWagonsOfIdWay(id_way_on, function (wagons) {
                 // модифицировать данные взависимости от отчета
                 this.wagons_on = [];
@@ -1232,8 +1345,9 @@
     // Отобразить вагоны на путях роспуска
     view_op_dissolution_cars.prototype.view_wagons_dissolution = function () {
         // Очистить сообщения и форму
-        this.form_on_setup.clear_all();
-        this.form_from_setup.clear_all();
+        this.clear_all();
+        // this.form_on_setup.clear_all();
+        // this.form_from_setup.clear_all();
         // Показать вагоны отправляемые
         this.view_wagons_dissolution_from();
         // Показать пути приема роспуска
@@ -1264,13 +1378,48 @@
     };
     //
     view_op_dissolution_cars.prototype.view_wagons_dissolution_on = function () {
-        var wagons = this.wagons_on;
+        var wagons = this.wagons_on.sort(function (a, b) { return b.position - a.position });
         var wagons_add = this.wagons.filter(function (i) {
             return i.id_way_dissolution === this.id_way_dissolution && this.id_way_dissolution !== null;
         }.bind(this));
-        if (wagons_add !== null && wagons_add.length > 0) {
-            wagons = wagons.concat(wagons_add)
+        // Выстроим вагоны согласно (реверса или головы и хвоста)
+        if (this.id_way_dissolution) {
+            //
+            if (wagons_add !== null && wagons_add.length > 0) {
+                if (this.reverse[this.id_way_dissolution]) {
+                    wagons_add.sort(function (a, b) { return b.position - a.position });
+                } else {
+                    wagons_add.sort(function (a, b) { return a.position - b.position });
+                }
+                var position = 1;
+                if (this.head[this.id_way_dissolution]) {
+                    $.each(wagons_add, function (i, el) {
+                        el['position_new'] = position;
+                        position++;
+                    }.bind(this));
+                    $.each(this.wagons_on.sort(function (a, b) { return a.position - b.position }), function (i, el) {
+                        el['position_new'] = position;
+                        position++;
+                    }.bind(this));
+                    wagons = wagons_add.concat(this.wagons_on);
+                } else {
+                    $.each(this.wagons_on.sort(function (a, b) { return a.position - b.position }), function (i, el) {
+                        el['position_new'] = position;
+                        position++;
+                    }.bind(this));
+                    $.each(wagons_add, function (i, el) {
+                        el['position_new'] = position;
+                        position++;
+                    }.bind(this));
+                    wagons = this.wagons_on.concat(wagons_add);
+                }
+            } else {
+                wagons = this.wagons_on;
+            };
         }
+        // if (wagons_add !== null && wagons_add.length > 0) {
+        //     wagons = wagons.concat(wagons_add)
+        // }
         if (this.tdwc_opdc.tab_com.eye) {
             wagons = wagons.filter(function (i) {
                 return i.id_way_dissolution !== null;
@@ -1297,7 +1446,7 @@
             var old = moment(operation_end);
             var minutes = old.diff(aplly, 'minutes');
             if (minutes > 0) {
-                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopdss_mess_error_start_time_aplly', App.Langs).format(operation_end), false);
                 valid = false;
             }
             // проверим на тек дату
@@ -1305,11 +1454,11 @@
             var minutes = aplly.diff(curr, 'minutes');
             if (minutes < App.wsd_setup.dissolution_start_dt_min) {
 
-                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_min * -1), false);
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopdss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_min * -1), false);
                 valid = false;
             }
             if (minutes > App.wsd_setup.dissolution_start_dt_max) {
-                this.form_on_setup.set_element_validation_error('time_start', langView('vopss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_max), false);
+                this.form_on_setup.set_element_validation_error('time_start', langView('vopdss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_start_dt_max), false);
                 valid = false;
             }
         }
@@ -1319,11 +1468,11 @@
             var dtstop = moment(result.new.input_datetime_time_stop);
             var minutes = dtstop.diff(dtstart, 'minutes');
             if (minutes <= 0) {
-                this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_stop_time_aplly', App.Langs), false);
+                this.form_on_setup.set_element_validation_error('time_stop', langView('vopdss_mess_error_stop_time_aplly', App.Langs), false);
                 valid = false;
             } else {
                 if (minutes < App.wsd_setup.dissolution_period_min) {
-                    this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_period_time', App.Langs).format(App.wsd_setup.dissolution_period_min), false);
+                    this.form_on_setup.set_element_validation_error('time_stop', langView('vopdss_mess_error_period_time', App.Langs).format(App.wsd_setup.dissolution_period_min), false);
                     valid = false;
                 } else {
                     // проверим на тек дату
@@ -1331,11 +1480,11 @@
                     var minutes = dtstop.diff(curr, 'minutes');
                     if (minutes < App.wsd_setup.dissolution_stop_dt_min) {
 
-                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_min * -1), false);
+                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopdss_mess_error_min_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_min * -1), false);
                         valid = false;
                     }
                     if (minutes > App.wsd_setup.dissolution_stop_dt_max) {
-                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_max), false);
+                        this.form_on_setup.set_element_validation_error('time_stop', langView('vopdss_mess_error_max_time_aplly', App.Langs).format(App.wsd_setup.dissolution_stop_dt_max), false);
                         valid = false;
                     }
                 }
@@ -1343,18 +1492,18 @@
         }
         // Проверим вагоны на путях роспуска
         if (wagons === null || wagons.length === 0) {
-            this.form_on_setup.validation_common.out_error_message(langView('vopss_mess_error_not_wagons', App.Langs))
+            this.form_on_setup.validation_common.out_error_message(langView('vopdss_mess_error_not_wagons', App.Langs))
             valid = false;
         }
         return valid;
     }
     // выполнить операцию
     view_op_dissolution_cars.prototype.apply = function (data) {
-        LockScreen(langView('vopss_mess_run_operation', App.Langs));
+        LockScreen(langView('vopdss_mess_run_operation', App.Langs));
         this.view_com.api_wsd.postDissolutionWagonsOfStationAMKR(data, function (result) {
             // Проверим на ошибку выполнения запроса api
             if (result && result.status) {
-                var mess = langView('vopss_mess_error_api', App.Langs).format(result.status, result.title);
+                var mess = langView('vopdss_mess_error_api', App.Langs).format(result.status, result.title);
                 console.log('[view_op_dissolution_cars] [postDissolutionWagonsOfStationAMKR] :' + mess);
                 this.form_on_setup.validation_common.out_error_message(mess);
                 if (result.errors) {
@@ -1367,7 +1516,8 @@
             } else {
                 // ошибки выполнения нет проверим ответ запроса
                 if (result && result.result > 0) {
-                    this.form_on_setup.validation_common.clear_all();
+                    this.clear_all();
+                    //this.form_on_setup.validation_common.clear_all();
                     // Сбросим установки (время и локомотивы)
                     this.form_on_setup.el.datalist_locomotive1.val('');
                     this.form_on_setup.el.input_datetime_time_start.val(moment());
@@ -1377,7 +1527,7 @@
                     var out_ufw = function (pr_ufw) {
                         if (pr_ufw === 0) {
                             this.view_wagons();
-                            this.form_on_setup.validation_common.out_info_message(langView('vopss_mess_ok_operation', App.Langs).format(result.moved));
+                            this.form_on_setup.validation_common.out_info_message(langView('vopdss_mess_ok_operation', App.Langs).format(result.moved));
                             if (typeof this.settings.fn_db_update === 'function') {
                                 //TODO: можно добавить возвращать перечень для обновления
                                 typeof this.settings.fn_db_update();
@@ -1397,13 +1547,13 @@
                     }.bind(this));
                 } else {
                     LockScreenOff();
-                    this.form_on_setup.validation_common.out_error_message(langView('vopss_mess_error_operation_run', App.Langs).format(result ? result.result : -1));
+                    this.form_on_setup.validation_common.out_error_message(langView('vopdss_mess_error_operation_run', App.Langs).format(result ? result.result : -1));
                     // Выведем ошибки по вагонно.
                     if (result && result.list_rs) {
                         $.each(result.list_rs, function (i, el) {
                             if (el.result <= 0) {
                                 $.each(el.listResult, function (i, el_wag) {
-                                    if (el_wag.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vopss_mess_error_operation_wagons_run', App.Langs).format(el_wag.num, el_wag.result));
+                                    if (el_wag.result <= 0) this.form_on_setup.validation_common.out_error_message(langView('vopdss_mess_error_operation_wagons_run', App.Langs).format(el_wag.num, el_wag.result));
                                 }.bind(this))
                             }
                         }.bind(this));
@@ -1412,6 +1562,14 @@
             }
         }.bind(this));
     };
+    //
+    view_op_dissolution_cars.prototype.clear_all = function () {
+        this.form_on_setup.clear_all();
+        this.form_from_setup.clear_all();
+        this.main_alert.clear_message();
+        this.on_alert.clear_message();
+        this.from_alert.clear_message();
+    }
     // Очистить сообщения
     view_op_dissolution_cars.prototype.out_clear = function () {
         if (this.settings.alert) {

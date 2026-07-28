@@ -3748,6 +3748,7 @@
         collums.push({ field: 'current_condition_abbr', title: null, class: null });
         collums.push({ field: 'operator_abbr', title: null, class: 'operator' });
         collums.push({ field: 'limiting_abbr', title: null, class: null });
+        collums.push({ field: 'current_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_group_name', title: null, class: null });
         collums.push({ field: 'arrival_cargo_name', title: null, class: null });
         collums.push({ field: 'arrival_sertification_data', title: null, class: null });
