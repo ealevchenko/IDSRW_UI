@@ -5405,10 +5405,11 @@
                     //    };
                     //}
                     if (data.id_wir_from !== null ||
-                        data.currentWagonBusy ||
+                        (data.currentWagonBusy && data.currentFilingBusy) ||
+                        (!data.currentFilingBusy && data.currentWagonBusy) ||
+                        (data.currentFilingBusy && !data.currentWagonBusy && data.typePreviousFiling !== 2) ||
                         data.currentMoveBusy ||
-                        data.outgoingSostavStatus !== null ||
-                        data.currentFilingBusy) {
+                        data.outgoingSostavStatus !== null) {
                         $(row).addClass('ban red');  // Отметим вагон заблокирован
                     }
                     // Прибыл

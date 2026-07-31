@@ -61,6 +61,11 @@
             'voprc_title_button_head': 'Голова',
             'voprc_title_button_tail': 'Хвост',
 
+            'voprc_title_type_filing_0': '',
+            'voprc_title_type_filing_1': 'выгрузки',
+            'voprc_title_type_filing_2': 'погрузки',
+            'voprc_title_type_filing_3': 'очистки',
+
             'voprc_title_button_edit_time_aplly': 'Править дату предъявляемого состава (Только при статусе в работе)!',
             'voprc_title_button_vagon_searsh': 'Найти указаные вагоны на путях АМКР!',
 
@@ -72,6 +77,7 @@
             'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
+            'voprc_mess_warning_wagon_ban_wagon_filing1': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче {1} [{2}])!',
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
@@ -171,6 +177,11 @@
             'voprc_title_button_head': 'Голова',
             'voprc_title_button_tail': 'Хвост',
 
+            'voprc_title_type_filing_0': '',
+            'voprc_title_type_filing_1': 'выгрузки',
+            'voprc_title_type_filing_2': 'погрузки',
+            'voprc_title_type_filing_3': 'очистки',
+
             'voprc_title_button_edit_time_aplly': 'Править дату предъявляемого состава (Только при статусе в работе)!',
             'voprc_title_button_vagon_searsh': 'Найти указаные вагоны на путях АМКР!',
 
@@ -182,6 +193,7 @@
             'voprc_mess_warning_wagon_ban_status2': 'Вагон № {0} для операций заблокирован (вагон принадлежит составу, предъявленному на УЗ)!',
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
+            'voprc_mess_warning_wagon_ban_wagon_filing1': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче {1} [{2}])!',
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
@@ -951,13 +963,33 @@
                             this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_status2', App.Langs).format(rowData[0].num));
                         }
                     } else {
-                        if (rowData[0].currentFilingBusy) {
+                        if (rowData[0].currentWagonBusy && rowData[0].currentFilingBusy) {
                             e.preventDefault();
                             this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_filing', App.Langs).format(rowData[0].num, rowData[0].idFiling !== null ? rowData[0].idFiling : rowData[0].idPreviousFiling));
-                        } else if (rowData[0].currentWagonBusy) {
-                            e.preventDefault();
-                            this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_busy', App.Langs).format(rowData[0].num, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                        } else {
+                            if (!rowData[0].currentFilingBusy && rowData[0].currentWagonBusy) {
+                                e.preventDefault();
+                                this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_busy', App.Langs).format(rowData[0].num, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                            }
+                            if (rowData[0].currentFilingBusy && !rowData[0].currentWagonBusy && rowData[0].typePreviousFiling !== 2) {
+                                e.preventDefault();
+                                this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_filing1', App.Langs).format(rowData[0].num, langView('voprc_title_type_filing_' + rowData[0].typePreviousFiling, App.Langs), (rowData[0].idFiling !== null ? rowData[0].idFiling : rowData[0].idPreviousFiling)));
+                            }
                         }
+
+                        // if (rowData[0].currentFilingBusy) {
+                        //     //e.preventDefault();
+                        //     this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_filing', App.Langs).format(rowData[0].num, rowData[0].idFiling !== null ? rowData[0].idFiling : rowData[0].idPreviousFiling));
+                        // }
+
+
+                        // if (rowData[0].currentFilingBusy) {
+                        //     e.preventDefault();
+                        //     this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_filing', App.Langs).format(rowData[0].num, rowData[0].idFiling !== null ? rowData[0].idFiling : rowData[0].idPreviousFiling));
+                        // } else if (rowData[0].currentWagonBusy) {
+                        //     e.preventDefault();
+                        //     this.from_alert.out_warning_message(langView('voprc_mess_warning_wagon_ban_wagon_busy', App.Langs).format(rowData[0].num, rowData[0]['currentOperationName' + ucFirst(App.Lang)]));
+                        // }
                     }
                     // if (rowData && rowData.length > 0) {
                     //     if (rowData[0].outgoingSostavStatus !== null || rowData[0].currentIdOperation === 9) {
