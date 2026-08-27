@@ -23,7 +23,7 @@
 
             'vodlc_title_label_way_on': 'Путь дислокации:',
             'vodlc_text_label_way_on': 'Выберите путь дислокации...',
-            'voplc_title_placeholder_way_on': 'Путь дислокации...',
+            // 'voplc_title_placeholder_way_on': 'Путь дислокации...',
 
             'vodlc_title_label_station': 'Станция дислокации:',
             'vodlc_text_label_station': 'Выберите станцию дислокации...',
@@ -96,7 +96,7 @@
 
             'vodlc_title_label_way_on': 'Путь дислокации:',
             'vodlc_text_label_way_on': 'Выберите путь дислокации...',
-            'voplc_title_placeholder_way_on': 'Путь дислокации...',
+            // 'voplc_title_placeholder_way_on': 'Путь дислокации...',
 
             'vodlc_title_label_station': 'Станция дислокации:',
             'vodlc_text_label_station': 'Выберите станцию дислокации...',
@@ -381,99 +381,52 @@
                 }
             };
 
-            var form_select_way_on = {
-                obj: 'bs_form_input_datalist',
-                options: {
-                    validation_group: 'common',
-                    id: 'id_way_on',
-                    name: 'id_way_on',
-                    label: langView('vodlc_title_label_way_on', App.Langs),
-                    element_fsize: 'sm',
-                    element_class: 'flexdatalist',
-                    element_value: null,
-                    element_title: null,
-                    element_placeholder: langView('voplc_title_placeholder_way_on', App.Langs),
-                    element_required: false,
-                    element_maxlength: null,
-                    element_pattern: null,
-                    element_readonly: false,
-                    element_options: {
-                        data: [],
-                        out_value: false,
-                        out_group: true,
-                        default: this.id_way_on,
-                        minLength: 1,
-                        searchContain: true,
-                        fn_change: function (event, set, options) {
-                            var id = null;
-                            var way_sel = this.ways.find(function (o) { return o.id == set.value; }.bind(this));
-                            if (way_sel && set.value !== "" && set.value !== set.text) {
-                                //this.id_way_on = null;
-                                var id = set.value;
-                            };
-                            this.load_of_way_on(id, function () {
-                                this.view_wagons_on();
-                                LockScreenOff();
-                            }.bind(this));
-
-                            // this.validation_exist_cargo(set.value, 'cargo_etsng', false, true);
-                        }.bind(this),
-                        fn_select: function (event, set, options) {
-                            event.preventDefault();
-                            // Обработать выбор
-                            //var id = Number($(e.currentTarget).val());
-                            var id = set.value;
-                            this.load_of_way_on(id, function () {
-                                this.view_wagons_on();
-                                LockScreenOff();
-                            }.bind(this));
-                        }.bind(this),
-                    },
-                    validation: true,
-                    feedback_invalid: null,
-                    feedback_valid: null,
-                    feedback_class: null,
-                    col_prefix: 'md',
-                    col_size: 12,
-                    col_class: 'mt-0',
-                    // group_prepend_class: null,
-                    // group_prepend_id: null,
-                    // group_prepend_html: null,
-                    // group_prepend_objs: [bt_edit_cargo_etsng, bt_save_cargo_etsng],
-                    form_text: langView('vodlc_text_label_way_on', App.Langs),
-                    form_text_class: null,
-                },
-                childs: []
-            };
             // var form_select_way_on = {
-            //     obj: 'bs_form_select',
+            //     obj: 'bs_form_input_datalist',
             //     options: {
             //         validation_group: 'common',
             //         id: 'id_way_on',
             //         name: 'id_way_on',
             //         label: langView('vodlc_title_label_way_on', App.Langs),
             //         element_fsize: 'sm',
-            //         element_class: null,
+            //         element_class: 'flexdatalist',
             //         element_value: null,
-            //         element_multiple: false,
             //         element_title: null,
-            //         element_required: true,
+            //         element_placeholder: langView('voplc_title_placeholder_way_on', App.Langs),
+            //         element_required: false,
+            //         element_maxlength: null,
+            //         element_pattern: null,
             //         element_readonly: false,
-            //         element_size: null,
             //         element_options: {
             //             data: [],
+            //             out_value: false,
+            //             out_group: true,
             //             default: this.id_way_on,
-            //             fn_change: function (e) {
-            //                 e.preventDefault();
-            //                 // Обработать выбор
-            //                 var id = Number($(e.currentTarget).val());
+            //             minLength: 1,
+            //             searchContain: true,
+            //             fn_change: function (event, set, options) {
+            //                 var id = null;
+            //                 var way_sel = this.ways.find(function (o) { return o.id == set.value; }.bind(this));
+            //                 if (way_sel && set.value !== "" && set.value !== set.text) {
+            //                     //this.id_way_on = null;
+            //                     var id = set.value;
+            //                 };
             //                 this.load_of_way_on(id, function () {
             //                     this.view_wagons_on();
             //                     LockScreenOff();
             //                 }.bind(this));
-            //             }.bind(this),
-            //             fn_check: function (text) {
 
+            //                 // this.validation_exist_cargo(set.value, 'cargo_etsng', false, true);
+            //             }.bind(this),
+            //             fn_select: function (event, set, options) {
+            //                 event.preventDefault();
+            //                 // Обработать выбор
+            //                 //var id = Number($(e.currentTarget).val());
+            //                 var id = set.value;
+            //                 this.load_of_way_on(id, function () {
+            //                     this.view_wagons_on();
+            //                     LockScreenOff();
+            //                 }.bind(this));
             //             }.bind(this),
             //         },
             //         validation: true,
@@ -483,11 +436,58 @@
             //         col_prefix: 'md',
             //         col_size: 12,
             //         col_class: 'mt-0',
+            //         // group_prepend_class: null,
+            //         // group_prepend_id: null,
+            //         // group_prepend_html: null,
+            //         // group_prepend_objs: [bt_edit_cargo_etsng, bt_save_cargo_etsng],
             //         form_text: langView('vodlc_text_label_way_on', App.Langs),
             //         form_text_class: null,
             //     },
             //     childs: []
             // };
+            var form_select_way_on = {
+                obj: 'bs_form_select',
+                options: {
+                    validation_group: 'common',
+                    id: 'id_way_on',
+                    name: 'id_way_on',
+                    label: langView('vodlc_title_label_way_on', App.Langs),
+                    element_fsize: 'sm',
+                    element_class: null,
+                    element_value: null,
+                    element_multiple: false,
+                    element_title: null,
+                    element_required: true,
+                    element_readonly: false,
+                    element_size: null,
+                    element_options: {
+                        data: [],
+                        default: this.id_way_on,
+                        fn_change: function (e) {
+                            e.preventDefault();
+                            // Обработать выбор
+                            var id = Number($(e.currentTarget).val());
+                            this.load_of_way_on(id, function () {
+                                this.view_wagons_on();
+                                LockScreenOff();
+                            }.bind(this));
+                        }.bind(this),
+                        fn_check: function (text) {
+
+                        }.bind(this),
+                    },
+                    validation: true,
+                    feedback_invalid: null,
+                    feedback_valid: null,
+                    feedback_class: null,
+                    col_prefix: 'md',
+                    col_size: 12,
+                    col_class: 'mt-0',
+                    form_text: langView('vodlc_text_label_way_on', App.Langs),
+                    form_text_class: null,
+                },
+                childs: []
+            };
             var form_input_datalist_locomotive1 = {
                 obj: 'bs_form_input_datalist',
                 options: {
@@ -636,7 +636,7 @@
                             var wagons = this.wagons.filter(function (i) { return i.id_wir_from !== null; });// получить вагоны
                             this.view_com.mcf.open(
                                 langView('vodlc_title_form_apply', App.Langs),
-                                langView('vodlc_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_from_setup.el.select_id_station.text(), (wagons ? wagons.length : 0), this.form_from_setup.el.select_id_way_from.text(), this.form_on_setup.el.datalist_id_way_on.text()),
+                                langView('vodlc_confirm_mess_apply_outgoing_wagons', App.Langs).format(this.form_from_setup.el.select_id_station.text(), (wagons ? wagons.length : 0), this.form_from_setup.el.select_id_way_from.text(), this.form_on_setup.el.select_id_way_on.text()),
                                 function () {
                                     // Принять
                                     // Проверим наличие вагонов 
@@ -1098,11 +1098,12 @@
                 //this.wagons_add = [];
                 // обновим компонент пути отправки
                 //this.list_way = this.view_com.api_dir.getListValueTextWaysOfStation(id_station);
-                this.list_way = this.view_com.api_dir.getListValueTextGroupWaysOfStation(id_station);
+                //this.list_way = this.view_com.api_dir.getListValueTextGroupWaysOfStation(id_station);
+                this.list_way = this.view_com.api_dir.getListValueTextParkWaysOfStation(id_station);
                 this.form_from_setup.el.select_id_way_from.update(this.list_way, id_way);
                 //var sel_way = this.list_way.find(function (o) { return o.value === id_way }.bind(this));
                 //if (sel_way) sel_way.disabled = true;
-                //this.form_on_setup.el.datalist_id_way_on.update(this.list_way, -1);
+                //this.form_on_setup.el.select_id_way_on.update(this.list_way, -1);
 
                 // Обновим станцию
                 this.id_station = id_station;
@@ -1186,7 +1187,7 @@
                             this.id_way_on = -1;
                             this.wagons_on = [];
                         }
-                        this.form_on_setup.el.datalist_id_way_on.update(this.list_way.filter(function (i) { return !i.disabled; }.bind(this)), this.id_way_on);
+                        this.form_on_setup.el.select_id_way_on.update(this.list_way.filter(function (i) { return !i.disabled; }.bind(this)), this.id_way_on);
                         if (typeof callback === 'function') {
                             callback();
                         }
