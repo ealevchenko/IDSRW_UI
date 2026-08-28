@@ -1583,7 +1583,7 @@
                             },
                             fn_close: function (upd) {
                                 // На обновления дерева путей, баланса ....
-                                refresh_tree_way(2, function () {
+                                refresh_tree_way(upd, function () {
                                     LockScreenOff();
                                 }.bind(this));
                             }

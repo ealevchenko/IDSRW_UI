@@ -78,6 +78,7 @@
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing1': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче {1} [{2}])!',
+            'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон не принадлежит предъявляемому составу)!',
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
@@ -110,7 +111,8 @@
             'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
             'voprc_mess_not_select_provide_sostav': 'Выберите предявленый состав!',
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
-            'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
+            'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено, код выполнения:{0}',
+
 
             'voprc_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
 
@@ -129,7 +131,7 @@
 
             'voprc_confirm_mess_change_station': 'Вы уверены что хотите выбрать новую станцию {0}? Все вагоны выбранные для предъявления в количестве {1} будут сброшены! ',
             'voprc_confirm_mess_change_way': 'Вы уверены что хотите выбрать новый путь предъявления {0}? Все предъявленые вагоны в количестве {1} будут сброшены! ',
-
+            
         },
         'en':  //default language: English
         {
@@ -194,6 +196,7 @@
             'voprc_mess_warning_wagon_ban_wagon_busy': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой операции [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче [{1}])!',
             'voprc_mess_warning_wagon_ban_wagon_filing1': 'Вагон № {0} для операций заблокирован (вагон принадлежит не завершённой подаче {1} [{2}])!',
+            'voprc_mess_warning_wagon_ban_provide_way': 'Вагон № {0} для операций заблокирован (вагон не принадлежит предъявляемому составу)!',
 
             'voprc_mess_warning_not_collect_wagons': 'В таблице вагонов для пръедявления - нет вагонов!',
             'voprc_mess_warning_not_collect_wagons_amkr': 'В таблице вагонов для пръедявления - нет вагонов находящихся на АМКР и не предъявленых',
@@ -226,7 +229,7 @@
             'voprc_mess_not_status_provide_sostav1': 'Запрет предъявления нового состава, на пути стоят не сданные составы! (Для добавления вагонов в существующий состав, выберите состав с незаконченной операцией предъявления или закройте операции предъявления и создайте новый состав)',
             'voprc_mess_not_select_provide_sostav': 'Выберите предявленый состав!',
             'voprc_mess_ok_operation': 'Предъявление состава выполнено, предъявлено {0} (ваг.)',
-            'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено',
+            'voprc_mess_ok_operation_edit_dt_apply': 'Правка даты и времени предъявления состава - выполнено, код выполнения:{0}',
 
             'voprc_mess_error_access_denied': 'Для учетной записи {0} доступ к операции запрещен!',
 
@@ -311,10 +314,13 @@
                     this.collect_sostav();
                     LockScreenOff();
                 }
-                this.settings.fn_close
+                if (typeof this.settings.fn_close === 'function') {
+                    this.settings.fn_close(this.upd);
+                }
             }.bind(this)
             ,
         }, function () { }.bind(this));
+        this.upd = 0;
         this.id_way = -1;                   // Значения по умолчанию
         this.id_station = -1;               // Значения по умолчанию
         this.id_sostav_provide = null;      // Значения по умолчанию
@@ -767,12 +773,14 @@
 
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                    this.on_alert.clear_message();
-                    this.form_on_setup.validation_common_on.clear_all();
+                    // this.on_alert.clear_message();
+                    // this.form_on_setup.validation_common_on.clear_all();
+                    this.clear_all();
                 }.bind(this),
                 fn_select_rows: function (rows, type) {
                     this.from_alert.clear_message();
-                    this.form_on_setup.validation_common_on.clear_all();
+                    //this.form_on_setup.validation_common_on.clear_all();
+                    this.clear_all();
                     this.form_on_setup.el.button_edit_time.prop('disabled', true);
                     this.form_on_setup.el.input_datetime_time_aplly.val(moment());
                     this.id_sostav_provide = null;
@@ -852,8 +860,9 @@
 
                 },
                 fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
-                    this.on_alert.clear_message();
-                    this.form_on_setup.validation_common_on.clear_all();
+                    // this.on_alert.clear_message();
+                    // this.form_on_setup.validation_common_on.clear_all();
+                    this.clear_all();
                     if (rowData && rowData.length > 0) {
                         if (rowData[0].id_wir_from === null) {
                             e.preventDefault();
@@ -1381,7 +1390,8 @@
                                                     //result = {};
                                                     //result.result = 1;
                                                     if (result && result.result > 0) {
-                                                        this.form_collect_setup.validation_common_collect.clear_all();
+                                                        // this.form_collect_setup.validation_common_collect.clear_all();
+                                                        this.clear_all();
                                                         // Обновим пути отправки 1 поток
                                                         this.load_of_way(this.id_way, function () {
                                                             // Сбросим таблицу вагонов
@@ -1470,6 +1480,7 @@
         this.rAdm = access && access.rAdmin ? access.rAdmin : false;
         this.rRW = access && access.rTropRW ? access.rTropRW : false;
         this.rRO = access && access.rRO ? access.rRO : false;
+        this.upd = 0;
         // Если указана станция выполним коррекцию по станции
         this.view_com.open();
         if (this.rRO) {
@@ -1485,7 +1496,8 @@
                 twfrom_bts.disable();
             }
             // Очистить сообщения и форму
-            this.form_on_setup.clear_all();
+            //this.form_on_setup.clear_all();
+            this.clear_all();
             this.bt_show(this.form_on_setup.el.button_apply, [this.rRW, this.rAdm]);
             // Сбросим установки (время)
             this.form_on_setup.el.input_datetime_time_aplly.val(moment());
@@ -1763,7 +1775,8 @@
     // Показать все (сотавы, вагоны)
     view_op_provide_cars.prototype.view_wagons = function () {
         // Очистить сообщения и форму
-        this.form_on_setup.clear_all();
+        //this.form_on_setup.clear_all();
+        this.clear_all();
         // Показать вагоны на пути начала дислокации
         this.view_wagons_from();
         this.view_provide_sostav();
@@ -1895,12 +1908,14 @@
                 //result = {};
                 //result.result = 1;
                 if (result && result.result > 0) {
-                    this.form_on_setup.validation_common_on.clear_all();
+                    //this.form_on_setup.validation_common_on.clear_all();
+                    this.clear_all();
                     // Сбросим установки (время и локомотивы)
                     this.form_on_setup.el.input_datetime_time_aplly.val(moment());
                     var pr_2 = 2;
                     var out_pr2 = function (pr_2) {
                         if (pr_2 === 0) {
+                            this.upd = 2;
                             this.view_wagons();
                             this.form_on_setup.validation_common_on.out_info_message(langView('voprc_mess_ok_operation', App.Langs).format(result.moved));
                             if (typeof this.settings.fn_db_update === 'function') {
@@ -1935,7 +1950,8 @@
     };
     // Править дату и время предъявления
     view_op_provide_cars.prototype.edit_dt_provide = function () {
-        this.form_on_setup.clear_all();
+        this.clear_all();
+        //this.form_on_setup.clear_all();
         var valid = true;
         //var old = moment(operation_end);
         //var el_dta = this.form_on_setup.el.input_datetime_time_aplly.$element;
@@ -1987,15 +2003,28 @@
                             LockScreenOff();
                         } else {
                             if (result && result >= 0) {
+                                var pr_2 = 2;
+                                var out_pr2 = function (pr_2) {
+                                    if (pr_2 === 0) {
+                                        this.upd = 2;
+                                        this.view_wagons();
+                                        this.form_on_setup.validation_common_on.out_info_message(langView('voprc_mess_ok_operation_edit_dt_apply', App.Langs).format(result));
+                                        if (typeof this.settings.fn_db_update === 'function') {
+                                            //TODO: можно добавить возвращать перечень для обновления
+                                            typeof this.settings.fn_db_update();
+                                        }
+                                        LockScreenOff();
+                                    }
+                                }.bind(this);
+                                // Обновим пути отправки 1 поток
+                                this.load_of_way(this.id_way, function () {
+                                    pr_2--;
+                                    out_pr2(pr_2);
+                                }.bind(this));
                                 // Обновим пути приема 2 поток
                                 this.load_of_provide_sostav(this.id_way, function () {
-                                    this.view_wagons();
-                                    this.form_on_setup.validation_common_on.out_info_message(langView('voprc_mess_ok_operation_edit_dt_apply', App.Langs));
-                                    if (typeof this.settings.fn_db_update === 'function') {
-                                        //TODO: можно добавить возвращать перечень для обновления
-                                        typeof this.settings.fn_db_update();
-                                    }
-                                    LockScreenOff();
+                                    pr_2--;
+                                    out_pr2(pr_2);
                                 }.bind(this));
                             } else {
                                 this.form_on_setup.validation_common_on.out_error_message(langView('voprc_mess_error_edit_dt_apply_provide', App.Langs).format(result));
@@ -2019,6 +2048,14 @@
         // удалим элементы этого модуля, затем view_com
         this.view_com.destroy();
     };
+    //
+    view_op_provide_cars.prototype.clear_all = function () {
+        this.form_on_setup.clear_all();
+        this.form_collect_setup.clear_all();
+        this.main_alert.clear_message();
+        this.on_alert.clear_message();
+        this.from_alert.clear_message();
+    }
 
     App.view_op_provide_cars = view_op_provide_cars;
 
