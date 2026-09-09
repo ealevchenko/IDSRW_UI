@@ -463,7 +463,7 @@
         var list_obj = this.getAllWays();
         var list = [];
         if (list_obj && list_obj.length > 0) {
-            $.each(list_obj.filter(function (i) { return i.idStation === id_station; }.bind(this)), function (i, el) {
+            $.each(list_obj.filter(function (i) { return i.idStation === id_station && !i.wayDelete; }.bind(this)), function (i, el) {
                 list.push({
                     value: el['id'],
                     text: el['wayNum' + ucFirst(App.Lang)] + '-' + el['wayAbbr' + ucFirst(App.Lang)],
@@ -480,7 +480,7 @@
         var list_obj = this.getAllWays();
         var list = [];
         if (list_obj && list_obj.length > 0) {
-            $.each(list_obj.filter(function (i) { return i.idStation === id_station; }.bind(this)), function (i, el) {
+            $.each(list_obj.filter(function (i) { return i.idStation === id_station && !i.wayDelete }.bind(this)), function (i, el) {
                 list.push({
                     value: el['id'],
                     text: el['wayNum' + ucFirst(App.Lang)] + '-' + el['wayAbbr' + ucFirst(App.Lang)],
@@ -496,7 +496,7 @@
         var list_obj = this.getAllWays();
         var list = [];
         if (list_obj && list_obj.length > 0) {
-            $.each(list_obj.filter(function (i) { return i.idStation === id_station; }.bind(this)), function (i, el) {
+            $.each(list_obj.filter(function (i) { return i.idStation === id_station && !i.wayDelete; }.bind(this)), function (i, el) {
                 list.push({
                     value: el['id'],
                     text: el['wayNum' + ucFirst(App.Lang)] + '-' + el['wayAbbr' + ucFirst(App.Lang)] + (el.idParkNavigation ? ' {' + el.idParkNavigation['parkAbbr' + ucFirst(App.Lang)] + '}' : ''), // + (el.idDevisionNavigation ? '-{' + el.idDevisionNavigation['divisionAbbr' + ucFirst(App.Lang)] + '}' : '')
