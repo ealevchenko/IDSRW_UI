@@ -516,7 +516,7 @@
                     // Окно для ввода номера вагона - поиск
                     var $find_num_wagon = $('input#find-num-wagon').val('').on('keydown',
                         function (event) {
-                            if (event.code == 'Enter') {
+                            if (event.code == 'Enter' || event.code == 'NumpadEnter') {
                                 var num = $find_num_wagon.val();
                                 searsh_wagon(num);
                             }
@@ -1033,6 +1033,7 @@
                                                     return Number(a.position) - Number(b.position)
                                                 });
                                                 var $form = $('<form id="manual-position" class="row g-3 needs-validation" novalidate></form>')
+                                                var $bt = $('<div class="btn-group btn-group-sm" role="group" aria-label="Авто-расстановка"><button type="button" class="btn btn-success">Авто</button><button type="button" class="btn btn-danger">Сброс</button></div>');
                                                 var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
                                                 var $thead = $('<thead></thead>');
                                                 var $tr = $('<tr></tr>');
@@ -1049,6 +1050,7 @@
                                                     $tbody.append($tr);
                                                 }
                                                 $table.append($tbody);
+                                                $form.append($bt);
                                                 $form.append($table);
                                                 //
                                                 //$form.on("submit", function (event) {
