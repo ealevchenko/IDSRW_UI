@@ -298,6 +298,8 @@
                         id_wim_arrival: row[i].fromIdWim,
                         arrivalCargoGroupNameEn: row[i].arrivalCargoGroupNameEn,
                         arrivalCargoGroupNameRu: row[i].arrivalCargoGroupNameRu,
+                        viewCurrentCargoNameEn: null, //row[i].viewCurrentCargoNameEn
+                        viewCurrentCargoNameRu: null, //row[i].viewCurrentCargoNameRu
                         arrivalCargoNameEn: row[i].arrivalCargoNameEn,
                         arrivalCargoNameRu: row[i].arrivalCargoNameRu,
                         arrivalCommercialConditionEn: null,
