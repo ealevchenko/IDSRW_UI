@@ -3542,10 +3542,15 @@ var getHoursFromMinuts = function (minutes) {
         modal_header.$html.append(h5.$html).append(bt_hclose.$html);
         this.$body = modal_body.$html;
         modal_footer.$html.append(bt_close.$html).append(bt_ok.$html);
+        this.$footer = modal_footer.$html;
         modal_content.$html.append(modal_header.$html).append(modal_body.$html).append(modal_footer.$html);
         modal_dialog.$html.append(modal_content.$html);
         modal.$html.append(modal_dialog.$html);
         $('body').append(modal.$html);
+        if (typeof this.settings.fn_init === 'function') {
+            // console.log('fn_init modal_confirm_form');
+            this.settings.fn_init.call(this);
+        }
         //---------------------------------------------------------
         // Инициализация модальной формы
         this.$modal_obj = modal.$html.modal({

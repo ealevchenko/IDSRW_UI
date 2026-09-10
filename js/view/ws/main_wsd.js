@@ -599,6 +599,7 @@
                         fsize: 'lg',
                         bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
                         bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+
                     });
 
                     var mcf_mp = new MCF(); // Создадим экземпляр окно ручной расстановки
@@ -726,6 +727,42 @@
                                     //    }.bind(this));
                                 }
                             }
+                        },
+                        fn_init: function () {
+                            var bt_auto = new this.fe.bs_button({
+                                color: 'success',
+                                text: 'А',
+                                fn_click: function (e) {
+                                    e.preventDefault();
+                                    var inp = $('form#manual-position').find('input');
+
+                                    $.each(inp, function (i, el) {
+                                        var value = $(el).val();
+                                        var num = $(el).attr('data-num');
+                                        var id = $(el).attr('id');
+                                        if (!value || value == "0") {
+                                            valid = false;
+                                        } else {
+                                            var pos = psts.find(function (o) { return o.position == value }.bind(this));
+                                            if (!pos) {
+                                                psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
+                                            } else {
+                                                $(el).addClass('is-invalid');
+                                                valid = false;
+                                            }
+                                        }
+                                    }.bind(this));
+
+
+                                }.bind(this)
+                            });
+                            var bt_clear = new this.fe.bs_button({
+                                color: 'danger',
+                                text: 'С',
+                                fn_click: function (e) {
+                                }.bind(this)
+                            });
+                            this.$footer.prepend(bt_clear.$html).prepend(bt_auto.$html);
                         }
                     });
 
@@ -1033,7 +1070,7 @@
                                                     return Number(a.position) - Number(b.position)
                                                 });
                                                 var $form = $('<form id="manual-position" class="row g-3 needs-validation" novalidate></form>')
-                                                var $bt = $('<div class="btn-group btn-group-sm" role="group" aria-label="Авто-расстановка"><button type="button" class="btn btn-success">Авто</button><button type="button" class="btn btn-danger">Сброс</button></div>');
+                                                // var $bt = $('<div class="btn-group btn-group-sm" role="group" aria-label="Авто-расстановка"><button type="button" class="btn btn-success">Авто</button><button type="button" class="btn btn-danger">Сброс</button></div>');
                                                 var $table = $('<table class="table table-sm table-striped table-hover" style="width:auto;font-size:14px"></table>');
                                                 var $thead = $('<thead></thead>');
                                                 var $tr = $('<tr></tr>');
@@ -1050,7 +1087,7 @@
                                                     $tbody.append($tr);
                                                 }
                                                 $table.append($tbody);
-                                                $form.append($bt);
+                                                // $form.append($bt);
                                                 $form.append($table);
                                                 //
                                                 //$form.on("submit", function (event) {
