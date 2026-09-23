@@ -3447,6 +3447,7 @@ var getHoursFromMinuts = function (minutes) {
             bt_close_text: 'Close',
             bt_ok_text: 'Ok',
             fn_init: null,              // Обработаем событие форма инициализировалась
+            fn_init_open: null,         // Обработаем событие форма открылась
             fn_show_modal: null,        // окно открывается
             fn_shown_modal: null,       // окно открылось
             fn_close: null,             // Обработаем событие форма закрывается
@@ -3580,6 +3581,12 @@ var getHoursFromMinuts = function (minutes) {
         this.result = false;
         this.$header.empty().append(title);
         if (message) { this.$body.empty().append(message); }
+
+        if (typeof this.settings.fn_init_open === 'function') {
+            // console.log('fn_init_open modal_confirm_form');
+            this.settings.fn_init_open.call(this);
+        }
+
         this.settings.fn_close = function (res) {
             if (res) {
                 // Ok

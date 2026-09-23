@@ -612,6 +612,23 @@
                         modal_class: 'modal-dialog-scrollable',
                         bt_close_text: langView('mwsd_title_button_Cancel', App.Langs),
                         bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
+                        fn_init_open: function (e) {
+                            this.$body.find('input').on("change", function (e) {
+                                var val = $(this).val();
+                                var forms = e.delegateTarget.form;
+                                // var inp = $(forms).find(function (o) {
+                                //     return o.test() == val;
+                                // }.bind(this));
+                                var exist = $.grep(forms, function (item) {
+                                    return item.value === val;
+                                });
+                                if (val) {
+                                    $(this).attr('data-type-position', 'M')
+                                } else {
+                                    $(this).attr('data-type-position', 'N')
+                                };
+                            });
+                        },
                         fn_click_ok: function (e) {
                             e.preventDefault();
                             var inp = $('form#manual-position').find('input');
@@ -735,24 +752,31 @@
                                 fn_click: function (e) {
                                     e.preventDefault();
                                     var inp = $('form#manual-position').find('input');
-
+                                    var wagons = [];
                                     $.each(inp, function (i, el) {
                                         var value = $(el).val();
                                         var num = $(el).attr('data-num');
+                                        var old_position = $(el).attr('data-old-position');
+                                        var type_position = $(el).attr('data-type-position');
                                         var id = $(el).attr('id');
-                                        if (!value || value == "0") {
-                                            valid = false;
-                                        } else {
-                                            var pos = psts.find(function (o) { return o.position == value }.bind(this));
-                                            if (!pos) {
-                                                psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
-                                            } else {
-                                                $(el).addClass('is-invalid');
-                                                valid = false;
-                                            }
-                                        }
+
+                                        wagons.push({ id: Number(id), num: Number(num), position: Number(old_position), new_pisition: (value ? Number(value) : null), type_position: type_position });
+
+
+                                        // if (!value || value == "0") {
+                                        //     // valid = false;
+                                        // } else {
+                                        //     // var pos = psts.find(function (o) { return o.position == value }.bind(this));
+                                        //     // if (!pos) {
+                                        //     //     psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
+                                        //     // } else {
+                                        //     //     $(el).addClass('is-invalid');
+                                        //     //     valid = false;
+                                        //     // }
+                                        // }
                                     }.bind(this));
 
+                                    wagons.length;
 
                                 }.bind(this)
                             });
@@ -922,7 +946,7 @@
                                 switch (event.currentTarget.id) {
                                     case 'provide': {
                                         if (current_option_way !== null && current_option_way["crossing-uz"] === 1) {
-                                            voprc.view(current_id_way, { rAdmin, rTropRW, rRO:true });
+                                            voprc.view(current_id_way, { rAdmin, rTropRW, rRO: true });
                                         } else {
                                             main_alert.clear_message();
                                             main_alert.out_warning_message(langView('mwsd_mess_war_not_way_provide', App.Langs));
@@ -1081,13 +1105,13 @@
                                                 var $tbody = $('<tbody class="table-group-divider"></tbody>');
                                                 for (var iw = 0; iw < wagons.length; iw++) {
                                                     var $tr = $('<tr></tr>');
-                                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId + '" data-num="' + wagons[iw].num + '" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
+                                                    $tr.append('<td><input type="number" id="' + wagons[iw].wimId + '" name="' + wagons[iw].wimId + '" data-num="' + wagons[iw].num + '" data-old-position="' + wagons[iw].position + '"data-type-position="N" class="form-control form-control-sm" min="0" max="100" step="1" value="" required></td>'); //w-50 h-50
                                                     $tr.append('<td>' + wagons[iw].position + '</td>');
                                                     $tr.append('<td>' + wagons[iw].num + '</td>');
                                                     $tbody.append($tr);
                                                 }
                                                 $table.append($tbody);
-                                                $form.append($bt);
+                                                //$form.append($bt);
                                                 $form.append($table);
                                                 //
                                                 //$form.on("submit", function (event) {
@@ -1098,6 +1122,10 @@
                                                 //        event.stopPropagation();
                                                 //    }
                                                 //});
+                                                // var inp = $('form#manual-position').find('input');
+                                                // inp.on('shown.bs.offcanvas', function (event) {
+
+                                                // }.bind(this));
                                                 mcf_mp.open(
                                                     langView('mwsd_title_form_apply_manual_position', App.Langs),
                                                     $form,
@@ -1301,48 +1329,48 @@
                         //$('.btn-all').on('click', function (event) {
                         //    switch (event.currentTarget.id) {
 
-            //    };
-            //});
-            //-----------------------------------------------------
-            // Инициализация модуля "Таблица вагоны на пути"
-            /*var tws = new TWS('div#cars-way');*/
-            tws.init({
-                alert: null,
-                class_table: 'table table-sm table-cars-way table-striped table-success',
-                detali_table: false,
-                type_report: 'cars_way',     //
-                link_num: true,
-                ids_wsd: null,
-                setup_buttons: [
-                    {
-                        name: 'statement1',
-                        action: function (e, dt, node, config) {
-                            tws.tab_com.button_action(config.button, e, dt, node, config);
-                        }.bind(this),
-                        enabled: false
-                    },
-                    {
-                        name: 'statement2',
-                        action: function (e, dt, node, config) {
-                            tws.tab_com.button_action(config.button, e, dt, node, config);
-                        }.bind(this),
-                        enabled: false
-                    },
-                    {
-                        name: 'statement3',
-                        action: function (e, dt, node, config) {
-                            tws.tab_com.button_action(config.button, e, dt, node, config);
-                        }.bind(this),
-                        enabled: false
-                    }
-                ],
-                fn_init: function () {
-                    // На проверку окончания инициализации
-                    process--;
-                    //console.log('[main_wsd] [tws] process ' + process);
-                    out_init(process);
-                },
-                fn_action_view_detali: function (rows) {
+                        //    };
+                        //});
+                        //-----------------------------------------------------
+                        // Инициализация модуля "Таблица вагоны на пути"
+                        /*var tws = new TWS('div#cars-way');*/
+                        tws.init({
+                            alert: null,
+                            class_table: 'table table-sm table-cars-way table-striped table-success',
+                            detali_table: false,
+                            type_report: 'cars_way',     //
+                            link_num: true,
+                            ids_wsd: null,
+                            setup_buttons: [
+                                {
+                                    name: 'statement1',
+                                    action: function (e, dt, node, config) {
+                                        tws.tab_com.button_action(config.button, e, dt, node, config);
+                                    }.bind(this),
+                                    enabled: false
+                                },
+                                {
+                                    name: 'statement2',
+                                    action: function (e, dt, node, config) {
+                                        tws.tab_com.button_action(config.button, e, dt, node, config);
+                                    }.bind(this),
+                                    enabled: false
+                                },
+                                {
+                                    name: 'statement3',
+                                    action: function (e, dt, node, config) {
+                                        tws.tab_com.button_action(config.button, e, dt, node, config);
+                                    }.bind(this),
+                                    enabled: false
+                                }
+                            ],
+                            fn_init: function () {
+                                // На проверку окончания инициализации
+                                process--;
+                                //console.log('[main_wsd] [tws] process ' + process);
+                                out_init(process);
+                            },
+                            fn_action_view_detali: function (rows) {
 
                             },
                             fn_user_select_rows: function (e, dt, type, cell, originalEvent, rowData) {
@@ -1357,25 +1385,25 @@
                             }.bind(this),
                             fn_select_link: function (link) {
 
-                }.bind(this),
-                fn_button_action: function (name, e, dt, node, config) {
-                    if (name === 'statement1') {
-                        if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&format=A4L&id=" + current_id_way, "Print");
-                        }
-                    }
-                    if (name === 'statement2') {
-                        if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
-                        }
-                    }
-                    if (name === 'statement3') {
-                        if (current_id_way !== null) {
-                            window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement3&format=A4&id=" + current_id_way, "Print");
-                        }
-                    }
-                }.bind(this),
-                fn_enable_button: function (tb) {
+                            }.bind(this),
+                            fn_button_action: function (name, e, dt, node, config) {
+                                if (name === 'statement1') {
+                                    if (current_id_way !== null) {
+                                        window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement1&format=A4L&id=" + current_id_way, "Print");
+                                    }
+                                }
+                                if (name === 'statement2') {
+                                    if (current_id_way !== null) {
+                                        window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement2&format=A4L&id=" + current_id_way, "Print");
+                                    }
+                                }
+                                if (name === 'statement3') {
+                                    if (current_id_way !== null) {
+                                        window.open("../../../idsrw_ui/areas/print/print.html?report=ws_statement3&format=A4&id=" + current_id_way, "Print");
+                                    }
+                                }
+                            }.bind(this),
+                            fn_enable_button: function (tb) {
 
                             }.bind(this),
                             //fn_action_view_detali: function (rows) {
