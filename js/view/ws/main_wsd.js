@@ -330,6 +330,56 @@
 
     $(function () {
 
+        // Проверка задвоений позиций
+        var is_clone_value = function (forms) {
+            var result = {};
+            result.validations = [];
+            result.positions = [];
+            result.valid = true;
+            $.each(forms, function (i, el) {
+                $(el).removeClass('is-invalid');
+                result.positions.push({
+                    id: el.id,
+                    num: $(el).attr('data-num'),
+                    position: el.value ? Number(el.value) : null,
+                    old_position: Number($(el).attr('data-old-position')),
+                    type_position: $(el).attr('data-type-position'),
+                    element: el,
+                });
+                var val = el.value;
+                if (val) {
+                    // Проверка на ноль
+                    if (Number(val) === 0 || Number(val) > forms.length) {
+                        $(el).addClass('is-invalid');
+                        result.valid = false;
+                    }
+                    var pos = result.validations.find(function (o) {
+                        return o.position === Number(val);
+                    }.bind(this));
+                    if (!pos) {
+                        var elm = [];
+                        elm.push({ element: el, num: el.id });
+                        result.validations.push({ position: Number(val), elements: elm });
+                    } else {
+                        pos.elements.push({ element: el, num: el.id });
+                    };
+                }
+            }.bind(this));
+            // Поиск задвоений
+            var clone = result.validations.filter(function (i) {
+                return i.elements.length > 1;
+            }.bind(this));
+            if (clone) {
+                $.each(clone, function (i, cl_el) {
+                    $.each(cl_el.elements, function (i, elm) {
+                        $(elm.element).addClass('is-invalid');
+                        result.valid = false;
+                    }.bind(this));
+                }.bind(this));
+            }
+            return result;
+        };
+
         setInterval(function () {
             $('label#user_name').text(moment().format("YYYY-MM-DD hh:mm:ss"));
             $('label#curent_date').text(App.AdminInfo ? App.AdminInfo.name : '?');
@@ -614,19 +664,16 @@
                         bt_ok_text: langView('mwsd_title_button_Ok', App.Langs),
                         fn_init_open: function (e) {
                             this.$body.find('input').on("change", function (e) {
-                                var val = $(this).val();
-                                var forms = e.delegateTarget.form;
-                                // var inp = $(forms).find(function (o) {
-                                //     return o.test() == val;
-                                // }.bind(this));
-                                var exist = $.grep(forms, function (item) {
-                                    return item.value === val;
-                                });
-                                if (val) {
-                                    $(this).attr('data-type-position', 'M')
+                                var val_man = $(this).val();
+                                if (val_man) {
+                                    $(this).attr('data-type-position', 'M');    // Признак ручной
                                 } else {
-                                    $(this).attr('data-type-position', 'N')
-                                };
+                                    $(this).attr('data-type-position', 'N');    // Признак не заполнен
+                                }
+                                var forms = e.delegateTarget.form;
+
+                                var result = is_clone_value(forms);
+
                             });
                         },
                         fn_click_ok: function (e) {
@@ -698,50 +745,6 @@
                                             }
                                         }
                                     }.bind(this));
-                                    //mcf.open(
-                                    //    langView('mwsd_title_form_apply', App.Langs),
-                                    //    langView('mwsd_confirm_mess_apply_operation_manual', App.Langs).format(wagons.length),
-                                    //    function () {
-                                    //        LockScreen(langView('mwsd_title_form_apply_operation_manual_position', App.Langs));
-                                    //        var operation = {
-                                    //            id_way: current_id_way,
-                                    //            positions: psts
-                                    //        };
-                                    //        api_wsd.postManualPosition(operation, function (result) {
-                                    //            // Проверим на ошибку выполнения запроса api
-                                    //            if (result === undefined || result === null) {
-                                    //                var mess = langView('mwsd_mess_error_api', App.Langs);
-                                    //                console.log('[main_wsd] [postManualPosition] :' + mess);
-                                    //                main_alert.clear_message();
-                                    //                main_alert.out_error_message(mess);
-                                    //                LockScreenOff();
-                                    //            } else {
-                                    //                if (result > 0) {
-                                    //                    refresh_tree_way(1, function () {
-                                    //                        main_alert.clear_message();
-                                    //                        main_alert.out_info_message(langView('mwsd_mess_ok_operation_manual', App.Langs).format(result));
-                                    //                        this.result = true;
-                                    //                        this.$modal_obj.modal('hide');
-                                    //                        LockScreenOff();
-                                    //                    }.bind(this));
-
-                                    //                } else {
-                                    //                    if (result < 0) {
-                                    //                        main_alert.clear_message();
-                                    //                        main_alert.out_error_message(langView('mwsd_mess_error_operation_manual', App.Langs).format(result));
-                                    //                    } else {
-                                    //                        main_alert.clear_message();
-                                    //                        main_alert.out_warning_message(langView('mwsd_mess_0_operation_manual', App.Langs));
-                                    //                    }
-                                    //                    LockScreenOff();
-                                    //                }
-                                    //            }
-                                    //        }.bind(this));
-                                    //    }.bind(this),
-                                    //    function () {
-                                    //        main_alert.clear_message();
-                                    //        main_alert.out_warning_message(langView('mwsd_mess_cancel_operation_manual', App.Langs));
-                                    //    }.bind(this));
                                 }
                             }
                         },
@@ -751,39 +754,56 @@
                                 text: 'А',
                                 fn_click: function (e) {
                                     e.preventDefault();
-                                    var inp = $('form#manual-position').find('input');
-                                    var wagons = [];
-                                    $.each(inp, function (i, el) {
-                                        var value = $(el).val();
-                                        var num = $(el).attr('data-num');
-                                        var old_position = $(el).attr('data-old-position');
-                                        var type_position = $(el).attr('data-type-position');
-                                        var id = $(el).attr('id');
+                                    var forms = $('form#manual-position').find('input');
+                                    // Получим результат
+                                    var result = is_clone_value(forms);
+                                    var new_position = [];
+                                    var pos = 1;
+                                    if (result && result.valid) {
+                                        // авто растановка
+                                        var list_new_pos = result.positions.filter(function (i) {
+                                            return i.position;
+                                        }.bind(this));
+                                        var list_old_pos = result.positions.filter(function (i) {
+                                            return !i.position;
+                                        }.bind(this));
+                                        //
+                                        if (list_new_pos && list_old_pos && list_new_pos.length > 0 && list_old_pos.length > 0) {
+                                            // Перенумеруем
+                                            list_old_pos = list_old_pos.sort(function (a, b) { return a.old_position - b.old_position; }); // отсортируем
+                                            for (var pos = 1; pos <= result.positions.length; pos++) {
+                                                var new_p = list_new_pos.find(function (o) {
+                                                    return o.position === pos;
+                                                }.bind(this));
+                                                if (new_p) {
+                                                    // найден
+                                                    var index = list_new_pos.indexOf(new_p);
+                                                    if (index !== -1) { list_new_pos.splice(index, 1); }
 
-                                        wagons.push({ id: Number(id), num: Number(num), position: Number(old_position), new_pisition: (value ? Number(value) : null), type_position: type_position });
-
-
-                                        // if (!value || value == "0") {
-                                        //     // valid = false;
-                                        // } else {
-                                        //     // var pos = psts.find(function (o) { return o.position == value }.bind(this));
-                                        //     // if (!pos) {
-                                        //     //     psts.push({ position: Number(value), num: Number(num), id_wim: Number(id), el: el });
-                                        //     // } else {
-                                        //     //     $(el).addClass('is-invalid');
-                                        //     //     valid = false;
-                                        //     // }
-                                        // }
-                                    }.bind(this));
-
-                                    wagons.length;
-
+                                                } else {
+                                                    // не найден
+                                                    var old_p = list_old_pos[0];
+                                                    if (old_p) {
+                                                        $(old_p.element).val(pos);
+                                                        $(old_p.element).attr('data-type-position', 'A');
+                                                        list_old_pos.splice(0, 1);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }.bind(this)
                             });
                             var bt_clear = new this.fe.bs_button({
                                 color: 'danger',
                                 text: 'С',
                                 fn_click: function (e) {
+                                    var forms = $('form#manual-position').find('input');
+                                    $.each(forms, function (i, el) {
+                                        $(el).removeClass('is-invalid');
+                                        $(el).val('');
+                                        $(el).attr('data-type-position', 'N');
+                                    }.bind(this));
                                 }.bind(this)
                             });
                             this.$footer.prepend(bt_clear.$html).prepend(bt_auto.$html);
@@ -1111,21 +1131,9 @@
                                                     $tbody.append($tr);
                                                 }
                                                 $table.append($tbody);
-                                                //$form.append($bt);
                                                 $form.append($table);
-                                                //
-                                                //$form.on("submit", function (event) {
-                                                //    var valid = false;
-                                                //    var inp = $('form#manual-position').find('input');
-                                                //    $(inp[0]).addClass('ban');
-                                                //    if (!valid) {
-                                                //        event.stopPropagation();
-                                                //    }
-                                                //});
-                                                // var inp = $('form#manual-position').find('input');
-                                                // inp.on('shown.bs.offcanvas', function (event) {
+                                              
 
-                                                // }.bind(this));
                                                 mcf_mp.open(
                                                     langView('mwsd_title_form_apply_manual_position', App.Langs),
                                                     $form,
