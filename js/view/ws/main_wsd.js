@@ -1132,7 +1132,7 @@
                                                 }
                                                 $table.append($tbody);
                                                 $form.append($table);
-                                              
+
 
                                                 mcf_mp.open(
                                                     langView('mwsd_title_form_apply_manual_position', App.Langs),
@@ -1193,7 +1193,10 @@
                         // получим из сокета какие станции отображать
                         var list_station_visible = null;
                         var select_station_tree = $.cookie("select_station_tree");
-                        if (select_station_tree) list_station_visible = $.parseJSON(select_station_tree);
+                        if (select_station_tree) {
+                            list_station_visible = $.parseJSON(select_station_tree);
+                            //$.cookie("select_station_tree", select_station_tree, { expires: 365 });
+                        }
                         //-------------------------------------------------
                         // Инициализация компонент выбора станций для отображения
                         // Загрузим список станций
@@ -1205,7 +1208,7 @@
                         $.each(list_station.filter(function (i) {
                             return !i.stationUz;
                         }.bind(this)), function (key, el) {
-                            if (!el.delete) {
+                            if (!el.delete && !el.stationUz) {
                                 var checked = 'checked';
                                 if (list_station_visible) {
                                     var st_enable = list_station_visible.find(function (o) {
@@ -1392,7 +1395,10 @@
 
                             }.bind(this),
                             fn_select_link: function (link) {
-
+                                // e.preventDefault();
+                                // e.stopPropagation();
+                                var url = getHref('/Directory/Home/SearchWagon' + '?num=' + link);
+                                window.open(url);
                             }.bind(this),
                             fn_button_action: function (name, e, dt, node, config) {
                                 if (name === 'statement1') {
@@ -1414,15 +1420,6 @@
                             fn_enable_button: function (tb) {
 
                             }.bind(this),
-                            //fn_action_view_detali: function (rows) {
-
-                            //},
-                            //fn_select_rows: function (rows) {
-
-                            //}.bind(this),
-                            //fn_select_link: function (link) {
-
-                            //}.bind(this),
                         });
                         //-----------------------------------------------------
                         // Инициализация модуля "Таблица остаток"

@@ -746,7 +746,7 @@
                 data: function (row, type, val, meta) {
                     var $link = new fe_ui.a({
                         id: row.num,
-                        class: 'num-wagon',
+                        class: 'num-wagon link-cell',
                         href: '#',
                         text: row.num,
                         target: '_blank',
